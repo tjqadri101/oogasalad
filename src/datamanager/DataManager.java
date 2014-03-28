@@ -1,4 +1,4 @@
-package dataManager;
+package datamanager;
 
 public class DataManager {
 
