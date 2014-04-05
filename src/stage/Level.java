@@ -1,5 +1,5 @@
 package stage;
-
+import stage.*;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +35,10 @@ public abstract class Level {
 	
 	public Map<Integer, Object> getCurrentObjects() {
 		return mySceneMap.get(myCurrentScene).getObjects();
+	}
+	
+	public Scene getScene(){
+	    return mySceneMap.get(myCurrentScene);
 	}
 	
 	

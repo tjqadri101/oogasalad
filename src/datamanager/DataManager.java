@@ -21,8 +21,8 @@ public class DataManager {
     private Scene currentScene;
     
     public void creatOrModify(String order){
-        String objectID = "fakeID"; // the ID obtained after sub-parsing 
-        if (currentLevel.getScenes.getObjects.contains(objectID)){
+        int objectID = 0; // the ID obtained after sub-parsing 
+        if (currentLevel.getScene().getObjects().containsKey(objectID)){
             create(order);
         }
         else 

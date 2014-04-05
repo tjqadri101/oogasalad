@@ -14,8 +14,8 @@ public class DMTester {
         enemyInfo = "ID Actor Image Path";
         playerInfo = "ID Actor Image Path";
         
-        Engine myTestEngine = new Engine();
-        myTestEngine.readAndWrited(stageInfo);
+        OOGASALADEngine myTestEngine = new OOGASALADEngine();
+        myTestEngine.readAndWrite(stageInfo);
   
 
     }
