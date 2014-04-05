@@ -94,6 +94,12 @@ public abstract class GameObject extends PhysicalObject{
 		}
 	}
 	
+	@Override
+	protected void paintShape() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	//public double getXPos(){ return this.x; }
 	
 	//public double getYPos(){ return this.y; }
