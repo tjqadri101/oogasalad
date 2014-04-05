@@ -96,7 +96,6 @@ public abstract class GameObject extends PhysicalObject{
 	
 	@Override
 	protected void paintShape() {
-		// TODO Auto-generated method stub
 		
 	}
 	

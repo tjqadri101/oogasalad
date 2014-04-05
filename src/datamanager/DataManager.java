@@ -2,6 +2,9 @@
 package datamanager;
 
 import java.util.*;
+
+import stage.Level;
+import stage.Scene;
 import jgame.JGObject;
 
 public class DataManager {
