@@ -35,9 +35,13 @@ public abstract class GameObject extends PhysicalObject{
 	}
 	
 	public void die(){
+		behaviorReflection(myBehaviors, myDieString, "remove");
+	}
+	
+	public void behaviorReflection(ResourceBundle myBundle, String myFile, String methodName){
 		try{
-			Object dieBehavior = Reflection.createInstance(myBehaviors.getString(myDieString), this);
-			Reflection.callMethod(dieBehavior, "remove");	
+			Object behavior = Reflection.createInstance(myBundle.getString(myFile), this);
+			Reflection.callMethod(behavior, methodName);	
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -45,11 +49,6 @@ public abstract class GameObject extends PhysicalObject{
 	
 	@Override
 	public void move(){
-		try{
-			Object moveBehavior = Reflection.createInstance(myBehaviors.getString(myMoveString), this);
-			Reflection.callMethod(moveBehavior, "move");	
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		behaviorReflection(myBehaviors, myMoveString, "move");
 	}
 }
