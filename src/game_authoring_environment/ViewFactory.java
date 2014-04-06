@@ -37,6 +37,10 @@ public class ViewFactory {
 			panel = new SubPanel();
 			break;
 			
+		case ACTOREDITOR:
+			panel = new ActorEditorPanel();
+			break;
+			
 		default:
 			//throw exception
 			break;						
