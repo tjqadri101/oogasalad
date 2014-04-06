@@ -17,18 +17,19 @@ public class DataController {
 	public static final String DEFAULT_CREATEORMODIFY = "CreationOrModify";
 	public static final String IS_CREATION = "Creation";
 	
-    protected Map<Integer, Level> myLevels = new HashMap<Integer, Level>();
-    protected Map<Integer, Scene> myScenes = new HashMap<Integer, Scene>();
-    protected Map<Integer, GameObject> myGameObjects = new HashMap<Integer, GameObject>();
+	protected Game myGame;
     protected Level currentLevel;
     protected Scene currentScene;
 	//Exporter myExporter;
 	protected GameFactory myFactory;
 	//Importer myImporter;
 	//protected GameEngine myGameEngine;
-	protected Game myGame;
 	protected ResourceBundle myCreateModifyTeller;
 	protected Scene myCurrentScene;
+	
+//  protected Map<Integer, Level> myLevels = new HashMap<Integer, Level>();
+//  protected Map<Integer, Scene> myScenes = new HashMap<Integer, Scene>();
+//  protected Map<Integer, GameObject> myGameObjects = new HashMap<Integer, GameObject>();
 	
 	public DataController(){
 		//myExporter = new Exporter();
@@ -40,7 +41,8 @@ public class DataController {
 	
 	public void receiveOrder(String order){
 		String[] orders = order.split(",");
-		Reflection.callMethod(this, myCreateModifyTeller.getString(orders[0]), order);	
+		String methodName = myCreateModifyTeller.getString(orders[0]);
+		Reflection.callMethod(this, methodName, order);	
 	}
 	
 	public void receiveXML(String url){
