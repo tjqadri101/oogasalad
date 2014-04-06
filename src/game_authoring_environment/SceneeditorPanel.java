@@ -2,9 +2,9 @@ package game_authoring_environment;
 
 import javax.swing.JComponent;
 
-public class SceneEditorPanel extends Panel {
+public class SceneeditorPanel extends Panel {
 
-	public SceneEditorPanel() {
+	public SceneeditorPanel() {
 		super(PanelType.SCENEEDITOR);
 		// TODO Auto-generated constructor stub
 	}

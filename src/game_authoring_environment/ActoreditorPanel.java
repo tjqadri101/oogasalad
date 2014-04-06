@@ -5,15 +5,14 @@ import java.awt.BorderLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
-public class ActorEditorPanel extends Panel {
+public class ActoreditorPanel extends Panel {
 	
 	private PanelType superType;
 	private JComponent myComponent;
 	private ViewFactory vf;
 	
-	public ActorEditorPanel() {
+	public ActoreditorPanel() {
 		super(PanelType.ACTOREDITOR);
-		vf = new ViewFactory();
 	}
 
 	@Override
@@ -28,7 +27,7 @@ public class ActorEditorPanel extends Panel {
 	@Override
 	protected void makeSubPanel() {
 		
-		myComponent.add(vf.createFileChooser());
+		//myComponent.add(vf.createFileChooser());
 		
 	}
 

@@ -6,14 +6,12 @@ import game_authoring_environment.MainPanel;
 
 public class Main
 {
-    public static void main (String[] args)
+    public static void Main (String[] args)
     {
+    	GAE k = new GAE();
     	System.out.println("This is the main s");
-    	MainPanel m = new MainPanel();
-    	m.setVisible(true);
-    	ImageTransferHandler g = new ImageTransferHandler(m);
-   	
-    	//GAE g = new GAE();
+    	
+    	//k.setVisible(true);
     	//GlassPaneDragAndDrop d = new GlassPaneDragAndDrop();
     	//d.setVisible(true);
     }
