@@ -13,5 +13,10 @@ public class Player extends GameObject {
 		super(name, xpos, ypos, collisionId, gfxname);
 
 	}
+	
+	@Override
+	public void move(){
+		super.move();
+	}
 
 }

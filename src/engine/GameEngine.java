@@ -1,14 +1,15 @@
 package engine;
 
+import parser.*; 
 import jgame.Highscore;
 import jgame.platform.StdGame;
 import java.awt.Dimension;
 import jgame.platform.JGEngine;
 import datamanager.*;
 
-public class OOGASALADEngine extends StdGame{
+public class GameEngine extends StdGame{
 
-    DataManager dm = new DataManager();
+    DataManager myDataManager = new DataManager();
     public static final Dimension SIZE = new Dimension(1200, 900);
     public static final String TITLE = "Platformer Game Editor";
 
@@ -31,7 +32,7 @@ public class OOGASALADEngine extends StdGame{
     }
 
     public void readAndWrite(String order){
-        dm.creatOrModify(order);
+        myDataManager.creatOrModify(order);
     }
 
     public void doFrame(){

@@ -2,12 +2,11 @@ package engineTests;
 
 import junit.framework.TestCase;
 
+/*
+ * @Author: Justin (Zihao) Zhang
+ */
 
-	/*
-	 * @Author: Justin (Zihao) Zhang
-	 */
-
-	public class GameObjectTests extends TestCase {
+public class GameObjectTests extends TestCase {
 
 //	    protected void setUp() throws LanguageNotFoundException {
 //	    	String defaultLanguage = "English";
