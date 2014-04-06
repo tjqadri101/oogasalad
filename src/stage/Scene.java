@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import objects.GameObject;
+
 import reflection.Reflection;
 
 /**
@@ -23,7 +25,7 @@ public class Scene {
 	private int myID;
 	private int myObjectCounter = 0;
 	private String myBackground;
-	private Map<Integer, Object> myObjectMap;
+	private Map<Integer, GameObject> myObjectMap;
 	private String myWinString;
 	
 	public Scene(int hash) {
@@ -33,11 +35,11 @@ public class Scene {
 	}
 		
 	public void addObject(Object object ) {
-		myObjectMap.put(myObjectCounter, object );
 		myObjectCounter++;
+		myObjectMap.put(myObjectCounter, (GameObject) object );
 	}
 
-	public Map<Integer, Object> getObjects() {
+	public Map<Integer, GameObject> getObjects() {
 		return myObjectMap;
 	}
 	
@@ -47,6 +49,10 @@ public class Scene {
 	
 	public void setWinBehavior(String s) {
 		myWinString = s;
+	}
+	
+	public GameObject getObject(int objectID) {
+		return myObjectMap.get(objectID);
 	}
 	
 	public void win(){
