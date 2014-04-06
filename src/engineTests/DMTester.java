@@ -1,6 +1,5 @@
-package datamanager;
+package engineTests;
 
-import datamanager.*;
 import engine.*;
 
 public class DMTester {
@@ -15,7 +14,6 @@ public class DMTester {
         playerInfo = "ID Actor Image Path";
         
         GameEngine myTestEngine = new GameEngine();
-        myTestEngine.readAndWrite(stageInfo);
   
 
     }
