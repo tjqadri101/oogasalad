@@ -1,5 +1,7 @@
 package parser;
 
-public class Parser {
-
+public interface Parser {
+    
+    
 }
+
