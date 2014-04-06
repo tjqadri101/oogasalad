@@ -6,7 +6,7 @@ import java.awt.Dimension;
 import jgame.platform.JGEngine;
 import datamanager.*;
 
-public class OOGASALADEngine extends StdGame{
+public class GameEngine extends StdGame{
 
     DataManager myDataManager = new DataManager();
     public static final Dimension SIZE = new Dimension(1200, 900);
