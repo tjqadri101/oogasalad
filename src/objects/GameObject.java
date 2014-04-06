@@ -22,11 +22,19 @@ public abstract class GameObject extends PhysicalObject{
 	protected String myMoveMethod;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
+	protected double xpos, ypos;
+	protected String name;
+	protected int collisionId;
+	protected JGColor color;
 	protected HashMap<Integer, String> myCollisionMap;
 
 	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
 		super(name, collisionId, color);
 		initObject(xpos, ypos);
+		
+		this.xpos = xpos;
+		this.ypos = ypos;
+		
 	}
 	
 	protected void initObject(double xpos, double ypos){
@@ -96,6 +104,12 @@ public abstract class GameObject extends PhysicalObject{
 		} catch (Exception e){
 			e.printStackTrace(); //should never reach here
 		}
+	}
+	
+	public List returnAttributes(){
+	    
+            return null;
+	    
 	}
 	
 	@Override
