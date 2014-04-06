@@ -11,7 +11,6 @@ import jgame.platform.JGEngine;
 
 public class GameEngine extends StdGame{
 
-    DataController myDataManager = new DataController();
     public static final Dimension SIZE = new Dimension(1200, 900);
     public static final String TITLE = "Platformer Game Editor";
 
