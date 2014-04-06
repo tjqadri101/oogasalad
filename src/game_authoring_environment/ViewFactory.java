@@ -12,4 +12,5 @@ public class ViewFactory {
 		JButton button = new JButton(str);
 		return button;
 	}
+
 }

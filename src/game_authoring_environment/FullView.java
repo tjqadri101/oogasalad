@@ -13,6 +13,4 @@ import javax.swing.JSplitPane;
 		}
 		
 
-	}
-
-
+}
