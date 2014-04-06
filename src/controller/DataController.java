@@ -17,14 +17,16 @@ public class DataController {
     protected int currentSceneID;
 	protected GameFactory myFactory;
 	protected ParseGame myParser;
-	//protected GameEngine myGameEngine;
+	protected GameEngine myGameEngine;
 	protected ResourceBundle myCreateModifyTeller;
 	
 	public DataController(){
-		//myExporter = new Exporter();
+		myParser = new ParseGame();
+		myGameEngine = new GameEngine();
 		myFactory = new GameFactory();
-		//myImporter = new Importer();
 		myGame = new Game();
+		currentLevelID = 0;
+		currentSceneID = 0;
 		myCreateModifyTeller = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
@@ -50,7 +52,7 @@ public class DataController {
 	 * Called by PlayView to import the game data
 	 * Input is a url to the XML file loaded by PlayView
 	 */
-	public void receiveXML(String url){
+	public void readXML(String url){
 		//Game game = myParser.readFromFile(url);
 	}
 	
