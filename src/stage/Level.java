@@ -20,7 +20,7 @@ public abstract class Level {
 	
 	public Level(int hash) {
 		myID = hash;
-		mySceneMap = new HashMap<>();
+		//mySceneMap = new HashMap<>();
 		
 	}
 	
