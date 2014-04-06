@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import util.reflection.Reflection;
 
 public class ViewFactory {
-	
+
 	public ViewFactory(){
 		
 	}
