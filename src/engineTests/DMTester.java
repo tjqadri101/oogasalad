@@ -1,6 +1,5 @@
-package datamanager;
+package engineTests;
 
-import datamanager.*;
 import engine.*;
 
 public class DMTester {
@@ -14,8 +13,7 @@ public class DMTester {
         enemyInfo = "ID Actor Image Path";
         playerInfo = "ID Actor Image Path";
         
-        OOGASALADEngine myTestEngine = new OOGASALADEngine();
-        myTestEngine.readAndWrite(stageInfo);
+        GameEngine myTestEngine = new GameEngine();
   
 
     }
