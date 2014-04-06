@@ -18,8 +18,8 @@ public class DataController {
 	public static final String IS_CREATION = "Creation";
 	
 	protected Game myGame;
-    protected Level currentLevel;
-    protected Scene currentScene;
+    protected int currentLevelID;
+    protected int currentSceneID;
 	//Exporter myExporter;
 	protected GameFactory myFactory;
 	//Importer myImporter;
