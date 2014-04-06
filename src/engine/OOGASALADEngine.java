@@ -1,5 +1,6 @@
 package engine;
 
+import parser.*; 
 import jgame.Highscore;
 import jgame.platform.StdGame;
 import java.awt.Dimension;
