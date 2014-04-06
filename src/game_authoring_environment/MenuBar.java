@@ -17,8 +17,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import util.reflection.ReflectionException;
-import util.reflection.Reflection;
+import reflection.ReflectionException;
+import reflection.Reflection;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
