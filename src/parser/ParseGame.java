@@ -133,21 +133,6 @@ public class ParseGame {
 		}
 		return gameObject; 
 	}
-	public static void main (String [] args) throws ParserConfigurationException, SAXException, IOException{
-		File in = new File("Game.xml"); 
-		File out = new File("Game.xml"); 
-
-		ParseGame a = new ParseGame(); 
-		String actor = "Mario,ID,Mario_Parameter1,IMG_Url,Mario_Parameter2,Mario_Parameter3, Mario_Parameter4";
-		ArrayList<String> gameObjects = new ArrayList<String>(); 
-		gameObjects.add(actor); 
-		a.writeToFile(gameObjects, out); 
-
-		ArrayList<String> gameObjects_1 = new ArrayList<String>(); 
-		gameObjects_1 = a.readFromFile(in); 
-		for(String gameObject: gameObjects_1){
-			System.out.println(gameObject);
-		}
-	}
+	
 
 }
