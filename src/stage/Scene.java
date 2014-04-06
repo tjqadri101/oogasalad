@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import util.reflection.Reflection;
+import reflection.Reflection;
 
 /**
  * 
@@ -28,7 +28,7 @@ public class Scene {
 	
 	public Scene(int hash) {
 		myID = hash;
-		myObjectMap = new HashMap<>();
+		//myObjectMap = new HashMap<>();
 		myWinnables = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 	}
 		
