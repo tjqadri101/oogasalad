@@ -1,13 +1,17 @@
 package objects;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import util.reflection.Reflection;
+import reflection.Reflection;
 import jboxGlue.PhysicalObject;
 import jgame.JGColor;
 import jgame.JGObject;
-
+/*
+ * @Author: Justin (Zihao) Zhang
+ */
 public abstract class GameObject extends PhysicalObject{
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
@@ -18,11 +22,19 @@ public abstract class GameObject extends PhysicalObject{
 	protected String myMoveMethod;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
+	protected double xpos, ypos;
+	protected String name;
+	protected int collisionId;
+	protected JGColor color;
 	protected HashMap<Integer, String> myCollisionMap;
 
 	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
 		super(name, collisionId, color);
 		initObject(xpos, ypos);
+		
+		this.xpos = xpos;
+		this.ypos = ypos;
+		
 	}
 	
 	protected void initObject(double xpos, double ypos){
@@ -62,7 +74,7 @@ public abstract class GameObject extends PhysicalObject{
 			Object behavior = Reflection.createInstance(myBundle.getString(myFile), this);
 			Reflection.callMethod(behavior, methodName);	
 		} catch (Exception e){
-			e.printStackTrace();
+			e.printStackTrace(); // should never reach here
 		}
 	}
 	
@@ -80,7 +92,7 @@ public abstract class GameObject extends PhysicalObject{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myCollisionMap.get(other.colid)), this);
 			Reflection.callMethod(behavior, "collide", other, this);	
 		} catch (Exception e){
-			e.printStackTrace();
+			e.printStackTrace(); // should never reach here
 		}
     }
 	
@@ -90,13 +102,27 @@ public abstract class GameObject extends PhysicalObject{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveMethod), this);
 			Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);	
 		} catch (Exception e){
-			e.printStackTrace();
+			e.printStackTrace(); //should never reach here
 		}
 	}
 	
 	@Override
 	protected void paintShape() {
 		
+	}
+	
+	/*
+	 * Should be called by the Parser class to get all attributes of the GameObject
+	 * Return a list of Strings that match with the Data Format but without Key 
+	 */
+	public List<String> getAttributes(){
+		List<String> answer = new ArrayList<String>();
+		answer.add("ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
+		answer.add("ID," + colid + ",Die," + myDieMethod);
+		for(int otherID: myCollisionMap.keySet()){
+			answer.add("ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
+		}
+		return answer;
 	}
 	
 	//public double getXPos(){ return this.x; }
