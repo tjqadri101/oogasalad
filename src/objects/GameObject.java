@@ -106,12 +106,6 @@ public abstract class GameObject extends PhysicalObject{
 		}
 	}
 	
-	public List returnAttributes(){
-	    
-            return null;
-	    
-	}
-	
 	@Override
 	protected void paintShape() {
 		
