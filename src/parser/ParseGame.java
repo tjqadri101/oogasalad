@@ -26,6 +26,7 @@ import org.xml.sax.SAXException;
 import org.w3c.dom.Node; 
 
 public class ParseGame {
+	private static final String GAME_OBJECT_ELEMENT = "GameObject";
 	private static final String ROOT_ELEMENT = "GameObjects";
 	private DocumentBuilderFactory docFactory; 
 	private DocumentBuilder docBuilder; 
@@ -77,10 +78,10 @@ public class ParseGame {
 		String[] parameters; 
 		for(String gameObject: gameObjects){
 			parameters = tokenizeString(gameObject);
-			Element gameObjectKey = doc.createElement(PARAMETER_NAMES[0]);
+			Element gameObjectKey = doc.createElement(GAME_OBJECT_ELEMENT);
 			rootElement.appendChild(gameObjectKey);
-			keys.add(parameters[0]); 
-			for(int i = 1; i<parameters.length; i++){
+
+			for(int i = 0; i<parameters.length; i++){
 				child = doc.createElement(PARAMETER_NAMES[i]); 
 				child.appendChild(doc.createTextNode(parameters[i]));
 				gameObjectKey.appendChild(child); 
@@ -105,11 +106,10 @@ public class ParseGame {
 
 		ArrayList<String> gameObjects = new ArrayList<String>(); 
 
-		NodeList gameObjectNodes = doc.getElementsByTagName(PARAMETER_NAMES[0]);
+		NodeList gameObjectNodes = doc.getElementsByTagName(GAME_OBJECT_ELEMENT);
 		String gameObject = "";
 		for(int i=0; i<gameObjectNodes.getLength(); i++){
 			Node node = gameObjectNodes.item(i);
-			gameObject= composeObjectString(gameObject, node.getNodeName(),i, i+2);
 
 			if(node.getNodeType() == Node.ELEMENT_NODE){
 				Element element = (Element) node; 
@@ -122,7 +122,7 @@ public class ParseGame {
 			}
 			gameObjects.add(gameObject); 
 		}
-	
+
 		return gameObjects;
 	}
 
@@ -133,21 +133,6 @@ public class ParseGame {
 		}
 		return gameObject; 
 	}
-	public static void main (String [] args) throws ParserConfigurationException, SAXException, IOException{
-		File in = new File("Game.xml"); 
-		File out = new File("Game.xml"); 
 
-		ParseGame a = new ParseGame(); 
-		String actor = "Mario,ID,Mario_Parameter1,IMG_Url,Mario_Parameter2,Mario_Parameter3, Mario_Parameter4";
-		ArrayList<String> gameObjects = new ArrayList<String>(); 
-		gameObjects.add(actor); 
-		a.writeToFile(gameObjects, out); 
-
-		ArrayList<String> gameObjects_1 = new ArrayList<String>(); 
-		gameObjects_1 = a.readFromFile(in); 
-		for(String gameObject: gameObjects_1){
-			System.out.println(gameObject);
-		}
-	}
 
 }
