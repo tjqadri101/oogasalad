@@ -2,6 +2,7 @@ package game_authoring_environment;
 
 import java.awt.Dimension;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -25,10 +26,14 @@ public class Library extends JTabbedPane {
 	}
 
 	private void addTabs() {
-		this.addTab( "Scenes", myScenesPanel);
-		this.addTab( "Actors", myActorsPanel);
-		this.addTab( "Media", myMediaPanel);
-		this.addTab( "Behaviors", myBehaviorsPanel);
+		ImageIcon sceneTabIcon = new ImageIcon(this.getClass().getResource("resources/sceneIcon.png"));
+		ImageIcon actorsTabIcon = new ImageIcon(this.getClass().getResource("resources/actorsIcon.png"));
+		ImageIcon mediaTabIcon = new ImageIcon(this.getClass().getResource("resources/mediaIcon.png"));
+		ImageIcon behaviorsTabIcon = new ImageIcon(this.getClass().getResource("resources/behaviorsIcon.png"));
+		this.addTab("",sceneTabIcon, myScenesPanel);
+		this.addTab( "", actorsTabIcon, myActorsPanel);
+		this.addTab( "", mediaTabIcon, myMediaPanel);
+		this.addTab( "", behaviorsTabIcon, myBehaviorsPanel);
 		
 	}
 

@@ -9,7 +9,7 @@ public class ViewFactory {
 		
 	}
 	
-	public JButton createJButton(String str){
+	public static JButton createJButton(String str){
 		JButton button = new JButton(str);
 		return button;
 	}
@@ -31,6 +31,10 @@ public class ViewFactory {
 		
 		case BEHAVIORS:
 			panel = new BehaviorsPanel();
+			break;
+			
+		case SUB:
+			panel = new SubPanel();
 			break;
 			
 		default:
