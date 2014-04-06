@@ -10,7 +10,7 @@ import objects.GameObject;
 import stage.Game;
 import stage.Level;
 import stage.Scene;
-import util.reflection.Reflection;
+import reflection.Reflection;
 
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
