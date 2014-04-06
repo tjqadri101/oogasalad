@@ -23,6 +23,6 @@ public class ViewFactory {
 			e.printStackTrace();
 		}
 		return null;
-	} 
+	}
 
 }
