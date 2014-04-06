@@ -15,7 +15,7 @@ public class ViewFactory {
 		JButton button = new JButton(str);
 		return button;
 	}
-	
+
 	public static Panel buildPanel(PanelType type){
 		try{
 			return (Panel) Reflection.createInstance("game_authoring_environment."+type.toString()+"Panel");
