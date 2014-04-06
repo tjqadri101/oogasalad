@@ -1,9 +1,9 @@
 package game_authoring_environment;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 public class ViewFactory {
+	
 	
 	public ViewFactory(){
 		
