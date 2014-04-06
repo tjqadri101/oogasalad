@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import objects.GameObject;
+
 /**
  * 
  * @author DavidChou
@@ -32,8 +34,8 @@ public abstract class Level {
 		mySceneMap.get(sceneID).addObject(object);
 	}
 	
-	public Map<Integer, Object> getCurrentObjects(int sceneID) {
-		return mySceneMap.get(sceneID).getObjects();
+	public GameObject getObject(int sceneID, int objectID) {
+		return mySceneMap.get(sceneID).getObject(objectID);
 	}
 	
 	public Scene getScene(int sceneID){
