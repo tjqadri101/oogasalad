@@ -1,23 +1,35 @@
 package game_authoring_environment;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 public class ActorEditorPanel extends Panel {
-
+	
+	private PanelType superType;
+	private JComponent myComponent;
+	private ViewFactory vf;
+	
 	public ActorEditorPanel() {
 		super(PanelType.ACTOREDITOR);
+		vf = new ViewFactory();
 	}
 
 	@Override
 	protected void construct() {
-		// TODO Auto-generated method stub
+		makeSubPanel();
+		this.setLayout(new BorderLayout());		
+		this.add(new JLabel(superType.toString()),BorderLayout.WEST);
+		this.add(myComponent,BorderLayout.EAST);
 
 	}
 
 	@Override
 	protected void makeSubPanel() {
-		// TODO Auto-generated method stub
-
+		
+		myComponent.add(vf.createFileChooser());
+		
 	}
 
 	@Override

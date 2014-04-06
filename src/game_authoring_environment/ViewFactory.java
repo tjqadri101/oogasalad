@@ -1,6 +1,7 @@
 package game_authoring_environment;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 public class ViewFactory {
@@ -41,6 +42,10 @@ public class ViewFactory {
 			panel = new ActorEditorPanel();
 			break;
 			
+		case SCENEEDITOR:
+			panel = new SceneEditorPanel();
+			break;
+			
 		default:
 			//throw exception
 			break;						
@@ -48,4 +53,22 @@ public class ViewFactory {
 		return panel;
 	} 
 
+	public JPanel createFileChooser(){
+		JFileChooser fc = new JFileChooser();
+
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+
+        JButton openButton = new JButton("Open a File...");
+        
+        JButton saveButton = new JButton("Save a File...");
+
+        JPanel buttonPanel = new JPanel(); 
+        buttonPanel.add(openButton);
+        buttonPanel.add(saveButton);
+
+        return buttonPanel;
+	}
+	
+	
+	
 }
