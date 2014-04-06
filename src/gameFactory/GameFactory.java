@@ -1,5 +1,6 @@
 package gameFactory;
 
+import objects.GameObject;
 import jgame.JGObject;
 
 public class GameFactory {
@@ -7,9 +8,12 @@ public class GameFactory {
     /**
      * Only takes String ordre as argument, for creation.
      */
-    public void processOrder(String order){
+    public GameObject processOrder(String order){
         
         
+        
+        
+        return null;
     }
     
     /**
