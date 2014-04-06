@@ -3,13 +3,15 @@ package engine;
 import parser.*; 
 import jgame.Highscore;
 import jgame.platform.StdGame;
+
 import java.awt.Dimension;
+
+import controller.DataController;
 import jgame.platform.JGEngine;
-import datamanager.*;
 
 public class GameEngine extends StdGame{
 
-    DataManager myDataManager = new DataManager();
+    DataController myDataManager = new DataController();
     public static final Dimension SIZE = new Dimension(1200, 900);
     public static final String TITLE = "Platformer Game Editor";
 
@@ -30,11 +32,7 @@ public class GameEngine extends StdGame{
         // TODO Auto-generated method stub
         setFrameRate(20, 2);
     }
-
-    public void readAndWrite(String order){
-        myDataManager.creatOrModify(order);
-    }
-
+    
     public void doFrame(){
 
     }
