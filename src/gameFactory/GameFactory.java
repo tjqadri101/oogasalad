@@ -6,7 +6,7 @@ import jgame.JGObject;
 public class GameFactory {
     
     /**
-     * Only takes String ordre as argument, for creation.
+     * Only takes String order as argument, for creation.
      */
     public GameObject processOrder(String order){
         
