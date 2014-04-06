@@ -1,8 +1,12 @@
 package controller;
 
+import gameFactory.GameFactory;
+
 import java.util.ResourceBundle;
 
+import objects.GameObject;
 import stage.Game;
+import stage.Scene;
 
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
@@ -10,15 +14,16 @@ public class DataController {
 	public static final String IS_CREATION = "Creation";
 	
 	//Exporter myExporter;
-	//GameFactory myFactory;
+	protected GameFactory myFactory;
 	//Importer myImporter;
 	//GameEngine myGameEngine;
-	Game myGame;
-	ResourceBundle myCreateModifyTeller;
+	protected Game myGame;
+	protected ResourceBundle myCreateModifyTeller;
+	protected Scene myCurrentScene;
 	
 	public DataController(){
 		//myExporter = new Exporter();
-		//myFactory = new GameFactory();
+		myFactory = new GameFactory();
 		//myImporter = new Importer();
 		myGame = new Game();
 		myCreateModifyTeller = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
@@ -27,6 +32,10 @@ public class DataController {
 	public void receiveOrder(String order){
 		String[] orders = order.split(",");
 		if(myCreateModifyTeller.getString(orders[0]) == IS_CREATION){
+			GameObject o = myFactory.processOrder(order);
+			myCurrentScene.addObject(o);
+		}
+		else{
 			
 		}
 		//Object o = myFactory.processOrder(order);
