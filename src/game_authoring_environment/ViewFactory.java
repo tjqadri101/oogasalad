@@ -4,8 +4,10 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
+import reflection.Reflection;
+
 public class ViewFactory {
-	
+
 	public ViewFactory(){
 		
 	}
@@ -14,44 +16,16 @@ public class ViewFactory {
 		JButton button = new JButton(str);
 		return button;
 	}
-	
+
 	public static Panel buildPanel(PanelType type){
-		Panel panel = null;
-		switch(type){
-		case SCENE:
-			panel = new ScenePanel();
-			break;
-		
-		case ACTORS:
-			panel = new ActorsPanel();
-			break;
-		
-		case MEDIA:
-			panel = new MediaPanel();
-			break;
-		
-		case BEHAVIORS:
-			panel = new BehaviorsPanel();
-			break;
-			
-		case SUB:
-			panel = new SubPanel();
-			break;
-			
-		case ACTOREDITOR:
-			panel = new ActorEditorPanel();
-			break;
-			
-		case SCENEEDITOR:
-			panel = new SceneEditorPanel();
-			break;
-			
-		default:
-			//throw exception
-			break;						
+
+		try{
+			return (Panel) Reflection.createInstance("game_authoring_environment."+type.toString()+"Panel");
+		} catch (Exception e){
+			e.printStackTrace();
 		}
-		return panel;
-	} 
+		return null;
+	}
 
 	public JPanel createFileChooser(){
 		JFileChooser fc = new JFileChooser();

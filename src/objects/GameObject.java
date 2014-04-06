@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import util.reflection.Reflection;
+import reflection.Reflection;
 import jboxGlue.PhysicalObject;
 import jgame.JGColor;
 import jgame.JGObject;

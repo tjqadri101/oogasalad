@@ -7,6 +7,7 @@ public class Main
 {
     public static void Main (String[] args)
     {
-    	GAE g = new GAE();
-    }
+
+     GAE g = new GAE();    
+}
 }

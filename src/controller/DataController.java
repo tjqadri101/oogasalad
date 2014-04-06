@@ -1,65 +1,73 @@
 package controller;
 
-import gameFactory.GameFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
-
-import jgame.JGObject;
-import objects.GameObject;
+import engine.GameEngine;
+import gameFactory.GameFactory;
+import parser.ParseGame;
 import stage.Game;
-import stage.Level;
-import stage.Scene;
+import reflection.Reflection;
 
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
 	public static final String DEFAULT_CREATEORMODIFY = "CreationOrModify";
 	public static final String IS_CREATION = "Creation";
 	
-    protected Map<String, Level> levelSet = new HashMap<String, Level>();
-    protected Map<String, Scene> sceneSet = new HashMap<String, Scene>();
-    protected Map<String, JGObject> objectSet = new HashMap<String, JGObject>();
-    // Note to David: to set Map of those in respective level, scene 
-    // this implementation requires GAE editing to be scene specific 
-    
-    protected Level currentLevel;
-    protected Scene currentScene;
-	//Exporter myExporter;
-	protected GameFactory myFactory;
-	//Importer myImporter;
-	//GameEngine myGameEngine;
 	protected Game myGame;
+    protected int currentLevelID;
+    protected int currentSceneID;
+	protected GameFactory myFactory;
+	protected ParseGame myParser;
+	protected GameEngine myGameEngine;
 	protected ResourceBundle myCreateModifyTeller;
-	protected Scene myCurrentScene;
 	
 	public DataController(){
-		//myExporter = new Exporter();
+		myParser = new ParseGame();
+		myGameEngine = new GameEngine();
 		myFactory = new GameFactory();
-		//myImporter = new Importer();
 		myGame = new Game();
+		currentLevelID = 0;
+		currentSceneID = 0;
 		myCreateModifyTeller = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
+	/*
+	 * Called by Game Authorizing Environment to send the command String
+	 * Input is a String order
+	 */
 	public void receiveOrder(String order){
 		String[] orders = order.split(",");
-		if(myCreateModifyTeller.getString(orders[0]) == IS_CREATION){
-			GameObject o = myFactory.processOrder(order);
-			myCurrentScene.addObject(o);
-		}
-		else if (currentScene.getObjects().containsKey(orders[1])){
-			
-		}
-		else {
-			System.out.println("Error"); // should never reach here
-		}
-		//Object o = myFactory.processOrder(order);
-		//myGame.add(o);
-		//myGameEngine.receiveObject(o);
+		String methodName = myCreateModifyTeller.getString(orders[0]);
+		Reflection.callMethod(this, methodName, order);	
 	}
 	
-	public void receiveXML(String url){
-		//Game game = myImporter.parser(url);
+	/*
+	 * Called by Game Authorizing Environment to export the game data
+	 * Input is a url to the XML file created by the GAE
+	 */
+	public void exportXML(String url){
+		//myParser.writeToFile(myGame, url);
 	}
-
+	
+	/*
+	 * Called by PlayView to import the game data
+	 * Input is a url to the XML file loaded by PlayView
+	 */
+	public void readXML(String url){
+		//Game game = myParser.readFromFile(url);
+	}
+	
+	
+	protected void callFactoryToProcess(String order){
+		//myFactory.processOrder(myGame, order);
+	}
+	
+	protected void switchToScene(String order){
+		String[] orders = order.split(",");
+		currentSceneID = Integer.parseInt(orders[2]);
+	}
+	
+	protected void switchToLevel(String order){
+		String[] orders = order.split(",");
+		currentLevelID = Integer.parseInt(orders[2]);
+	}
 }

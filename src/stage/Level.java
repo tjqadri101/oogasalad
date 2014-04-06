@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import objects.GameObject;
+
 /**
  * 
  * @author DavidChou
@@ -12,15 +14,14 @@ import java.util.Map;
  */
 public abstract class Level {
 	
-	private Map<Integer, Scene> mySceneMap;
+	protected Map<Integer, Scene> mySceneMap;
 	
-	private int myID;
-	private int mySceneTotal = 0;
-	private int myCurrentScene = 0;
+	protected int myID;
+	protected int mySceneTotal = 0;
 	
 	public Level(int hash) {
 		myID = hash;
-		mySceneMap = new HashMap<>();
+		//mySceneMap = new HashMap<>();
 		
 	}
 	
@@ -33,12 +34,12 @@ public abstract class Level {
 		mySceneMap.get(sceneID).addObject(object);
 	}
 	
-	public Map<Integer, Object> getCurrentObjects() {
-		return mySceneMap.get(myCurrentScene).getObjects();
+	public GameObject getObject(int sceneID, int objectID) {
+		return mySceneMap.get(sceneID).getObject(objectID);
 	}
 	
-	public Scene getScene(){
-	    return mySceneMap.get(myCurrentScene);
+	public Scene getScene(int sceneID){
+	    return mySceneMap.get(sceneID);
 	}
 	
 	
