@@ -24,7 +24,7 @@ public class TimerManager {
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		for(int key: myTimerMap.keySet()){
-			answer.add(SaladConstants.MODIFY_INPUTMANAGER + "," + key + "," + myTimerMap.get(key));
+			answer.add(SaladConstants.MODIFY_TIMERMANAGER + "," + key + "," + myTimerMap.get(key));
 		}
 		return answer;
 	}

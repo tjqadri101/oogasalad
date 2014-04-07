@@ -51,7 +51,7 @@ public class DataController {
 	 * Called by Game Authorizing Environment to export the game data
 	 * Input is a url to the XML file created by the GAE
 	 */
-	public void exportXML(String url){
+	public void exportXML(String url) throws ParserConfigurationException{
 		myParser.writeToFile(myGame, url);
 	}
 	

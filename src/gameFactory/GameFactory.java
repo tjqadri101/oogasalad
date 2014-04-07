@@ -41,12 +41,8 @@ public class GameFactory {
 //            myGame = game;
 //            myOrder = order;
 //            myObject = object;
-            
-            List<GameObject> results = new ArrayList<GameObject>();
-            Enumeration<String> iter = myFormat.getKeys();
+//            checkModifyOrCreate(order);
             parseOrder(order);
-            
-            
             try{
                     Object myObject = Reflection.createInstance(myFormat.getString(myMoveMethod), this);
                     Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);      
@@ -56,16 +52,21 @@ public class GameFactory {
 
 
             return null;
+            
+            /*this part (Enum) used when creating many instances of object at the same time ==> when playing game */
+            List<GameObject> results = new ArrayList<GameObject>();
+            Enumeration<String> iter = myFormat.getKeys();
         }
 
         private void parseOrder (String order) {
             // TODO Auto-generated method stub
             if (testLegitimateOrder(order)){
                 String[] orderSplit = order.split("=");
+                String instruction = orderSplit[0];
+//                checkModifyOrCreate(orderSplit[0]);
                 List<String> parameterSplit = Arrays.asList(orderSplit[1].split("\\,"));
                 for 
             }
-
         }
 
         private boolean testLegitimateOrder (String order) {
@@ -75,6 +76,21 @@ public class GameFactory {
                 throw new IllegalArgumentException("String " + order + " does not contain =");
                 return false;
             }
+        }
+        
+        private GameObject reflectCreate(){
+            
+        }
+        
+        private void reflectModify(){
+            
+        }
+
+        private void checkModifyOrCreate (String order) {
+            // TODO Auto-generated method stub
+            order.toLowerCase().contains()
+            str1.toLowerCase().contains(str2.toLowerCase())
+            
         }
 
         
@@ -88,7 +104,6 @@ public class GameFactory {
          */
         public void processOrder(GameObject object, String order){
             parseOrder(order);
-            
             try{
 //                http://docs.oracle.com/javase/tutorial/reflect/member/ctorInstance.html
 //                http://java.sun.com/docs/books/tutorial/reflect/member/methodInvocation.html
