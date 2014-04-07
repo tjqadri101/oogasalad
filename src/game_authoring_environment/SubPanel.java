@@ -8,12 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
+import controller.GAEController;
+
 public class SubPanel extends Panel {
 	
 	private PanelType superType;
 	private JComponent myComponent;
 
-	public SubPanel() {
+	public SubPanel(GAEController gController) {
 		super(PanelType.SUB);
 		this.setBackground(Color.LIGHT_GRAY);	
 	}

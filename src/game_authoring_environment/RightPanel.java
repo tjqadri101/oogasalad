@@ -15,15 +15,17 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import controller.GAEController;
+
 public class RightPanel extends JSplitPane {
 
-	public RightPanel(){
+	public RightPanel(GAEController gController){
 		setOrientation(VERTICAL_SPLIT);
-		setTopComponent(createSpinnerPanel());
+		setTopComponent(createSpinnerPanel(gController));
 		setBottomComponent(new JPanel());
 	}	
 	
-	private JComponent createSpinnerPanel(){
+	private JComponent createSpinnerPanel(GAEController gController){
 		JPanel spinnerPanel = new JPanel();
 		addLabeledPositionSpinner(spinnerPanel, "X");
 		addLabeledPositionSpinner(spinnerPanel, "Y");

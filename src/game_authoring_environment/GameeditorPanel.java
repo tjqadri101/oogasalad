@@ -20,13 +20,17 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import controller.GAEController;
+
 public class GameeditorPanel extends Panel {
 	
 	private SubPanel mySubPanel;
 	private PanelType superType;
+	private GAEController gController;
 	
-	public GameeditorPanel() {
+	public GameeditorPanel(GAEController gController) {
 		super(PanelType.GAMEEDITOR);
+		this.gController = gController;
 		makeSubPanel();
 		construct();
 	}
@@ -43,7 +47,7 @@ public class GameeditorPanel extends Panel {
 
 	@Override
 	protected void makeSubPanel() {
-		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB);
+		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB,gController);
 		mySubPanel.setSuperType(getType());
 		mySubPanel.addItems(makeSubPanelItems());
 		mySubPanel.construct();

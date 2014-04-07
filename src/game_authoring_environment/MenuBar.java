@@ -20,14 +20,19 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import controller.GAEController;
+
 import reflection.ReflectionException;
 import reflection.Reflection;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
+	
+	private GAEController gController;
 
-	public MenuBar(){
+	public MenuBar(GAEController gController){
 		super();
+		this.gController = gController;
 		this.add(createFileMenu());
 		this.add(createEditMenu());
 		this.add(createHelpMenu());
