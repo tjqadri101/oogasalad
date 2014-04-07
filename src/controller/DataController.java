@@ -77,6 +77,7 @@ public class DataController {
 	protected void switchToScene(String order){
 		String[] orders = order.split(",");
 		currentSceneID = Integer.parseInt(orders[2]);
+		myGameEngine.setCurrentScene(currentLevelID, currentSceneID);
 	}
 	
 	protected void switchToLevel(String order){
