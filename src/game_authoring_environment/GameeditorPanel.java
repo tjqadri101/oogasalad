@@ -35,8 +35,7 @@ public class GameeditorPanel extends Panel {
 	protected void construct() {
 		this.setLayout(new BorderLayout());		
 		this.add(mySubPanel, BorderLayout.NORTH);
-		System.out.println("test");
-		
+		//this.add(makeTable(), BorderLayout.SOUTH);
 		this.add(makeTable(), BorderLayout.CENTER);
 	
 
@@ -58,23 +57,27 @@ public class GameeditorPanel extends Panel {
 	
 	
 	protected JComponent makeTable(){
-		String[] columnNames = {"Category",
-			  "Value",
-			  "Type"};
-			
-			Object[][] data = {
-			{"Name", new String(),
-			"text"},
-			{"Time", new Integer(0),
-			"real"},
-			{"Display Width", new Integer(480),
-			"real"},
-			{"Display Height", new Integer(320),
-			"real"},
-			{"Actor Tags", new String(),
-			"text"}
-			};
-		return ViewFactory.createScrollingTable(columnNames, data);
+		 JTable table2 = new JTable();
+		 
+		 String[] columnNames = {"Category",
+				  "Value",
+				  "Type"};
+				
+				Object[][] data = {
+				{"Name", new String(),
+				"text"},
+				{"Time", new Integer(0),
+				"real"},
+				{"Display Width", new Integer(480),
+				"real"},
+				{"Display Height", new Integer(320),
+				"real"},
+				//{"Actor Tags", new String(), "text"}
+				};
+		 JComponent t =  ViewFactory.createScrollingTable(columnNames, data);
+	
+		
+		return t;
 	}
 			
 

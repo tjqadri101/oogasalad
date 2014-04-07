@@ -37,6 +37,14 @@ public class ViewFactory {
 		
 	}
 	
+	public static JComponent createDropDownMenuTable(){
+		
+		
+		return null;
+		
+	}
+	
+	
 	public static JComponent createScrollingTable(String[] colNames, Object[][] data){
 		JTable table = new ScrollableTable(colNames, data);
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
