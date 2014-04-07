@@ -19,8 +19,16 @@ public class Player extends GameObject {
 		super(name, xpos, ypos, collisionId, gfxname);
 	}
 	
-	public void setMoveUpKeys(int keyUp){
-
+	protected void setMoveUpKey(int keyUp){
+		myKeyUp = keyUp;
+	}
+	
+	public void setMoveDownKey(int keyDown){
+		myKeyDown = keyDown;
+	}
+	
+	public void setMoveLeftKey(int keyLeft){
+		myKeyLeft = keyLeft;
 	}
 	
 	@Override
