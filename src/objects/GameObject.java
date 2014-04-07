@@ -22,19 +22,13 @@ public abstract class GameObject extends PhysicalObject{
 	protected String myMoveMethod;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
-	protected double xpos, ypos;
-	protected String name;
-	protected int collisionId;
-	protected JGColor color;
 	protected HashMap<Integer, String> myCollisionMap;
+	protected String myColor;
+	protected String myGFXName;
 
 	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
 		super(name, collisionId, color);
 		initObject(xpos, ypos);
-		
-		this.xpos = xpos;
-		this.ypos = ypos;
-		
 	}
 	
 	protected void initObject(double xpos, double ypos){
@@ -90,7 +84,7 @@ public abstract class GameObject extends PhysicalObject{
 		if(!myCollisionMap.containsKey(other.colid)) return;
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myCollisionMap.get(other.colid)), this);
-			Reflection.callMethod(behavior, "collide", other, this);	
+			Reflection.callMethod(behavior, "collide", other);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}
@@ -117,6 +111,7 @@ public abstract class GameObject extends PhysicalObject{
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
+		answer.add("ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
 		answer.add("ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
 		answer.add("ID," + colid + ",Die," + myDieMethod);
 		for(int otherID: myCollisionMap.keySet()){
