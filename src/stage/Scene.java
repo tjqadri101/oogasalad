@@ -30,8 +30,9 @@ public class Scene {
 	
 	public Scene(int hash) {
 		myID = hash;
+		myObjects = new HashMap<Integer, GameObject>(); 
 		//myObjectMap = new HashMap<>();
-		myWinnables = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
+		//myWinnables = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 	}
 		
 	public void addObject(GameObject object ) {

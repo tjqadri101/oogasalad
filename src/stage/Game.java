@@ -22,12 +22,13 @@ public class Game {
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	
-	public Game(){
+	public Game(GameEngine){
 		numLevels = 0;
 		myLevels = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
+
 	}
 	
 	public void addLevel(Level level) {
@@ -63,6 +64,7 @@ public class Game {
 		myLevels.remove(levelID);
 	}
 	
+	
 	public void resetLevelID(int initialLevelID, int newLevelID) {
 		
 	}
@@ -80,5 +82,4 @@ public class Game {
 	public void modifyActor(){
 	    // need implementation
 	}
-
 }

@@ -1,7 +1,12 @@
 package controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import engine.GameEngine;
 import gameFactory.GameFactory;
@@ -30,7 +35,6 @@ public class DataController {
 		currentLevelID = 0;
 		currentSceneID = 0;
 		myCreateModifyTeller = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
-	
 	}
 	
 	/*
@@ -55,13 +59,12 @@ public class DataController {
 	 * Called by PlayView to import the game data
 	 * Input is a url to the XML file loaded by PlayView
 	 */
-	public void readXML(String url){
+	public void readXML(String url) throws ParserConfigurationException, SAXException, IOException{
 		List<String> orders = myParser.readFromFile(url);
 		for(String order: orders){
 			receiveOrder(order);
 		}
 	}
-	
 	
 	protected void callFactoryToProcess(String order){
 		myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);

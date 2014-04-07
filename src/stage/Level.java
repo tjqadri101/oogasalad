@@ -21,7 +21,8 @@ public class Level {
 	
 	public Level(int hash) {
 		myID = hash;
-		myScenes = new HashMap<Integer, Scene>();
+		myScenes = new HashMap<Integer, Scene>(); 
+
 	}
 	
 	public void addScene(Scene scene ) {

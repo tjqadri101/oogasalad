@@ -1,16 +1,17 @@
 package engine;
 
 import stage.Game;
+import jgame.JGColor;
 import jgame.JGPoint;
 import jgame.platform.StdGame;
+import objects.GameObject;
+import objects.NonPlayer;
+import objects.Player;
 
 import java.awt.Dimension;
 /*
  * @Author: Justin (Zihao) Zhang
  */
-
-import objects.GameObject;
-
 public class GameEngine extends StdGame{
 
     public static final Dimension SIZE = new Dimension(1200, 900);
@@ -46,11 +47,21 @@ public class GameEngine extends StdGame{
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
     }
     
+    /*
+     * (non-Javadoc)
+     * @see jgame.platform.StdGame#doFrame()
+     * For inGame States
+     */
     @Override
     public void doFrame(){
 
     }
     
+    /*
+     * (non-Javadoc)
+     * @see jgame.platform.StdGame#paintFrame()
+     * For inGame states
+     */
     @Override
     public void paintFrame ()
     {
@@ -107,18 +118,33 @@ public class GameEngine extends StdGame{
     	
     }
     
-    /* Create this method in Engine
+    /* 
      * Should be called by the GameFactory to createPlayer
-     * Return a  
+     * Return a created GameObject 
      */
-    public GameObject createPlayer(){
-        // NEED IMPLEMENTATION
-        return null;
+    public GameObject createPlayer(int colid, String gfxname, double xpos, double ypos, String name){
+        GameObject object = new Player(name, xpos, ypos, colid, gfxname);
+        object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        return object;
     }
     
-    public GameObject createActor(){
-        // NEED IMPLEMENTATION
-        return null;
+    public GameObject createActor(int colid, String gfxname, double xpos, double ypos, String name){
+        GameObject object = new NonPlayer(name, xpos, ypos, colid, gfxname);
+        object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        return object;
     }
+    
+    public void removeActor(GameObject object){
+    	object.remove();
+    }
+    
+    /*
+     * For reference only
+     */
+//	private Mass getMassById(String id){
+//    	Object thisObject = this.getObject(id);
+//    	Mass returnObject = (Mass) thisObject;
+//    	return returnObject;
+//    }
 
 }
