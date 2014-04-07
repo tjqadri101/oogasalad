@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.InputManager;
+import engineManagers.ScoreManager;
 import objects.GameObject;
 import objects.Player;
 
@@ -13,8 +15,8 @@ public class Game {
 	protected Map<Integer, Level> myLevels;
 	protected Player myPlayer;
 	protected int numLevels;
-	//protected ScoreManager myScoreManager;
-	//protected KeyInputManager myKeyInputManager;
+	protected ScoreManager myScoreManager;
+	protected InputManager myKeyInputManager;
 	//protected TimerManager myTimerManager
 	
 	public Game(){
