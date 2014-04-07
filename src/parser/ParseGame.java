@@ -68,7 +68,9 @@ public class ParseGame {
 	public String[] tokenizeString (String arg){
 		return arg.split("\\,"); 
 	}
-
+	
+	
+	
 	public File writeToFile(ArrayList<String> gameObjects, File fileToWriteTo) throws ParserConfigurationException{
 		Element rootElement = doc.createElement(ROOT_ELEMENT);
 		doc.appendChild(rootElement);
