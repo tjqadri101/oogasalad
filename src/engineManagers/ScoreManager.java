@@ -1,16 +1,20 @@
 package engineManagers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import saladConstants.SaladConstants;
+
 public class ScoreManager {
-	public static final int DEFAULT_SCORE = 0;
+	
+	public static final String INITIAL_SCORE = "InitialScore";
 	
 	protected int myScore;
+	protected int initialScore;
 	
-	public ScoreManager(int initialScore){
-		myScore = initialScore;
-	}
-	
-	public ScoreManager(){
-		this(DEFAULT_SCORE);
+	public ScoreManager(int startScore){
+		myScore = startScore;
+		initialScore = startScore;
 	}
 	
 	public int getScore(){
@@ -19,6 +23,12 @@ public class ScoreManager {
 	
 	public void addScore(int points){
 		myScore += points;
+	}
+	
+	public List<String> getAttributes(){
+		List<String> answer = new ArrayList<String>();
+		answer.add(SaladConstants.MODIFY_SCOREMANAGER + "," + INITIAL_SCORE + "," + initialScore);
+		return answer;
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import saladConstants.SaladConstants;
+
 public class InputManager {
 	
 	protected Map<Integer, String> myKeyMap;
@@ -24,7 +26,7 @@ public class InputManager {
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		for(int key: myKeyMap.keySet()){
-			answer.add("ModifyInputManager" + "," + key + "," + myKeyMap.get(key));
+			answer.add(SaladConstants.MODIFY_INPUTMANAGER + "," + key + "," + myKeyMap.get(key));
 		}
 		return answer;
 	}
