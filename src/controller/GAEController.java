@@ -5,7 +5,7 @@ public class GAEController {
 	DataController dcontroller;
 	
 	public GAEController(){
-		dcontroller = new DataController();
+		//dcontroller = new DataController();
 	}
 	
 	public void createPlayer(){
