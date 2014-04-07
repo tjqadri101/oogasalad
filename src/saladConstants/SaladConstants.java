@@ -9,7 +9,6 @@ public final class SaladConstants {
 	public static final String SWITCH_LEVEL = "SwitchLevel";
 	public static final String MODIFY_LEVEL = "ModifyLevel";
 	public static final String SWITCH_SCENE = "SwitchScene";
-	public static final String CREATE_SCENE = "CreateScene";
 	public static final String MODIFY_SCENE = "ModifyScene";
 	public static final String CREATE_SCENE = "CreateScene";
 	public static final String MODIFY_GOALMANAGER = "ModifyGoalManager";

@@ -19,9 +19,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
 
 import controller.GAEController;
-
 import reflection.ReflectionException;
 import reflection.Reflection;
 
@@ -86,19 +86,12 @@ public class MenuBar extends JMenuBar{
 			saveFile = new File(saveFile.getAbsolutePath() + ".xml");
 			
 		}
-
-		BufferedWriter outFile = null;
-		try {
-			outFile = new BufferedWriter(new FileWriter(saveFile));
-		} catch (IOException ex) {
-			//ex.printStackTrace();
-		} finally {
-			if (outFile != null) {
-				try {
-					outFile.close();
-				} catch (Exception e) {}
-			}
-		}
+		/*try {
+			gController.getDataController().exportXML(saveFile.getAbsolutePath());
+		} catch (ParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
 	}
 	
 	private void openGameFile(){

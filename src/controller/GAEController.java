@@ -3,10 +3,10 @@ import saladConstants.SaladConstants;
 
 public class GAEController {
 	
-	DataController dcontroller;
+	private DataController myDataController;
 	
 	public GAEController(){
-		//dcontroller = new DataController();
+		//myDataController = new DataController();
 	}
 	
 	public void createPlayer(int ID,String url,String name){
@@ -79,4 +79,7 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	public DataController getDataController(){
+		return myDataController;
+	}
 }
