@@ -51,28 +51,26 @@ public class GameeditorPanel extends Panel {
 
 	@Override
 	protected JComponent makeSubPanelItems() {
-		JButton jb = new JButton("button");
+		JButton jb = ViewFactory.createJButton("Validate");
 		return jb;
 	}
 	
 	protected JComponent makeTable(){
-		String[] columnNames = {"First Name",
-		  "Last Name",
-		  "Sport",
-		  "# of Years",
-		  "Vegetarian"};
-		System.out.println("sample");
+		String[] columnNames = {"Category",
+		  "Value",
+		  "Type"};
+		
 		Object[][] data = {
-		{"Kathy", "Smith",
-		"Snowboarding", new Integer(5), new Boolean(false)},
-		{"John", "Doe",
-		"Rowing", new Integer(3), new Boolean(true)},
-		{"Sue", "Black",
-		"Knitting", new Integer(2), new Boolean(false)},
-		{"Jane", "White",
-		"Speed reading", new Integer(20), new Boolean(true)},
-		{"Joe", "Brown",
-		"Pool", new Integer(10), new Boolean(false)}
+		{"Name", new String(),
+		"text"},
+		{"Time", new Integer(0),
+		"real"},
+		{"Display Width", new Integer(480),
+		"real"},
+		{"Display Height", new Integer(320),
+		"real"},
+		{"Actor Tags", new String(),
+		"text"}
 		};
 		
 		JTable table = new JTable(data, columnNames);
