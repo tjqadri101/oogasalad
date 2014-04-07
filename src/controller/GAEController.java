@@ -19,6 +19,13 @@ public class GAEController {
 		
 	}
 	
+	public void deleteActor(int ID){
+		String order = "DeleteActor,ID,"+ID;
+		//dcontroller.receiveOrder(order);
+		System.out.println(order);
+		
+	}
+	
 	
 	public void modifyActor(){
 		
