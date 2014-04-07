@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import objects.GameObject;
 
 import reflection.Reflection;
+import saladConstants.SaladConstants;
 
 /**
  * 
@@ -57,12 +58,9 @@ public class Scene {
 	}
 	
 	
-	public List<Object> getAttributes() {
-		List<Object> result = new ArrayList<Object>();
-		result.add(myID);
-		for (Integer i : myObjects.keySet() ) {
-			result.add(myObjects.get(i).getAttributes());
-		}
-		return result;
+	public List<String> getAttributes() {
+		List<String> answer = new ArrayList<String>();
+		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
+		return answer;
 	}
 }

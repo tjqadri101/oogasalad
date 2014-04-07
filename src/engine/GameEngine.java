@@ -10,7 +10,7 @@ import objects.Player;
 
 import java.awt.Dimension;
 /*
- * @Author: Justin (Zihao) Zhang
+ * @Author: Chensheng Han (main), Justin (Zihao) Zhang
  */
 public class GameEngine extends StdGame{
 

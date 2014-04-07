@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import objects.GameObject;
+import saladConstants.SaladConstants;
 
 /**
  * 
@@ -22,7 +23,6 @@ public class Level {
 	public Level(int hash) {
 		myID = hash;
 		myScenes = new HashMap<Integer, Scene>(); 
-
 	}
 	
 	public void addScene(Scene scene ) {
@@ -46,12 +46,10 @@ public class Level {
 		myScenes.remove(sceneID);
 	}
 	
-	public List<List> getAttributes() {
-		List<List> result = new ArrayList<List>();
-		for (Integer i : myScenes.keySet()) {
-			result.add(myScenes.get(i).getAttributes());
-		}
-		return result;
+	public List<String> getAttributes() {
+		List<String> answer = new ArrayList<String>();
+		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID);
+		return answer;
 	}
 	
 }
