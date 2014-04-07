@@ -22,7 +22,7 @@ public class Game {
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	
-	public Game(){
+	public Game(GameEngine){
 		numLevels = 0;
 		myLevels = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
@@ -80,5 +80,4 @@ public class Game {
 	public void modifyActor(){
 	    // need implementation
 	}
-
 }
