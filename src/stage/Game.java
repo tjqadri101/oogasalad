@@ -43,6 +43,10 @@ public class Game {
 		myPlayer = (Player)object;
 	}
 	
+	public void setPlayerXY(int levelID, int sceneID, int playerID, int x, int y) {
+		myLevels.get(levelID).setPlayerXY(sceneID, playerID, x, y);
+	}
+	
 	public void addObject(int levelID, int sceneID, GameObject object){
 		myLevels.get(levelID).addObject(sceneID, object);
 	}
