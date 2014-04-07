@@ -24,7 +24,7 @@ public class GameeditorPanel extends Panel {
 	
 	private SubPanel mySubPanel;
 	private PanelType superType;
-	
+
 	public GameeditorPanel() {
 		super(PanelType.GAMEEDITOR);
 		makeSubPanel();
@@ -36,6 +36,7 @@ public class GameeditorPanel extends Panel {
 		this.setLayout(new BorderLayout());		
 		this.add(mySubPanel, BorderLayout.NORTH);
 		System.out.println("test");
+		
 		this.add(makeTable(), BorderLayout.CENTER);
 	
 
@@ -55,35 +56,27 @@ public class GameeditorPanel extends Panel {
 		return jb;
 	}
 	
+	
 	protected JComponent makeTable(){
 		String[] columnNames = {"Category",
-		  "Value",
-		  "Type"};
-		
-		Object[][] data = {
-		{"Name", new String(),
-		"text"},
-		{"Time", new Integer(0),
-		"real"},
-		{"Display Width", new Integer(480),
-		"real"},
-		{"Display Height", new Integer(320),
-		"real"},
-		{"Actor Tags", new String(),
-		"text"}
-		};
-		
-		JTable table = new JTable(data, columnNames);
-		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-		table.setFillsViewportHeight(true);
-		
-		//Create the scroll pane and add the table to it.
-		JScrollPane scrollPane = new JScrollPane(table);
-		
-		//Add the scroll pane to this panel.
-		
-		return scrollPane;
+			  "Value",
+			  "Type"};
+			
+			Object[][] data = {
+			{"Name", new String(),
+			"text"},
+			{"Time", new Integer(0),
+			"real"},
+			{"Display Width", new Integer(480),
+			"real"},
+			{"Display Height", new Integer(320),
+			"real"},
+			{"Actor Tags", new String(),
+			"text"}
+			};
+		return ViewFactory.createScrollingTable(columnNames, data);
 	}
+			
 
 }
 

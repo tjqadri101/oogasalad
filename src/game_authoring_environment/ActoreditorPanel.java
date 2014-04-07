@@ -22,6 +22,8 @@ public class ActoreditorPanel extends Panel {
 	protected void construct() {
 		this.setLayout(new BorderLayout());		
 		this.add(mySubPanel, BorderLayout.NORTH);
+		TableRenderDemo t = new TableRenderDemo();
+		this.add(t, BorderLayout.CENTER);
 	}
 
 	@Override
@@ -37,5 +39,8 @@ public class ActoreditorPanel extends Panel {
 		JButton jb  = new JButton("test");
 		return jb;
 	}
+	
+	
+	
 
 }

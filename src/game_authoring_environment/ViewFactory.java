@@ -1,6 +1,13 @@
 package game_authoring_environment;
 
+import java.awt.Dimension;
+
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import reflection.Reflection;
 
 public class ViewFactory {
@@ -22,5 +29,23 @@ public class ViewFactory {
 		}
 		return null;
 	}
-
+	
+	public static JFileChooser createJFileChooser(){
+		
+		
+		return null;
+		
+	}
+	
+	public static JComponent createScrollingTable(String[] colNames, Object[][] data){
+		JTable table = new ScrollableTable(colNames, data);
+		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+		table.setFillsViewportHeight(true);
+		//Create the scroll pane and add the table to it.
+		JScrollPane scrollPane = new JScrollPane(table);
+		
+		
+		//Add the scroll pane to this panel.
+		return scrollPane;
+	}
 }
