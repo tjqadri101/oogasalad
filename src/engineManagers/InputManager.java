@@ -26,7 +26,6 @@ public class InputManager {
 		for(int key: myKeyMap.keySet()){
 //			answer.add(e)
 		}
-		
 		return answer;
 	}
 
