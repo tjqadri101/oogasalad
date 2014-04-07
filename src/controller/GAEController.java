@@ -1,18 +1,10 @@
 package controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class GAEController {
 	
-	Map<Integer, String> actorMap;
-	Map<Integer, String> environmentMap;
-	int curFeatureId;
 	DataController dcontroller;
 	
 	public GAEController(){
-		actorMap = new HashMap<Integer, String>();
-		environmentMap = new HashMap<Integer, String>();
 		dcontroller = new DataController();
 	}
 	
@@ -20,7 +12,10 @@ public class GAEController {
 		
 	}
  	
-	public void createActor(){
+	public void createActor(int ID,String url,String name){
+		String order = "CreateActor,ID,"+ID+",Image,"+url+",Position,0,0,Name,"+name;
+		//dcontroller.receiveOrder(order);
+		System.out.println(order);
 		
 	}
 	

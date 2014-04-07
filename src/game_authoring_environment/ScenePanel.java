@@ -12,6 +12,8 @@ import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import controller.GAEController;
+
 public class ScenePanel extends Panel{
 	
 	private SubPanel mySubPanel;
@@ -19,9 +21,11 @@ public class ScenePanel extends Panel{
 	private int mySceneCount = 0;
 	private int mySeletedIndex = -1;
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
+	private GAEController gController;
 	
-	public ScenePanel(){
+	public ScenePanel(GAEController gController){
 		super(PanelType.SCENE);
+		this.gController = gController;
 		makeSubPanel();
 		construct();
 		addScene();
@@ -57,7 +61,7 @@ public class ScenePanel extends Panel{
 
 	@Override
 	protected void makeSubPanel() {
-		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB);
+		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB,gController);
 		mySubPanel.setSuperType(getType());
 		mySubPanel.addItems(makeSubPanelItems());
 		mySubPanel.construct();

@@ -21,12 +21,7 @@ public class DataController {
 	protected ResourceBundle myCreateModifyTeller;
 	
 	public DataController(){
-		myParser = new ParseGame();
-		myFactory = new GameFactory();
-		myGame = new Game();
-		currentLevelID = 0;
-		currentSceneID = 0;
-		myCreateModifyTeller = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
+	
 	}
 	
 	public void initGameEngine(){
