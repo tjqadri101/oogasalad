@@ -123,6 +123,7 @@ public class GameEngine extends StdGame{
      * Return a created GameObject 
      */
     public GameObject createPlayer(int colid, String gfxname, double xpos, double ypos, String name){
+        
         GameObject object = new Player(name, xpos, ypos, colid, gfxname);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;
