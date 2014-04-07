@@ -41,6 +41,10 @@ public abstract class Level {
 	public Scene getScene(int sceneID){
 	    return mySceneMap.get(sceneID);
 	}
+
+	public void removeScene(int sceneID) {
+		mySceneMap.remove(sceneID);
+	}
 	
 	
 }
