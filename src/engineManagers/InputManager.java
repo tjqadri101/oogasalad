@@ -1,6 +1,8 @@
 package engineManagers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InputManager {
@@ -17,6 +19,15 @@ public class InputManager {
 	
 	public Map<Integer, String> getKeyMap(){
 		return myKeyMap;
+	}
+	
+	public List<String> getAttributes(){
+		List<String> answer = new ArrayList<String>();
+		for(int key: myKeyMap.keySet()){
+//			answer.add(e)
+		}
+		
+		return answer;
 	}
 
 }
