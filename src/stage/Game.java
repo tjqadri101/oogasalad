@@ -42,15 +42,19 @@ public class Game {
 	}
 	
 	public void removeScene(int levelID, int sceneID) {
-		
+		myLevels.get(levelID).removeScene(sceneID);
 	}
 	
 	public void removeLevel(int levelID) {
-		
+		myLevels.remove(levelID);
 	}
 	
 	public void resetLevelID(int initialLevelID, int newLevelID) {
 		
+	}
+	
+	public Map<Integer, Level> getAllAttributes() {
+		return myLevels;
 	}
 
 }

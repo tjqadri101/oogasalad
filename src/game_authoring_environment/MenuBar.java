@@ -11,12 +11,15 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import reflection.ReflectionException;
 import reflection.Reflection;
 
@@ -34,7 +37,6 @@ public class MenuBar extends JMenuBar{
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(makeMenuItem("Save As...", "saveGameFile"));
 		fileMenu.add(makeMenuItem("Open", "openGameFile"));
-		fileMenu.add(makeMenuItem("Export", "doNothing"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
 	}
@@ -51,22 +53,26 @@ public class MenuBar extends JMenuBar{
 	}
 	
 	private JMenu createHelpMenu(){
-		JMenu helpMenu = new JMenu("Edit");
+		JMenu helpMenu = new JMenu("Help");
 		helpMenu.add(makeMenuItem("About", "doNothing"));
 		helpMenu.add(makeMenuItem("Help page", "doNothing"));
 		return helpMenu;
 	}
 	
 	//temporarily added for testing purposes
-	public void doNothing(){
+	private void doNothing(){
 		
 	}
 	
-	public void closeProgram(){
-		System.exit(0);
+	private void closeProgram(){
+	
+		int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit", "Quitting", JOptionPane.YES_NO_OPTION);
+		if(n==JOptionPane.YES_OPTION){
+			System.exit(0);
+		}	
 	}
 
-	public void saveGameFile() {
+	private void saveGameFile() {
 		File saveFile = chooseGameFile("Save");
 		if(saveFile == null){
 			return;
@@ -89,7 +95,7 @@ public class MenuBar extends JMenuBar{
 		}
 	}
 	
-	public void openGameFile(){
+	private void openGameFile(){
 		File loadedFile =  chooseGameFile("Load");
 		if(loadedFile == null) {
 			return;
@@ -151,7 +157,7 @@ public class MenuBar extends JMenuBar{
 	}
 
 	// for testing purposes
-	 /*private static void createAndShowGUI() {
+	 private static void createAndShowGUI() {
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("MenuBarDemo");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -172,6 +178,6 @@ public class MenuBar extends JMenuBar{
 	                createAndShowGUI();
 	            }
 	        });
-	    }*/
+	    }
 
 }
