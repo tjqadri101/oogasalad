@@ -53,7 +53,7 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        setGameState(Mode);
+        //setGameState(Mode);
     }
 
     public void startEdit(){
