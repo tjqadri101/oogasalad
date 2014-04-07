@@ -34,7 +34,7 @@ public class Scene {
 		myWinnables = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 	}
 		
-	public void addObject(Object object ) {
+	public void addObject(GameObject object ) {
 		myObjectCounter++;
 		myObjectMap.put(myObjectCounter, (GameObject) object );
 	}
@@ -55,12 +55,8 @@ public class Scene {
 		return myObjectMap.get(objectID);
 	}
 	
-	public void win(){
-		try{
-			Object winBehavior = Reflection.createInstance(myWinnables.getString(myWinString), this);
-			Reflection.callMethod(winBehavior, "ifWin");	
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+	
+	public Map<Integer, GameObject> getAllObjects() {
+		return myObjectMap;
 	}
 }

@@ -53,7 +53,7 @@ public class Game {
 		
 	}
 	
-	public Map<Integer, Level> getAttributes() {
+	public Map<Integer, Level> getAllAttributes() {
 		return myLevels;
 	}
 
