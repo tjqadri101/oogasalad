@@ -4,15 +4,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import controller.GAEController;
+
 public class Attributes extends JTabbedPane {
 	
 	private JPanel myActorEditorPanel;
 	private JPanel mySceneEditorPanel;
 	private JPanel myGameEditorPanel;
 	
-	public Attributes(){
+	public Attributes(GAEController gController){
 
-		makePanels();
+		makePanels(gController);
 		addTabs();
 	}
 	
@@ -26,10 +28,10 @@ public class Attributes extends JTabbedPane {
 		
 	}
 
-	private void makePanels() {
-		myActorEditorPanel = ViewFactory.buildPanel(PanelType.ACTOREDITOR);
-		mySceneEditorPanel = ViewFactory.buildPanel(PanelType.SCENEEDITOR);
-		myGameEditorPanel = ViewFactory.buildPanel(PanelType.GAMEEDITOR);
+	private void makePanels(GAEController gController) {
+		myActorEditorPanel = ViewFactory.buildPanel(PanelType.ACTOREDITOR,gController);
+		mySceneEditorPanel = ViewFactory.buildPanel(PanelType.SCENEEDITOR,gController);
+		myGameEditorPanel = ViewFactory.buildPanel(PanelType.GAMEEDITOR,gController);
 	}
 
 }

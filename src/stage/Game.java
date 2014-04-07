@@ -28,6 +28,7 @@ public class Game {
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
+
 	}
 	
 	public void addLevel(Level level) {
@@ -62,6 +63,7 @@ public class Game {
 	public void removeLevel(int levelID) {
 		myLevels.remove(levelID);
 	}
+	
 	
 	public void resetLevelID(int initialLevelID, int newLevelID) {
 		
