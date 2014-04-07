@@ -13,6 +13,7 @@ import jgame.JGObject;
  * @Author: Justin (Zihao) Zhang
  */
 public abstract class GameObject extends PhysicalObject{
+	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     public static final String DEFAULT_NULL = "null";
@@ -23,6 +24,7 @@ public abstract class GameObject extends PhysicalObject{
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
 	protected HashMap<Integer, String> myCollisionMap;
+	protected int myLives;
 
 	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
 		super(name, collisionId, color);
@@ -35,6 +37,7 @@ public abstract class GameObject extends PhysicalObject{
 		myMoveMethod = DEFAULT_NULL;
 		myCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
+		myLives = DEFAULT_LIVES; // change later
 	}
 	
 	protected GameObject(String name, double xpos, double ypos, int collisionId, String gfxname){
@@ -44,6 +47,10 @@ public abstract class GameObject extends PhysicalObject{
 	
 	public void setDieBehavior(String s){
 		myDieMethod = s;
+	}
+	
+	public void loseLife(){
+		myLives --;
 	}
 	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
@@ -74,6 +81,7 @@ public abstract class GameObject extends PhysicalObject{
 	public void move(){
 		super.move();
 		autoMove();
+		if(myLives <= 0) die();
 	}
 	
 	@Override

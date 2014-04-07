@@ -1,11 +1,16 @@
 package engineManagers;
 
 public class ScoreManager {
+	public static final int DEFAULT_SCORE = 0;
 	
 	protected int myScore;
 	
+	public ScoreManager(int initialScore){
+		myScore = initialScore;
+	}
+	
 	public ScoreManager(){
-		myScore = 0;
+		this(DEFAULT_SCORE);
 	}
 	
 	public int getScore(){
