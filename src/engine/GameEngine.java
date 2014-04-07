@@ -1,6 +1,5 @@
 package engine;
 
-import springies.Mass;
 import stage.Game;
 import jgame.JGColor;
 import jgame.JGPoint;
