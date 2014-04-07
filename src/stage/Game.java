@@ -19,6 +19,7 @@ public class Game {
 	
 	public Game(){
 		numLevels = 0;
+		myLevels = new HashMap<Integer, Level>(); 
 	}
 	
 	public void addLevel(Level level) {
@@ -55,7 +56,6 @@ public class Game {
 		
 	}
 	
-
 	public List<List> getAttributes() {
 		List<List> result = new ArrayList<List>();
 		for (Integer i : myLevels.keySet() ) {

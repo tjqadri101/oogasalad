@@ -4,7 +4,7 @@ import jgame.JGColor;
 
 public class Player extends GameObject {
 
-	protected Player(String name, double xpos, double ypos, int collisionId, JGColor color) {
+	public Player(String name, double xpos, double ypos, int collisionId, JGColor color) {
 		super(name, xpos, ypos, collisionId, color);
 		
 	}

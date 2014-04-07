@@ -18,12 +18,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import jgame.JGColor;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Node; 
+
+import stage.*;
+import objects.*; 
 
 public class ParseGame {
 	private static final String GAME_OBJECT_ELEMENT = "GameObject";
@@ -134,6 +139,26 @@ public class ParseGame {
 			gameObject +=",";
 		}
 		return gameObject; 
+	}
+	
+	public static void main (String [] args){
+		Game myGame = new Game(); 
+		Level myLevel = new Level(0); 
+		Scene myScene = new Scene(0); 
+		JGColor myColor = new JGColor(0,0,0);
+		String player = "myPlayer";
+		int id = 0; 
+		double xpos = 0.0, ypos= 0.0; 
+		//Player myPlayer = new Player(player, xpos, ypos, id , myColor); 
+		
+		myGame.addLevel(myLevel);
+		myGame.addScene(1, myScene); 
+		//myGame.addObject(0, 0, myPlayer);
+		
+		List<List> gameAttributes = new ArrayList<List>();
+		gameAttributes = myGame.getAttributes();
+		
+		System.out.println(gameAttributes);
 	}
 	
 
