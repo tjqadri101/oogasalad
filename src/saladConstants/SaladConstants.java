@@ -1,6 +1,6 @@
-package oogasalad_iTeam;
+package saladConstants;
 
-public final class Constants {
+public final class SaladConstants {
 	public static final String CREATEACTOR = "CreateActor";
 	public static final String MODIFYACTOR = "ModifyActor";
 	public static final String BACKGROUND = "Background";
