@@ -108,7 +108,8 @@ public class ActorsPanel extends Panel {
 	private void deleteActors(){		
 		if(mySeletedIndex > -1){
 			//delete scene here
-			listModel.remove(mySeletedIndex);			
+			listModel.remove(mySeletedIndex);
+			gController.deleteActor(mySeletedIndex+1);
 		}		
 	}
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engine.GameEngine;
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
@@ -22,7 +23,7 @@ public class Game {
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	
-	public Game(GameEngine){
+	public Game(){
 		numLevels = 0;
 		myLevels = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
@@ -69,12 +70,8 @@ public class Game {
 		
 	}
 	
-	public List<List> getAttributes() {
-		List<List> result = new ArrayList<List>();
-		for (Integer i : myLevels.keySet() ) {
-			result.add(myLevels.get(i).getAttributes());
-		}
-		return result;
+	public List<String> getAttributes() {
+		
 	}
 	/*
          * NEED implementation. This method will be called from Factory through reflection

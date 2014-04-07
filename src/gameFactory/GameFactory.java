@@ -27,7 +27,7 @@ public class GameFactory {
     private static final String TEST_STRING = ""; 
 
         protected ResourceBundle myFormat;
-        protected GameFactory(JGEngine engine){
+        public GameFactory(JGEngine engine){
             myEngine = engine;
             myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
         }
