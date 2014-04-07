@@ -23,8 +23,6 @@ public abstract class GameObject extends PhysicalObject{
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
 	protected HashMap<Integer, String> myCollisionMap;
-	protected String myColor;
-	protected String myGFXName;
 
 	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
 		super(name, collisionId, color);
@@ -111,11 +109,11 @@ public abstract class GameObject extends PhysicalObject{
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add("ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
-		answer.add("ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add("ID," + colid + ",Die," + myDieMethod);
+		answer.add("CreateActor,ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
+		answer.add("ModifyActor,ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
+		answer.add("ModifyActor,ID," + colid + ",Die," + myDieMethod);
 		for(int otherID: myCollisionMap.keySet()){
-			answer.add("ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
+			answer.add("ModifyActor,ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		return answer;
 	}
