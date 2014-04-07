@@ -52,5 +52,9 @@ public class Game {
 	public void resetLevelID(int initialLevelID, int newLevelID) {
 		
 	}
+	
+	public Map<Integer, Level> getAttributes() {
+		return myLevels;
+	}
 
 }
