@@ -14,7 +14,7 @@ import objects.GameObject;
  * @author DavidChou
  *
  */
-public abstract class Level {
+public class Level {
 	
 	protected Map<Integer, Scene> myScenes;
 	
