@@ -1,5 +1,6 @@
 package engine;
 
+import springies.Mass;
 import stage.Game;
 import jgame.JGColor;
 import jgame.JGPoint;
@@ -47,11 +48,21 @@ public class GameEngine extends StdGame{
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
     }
     
+    /*
+     * (non-Javadoc)
+     * @see jgame.platform.StdGame#doFrame()
+     * For inGame States
+     */
     @Override
     public void doFrame(){
 
     }
     
+    /*
+     * (non-Javadoc)
+     * @see jgame.platform.StdGame#paintFrame()
+     * For inGame states
+     */
     @Override
     public void paintFrame ()
     {
@@ -113,14 +124,28 @@ public class GameEngine extends StdGame{
      * Return a created GameObject 
      */
     public GameObject createPlayer(int colid, String gfxname, double xpos, double ypos, String name){
-        new Player(name, xpos, ypos, colid, gfxname);
-        this.get
+        GameObject object = new Player(name, xpos, ypos, colid, gfxname);
+        object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;
     }
     
     public GameObject createActor(int colid, String gfxname, double xpos, double ypos, String name){
         GameObject object = new NonPlayer(name, xpos, ypos, colid, gfxname);
+        object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;
     }
+    
+    public void removeActor(GameObject object){
+    	object.remove();
+    }
+    
+    /*
+     * For reference only
+     */
+//	private Mass getMassById(String id){
+//    	Object thisObject = this.getObject(id);
+//    	Mass returnObject = (Mass) thisObject;
+//    	return returnObject;
+//    }
 
 }
