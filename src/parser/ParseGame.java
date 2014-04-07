@@ -1,4 +1,9 @@
 package parser;
+/**
+ * 
+ * @author AnthonyOlawo
+ *
+ */
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +49,7 @@ public class ParseGame {
 	private File fileToWriteTo; 
 	private Map<String, String> values; 
 	private List<String> keys; 
-	private static final String [] PARAMETER_NAMES  = {"Key", "Type_0", "Parameter_0", "Type_1", "Parameter_1", "Parameter_2", "Parameter_3","Type_2" };
+	private static final String [] PARAMETER_NAMES  = {"Key", "Type_0", "Parameter_0", "Type_1", "Parameter_1", "Parameter_2", "Parameter_3","Type_2", "Parameter_4", "Parameter_5","Type_3","Parameter_6"  };
 
 	public  ParseGame(){
 		docFactory = DocumentBuilderFactory.newInstance();
@@ -73,19 +78,22 @@ public class ParseGame {
 	public String[] tokenizeString (String arg){
 		return arg.split("\\,"); 
 	}
-	
+
 	public void writeToFile(Game game, String url){
-		
+		ArrayList<String> gameAttributes = new ArrayList<String>(); 
+		gameAttributes = game.getAttributes(); 
+
+		writeIndividualElement(gameAttributes, new File(url)); 
 	}
-	
-	private File writeIndividualElements(ArrayList<String> gameObjects, File fileToWriteTo) throws ParserConfigurationException{
+
+	private File writeIndividualElement(ArrayList<String> gameAttributes, File fileToWriteTo) throws ParserConfigurationException{
 		Element rootElement = doc.createElement(ROOT_ELEMENT);
 		doc.appendChild(rootElement);
 
 		Element child, grandChild;
 
 		String[] parameters; 
-		for(String gameObject: gameObjects){
+		for(String gameObject: gameAttributes){
 			parameters = tokenizeString(gameObject);
 			Element gameObjectKey = doc.createElement(GAME_OBJECT_ELEMENT);
 			rootElement.appendChild(gameObjectKey);
@@ -142,7 +150,7 @@ public class ParseGame {
 		}
 		return gameObject; 
 	}
-	
+
 	public static void main (String [] args){
 		Game myGame = new Game(); 
 		Level myLevel = new Level(0); 
@@ -152,16 +160,16 @@ public class ParseGame {
 		int id = 0; 
 		double xpos = 0.0, ypos= 0.0; 
 		//Player myPlayer = new Player(player, xpos, ypos, id , myColor); 
-		
+
 		myGame.addLevel(myLevel);
 		myGame.addScene(1, myScene); 
 		//myGame.addObject(0, 0, myPlayer);
-		
+
 		List<List> gameAttributes = new ArrayList<List>();
 		gameAttributes = myGame.getAttributes();
-		
+
 		System.out.println(gameAttributes);
 	}
-	
+
 
 }
