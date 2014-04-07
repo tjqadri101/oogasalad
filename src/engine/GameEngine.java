@@ -10,7 +10,7 @@ import objects.Player;
 
 import java.awt.Dimension;
 /*
- * @Author: Justin (Zihao) Zhang
+ * @Author: Chensheng Han (main), Justin (Zihao) Zhang
  */
 public class GameEngine extends StdGame{
 
@@ -123,6 +123,7 @@ public class GameEngine extends StdGame{
      * Return a created GameObject 
      */
     public GameObject createPlayer(int colid, String gfxname, double xpos, double ypos, String name){
+        
         GameObject object = new Player(name, xpos, ypos, colid, gfxname);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;

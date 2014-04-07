@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import engine.GameEngine;
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
@@ -29,7 +28,6 @@ public class Game {
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
-
 	}
 	
 	public void addLevel(Level level) {

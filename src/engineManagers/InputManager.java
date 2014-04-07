@@ -11,6 +11,9 @@ import saladConstants.SaladConstants;
  */
 public class InputManager {
 	
+	/*
+	 * Maps keys (i.e. 'G') to the name of the method in GameEngine
+	 */
 	protected Map<Integer, String> myKeyMap;
 	
 	public InputManager(){
