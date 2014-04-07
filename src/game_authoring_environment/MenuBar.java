@@ -84,6 +84,7 @@ public class MenuBar extends JMenuBar{
 		}
 		if (!saveFile.getName().endsWith(".xml")) {
 			saveFile = new File(saveFile.getAbsolutePath() + ".xml");
+			
 		}
 
 		BufferedWriter outFile = null;
