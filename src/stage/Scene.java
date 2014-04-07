@@ -19,9 +19,6 @@ import saladConstants.SaladConstants;
 
 public class Scene {
 	
-	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-	private static final String DEFAULT_BEHAVIOR = "scene_winning";
-	private ResourceBundle myWinnables;
 	
 	private int myID;
 	private int myObjectCounter = 0;
@@ -31,9 +28,7 @@ public class Scene {
 	
 	public Scene(int hash) {
 		myID = hash;
-		myObjects = new HashMap<Integer, GameObject>(); 
-		//myObjectMap = new HashMap<>();
-		//myWinnables = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
+		myObjects = new HashMap<Integer, GameObject>();
 	}
 		
 	public void addObject(GameObject object ) {
