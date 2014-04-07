@@ -56,7 +56,6 @@ public class GameEngine extends StdGame{
     }
 
     public void startEdit(){
-    	currentScene = myGame.getScene(0, 0);//default starting scene
     	setBGImage(currentScene.getBackgroundImage());
     	for(GameObject go: currentScene.getObjects().values()){
     		go.setEngine(this);//need to figure out a correct way to register GameObjects with engine
@@ -74,6 +73,11 @@ public class GameEngine extends StdGame{
     
     public void addCollisionPair(int srccid, int dstcid){
     	collsionPair.add(new int[]{srccid,dstcid});
+    }
+    
+    public void setCurrentScene (int currentLevelID, int currentSceneID) {
+    	currentScene = myGame.getScene(currentLevelID, currentSceneID);
+    	setGameState(Mode);
     }
     
     
