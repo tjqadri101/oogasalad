@@ -1,4 +1,4 @@
-package oogasalad_iTeam;
+package saladConstants;
 
 import game_authoring_environment.GAE;
 
