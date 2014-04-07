@@ -6,10 +6,16 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+<<<<<<< HEAD
+
+import objects.GameObject;
+import reflection.Reflection;
+=======
 import gameFactory.FactoryException;
 import objects.GameObject;
 import reflection.Reflection;
 import stage.Game;
+>>>>>>> d2d076f474af42c08981fea348f3e0f8295d4988
 import jgame.JGObject;
 import jgame.platform.JGEngine;
 import reflection.*;

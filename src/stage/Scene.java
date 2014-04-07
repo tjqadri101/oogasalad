@@ -48,6 +48,10 @@ public class Scene {
 		myBackground = s;
 	}
 	
+	public String getBackgroundImage() {
+		return myBackground;
+	}
+	
 	public void setWinBehavior(String s) {
 		myWinString = s;
 	}

@@ -3,18 +3,16 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import engine.GameEngine;
-import gameFactory.FactoryException;
 import gameFactory.GameFactory;
 import parser.ParseGame;
 import stage.Game;
 import reflection.Reflection;
-
+/*
+ * @Author: Justin (Zihao) Zhang
+ */
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
 	public static final String DEFAULT_CREATEORMODIFY = "CreationOrModify";
@@ -25,16 +23,14 @@ public class DataController {
 	protected GameFactory myFactory;
 	protected ParseGame myParser;
 	protected GameEngine myGameEngine;
-	protected ResourceBundle myCreateModifyTeller;
+	protected ResourceBundle myOrderReflector;
 	
 	public DataController(){
 		myParser = new ParseGame();
 		myGame = new Game();
 		myGameEngine = new GameEngine();
 		myFactory = new GameFactory(myGameEngine);
-		currentLevelID = 0;
-		currentSceneID = 0;
-		myCreateModifyTeller = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
+		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
 	/*
@@ -43,7 +39,7 @@ public class DataController {
 	 */
 	public void receiveOrder(String order){
 		String[] orders = order.split(",");
-		String methodName = myCreateModifyTeller.getString(orders[0]);
+		String methodName = myOrderReflector.getString(orders[0]);
 		Reflection.callMethod(this, methodName, order);	
 	}
 	
@@ -77,6 +73,7 @@ public class DataController {
 	protected void switchToScene(String order){
 		String[] orders = order.split(",");
 		currentSceneID = Integer.parseInt(orders[2]);
+		myGameEngine.setCurrentScene(currentLevelID, currentSceneID);
 	}
 	
 	protected void switchToLevel(String order){
