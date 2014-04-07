@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import controller.GAEController;
+
 public class Library extends JTabbedPane {
 	
 	private static final int FULL_VIEW_HEIGHT = 768;
@@ -18,9 +20,9 @@ public class Library extends JTabbedPane {
 	private JPanel myBehaviorsPanel;
 	private JPanel myActorsPanel;
 
-	public Library(){
+	public Library(GAEController gController){
 		setPreferredSize(new Dimension(LIBRARY_PANEL_WIDTH, LIBRARY_PANEL_HEIGHT));
-		makePanels();
+		makePanels(gController);
 		addTabs();
 		
 	}
@@ -37,11 +39,11 @@ public class Library extends JTabbedPane {
 		
 	}
 
-	private void makePanels() {
-		myScenesPanel = ViewFactory.buildPanel(PanelType.SCENE);
-		myMediaPanel = ViewFactory.buildPanel(PanelType.MEDIA);
-		myBehaviorsPanel = ViewFactory.buildPanel(PanelType.BEHAVIORS);
-		myActorsPanel = ViewFactory.buildPanel(PanelType.ACTORS);
+	private void makePanels(GAEController gController) {
+		myScenesPanel = ViewFactory.buildPanel(PanelType.SCENE,gController);
+		myMediaPanel = ViewFactory.buildPanel(PanelType.MEDIA,gController);
+		myBehaviorsPanel = ViewFactory.buildPanel(PanelType.BEHAVIORS,gController);
+		myActorsPanel = ViewFactory.buildPanel(PanelType.ACTORS,gController);
 		
 	}
 }

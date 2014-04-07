@@ -6,12 +6,16 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import controller.GAEController;
+
 public class BehaviorsPanel extends Panel {
 
 	private SubPanel mySubPanel;
+	private GAEController gController;
 	
-	public BehaviorsPanel() {
+	public BehaviorsPanel(GAEController gController) {
 		super(PanelType.BEHAVIORS);
+		this.gController = gController;
 		makeSubPanel();
 		construct();
 	}
@@ -26,7 +30,7 @@ public class BehaviorsPanel extends Panel {
 
 	@Override
 	protected void makeSubPanel() {
-		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB);
+		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB,gController);
 		mySubPanel.setSuperType(getType());
 		mySubPanel.addItems(makeSubPanelItems());
 		mySubPanel.construct();
