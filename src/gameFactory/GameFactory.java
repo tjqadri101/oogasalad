@@ -40,7 +40,7 @@ public class GameFactory {
       * Only couple things as argument, use reflection to create or modify object instance.
       */
     public GameObject processOrder(Game game, int levelID, int sceneID, String order) throws FactoryException{
-            testLegitimateOrder(order);
+//            testLegitimateOrder(order);
             String[] orderSplit = order.split("=");
             String instruction = orderSplit[0];
             List<String> parameterList = parseOrder(instruction, orderSplit[1]);
@@ -69,7 +69,7 @@ public class GameFactory {
             }
             return answerList;
         }
-
+        
         private void testLegitimateOrder (String order) {
             if (!order.contains("=")) 
                 throw new IllegalArgumentException("String " + order + " does not contain =");
