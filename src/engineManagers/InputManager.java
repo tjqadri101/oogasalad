@@ -32,5 +32,4 @@ public class InputManager {
 		}
 		return answer;
 	}
-
 }

@@ -61,6 +61,7 @@ public class Scene {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
+		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
 		return answer;
 	}
 }

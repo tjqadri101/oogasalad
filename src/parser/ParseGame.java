@@ -36,7 +36,7 @@ import stage.*;
 import objects.*; 
 
 public class ParseGame {
-	private static final String GAME_OBJECT_ELEMENT = "GameObject";
+	private static final String GAME_ELEMENT = "GameElement";
 	private static final String ROOT_ELEMENT = "Game";
 	private DocumentBuilderFactory docFactory; 
 	private DocumentBuilder docBuilder; 
@@ -79,14 +79,14 @@ public class ParseGame {
 		return arg.split("\\,"); 
 	}
 
-	public void writeToFile(Game game, String url){
-		ArrayList<String> gameAttributes = new ArrayList<String>(); 
+	public void writeToFile(Game game, String url) throws ParserConfigurationException{
+		List<String> gameAttributes = new ArrayList<String>(); 
 		gameAttributes = game.getAttributes(); 
 
 		writeIndividualElement(gameAttributes, new File(url)); 
 	}
 
-	private File writeIndividualElement(ArrayList<String> gameAttributes, File fileToWriteTo) throws ParserConfigurationException{
+	private File writeIndividualElement(List<String> gameAttributes, File fileToWriteTo) throws ParserConfigurationException{
 		Element rootElement = doc.createElement(ROOT_ELEMENT);
 		doc.appendChild(rootElement);
 
@@ -95,7 +95,7 @@ public class ParseGame {
 		String[] parameters; 
 		for(String gameObject: gameAttributes){
 			parameters = tokenizeString(gameObject);
-			Element gameObjectKey = doc.createElement(GAME_OBJECT_ELEMENT);
+			Element gameObjectKey = doc.createElement(GAME_ELEMENT);
 			rootElement.appendChild(gameObjectKey);
 
 			for(int i = 0; i<parameters.length; i++){
@@ -123,7 +123,7 @@ public class ParseGame {
 
 		ArrayList<String> gameObjects = new ArrayList<String>(); 
 
-		NodeList gameObjectNodes = doc.getElementsByTagName(GAME_OBJECT_ELEMENT);
+		NodeList gameObjectNodes = doc.getElementsByTagName(GAME_ELEMENT);
 		String gameObject = "";
 		for(int i=0; i<gameObjectNodes.getLength(); i++){
 			Node node = gameObjectNodes.item(i);
@@ -151,7 +151,8 @@ public class ParseGame {
 		return gameObject; 
 	}
 
-	public static void main (String [] args){
+	public static void main (String [] args) throws ParserConfigurationException{
+		ParseGame A = new ParseGame() ; 
 		Game myGame = new Game(); 
 		Level myLevel = new Level(0); 
 		Scene myScene = new Scene(0); 
@@ -165,10 +166,14 @@ public class ParseGame {
 		myGame.addScene(1, myScene); 
 		//myGame.addObject(0, 0, myPlayer);
 
-		List<List> gameAttributes = new ArrayList<List>();
+		List<String> gameAttributes = new ArrayList<String>();
 		gameAttributes = myGame.getAttributes();
 
-		System.out.println(gameAttributes);
+		A.writeToFile(myGame, "Game.xml"); 
+		for(String string: gameAttributes)
+			System.out.println(string);
+		
+		
 	}
 
 

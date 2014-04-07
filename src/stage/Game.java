@@ -71,12 +71,14 @@ public class Game {
 	}
 	
 	public List<String> getAttributes() {
-		List <String> answer = new ArrayList<String>(); 
+		List <String> answer = new ArrayList<String>();
+		answer.addAll(myScoreManager.getAttributes()); 
+		answer.addAll(myInputManager.getAttributes()); 
+		answer.addAll(myTimerManager.getAttributes()); 
 		for(Integer key: myLevels.keySet()){
 			answer.addAll(myLevels.get(key).getAttributes()); 
 		}
 		return answer;
-
 	}
 	/*
          * NEED implementation. This method will be called from Factory through reflection

@@ -48,7 +48,8 @@ public class Level {
 
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID);
+		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
+		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
 		answer.addAll(getSceneAttributes());
 		return answer;
 	}
