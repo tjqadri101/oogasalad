@@ -61,7 +61,7 @@ public class DataController {
 	
 	
 	protected void callFactoryToProcess(String order){
-		//myFactory.processOrder(myGame, order);
+		//myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);
 	}
 	
 	protected void switchToScene(String order){
