@@ -9,5 +9,5 @@ public abstract class Collision {
 		myObject = o;
 	}
 	
-	public abstract void collide(GameObject hitter, GameObject victim);
+	public abstract void collide(GameObject hitter);
 }
