@@ -57,7 +57,7 @@ public class GameEngine extends StdGame{
     }
 
     public void startEdit(){
-    	setBGImage(currentScene.getBackgroundImage());
+    	//setBGImage(currentScene.getBackgroundImage());
     	for(GameObject go: currentScene.getObjects().values()){
     		go.resume();
     	}
