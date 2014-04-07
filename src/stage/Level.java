@@ -34,6 +34,10 @@ public class Level {
 		myScenes.get(sceneID).addObject(object);
 	}
 
+	public void setPlayerXY(int sceneID, int playerID, int x, int y) {
+		myScenes.get(sceneID).setPlayerXY(playerID, x, y);
+	}
+	
 	public GameObject getObject(int sceneID, int objectID) {
 		return myScenes.get(sceneID).getObject(objectID);
 	}
