@@ -9,14 +9,14 @@ import saladConstants.SaladConstants;
 /*
  * @Author: Justin (Zihao) Zhang
  */
-public class PlayerInputManager {
+public class InputManager {
 	
 	/*
 	 * Maps keys (i.e. 'G') to the name of the method in GameEngine
 	 */
 	protected Map<Integer, String> myKeyMap;
 	
-	public PlayerInputManager(){
+	public InputManager(){
 		myKeyMap = new HashMap<Integer, String>();
 	}
 	
