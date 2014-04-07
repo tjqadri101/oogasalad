@@ -1,6 +1,8 @@
 package controller;
 
+import java.util.List;
 import java.util.ResourceBundle;
+
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.ParseGame;
@@ -45,7 +47,7 @@ public class DataController {
 	 * Input is a url to the XML file created by the GAE
 	 */
 	public void exportXML(String url){
-		//myParser.writeToFile(myGame, url);
+		myParser.writeToFile(myGame, url);
 	}
 	
 	/*
@@ -53,12 +55,15 @@ public class DataController {
 	 * Input is a url to the XML file loaded by PlayView
 	 */
 	public void readXML(String url){
-		//Game game = myParser.readFromFile(url);
+		List<String> orders = myParser.readFromFile(url);
+		for(String order: orders){
+			receiveOrder(order);
+		}
 	}
 	
 	
 	protected void callFactoryToProcess(String order){
-		//myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);
+		myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);
 	}
 	
 	protected void switchToScene(String order){
