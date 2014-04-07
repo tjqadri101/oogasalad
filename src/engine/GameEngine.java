@@ -58,7 +58,7 @@ public class GameEngine extends StdGame{
     public void startEdit(){
     	setBGImage(currentScene.getBackgroundImage());
     	for(GameObject go: currentScene.getObjects().values()){
-    		go.setEngine(this);//need to figure out a correct way to register GameObjects with engine
+    		go.resume();
     	}
     }
     public void doFrameEdit(){
@@ -76,6 +76,9 @@ public class GameEngine extends StdGame{
     }
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
+    	for(GameObject go: currentScene.getObjects().values()){
+    		go.suspend();
+    	}
     	currentScene = myGame.getScene(currentLevelID, currentSceneID);
     	setGameState(Mode);
     }
