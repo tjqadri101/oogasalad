@@ -1,7 +1,9 @@
 package engine;
 
 import stage.Game;
+import stage.Scene;
 import jgame.JGColor;
+import jgame.JGFont;
 import jgame.JGPoint;
 import jgame.platform.StdGame;
 import objects.GameObject;
@@ -9,8 +11,9 @@ import objects.NonPlayer;
 import objects.Player;
 
 import java.awt.Dimension;
+import java.util.List;
 /*
- * @Author: Chensheng Han (main), Justin (Zihao) Zhang
+ * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
  */
 public class GameEngine extends StdGame{
 
@@ -20,6 +23,10 @@ public class GameEngine extends StdGame{
     public static final int MAX_FRAMES_TO_SKIP = 2;
     public static final int JGPOINT_X = 960;
     public static final int JGPOINT_Y = 640;
+    
+    private String Mode = "Edit";//String or boolean ?
+    private Scene currentScene;//ID or Object ?
+    private List<int[]> collsionPair;
     
     protected Game myGame;
     
@@ -45,7 +52,30 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
+        setGameState(Mode);
     }
+
+    public void startEdit(){
+    	currentScene = myGame.getScene(0, 0);//default starting scene
+    	setBGImage(currentScene.getBackgroundImage());
+    	for(GameObject go: currentScene.getObjects().values()){
+    		go.setEngine(this);//need to figure out a correct way to register GameObjects with engine
+    	}
+    }
+    public void doFrameEdit(){
+    	moveObjects();
+    	for (int[] cp: collsionPair){
+    		checkCollision(cp[0], cp[1]);
+    	}
+    }
+    public void paintFrameEdit(){
+    	
+    }
+    
+    public void addCollisionPair(int srccid, int dstcid){
+    	collsionPair.add(new int[]{srccid,dstcid});
+    }
+    
     
     /*
      * (non-Javadoc)
