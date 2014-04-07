@@ -23,7 +23,7 @@ public class Game {
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	
-	public Game(GameEngine engine){
+	public Game(){
 		numLevels = 0;
 		myLevels = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
@@ -70,7 +70,7 @@ public class Game {
 		
 	}
 	
-	public List<List> getAttributes() {
+	public List<String> getAttributes() {
 		
 	}
 	/*
