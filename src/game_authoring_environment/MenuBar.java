@@ -77,8 +77,8 @@ public class MenuBar extends JMenuBar{
 		if(saveFile == null){
 			return;
 		}
-		if (!saveFile.getName().endsWith(".txt")) {
-			saveFile = new File(saveFile.getAbsolutePath() + ".txt");
+		if (!saveFile.getName().endsWith(".xml")) {
+			saveFile = new File(saveFile.getAbsolutePath() + ".xml");
 		}
 
 		BufferedWriter outFile = null;
@@ -112,7 +112,7 @@ public class MenuBar extends JMenuBar{
 	}
 	
 	private File chooseGameFile(String command){
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file", "xml");
 		final JFileChooser chooser = new JFileChooser();
 		chooser.setApproveButtonText(command);
 		chooser.setFileFilter(filter);
@@ -156,7 +156,7 @@ public class MenuBar extends JMenuBar{
 		return this;
 	}
 
-	// for testing purposes
+	/*// for testing purposes
 	 private static void createAndShowGUI() {
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("MenuBarDemo");
@@ -178,6 +178,6 @@ public class MenuBar extends JMenuBar{
 	                createAndShowGUI();
 	            }
 	        });
-	    }
+	    }*/
 
 }

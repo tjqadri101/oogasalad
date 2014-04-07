@@ -1,6 +1,8 @@
 package controller;
 
+import java.util.List;
 import java.util.ResourceBundle;
+
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.ParseGame;
@@ -22,15 +24,12 @@ public class DataController {
 	
 	public DataController(){
 		myParser = new ParseGame();
-		myFactory = new GameFactory();
 		myGame = new Game();
+		myGameEngine = new GameEngine();
+		myFactory = new GameFactory(myGameEngine);
 		currentLevelID = 0;
 		currentSceneID = 0;
 		myCreateModifyTeller = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
-	}
-	
-	public void initGameEngine(){
-		myGameEngine = new GameEngine();
 	}
 	
 	/*
@@ -48,7 +47,7 @@ public class DataController {
 	 * Input is a url to the XML file created by the GAE
 	 */
 	public void exportXML(String url){
-		//myParser.writeToFile(myGame, url);
+		myParser.writeToFile(myGame, url);
 	}
 	
 	/*
@@ -56,12 +55,15 @@ public class DataController {
 	 * Input is a url to the XML file loaded by PlayView
 	 */
 	public void readXML(String url){
-		//Game game = myParser.readFromFile(url);
+		List<String> orders = myParser.readFromFile(url);
+		for(String order: orders){
+			receiveOrder(order);
+		}
 	}
 	
 	
 	protected void callFactoryToProcess(String order){
-		//myFactory.processOrder(myGame, order);
+		myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);
 	}
 	
 	protected void switchToScene(String order){

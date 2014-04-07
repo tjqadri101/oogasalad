@@ -5,20 +5,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.InputManager;
+import engineManagers.ScoreManager;
+import engineManagers.TimerManager;
 import objects.GameObject;
 import objects.Player;
 
 public class Game {
 	
+	public static final int DEFAULT_SCORE = 0;
+	
 	protected Map<Integer, Level> myLevels;
 	protected Player myPlayer;
 	protected int numLevels;
-	//protected ScoreManager myScoreManager;
-	//protected KeyInputManager myKeyInputManager;
-	//protected TimerManager myTimerManager
+	protected ScoreManager myScoreManager;
+	protected InputManager myInputManager;
+	protected TimerManager myTimerManager;
 	
 	public Game(){
 		numLevels = 0;
+		myLevels = new HashMap<Integer, Level>();
+		myScoreManager = new ScoreManager(DEFAULT_SCORE);
+		myInputManager = new InputManager();
+		myTimerManager = new TimerManager();
 	}
 	
 	public void addLevel(Level level) {
@@ -28,6 +37,10 @@ public class Game {
 	
 	public void addScene(int levelID, Scene scene){
 		myLevels.get(levelID).addScene(scene);
+	}
+	
+	public void setPlayer(GameObject object){
+		myPlayer = (Player)object;
 	}
 	
 	public void addObject(int levelID, int sceneID, GameObject object){
