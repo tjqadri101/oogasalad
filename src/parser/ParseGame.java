@@ -74,9 +74,11 @@ public class ParseGame {
 		return arg.split("\\,"); 
 	}
 	
+	public void writeToFile(Game game, String url){
+		
+	}
 	
-	
-	public File writeToFile(ArrayList<String> gameObjects, File fileToWriteTo) throws ParserConfigurationException{
+	private File writeIndividualElements(ArrayList<String> gameObjects, File fileToWriteTo) throws ParserConfigurationException{
 		Element rootElement = doc.createElement(ROOT_ELEMENT);
 		doc.appendChild(rootElement);
 
