@@ -114,6 +114,7 @@ public class GameEngine extends StdGame{
      */
     public GameObject createPlayer(int colid, String gfxname, double xpos, double ypos, String name){
         new Player(name, xpos, ypos, colid, gfxname);
+        this.get
         return object;
     }
     
