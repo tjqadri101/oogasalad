@@ -1,6 +1,7 @@
 package gameFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,10 +24,9 @@ public class GameFactory {
     public static final String DEFAULT_FORMAT= "DataFormat";
     public static final String DEFAULT_NULL = "null";
     
-    private static final 
+    private static final String TEST_STRING = ""; 
 
         protected ResourceBundle myFormat;
-        
         protected GameFactory(JGEngine engine){
             myEngine = engine;
             myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
@@ -60,7 +60,21 @@ public class GameFactory {
 
         private void parseOrder (String order) {
             // TODO Auto-generated method stub
+            if (testLegitimateOrder(order)){
+                String[] orderSplit = order.split("=");
+                List<String> parameterSplit = Arrays.asList(orderSplit[1].split("\\,"));
+                for 
+            }
 
+        }
+
+        private boolean testLegitimateOrder (String order) {
+            if (order.contains("=")) {
+                return true;
+            } else {
+                throw new IllegalArgumentException("String " + order + " does not contain =");
+                return false;
+            }
         }
 
         
