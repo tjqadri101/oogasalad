@@ -15,46 +15,75 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import reflection.ReflectionException;
+
+import java.lang.reflect.Field;
+
+import controller.GAEController;
+
 public class RightPanel extends JSplitPane {
 
-	public RightPanel(){
+	public double curID, curXPos, curYPos;
+	public String fieldName;
+	public GAEController myGAEController;
+	public static final double ID_STEP = 1d;
+	public static final double POSIT_STEP = .2d;
+	
+	public RightPanel(GAEController gController){
+		myGAEController = gController;
 		setOrientation(VERTICAL_SPLIT);
-		setTopComponent(createSpinnerPanel());
+		setTopComponent(createSpinnerPanel(gController));
 		setBottomComponent(new JPanel());
+		fieldName = "";
 	}	
 	
-	private JComponent createSpinnerPanel(){
+	private JComponent createSpinnerPanel(GAEController gController){
 		JPanel spinnerPanel = new JPanel();
-		addLabeledPositionSpinner(spinnerPanel, "X");
-		addLabeledPositionSpinner(spinnerPanel, "Y");
-		addLabeledPositionSpinner(spinnerPanel, "W");
-		addLabeledPositionSpinner(spinnerPanel, "H");
+		addLabeledPositionSpinner(spinnerPanel, "ID", "curID", ID_STEP);
+		addLabeledPositionSpinner(spinnerPanel, "X", "curXPos",POSIT_STEP);
+		addLabeledPositionSpinner(spinnerPanel, "Y", "curYPos", POSIT_STEP);
+		addLabeledPositionSpinner(spinnerPanel, "W", "", POSIT_STEP);
+		addLabeledPositionSpinner(spinnerPanel, "H", "", POSIT_STEP);
 		return spinnerPanel;
 	}
 	
 	
-	static protected JSpinner addLabeledPositionSpinner(Container c, String label) {
-		SpinnerModel posModel = new SpinnerNumberModel(0d, 0d, 500d, 0.2d);
+	 protected JSpinner addLabeledPositionSpinner(Container c, String label, String field, double stepSize){
+		SpinnerModel posModel = new SpinnerNumberModel(0d, 0d, 500d, stepSize);
 		JLabel l = new JLabel(label);
 		c.add(l);
-
 		JSpinner spinner = new JSpinner(posModel);
 		l.setLabelFor(spinner);
 		c.add(spinner);
+		spinner.setName(field);
 		spinner.addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				// TODO Auto-generated method stub
 				JSpinner curSpinner = (JSpinner)(e.getSource());
-				 System.out.println(curSpinner.getValue());
+				 try{
+						Class<?> c1 = getCurInstance().getClass();
+						Field field1 = c1.getField(curSpinner.getName());
+						field1.set(getCurInstance(),curSpinner.getValue());
+						myGAEController.modifyActorPosition((int) curID, curXPos, curYPos);
+					}
+					 catch (Exception e2)
+				        {
+				            throw new ReflectionException(e2.getMessage());
+				        }
 			}
 
 	        });
 		return spinner;
 	}
+	 
+	
+	private RightPanel getCurInstance(){
+		return this;
+	}
 	//for tesing purposes
-	 private static void createAndShowGUI() {
+	/* private static void createAndShowGUI() {
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("SpinnerDemo");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,5 +106,5 @@ public class RightPanel extends JSplitPane {
 			createAndShowGUI();
 	            }
 	        });
-	    }
+	    }*/
 }

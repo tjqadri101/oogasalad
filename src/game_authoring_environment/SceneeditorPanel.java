@@ -2,10 +2,15 @@ package game_authoring_environment;
 
 import javax.swing.JComponent;
 
-public class SceneeditorPanel extends Panel {
+import controller.GAEController;
 
-	public SceneeditorPanel() {
+public class SceneeditorPanel extends Panel {
+	
+	private GAEController gController;
+
+	public SceneeditorPanel(GAEController gController) {
 		super(PanelType.SCENEEDITOR);
+		this.gController = gController;
 		// TODO Auto-generated constructor stub
 	}
 

@@ -1,6 +1,7 @@
 package game_authoring_environment;
 
 import java.awt.BorderLayout;
+import controller.GAEController;
 
 import javax.swing.JFrame;
 
@@ -10,8 +11,9 @@ public class GAE {
 	
 	public static void main(String args[]){
 		JFrame mainFrame = makeFrame(TITLE);
-		FullView fv = new FullView();
-		MenuBar mb = new MenuBar();
+		GAEController gController = new GAEController();
+		FullView fv = new FullView(gController);
+		MenuBar mb = new MenuBar(gController);
 		mainFrame.add(fv, BorderLayout.SOUTH);
 		mainFrame.add(mb, BorderLayout.NORTH);
 		mainFrame.pack();

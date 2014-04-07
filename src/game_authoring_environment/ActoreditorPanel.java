@@ -7,14 +7,18 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 
+import controller.GAEController;
+
 public class ActoreditorPanel extends Panel {
 	
 	private SubPanel mySubPanel;
 	private PanelType superType;
 	private JComponent myComponent;
+	private GAEController gController;
 	
-	public ActoreditorPanel() {
+	public ActoreditorPanel(GAEController gController) {
 		super(PanelType.ACTOREDITOR);
+		this.gController = gController;
 		makeSubPanel();
 		construct();
 	}
@@ -29,7 +33,7 @@ public class ActoreditorPanel extends Panel {
 
 	@Override
 	protected void makeSubPanel() {
-		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB);
+		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB,gController);
 		mySubPanel.setSuperType(getType());
 		mySubPanel.addItems(makeSubPanelItems());
 		mySubPanel.construct();

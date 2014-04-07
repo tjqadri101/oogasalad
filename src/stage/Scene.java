@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import objects.GameObject;
 
 import reflection.Reflection;
+import saladConstants.SaladConstants;
 
 /**
  * 
@@ -18,9 +19,6 @@ import reflection.Reflection;
 
 public class Scene {
 	
-	private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-	private static final String DEFAULT_BEHAVIOR = "scene_winning";
-	private ResourceBundle myWinnables;
 	
 	private int myID;
 	private int myObjectCounter = 0;
@@ -30,8 +28,7 @@ public class Scene {
 	
 	public Scene(int hash) {
 		myID = hash;
-		//myObjectMap = new HashMap<>();
-		myWinnables = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
+		myObjects = new HashMap<Integer, GameObject>();
 	}
 		
 	public void addObject(GameObject object ) {
@@ -47,6 +44,10 @@ public class Scene {
 		myBackground = s;
 	}
 	
+	public String getBackgroundImage() {
+		return myBackground;
+	}
+	
 	public void setWinBehavior(String s) {
 		myWinString = s;
 	}
@@ -56,12 +57,10 @@ public class Scene {
 	}
 	
 	
-	public List<Object> getAttributes() {
-		List<Object> result = new ArrayList<Object>();
-		result.add(myID);
-		for (Integer i : myObjects.keySet() ) {
-			result.add(myObjects.get(i).getAttributes());
-		}
-		return result;
+	public List<String> getAttributes() {
+		List<String> answer = new ArrayList<String>();
+		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
+		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
+		return answer;
 	}
 }

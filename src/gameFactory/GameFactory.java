@@ -1,70 +1,80 @@
 package gameFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+<<<<<<< HEAD
 
 import objects.GameObject;
 import reflection.Reflection;
+=======
+import gameFactory.FactoryException;
+import objects.GameObject;
+import reflection.Reflection;
+import stage.Game;
+>>>>>>> d2d076f474af42c08981fea348f3e0f8295d4988
 import jgame.JGObject;
-import util.reflection.*;
-/*
+import jgame.platform.JGEngine;
+import reflection.*;
+/**
  * @Author: Steve (Siyang) Wang
  */
 public class GameFactory {
+    private JGEngine myEngine;
     private String myOrder;
-    private GameObject myObject;
+    private int  myLevelID, mySceneID;
+    private Game myGame;
     public static final String RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_FORMAT= "DataFormat";
+    public static final String DEFAULT_PATH= "FactoryOrderPath";
     public static final String DEFAULT_NULL = "null";
 
-        protected ResourceBundle myFormat;
-        
-        protected GameFactory(String order, GameObject object){
-            myOrder = order;
-            myObject = object;
+    private static final String TEST_STRING = ""; 
+    protected ResourceBundle myFormat, myPath;
+    public GameFactory(JGEngine engine){
+            myEngine = engine;
             myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
-        }
-        
-        /**
-         * Only takes String order as argument, for creation.
+            myPath = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_PATH);
+    }
+    /**
+      * Only couple things as argument, use reflection to create or modify object instance.
+      */
+    public GameObject processOrder(Game game, int levelID, int sceneID, String order) throws FactoryException{
+            testLegitimateOrder(order);
+            String[] orderSplit = order.split("=");
+            String instruction = orderSplit[0];
+            List<String> parameterList = parseOrder(instruction, orderSplit[1]);
+            Object myObject = Reflection.createInstance(myPath.getString(instruction), 
+                                                        parameterList.get(0), 
+                                                        parameterList.get(1),
+                                                        parameterList.get(2),
+                                                        parameterList.get(3),
+                                                        parameterList.get(4));  
+            return (GameObject) myObject;
+     }
+
+        /*
+         * discuss this again
          */
-        public GameObject processOrder(String order){
-            parseOrder(order);
-            
-            try{
-                    Object myObject = Reflection.createInstance(myFormat.getString(myMoveMethod), this);
-                    Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);      
-            } catch (Exception e){
-                    e.printStackTrace(); //should never reach here
+        private List<String> parseOrder (String instruction, String orderValue) {
+            //          checkModifyOrCreate(orderSplit[0]);
+            String tokensList = myFormat.getString(instruction);
+            List<String> answerList = new ArrayList<String>();
+            List<String> inputParameterSplit = Arrays.asList(orderValue.split("\\,"));
+
+            for(int i = 0; i < inputParameterSplit.size(); i ++){
+                if(inputParameterSplit.get(i).equals("ParameterToken")){
+                    answerList.add(inputParameterSplit.get(i));
+                }
             }
-
-
-            return null;
+            return answerList;
         }
 
-        private void parseOrder (String order) {
-            // TODO Auto-generated method stub
-
+        private void testLegitimateOrder (String order) {
+            if (!order.contains("=")) 
+                throw new IllegalArgumentException("String " + order + " does not contain =");
         }
-
-        /**
-         * Takes Object and String order as argument, for modification.
-         */
-        public void processOrder(JGObject object, String order){
-            parseOrder(order);
-            
-            try{
-//                http://docs.oracle.com/javase/tutorial/reflect/member/ctorInstance.html
-//                http://java.sun.com/docs/books/tutorial/reflect/member/methodInvocation.html
-//                http://docs.oracle.com/javase/tutorial/reflect/member/fieldValues.html
-//                Object instance = Class.forName("Foobar").newInstance();
-                Object behavior = Reflection.createInstance(myFormat.getString(myMoveMethod), this);
-                Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);      
-            } catch (Exception e){
-                e.printStackTrace(); //should never reach here
-            }
-
-        }
-
-
-
 }

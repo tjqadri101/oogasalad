@@ -19,15 +19,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
 
+import controller.GAEController;
 import reflection.ReflectionException;
 import reflection.Reflection;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
+	
+	private GAEController gController;
 
-	public MenuBar(){
+	public MenuBar(GAEController gController){
 		super();
+		this.gController = gController;
 		this.add(createFileMenu());
 		this.add(createEditMenu());
 		this.add(createHelpMenu());
@@ -77,22 +82,16 @@ public class MenuBar extends JMenuBar{
 		if(saveFile == null){
 			return;
 		}
-		if (!saveFile.getName().endsWith(".txt")) {
-			saveFile = new File(saveFile.getAbsolutePath() + ".txt");
+		if (!saveFile.getName().endsWith(".xml")) {
+			saveFile = new File(saveFile.getAbsolutePath() + ".xml");
+			
 		}
-
-		BufferedWriter outFile = null;
-		try {
-			outFile = new BufferedWriter(new FileWriter(saveFile));
-		} catch (IOException ex) {
-			//ex.printStackTrace();
-		} finally {
-			if (outFile != null) {
-				try {
-					outFile.close();
-				} catch (Exception e) {}
-			}
-		}
+		/*try {
+			gController.getDataController().exportXML(saveFile.getAbsolutePath());
+		} catch (ParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
 	}
 	
 	private void openGameFile(){
@@ -112,7 +111,7 @@ public class MenuBar extends JMenuBar{
 	}
 	
 	private File chooseGameFile(String command){
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File", "txt");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file", "xml");
 		final JFileChooser chooser = new JFileChooser();
 		chooser.setApproveButtonText(command);
 		chooser.setFileFilter(filter);
@@ -156,7 +155,7 @@ public class MenuBar extends JMenuBar{
 		return this;
 	}
 
-	// for testing purposes
+	/*// for testing purposes
 	 private static void createAndShowGUI() {
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("MenuBarDemo");
@@ -178,6 +177,6 @@ public class MenuBar extends JMenuBar{
 	                createAndShowGUI();
 	            }
 	        });
-	    }
+	    }*/
 
 }

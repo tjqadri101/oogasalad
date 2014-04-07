@@ -1,4 +1,9 @@
 package parser;
+/**
+ * 
+ * @author AnthonyOlawo
+ *
+ */
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +23,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import jgame.JGColor;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,8 +32,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.w3c.dom.Node; 
 
+import stage.*;
+import objects.*; 
+
 public class ParseGame {
-	private static final String GAME_OBJECT_ELEMENT = "GameObject";
+	private static final String GAME_ELEMENT = "GameElement";
 	private static final String ROOT_ELEMENT = "Game";
 	private DocumentBuilderFactory docFactory; 
 	private DocumentBuilder docBuilder; 
@@ -39,7 +49,7 @@ public class ParseGame {
 	private File fileToWriteTo; 
 	private Map<String, String> values; 
 	private List<String> keys; 
-	private static final String [] PARAMETER_NAMES  = {"Key", "Type_0", "Parameter_0", "Type_1", "Parameter_1", "Parameter_2", "Parameter_3","Type_2" };
+	private static final String [] PARAMETER_NAMES  = {"Key", "Type_0", "Parameter_0", "Type_1", "Parameter_1", "Parameter_2", "Parameter_3","Type_2", "Parameter_4", "Parameter_5","Type_3","Parameter_6"  };
 
 	public  ParseGame(){
 		docFactory = DocumentBuilderFactory.newInstance();
@@ -69,16 +79,23 @@ public class ParseGame {
 		return arg.split("\\,"); 
 	}
 
-	public File writeToFile(ArrayList<String> gameObjects, File fileToWriteTo) throws ParserConfigurationException{
+	public void writeToFile(Game game, String url) throws ParserConfigurationException{
+		List<String> gameAttributes = new ArrayList<String>(); 
+		gameAttributes = game.getAttributes(); 
+
+		writeIndividualElement(gameAttributes, new File(url)); 
+	}
+
+	private File writeIndividualElement(List<String> gameAttributes, File fileToWriteTo) throws ParserConfigurationException{
 		Element rootElement = doc.createElement(ROOT_ELEMENT);
 		doc.appendChild(rootElement);
 
 		Element child, grandChild;
 
 		String[] parameters; 
-		for(String gameObject: gameObjects){
+		for(String gameObject: gameAttributes){
 			parameters = tokenizeString(gameObject);
-			Element gameObjectKey = doc.createElement(GAME_OBJECT_ELEMENT);
+			Element gameObjectKey = doc.createElement(GAME_ELEMENT);
 			rootElement.appendChild(gameObjectKey);
 
 			for(int i = 0; i<parameters.length; i++){
@@ -100,13 +117,13 @@ public class ParseGame {
 		return fileToWriteTo; 
 	}
 
-	public ArrayList<String> readFromFile(File fileToReadFrom) throws ParserConfigurationException, SAXException, IOException{
-		doc = docBuilder.parse (fileToReadFrom);
+	public ArrayList<String> readFromFile(String urlOfFileToReadFrom) throws ParserConfigurationException, SAXException, IOException{
+		doc = docBuilder.parse (new File(urlOfFileToReadFrom));
 		doc.getDocumentElement ().normalize ();
 
 		ArrayList<String> gameObjects = new ArrayList<String>(); 
 
-		NodeList gameObjectNodes = doc.getElementsByTagName(GAME_OBJECT_ELEMENT);
+		NodeList gameObjectNodes = doc.getElementsByTagName(GAME_ELEMENT);
 		String gameObject = "";
 		for(int i=0; i<gameObjectNodes.getLength(); i++){
 			Node node = gameObjectNodes.item(i);
@@ -133,6 +150,8 @@ public class ParseGame {
 		}
 		return gameObject; 
 	}
+
 	
+
 
 }

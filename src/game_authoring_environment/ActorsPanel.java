@@ -10,21 +10,25 @@ import java.awt.event.MouseListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+
+import controller.GAEController;
 
 public class ActorsPanel extends Panel {
+	
+	private static final String ACTOR_DEFAULT_IMAGE = "resources/actor_default.png";
 
 	private SubPanel mySubPanel;
 	private JList myActorsList;
 	private int myActorsCount = 1;
 	private int mySeletedIndex = -1;
+	private GAEController gController;
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	
-	public ActorsPanel(){
+	public ActorsPanel(GAEController gController){
 		super(PanelType.ACTORS);
+		this.gController = gController;
 		makeSubPanel();
 		construct();
 	}
@@ -59,7 +63,7 @@ public class ActorsPanel extends Panel {
 
 	@Override
 	protected void makeSubPanel() {
-		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB);
+		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB,gController);
 		mySubPanel.setSuperType(getType());
 		mySubPanel.addItems(makeSubPanelItems());
 		mySubPanel.construct();
@@ -97,13 +101,15 @@ public class ActorsPanel extends Panel {
 	private void addActors(){		
 		listModel.addElement("Actor " + myActorsCount);
 		//add scene here
+		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, listModel.get(myActorsCount-1));
 			
 	}
 	
 	private void deleteActors(){		
 		if(mySeletedIndex > -1){
 			//delete scene here
-			listModel.remove(mySeletedIndex);			
+			listModel.remove(mySeletedIndex);
+			gController.deleteActor(mySeletedIndex+1);
 		}		
 	}
 
