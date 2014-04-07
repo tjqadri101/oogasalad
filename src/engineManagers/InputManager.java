@@ -24,7 +24,7 @@ public class InputManager {
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		for(int key: myKeyMap.keySet()){
-//			answer.add(e)
+			answer.add("ModifyInputManager" + "," + key + "," + myKeyMap.get(key));
 		}
 		return answer;
 	}
