@@ -6,7 +6,7 @@ public class GAEController {
 	private DataController myDataController;
 	
 	public GAEController(){
-		//myDataController = new DataController();
+		myDataController = new DataController();
 	}
 	
 	public void createPlayer(int ID,String url,String name){
@@ -32,7 +32,7 @@ public class GAEController {
 	
 	public void modifyActorPosition(int ID, double xPos, double yPos){
 		String order = SaladConstants.MODIFY_ACTOR + ",ID,"+ID+",Position," + xPos + "," + yPos;
-		//myDataController.receiveOrder(order);
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
