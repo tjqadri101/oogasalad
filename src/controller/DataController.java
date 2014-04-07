@@ -30,8 +30,6 @@ public class DataController {
 		myGame = new Game();
 		myGameEngine = new GameEngine();
 		myFactory = new GameFactory(myGameEngine);
-		currentLevelID = 0;
-		currentSceneID = 0;
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
