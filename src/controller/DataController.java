@@ -62,6 +62,14 @@ public class DataController {
 		}
 	}
 	
+	/*
+	 * Called by Game Authorizing Environment to read the info about a specific Game Object (i.e. Actor)
+	 * Input is an id number matched to the Game Object
+	 */
+	public List<String> getObjectInfo(int id){
+		return myGame.getGameObject(currentLevelID, currentSceneID, id).getAttributes();
+	}
+	
 	public void callFactoryToProcess(String order) {
 		try{
 			myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);	
