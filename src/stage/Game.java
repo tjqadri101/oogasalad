@@ -23,7 +23,7 @@ public class Game {
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	
-	public Game(GameEngine engine){
+	public Game(){
 		numLevels = 0;
 		myLevels = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
@@ -76,6 +76,7 @@ public class Game {
 			answer.addAll(myLevels.get(key).getAttributes()); 
 		}
 		return answer;
+
 	}
 	/*
          * NEED implementation. This method will be called from Factory through reflection
