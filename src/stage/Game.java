@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import engine.GameEngine;
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
@@ -29,7 +28,6 @@ public class Game {
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
-
 	}
 	
 	public void addLevel(Level level) {
@@ -71,7 +69,14 @@ public class Game {
 	}
 	
 	public List<String> getAttributes() {
-		
+		List <String> answer = new ArrayList<String>();
+		answer.addAll(myScoreManager.getAttributes()); 
+		answer.addAll(myInputManager.getAttributes()); 
+		answer.addAll(myTimerManager.getAttributes()); 
+		for(Integer key: myLevels.keySet()){
+			answer.addAll(myLevels.get(key).getAttributes()); 
+		}
+		return answer;
 	}
 	/*
          * NEED implementation. This method will be called from Factory through reflection

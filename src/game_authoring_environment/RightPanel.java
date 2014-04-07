@@ -1,6 +1,7 @@
 package game_authoring_environment;
 
 import java.awt.Container;
+import java.lang.reflect.Field;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -19,6 +20,7 @@ import controller.GAEController;
 
 public class RightPanel extends JSplitPane {
 
+	public int curID, curXPos, curYPos;
 	public RightPanel(GAEController gController){
 		setOrientation(VERTICAL_SPLIT);
 		setTopComponent(createSpinnerPanel(gController));
@@ -27,15 +29,16 @@ public class RightPanel extends JSplitPane {
 	
 	private JComponent createSpinnerPanel(GAEController gController){
 		JPanel spinnerPanel = new JPanel();
-		addLabeledPositionSpinner(spinnerPanel, "X");
-		addLabeledPositionSpinner(spinnerPanel, "Y");
-		addLabeledPositionSpinner(spinnerPanel, "W");
-		addLabeledPositionSpinner(spinnerPanel, "H");
+		addLabeledPositionSpinner(spinnerPanel, "ID", "curID");
+		addLabeledPositionSpinner(spinnerPanel, "X", "curXPos");
+		addLabeledPositionSpinner(spinnerPanel, "Y", "curYPos");
+		addLabeledPositionSpinner(spinnerPanel, "W", "");
+		addLabeledPositionSpinner(spinnerPanel, "H", "");
 		return spinnerPanel;
 	}
 	
 	
-	static protected JSpinner addLabeledPositionSpinner(Container c, String label) {
+	static protected JSpinner addLabeledPositionSpinner(Container c, String label, String field) {
 		SpinnerModel posModel = new SpinnerNumberModel(0d, 0d, 500d, 0.2d);
 		JLabel l = new JLabel(label);
 		c.add(l);
@@ -43,6 +46,14 @@ public class RightPanel extends JSplitPane {
 		JSpinner spinner = new JSpinner(posModel);
 		l.setLabelFor(spinner);
 		c.add(spinner);
+	/*	Class  aClass = getCurInstance().getClass();
+		Field field = aClass.getField(field);
+
+		MyObject objectInstance = new MyObject();
+
+		Object value = field.get(objectInstance);
+
+		field.set(objectInstance, value);*/
 		spinner.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -50,11 +61,16 @@ public class RightPanel extends JSplitPane {
 				// TODO Auto-generated method stub
 				JSpinner curSpinner = (JSpinner)(e.getSource());
 				 System.out.println(curSpinner.getValue());
+				 //curID = (int) curSpinner.getValue();
 			}
 
 	        });
 		return spinner;
 	}
+	
+	/*private static JComponent getCurInstance(){
+		return this;
+	}*/
 	//for tesing purposes
 	/* private static void createAndShowGUI() {
 	        //Create and set up the window.
