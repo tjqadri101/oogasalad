@@ -1,5 +1,6 @@
 package stage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +54,12 @@ public class Game {
 		
 	}
 	
-	public Map<Integer, Level> getAllAttributes() {
-		return myLevels;
+	public List<List> getAttributes() {
+		List<List> result = new ArrayList<List>();
+		for (Integer i : myLevels.keySet() ) {
+			result.add(myLevels.get(i).getAttributes());
+		}
+		return result;
 	}
 
 }

@@ -1,5 +1,7 @@
 package stage;
 import stage.*;
+
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +16,7 @@ import objects.GameObject;
  */
 public abstract class Level {
 	
-	protected Map<Integer, Scene> mySceneMap;
+	protected Map<Integer, Scene> myScenes;
 	
 	protected int myID;
 	protected int mySceneTotal = 0;
@@ -26,28 +28,32 @@ public abstract class Level {
 	}
 	
 	public void addScene(Scene scene ) {
-		mySceneMap.put(mySceneTotal, scene );
+		myScenes.put(mySceneTotal, scene );
 		mySceneTotal++;
 	}
 	
 	public void addObject(int sceneID, GameObject object) {
-		mySceneMap.get(sceneID).addObject(object);
+		myScenes.get(sceneID).addObject(object);
 	}
 	
 	public GameObject getObject(int sceneID, int objectID) {
-		return mySceneMap.get(sceneID).getObject(objectID);
+		return myScenes.get(sceneID).getObject(objectID);
 	}
 	
 	public Scene getScene(int sceneID){
-	    return mySceneMap.get(sceneID);
+	    return myScenes.get(sceneID);
 	}
 
 	public void removeScene(int sceneID) {
-		mySceneMap.remove(sceneID);
+		myScenes.remove(sceneID);
 	}
 	
-	public Map<Integer, Scene> getAllScenes() {
-		return mySceneMap;
+	public List<List> getAttributes() {
+		List<List> result = new ArrayList<List>();
+		for (Integer i : myScenes.keySet()) {
+			result.add(myScenes.get(i).getAttributes());
+		}
+		return result;
 	}
 	
 }
