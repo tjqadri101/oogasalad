@@ -62,7 +62,7 @@ public class DataController {
 		}
 	}
 	
-	protected void callFactoryToProcess(String order) {
+	public void callFactoryToProcess(String order) {
 		try{
 			myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);	
 		} catch (Exception e){
@@ -70,13 +70,13 @@ public class DataController {
 		}
 	}
 	
-	protected void switchToScene(String order){
+	public void switchToScene(String order){
 		String[] orders = order.split(",");
 		currentSceneID = Integer.parseInt(orders[2]);
 		myGameEngine.setCurrentScene(currentLevelID, currentSceneID);
 	}
 	
-	protected void switchToLevel(String order){
+	public void switchToLevel(String order){
 		String[] orders = order.split(",");
 		currentLevelID = Integer.parseInt(orders[2]);
 	}

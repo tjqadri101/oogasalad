@@ -41,27 +41,26 @@ public class GameFactory {
       */
     public GameObject processOrder(Game game, int levelID, int sceneID, String order) throws FactoryException{
 //            testLegitimateOrder(order);
-            String[] orderSplit = order.split("=");
-            String instruction = orderSplit[0];
-            List<String> parameterList = parseOrder(instruction, orderSplit[1]);
-            Object myObject = Reflection.createInstance(myPath.getString(instruction), 
-                                                        parameterList.get(0), 
-                                                        parameterList.get(1),
+//            String[] orderSplit = order.split("=");
+//            String instruction = orderSplit[0];
+            List<String> parameterList = parseOrder(order);
+            Object myObject = Reflection.createInstance(myPath.getString(parameterList.get(1)), 
+                                                        parameterList.get(1), 
                                                         parameterList.get(2),
                                                         parameterList.get(3),
-                                                        parameterList.get(4));  
+                                                        parameterList.get(4),
+                                                        parameterList.get(5));  
             return (GameObject) myObject;
      }
 
         /*
          * discuss this again
          */
-        private List<String> parseOrder (String instruction, String orderValue) {
+        private List<String> parseOrder (String order) {
             //          checkModifyOrCreate(orderSplit[0]);
-            String tokensList = myFormat.getString(instruction);
             List<String> answerList = new ArrayList<String>();
-            List<String> inputParameterSplit = Arrays.asList(orderValue.split("\\,"));
-
+            List<String> inputParameterSplit = Arrays.asList(order.split("\\,"));
+            String tokensList = myFormat.getString(inputParameterSplit.get(0));
             for(int i = 0; i < inputParameterSplit.size(); i ++){
                 if(inputParameterSplit.get(i).equals("ParameterToken")){
                     answerList.add(inputParameterSplit.get(i));
