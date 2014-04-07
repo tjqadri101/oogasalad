@@ -5,6 +5,7 @@ import jgame.Highscore;
 import jgame.platform.StdGame;
 
 import java.awt.Dimension;
+import objects.GameObject;
 
 import controller.DataController;
 import jgame.platform.JGEngine;
@@ -39,6 +40,20 @@ public class GameEngine extends StdGame{
     @Override
     public void paintFrame ()
     {
+    }
+    
+    /* @Shenghan: create this method in Engine
+     * Should be called by the GameFactory to createPlayer
+     * Return a  
+     */
+    public GameObject createPlayer(){
+        // NEED IMPLEMENTATION
+        return null;
+    }
+    
+    public GameObject createActor(){
+        // NEED IMPLEMENTATION
+        return null;
     }
 
 
