@@ -22,13 +22,12 @@ public class Game {
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	
-	public Game(GameEngine){
+	public Game(){
 		numLevels = 0;
 		myLevels = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
-
 	}
 	
 	public void addLevel(Level level) {
