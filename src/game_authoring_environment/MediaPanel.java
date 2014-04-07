@@ -24,15 +24,19 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import controller.GAEController;
+
 public class MediaPanel extends Panel {
 	
 	private SubPanel mySubPanel;
 	private JList myMediaList;
 	private int mySeletedIndex = -1;
 	private DefaultListModel listModel = new DefaultListModel();
+	private GAEController gController;
 	
-	public MediaPanel(){
+	public MediaPanel(GAEController gController){
 		super(PanelType.MEDIA);
+		this.gController = gController;
 		makeSubPanel();
 		construct();
 	}
@@ -67,7 +71,7 @@ public class MediaPanel extends Panel {
 
 	@Override
 	protected void makeSubPanel() {
-		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB);
+		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB,gController);
 		mySubPanel.setSuperType(getType());
 		mySubPanel.addItems(makeSubPanelItems());
 		mySubPanel.construct();
