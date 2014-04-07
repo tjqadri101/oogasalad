@@ -1,8 +1,5 @@
 
 import game_authoring_environment.GAE;
-import game_authoring_environment.GlassPaneDragAndDrop;
-import game_authoring_environment.ImageTransferHandler;
-import game_authoring_environment.MainPanel;
 
 public class Main
 {

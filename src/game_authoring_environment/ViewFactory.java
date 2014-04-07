@@ -1,7 +1,6 @@
 package game_authoring_environment;
 
 import javax.swing.JButton;
-
 import reflection.Reflection;
 
 public class ViewFactory {
