@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import util.reflection.Reflection;
+import reflection.Reflection;
 import jboxGlue.PhysicalObject;
 import jgame.JGColor;
 import jgame.JGObject;
@@ -13,6 +13,7 @@ import jgame.JGObject;
  * @Author: Justin (Zihao) Zhang
  */
 public abstract class GameObject extends PhysicalObject{
+	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     public static final String DEFAULT_NULL = "null";
@@ -22,19 +23,12 @@ public abstract class GameObject extends PhysicalObject{
 	protected String myMoveMethod;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
-	protected double xpos, ypos;
-	protected String name;
-	protected int collisionId;
-	protected JGColor color;
 	protected HashMap<Integer, String> myCollisionMap;
+	protected int myLives;
 
 	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
 		super(name, collisionId, color);
 		initObject(xpos, ypos);
-		
-		this.xpos = xpos;
-		this.ypos = ypos;
-		
 	}
 	
 	protected void initObject(double xpos, double ypos){
@@ -43,6 +37,7 @@ public abstract class GameObject extends PhysicalObject{
 		myMoveMethod = DEFAULT_NULL;
 		myCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
+		myLives = DEFAULT_LIVES; // change later
 	}
 	
 	protected GameObject(String name, double xpos, double ypos, int collisionId, String gfxname){
@@ -52,6 +47,10 @@ public abstract class GameObject extends PhysicalObject{
 	
 	public void setDieBehavior(String s){
 		myDieMethod = s;
+	}
+	
+	public void loseLife(){
+		myLives --;
 	}
 	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
@@ -82,6 +81,7 @@ public abstract class GameObject extends PhysicalObject{
 	public void move(){
 		super.move();
 		autoMove();
+		if(myLives <= 0) die();
 	}
 	
 	@Override
@@ -90,7 +90,7 @@ public abstract class GameObject extends PhysicalObject{
 		if(!myCollisionMap.containsKey(other.colid)) return;
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myCollisionMap.get(other.colid)), this);
-			Reflection.callMethod(behavior, "collide", other, this);	
+			Reflection.callMethod(behavior, "collide", other);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}
@@ -117,10 +117,11 @@ public abstract class GameObject extends PhysicalObject{
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add("ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add("ID," + colid + ",Die," + myDieMethod);
+		answer.add("CreateActor,ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
+		answer.add("ModifyActor,ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
+		answer.add("ModifyActor,ID," + colid + ",Die," + myDieMethod);
 		for(int otherID: myCollisionMap.keySet()){
-			answer.add("ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
+			answer.add("ModifyActor,ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		return answer;
 	}

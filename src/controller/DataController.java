@@ -1,21 +1,76 @@
 package controller;
 
+import java.util.ResourceBundle;
+import engine.GameEngine;
+import gameFactory.GameFactory;
+import parser.ParseGame;
+import stage.Game;
+import reflection.Reflection;
+
 public class DataController {
-	//Exporter myExporter;
-	//EngineParser myEngineParser;
-	//GameFactory myFactory;
-	//Importer myImporter;
+	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
+	public static final String DEFAULT_CREATEORMODIFY = "CreationOrModify";
+	public static final String IS_CREATION = "Creation";
+	
+	protected Game myGame;
+    protected int currentLevelID;
+    protected int currentSceneID;
+	protected GameFactory myFactory;
+	protected ParseGame myParser;
+	protected GameEngine myGameEngine;
+	protected ResourceBundle myCreateModifyTeller;
 	
 	public DataController(){
-		
+		myParser = new ParseGame();
+		myFactory = new GameFactory();
+		myGame = new Game();
+		currentLevelID = 0;
+		currentSceneID = 0;
+		myCreateModifyTeller = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
+	public void initGameEngine(){
+		myGameEngine = new GameEngine();
+	}
+	
+	/*
+	 * Called by Game Authorizing Environment to send the command String
+	 * Input is a String order
+	 */
 	public void receiveOrder(String order){
-		
+		String[] orders = order.split(",");
+		String methodName = myCreateModifyTeller.getString(orders[0]);
+		Reflection.callMethod(this, methodName, order);	
 	}
 	
-	public void receiveXML(String url){
-		
+	/*
+	 * Called by Game Authorizing Environment to export the game data
+	 * Input is a url to the XML file created by the GAE
+	 */
+	public void exportXML(String url){
+		//myParser.writeToFile(myGame, url);
 	}
-
+	
+	/*
+	 * Called by PlayView to import the game data
+	 * Input is a url to the XML file loaded by PlayView
+	 */
+	public void readXML(String url){
+		//Game game = myParser.readFromFile(url);
+	}
+	
+	
+	protected void callFactoryToProcess(String order){
+		//myFactory.processOrder(myGame, order);
+	}
+	
+	protected void switchToScene(String order){
+		String[] orders = order.split(",");
+		currentSceneID = Integer.parseInt(orders[2]);
+	}
+	
+	protected void switchToLevel(String order){
+		String[] orders = order.split(",");
+		currentLevelID = Integer.parseInt(orders[2]);
+	}
 }

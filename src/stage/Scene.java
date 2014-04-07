@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import util.reflection.Reflection;
+import objects.GameObject;
+
+import reflection.Reflection;
 
 /**
  * 
@@ -23,21 +25,21 @@ public class Scene {
 	private int myID;
 	private int myObjectCounter = 0;
 	private String myBackground;
-	private Map<Integer, Object> myObjectMap;
+	private Map<Integer, GameObject> myObjectMap;
 	private String myWinString;
 	
 	public Scene(int hash) {
 		myID = hash;
-		myObjectMap = new HashMap<>();
+		//myObjectMap = new HashMap<>();
 		myWinnables = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 	}
 		
-	public void addObject(Object object ) {
-		myObjectMap.put(myObjectCounter, object );
+	public void addObject(GameObject object ) {
 		myObjectCounter++;
+		myObjectMap.put(myObjectCounter, (GameObject) object );
 	}
 
-	public Map<Integer, Object> getObjects() {
+	public Map<Integer, GameObject> getObjects() {
 		return myObjectMap;
 	}
 	
@@ -49,12 +51,12 @@ public class Scene {
 		myWinString = s;
 	}
 	
-	public void win(){
-		try{
-			Object winBehavior = Reflection.createInstance(myWinnables.getString(myWinString), this);
-			Reflection.callMethod(winBehavior, "ifWin");	
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+	public GameObject getObject(int objectID) {
+		return myObjectMap.get(objectID);
+	}
+	
+	
+	public Map<Integer, GameObject> getAllObjects() {
+		return myObjectMap;
 	}
 }

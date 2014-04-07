@@ -13,7 +13,7 @@ public class GameFactory {
     public static final String RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_FORMAT= "DataFormat";
     public static final String DEFAULT_NULL = "null";
-        
+
         protected ResourceBundle myFormat;
         
         protected GameFactory(String order, GameObject object){
