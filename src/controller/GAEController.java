@@ -22,6 +22,13 @@ public class GAEController {
 		
 	}
 	
+	public void deleteActor(int ID){
+		String order = "DeleteActor,ID,"+ID;
+		//dcontroller.receiveOrder(order);
+		System.out.println(order);
+		
+	}
+	
 	
 	public void modifyActorPosition(int ID, double xPos, double yPos){
 		String order = SaladConstants.MODIFY_ACTOR + ",ID,"+ID+",Position," + xPos + "," + yPos;
