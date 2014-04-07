@@ -1,8 +1,6 @@
 package stage;
-import stage.*;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +21,8 @@ public class Level {
 	
 	public Level(int hash) {
 		myID = hash;
-		//mySceneMap = new HashMap<>();
 		myScenes = new HashMap<Integer, Scene>(); 
+
 	}
 	
 	public void addScene(Scene scene ) {

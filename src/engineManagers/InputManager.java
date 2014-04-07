@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import saladConstants.SaladConstants;
-
+/*
+ * @Author: Justin (Zihao) Zhang
+ */
 public class InputManager {
 	
 	protected Map<Integer, String> myKeyMap;

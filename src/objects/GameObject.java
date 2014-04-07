@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import reflection.Reflection;
+import saladConstants.SaladConstants;
 import jboxGlue.PhysicalObject;
 import jgame.JGColor;
 import jgame.JGObject;
@@ -108,7 +109,8 @@ public abstract class GameObject extends PhysicalObject{
 	
 	@Override
 	protected void paintShape() {
-		
+		myEngine.setColor( myColor );
+//		myEngine.drawOval( x, y, (float)myRadius*2, (float)myRadius*2, true, true );
 	}
 	
 	/*
@@ -117,11 +119,11 @@ public abstract class GameObject extends PhysicalObject{
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add("CreateActor,ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
-		answer.add("ModifyActor,ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add("ModifyActor,ID," + colid + ",Die," + myDieMethod);
+		answer.add(SaladConstants.CREATE_ACTOR + ",ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
+		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
+		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Die," + myDieMethod);
 		for(int otherID: myCollisionMap.keySet()){
-			answer.add("ModifyActor,ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
+			answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		return answer;
 	}

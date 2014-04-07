@@ -10,4 +10,5 @@ public final class SaladConstants {
 	public static final String MODIFY_GOALMANAGER = "ModifyGoalManager";
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
+	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
 }
