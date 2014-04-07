@@ -3,10 +3,14 @@ package engine;
 import stage.Game;
 import jgame.JGPoint;
 import jgame.platform.StdGame;
+
 import java.awt.Dimension;
 /*
  * @Author: Justin (Zihao) Zhang
  */
+
+import objects.GameObject;
+
 public class GameEngine extends StdGame{
 
     public static final Dimension SIZE = new Dimension(1200, 900);
@@ -103,6 +107,18 @@ public class GameEngine extends StdGame{
     	
     }
     
-
+    /* Create this method in Engine
+     * Should be called by the GameFactory to createPlayer
+     * Return a  
+     */
+    public GameObject createPlayer(){
+        // NEED IMPLEMENTATION
+        return null;
+    }
+    
+    public GameObject createActor(){
+        // NEED IMPLEMENTATION
+        return null;
+    }
 
 }

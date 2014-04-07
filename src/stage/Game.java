@@ -74,5 +74,11 @@ public class Game {
 		}
 		return result;
 	}
+	/*
+         * NEED implementation. This method will be called from Factory through reflection
+         */
+	public void modifyActor(){
+	    // need implementation
+	}
 
 }

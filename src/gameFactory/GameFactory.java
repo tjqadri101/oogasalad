@@ -1,32 +1,51 @@
 package gameFactory;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.ResourceBundle;
 import objects.GameObject;
+import reflection.Reflection;
+import stage.Game;
 import jgame.JGObject;
+import jgame.platform.JGEngine;
 import util.reflection.*;
 /*
  * @Author: Steve (Siyang) Wang
  */
 public class GameFactory {
+    private JGEngine myEngine;
     private String myOrder;
+    private int  myLevelID, mySceneID;
+    private Game myGame;
     private GameObject myObject;
     public static final String RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_FORMAT= "DataFormat";
     public static final String DEFAULT_NULL = "null";
+    
+    private static final 
 
         protected ResourceBundle myFormat;
         
-        protected GameFactory(String order, GameObject object){
-            myOrder = order;
-            myObject = object;
+        protected GameFactory(JGEngine engine){
+            myEngine = engine;
             myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
         }
         
         /**
-         * Only takes String order as argument, for creation.
+         * Only couple things as argument, use reflection to creat or modify object instance.
          */
-        public GameObject processOrder(String order){
+        public GameObject processOrder(Game game, int levelID, int sceneID, String order){
+//            myLevelID = levelID;
+//            mySceneID = sceneID;
+//            myGame = game;
+//            myOrder = order;
+//            myObject = object;
+            
+            List<GameObject> results = new ArrayList<GameObject>();
+            Enumeration<String> iter = myFormat.getKeys();
             parseOrder(order);
+            
             
             try{
                     Object myObject = Reflection.createInstance(myFormat.getString(myMoveMethod), this);
@@ -44,10 +63,16 @@ public class GameFactory {
 
         }
 
+        
+        
+        
+        
+        
+        
         /**
-         * Takes Object and String order as argument, for modification.
+         * Takes Object instance and String order as argument, for modification.
          */
-        public void processOrder(JGObject object, String order){
+        public void processOrder(GameObject object, String order){
             parseOrder(order);
             
             try{
