@@ -11,6 +11,7 @@ import objects.NonPlayer;
 import objects.Player;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 /*
  * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
@@ -26,7 +27,7 @@ public class GameEngine extends StdGame{
     
     private String Mode = "Edit";//String or boolean ?
     private Scene currentScene;//ID or Object ?
-    private List<int[]> collsionPair;
+    private List<int[]> collsionPair = new ArrayList<int[]>();
     
     protected Game myGame;
     
