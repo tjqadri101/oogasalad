@@ -109,7 +109,8 @@ public abstract class GameObject extends PhysicalObject{
 	
 	@Override
 	protected void paintShape() {
-		
+		myEngine.setColor( myColor );
+//		myEngine.drawOval( x, y, (float)myRadius*2, (float)myRadius*2, true, true );
 	}
 	
 	/*
