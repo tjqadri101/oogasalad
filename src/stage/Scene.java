@@ -25,7 +25,7 @@ public class Scene {
 	private int myID;
 	private int myObjectCounter = 0;
 	private String myBackground;
-	private Map<Integer, GameObject> myObjectMap;
+	private Map<Integer, GameObject> myObjects;
 	private String myWinString;
 	
 	public Scene(int hash) {
@@ -36,11 +36,11 @@ public class Scene {
 		
 	public void addObject(GameObject object ) {
 		myObjectCounter++;
-		myObjectMap.put(myObjectCounter, (GameObject) object );
+		myObjects.put(myObjectCounter, (GameObject) object );
 	}
 
 	public Map<Integer, GameObject> getObjects() {
-		return myObjectMap;
+		return myObjects;
 	}
 	
 	public void setBackgroundImage(String s) {
@@ -52,11 +52,16 @@ public class Scene {
 	}
 	
 	public GameObject getObject(int objectID) {
-		return myObjectMap.get(objectID);
+		return myObjects.get(objectID);
 	}
 	
 	
-	public Map<Integer, GameObject> getAllObjects() {
-		return myObjectMap;
+	public List<Object> getAttributes() {
+		List<Object> result = new ArrayList<Object>();
+		result.add(myID);
+		for (Integer i : myObjects.keySet() ) {
+			result.add(myObjects.get(i).getAttributes());
+		}
+		return result;
 	}
 }
