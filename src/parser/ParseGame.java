@@ -100,8 +100,8 @@ public class ParseGame {
 		return fileToWriteTo; 
 	}
 
-	public ArrayList<String> readFromFile(File fileToReadFrom) throws ParserConfigurationException, SAXException, IOException{
-		doc = docBuilder.parse (fileToReadFrom);
+	public ArrayList<String> readFromFile(String urlOfFileToReadFrom) throws ParserConfigurationException, SAXException, IOException{
+		doc = docBuilder.parse (new File(urlOfFileToReadFrom));
 		doc.getDocumentElement ().normalize ();
 
 		ArrayList<String> gameObjects = new ArrayList<String>(); 
