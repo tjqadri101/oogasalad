@@ -30,7 +30,7 @@ public abstract class Level {
 		mySceneTotal++;
 	}
 	
-	public void addObject(int sceneID, Object object) {
+	public void addObject(int sceneID, GameObject object) {
 		mySceneMap.get(sceneID).addObject(object);
 	}
 	
@@ -46,5 +46,8 @@ public abstract class Level {
 		mySceneMap.remove(sceneID);
 	}
 	
+	public Map<Integer, Scene> getAllScenes() {
+		return mySceneMap;
+	}
 	
 }
