@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import engine.GameEngine;
+import gameFactory.FactoryException;
 import gameFactory.GameFactory;
 import parser.ParseGame;
 import stage.Game;
@@ -65,8 +66,12 @@ public class DataController {
 		}
 	}
 	
-	protected void callFactoryToProcess(String order){
-		myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);
+	protected void callFactoryToProcess(String order) {
+		try{
+			myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);	
+		} catch (Exception e){
+			e.printStackTrace(); // should never reach here
+		}
 	}
 	
 	protected void switchToScene(String order){
