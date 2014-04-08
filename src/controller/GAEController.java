@@ -7,8 +7,8 @@ public class GAEController {
 	private DataController myDataController;
 	
 	public GAEController(){
-		myDataController = new DataController();
-		myDataController.initGameEditing(new Game());
+//		myDataController = new DataController();
+//		myDataController.initGameEditing(new Game());
 	}
 	
 	public void createPlayer(int ID,String url,String name){

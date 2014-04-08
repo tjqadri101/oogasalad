@@ -1,39 +1,41 @@
 package game_authoring_environment;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 import controller.GAEController;
 
 public class MediaPanel extends Panel {
-	
+
 	private SubPanel mySubPanel;
-	private JList myMediaList;
-	private int mySeletedIndex = -1;
-	private DefaultListModel listModel = new DefaultListModel();
+	private JTable myMediaTable;
+	private int mySeletedRow = -1;
+	private DefaultTableModel mediaTableModel;
 	private GAEController gController;
-	
+
 	public MediaPanel(GAEController gController){
 		super(PanelType.MEDIA);
 		this.gController = gController;
@@ -43,30 +45,38 @@ public class MediaPanel extends Panel {
 
 	@Override
 	protected void construct() {
-		makeActorsList();
+		makeLists();
 		this.setLayout(new BorderLayout());
-		this.add(mySubPanel,BorderLayout.NORTH);
-		this.add(myMediaList,BorderLayout.CENTER);
+		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
+		this.add(new JScrollPane(myMediaTable),BorderLayout.CENTER);
 	}
 
-	private void makeActorsList() {
-		myMediaList = new JList();
-		myMediaList.setModel(listModel);
-		MouseListener mouseListener = new MouseAdapter() {
-		     public void mouseClicked(MouseEvent e) {
-		    	 if (e.getClickCount() == 1 && listModel.size()!= 0) {
-		    		 //single clicked
-		    		 mySeletedIndex = myMediaList.locationToIndex(e.getPoint());	
-		    		 //need to change attribute display to current actor
-		          }
-		    	 
-		    	 else if (e.getClickCount() == 2 && listModel.size()!= 0) {
-		             //double clicked
-		          }
-		     }
-		 };
-		 myMediaList.addMouseListener(mouseListener);
-		
+
+	private void makeLists() {
+		myMediaTable = new JTable();
+		mediaTableModel = new DefaultTableModel(new Object[]{"Media", "Name"}, 0){
+			@Override
+			public Class<?> getColumnClass(int col) {
+				if (col == 1) {
+					return super.getColumnClass(col);
+				} else {
+					return ImageIcon.class;
+				}
+			}
+			@Override
+			public boolean isCellEditable(int row, int column){  
+				return false;  
+			}
+		};
+		myMediaTable.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
+		myMediaTable.setModel(mediaTableModel);
+		ListSelectionModel cellSelectionModel = myMediaTable.getSelectionModel();
+		cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				mySeletedRow = myMediaTable.getSelectedRow();	        
+			}
+		});
 	}
 
 	@Override
@@ -81,15 +91,15 @@ public class MediaPanel extends Panel {
 	protected JComponent makeSubPanelItems() {
 		JPanel outPanel = new JPanel();
 		outPanel.setLayout(new BorderLayout());
-		
+
 		JButton addButton = ViewFactory.createJButton("Add");
 		addButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				addMedia();
+				addMedia();				
 			}
 		});
-		
+
 		JButton deleteButton = ViewFactory.createJButton("Delete");
 		deleteButton.addActionListener(new ActionListener(){
 			@Override
@@ -97,26 +107,26 @@ public class MediaPanel extends Panel {
 				deleteMedia();
 			}
 		});
-		
+
 		outPanel.add(addButton,BorderLayout.WEST);
 		outPanel.add(deleteButton,BorderLayout.EAST);
-		
+
 		return outPanel;
 	}
-	
+
 	private void addMedia(){
 		String path = chooseFileAddToList("Choose the media file");
 		//add media here
-			
+
 	}
-	
+
 	private void deleteMedia(){		
-		if(mySeletedIndex > -1){
+		if(mySeletedRow > -1){
 			//delete media here
-			listModel.remove(mySeletedIndex);			
+			mediaTableModel.removeRow(mySeletedRow);			
 		}		
 	}
-	
+
 	public String chooseFileAddToList(String displayText){
 		try{
 			JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
@@ -133,7 +143,10 @@ public class MediaPanel extends Panel {
 				Image img = icon.getImage();
 				Image newimg = img.getScaledInstance( 50, 50, Image.SCALE_SMOOTH ) ;
 				icon = new ImageIcon( newimg );
-				listModel.addElement(icon);
+				Object toAdd[] = {icon , chooser.getSelectedFile().getName()};
+				mediaTableModel.addRow(toAdd);
+				myMediaTable.setRowHeight(icon.getIconHeight() +2);
+				myMediaTable.getColumnModel().getColumn(0).setMaxWidth(icon.getIconWidth() +2);
 			}
 			return chooser.getSelectedFile().getName();
 		}catch(Exception e){
