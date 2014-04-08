@@ -1,12 +1,18 @@
 package controller;
+import java.awt.Image;
+import java.util.HashMap;
+
 import saladConstants.SaladConstants;
 import stage.Game;
 
 public class GAEController {
 	
 	private DataController myDataController;
+	private HashMap<String, Image> availableImages;
+	
 	
 	public GAEController(){
+		
 //		myDataController = new DataController();
 //		myDataController.initGameEditing(new Game());
 	}

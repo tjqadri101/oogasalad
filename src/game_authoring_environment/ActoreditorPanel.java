@@ -1,9 +1,14 @@
 package game_authoring_environment;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.io.File;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -28,7 +33,7 @@ public class ActoreditorPanel extends Panel {
 	protected void construct() {
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
-	//	this.add(ViewFactory.createJFileChooser(), BorderLayout.CENTER);
+		this.add(new FileChooser(), BorderLayout.CENTER);
 		this.add(new JScrollPane(makeTable()), BorderLayout.SOUTH);
 	}
 
@@ -67,6 +72,7 @@ public class ActoreditorPanel extends Panel {
 		JComponent k = ViewFactory.createScrollingTable(columnNames, data);
 				return k;
 	}
+	
 	
 
 }

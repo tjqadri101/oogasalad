@@ -1,6 +1,9 @@
 package game_authoring_environment;
 
 import java.awt.Dimension;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -11,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import controller.GAEController;
-
 import reflection.Reflection;
 
 public class ViewFactory {
@@ -35,9 +37,10 @@ public class ViewFactory {
 	}
 	
 	public static JFileChooser createJFileChooser(){
-		
-		
-		return null;
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new File("./"));
+
+		return chooser;
 		
 	}
 	
