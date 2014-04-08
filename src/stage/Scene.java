@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import objects.GameObject;
-
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 
@@ -58,6 +57,15 @@ public class Scene {
 	
 	public GameObject getObject(int objectID) {
 		return myObjects.get(objectID);
+	}
+	
+	public List<GameObject> getObjectsByColid(int colid){
+		List<GameObject> objects = new ArrayList<GameObject>();
+		for(int objectID: myObjects.keySet()){
+			GameObject object = myObjects.get(objectID);
+			if(object.colid == colid) objects.add(object);
+		}
+		return objects;
 	}
 	
 	

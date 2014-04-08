@@ -24,24 +24,24 @@ public class GameObjectTests extends TestCase {
 		
 		@Test
 		public void testCreateObjects(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero");
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
 		}
 		
 		@Test
 		public void testModifyCollision(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero");
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
 			object.setCollisionBehavior(2, "HitterEliminateVictim");
 		}
 		
 		@Test
 		public void testModifyMove(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero");
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
 			object.setMoveBehavior("RegularMove", 1, 1);
 		}
 		
 		@Test
 		public void testModifyDie(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero");
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
 			object.setDieBehavior("RegularRemove");
 		}
 		

@@ -49,6 +49,15 @@ public class Level {
 	public void removeScene(int sceneID) {
 		myScenes.remove(sceneID);
 	}
+	
+	public List<GameObject> getObjectsByColid(int colid){
+		List<GameObject> objects = new ArrayList<GameObject>();
+		for(int sceneID: myScenes.keySet()){
+			Scene scene = myScenes.get(sceneID);
+			objects.addAll(scene.getObjectsByColid(colid));
+		}
+		return objects;
+	}
 
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();

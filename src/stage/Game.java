@@ -72,6 +72,15 @@ public class Game {
 		
 	}
 	
+	public List<GameObject> getObjectsByColid(int colid){
+		List<GameObject> objects = new ArrayList<GameObject>();
+		for(int levelID: myLevels.keySet()){
+			Level level = myLevels.get(levelID);
+			objects.addAll(level.getObjectsByColid(colid));
+		}
+		return objects;
+	}
+	
 	public List<String> getAttributes() {
 		List <String> answer = new ArrayList<String>();
 		answer.addAll(myScoreManager.getAttributes()); 
