@@ -17,11 +17,11 @@ public class GAEController {
 	private HashMap<String, Image> availableImages;
 	private GameEngine myGameEngine;
 	
-	public GAEController(){
-		g = new GAE(this);
+	public GAEController(){		
 		myDataController = new DataController();
 		myDataController.initGameEngine(new Game());
 		myGameEngine = myDataController.getEngine();
+		g = new GAE(this);
 	}
 	
 	public GameEngine getEngine(){
