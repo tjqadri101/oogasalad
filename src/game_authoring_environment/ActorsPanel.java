@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import controller.GAEController;
 
@@ -37,8 +38,8 @@ public class ActorsPanel extends Panel {
 	protected void construct() {
 		makeActorsList();
 		this.setLayout(new BorderLayout());
-		this.add(mySubPanel,BorderLayout.NORTH);
-		this.add(myActorsList,BorderLayout.CENTER);
+		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
+		this.add(new JScrollPane(myActorsList),BorderLayout.CENTER);
 	}
 
 	private void makeActorsList() {
@@ -48,7 +49,7 @@ public class ActorsPanel extends Panel {
 		     public void mouseClicked(MouseEvent e) {
 		    	 if (e.getClickCount() == 1 && listModel.size()!= 0) {
 		    		 //single clicked
-		    		 mySeletedIndex = myActorsList.locationToIndex(e.getPoint());	
+		    		 mySeletedIndex = myActorsList.locationToIndex(e.getPoint());
 		    		 //need to change attribute display to current actor
 		          }
 		    	 
@@ -79,7 +80,6 @@ public class ActorsPanel extends Panel {
 			@Override
 			public void actionPerformed (ActionEvent e){
 				addActors();
-				manageActorsNum(true);
 			}
 		});
 		
@@ -88,7 +88,6 @@ public class ActorsPanel extends Panel {
 			@Override
 			public void actionPerformed (ActionEvent e){
 				deleteActors();
-				manageActorsNum(false);
 			}
 		});
 		
@@ -101,30 +100,20 @@ public class ActorsPanel extends Panel {
 	private void addActors(){		
 		listModel.addElement("Actor " + myActorsCount);
 		//add scene here
-		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, listModel.get(myActorsCount-1));
+		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, "Actor " + myActorsCount);
+		myActorsCount++;
 			
 	}
 	
 	private void deleteActors(){		
 		if(mySeletedIndex > -1){
-			//delete scene here
+			//delete scene here			
+			String actorName = listModel.get(mySeletedIndex);
+			int actorID = Integer.parseInt(actorName.split(" ")[actorName.split(" ").length-1]);
+			gController.deleteActor(actorID);
 			listModel.remove(mySeletedIndex);
-			gController.deleteActor(mySeletedIndex+1);
+			mySeletedIndex = -1;
 		}		
 	}
-
-	private void manageActorsNum(boolean ifAdd){
-		if(ifAdd){//adding scene
-			myActorsCount = listModel.getSize()+1;
-		}else{//deleting scene			
-			mySeletedIndex = -1;
-			//update the list display and scene number at engine
-			for(int j=0;j<listModel.getSize();j++){
-				listModel.set(j, "Actor "+(j+1));
-				//need to set scene ID to be j at engine
-			}
-			myActorsCount = listModel.getSize()+1;
-		}
-		
-	}
+	
 }

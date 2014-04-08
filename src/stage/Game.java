@@ -1,5 +1,6 @@
 package stage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,7 @@ import engineManagers.TimerManager;
 import objects.GameObject;
 import objects.Player;
 
-public class Game {
+public class Game implements Serializable{
 	
 	public static final int DEFAULT_SCORE = 0;
 	
@@ -43,12 +44,28 @@ public class Game {
 		myPlayer = (Player)object;
 	}
 	
+	public void setPlayerXY(int levelID, int sceneID, int playerID, int x, int y) {
+		myLevels.get(levelID).setPlayerXY(sceneID, playerID, x, y);
+	}
+	
 	public void addObject(int levelID, int sceneID, GameObject object){
 		myLevels.get(levelID).addObject(sceneID, object);
 	}
 	
 	public GameObject getGameObject(int levelID, int sceneID, int objectID){
 		return myLevels.get(levelID).getObject(sceneID, objectID);
+	}
+	
+	public Map<Integer, Map< Integer, Map<Integer, GameObject>>> getGameObjects(){
+		Map<Integer, Map< Integer, Map<Integer, GameObject>>> allGameObjects = new HashMap<Integer, Map<Integer,Map<Integer, GameObject>>>();
+		for(int i=0; i<myLevels.size(); i++){
+			allGameObjects.put(myLevels.get(i).getID(), myLevels.get(i).getGameObjects()); 
+		}
+		return allGameObjects; 
+	}
+	
+	public void setGameObjects(Map<Integer, Map< Integer, Map<Integer, GameObject>>> gameObjects){
+		
 	}
 	
 	public Scene getScene(int levelID, int sceneID){
@@ -68,20 +85,23 @@ public class Game {
 		
 	}
 	
-	public List<String> getAttributes() {
-		List <String> answer = new ArrayList<String>();
-		answer.addAll(myScoreManager.getAttributes()); 
-		answer.addAll(myInputManager.getAttributes()); 
-		answer.addAll(myTimerManager.getAttributes()); 
-		for(Integer key: myLevels.keySet()){
-			answer.addAll(myLevels.get(key).getAttributes()); 
+	public List<GameObject> getObjectsByColid(int colid){
+		List<GameObject> objects = new ArrayList<GameObject>();
+		for(int levelID: myLevels.keySet()){
+			Level level = myLevels.get(levelID);
+			objects.addAll(level.getObjectsByColid(colid));
 		}
-		return answer;
+		return objects;
 	}
-	/*
-         * NEED implementation. This method will be called from Factory through reflection
-         */
-	public void modifyActor(){
-	    // need implementation
-	}
+	
+//	public List<String> getAttributes() {
+//		List <String> answer = new ArrayList<String>();
+//		answer.addAll(myScoreManager.getAttributes()); 
+//		answer.addAll(myInputManager.getAttributes()); 
+//		answer.addAll(myTimerManager.getAttributes()); 
+//		for(Integer key: myLevels.keySet()){
+//			answer.addAll(myLevels.get(key).getAttributes()); 
+//		}
+//		return answer;
+//	}
 }

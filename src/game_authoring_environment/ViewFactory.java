@@ -7,6 +7,9 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
 import controller.GAEController;
 
 import reflection.Reflection;
@@ -51,10 +54,10 @@ public class ViewFactory {
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		table.setFillsViewportHeight(true);
 		//Create the scroll pane and add the table to it.
-		JScrollPane scrollPane = new JScrollPane(table);
-		
-		
+		JScrollPane scrollPane = new JScrollPane(table);		
 		//Add the scroll pane to this panel.
 		return scrollPane;
 	}
+		
+	
 }

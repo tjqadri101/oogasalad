@@ -1,5 +1,6 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import jgame.JGObject;
 /*
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends PhysicalObject{
+public abstract class GameObject extends PhysicalObject implements Serializable{
 	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
@@ -26,11 +27,6 @@ public abstract class GameObject extends PhysicalObject{
 	protected double mySetYSpeed;
 	protected HashMap<Integer, String> myCollisionMap;
 	protected int myLives;
-
-	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
-		super(name, collisionId, color);
-		initObject(xpos, ypos);
-	}
 	
 	protected void initObject(double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
@@ -109,8 +105,7 @@ public abstract class GameObject extends PhysicalObject{
 	
 	@Override
 	protected void paintShape() {
-		myEngine.setColor( myColor );
-//		myEngine.drawOval( x, y, (float)myRadius*2, (float)myRadius*2, true, true );
+		// do nothing; image already set
 	}
 	
 	/*

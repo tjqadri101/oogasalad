@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import controller.GAEController;
@@ -23,7 +24,7 @@ public class BehaviorsPanel extends Panel {
 	@Override
 	protected void construct() {
 		this.setLayout(new BorderLayout());
-		this.add(mySubPanel,BorderLayout.NORTH);
+		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
 		this.add(new JTextField(),BorderLayout.SOUTH);
 
 	}

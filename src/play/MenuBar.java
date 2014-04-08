@@ -1,4 +1,4 @@
-package game_authoring_environment;
+package play;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +28,7 @@ import reflection.Reflection;
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
 	
-	private GAEController gController;
+	private static GAEController gController;
 
 	public MenuBar(GAEController gController){
 		super();
@@ -155,14 +155,14 @@ public class MenuBar extends JMenuBar{
 		return this;
 	}
 
-	/*// for testing purposes
+	// for testing purposes
 	 private static void createAndShowGUI() {
 	        //Create and set up the window.
 	        JFrame frame = new JFrame("MenuBarDemo");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        //Create and set up the content pane.
-	        MenuBar demo = new MenuBar();
+	        MenuBar demo = new MenuBar(gController);
 	        frame.setJMenuBar(demo);
 	        //Display the window.
 	        frame.setSize(450, 260);
@@ -177,6 +177,6 @@ public class MenuBar extends JMenuBar{
 	                createAndShowGUI();
 	            }
 	        });
-	    }*/
+	    }
 
 }

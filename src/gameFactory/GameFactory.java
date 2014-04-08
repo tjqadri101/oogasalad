@@ -6,16 +6,13 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-<<<<<<< HEAD
-
 import objects.GameObject;
 import reflection.Reflection;
-=======
+
 import gameFactory.FactoryException;
 import objects.GameObject;
 import reflection.Reflection;
 import stage.Game;
->>>>>>> d2d076f474af42c08981fea348f3e0f8295d4988
 import jgame.JGObject;
 import jgame.platform.JGEngine;
 import reflection.*;
@@ -43,36 +40,36 @@ public class GameFactory {
       * Only couple things as argument, use reflection to create or modify object instance.
       */
     public GameObject processOrder(Game game, int levelID, int sceneID, String order) throws FactoryException{
-            testLegitimateOrder(order);
-            String[] orderSplit = order.split("=");
-            String instruction = orderSplit[0];
-            List<String> parameterList = parseOrder(instruction, orderSplit[1]);
-            Object myObject = Reflection.createInstance(myPath.getString(instruction), 
-                                                        parameterList.get(0), 
-                                                        parameterList.get(1),
+            List<String> parameterList = parseOrder(order);
+            String className = myPath.getString(parameterList.get(0));
+            GameObject myObject = (GameObject) Reflection.createInstance(className, 
+                                                        parameterList.get(1), 
                                                         parameterList.get(2),
                                                         parameterList.get(3),
-                                                        parameterList.get(4));  
-            return (GameObject) myObject;
+                                                        parameterList.get(4),
+                                                        parameterList.get(5));
+            game.addObject(levelID, sceneID, myObject);
+            return myObject;
      }
 
         /*
          * discuss this again
          */
-        private List<String> parseOrder (String instruction, String orderValue) {
+        private List<String> parseOrder (String order) {
             //          checkModifyOrCreate(orderSplit[0]);
-            String tokensList = myFormat.getString(instruction);
+            
+            List<String> inputSplit = Arrays.asList(order.split("\\,"));
+            String tokensList = myFormat.getString(inputSplit.get(0));
+            List<String> instructionList = Arrays.asList(tokensList.split("\\,"));
             List<String> answerList = new ArrayList<String>();
-            List<String> inputParameterSplit = Arrays.asList(orderValue.split("\\,"));
-
-            for(int i = 0; i < inputParameterSplit.size(); i ++){
-                if(inputParameterSplit.get(i).equals("ParameterToken")){
-                    answerList.add(inputParameterSplit.get(i));
+            for(int i = 0; i < inputSplit.size() - 1; i ++){
+                if(instructionList.get(i).equals("ParameterToken")){
+                    answerList.add(inputSplit.get(i));
                 }
             }
             return answerList;
         }
-
+        
         private void testLegitimateOrder (String order) {
             if (!order.contains("=")) 
                 throw new IllegalArgumentException("String " + order + " does not contain =");

@@ -1,5 +1,6 @@
 package engineManagers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,15 +9,16 @@ import java.util.Map;
 import saladConstants.SaladConstants;
 /*
  * @Author: Justin (Zihao) Zhang
+ * Only intended for non-player keys
  */
-public class PlayerInputManager {
+public class InputManager implements Serializable{
 	
 	/*
 	 * Maps keys (i.e. 'G') to the name of the method in GameEngine
 	 */
 	protected Map<Integer, String> myKeyMap;
 	
-	public PlayerInputManager(){
+	public InputManager(){
 		myKeyMap = new HashMap<Integer, String>();
 	}
 	
