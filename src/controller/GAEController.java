@@ -1,7 +1,9 @@
 package controller;
+
 import java.awt.Image;
 import java.util.HashMap;
 
+import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
 
@@ -9,12 +11,16 @@ public class GAEController {
 	
 	private DataController myDataController;
 	private HashMap<String, Image> availableImages;
-	
+	private GameEngine myGameEngine;
 	
 	public GAEController(){
-		
-//		myDataController = new DataController();
-//		myDataController.initGameEditing(new Game());
+		myDataController = new DataController();
+		myDataController.initGameEngine(new Game());
+		myGameEngine = myDataController.getEngine();
+	}
+	
+	public GameEngine getEngine(){
+		return myGameEngine;
 	}
 	
 	public void createPlayer(int ID,String url,String name){

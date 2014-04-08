@@ -6,6 +6,8 @@ import objects.NonPlayer;
 import org.junit.Test;
 
 import stage.Game;
+import stage.Level;
+import stage.Scene;
 import controller.DataController;
 import engine.GameEngine;
 import junit.framework.TestCase;
@@ -17,9 +19,15 @@ import junit.framework.TestCase;
 public class GameObjectTests extends TestCase {
 	
 		protected GameEngine myEngine;
+		protected Game myGame;
 
 	    protected void setUp(){
-	    	myEngine = new GameEngine(new Game());
+	    	myGame = new Game();
+	    	myEngine = new GameEngine(myGame);
+//			Level level = new Level(0);
+//			myGame.addLevel(level);
+//			Scene scene = new Scene(0);
+//			myGame.addScene(0, scene);
 	    }
 		
 		@Test

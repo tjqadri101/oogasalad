@@ -19,12 +19,12 @@ import java.util.List;
  */
 public class GameEngine extends StdGame{
 
-    public static final Dimension SIZE = new Dimension(1200, 900);
+    public static final Dimension SIZE = new Dimension(800, 600);
     public static final String TITLE = "Platformer Game Editor";
     public static final int FRAMES_PER_SECOND = 20;
     public static final int MAX_FRAMES_TO_SKIP = 2;
-    public static final int JGPOINT_X = 960;
-    public static final int JGPOINT_Y = 640;
+    public static final int JGPOINT_X = 800;
+    public static final int JGPOINT_Y = 600;
     
     private String Mode = "Edit";//String or boolean ?
     private Scene currentScene;//ID or Object ?
@@ -33,7 +33,7 @@ public class GameEngine extends StdGame{
     protected Game myGame;
     
     public GameEngine(Game mygame){
-    	initEngine(JGPOINT_X, JGPOINT_Y);
+    	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     	myGame = mygame;
     }
     

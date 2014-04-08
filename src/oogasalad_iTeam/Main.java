@@ -7,6 +7,6 @@ public class Main
 {
 	public static void Main (String[] args)
 	{
-		GAE g = new GAE();    
+		GAEController g = new GAEController();    
 	}
 }
