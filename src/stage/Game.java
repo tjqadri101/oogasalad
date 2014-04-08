@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.annotations.Expose;
-
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
@@ -24,6 +22,7 @@ public class Game implements Serializable{
 	 protected ScoreManager myScoreManager;
 	 protected InputManager myInputManager;
 	 protected TimerManager myTimerManager;
+
 	
 	public Game(){
 		numLevels = 0;
@@ -86,6 +85,26 @@ public class Game implements Serializable{
 	public void resetLevelID(int initialLevelID, int newLevelID) {
 		
 	}
+	
+	public List<GameObject> getObjectsByColid(int colid){
+		List<GameObject> objects = new ArrayList<GameObject>();
+		for(int levelID: myLevels.keySet()){
+			Level level = myLevels.get(levelID);
+			objects.addAll(level.getObjectsByColid(colid));
+		}
+		return objects;
+	}
+	
+//	public List<String> getAttributes() {
+//		List <String> answer = new ArrayList<String>();
+//		answer.addAll(myScoreManager.getAttributes()); 
+//		answer.addAll(myInputManager.getAttributes()); 
+//		answer.addAll(myTimerManager.getAttributes()); 
+//		for(Integer key: myLevels.keySet()){
+//			answer.addAll(myLevels.get(key).getAttributes()); 
+//		}
+//		return answer;
+//	}
 	/*
          * NEED implementation. This method will be called from Factory through reflection
          */

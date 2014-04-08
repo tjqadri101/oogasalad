@@ -9,6 +9,7 @@ import java.util.Map;
 import saladConstants.SaladConstants;
 /*
  * @Author: Justin (Zihao) Zhang
+ * Only intended for non-player keys
  */
 public class InputManager implements Serializable{
 	

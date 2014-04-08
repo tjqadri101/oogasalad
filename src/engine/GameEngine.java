@@ -55,13 +55,8 @@ public class GameEngine extends StdGame{
     }
 
     public void startEdit(){
-<<<<<<< HEAD
     	setBGImage(currentScene.getBackgroundImage());
     	for(GameObject go: currentScene.getGameObjects().values()){
-=======
-    	//setBGImage(currentScene.getBackgroundImage());
-    	for(GameObject go: currentScene.getObjects().values()){
->>>>>>> branch 'master' of https://github.com/duke-compsci308-spring2014/oogasalad_iTeam.git
     		go.resume();
     	}
     }
@@ -75,9 +70,12 @@ public class GameEngine extends StdGame{
     	
     }
     
-    public void addCollisionPair(int srccid, int dstcid, String type){
+    public void addCollisionPair(int srccid, String type, int dstcid, int levelID, int sceneID){
     	collsionPair.add(new int[]{srccid,dstcid});
-    	
+    	List<GameObject> objects = myGame.getObjectsByColid(dstcid);
+    	for(GameObject o: objects){
+    		o.setCollisionBehavior(srccid, type);
+    	}
     }
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
@@ -164,17 +162,21 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public GameObject createPlayer(int unique_id, int colid, String url, double xpos, double ypos, String name){
-    	defineImage(url,"-",0,url,"-");
-        GameObject object = new Player(name, xpos, ypos, colid, url);
+    public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
+    	File file = new File(url);
+    	String filename = file.getName();
+        GameObject object = new Player(name, xpos, ypos, colid, filename);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        myGame.addObject(levelID, sceneID, object);
         return object;
     }
     
-    public GameObject createActor(int colid, String url, double xpos, double ypos, String name){
-    	defineImage(url,"-",0,url,"-");
-        GameObject object = new NonPlayer(name, xpos, ypos, colid, url);
+    public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
+    	File file = new File(url);
+    	String filename = file.getName();
+        GameObject object = new NonPlayer(name, xpos, ypos, colid, filename);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        myGame.addObject(levelID, sceneID, object);
         return object;
     }
     

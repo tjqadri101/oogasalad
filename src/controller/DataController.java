@@ -11,7 +11,6 @@ import org.xml.sax.SAXException;
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
-import parser.XMLParser;
 import stage.Game;
 import reflection.Reflection;
 /*
@@ -32,7 +31,7 @@ public class DataController {
 	public DataController(){
 		myGameSaverAndLoader = new GameSaverAndLoader(); 
 		myGame = new Game();
-		myGameEngine = new GameEngine();
+		myGameEngine = new GameEngine(myGame);
 		myFactory = new GameFactory(myGameEngine);
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
@@ -58,7 +57,7 @@ public class DataController {
 	 * Input is a url to the XML file created by the GAE
 	 */
 	public void exportXML(String url) throws ParserConfigurationException{
-		myGameSaverAndLoader.save(myGame, url);
+//		myGameSaverAndLoader.save(myGame, url);
 	}
 	
 	/*
@@ -66,10 +65,10 @@ public class DataController {
 	 * Input is a url to the XML file loaded by PlayView
 	 */
 	public void readXML(String url) throws ParserConfigurationException, SAXException, IOException{
-		List<String> orders = myParser.readFromFile(url);
-		for(String order: orders){
-			receiveOrder(order);
-		}
+//		List<String> orders = myParser.readFromFile(url);
+//		for(String order: orders){
+//			receiveOrder(order);
+//		}
 	}
 	
 //	/*

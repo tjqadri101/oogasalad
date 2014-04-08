@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.annotations.Expose;
-
 import objects.GameObject;
 import saladConstants.SaladConstants;
 
@@ -17,10 +15,10 @@ import saladConstants.SaladConstants;
  *
  */
 public class Level implements Serializable {
-
 	 protected Map<Integer, Scene> myScenes;
 	 protected int myID;
 	 protected int mySceneTotal = 0;
+
 
 	public Level(int hash) {
 		myID = hash;
@@ -56,6 +54,26 @@ public class Level implements Serializable {
 		myScenes.remove(sceneID);
 	}
 	
+	public List<GameObject> getObjectsByColid(int colid){
+		List<GameObject> objects = new ArrayList<GameObject>();
+		for(int sceneID: myScenes.keySet()){
+			Scene scene = myScenes.get(sceneID);
+			objects.addAll(scene.getObjectsByColid(colid));
+		}
+		return objects;
+	}
+
+//	public List<String> getAttributes() {
+//		List<String> answer = new ArrayList<String>();
+//		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
+//		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
+//		answer.addAll(getSceneAttributes());
+//		return answer;
+//	}
+//
+//	public List<String> getSceneAttributes(){
+//		List<String> answer = new ArrayList<String>();
+//=======
 	
 	public Map<Integer, Map<Integer, GameObject>> getGameObjects(){ 
 		Map<Integer, Map<Integer, GameObject>> levelGameObjects = new HashMap<Integer, Map<Integer, GameObject>>(); 

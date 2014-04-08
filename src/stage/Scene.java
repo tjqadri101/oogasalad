@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.google.gson.annotations.Expose;
-
 import objects.GameObject;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
@@ -20,13 +18,13 @@ import saladConstants.SaladConstants;
  */
 
 public class Scene implements Serializable{
-	
-	
+
 	 private int myID;
 	 private int myObjectCounter = 0;
 	 private String myBackground;
-	private Map<Integer, GameObject> myObjects;
+	 private Map<Integer, GameObject> myObjects;
 	 private String myWinString;
+
 	
 	public Scene(int hash) {
 		myID = hash;
@@ -69,5 +67,20 @@ public class Scene implements Serializable{
 	public GameObject getObject(int objectID) {
 		return myObjects.get(objectID);
 	}
+
+	public List<GameObject> getObjectsByColid(int colid){
+		List<GameObject> objects = new ArrayList<GameObject>();
+		for(int objectID: myObjects.keySet()){
+			GameObject object = myObjects.get(objectID);
+			if(object.colid == colid) objects.add(object);
+		}
+		return objects;
+	}
 	
+	public List<String> getAttributes() {
+		List<String> answer = new ArrayList<String>();
+		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
+		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
+		return answer;
+	}
 }
