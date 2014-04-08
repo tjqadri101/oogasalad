@@ -14,7 +14,7 @@ public class GAE {
 		GAEController gController = new GAEController();
 		FullView fv = new FullView(gController);
 		MenuBar mb = new MenuBar(gController);
-		mainFrame.add(fv, BorderLayout.SOUTH);
+		mainFrame.add(fv, BorderLayout.CENTER);
 		mainFrame.add(mb, BorderLayout.NORTH);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
