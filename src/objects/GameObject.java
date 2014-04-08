@@ -18,7 +18,6 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
-    public static final String DEFAULT_NULL = "null";
     
 	protected ResourceBundle myBehaviors;
 	protected String myDieMethod;
@@ -30,8 +29,6 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	
 	protected void initObject(double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
-		myDieMethod = DEFAULT_NULL;
-		myMoveMethod = DEFAULT_NULL;
 		myCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
 		myLives = DEFAULT_LIVES; // change later
@@ -50,6 +47,10 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 		myLives --;
 	}
 	
+	public void setLives(int lives){
+		myLives = lives;
+	}
+	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
 		myMoveMethod = s;
 		mySetXSpeed= xspeed;
@@ -64,10 +65,10 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 		behaviorNoParameterReflection(myBehaviors, myDieMethod, "remove");	
 	}
 	
-	public void behaviorNoParameterReflection(ResourceBundle myBundle, String myFile, String methodName){
-		if(myFile.equals(DEFAULT_NULL)) return;
+	protected void behaviorNoParameterReflection(ResourceBundle myBundle, String myString, String methodName){
+		if(myString == null) return;
 		try{
-			Object behavior = Reflection.createInstance(myBundle.getString(myFile), this);
+			Object behavior = Reflection.createInstance(myBundle.getString(myString), this);
 			Reflection.callMethod(behavior, methodName);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
@@ -94,7 +95,7 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
     }
 	
 	public void autoMove(){
-		if(myMoveMethod.equals(DEFAULT_NULL)) return;
+		if(myMoveMethod == null) return;
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveMethod), this);
 			Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);	
@@ -122,8 +123,4 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 		}
 		return answer;
 	}
-	
-	//public double getXPos(){ return this.x; }
-	
-	//public double getYPos(){ return this.y; }
 }

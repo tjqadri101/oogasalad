@@ -18,7 +18,7 @@ import reflection.Reflection;
  */
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-	public static final String DEFAULT_CREATEORMODIFY = "CreationOrModify";
+	public static final String DEFAULT_CREATEORMODIFY = "KeyDataController";
 	
 	protected Game myGame;
     protected int currentLevelID;
