@@ -6,7 +6,8 @@ public class GAEController {
 	private DataController myDataController;
 	
 	public GAEController(){
-		//myDataController = new DataController();
+		myDataController = new DataController();
+		myDataController
 	}
 	
 	public void createPlayer(int ID,String url,String name){
