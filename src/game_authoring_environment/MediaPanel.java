@@ -17,20 +17,23 @@ import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 import controller.GAEController;
 
 public class MediaPanel extends Panel {
 
 	private SubPanel mySubPanel;
-	private JList myMediaList;
-	private JList myNameList;
-	private int mySeletedIndex = -1;
-	private DefaultListModel mediaListModel = new DefaultListModel();
-	private DefaultListModel nameListModel = new DefaultListModel();
+	private JTable myMediaTable;
+	private int mySeletedRow = -1;
+	private DefaultTableModel mediaTableModel;
 	private GAEController gController;
 
 	public MediaPanel(GAEController gController){
@@ -44,39 +47,36 @@ public class MediaPanel extends Panel {
 	protected void construct() {
 		makeLists();
 		this.setLayout(new BorderLayout());
-		this.add(mySubPanel,BorderLayout.NORTH);
-		this.add(combineTwoLists(),BorderLayout.CENTER);
+		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
+		this.add(new JScrollPane(myMediaTable),BorderLayout.CENTER);
 	}
 
-	private JComponent combineTwoLists() {//testing
-		JPanel scrollPane = new JPanel();
-		scrollPane.setLayout(new BorderLayout());
-		scrollPane.add(myMediaList,BorderLayout.WEST);
-		scrollPane.add(myNameList,BorderLayout.CENTER);
-		return scrollPane;
-	}
 
 	private void makeLists() {
-		myMediaList = new JList();
-		myMediaList.setModel(mediaListModel);
-		myNameList = new JList();
-		myNameList.setModel(nameListModel);
-		MouseListener mouseListener = new MouseAdapter() {
-		     public void mouseClicked(MouseEvent e) {
-		    	 if (e.getClickCount() == 1 && mediaListModel.size()!= 0) {
-		    		 //single clicked
-		    		 mySeletedIndex = myMediaList.locationToIndex(e.getPoint());	
-		    		 //need to change attribute display to current actor
-		          }
-
-		    	 else if (e.getClickCount() == 2 && mediaListModel.size()!= 0) {
-		             //double clicked
-		          }
-		     }
-		 };
-		 myMediaList.addMouseListener(mouseListener);
-		 myNameList.addMouseListener(mouseListener);
-
+		myMediaTable = new JTable();
+		mediaTableModel = new DefaultTableModel(new Object[]{"Media", "Name"}, 0){
+			@Override
+			public Class<?> getColumnClass(int col) {
+				if (col == 1) {
+					return super.getColumnClass(col);
+				} else {
+					return ImageIcon.class;
+				}
+			}
+			@Override
+			public boolean isCellEditable(int row, int column){  
+				return false;  
+			}
+		};
+		myMediaTable.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
+		myMediaTable.setModel(mediaTableModel);
+		ListSelectionModel cellSelectionModel = myMediaTable.getSelectionModel();
+		cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				mySeletedRow = myMediaTable.getSelectedRow();	        
+			}
+		});
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class MediaPanel extends Panel {
 		addButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				addMedia();
+				addMedia();				
 			}
 		});
 
@@ -121,9 +121,9 @@ public class MediaPanel extends Panel {
 	}
 
 	private void deleteMedia(){		
-		if(mySeletedIndex > -1){
+		if(mySeletedRow > -1){
 			//delete media here
-			mediaListModel.remove(mySeletedIndex);			
+			mediaTableModel.removeRow(mySeletedRow);			
 		}		
 	}
 
@@ -143,8 +143,10 @@ public class MediaPanel extends Panel {
 				Image img = icon.getImage();
 				Image newimg = img.getScaledInstance( 50, 50, Image.SCALE_SMOOTH ) ;
 				icon = new ImageIcon( newimg );
-				mediaListModel.addElement(icon);
-				nameListModel.addElement(chooser.getSelectedFile().getName());
+				Object toAdd[] = {icon , chooser.getSelectedFile().getName()};
+				mediaTableModel.addRow(toAdd);
+				myMediaTable.setRowHeight(icon.getIconHeight() +2);
+				myMediaTable.getColumnModel().getColumn(0).setMaxWidth(icon.getIconWidth() +2);
 			}
 			return chooser.getSelectedFile().getName();
 		}catch(Exception e){
