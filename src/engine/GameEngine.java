@@ -11,6 +11,7 @@ import objects.NonPlayer;
 import objects.Player;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 /*
@@ -31,12 +32,9 @@ public class GameEngine extends StdGame{
     
     protected Game myGame;
     
-    public GameEngine(JGPoint size){
-    	initEngine(size.x,size.y); 
-    }
-    
-    public GameEngine(){
-		new GameEngine(new JGPoint(JGPOINT_X, JGPOINT_Y));
+    public GameEngine(Game mygame){
+    	initEngine(JGPOINT_X, JGPOINT_Y);
+    	myGame = mygame;
     }
     
     @Override
@@ -160,15 +158,18 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public GameObject createPlayer(int colid, String gfxname, double xpos, double ypos, String name){
-        
-        GameObject object = new Player(name, xpos, ypos, colid, gfxname);
+    public GameObject createPlayer(int colid, String url, double xpos, double ypos, String name){
+    	File file = new File(url);
+    	defineImage(url,"-",colid,file.getName(),"-");
+        GameObject object = new Player(name, xpos, ypos, colid, url);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;
     }
     
-    public GameObject createActor(int colid, String gfxname, double xpos, double ypos, String name){
-        GameObject object = new NonPlayer(name, xpos, ypos, colid, gfxname);
+    public GameObject createActor(int colid, String url, double xpos, double ypos, String name){
+    	File file = new File(url);
+    	defineImage(url,"-",colid,file.getName(),"-");
+        GameObject object = new NonPlayer(name, xpos, ypos, colid, url);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;
     }

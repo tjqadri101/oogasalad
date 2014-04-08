@@ -27,7 +27,8 @@ public class FactoryTest {
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(myObject, new GameObject());
+        
+        assertEquals(myObject, "");
     }
 }
 
