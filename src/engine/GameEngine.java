@@ -70,8 +70,9 @@ public class GameEngine extends StdGame{
     	
     }
     
-    public void addCollisionPair(int srccid, int dstcid){
+    public void addCollisionPair(int srccid, int dstcid, String type){
     	collsionPair.add(new int[]{srccid,dstcid});
+    	
     }
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
@@ -158,17 +159,15 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public GameObject createPlayer(int colid, String url, double xpos, double ypos, String name){
-    	File file = new File(url);
-    	defineImage(url,"-",colid,file.getName(),"-");
+    public GameObject createPlayer(int unique_id, int colid, String url, double xpos, double ypos, String name){
+    	defineImage(url,"-",0,url,"-");
         GameObject object = new Player(name, xpos, ypos, colid, url);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;
     }
     
     public GameObject createActor(int colid, String url, double xpos, double ypos, String name){
-    	File file = new File(url);
-    	defineImage(url,"-",colid,file.getName(),"-");
+    	defineImage(url,"-",0,url,"-");
         GameObject object = new NonPlayer(name, xpos, ypos, colid, url);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;
