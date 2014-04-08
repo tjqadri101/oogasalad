@@ -16,14 +16,14 @@ import objects.Player;
 
 public class Game implements Serializable{
 	
-	@Expose public static final int DEFAULT_SCORE = 0;
+	 public static final int DEFAULT_SCORE = 0;
 	
-	@Expose protected Map<Integer, Level> myLevels;
-	@Expose protected Player myPlayer;
-	@Expose protected int numLevels;
-	@Expose protected ScoreManager myScoreManager;
-	@Expose protected InputManager myInputManager;
-	@Expose protected TimerManager myTimerManager;
+	 protected Map<Integer, Level> myLevels;
+	 protected Player myPlayer;
+	 protected int numLevels;
+	 protected ScoreManager myScoreManager;
+	 protected InputManager myInputManager;
+	 protected TimerManager myTimerManager;
 	
 	public Game(){
 		numLevels = 0;

@@ -17,9 +17,6 @@ import stage.Game;
 import stage.Level;
 import stage.Scene;
 
-import com.google.gson.Gson; 
-import com.google.gson.GsonBuilder;
-
 public class GameSaverAndLoader { 
 	private Parser myParser; 
 	

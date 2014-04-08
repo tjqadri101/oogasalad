@@ -18,9 +18,9 @@ import saladConstants.SaladConstants;
  */
 public class Level implements Serializable {
 
-	@Expose protected Map<Integer, Scene> myScenes;
-	@Expose protected int myID;
-	@Expose protected int mySceneTotal = 0;
+	 protected Map<Integer, Scene> myScenes;
+	 protected int myID;
+	 protected int mySceneTotal = 0;
 
 	public Level(int hash) {
 		myID = hash;

@@ -22,11 +22,11 @@ import saladConstants.SaladConstants;
 public class Scene implements Serializable{
 	
 	
-	@Expose private int myID;
-	@Expose private int myObjectCounter = 0;
-	@Expose private String myBackground;
+	 private int myID;
+	 private int myObjectCounter = 0;
+	 private String myBackground;
 	private Map<Integer, GameObject> myObjects;
-	@Expose private String myWinString;
+	 private String myWinString;
 	
 	public Scene(int hash) {
 		myID = hash;
