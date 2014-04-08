@@ -27,10 +27,10 @@ public abstract class GameObject extends PhysicalObject{
 	protected HashMap<Integer, String> myCollisionMap;
 	protected int myLives;
 
-	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
-		super(name, collisionId, color);
-		initObject(xpos, ypos);
-	}
+//	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
+//		super(name, collisionId, color);
+//		initObject(xpos, ypos);
+//	}
 	
 	protected void initObject(double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
@@ -109,7 +109,7 @@ public abstract class GameObject extends PhysicalObject{
 	
 	@Override
 	protected void paintShape() {
-		myEngine.setColor( myColor );
+//		myEngine.setColor( myColor );
 //		myEngine.drawOval( x, y, (float)myRadius*2, (float)myRadius*2, true, true );
 	}
 	

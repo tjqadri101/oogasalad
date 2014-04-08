@@ -27,10 +27,13 @@ public class DataController {
 	
 	public DataController(){
 		myParser = new ParseGame();
-		myGame = new Game();
-		myGameEngine = new GameEngine();
-		myFactory = new GameFactory(myGameEngine);
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
+	}
+	
+	public void initGameEditing(Game game){
+		myGame = game;
+		myGameEngine = new GameEngine(myGame);
+		myFactory = new GameFactory(myGameEngine);
 	}
 	
 	/*

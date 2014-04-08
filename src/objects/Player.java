@@ -13,10 +13,6 @@ public class Player extends GameObject {
 	protected int myKeyLeft;
 	protected int myKeyRight;
 	protected int myKeyShoot;
-
-	public Player(String name, double xpos, double ypos, int collisionId, JGColor color) {
-		super(name, xpos, ypos, collisionId, color);
-	}
 	
 	public Player(String name, double xpos, double ypos, int collisionId, String gfxname) {
 		super(name, xpos, ypos, collisionId, gfxname);
