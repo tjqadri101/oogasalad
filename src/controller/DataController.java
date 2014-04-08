@@ -30,7 +30,7 @@ public class DataController {
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
-	public void initGameEditing(Game game){
+	public void initGameEngine(Game game){
 		myGame = game;
 		myGameEngine = new GameEngine(myGame);
 		myFactory = new GameFactory(myGameEngine);
@@ -64,6 +64,14 @@ public class DataController {
 			receiveOrder(order);
 		}
 	}
+	
+//	/*
+//	 * Called by PlayView to import the game data
+//	 * Input is a url to the XML file loaded by PlayView
+//	 */
+//	public void readXML(String url) throws ParserConfigurationException, SAXException, IOException{
+//		initGameEngine(myParser.readFromFile(url));
+//	}
 	
 	/*
 	 * Called by Game Authorizing Environment to read the info about a specific Game Object (i.e. Actor)
