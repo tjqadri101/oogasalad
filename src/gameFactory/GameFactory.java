@@ -40,18 +40,16 @@ public class GameFactory {
       * Only couple things as argument, use reflection to create or modify object instance.
       */
     public GameObject processOrder(Game game, int levelID, int sceneID, String order) throws FactoryException{
-//            testLegitimateOrder(order);
-//            String[] orderSplit = order.split("=");
-//            String instruction = orderSplit[0];
             List<String> parameterList = parseOrder(order);
             String className = myPath.getString(parameterList.get(0));
-            Object myObject = Reflection.createInstance(className, 
+            GameObject myObject = (GameObject) Reflection.createInstance(className, 
                                                         parameterList.get(1), 
                                                         parameterList.get(2),
                                                         parameterList.get(3),
                                                         parameterList.get(4),
-                                                        parameterList.get(5));  
-            return (GameObject) myObject;
+                                                        parameterList.get(5));
+            game.addObject(levelID, sceneID, myObject);
+            return myObject;
      }
 
         /*
