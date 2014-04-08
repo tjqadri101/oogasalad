@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import controller.GAEController;
@@ -26,9 +27,9 @@ public class ActoreditorPanel extends Panel {
 	@Override
 	protected void construct() {
 		this.setLayout(new BorderLayout());		
-		this.add(mySubPanel, BorderLayout.NORTH);
+		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
 	//	this.add(ViewFactory.createJFileChooser(), BorderLayout.CENTER);
-		this.add(makeTable(), BorderLayout.SOUTH);
+		this.add(new JScrollPane(makeTable()), BorderLayout.SOUTH);
 	}
 
 	@Override
