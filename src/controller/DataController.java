@@ -30,9 +30,6 @@ public class DataController {
 	
 	public DataController(){
 		myGameSaverAndLoader = new GameSaverAndLoader(); 
-		myGame = new Game();
-		myGameEngine = new GameEngine(myGame);
-		myFactory = new GameFactory(myGameEngine);
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
@@ -78,6 +75,14 @@ public class DataController {
 	 */
 	public List<String> getObjectInfo(int id){
 		return myGame.getGameObject(currentLevelID, currentSceneID, id).getAttributes();
+	}
+	
+	public int getCurrentLevelID(){
+		return currentLevelID;
+	}
+	
+	public int getCurrentSceneID(){
+		return currentSceneID;
 	}
 	
 	
