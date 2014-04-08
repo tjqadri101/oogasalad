@@ -44,7 +44,8 @@ public class GameFactory {
 //            String[] orderSplit = order.split("=");
 //            String instruction = orderSplit[0];
             List<String> parameterList = parseOrder(order);
-            Object myObject = Reflection.createInstance(myPath.getString(parameterList.get(1)), 
+            String className = myPath.getString(parameterList.get(0));
+            Object myObject = Reflection.createInstance(className, 
                                                         parameterList.get(1), 
                                                         parameterList.get(2),
                                                         parameterList.get(3),
@@ -58,12 +59,14 @@ public class GameFactory {
          */
         private List<String> parseOrder (String order) {
             //          checkModifyOrCreate(orderSplit[0]);
+            
+            List<String> inputSplit = Arrays.asList(order.split("\\,"));
+            String tokensList = myFormat.getString(inputSplit.get(0));
+            List<String> instructionList = Arrays.asList(tokensList.split("\\,"));
             List<String> answerList = new ArrayList<String>();
-            List<String> inputParameterSplit = Arrays.asList(order.split("\\,"));
-            String tokensList = myFormat.getString(inputParameterSplit.get(0));
-            for(int i = 0; i < inputParameterSplit.size(); i ++){
-                if(inputParameterSplit.get(i).equals("ParameterToken")){
-                    answerList.add(inputParameterSplit.get(i));
+            for(int i = 0; i < inputSplit.size() - 1; i ++){
+                if(instructionList.get(i).equals("ParameterToken")){
+                    answerList.add(inputSplit.get(i));
                 }
             }
             return answerList;
