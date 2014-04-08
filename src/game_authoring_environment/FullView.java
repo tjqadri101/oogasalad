@@ -19,6 +19,8 @@ import controller.GAEController;
 			setLeftComponent(lp);
 			setRightComponent(rp);
 			setPreferredSize(new Dimension(FULL_VIEW_WIDTH,FULL_VIEW_HEIGHT));
-		}	
+		}
+		
+	
 
 }

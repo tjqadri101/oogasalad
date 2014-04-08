@@ -1,22 +1,30 @@
 package controller;
+
+
 import game_authoring_environment.GAE;
 
 import java.awt.Image;
 import java.util.HashMap;
-
+import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
 
 public class GAEController {
 	
 	private DataController myDataController;
+	private GAE g;
 	private HashMap<String, Image> availableImages;
-	
+	private GameEngine myGameEngine;
 	
 	public GAEController(){
-		GAE g = new GAE(this);
-//		myDataController = new DataController();
-//		myDataController.initGameEditing(new Game());
+		g = new GAE(this);
+		myDataController = new DataController();
+		myDataController.initGameEngine(new Game());
+		myGameEngine = myDataController.getEngine();
+	}
+	
+	public GameEngine getEngine(){
+		return myGameEngine;
 	}
 	
 	public void createPlayer(int ID,String url,String name){
