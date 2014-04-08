@@ -39,6 +39,10 @@ public class DataController {
 		myFactory = new GameFactory(myGameEngine);
 	}
 	
+	public GameEngine getEngine(){
+		return myGameEngine;
+	}
+	
 	
 	/*
 	 * Called by Game Authorizing Environment to send the command String

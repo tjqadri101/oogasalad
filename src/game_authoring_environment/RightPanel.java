@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.SpinnerModel;
@@ -33,7 +34,7 @@ public class RightPanel extends JSplitPane {
 		myGAEController = gController;
 		setOrientation(VERTICAL_SPLIT);
 		setTopComponent(createSpinnerPanel(gController));
-		setBottomComponent(new JPanel());
+		setBottomComponent(new JScrollPane(myGAEController.getEngine()));
 		fieldName = "";
 	}	
 	
