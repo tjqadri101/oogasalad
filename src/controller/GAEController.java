@@ -1,4 +1,6 @@
 package controller;
+import game_authoring_environment.GAE;
+
 import java.awt.Image;
 import java.util.HashMap;
 
@@ -12,7 +14,7 @@ public class GAEController {
 	
 	
 	public GAEController(){
-		
+		GAE g = new GAE(this);
 //		myDataController = new DataController();
 //		myDataController.initGameEditing(new Game());
 	}
@@ -90,4 +92,9 @@ public class GAEController {
 	public DataController getDataController(){
 		return myDataController;
 	}
+	
+	public void switchActiveTab(int index){
+		
+	}
+	
 }

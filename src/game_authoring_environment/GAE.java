@@ -8,12 +8,14 @@ import javax.swing.JFrame;
 public class GAE {
 	
 	public static final String TITLE = "OOGASalad iTeam";
+	private static FullView fv;
+	private static MenuBar mb; 
+	private static GAEController gController;
 	
-	public static void main(String args[]){
+	public GAE(GAEController gController){
 		JFrame mainFrame = makeFrame(TITLE);
-		GAEController gController = new GAEController();
-		FullView fv = new FullView(gController);
-		MenuBar mb = new MenuBar(gController);
+		fv = new FullView(gController);
+		mb = new MenuBar(gController);
 		mainFrame.add(fv, BorderLayout.CENTER);
 		mainFrame.add(mb, BorderLayout.NORTH);
 		mainFrame.pack();
