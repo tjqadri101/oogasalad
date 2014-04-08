@@ -55,10 +55,7 @@ public class GameEngine extends StdGame{
     }
 
     public void startEdit(){
-    	setBGImage(currentScene.getBackgroundImage());
-    	for(GameObject go: currentScene.getGameObjects().values()){
-    		go.resume();
-    	}
+    	//setBGImage(currentScene.getBackgroundImage());
     }
     public void doFrameEdit(){
     	moveObjects();
@@ -67,7 +64,7 @@ public class GameEngine extends StdGame{
     	}
     }
     public void paintFrameEdit(){
-    	
+
     }
     
     public void addCollisionPair(int srccid, String type, int dstcid, int levelID, int sceneID){
@@ -83,7 +80,10 @@ public class GameEngine extends StdGame{
     		go.suspend();
     	}
     	currentScene = myGame.getScene(currentLevelID, currentSceneID);
-    	setGameState(Mode);
+    	for(GameObject go: currentScene.getGameObjects().values()){
+    		go.resume();
+    	}
+    	//setGameState(Mode);
     }
     
     
