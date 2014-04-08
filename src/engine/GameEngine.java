@@ -163,16 +163,18 @@ public class GameEngine extends StdGame{
      * Return a created GameObject 
      */
     public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
-    	defineImage(url,"-",0,url,"-");
-        GameObject object = new Player(name, xpos, ypos, colid, url);
+    	File file = new File(url);
+    	String filename = file.getName();
+        GameObject object = new Player(name, xpos, ypos, colid, filename);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.addObject(levelID, sceneID, object);
         return object;
     }
     
     public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
-    	defineImage(url,"-",0,url,"-");
-        GameObject object = new NonPlayer(name, xpos, ypos, colid, url);
+    	File file = new File(url);
+    	String filename = file.getName();
+        GameObject object = new NonPlayer(name, xpos, ypos, colid, filename);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.addObject(levelID, sceneID, object);
         return object;
