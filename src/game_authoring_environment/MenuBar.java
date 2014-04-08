@@ -86,12 +86,12 @@ public class MenuBar extends JMenuBar{
 			saveFile = new File(saveFile.getAbsolutePath() + ".xml");
 			
 		}
-		/*try {
+		try {
 			gController.getDataController().exportXML(saveFile.getAbsolutePath());
 		} catch (ParserConfigurationException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}*/
+		}
 	}
 	
 	private void openGameFile(){

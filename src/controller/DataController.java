@@ -26,11 +26,21 @@ public class DataController {
 	protected ResourceBundle myOrderReflector;
 	
 	public DataController(){
+<<<<<<< HEAD
 		myParser = new XMLParser();
 		myGame = new Game();
 		myGameEngine = new GameEngine();
 		myFactory = new GameFactory(myGameEngine);
+=======
+		myParser = new ParseGame();
+>>>>>>> branch 'master' of https://github.com/duke-compsci308-spring2014/oogasalad_iTeam.git
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
+	}
+	
+	public void initGameEngine(Game game){
+		myGame = game;
+		myGameEngine = new GameEngine(myGame);
+		myFactory = new GameFactory(myGameEngine);
 	}
 	
 	/*
@@ -62,7 +72,23 @@ public class DataController {
 		}
 	}
 	
-	protected void callFactoryToProcess(String order) {
+//	/*
+//	 * Called by PlayView to import the game data
+//	 * Input is a url to the XML file loaded by PlayView
+//	 */
+//	public void readXML(String url) throws ParserConfigurationException, SAXException, IOException{
+//		initGameEngine(myParser.readFromFile(url));
+//	}
+	
+	/*
+	 * Called by Game Authorizing Environment to read the info about a specific Game Object (i.e. Actor)
+	 * Input is an id number matched to the Game Object
+	 */
+	public List<String> getObjectInfo(int id){
+		return myGame.getGameObject(currentLevelID, currentSceneID, id).getAttributes();
+	}
+	
+	public void callFactoryToProcess(String order) {
 		try{
 			myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);	
 		} catch (Exception e){
@@ -70,13 +96,13 @@ public class DataController {
 		}
 	}
 	
-	protected void switchToScene(String order){
+	public void switchToScene(String order){
 		String[] orders = order.split(",");
 		currentSceneID = Integer.parseInt(orders[2]);
 		myGameEngine.setCurrentScene(currentLevelID, currentSceneID);
 	}
 	
-	protected void switchToLevel(String order){
+	public void switchToLevel(String order){
 		String[] orders = order.split(",");
 		currentLevelID = Integer.parseInt(orders[2]);
 	}
