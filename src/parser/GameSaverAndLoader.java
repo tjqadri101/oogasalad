@@ -23,7 +23,7 @@ import com.google.gson.GsonBuilder;
 public class GameSaverAndLoader { 
 	private Parser myParser; 
 	
-	GameSaverAndLoader(){ 
+	public GameSaverAndLoader(){ 
 		myParser = new Parser(); 
 	}
 

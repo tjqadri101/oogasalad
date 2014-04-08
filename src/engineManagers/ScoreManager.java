@@ -6,12 +6,8 @@ import java.util.List;
 
 import saladConstants.SaladConstants;
 
-<<<<<<< HEAD
 public class ScoreManager implements Serializable {
 	
-=======
-public class ScoreManager {
->>>>>>> branch 'master' of https://github.com/duke-compsci308-spring2014/oogasalad_iTeam.git
 	public static final String INITIAL_SCORE = "InitialScore";
 	
 	protected int myScore;
