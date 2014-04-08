@@ -16,6 +16,7 @@ public class Attributes extends JTabbedPane {
 
 		makePanels(gController);
 		addTabs();
+		
 	}
 	
 	private void addTabs() {
@@ -33,5 +34,8 @@ public class Attributes extends JTabbedPane {
 		mySceneEditorPanel = ViewFactory.buildPanel(PanelType.SCENEEDITOR,gController);
 		myGameEditorPanel = ViewFactory.buildPanel(PanelType.GAMEEDITOR,gController);
 	}
-
+	
+	public void setTab(int index){
+		this.setSelectedIndex(index);
+	}
 }

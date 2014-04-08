@@ -18,7 +18,7 @@ import reflection.Reflection;
  */
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-	public static final String DEFAULT_CREATEORMODIFY = "CreationOrModify";
+	public static final String DEFAULT_CREATEORMODIFY = "KeyDataController";
 	
 	protected Game myGame;
     protected int currentLevelID;
@@ -39,15 +39,10 @@ public class DataController {
 		myFactory = new GameFactory(myGameEngine);
 	}
 	
-	public GameEngine getEngine(){
-		return myGameEngine;
-	}
-	
-	
 	/*
 	 * Called by Game Authorizing Environment to display the engine inside its GUI
 	 */
-	public GameEngine getGameEngine(){
+	public GameEngine getEngine(){
 		return myGameEngine;
 	}
 	

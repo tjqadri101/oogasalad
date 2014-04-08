@@ -1,4 +1,10 @@
 package controller;
+
+import game_authoring_environment.GAE;
+
+import java.awt.Image;
+import java.util.HashMap;
+
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
@@ -6,9 +12,13 @@ import stage.Game;
 public class GAEController {
 	
 	private DataController myDataController;
+	private GAE g;
+
+	private HashMap<String, Image> availableImages;
 	private GameEngine myGameEngine;
 	
 	public GAEController(){
+		g = new GAE(this);
 		myDataController = new DataController();
 		myDataController.initGameEngine(new Game());
 		myGameEngine = myDataController.getEngine();
@@ -91,4 +101,9 @@ public class GAEController {
 	public DataController getDataController(){
 		return myDataController;
 	}
+	
+	public void switchActiveTab(int index){
+		
+	}
+	
 }
