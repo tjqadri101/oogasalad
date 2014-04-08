@@ -1,13 +1,15 @@
 package stage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import objects.GameObject;
+import com.google.gson.annotations.Expose;
 
+import objects.GameObject;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 
@@ -17,20 +19,24 @@ import saladConstants.SaladConstants;
  *
  */
 
-public class Scene {
+public class Scene implements Serializable{
 	
 	
-	private int myID;
-	private int myObjectCounter = 0;
-	private String myBackground;
+	@Expose private int myID;
+	@Expose private int myObjectCounter = 0;
+	@Expose private String myBackground;
 	private Map<Integer, GameObject> myObjects;
-	private String myWinString;
+	@Expose private String myWinString;
 	
 	public Scene(int hash) {
 		myID = hash;
 		myObjects = new HashMap<Integer, GameObject>();
 	}
 		
+	public int getID(){
+		return myID; 
+	}
+	
 	public void addObject(GameObject object ) {
 		myObjectCounter++;
 		myObjects.put(myObjectCounter, (GameObject) object );
@@ -40,8 +46,12 @@ public class Scene {
 		myObjects.get(playerID).setPos(x,y);
 	}
 
-	public Map<Integer, GameObject> getObjects() {
+	public Map<Integer, GameObject> getGameObjects() {
 		return myObjects;
+	}
+	
+	public void setObjects(Map<Integer, GameObject> gameObjects){
+		myObjects= gameObjects;
 	}
 	
 	public void setBackgroundImage(String s) {
@@ -60,11 +70,4 @@ public class Scene {
 		return myObjects.get(objectID);
 	}
 	
-	
-	public List<String> getAttributes() {
-		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
-		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
-		return answer;
-	}
 }

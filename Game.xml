@@ -1,1 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Game><GameElement><Key>ModifyScoreManager</Key><Type_0>InitialScore</Type_0><Parameter_0>0</Parameter_0></GameElement><GameElement><Key>CreateLevel</Key><Type_0>ID</Type_0><Parameter_0>0</Parameter_0></GameElement><GameElement><Key>SwitchLevel</Key><Type_0>ID</Type_0><Parameter_0>0</Parameter_0></GameElement><GameElement><Key>CreateScene</Key><Type_0>ID</Type_0><Parameter_0>0</Parameter_0><Type_1>Image</Type_1><Parameter_1>null</Parameter_1></GameElement><GameElement><Key>SwitchScene</Key><Type_0>ID</Type_0><Parameter_0>0</Parameter_0><Type_1>Image</Type_1><Parameter_1>null</Parameter_1></GameElement></Game>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Game>
+	<GameElement>
+		<Key>ModifyScoreManager</Key>
+		<Type_0>InitialScore</Type_0>
+		<Parameter_0>0</Parameter_0>
+	</GameElement>
+	<GameElement>
+		<Key>CreateLevel</Key>
+		<Type_0>ID</Type_0>
+		<Parameter_0>0</Parameter_0>
+	</GameElement>
+	<GameElement>
+		<Key>SwitchLevel</Key>
+		<Type_0>ID</Type_0>
+		<Parameter_0>0</Parameter_0>
+	</GameElement>
+	<GameElement>
+		<Key>CreateScene</Key>
+		<Type_0>ID</Type_0>
+		<Parameter_0>0</Parameter_0>
+		<Type_1>Image</Type_1>
+		<Parameter_1>null</Parameter_1>
+	</GameElement>
+	<GameElement>
+		<Key>SwitchScene</Key>
+		<Type_0>ID</Type_0>
+		<Parameter_0>0</Parameter_0>
+		<Type_1>Image</Type_1>
+		<Parameter_1>null</Parameter_1>
+	</GameElement>
+</Game>

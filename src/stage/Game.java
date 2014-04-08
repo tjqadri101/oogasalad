@@ -1,9 +1,12 @@
 package stage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.annotations.Expose;
 
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
@@ -11,16 +14,16 @@ import engineManagers.TimerManager;
 import objects.GameObject;
 import objects.Player;
 
-public class Game {
+public class Game implements Serializable{
 	
-	public static final int DEFAULT_SCORE = 0;
+	@Expose public static final int DEFAULT_SCORE = 0;
 	
-	protected Map<Integer, Level> myLevels;
-	protected Player myPlayer;
-	protected int numLevels;
-	protected ScoreManager myScoreManager;
-	protected InputManager myInputManager;
-	protected TimerManager myTimerManager;
+	@Expose protected Map<Integer, Level> myLevels;
+	@Expose protected Player myPlayer;
+	@Expose protected int numLevels;
+	@Expose protected ScoreManager myScoreManager;
+	@Expose protected InputManager myInputManager;
+	@Expose protected TimerManager myTimerManager;
 	
 	public Game(){
 		numLevels = 0;
@@ -55,6 +58,18 @@ public class Game {
 		return myLevels.get(levelID).getObject(sceneID, objectID);
 	}
 	
+	public Map<Integer, Map< Integer, Map<Integer, GameObject>>> getGameObjects(){
+		Map<Integer, Map< Integer, Map<Integer, GameObject>>> allGameObjects = new HashMap<Integer, Map<Integer,Map<Integer, GameObject>>>();
+		for(int i=0; i<myLevels.size(); i++){
+			allGameObjects.put(myLevels.get(i).getID(), myLevels.get(i).getGameObjects()); 
+		}
+		return allGameObjects; 
+	}
+	
+	public void setGameObjects(Map<Integer, Map< Integer, Map<Integer, GameObject>>> gameObjects){
+		
+	}
+	
 	public Scene getScene(int levelID, int sceneID){
 		return myLevels.get(levelID).getScene(sceneID);
 	}
@@ -70,17 +85,6 @@ public class Game {
 	
 	public void resetLevelID(int initialLevelID, int newLevelID) {
 		
-	}
-	
-	public List<String> getAttributes() {
-		List <String> answer = new ArrayList<String>();
-		answer.addAll(myScoreManager.getAttributes()); 
-		answer.addAll(myInputManager.getAttributes()); 
-		answer.addAll(myTimerManager.getAttributes()); 
-		for(Integer key: myLevels.keySet()){
-			answer.addAll(myLevels.get(key).getAttributes()); 
-		}
-		return answer;
 	}
 	/*
          * NEED implementation. This method will be called from Factory through reflection

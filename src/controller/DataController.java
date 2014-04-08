@@ -7,7 +7,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import engine.GameEngine;
 import gameFactory.GameFactory;
-import parser.ParseGame;
+import parser.XMLParser;
 import stage.Game;
 import reflection.Reflection;
 /*
@@ -21,12 +21,12 @@ public class DataController {
     protected int currentLevelID;
     protected int currentSceneID;
 	protected GameFactory myFactory;
-	protected ParseGame myParser;
+	protected XMLParser myParser;
 	protected GameEngine myGameEngine;
 	protected ResourceBundle myOrderReflector;
 	
 	public DataController(){
-		myParser = new ParseGame();
+		myParser = new XMLParser();
 		myGame = new Game();
 		myGameEngine = new GameEngine();
 		myFactory = new GameFactory(myGameEngine);

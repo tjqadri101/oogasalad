@@ -1,5 +1,6 @@
 package objects;
 
+import java.io.Serializable;
 import java.util.List;
 
 import reflection.Reflection;
@@ -7,7 +8,7 @@ import jgame.JGColor;
 /*
  * @Author: Justin (Zihao) Zhang
  */
-public class Player extends GameObject {
+public class Player extends GameObject implements Serializable{
 	protected int myKeyUp;
 	protected int myKeyDown;
 	protected int myKeyLeft;

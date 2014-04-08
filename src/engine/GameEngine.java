@@ -58,7 +58,7 @@ public class GameEngine extends StdGame{
 
     public void startEdit(){
     	setBGImage(currentScene.getBackgroundImage());
-    	for(GameObject go: currentScene.getObjects().values()){
+    	for(GameObject go: currentScene.getGameObjects().values()){
     		go.resume();
     	}
     }
@@ -77,7 +77,7 @@ public class GameEngine extends StdGame{
     }
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
-    	for(GameObject go: currentScene.getObjects().values()){
+    	for(GameObject go: currentScene.getGameObjects().values()){
     		go.suspend();
     	}
     	currentScene = myGame.getScene(currentLevelID, currentSceneID);
