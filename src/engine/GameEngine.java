@@ -52,6 +52,8 @@ public class GameEngine extends StdGame{
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
         //setGameState(Mode);
+        defineMedia("TestMediaTable.tbl");
+		setBGImage("StartGameBGImage");
     }
 
     public void startEdit(){
