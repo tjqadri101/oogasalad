@@ -20,7 +20,6 @@ public class GAE {
 		mainFrame.add(mb, BorderLayout.NORTH);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
-		System.out.println("help");
 	}
 	
 	private static JFrame makeFrame(String title){
