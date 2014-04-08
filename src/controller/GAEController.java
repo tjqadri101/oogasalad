@@ -1,5 +1,6 @@
 package controller;
 import saladConstants.SaladConstants;
+import stage.Game;
 
 public class GAEController {
 	
@@ -7,7 +8,7 @@ public class GAEController {
 	
 	public GAEController(){
 		myDataController = new DataController();
-		myDataController
+		myDataController.initGameEditing(new Game());
 	}
 	
 	public void createPlayer(int ID,String url,String name){
