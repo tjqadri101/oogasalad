@@ -20,7 +20,6 @@ public class GameObjectTests extends TestCase {
 		@Test
 		public void testCreateScene(){
 			
-			
 //			assertEquals("Chinese", myLangManager.getCurrentLanguage());
 //			Throwable caught = null;
 //			try {

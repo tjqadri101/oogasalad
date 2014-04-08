@@ -11,6 +11,7 @@ import objects.NonPlayer;
 import objects.Player;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 /*
  * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
@@ -26,7 +27,7 @@ public class GameEngine extends StdGame{
     
     private String Mode = "Edit";//String or boolean ?
     private Scene currentScene;//ID or Object ?
-    private List<int[]> collsionPair;
+    private List<int[]> collsionPair = new ArrayList<int[]>();
     
     protected Game myGame;
     
@@ -52,13 +53,13 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        setGameState(Mode);
+        //setGameState(Mode);
     }
 
     public void startEdit(){
-    	setBGImage(currentScene.getBackgroundImage());
+    	//setBGImage(currentScene.getBackgroundImage());
     	for(GameObject go: currentScene.getObjects().values()){
-    		go.setEngine(this);//need to figure out a correct way to register GameObjects with engine
+    		go.resume();
     	}
     }
     public void doFrameEdit(){
@@ -76,6 +77,9 @@ public class GameEngine extends StdGame{
     }
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
+    	for(GameObject go: currentScene.getObjects().values()){
+    		go.suspend();
+    	}
     	currentScene = myGame.getScene(currentLevelID, currentSceneID);
     	setGameState(Mode);
     }
@@ -157,7 +161,6 @@ public class GameEngine extends StdGame{
      * Return a created GameObject 
      */
     public GameObject createPlayer(int colid, String gfxname, double xpos, double ypos, String name){
-        
         GameObject object = new Player(name, xpos, ypos, colid, gfxname);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         return object;

@@ -35,6 +35,10 @@ public class Scene {
 		myObjectCounter++;
 		myObjects.put(myObjectCounter, (GameObject) object );
 	}
+	
+	public void setPlayerXY(int playerID, int x, int y) {
+		myObjects.get(playerID).setPos(x,y);
+	}
 
 	public Map<Integer, GameObject> getObjects() {
 		return myObjects;
