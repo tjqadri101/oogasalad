@@ -1,15 +1,17 @@
 package engineManagers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 /*
  * @Author: Justin (Zihao) Zhang
  */
 import saladConstants.SaladConstants;
 
-public class TimerManager {
+public class TimerManager implements Serializable{
 	
 	protected Map<String, Integer> myTimerMap;
 	

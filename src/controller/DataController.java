@@ -3,11 +3,14 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.xml.sax.SAXException;
+
 import engine.GameEngine;
 import gameFactory.GameFactory;
-import parser.ParseGame;
+import parser.GameSaverAndLoader;
 import stage.Game;
 import reflection.Reflection;
 /*
@@ -21,12 +24,15 @@ public class DataController {
     protected int currentLevelID;
     protected int currentSceneID;
 	protected GameFactory myFactory;
-	protected ParseGame myParser;
+	protected GameSaverAndLoader myGameSaverAndLoader;
 	protected GameEngine myGameEngine;
 	protected ResourceBundle myOrderReflector;
 	
 	public DataController(){
-		myParser = new ParseGame();
+		myGameSaverAndLoader = new GameSaverAndLoader(); 
+		myGame = new Game();
+		myGameEngine = new GameEngine(myGame);
+		myFactory = new GameFactory(myGameEngine);
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
@@ -51,7 +57,7 @@ public class DataController {
 	 * Input is a url to the XML file created by the GAE
 	 */
 	public void exportXML(String url) throws ParserConfigurationException{
-		myParser.writeToFile(myGame, url);
+//		myGameSaverAndLoader.save(myGame, url);
 	}
 	
 	/*
@@ -59,10 +65,10 @@ public class DataController {
 	 * Input is a url to the XML file loaded by PlayView
 	 */
 	public void readXML(String url) throws ParserConfigurationException, SAXException, IOException{
-		List<String> orders = myParser.readFromFile(url);
-		for(String order: orders){
-			receiveOrder(order);
-		}
+//		List<String> orders = myParser.readFromFile(url);
+//		for(String order: orders){
+//			receiveOrder(order);
+//		}
 	}
 	
 //	/*

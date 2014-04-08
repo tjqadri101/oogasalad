@@ -1,5 +1,6 @@
 package stage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,7 @@ import saladConstants.SaladConstants;
  *
  */
 
-public class Scene {
+public class Scene implements Serializable{
 	
 	
 	private int myID;
@@ -30,6 +31,10 @@ public class Scene {
 		myObjects = new HashMap<Integer, GameObject>();
 	}
 		
+	public int getID(){
+		return myID; 
+	}
+	
 	public void addObject(GameObject object ) {
 		myObjectCounter++;
 		myObjects.put(myObjectCounter, (GameObject) object );
@@ -39,8 +44,12 @@ public class Scene {
 		myObjects.get(playerID).setPos(x,y);
 	}
 
-	public Map<Integer, GameObject> getObjects() {
+	public Map<Integer, GameObject> getGameObjects() {
 		return myObjects;
+	}
+	
+	public void setObjects(Map<Integer, GameObject> gameObjects){
+		myObjects= gameObjects;
 	}
 	
 	public void setBackgroundImage(String s) {
@@ -58,7 +67,7 @@ public class Scene {
 	public GameObject getObject(int objectID) {
 		return myObjects.get(objectID);
 	}
-	
+
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int objectID: myObjects.keySet()){
@@ -67,7 +76,6 @@ public class Scene {
 		}
 		return objects;
 	}
-	
 	
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();

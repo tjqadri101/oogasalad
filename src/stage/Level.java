@@ -1,5 +1,6 @@
 package stage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,16 +14,19 @@ import saladConstants.SaladConstants;
  * @author DavidChou
  *
  */
-public class Level {
+public class Level implements Serializable {
 
 	protected Map<Integer, Scene> myScenes;
-
 	protected int myID;
 	protected int mySceneTotal = 0;
 
 	public Level(int hash) {
 		myID = hash;
 		myScenes = new HashMap<Integer, Scene>(); 
+	}
+	
+	public int getID(){ 
+		return myID; 
 	}
 
 	public void addScene(Scene scene ) {
@@ -59,20 +63,30 @@ public class Level {
 		return objects;
 	}
 
-	public List<String> getAttributes() {
-		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
-		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
-		answer.addAll(getSceneAttributes());
-		return answer;
-	}
-
-	public List<String> getSceneAttributes(){
-		List<String> answer = new ArrayList<String>();
+//	public List<String> getAttributes() {
+//		List<String> answer = new ArrayList<String>();
+//		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
+//		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
+//		answer.addAll(getSceneAttributes());
+//		return answer;
+//	}
+//
+//	public List<String> getSceneAttributes(){
+//		List<String> answer = new ArrayList<String>();
+//=======
+	
+	public Map<Integer, Map<Integer, GameObject>> getGameObjects(){ 
+		Map<Integer, Map<Integer, GameObject>> levelGameObjects = new HashMap<Integer, Map<Integer, GameObject>>(); 
 		for(int i=0; i<myScenes.size(); i++){
-			answer.addAll(myScenes.get(i).getAttributes()); 
-		}
-		return answer; 
+			levelGameObjects.put(myScenes.get(i).getID(), myScenes.get(i).getGameObjects()); 
+		}	
+		return levelGameObjects; 
 	}
-
+	
+	public void setGameObjects(Map< Integer, Map<Integer, GameObject>> gameObjects){
+		for(Integer SceneKeys: gameObjects.keySet()){
+			
+		}
+	}
+	
 }
