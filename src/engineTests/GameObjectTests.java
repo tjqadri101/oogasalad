@@ -16,23 +16,37 @@ import junit.framework.TestCase;
 
 public class GameObjectTests extends TestCase {
 	
-		protected DataController myDataController;
+		protected GameEngine myEngine;
 
 	    protected void setUp(){
-			myDataController = new DataController();
+	    	myEngine = new GameEngine(new Game());
 	    }
-	    
-		@Test
-		public void testCreateScene(){
-//			myDataController.initGameEngine(new Game());
-//			String order = "CreatePlayer,ID,1,Image,game_authoring_environment.resources/actor_default.png,Position,0,0,Name,Hero";
-//			myDataController.receiveOrder(order);
-			GameEngine engine = new GameEngine(new Game());
-			GameObject other = engine.createActor(1, "actor_default.png", 0, 0, "Hero");
-		}
 		
 		@Test
 		public void testCreateObjects(){
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero");
+		}
+		
+		@Test
+		public void testModifyCollision(){
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero");
+			object.setCollisionBehavior(2, "HitterEliminateVictim");
+		}
+		
+		@Test
+		public void testModifyMove(){
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero");
+			object.setMoveBehavior("RegularMove", 1, 1);
+		}
+		
+		@Test
+		public void testModifyDie(){
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero");
+			object.setDieBehavior("RegularRemove");
+		}
+		
+		@Test
+		public void testResources(){
 //			assertEquals(, other.get);
 //			assertEquals("Chinese", myLangManager.getCurrentLanguage());
 //			Throwable caught = null;
@@ -41,16 +55,6 @@ public class GameObjectTests extends TestCase {
 //			} catch (Throwable t) { caught = t; }
 //			assertNotNull(caught);
 //			assertSame(LanguageNotFoundException.class, caught.getClass());
-		}
-		
-		@Test
-		public void testModifyCollision(){
-			
-		}
-		
-		@Test
-		public void testModifyMove(){
-			
 		}
 		
 }

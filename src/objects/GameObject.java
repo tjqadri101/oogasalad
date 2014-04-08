@@ -26,11 +26,6 @@ public abstract class GameObject extends PhysicalObject{
 	protected double mySetYSpeed;
 	protected HashMap<Integer, String> myCollisionMap;
 	protected int myLives;
-
-//	protected GameObject(String name, double xpos, double ypos, int collisionId, JGColor color) {
-//		super(name, collisionId, color);
-//		initObject(xpos, ypos);
-//	}
 	
 	protected void initObject(double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
