@@ -24,7 +24,7 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	public String myMoveBehavior;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
-	protected HashMap<Integer, String> myCollisionMap;
+	public HashMap<Integer, String> myCollisionMap;
 	protected int myLives;
 	protected int myUniqueID;
 	public String myJumpBehavior;
