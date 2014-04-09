@@ -32,9 +32,9 @@ public class GameEngine extends StdGame{
     
     protected Game myGame;
     
-    public GameEngine(Game mygame){
+    public GameEngine(){
+//    	initEngine(JGPOINT_X, JGPOINT_Y);//just for testing; will be deleted later
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
-    	myGame = mygame;
     }
     
     @Override
@@ -78,15 +78,20 @@ public class GameEngine extends StdGame{
     }
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
-    	for(GameObject go: currentScene.getGameObjects().values()){
+    	for(GameObject go: currentScene.getGameObjects()){
     		go.suspend();
     	}
     	currentScene = myGame.getScene(currentLevelID, currentSceneID);
-    	for(GameObject go: currentScene.getGameObjects().values()){
+    	for(GameObject go: currentScene.getGameObjects()){
     		go.resume();
     	}
     	//setGameState(Mode);
     }
+    
+    public void setGame (Game mygame) {
+    	myGame = mygame;
+    }
+    
     
     
     /*
@@ -167,22 +172,21 @@ public class GameEngine extends StdGame{
     public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
     	File file = new File(url);
     	String filename = file.getName();
-        GameObject object = new Player(name, xpos, ypos, colid, filename);
+        GameObject object = new Player(unique_id, filename, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
-        myGame.addPlayer(object);
+        myGame.setPlayer(object);
         return object;
     }
     
     public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
     	File file = new File(url);
     	String filename = file.getName();
-        GameObject object = new NonPlayer(name, xpos, ypos, colid, filename);
+        GameObject object = new NonPlayer(unique_id, filename, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.addObject(levelID, sceneID, object);
         return object;
     }
-    
-    public GameObject
+
     
     public void removeActor(GameObject object){
     	object.remove();
