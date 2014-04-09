@@ -16,48 +16,47 @@ import saladConstants.SaladConstants;
  */
 public class Level implements Serializable {
 
-	protected Map<Integer, Scene> myScenes;
+	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
-	protected int mySceneTotal = 0;
 
 	public Level(int hash) {
 		myID = hash;
-		myScenes = new HashMap<Integer, Scene>(); 
+		mySceneMap = new HashMap<Integer, Scene>(); 
 	}
 	
 	public int getID(){ 
 		return myID; 
 	}
 
-	public void addScene(Scene scene ) {
-		myScenes.put(mySceneTotal, scene );
-		mySceneTotal++;
+	public void addScene(int sceneID) {
+		Scene scene = new Scene(sceneID);
+		mySceneMap.put(sceneID, scene);
 	}
 
 	public void addObject(int sceneID, GameObject object) {
-		myScenes.get(sceneID).addObject(object);
+		mySceneMap.get(sceneID).addObject(object);
 	}
 
-	public void setPlayerXY(int sceneID, int playerID, int x, int y) {
-		myScenes.get(sceneID).setPlayerXY(playerID, x, y);
-	}
+//	public void setPlayerXY(int sceneID, int playerID, int x, int y) {
+//		myScenes.get(sceneID).setPlayerXY(playerID, x, y);
+//	}
 	
 	public GameObject getObject(int sceneID, int objectID) {
-		return myScenes.get(sceneID).getObject(objectID);
+		return mySceneMap.get(sceneID).getObject(objectID);
 	}
 
 	public Scene getScene(int sceneID){
-		return myScenes.get(sceneID);
+		return mySceneMap.get(sceneID);
 	}
 
 	public void removeScene(int sceneID) {
-		myScenes.remove(sceneID);
+		mySceneMap.remove(sceneID);
 	}
 	
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
-		for(int sceneID: myScenes.keySet()){
-			Scene scene = myScenes.get(sceneID);
+		for(int sceneID: mySceneMap.keySet()){
+			Scene scene = mySceneMap.get(sceneID);
 			objects.addAll(scene.getObjectsByColid(colid));
 		}
 		return objects;
@@ -73,19 +72,32 @@ public class Level implements Serializable {
 //
 //	public List<String> getSceneAttributes(){
 //		List<String> answer = new ArrayList<String>();
-//=======
 	
-	public Map<Integer, Map<Integer, GameObject>> getGameObjects(){ 
-		Map<Integer, Map<Integer, GameObject>> levelGameObjects = new HashMap<Integer, Map<Integer, GameObject>>(); 
-		for(int i=0; i<myScenes.size(); i++){
-			levelGameObjects.put(myScenes.get(i).getID(), myScenes.get(i).getGameObjects()); 
-		}	
-		return levelGameObjects; 
+//	public Map<Integer, Map<Integer, GameObject>> getGameObjects(){ 
+//		Map<Integer, Map<Integer, GameObject>> levelGameObjects = new HashMap<Integer, Map<Integer, GameObject>>(); 
+//		for(int i=0; i<myScenes.size(); i++){
+//			levelGameObjects.put(myScenes.get(i).getID(), myScenes.get(i).getGameObjects()); 
+//		}	
+//		return levelGameObjects; 
+//	}
+//	
+//	public void setGameObjects(Map< Integer, Map<Integer, GameObject>> gameObjects){
+//		for(Integer SceneKeys: gameObjects.keySet()){
+//			
+//		}
+//	}
+	
+	public List<GameObject> getGameObjects() {
+		List<GameObject> answer = new ArrayList<GameObject>();
+		for(int sceneID: mySceneMap.keySet()){
+			answer.addAll(c)
+		}
+		return answer;
 	}
 	
-	public void setGameObjects(Map< Integer, Map<Integer, GameObject>> gameObjects){
-		for(Integer SceneKeys: gameObjects.keySet()){
-			
+	public void setObjects(List<GameObject> gameObjects){
+		for(GameObject object: gameObjects){
+			addObject(object);
 		}
 	}
 	

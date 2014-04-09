@@ -96,7 +96,7 @@ public class GameEngine extends StdGame{
      */
     @Override
     public void doFrame(){
-
+    	
     }
     
     /*
@@ -169,7 +169,7 @@ public class GameEngine extends StdGame{
     	String filename = file.getName();
         GameObject object = new Player(name, xpos, ypos, colid, filename);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
-        myGame.addObject(levelID, sceneID, object);
+        myGame.addPlayer(object);
         return object;
     }
     
@@ -181,6 +181,8 @@ public class GameEngine extends StdGame{
         myGame.addObject(levelID, sceneID, object);
         return object;
     }
+    
+    public GameObject
     
     public void removeActor(GameObject object){
     	object.remove();
