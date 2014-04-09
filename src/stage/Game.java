@@ -11,7 +11,11 @@ import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import objects.GameObject;
 import objects.Player;
-
+/**
+ * 
+ * @author DavidChou, Justin Zhang
+ *
+ */
 public class Game implements Serializable{
 	
 	public static final int DEFAULT_SCORE = 0;
