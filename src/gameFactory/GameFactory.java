@@ -41,7 +41,6 @@ public class GameFactory {
         myEngine = engine;
         myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
         myPath = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_PATH);
-        myReflection = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_REFLECTION);
     }
     
     /**
@@ -131,8 +130,12 @@ public class GameFactory {
         
     }
     
+    private double doubleParse(String s){
+        return 0.0;
+    }
+    
     /**
-     * Test the legitimacy of an order passed via GAE
+     * Test the legitimacy of an order passed from GAE
      */
     private void testLegitimateOrder (String order) {
         if (!order.contains(",")) 
