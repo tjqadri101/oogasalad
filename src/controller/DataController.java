@@ -69,8 +69,8 @@ public class DataController {
 	 * Called by PlayView to import the game data
 	 * Input is a url to the XML file loaded by PlayView
 	 */
-	public Game readXML(String url) throws Exception {
-		return myGameSaverAndLoader.load(url);
+	public void readXML(String url) throws Exception {
+//		return myGameSaverAndLoader.load(url);
 	}
 	
 	
@@ -97,7 +97,7 @@ public class DataController {
 	 */
 	public void callFactoryToProcess(String order) {
 		try{
-//			myFactory.processOrder(myEngine, myGame, currentLevelID, currentSceneID, order);	
+			myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}

@@ -23,8 +23,8 @@ public class Scene implements Serializable{
 	private Map<Integer, GameObject> myObjectMap;
 	private String myWinString;
 	
-	public Scene(int hash) {
-		myID = hash;
+	public Scene(int id) {
+		myID = id;
 		myObjectMap = new HashMap<Integer, GameObject>();
 	}
 		
@@ -84,7 +84,7 @@ public class Scene implements Serializable{
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
-		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
+//		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
 		return answer;
 	}
 }

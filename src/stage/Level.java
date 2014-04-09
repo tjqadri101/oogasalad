@@ -11,7 +11,7 @@ import saladConstants.SaladConstants;
 
 /**
  * 
- * @author DavidChou
+ * @author DavidChou, Justin Zhang
  *
  */
 public class Level implements Serializable {
@@ -19,8 +19,8 @@ public class Level implements Serializable {
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
 
-	public Level(int hash) {
-		myID = hash;
+	public Level(int id) {
+		myID = id;
 		mySceneMap = new HashMap<Integer, Scene>(); 
 	}
 	
@@ -62,13 +62,13 @@ public class Level implements Serializable {
 		return objects;
 	}
 
-//	public List<String> getAttributes() {
-//		List<String> answer = new ArrayList<String>();
-//		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
+	public List<String> getAttributes() {
+		List<String> answer = new ArrayList<String>();
+		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
 //		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
-//		answer.addAll(getSceneAttributes());
-//		return answer;
-//	}
+		answer.addAll(getAttributes());
+		return answer;
+	}
 	
 	public List<Scene> getScenes() {
 		List<Scene> answer = new ArrayList<Scene>();
