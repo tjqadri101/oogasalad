@@ -23,6 +23,5 @@ public final class SaladConstants {
 	public static final String ACTOR_PANEL = "Actor";
 	public static final String MEDIA_PANEL = "Media";
 	public static final String BEHAVIOR_PANEL = "Behavior";
-	
-	
+
 }
