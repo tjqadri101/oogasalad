@@ -20,6 +20,11 @@ public class Parser {
 	private ObjectOutputStream out; 
 	private ObjectInputStream in; 
 
+	/*
+	 * @param obj An object to be written to file
+	 * @param url String referencing location to store the game object
+	 * @return Nothing
+	 */
 	public void write(Object obj, String url) throws IOException{ 
 		fileOut = new FileOutputStream(url);
 		out = new ObjectOutputStream(fileOut); 
@@ -28,6 +33,11 @@ public class Parser {
 		fileOut.close(); 	
 	}
 	
+	/*
+	 * 
+	 * @param url String referencing location to store the game object
+	 * @return Nothing
+	 */
 	public Game read(String url) throws Exception{
 		fileIn = new FileInputStream(url); 
 		in = new ObjectInputStream(fileIn);
@@ -38,5 +48,13 @@ public class Parser {
 		return game; 
 	}
 	
+	public void writeXML(){
+		
+	}
+	
+	public void readXML(){
+		
+		
+	}
 	
 }

@@ -21,52 +21,27 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 
+import controller.DataController;
 import controller.GAEController;
 import reflection.ReflectionException;
 import reflection.Reflection;
 
 @SuppressWarnings("serial")
-public class MenuBar extends JMenuBar{
+public class PlayMenuBar extends JMenuBar{
 	
-	private static GAEController gController;
+	private static DataController myController;
 
-	public MenuBar(GAEController gController){
+	public PlayMenuBar(DataController myController){
 		super();
-		this.gController = gController;
+		this.myController = myController;
 		this.add(createFileMenu());
-		this.add(createEditMenu());
-		this.add(createHelpMenu());
 	}
 	
 	private JMenu createFileMenu(){
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(makeMenuItem("Save As...", "saveGameFile"));
 		fileMenu.add(makeMenuItem("Open", "openGameFile"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
-	}
-	
-	private JMenu createEditMenu(){
-		JMenu editMenu = new JMenu("Edit");
-		editMenu.add(makeMenuItem("Undo", "doNothing"));
-		editMenu.add(makeMenuItem("Redo", "doNothing"));
-		editMenu.add(makeMenuItem("Cut", "doNothing"));
-		editMenu.add(makeMenuItem("Copy", "doNothing"));
-		editMenu.add(makeMenuItem("Paste", "doNothing"));
-		editMenu.add(makeMenuItem("Paste", "doNothing"));
-		return editMenu;
-	}
-	
-	private JMenu createHelpMenu(){
-		JMenu helpMenu = new JMenu("Help");
-		helpMenu.add(makeMenuItem("About", "doNothing"));
-		helpMenu.add(makeMenuItem("Help page", "doNothing"));
-		return helpMenu;
-	}
-	
-	//temporarily added for testing purposes
-	private void doNothing(){
-		
 	}
 	
 	private void closeProgram(){
@@ -75,23 +50,6 @@ public class MenuBar extends JMenuBar{
 		if(n==JOptionPane.YES_OPTION){
 			System.exit(0);
 		}	
-	}
-
-	private void saveGameFile() {
-		File saveFile = chooseGameFile("Save");
-		if(saveFile == null){
-			return;
-		}
-		if (!saveFile.getName().endsWith(".xml")) {
-			saveFile = new File(saveFile.getAbsolutePath() + ".xml");
-			
-		}
-		try {
-			gController.getDataController().exportXML(saveFile.getAbsolutePath());
-		} catch (ParserConfigurationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
 	
 	private void openGameFile(){
@@ -128,7 +86,7 @@ public class MenuBar extends JMenuBar{
 		JMenuItem m = new JMenuItem(label);
 
 		try {
-			final Method onClickMethod = MenuBar.class
+			final Method onClickMethod = PlayMenuBar.class
 					.getDeclaredMethod(method);
 			m.addActionListener(new ActionListener() {
 				@Override
@@ -151,7 +109,7 @@ public class MenuBar extends JMenuBar{
 		return m;
 	}
 	
-	private MenuBar getCurrentInstance(){
+	private PlayMenuBar getCurrentInstance(){
 		return this;
 	}
 
@@ -162,7 +120,7 @@ public class MenuBar extends JMenuBar{
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	        //Create and set up the content pane.
-	        MenuBar demo = new MenuBar(gController);
+	        PlayMenuBar demo = new PlayMenuBar(myController);
 	        frame.setJMenuBar(demo);
 	        //Display the window.
 	        frame.setSize(450, 260);

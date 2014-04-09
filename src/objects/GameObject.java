@@ -26,19 +26,25 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	protected double mySetYSpeed;
 	protected HashMap<Integer, String> myCollisionMap;
 	protected int myLives;
+	protected int myUniqueID;
 	
-	protected void initObject(double xpos, double ypos){
+	protected void initObject(int uniqueID, double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
 		myLives = DEFAULT_LIVES; // change later
+		myUniqueID = uniqueID;
 	}
 	
-	protected GameObject(String name, double xpos, double ypos, int collisionId, String gfxname){
+	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId){
 		super(name, collisionId, gfxname);
-		initObject(xpos, ypos);
+		initObject(uniqueID, xpos, ypos);
 	}
 	
+	public int getID(){
+		return myUniqueID;
+	}
+
 	public void setDieBehavior(String s){
 		myDieMethod = s;
 	}
@@ -78,7 +84,6 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	@Override
 	public void move(){
 		super.move();
-		autoMove();
 		if(myLives <= 0) die();
 	}
 	

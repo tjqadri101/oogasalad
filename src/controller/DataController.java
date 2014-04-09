@@ -33,17 +33,14 @@ public class DataController {
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
-	public void initGameEngine(Game game){
-		myGame = game;
-		myGameEngine = new GameEngine(myGame);
-		myFactory = new GameFactory(myGameEngine);
-	}
-	
 	/*
 	 * Called by Game Authorizing Environment to display the engine inside its GUI
 	 */
-	public GameEngine getEngine(){
-		return myGameEngine;
+	public GameEngine initGameEngine(Game game){
+		myGame = game;
+		myGameEngine = new GameEngine();
+		myGameEngine.setGame(myGame);
+		myFactory = new GameFactory(myGameEngine);
 	}
 	
 	
@@ -71,8 +68,8 @@ public class DataController {
 	 * Called by PlayView to import the game data
 	 * Input is a url to the XML file loaded by PlayView
 	 */
-	public void readXML(String url) throws Exception {
-		initGameEngine(myGameSaverAndLoader.load(url));
+	public Game readXML(String url) throws Exception {
+		return myGameSaverAndLoader.load(url);
 	}
 	
 	
@@ -99,7 +96,7 @@ public class DataController {
 	 */
 	public void callFactoryToProcess(String order) {
 		try{
-			myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);	
+//			myFactory.processOrder(myEngine, myGame, currentLevelID, currentSceneID, order);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}

@@ -9,64 +9,104 @@ import jgame.JGColor;
  * @Author: Justin (Zihao) Zhang
  */
 public class Player extends GameObject implements Serializable{
+	public static final int DEFAULT_KEY = '`';
 	protected int myKeyUp;
 	protected int myKeyDown;
 	protected int myKeyLeft;
 	protected int myKeyRight;
 	protected int myKeyShoot;
 	protected int myKeyJump;
+	protected String myJumpBehavior;
+	protected double myJumpForceMagnitude;
+	protected String myShootBehavior;
 	
-	public Player(String name, double xpos, double ypos, int collisionId, String gfxname) {
-		super(name, xpos, ypos, collisionId, gfxname);
+	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionID) {
+		super(uniqueID, gfxname, xpos, ypos, name, collisionID);
+		myKeyUp = DEFAULT_KEY;
+		myKeyDown = DEFAULT_KEY;
+		myKeyLeft = DEFAULT_KEY;
+		myKeyRight = DEFAULT_KEY;
+		myKeyRight = DEFAULT_KEY;
+		myKeyShoot = DEFAULT_KEY;
+		myKeyJump = DEFAULT_KEY;
 	}
 	
 	public void setKey(int key, String methodName){
 		Reflection.callMethod(this, methodName, key);
 	}
 	
-	protected void setShootKey(int keyShoot){
+	public void setShootKey(int keyShoot){
 		myKeyShoot = keyShoot;
 	}
 	
-	protected void setJumpKey(int keyJump){
+	public void setJumpKey(int keyJump){
 		myKeyJump = keyJump;
 	}
 	
-	protected void setMoveUpKey(int keyUp){
+	public void setJumpBehavior(String s, double forceMagnitude){
+		myJumpBehavior = s;
+		myJumpForceMagnitude = forceMagnitude;
+	}
+	
+	public void setShootBehavior(String s){
+		myShootBehavior = s;
+	}
+	
+	public void setMoveUpKey(int keyUp){
 		myKeyUp = keyUp;
 	}
 	
-	protected void setMoveDownKey(int keyDown){
+	public void setMoveDownKey(int keyDown){
 		myKeyDown = keyDown;
 	}
 	
-	protected void setMoveLeftKey(int keyLeft){
+	public void setMoveLeftKey(int keyLeft){
 		myKeyLeft = keyLeft;
 	}
 	
-	protected void setMoveRightKey(int keyRight){
+	public void setMoveRightKey(int keyRight){
 		myKeyRight = keyRight;
 	}
 	
 	@Override
 	public void move(){
 		super.move();
-		checkMoveKeys();
+		checkMoveUpDownKeys();
+		checkMoveLeftRightKeys();
+		checkJumpKeys();
+		checkShootKeys();
 	}
 	
-	protected void checkMoveKeys(){
+	protected void checkMoveLeftRightKeys(){
+		if(myKeyLeft == DEFAULT_KEY|| myKeyRight == DEFAULT_KEY) return;
 		if ((eng.getKey(myKeyLeft)  && x > 0))  			xdir = -1;
 		if (eng.getKey(myKeyRight) && x < eng.pfWidth()) 	xdir = 1; 
+	}
+	
+	protected void checkMoveUpDownKeys(){
+		if(myKeyUp == DEFAULT_KEY|| myKeyDown == DEFAULT_KEY) return;
 		if ((eng.getKey(myKeyUp)  && y > 0))                ydir = -1;
 		if (eng.getKey(myKeyDown) && y < eng.pfHeight())  	ydir = 1;
 	}
 	
 	protected void checkJumpKeys(){
-		
+		if(myKeyJump == DEFAULT_KEY) return;
+		if(eng.getKey(myKeyJump)) jump();
 	}
 	
 	protected void checkShootKeys(){
-		
+		if(myShootBehavior == null) return;
+		behaviorNoParameterReflection(myBehaviors, myShootBehavior, "shoot");
+	}
+	
+	public void jump(){
+		if(myJumpBehavior == null) return;
+		try{
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myJumpBehavior), this);
+			Reflection.callMethod(behavior, "jump", myJumpForceMagnitude);	
+		} catch (Exception e){
+			e.printStackTrace(); //should never reach here
+		}
 	}
 	
 	@Override
