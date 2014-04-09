@@ -27,11 +27,13 @@ public class EnginePlayer extends JFrame{
 		myMenuBar = new PlayMenuBar(myController);
 		setJMenuBar(myMenuBar);
 		myGame = new Game();
-		
+		myEngine = new GameEngine();
 		myPanel = new JPanel();
-		myPanel.add(new GameEngine(myGame));
+		myPanel.add(myEngine);
 		myPanel.setLayout(new BorderLayout());
-//		myPanel.add(GameEngine engine, BorderLayout.CENTER);
+		myPanel.add(myEngine, BorderLayout.CENTER);
+		
+		myEngine.init();
 		
 		setMinimumSize(new Dimension(600, 800));
 		setVisible(true);

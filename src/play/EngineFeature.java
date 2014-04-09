@@ -27,7 +27,7 @@ public class EngineFeature extends Feature{
 	public EngineFeature () {
 		myMenu = new MenuBar();
 		myFrame = new JFrame("Game Player");
-		myFrame.add(new GameEngine(myGame));
+		myFrame.add(new GameEngine());
 		myFrame.pack();
 		myFrame.setVisible(true);
 		myFrame.setMinimumSize(new Dimension(600,800));
