@@ -25,10 +25,8 @@ public class GameObjectTests extends TestCase {
 	    	myGame = new Game();
 	    	myEngine = new GameEngine();
 	    	myEngine.setGame(myGame);
-//			Level level = new Level(0);
-//			myGame.addLevel(level);
-//			Scene scene = new Scene(0);
-//			myGame.addScene(0, scene);
+			myGame.addLevel(0);
+			myGame.addScene(0, 0);
 	    }
 		
 		@Test
@@ -40,18 +38,21 @@ public class GameObjectTests extends TestCase {
 		public void testModifyCollision(){
 			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
 			object.setCollisionBehavior(2, "HitterEliminateVictim");
+//			assertEquals("RegularRemove", object.myMoveBehavior);
 		}
 		
 		@Test
 		public void testModifyMove(){
 			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
 			object.setMoveBehavior("RegularMove", 1, 1);
+			assertEquals("RegularMove", object.myMoveBehavior);
 		}
 		
 		@Test
 		public void testModifyDie(){
 			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
 			object.setDieBehavior("RegularRemove");
+			assertEquals("RegularRemove", object.myDieBehavior);
 		}
 		
 		@Test
