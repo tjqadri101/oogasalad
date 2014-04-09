@@ -21,7 +21,7 @@ import reflection.*;
 
 /**
  * @Author: Steve (Siyang) Wang, 
- * @VirtualCoAuthor: Issac (Shenghan) Chen
+ * @VirtualCo-Author: Issac (Shenghan) Chen
  */
 public class GameFactory {
     private JGEngine myEngine;
@@ -45,7 +45,7 @@ public class GameFactory {
     }
     
     /**
-     * Only couple things as argument, use reflection to create or modify object instance.
+     * only public method, takes in creation or modification order
      */
     public void processOrder(Game game, int levelID, int sceneID, String order) {
        
@@ -54,8 +54,7 @@ public class GameFactory {
  *  
  *      // http://stackoverflow.com/questions/11022208/how-do-i-use-reflection-to-invoke-a-method-with-parameters
  *      // http://yourmitra.wordpress.com/2008/09/26/using-java-reflection-to-invoke-a-method-with-array-parameters/
- *  
- *  
+ * 
  *      */
         
         List<String> orderSplit = Arrays.asList(order.split("\\,"));
@@ -78,7 +77,7 @@ public class GameFactory {
     }
     
     /**
-     * Only couple things as argument, use reflection to create or modify object instance.
+     * Creation or modification via Engine (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
      */
     @SuppressWarnings("unused")
     private void EngineReflect (int levelID, int sceneID, List<String> argumentList, 
@@ -91,7 +90,7 @@ public class GameFactory {
     }
     
     /**
-     * Only couple things as argument, use reflection to create or modify object instance.
+     * Creation or modification via Game (See FactoryOrderPath.Properties or exhaustive list of create/modify through Game)
      */
     @SuppressWarnings("unused")
     private void GameReflect (int levelID, int sceneID, List<String> argumentList, 
@@ -126,16 +125,17 @@ public class GameFactory {
         return answerList;
     }
     
+    // Need to implement if the order format is not changed. Discuss tmr
     private int intParse(String s){
         return 0;
         
     }
     
     /**
-     * Only couple things as argument, use reflection to create or modify object instance.
+     * Test the legitimacy of an order passed via GAE
      */
     private void testLegitimateOrder (String order) {
-        if (!order.contains("=")) 
+        if (!order.contains(",")) 
             throw new IllegalArgumentException("String " + order + " does not contain =");
     }
 }
