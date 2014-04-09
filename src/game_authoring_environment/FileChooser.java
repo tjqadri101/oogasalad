@@ -48,24 +48,14 @@ public class FileChooser extends JPanel
     public FileChooser() {
         super(new BorderLayout());
 
-        //Create the log first, because the action listeners
-        //need to refer to it.
-
-        //Create a file chooser
         fc = new JFileChooser();
 
         openButton = new JButton("Select Actor Image");
         openButton.addActionListener(this);
 
-        //Create the save button.  We use the image from the JLF
-        //Graphics Repository (but we extracted it from the jar).
-
-
-        //For layout purposes, put the buttons in a separate panel
         JPanel buttonPanel = new JPanel(); //use FlowLayout
         buttonPanel.add(openButton);
 
-        //Add the buttons and the log to this panel.
         add(buttonPanel, BorderLayout.PAGE_START);
 
 

@@ -9,13 +9,13 @@ import javax.swing.JTabbedPane;
 import saladConstants.SaladConstants;
 import controller.GAEController;
 
-public class Attributes extends JTabbedPane {
+public class AttributesPanel extends JTabbedPane {
 	
 	private JPanel myActorEditorPanel;
 	private JPanel mySceneEditorPanel;
 	private JPanel myGameEditorPanel;
 	
-	public Attributes(GAEController gController){
+	public AttributesPanel(GAEController gController){
 
 		makePanels(gController);
 		addTabs();

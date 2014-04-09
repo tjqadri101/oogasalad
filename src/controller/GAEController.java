@@ -1,7 +1,9 @@
 package controller;
 
+import game_authoring_environment.AttributesPanel;
 import game_authoring_environment.FullView;
 import game_authoring_environment.GAE;
+import game_authoring_environment.LeftPanel;
 import game_authoring_environment.MenuBar;
 
 import java.awt.BorderLayout;
@@ -9,6 +11,8 @@ import java.awt.Image;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 
 import engine.GameEngine;
 import saladConstants.SaladConstants;
@@ -24,6 +28,8 @@ public class GAEController {
 	private static GAEController gController;
 	private HashMap<String, Image> availableImages;
 	private GameEngine myGameEngine;
+	private HashMap<String, JPanel> map;
+	private AttributesPanel attributesPanel;
 	
 	public GAEController(){
 		createGAE(this);
@@ -42,8 +48,13 @@ public class GAEController {
 		mainFrame.pack();
 		mainFrame.setVisible(true);
 		System.out.println("help");
+		
 	}
 	
+	private void setUpVariables(){
+		map = fv.getMap();
+		attributesPanel = fv.getAttributes();
+	}
 	
 	public GameEngine getEngine(){
 		return myGameEngine;
