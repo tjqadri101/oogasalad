@@ -18,35 +18,33 @@ public class Game implements Serializable{
 	
 	protected Map<Integer, Level> myLevels;
 	protected Player myPlayer;
-	protected int numLevels;
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	
 	public Game(){
-		numLevels = 0;
 		myLevels = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
 	}
 	
-	public void addLevel(Level level) {
-		numLevels++;
-		myLevels.put(numLevels, level);
+	public void addLevel(int levelID) {
+		Level level = new Level(levelID);
+		myLevels.put(levelID, level);
 	}
 	
-	public void addScene(int levelID, Scene scene){
-		myLevels.get(levelID).addScene(scene);
+	public void addScene(int levelID, int sceneID){
+		myLevels.get(levelID).addScene(sceneID);
 	}
 	
 	public void setPlayer(GameObject object){
 		myPlayer = (Player)object;
 	}
 	
-	public void setPlayerXY(int levelID, int sceneID, int playerID, int x, int y) {
-		myLevels.get(levelID).setPlayerXY(sceneID, playerID, x, y);
-	}
+//	public void setPlayerXY(int levelID, int sceneID, int playerID, int x, int y) {
+//		myLevels.get(levelID).setPlayerXY(sceneID, playerID, x, y);
+//	}
 	
 	public void addObject(int levelID, int sceneID, GameObject object){
 		myLevels.get(levelID).addObject(sceneID, object);
@@ -54,18 +52,6 @@ public class Game implements Serializable{
 	
 	public GameObject getGameObject(int levelID, int sceneID, int objectID){
 		return myLevels.get(levelID).getObject(sceneID, objectID);
-	}
-	
-	public Map<Integer, Map< Integer, Map<Integer, GameObject>>> getGameObjects(){
-		Map<Integer, Map< Integer, Map<Integer, GameObject>>> allGameObjects = new HashMap<Integer, Map<Integer,Map<Integer, GameObject>>>();
-		for(int i=0; i<myLevels.size(); i++){
-			allGameObjects.put(myLevels.get(i).getID(), myLevels.get(i).getGameObjects()); 
-		}
-		return allGameObjects; 
-	}
-	
-	public void setGameObjects(Map<Integer, Map< Integer, Map<Integer, GameObject>>> gameObjects){
-		
 	}
 	
 	public Scene getScene(int levelID, int sceneID){
