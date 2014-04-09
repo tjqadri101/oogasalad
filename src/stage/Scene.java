@@ -1,14 +1,11 @@
 package stage;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import objects.GameObject;
-import reflection.Reflection;
 import saladConstants.SaladConstants;
 
 /**
@@ -16,12 +13,11 @@ import saladConstants.SaladConstants;
  * @author DavidChou, Justin Zhang
  */
 
-public class Scene implements Serializable{
+public class Scene {
 	
 	private int myID;
 	private String myBackground;
 	private Map<Integer, GameObject> myObjectMap;
-	private String myWinString;
 	
 	public Scene(int id) {
 		myID = id;
@@ -39,7 +35,10 @@ public class Scene implements Serializable{
 //	public void setPlayerXY(int playerID, int x, int y) {
 //		myObjects.get(playerID).setPos(x,y);
 //	}
-
+	
+	/*
+	 * Called by GameEngine to display the GameObjects
+	 */
 	public List<GameObject> getGameObjects() {
 		List<GameObject> answer = new ArrayList<GameObject>();
 		for(int id: myObjectMap.keySet()){
@@ -47,12 +46,12 @@ public class Scene implements Serializable{
 		}
 		return answer;
 	}
-	
-	public void setObjects(List<GameObject> gameObjects){
-		for(GameObject object: gameObjects){
-			addObject(object);
-		}
-	}
+//	
+//	public void setObjects(List<GameObject> gameObjects){
+//		for(GameObject object: gameObjects){
+//			addObject(object);
+//		}
+//	}
 	
 	//need check
 	public void setBackgroundImage(String imageName) {
@@ -61,11 +60,6 @@ public class Scene implements Serializable{
 	
 	public String getBackgroundImage() {
 		return myBackground;
-	}
-	
-	//need check
-	public void setWinBehavior(String s) {
-		myWinString = s;
 	}
 	
 	public GameObject getObject(int objectID) {
@@ -84,7 +78,7 @@ public class Scene implements Serializable{
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
-//		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
+		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
 		return answer;
 	}
 }

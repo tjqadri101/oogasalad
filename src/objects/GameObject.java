@@ -20,16 +20,16 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
 	protected ResourceBundle myBehaviors;
-	public String myDieBehavior;
-	public String myMoveBehavior;
+	protected String myDieBehavior;
+	protected String myMoveBehavior;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
-	public HashMap<Integer, String> myCollisionMap;
+	protected HashMap<Integer, String> myCollisionMap;
 	protected int myLives;
 	protected int myUniqueID;
-	public String myJumpBehavior;
+	protected String myJumpBehavior;
 	protected double myJumpForceMagnitude;
-	public String myShootBehavior;
+	protected String myShootBehavior;
 	
 	protected void initObject(int uniqueID, double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
