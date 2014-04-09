@@ -75,8 +75,8 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 		mySetYSpeed = yspeed;
 	}
 	
-	public void setCollisionBehavior(int id, String s){
-		myCollisionMap.put(id, s);
+	public void setCollisionBehavior(String type, int id){
+		myCollisionMap.put(id, type);
 	}
 	
 	public void die(){
@@ -131,6 +131,17 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 		}
 	}
 	
+	//need modification
+	public void shoot(){
+		if(myShootBehavior == null) return;
+		try{
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myShootBehavior), this);
+			Reflection.callMethod(behavior, "shoot"); // need modification
+		} catch (Exception e){
+			e.printStackTrace(); //should never reach here
+		}
+	}
+	
 	@Override
 	protected void paintShape() {
 		// do nothing; image already set
@@ -142,11 +153,11 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_ACTOR + ",ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
-		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Move," + myMoveBehavior + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Die," + myDieBehavior);
+		answer.add(SaladConstants.CREATE_ACTOR + ",ID," + myUniqueID + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName() + ",CollisionID," + colid);
+		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + myUniqueID + ",Move," + myMoveBehavior + "," + mySetXSpeed + "," + mySetYSpeed);
+		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + myUniqueID + ",Die," + myDieBehavior);
 		for(int otherID: myCollisionMap.keySet()){
-			answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
+			answer.add(SaladConstants.MODIFY_ACTOR + ",Colid," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		return answer;
 	}
