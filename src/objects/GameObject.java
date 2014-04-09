@@ -20,8 +20,8 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
 	protected ResourceBundle myBehaviors;
-	protected String myDieMethod;
-	protected String myMoveMethod;
+	protected String myDieBehavior;
+	protected String myMoveBehavior;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
 	protected HashMap<Integer, String> myCollisionMap;
@@ -49,7 +49,7 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	}
 
 	public void setDieBehavior(String s){
-		myDieMethod = s;
+		myDieBehavior = s;
 	}
 	
 	public void loseLife(){
@@ -70,17 +70,17 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	}
 	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
-		myMoveMethod = s;
+		myMoveBehavior = s;
 		mySetXSpeed= xspeed;
 		mySetYSpeed = yspeed;
 	}
 	
-	public void setCollisionBehavior(int id, String s){
-		myCollisionMap.put(id, s);
+	public void setCollisionBehavior(String type, int id){
+		myCollisionMap.put(id, type);
 	}
 	
 	public void die(){
-		behaviorNoParameterReflection(myBehaviors, myDieMethod, "remove");	
+		behaviorNoParameterReflection(myBehaviors, myDieBehavior, "remove");	
 	}
 	
 	public void jump(){
@@ -122,10 +122,21 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
     }
 	
 	public void autoMove(){
-		if(myMoveMethod == null) return;
+		if(myMoveBehavior == null) return;
 		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveMethod), this);
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveBehavior), this);
 			Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);	
+		} catch (Exception e){
+			e.printStackTrace(); //should never reach here
+		}
+	}
+	
+	//need modification
+	public void shoot(){
+		if(myShootBehavior == null) return;
+		try{
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myShootBehavior), this);
+			Reflection.callMethod(behavior, "shoot"); // need modification
 		} catch (Exception e){
 			e.printStackTrace(); //should never reach here
 		}
@@ -142,11 +153,11 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_ACTOR + ",ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
-		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Die," + myDieMethod);
+		answer.add(SaladConstants.CREATE_ACTOR + ",ID," + myUniqueID + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName() + ",CollisionID," + colid);
+		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + myUniqueID + ",Move," + myMoveBehavior + "," + mySetXSpeed + "," + mySetYSpeed);
+		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + myUniqueID + ",Die," + myDieBehavior);
 		for(int otherID: myCollisionMap.keySet()){
-			answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
+			answer.add(SaladConstants.MODIFY_ACTOR + ",Colid," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		return answer;
 	}

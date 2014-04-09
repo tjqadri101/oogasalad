@@ -1,6 +1,5 @@
 package stage;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,21 +10,25 @@ import saladConstants.SaladConstants;
 
 /**
  * 
- * @author DavidChou
+ * @author DavidChou, Justin Zhang
  *
  */
-public class Level implements Serializable {
+public class Level {
 
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
 
-	public Level(int hash) {
-		myID = hash;
+	public Level(int id) {
+		myID = id;
 		mySceneMap = new HashMap<Integer, Scene>(); 
 	}
 	
 	public int getID(){ 
 		return myID; 
+	}
+	
+	public void resetID(int id){
+		myID = id;
 	}
 
 	public void addScene(int sceneID) {
@@ -62,26 +65,28 @@ public class Level implements Serializable {
 		return objects;
 	}
 
-//	public List<String> getAttributes() {
-//		List<String> answer = new ArrayList<String>();
-//		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
-//		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
-//		answer.addAll(getSceneAttributes());
-//		return answer;
-//	}
-	
-	public List<Scene> getScenes() {
-		List<Scene> answer = new ArrayList<Scene>();
-		for(int sceneID: mySceneMap.keySet()){
-			answer.add(mySceneMap.get(sceneID));
+	public List<String> getAttributes() {
+		List<String> answer = new ArrayList<String>();
+		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
+		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
+		for(int a: mySceneMap.keySet()){
+			answer.addAll(mySceneMap.get(a).getAttributes());
 		}
 		return answer;
 	}
-
-	public void setScenes(List<Scene> scenes){
-		for(Scene scene: scenes){
-			mySceneMap.put(scene.getID(), scene);
-		}
-	}
+	
+//	public List<Scene> getScenes() {
+//		List<Scene> answer = new ArrayList<Scene>();
+//		for(int sceneID: mySceneMap.keySet()){
+//			answer.add(mySceneMap.get(sceneID));
+//		}
+//		return answer;
+//	}
+//
+//	public void setScenes(List<Scene> scenes){
+//		for(Scene scene: scenes){
+//			mySceneMap.put(scene.getID(), scene);
+//		}
+//	}
 	
 }
