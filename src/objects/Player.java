@@ -34,12 +34,13 @@ public class Player extends GameObject {
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				Reflection.callMethod(this, myKeyMap.get(key));
+				eng.clearKey(key);
 			}
 		}
 	}
 	
 	public void moveUp(){
-		if (y > 0) ydir = -1;
+		if (y > 0) 	ydir = -1;
 	}
 	
 	public void moveDown(){
