@@ -18,8 +18,10 @@ import stage.Game;
 import jgame.JGObject;
 import jgame.platform.JGEngine;
 import reflection.*;
+
 /**
- * @Author: Steve (Siyang) Wang
+ * @Author: Steve (Siyang) Wang, 
+ * @VirtualCoAuthor: Issac (Shenghan) Chen
  */
 public class GameFactory {
     private JGEngine myEngine;
@@ -34,146 +36,106 @@ public class GameFactory {
 
     private static final String TEST_STRING = ""; 
     protected ResourceBundle myFormat, myPath, myReflection;
+    
     public GameFactory(JGEngine engine){
         myEngine = engine;
         myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
         myPath = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_PATH);
         myReflection = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_REFLECTION);
     }
+    
     /**
      * Only couple things as argument, use reflection to create or modify object instance.
      */
-    public GameObject processOrder(Game game, int levelID, int sceneID, String order) throws FactoryException{
-
+    public void processOrder(Game game, int levelID, int sceneID, String order) {
+       
+/*      // Optional parsing by splitting strings, converting them into respective types, and concatonate to Obj Array 
+ *      // as indicated in the following link 
+ *  
+ *      // http://stackoverflow.com/questions/11022208/how-do-i-use-reflection-to-invoke-a-method-with-parameters
+ *      // http://yourmitra.wordpress.com/2008/09/26/using-java-reflection-to-invoke-a-method-with-array-parameters/
+ *  
+ *  
+ *      */
+        
         List<String> orderSplit = Arrays.asList(order.split("\\,"));
         String instruction = orderSplit.get(0);
         String tokens = myFormat.getString(instruction);
         List<String> tokenList = Arrays.asList(tokens.split("\\,"));
         List<String> argumentList = new ArrayList<String>();
-        for(int i = 0; i < orderSplit.size() - 1; i ++){
+        for(int i = 0; i < orderSplit.size(); i ++){
             if(tokenList.get(i).equals("ParameterToken")){
                 argumentList.add((String) orderSplit.get(i));
             }
         }
-        int[][] IDArrays = new int[][]{new int[]{Integer.parseInt(argumentList.get(0))},new int[]{argumentList.get(0),levelID},new int[]{argumentList.get(0),levelID, sceneID}};
         
-        argumentList.add();
+        String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
+        String methodToInvoke = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
+        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
+        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
+        Reflection.callMethod(this, reflectionChoice+"Reflect", levelID, sceneID, argumentList, 
+                              methodToInvoke, game, GameRefMethod, GameRefPara);
+    }
+    
+    /**
+     * Only couple things as argument, use reflection to create or modify object instance.
+     */
+    @SuppressWarnings("unused")
+    private void EngineReflect (int levelID, int sceneID, List<String> argumentList, 
+                                String methodToInvoke, Game game, String GameReflectInfo, String GameRefPara) 
+                                        throws FactoryException {
+
         String [] argumentArray = argumentList.toArray(new String[argumentList.size()]);
-        
-        Reflection.callMethod(myEngine, myPath.getString(instruction), argumentArray);
-        
-        generalReflection(levelID, sceneID, argumentList);
-        
-        Reflection.callMethod(, myReflection.getString(argumentList.size()+""), 
-                              argumentList.get(1), 
-                              argumentList.get(2),
-                              argumentList.get(3),
-                              argumentList.get(4),
-                              argumentList.get(5),
-                              levelID,
-                              sceneID);
 
-        String reflectionType = myPath.getString(argumentList.get(0));
-        
-        String className = myPath.getString(instruction);
-        GameObject myObject = (GameObject) Reflection.createInstance(className, 
-                                                                     tokenList.toArray());
-        answerList.get(1), 
-        answerList.get(2),
-        answerList.get(3),
-        answerList.get(4),
-        answerList.get(5),
-        levelID,s
-        sceneID);
-        return myObject;
+        Reflection.callMethod(myEngine, methodToInvoke, argumentArray);
     }
+    
+    /**
+     * Only couple things as argument, use reflection to create or modify object instance.
+     */
+    @SuppressWarnings("unused")
+    private void GameReflect (int levelID, int sceneID, List<String> argumentList, 
+                              String methodToInvoke, Game game, String GameRefMethod, String GameRefPara) 
+                                      throws FactoryException {
 
+        int numArg = Integer.parseInt(GameRefPara);
+        String [] argumentArray = argumentList.toArray(new String[argumentList.size()]);
 
-    private void generalReflection (int levelID, int sceneID, List<String> argumentList ) throws FactoryException, ReflectionException{ 
-        if(argumentList.equals(DEFAULT_NULL)) return; {
-            try
-            {   
-                sixArgumentReflection(levelID, sceneID, argumentList);
-            }
-            catch (Exception e){
-                throw new ReflectionException("No matching public method " + myReflection.getString(argumentList.size()+"") + 
-                                              " for " + this.getClass().getName());}
-        }
-        return;
+        int[][] IDSelector = new int[][]{new int[]{Integer.parseInt(argumentList.get(0))},
+                                         new int[]{Integer.parseInt(argumentList.get(0)),levelID},
+                                         new int[]{Integer.parseInt(argumentList.get(0)),levelID, sceneID}};
+        //        Class<?> c = Class.forName(GameReflectionInfo);
+        Object obj = Reflection.callMethod(game, GameRefMethod, IDSelector[numArg]);
+        Reflection.callMethod(obj, methodToInvoke, argumentArray);
     }
-
-    class Y implements callableInterface
-    {
-        public void call (List<String> argumentList) {
-            Reflection.callMethod(this, myReflection.getString(argumentList.size()+""), 
-                                  argumentList.get(1), 
-                                  argumentList.get(2),
-                                  argumentList.get(3),
-                                  argumentList.get(4),
-                                  argumentList.get(5),
-                                  levelID,
-                                  sceneID);
-            //                Method toCall = this.getClass().getDeclaredMethod(myReflection.getString(argumentList.size()+""), new Class[0]);
-        }
-
-        class X implements callableInterface
-        {
-            public X (weird parameters)
-            {
-                save weird parameters
-            }
-
-            public void call (List<String> argumentList) {
-                Reflection.callMethod(this, myReflection.getString(argumentList.size()+""), 
-                                      argumentList.get(1), 
-                                      argumentList.get(2),
-                                      argumentList.get(3),
-                                      saved weird arguments);
-                //                Method toCall = this.getClass().getDeclaredMethod(myReflection.getString(argumentList.size()+""), new Class[0]);
-            }
-
-            public void sixArgumentReflection(Game game, int levelID, int sceneID, List<String> argumentList) throws FactoryException{
-                List<String> parameterList = parseOrder(order);
-                String className = myPath.getString(parameterList.get(0));
-                Reflection.callMethod(myEngine, myPath.getString(argumentList.size()+""), 
-                                      argumentList.get(1), 
-                                      argumentList.get(2),
-                                      argumentList.get(3),
-                                      argumentList.get(4),
-                                      argumentList.get(5),
-                                      levelID,
-                                      sceneID);
-            }
-
-
-
-
-
-            private List<String> parseOrder (String order) {
-                //          checkModifyOrCreate(orderSplit[0]);
-                List<String> inputSplit = Arrays.asList(order.split("\\,"));
-                String tokensList = myFormat.getString(inputSplit.get(0));
-                List<String> instructionList = Arrays.asList(tokensList.split("\\,"));
-                List<String> answerList = new ArrayList<String>();
-                for(int i = 0; i < instructionList.size() - 1; i ++){
-                    if(instructionList.get(i).equals("ParameterToken")){
-                        answerList.add(inputSplit.get(i));
-                    }
-                }
-                return answerList;
-            }
-
-            private void testLegitimateOrder (String order) {
-                if (!order.contains("=")) 
-                    throw new IllegalArgumentException("String " + order + " does not contain =");
+    
+    /**
+     * Only couple things as argument, use reflection to create or modify object instance.
+     */
+    private List<String> parseOrder (String order) {
+        //          checkModifyOrCreate(orderSplit[0]);
+        List<String> inputSplit = Arrays.asList(order.split("\\,"));
+        String tokensList = myFormat.getString(inputSplit.get(0));
+        List<String> instructionList = Arrays.asList(tokensList.split("\\,"));
+        List<String> answerList = new ArrayList<String>();
+        for(int i = 0; i < instructionList.size() - 1; i ++){
+            if(instructionList.get(i).equals("ParameterToken")){
+                answerList.add(inputSplit.get(i));
             }
         }
+        return answerList;
+    }
+    
+    private int intParse(String s){
+        return 0;
+        
+    }
+    
+    /**
+     * Only couple things as argument, use reflection to create or modify object instance.
+     */
+    private void testLegitimateOrder (String order) {
+        if (!order.contains("=")) 
+            throw new IllegalArgumentException("String " + order + " does not contain =");
     }
 }
-
-/*  // for reference only
-    methods = new HashMap<String, CallableInterface>();
-    methods[6] = new X(weird parameters);
-    // solution is to just pass an Array inside. Figure out how to make array of similar things 
-    // outside of reflection part
-    methods["X"].call(argumentList);*/

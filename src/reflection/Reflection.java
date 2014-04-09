@@ -3,7 +3,7 @@ package reflection;
 import java.lang.reflect.*;
 
 
-/**
+/**@author Prof. Duvall
  * This class provides a variety of convenience methods for dynamically
  * calling methods and allocating classes.  This utility class simplifies
  * some of Java's reflection API and fixes some issues.
@@ -64,7 +64,32 @@ public class Reflection
             throw new ReflectionException("No matching public constructor for " + name);
         }
     }
-
+    
+    /** @author Steve (Siyang) Wang
+     *   
+     * @param takes target object, the name of the method you want to get
+     * @return the Method
+     */
+    public static Method getMethod(Object target, String name)
+        throws ReflectionException, ClassNotFoundException
+    {
+        try
+        {
+            Method[] toCall = target.getClass().getMethods();
+            for (Method current: toCall)
+            {
+                if (current.getName().equals(name)){
+                    return current;
+                }
+            }
+            throw new ReflectionException("No matching public constructor for " + name);
+        }
+        catch (Exception e)
+        {
+            throw new ReflectionException("No matching public method " + name + 
+                                          " for " + target.getClass().getName());
+        }
+    }
 
     /**
      * Given a target object with a no argument method of the given name, 
