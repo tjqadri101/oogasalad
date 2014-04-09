@@ -70,23 +70,6 @@ public class Level implements Serializable {
 //		answer.addAll(getSceneAttributes());
 //		return answer;
 //	}
-//
-//	public List<String> getSceneAttributes(){
-//		List<String> answer = new ArrayList<String>();
-	
-//	public Map<Integer, Map<Integer, GameObject>> getGameObjects(){ 
-//		Map<Integer, Map<Integer, GameObject>> levelGameObjects = new HashMap<Integer, Map<Integer, GameObject>>(); 
-//		for(int i=0; i<myScenes.size(); i++){
-//			levelGameObjects.put(myScenes.get(i).getID(), myScenes.get(i).getGameObjects()); 
-//		}	
-//		return levelGameObjects; 
-//	}
-//	
-//	public void setGameObjects(Map< Integer, Map<Integer, GameObject>> gameObjects){
-//		for(Integer SceneKeys: gameObjects.keySet()){
-//			
-//		}
-//	}
 	
 	public List<Scene> getScenes() {
 		List<Scene> answer = new ArrayList<Scene>();
@@ -95,11 +78,11 @@ public class Level implements Serializable {
 		}
 		return answer;
 	}
-	
-//	public void setObjects(List<GameObject> gameObjects){
-//		for(GameObject object: gameObjects){
-//			addObject(object);
-//		}
-//	}
+
+	public void setScenes(List<Scene> scenes){
+		for(Scene scene: scenes){
+			mySceneMap.put(scene.getID(), scene);
+		}
+	}
 	
 }

@@ -41,6 +41,7 @@ public class DataController {
 		myGameEngine = new GameEngine();
 		myGameEngine.setGame(myGame);
 		myFactory = new GameFactory(myGameEngine);
+		return myGameEngine;
 	}
 	
 	

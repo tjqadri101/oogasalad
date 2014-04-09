@@ -27,6 +27,9 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	protected HashMap<Integer, String> myCollisionMap;
 	protected int myLives;
 	protected int myUniqueID;
+	protected String myJumpBehavior;
+	protected double myJumpForceMagnitude;
+	protected String myShootBehavior;
 	
 	protected void initObject(int uniqueID, double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
@@ -57,6 +60,15 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 		myLives = lives;
 	}
 	
+	public void setJumpBehavior(String s, double forceMagnitude){
+		myJumpBehavior = s;
+		myJumpForceMagnitude = forceMagnitude;
+	}
+	
+	public void setShootBehavior(String s){
+		myShootBehavior = s;
+	}
+	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
 		myMoveMethod = s;
 		mySetXSpeed= xspeed;
@@ -69,6 +81,16 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	
 	public void die(){
 		behaviorNoParameterReflection(myBehaviors, myDieMethod, "remove");	
+	}
+	
+	public void jump(){
+		if(myJumpBehavior == null) return;
+		try{
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myJumpBehavior), this);
+			Reflection.callMethod(behavior, "jump", myJumpForceMagnitude);	
+		} catch (Exception e){
+			e.printStackTrace(); //should never reach here
+		}
 	}
 	
 	protected void behaviorNoParameterReflection(ResourceBundle myBundle, String myString, String methodName){

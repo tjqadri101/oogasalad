@@ -56,18 +56,6 @@ public class Game implements Serializable{
 		return myLevels.get(levelID).getObject(sceneID, objectID);
 	}
 	
-//	public Map<Integer, Map< Integer, Map<Integer, GameObject>>> getGameObjects(){
-//		Map<Integer, Map< Integer, Map<Integer, GameObject>>> allGameObjects = new HashMap<Integer, Map<Integer,Map<Integer, GameObject>>>();
-//		for(int i=0; i<myLevels.size(); i++){
-//			allGameObjects.put(myLevels.get(i).getID(), myLevels.get(i).getGameObjects()); 
-//		}
-//		return allGameObjects; 
-//	}
-//	
-//	public void setGameObjects(Map<Integer, Map< Integer, Map<Integer, GameObject>>> gameObjects){
-//		
-//	}
-	
 	public Scene getScene(int levelID, int sceneID){
 		return myLevels.get(levelID).getScene(sceneID);
 	}

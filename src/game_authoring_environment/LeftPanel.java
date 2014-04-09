@@ -31,7 +31,7 @@ public class LeftPanel extends JSplitPane {
 	public HashMap<String, JPanel> setUpMap(){
 		HashMap<String, JPanel> map = new HashMap<String, JPanel>();
 		map = attributesPane.setUpMap(map);
-		
+		map = libraryPane.setUpMap(map);
 		return map;
 	}
 	

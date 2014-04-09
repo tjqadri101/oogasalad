@@ -16,9 +16,6 @@ public class Player extends GameObject implements Serializable{
 	protected int myKeyRight;
 	protected int myKeyShoot;
 	protected int myKeyJump;
-	protected String myJumpBehavior;
-	protected double myJumpForceMagnitude;
-	protected String myShootBehavior;
 	
 	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionID) {
 		super(uniqueID, gfxname, xpos, ypos, name, collisionID);
@@ -41,15 +38,6 @@ public class Player extends GameObject implements Serializable{
 	
 	public void setJumpKey(int keyJump){
 		myKeyJump = keyJump;
-	}
-	
-	public void setJumpBehavior(String s, double forceMagnitude){
-		myJumpBehavior = s;
-		myJumpForceMagnitude = forceMagnitude;
-	}
-	
-	public void setShootBehavior(String s){
-		myShootBehavior = s;
 	}
 	
 	public void setMoveUpKey(int keyUp){
@@ -97,16 +85,6 @@ public class Player extends GameObject implements Serializable{
 	protected void checkShootKeys(){
 		if(myShootBehavior == null) return;
 		behaviorNoParameterReflection(myBehaviors, myShootBehavior, "shoot");
-	}
-	
-	public void jump(){
-		if(myJumpBehavior == null) return;
-		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myJumpBehavior), this);
-			Reflection.callMethod(behavior, "jump", myJumpForceMagnitude);	
-		} catch (Exception e){
-			e.printStackTrace(); //should never reach here
-		}
 	}
 	
 	@Override

@@ -1,11 +1,13 @@
 package game_authoring_environment;
 
 import java.awt.Dimension;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import saladConstants.SaladConstants;
 import controller.GAEController;
 
 public class Library extends JTabbedPane {
@@ -46,4 +48,13 @@ public class Library extends JTabbedPane {
 		myActorsPanel = ViewFactory.buildPanel(PanelType.ACTORS,gController);
 		
 	}
+	
+	public HashMap<String, JPanel> setUpMap(HashMap<String, JPanel> map){
+		map.put(SaladConstants.BEHAVIOR_PANEL, myBehaviorsPanel);
+		map.put(SaladConstants.SCENE_PANEL, myScenesPanel);
+		map.put(SaladConstants.ACTOR_PANEL, myActorsPanel);
+		map.put(SaladConstants.MEDIA_PANEL, myBehaviorsPanel);
+		return map;
+	}
+	
 }
