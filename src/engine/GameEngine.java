@@ -169,7 +169,7 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
+    public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int co`lid, int levelID, int sceneID){
     	File file = new File(url);
     	String filename = file.getName();
         GameObject object = new Player(unique_id, filename, xpos, ypos, name, colid);
