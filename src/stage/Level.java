@@ -87,18 +87,18 @@ public class Level implements Serializable {
 //		}
 //	}
 	
-	public List<GameObject> getGameObjects() {
-		List<GameObject> answer = new ArrayList<GameObject>();
+	public List<Scene> getScenes() {
+		List<Scene> answer = new ArrayList<Scene>();
 		for(int sceneID: mySceneMap.keySet()){
-			answer.addAll(c)
+			answer.add(mySceneMap.get(sceneID));
 		}
 		return answer;
 	}
 	
-	public void setObjects(List<GameObject> gameObjects){
-		for(GameObject object: gameObjects){
-			addObject(object);
-		}
-	}
+//	public void setObjects(List<GameObject> gameObjects){
+//		for(GameObject object: gameObjects){
+//			addObject(object);
+//		}
+//	}
 	
 }
