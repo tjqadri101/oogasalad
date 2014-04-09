@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import saladConstants.SaladConstants;
 import controller.GAEController;
 
 public class Attributes extends JTabbedPane {
@@ -44,9 +45,9 @@ public class Attributes extends JTabbedPane {
 	
 	///best way to do this?
 	public HashMap<String, JPanel> setUpMap(HashMap<String, JPanel> map){
-		map.put("GameEditor", myGameEditorPanel);
-		map.put("SceneEditor", mySceneEditorPanel);
-		map.put("ActorEditor", myActorEditorPanel);
+		map.put(SaladConstants.GAME_EDITOR_PANEL, myGameEditorPanel);
+		map.put(SaladConstants.SCENE_EDITOR_PANEL, mySceneEditorPanel);
+		map.put(SaladConstants.ACTOR_EDITOR_PANEL, myActorEditorPanel);
 		
 		return map;
 	}
