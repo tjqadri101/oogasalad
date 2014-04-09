@@ -1,14 +1,53 @@
 package controller;
+
+import game_authoring_environment.FullView;
+import game_authoring_environment.GAE;
+import game_authoring_environment.MenuBar;
+
+import java.awt.BorderLayout;
+import java.awt.Image;
+import java.util.HashMap;
+
+import javax.swing.JFrame;
+
+import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
 
 public class GAEController {
 	
 	private DataController myDataController;
+	private GAE g;
+	public static final String TITLE = "OOGASalad iTeam";
+	private static FullView fv;
+	private static MenuBar mb; 
+	private static GAEController gController;
+	private HashMap<String, Image> availableImages;
+	private GameEngine myGameEngine;
 	
 	public GAEController(){
+		createGAE(this);
 		myDataController = new DataController();
-		myDataController.initGameEditing(new Game());
+		myDataController.initGameEngine(new Game());
+		myGameEngine = myDataController.getEngine();
+		g = new GAE(this);
+	}
+	
+	public void createGAE(GAEController gController){
+		JFrame mainFrame = new JFrame(TITLE);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		fv = new FullView(gController);
+		mb = new MenuBar(gController);
+		mainFrame.add(fv, BorderLayout.CENTER);
+		mainFrame.add(mb, BorderLayout.NORTH);
+		mainFrame.pack();
+		mainFrame.setVisible(true);
+		System.out.println("help");
+	}
+	
+	
+	public GameEngine getEngine(){
+		return myGameEngine;
 	}
 	
 	public void createPlayer(int ID,String url,String name){
@@ -84,4 +123,9 @@ public class GAEController {
 	public DataController getDataController(){
 		return myDataController;
 	}
+	
+	public void switchActiveTab(int index){
+		
+	}
+	
 }

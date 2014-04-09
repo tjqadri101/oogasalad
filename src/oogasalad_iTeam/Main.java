@@ -1,5 +1,6 @@
 package oogasalad_iTeam;
 
+import controller.GAEController;
 import game_authoring_environment.GAE;
 
 
@@ -7,6 +8,6 @@ public class Main
 {
 	public static void Main (String[] args)
 	{
-		GAE g = new GAE();    
+		GAEController g = new GAEController();    
 	}
 }

@@ -105,10 +105,4 @@ public class Game implements Serializable{
 //		}
 //		return answer;
 //	}
-	/*
-         * NEED implementation. This method will be called from Factory through reflection
-         */
-	public void modifyActor(){
-	    // need implementation
-	}
 }

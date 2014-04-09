@@ -1,0 +1,7 @@
+//This is the media table of game Dungeon Shooter based on JGame 3.6
+//@author Pengyi Pan(pp83)
+//@version 1.0
+
+//test
+
+StartGameBGImage	-	0	actor_default.png	-

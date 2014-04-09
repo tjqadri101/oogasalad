@@ -38,7 +38,7 @@ public class GameeditorPanel extends Panel {
 	@Override
 	protected void construct() {
 		this.setLayout(new BorderLayout());		
-		this.add(mySubPanel, BorderLayout.NORTH);
+		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
 		//this.add(makeTable(), BorderLayout.SOUTH);
 		this.add(makeTable(), BorderLayout.CENTER);
 	

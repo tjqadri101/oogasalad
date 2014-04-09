@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import controller.GAEController;
 
@@ -35,8 +36,8 @@ public class ScenePanel extends Panel{
 	protected void construct() {
 		makeSceneList();
 		this.setLayout(new BorderLayout());
-		this.add(mySubPanel,BorderLayout.NORTH);
-		this.add(myScenesList,BorderLayout.CENTER);
+		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
+		this.add(new JScrollPane(myScenesList),BorderLayout.CENTER);
 	}
 
 	private void makeSceneList() {
@@ -77,7 +78,6 @@ public class ScenePanel extends Panel{
 			@Override
 			public void actionPerformed (ActionEvent e){
 				addScene();
-				manageSceneNum(true);
 			}
 		});
 		
@@ -86,7 +86,6 @@ public class ScenePanel extends Panel{
 			@Override
 			public void actionPerformed (ActionEvent e){
 				deleteScene();
-				manageSceneNum(false);
 			}
 		});
 		
@@ -100,11 +99,12 @@ public class ScenePanel extends Panel{
 		if(mySceneCount==0){
 			listModel.addElement("Initial Scene");
 			//add scene here
-			manageSceneNum(true);
+			mySceneCount++;
 		}
 		else{
 			listModel.addElement("Scene " + mySceneCount);
 			//add scene here
+			mySceneCount++;
 		}
 		
 	}
@@ -112,22 +112,11 @@ public class ScenePanel extends Panel{
 	private void deleteScene(){		
 		if(mySeletedIndex > 0){
 			//delete scene here
-			listModel.remove(mySeletedIndex);			
+			String sceneName = listModel.get(mySeletedIndex);
+			int sceneID = Integer.parseInt(sceneName.split(" ")[sceneName.split(" ").length-1]);
+			listModel.remove(mySeletedIndex);
+			mySeletedIndex = -1;
 		}		
 	}
-
-	private void manageSceneNum(boolean ifAdd){
-		if(ifAdd){//adding scene
-			mySceneCount = listModel.getSize();
-		}else{//deleting scene			
-			mySeletedIndex = -1;
-			//update the list display and scene number at engine
-			for(int j=1;j<listModel.getSize();j++){
-				listModel.set(j, "Scene "+j);
-				//need to set scene ID to be j at engine
-			}
-			mySceneCount = listModel.getSize();
-		}
-		
-	}
+			
 }

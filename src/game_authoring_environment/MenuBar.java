@@ -77,7 +77,7 @@ public class MenuBar extends JMenuBar{
 		}	
 	}
 
-	private void saveGameFile() {
+	private void saveGameFile(){
 		File saveFile = chooseGameFile("Save");
 		if(saveFile == null){
 			return;
@@ -88,7 +88,7 @@ public class MenuBar extends JMenuBar{
 		}
 		try {
 			gController.getDataController().exportXML(saveFile.getAbsolutePath());
-		} catch (ParserConfigurationException e1) {
+		} catch (ParserConfigurationException | IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}

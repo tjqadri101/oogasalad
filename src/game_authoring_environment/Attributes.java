@@ -1,5 +1,7 @@
 package game_authoring_environment;
 
+import java.util.HashMap;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -16,6 +18,7 @@ public class Attributes extends JTabbedPane {
 
 		makePanels(gController);
 		addTabs();
+		
 	}
 	
 	private void addTabs() {
@@ -33,5 +36,19 @@ public class Attributes extends JTabbedPane {
 		mySceneEditorPanel = ViewFactory.buildPanel(PanelType.SCENEEDITOR,gController);
 		myGameEditorPanel = ViewFactory.buildPanel(PanelType.GAMEEDITOR,gController);
 	}
-
+	
+	public void setTab(int index){
+		this.setSelectedIndex(index);
+	}
+	
+	
+	///best way to do this?
+	public HashMap<String, JPanel> setUpMap(HashMap<String, JPanel> map){
+		map.put("GameEditor", myGameEditorPanel);
+		map.put("SceneEditor", mySceneEditorPanel);
+		map.put("ActorEditor", myActorEditorPanel);
+		
+		return map;
+	}
+	
 }
