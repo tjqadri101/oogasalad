@@ -23,7 +23,8 @@ public class GameObjectTests extends TestCase {
 
 	    protected void setUp(){
 	    	myGame = new Game();
-	    	myEngine = new GameEngine(myGame);
+	    	myEngine = new GameEngine();
+	    	myEngine.setGame(myGame);
 //			Level level = new Level(0);
 //			myGame.addLevel(level);
 //			Scene scene = new Scene(0);
