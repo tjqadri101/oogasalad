@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import saladConstants.SaladConstants;
-/*
+/**
  * @Author: Justin (Zihao) Zhang
  * Only intended for non-player keys
  */
 public class InputManager {
 	
-	/*
+	/**
 	 * Maps keys (i.e. 'G') to the name of the method in GameEngine
 	 */
 	protected Map<Integer, String> myKeyMap;

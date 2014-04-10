@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import saladConstants.SaladConstants;
-
+/**
+ * @Author: Justin (Zihao) Zhang
+ */
 public class ScoreManager {
 	
 	public static final String INITIAL_SCORE = "InitialScore";
