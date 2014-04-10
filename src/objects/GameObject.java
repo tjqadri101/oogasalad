@@ -47,7 +47,7 @@ public abstract class GameObject extends PhysicalObject {
 	}
 	
 	//may not be needed
-	public void setID(int uniqueID){
+	public void resetID(int uniqueID){
 		myUniqueID = uniqueID;
 	}
 	
@@ -91,7 +91,7 @@ public abstract class GameObject extends PhysicalObject {
 		behaviorNoParameterReflection(myBehaviors, myDieBehavior, "remove");	
 	}
 	
-	public void setCollisionID(int collisionID){
+	public void resetCollisionID(int collisionID){
 		colid = collisionID;
 	}
 	
