@@ -31,15 +31,12 @@ public class GameFactory {
     private Game myGame;
     public static final String RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_FORMAT= "DataFormat";
-    public static final String DEFAULT_PATH= "FactoryOrderPath";
-    public static final String DEFAULT_REFLECTION= "ArgumentNumberReflection";
-    public static final String DEFAULT_NULL = "null";
-
-    private static final String TEST_STRING = ""; 
+    public static final String DEFAULT_PATH= "FactoryOrderPath"; 
     protected ResourceBundle myFormat, myPath, myReflection;
     
     public GameFactory(GameEngine engine){
         myEngine = engine;
+        myGame = ((GameEngine) myEngine).getGame();
         myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
         myPath = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_PATH);
     }
@@ -49,29 +46,62 @@ public class GameFactory {
      */
     public GameObject processOrder(List<Object> order) {
         
-        Game game = ((GameEngine) myEngine).getGame();
-        int levelID = ((GameEngine) myEngine).getCurrentLevelID();
-        int sceneID = ((GameEngine) myEngine).getCurrentSceneID();
+        myLevelID = ((GameEngine) myEngine).getCurrentLevelID();
+        mySceneID = ((GameEngine) myEngine).getCurrentSceneID();
         
         String instruction = (String) order.get(0);
-        List<Object> argumentList = parseOrder(order, instruction);
+        List<Object> objArgList = parseOrder(order, instruction);
         
         String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
         String methodToInvoke = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
         String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
         String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
         
-        return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", levelID, sceneID, argumentList, 
-                              methodToInvoke, game, GameRefMethod, GameRefPara);
+        return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", myLevelID, mySceneID, objArgList, 
+                              methodToInvoke, myGame, GameRefMethod, GameRefPara);
     }
 
+    
+    /**
+     * Creation or modification via Engine (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
+     */
+    @SuppressWarnings("unused")
+    public GameObject EngineReflect (int levelID, int sceneID, List<Object> objArgList, 
+                                String methodToInvoke, Game game, String GameReflectInfo, String GameRefPara) 
+                                        throws FactoryException {
+
+        Object[] objArgArray = objArgList.toArray(new Object[objArgList.size()]);
+
+        return (GameObject) Reflection.callMethod(myEngine, methodToInvoke, objArgArray);
+    }
+    
+    /**
+     * Creation or modification via Game (See FactoryOrderPath.Properties or exhaustive list of create/modify through Game)
+     */
+    @SuppressWarnings("unused")
+    public GameObject GameReflect (int levelID, int sceneID, List<Object> objArgList, 
+                              String methodToInvoke, Game game, String GameRefMethod, String GameReflectPara) 
+                                      throws FactoryException {
+
+        int numArg = Integer.parseInt(GameReflectPara);
+        Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
+
+        int[][] IDSelector = new int[][]{new int[]{(int) objArgList.get(0)},
+                                         new int[]{(int) objArgList.get(0),levelID},
+                                         new int[]{(int) objArgList.get(0),levelID, sceneID}};
+        //        Class<?> c = Class.forName(GameReflectionInfo);
+        
+        Object obj = Reflection.callMethod(game, GameRefMethod, IDSelector[numArg]);
+        return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);
+    }
+    
     /**
      * Only couple things as argument, use reflection to create or modify object instance.
      * @param order
      * @param instruction
      * @return
      */
-    private List<Object> parseOrder (List<Object> order, String instruction) {
+    public List<Object> parseOrder (List<Object> order, String instruction) {
         String tokens = myFormat.getString(instruction);
         List<String> tokenList = Arrays.asList(tokens.split("\\,"));
         List<Object> argumentList = new ArrayList<Object>();
@@ -81,39 +111,6 @@ public class GameFactory {
             }
         }
         return argumentList;
-    }
-    
-    /**
-     * Creation or modification via Engine (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
-     */
-    @SuppressWarnings("unused")
-    private GameObject EngineReflect (int levelID, int sceneID, List<String> argumentList, 
-                                String methodToInvoke, Game game, String GameReflectInfo, String GameRefPara) 
-                                        throws FactoryException {
-
-        String [] argumentArray = argumentList.toArray(new String[argumentList.size()]);
-
-        return (GameObject) Reflection.callMethod(myEngine, methodToInvoke, argumentArray);
-    }
-    
-    /**
-     * Creation or modification via Game (See FactoryOrderPath.Properties or exhaustive list of create/modify through Game)
-     */
-    @SuppressWarnings("unused")
-    private GameObject GameReflect (int levelID, int sceneID, List<String> argumentList, 
-                              String methodToInvoke, Game game, String GameRefMethod, String GameReflectPara) 
-                                      throws FactoryException {
-
-        int numArg = Integer.parseInt(GameReflectPara);
-        String [] argumentArray = argumentList.toArray(new String[argumentList.size()]);
-
-        int[][] IDSelector = new int[][]{new int[]{Integer.parseInt(argumentList.get(0))},
-                                         new int[]{Integer.parseInt(argumentList.get(0)),levelID},
-                                         new int[]{Integer.parseInt(argumentList.get(0)),levelID, sceneID}};
-        //        Class<?> c = Class.forName(GameReflectionInfo);
-        
-        Object obj = Reflection.callMethod(game, GameRefMethod, IDSelector[numArg]);
-        return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);
     }
     
     // Need to implement if the order format is not changed. Discuss tmr

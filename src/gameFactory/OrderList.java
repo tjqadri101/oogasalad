@@ -14,9 +14,10 @@ public class OrderList extends ArrayList<Object> {
     }
 
     @Override
-    public void add(Object obj) {
+    public boolean add(Object obj) {
         if ((obj instanceof String) || (obj instanceof Integer) || (obj instanceof Double)) {
             add(obj);
+            return true;
         } else {
             throw new IllegalArgumentException("not a String or int or double");
         }
