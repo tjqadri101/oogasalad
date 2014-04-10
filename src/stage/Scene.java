@@ -18,11 +18,12 @@ public class Scene {
 	public static final double DEFAULT_PLAYER_X = 0;
 	public static final double DEFAULT_PLAYER_Y = 0;
 	
-	private int myID;
-	private String myBackground;
-	private Map<Integer, GameObject> myObjectMap;
-	private double initPlayerX;
-	private double initPlayerY;
+	protected int myID;
+	protected String myBackground;
+	protected Map<Integer, GameObject> myObjectMap;
+	protected double initPlayerX;
+	protected double initPlayerY;
+//	protected GoalManager myGoalManager;
 	
 	public Scene(int id) {
 		myID = id;

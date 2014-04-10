@@ -11,7 +11,7 @@ import engineManagers.TimerManager;
 import objects.GameObject;
 import objects.Player;
 /**
- * 
+ * A data structure that holds all the information about a game
  * @author Main DavidChou, Justin (Zihao) Zhang
  * 
  */
