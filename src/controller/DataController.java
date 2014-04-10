@@ -3,16 +3,12 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
 import stage.Game;
-import reflection.Reflection;
 /*
  * @Author: Justin (Zihao) Zhang
  */
@@ -58,7 +54,7 @@ public class DataController {
 	 * Input is a url to the XML file created by the GAE
 	 */
 	public void exportXML(String url) throws ParserConfigurationException, IOException{
-//		myGameSaverAndLoader.save(myGame, url);
+		myGameSaverAndLoader.save(myGame.getAttributes(), url);
 	}
 	
 	
@@ -84,13 +80,11 @@ public class DataController {
 	}
 	
 	public int getCurrentLevelID(){
-//		return myGameEngine.getCurrentLevel();
-		return 0;
+		return myGameEngine.getCurrentLevelID();
 	}
 	
 	public int getCurrentSceneID(){
-//		return myGameEngine.getCurrentScene();
-		return 0;
+		return myGameEngine.getCurrentSceneID();
 	}
 	
 	

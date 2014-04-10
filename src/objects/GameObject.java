@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 import jboxGlue.PhysicalObject;
@@ -19,11 +20,13 @@ public abstract class GameObject extends PhysicalObject {
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
 	protected ResourceBundle myBehaviors;
+//	protected ScoreManager myScoreManager;
 	protected String myDieBehavior;
 	protected String myMoveBehavior;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
 	protected Map<Integer, String> myCollisionMap;
+//	protected Map<Integer, String>
 	protected int myLives;
 	protected int myUniqueID;
 	protected String myJumpBehavior;
