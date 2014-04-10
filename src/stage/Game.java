@@ -40,7 +40,7 @@ public class Game {
 	public void addScene(int levelID, int sceneID){
 		myLevelMap.get(levelID).addScene(sceneID);
 	}
-
+	
 	public void addObject(int levelID, int sceneID, GameObject object){
 		myLevelMap.get(levelID).addObject(sceneID, object);
 	}
@@ -67,6 +67,13 @@ public class Game {
 		level.resetID(newLevelID);
 		myLevelMap.remove(currentLevelID);
 		myLevelMap.put(newLevelID, level);
+	}
+	
+	public void switchSceneToLevel(int currentLevelID, int newLevelID, int sceneID){
+		Scene scene = getScene(currentLevelID, sceneID);
+		removeScene(currentLevelID, sceneID);
+		Level level = myLevelMap.get(newLevelID);
+		level.addScene(sceneID, scene);
 	}
 
 	public List<GameObject> getObjectsByColid(int colid){

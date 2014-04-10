@@ -27,7 +27,7 @@ public class GAEController {
 	
 	public GAEController(){
 		myDataController = new DataController();
-		myGameEngine = myDataController.initGameEngine(new Game());
+		myGameEngine = myDataController.initGameEngine();
 		createGAE(this);
 		//g = new GAE(this);
 	}

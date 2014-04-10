@@ -28,7 +28,7 @@ public class GameEngine extends StdGame{
     public static final int JGPOINT_Y = 600;
     
     private int myCurrentLevelID = 1;
-    private int currentSceneID = 0;
+    private int myCurrentSceneID = 0;
     private String Mode = "Edit";//String or boolean ?
     private Scene myCurrentScene;//ID or Object ?
     private List<int[]> collsionPair = new ArrayList<int[]>();
@@ -37,15 +37,15 @@ public class GameEngine extends StdGame{
     
     public GameEngine(){
 //    	initEngine(JGPOINT_X, JGPOINT_Y);//just for testing; will be deleted later
-    	initEngine(JGPOINT_X, JGPOINT_Y);
+    	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     }
     
     @Override
     public void initCanvas () {
-        setCanvasSettings(1, // width of the canvas in tiles
-                          1, // height of the canvas in tiles
-                          displayWidth(), // width of one tile
-                          displayHeight(), // height of one tile
+        setCanvasSettings(40, // width of the canvas in tiles
+                          30, // height of the canvas in tiles
+                          20, // width of one tile
+                          20, // height of one tile
                           null,// foreground colour -> use default colour white
                           null,// background colour -> use default colour black
                           null); // standard font -> use default font
@@ -58,8 +58,10 @@ public class GameEngine extends StdGame{
 //        defineImage("mm", "-", 0, "actor_default.png", "-");
 //        setBGImage("mm");
         
+        defineMedia("example3.tbl");
+        setGameState("Edit");
         
-        setGameState(Mode);
+		//setBGImage("bg");
 //        defineMedia("TestMediaTable.tbl");
 //		setBGImage("StartGameBGImage");
     }
@@ -69,7 +71,7 @@ public class GameEngine extends StdGame{
     }
     
     public void setCurrentLevel(int currentLevelID){
-    	myCurrentLevelID = currentSceneID;
+    	myCurrentLevelID = myCurrentSceneID;
     }
     
 
@@ -80,7 +82,8 @@ public class GameEngine extends StdGame{
 //        setBGImage("mm");
 //    	createPlayer(0, "actor_default.png", 0, 0, null, 0, 0, 0);
     	
-    	setBGColor(JGColor.cyan);
+    	//setBGColor(JGColor.cyan);
+    	removeObjects(null,0);	
     }
     public void doFrameEdit(){
     	moveObjects();
@@ -89,14 +92,16 @@ public class GameEngine extends StdGame{
     	}
     }
     public void paintFrameEdit(){
-
+    	//drawImage("bg", 100, 200);
+    	drawImage(100, 200, "bg");
+    	drawString("Press space to start",pfWidth()/2,500,0);
     }
     
     public void addCollisionPair(int srccid, String type, int dstcid, int levelID, int sceneID){
     	collsionPair.add(new int[]{srccid,dstcid});
     	List<GameObject> objects = myGame.getObjectsByColid(dstcid);
     	for(GameObject o: objects){
-    		o.setCollisionBehavior(srccid, type);
+    		o.setCollisionBehavior(type, srccid);
     	}
     }
     
@@ -209,13 +214,13 @@ public class GameEngine extends StdGame{
     }
     
     public int getCurrentSceneID(){
-    	return currentSceneID;
+    	return myCurrentSceneID;
     }
     
     public GameObject createPlayer(String unique_id, String url, String xpos, String ypos, String name, String colid){
     	File file = new File(url);
     	String filename = file.getName();
-        GameObject object = new Player(Integer.parseInt(unique_id), filename, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
+        Player object = new Player(Integer.parseInt(unique_id), filename, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
         object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
         myGame.setPlayer(object);
         return object;
@@ -235,14 +240,14 @@ public class GameEngine extends StdGame{
         return object;
     }
     
-    public GameObject createActor(String unique_id, String url, String xpos, String ypos, String name, String colid){
+    public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
 //    	File file = new File(url);
 //    	String filename = file.getName();
     	defineImage(url, "-", 0, url, "-");
     	System.out.print("here");
-        GameObject object = new NonPlayer(Integer.parseInt(unique_id), url, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
-        object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
-        myCurrentScene.addObject(object);
+        GameObject object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
+        object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        myGame.getScene(myCurrentLevelID, myCurrentSceneID).addObject(object);
         return object;
     }
 
