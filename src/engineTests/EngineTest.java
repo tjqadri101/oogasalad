@@ -21,7 +21,7 @@ public class EngineTest {
 		
 		
 		System.out.print("lol\n");
-		//ge.createPlayer(0, null, 0, 0, null, 0, 0, 0);
+		ge.createPlayer(0, "actor_default.png", 0, 0, null, 0);
 		//ge.createBackground();
     }
 }
