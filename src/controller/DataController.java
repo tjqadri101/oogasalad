@@ -9,7 +9,7 @@ import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
 import stage.Game;
-/*
+/**
  * @Author: Justin (Zihao) Zhang
  */
 public class DataController {
@@ -27,9 +27,9 @@ public class DataController {
 		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
 	}
 	
-	/*
+	/**
 	 * Called by Game Authorizing Environment to display the engine inside its GUI
-	 * Return the Game Engine 
+     * @return Game Engine
 	 */
 	public GameEngine initGameEngine(){
 		myGame = new Game();
@@ -40,61 +40,72 @@ public class DataController {
 	}
 	
 	
-	/*
+	/**
 	 * Called by Game Authorizing Environment to send the command String
-	 * Input is a String order
+	 * @param a list of objects: order
+     * @return nothing
 	 */
-	public void receiveOrder(String order){
+	public void receiveOrder(List<Object> order){
 		callFactoryToProcess(order);
 	}
 	
 	
-	/*
+	/**
 	 * Called by Game Authorizing Environment to export the game data
-	 * Input is a url to the XML file created by the GAE
+	 * @param a String url to the XML file created by the GAE
+	 * @return nothing
 	 */
 	public void exportXML(String url) throws ParserConfigurationException, IOException{
 		myGameSaverAndLoader.save(myGame.getAttributes(), url);
 	}
 	
 	
-	/*
+	/**
 	 * Called by PlayView to import the game data
-	 * Input is a url to the XML file loaded by PlayView
+	 * @param a String url to the XML file loaded by PlayView
+	 * @return nothing
 	 */
 	public void readXML(String url) throws Exception {
-		List<String> orders = myGameSaverAndLoader.load(url);
-		for(String order: orders){
-			callFactoryToProcess(order);
-		}
+//		List<List<Object>> orders = myGameSaverAndLoader.load(url);
+//		for(List<Object> order: orders){
+//			callFactoryToProcess(order);
+//		}
 	}
 	
 	
-	/*
+	/**
 	 * Called by Game Authorizing Environment to read the info about a specific Game Object (i.e. Actor)
-	 * Input is an id number matched to the Game Object
+	 * @param an id number matched to the Game Object to get
+	 * @return a list of String orders attached to the Game Object
 	 */
 	public List<String> getObjectInfo(int id){
-//		return myGame.getGameObject(currentLevelID, currentSceneID, id).getAttributes();
-		return null;
+		return myGame.getGameObject(myGameEngine.getCurrentLevelID(), myGameEngine.getCurrentSceneID(), id).getAttributes();
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current level ID
+	 * @return the current level ID
+	 */
 	public int getCurrentLevelID(){
 		return myGameEngine.getCurrentLevelID();
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current scene ID
+	 * @return the current scene ID
+	 */
 	public int getCurrentSceneID(){
 		return myGameEngine.getCurrentSceneID();
 	}
 	
 	
-	/*
+	/**
 	 * Do not call this method directly
 	 * This method is called within DataController by Reflection
 	 */
-	public void callFactoryToProcess(String order) {
+	public void callFactoryToProcess(List<Object> order) {
 		try{
-//			myFactory.processOrder(order);	
+			myFactory.processOrder(order);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}

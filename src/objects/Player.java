@@ -11,7 +11,6 @@ import saladConstants.SaladConstants;
  * @Author: Justin (Zihao) Zhang
  */
 public class Player extends GameObject {
-	public static final int DEFAULT_KEY = '`';
 	
 	protected Map<Integer, String> myKeyMap;
 	
@@ -31,6 +30,7 @@ public class Player extends GameObject {
 	}
 	
 	public void checkKeys(){
+		if(myKeyMap.isEmpty()) return; // just in case
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				Reflection.callMethod(this, myKeyMap.get(key));

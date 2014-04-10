@@ -10,20 +10,25 @@ import saladConstants.SaladConstants;
 
 /**
  * 
- * @author DavidChou, Justin Zhang
+ * @author Justin (Zihao) Zhang, DavidChou
  */
-
 
 public class Scene {
 	
-	private int myID;
-	private String myBackground;
-	private Map<Integer, GameObject> myObjectMap;
-	private double initPlayerX;
-	private double initPlayerY;
+	public static final double DEFAULT_PLAYER_X = 0;
+	public static final double DEFAULT_PLAYER_Y = 0;
+	
+	protected int myID;
+	protected String myBackground;
+	protected Map<Integer, GameObject> myObjectMap;
+	protected double initPlayerX;
+	protected double initPlayerY;
+//	protected GoalManager myGoalManager;
 	
 	public Scene(int id) {
 		myID = id;
+		initPlayerX = DEFAULT_PLAYER_X;
+		initPlayerY = DEFAULT_PLAYER_Y;
 		myObjectMap = new HashMap<Integer, GameObject>();
 	}
 		
@@ -47,8 +52,9 @@ public class Scene {
 		return position;
 	}
 	
-	/*
+	/**
 	 * Called by GameEngine to display the GameObjects
+	 * @return a list of Game Objects for the current scene
 	 */
 	public List<GameObject> getGameObjects() {
 		List<GameObject> answer = new ArrayList<GameObject>();
@@ -57,12 +63,6 @@ public class Scene {
 		}
 		return answer;
 	}
-//	
-//	public void setObjects(List<GameObject> gameObjects){
-//		for(GameObject object: gameObjects){
-//			addObject(object);
-//		}
-//	}
 	
 	//need check
 	public void setBackgroundImage(String imageName) {
@@ -88,12 +88,12 @@ public class Scene {
 	
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
-		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
+		answer.add(SaladConstants.CREATE_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.BACKGROUND + "," + myBackground);
+		answer.add(SaladConstants.SWITCH_SCENE + "," + SaladConstants.ID + "," + myID);
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
-		answer.add(SaladConstants.MODIFY_SCENE + ",ID," + myID + ",PlayerInitialPosition," + initPlayerX + "," + initPlayerY);
+		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.PLAYER_INITIAL_POSITION + "," + initPlayerX + "," + initPlayerY);
 		return answer;
 	}
 }
