@@ -38,7 +38,7 @@ public class GameObjectTests extends TestCase {
 		@Test
 		public void testModifyCollision(){
 			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
-			object.setCollisionBehavior(2, "HitterEliminateVictim");
+			object.setCollisionBehavior("HitterEliminateVictim", 2);
 //			assertEquals("HitterEliminateVictim", object.myCollisionMap.get(2));
 		}
 		
