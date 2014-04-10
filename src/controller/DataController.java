@@ -45,7 +45,7 @@ public class DataController {
 	 * @param a list of objects: order
      * @return nothing
 	 */
-	public void receiveOrder(String order){
+	public void receiveOrder(List<Object> order){
 		callFactoryToProcess(order);
 	}
 	
@@ -66,10 +66,10 @@ public class DataController {
 	 * @return nothing
 	 */
 	public void readXML(String url) throws Exception {
-		List<String> orders = myGameSaverAndLoader.load(url);
-		for(String order: orders){
-			callFactoryToProcess(order);
-		}
+//		List<List<Object>> orders = myGameSaverAndLoader.load(url);
+//		for(List<Object> order: orders){
+//			callFactoryToProcess(order);
+//		}
 	}
 	
 	
@@ -103,9 +103,9 @@ public class DataController {
 	 * Do not call this method directly
 	 * This method is called within DataController by Reflection
 	 */
-	public void callFactoryToProcess(String order) {
+	public void callFactoryToProcess(List<Object> order) {
 		try{
-//			myFactory.processOrder(order);	
+			myFactory.processOrder(order);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}

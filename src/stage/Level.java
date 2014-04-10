@@ -10,7 +10,7 @@ import saladConstants.SaladConstants;
 
 /**
  * 
- * @author DavidChou, Justin Zhang
+ * @author Justin (Zihao) Zhang, DavidChou
  *
  */
 public class Level {
@@ -67,26 +67,12 @@ public class Level {
 
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
-		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
+		answer.add(SaladConstants.CREATE_LEVEL + "," + SaladConstants.ID + "," + myID);
+		answer.add(SaladConstants.SWITCH_LEVEL + "," + SaladConstants.ID + "," + myID);
 		for(int a: mySceneMap.keySet()){
 			answer.addAll(mySceneMap.get(a).getAttributes());
 		}
 		return answer;
 	}
-
-//	public List<Scene> getScenes() {
-//		List<Scene> answer = new ArrayList<Scene>();
-//		for(int sceneID: mySceneMap.keySet()){
-//			answer.add(mySceneMap.get(sceneID));
-//		}
-//		return answer;
-//	}
-//
-//	public void setScenes(List<Scene> scenes){
-//		for(Scene scene: scenes){
-//			mySceneMap.put(scene.getID(), scene);
-//		}
-//	}
 
 }

@@ -10,20 +10,20 @@ import saladConstants.SaladConstants;
 
 /**
  * 
- * @author DavidChou, Justin Zhang
+ * @author Justin (Zihao) Zhang, DavidChou
  */
-
 
 public class Scene {
 	
 	public static final double DEFAULT_PLAYER_X = 0;
 	public static final double DEFAULT_PLAYER_Y = 0;
 	
-	private int myID;
-	private String myBackground;
-	private Map<Integer, GameObject> myObjectMap;
-	private double initPlayerX;
-	private double initPlayerY;
+	protected int myID;
+	protected String myBackground;
+	protected Map<Integer, GameObject> myObjectMap;
+	protected double initPlayerX;
+	protected double initPlayerY;
+//	protected GoalManager myGoalManager;
 	
 	public Scene(int id) {
 		myID = id;
@@ -52,8 +52,9 @@ public class Scene {
 		return position;
 	}
 	
-	/*
+	/**
 	 * Called by GameEngine to display the GameObjects
+	 * @return a list of Game Objects for the current scene
 	 */
 	public List<GameObject> getGameObjects() {
 		List<GameObject> answer = new ArrayList<GameObject>();
@@ -62,12 +63,6 @@ public class Scene {
 		}
 		return answer;
 	}
-//	
-//	public void setObjects(List<GameObject> gameObjects){
-//		for(GameObject object: gameObjects){
-//			addObject(object);
-//		}
-//	}
 	
 	//need check
 	public void setBackgroundImage(String imageName) {
@@ -75,17 +70,14 @@ public class Scene {
 	}
 	
 	public String getBackgroundImage() {
-		if(myBackground == null) return null;
 		return myBackground;
 	}
 	
 	public GameObject getObject(int objectID) {
-		if(myObjectMap.isEmpty() || !myObjectMap.containsKey(objectID)) return null;
 		return myObjectMap.get(objectID);
 	}
 
 	public List<GameObject> getObjectsByColid(int colid){
-		if(myObjectMap.isEmpty()) return null;
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int objectID: myObjectMap.keySet()){
 			GameObject object = myObjectMap.get(objectID);
@@ -96,12 +88,12 @@ public class Scene {
 	
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
-		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
+		answer.add(SaladConstants.CREATE_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.BACKGROUND + "," + myBackground);
+		answer.add(SaladConstants.SWITCH_SCENE + "," + SaladConstants.ID + "," + myID);
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
-		answer.add(SaladConstants.MODIFY_SCENE + ",ID," + myID + ",PlayerInitialPosition," + initPlayerX + "," + initPlayerY);
+		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.PLAYER_INITIAL_POSITION + "," + initPlayerX + "," + initPlayerY);
 		return answer;
 	}
 }

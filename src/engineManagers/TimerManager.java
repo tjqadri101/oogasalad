@@ -9,7 +9,9 @@ import java.util.Map;
  * @Author: Justin (Zihao) Zhang
  */
 import saladConstants.SaladConstants;
-
+/**
+ * @Author: Justin (Zihao) Zhang
+ */
 public class TimerManager {
 	
 	protected Map<String, Integer> myTimerMap;
