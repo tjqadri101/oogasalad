@@ -30,7 +30,7 @@ public class GameObjectTests extends TestCase {
 		
 		@Test
 		public void testCreateObjects(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0);
+			GameObject object = myEngine.createActor(0, "actor_default.png", 0, 0, "Hero", 0);
 			assertEquals(object, myGame.getGameObject(1, 0, 0));
 		}
 		
