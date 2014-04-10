@@ -227,13 +227,13 @@ public class GameEngine extends StdGame{
         return object;
     }
     
-    public GameObject createActor(String unique_id, String url, String xpos, String ypos, String name, String colid){
+    public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
 //    	File file = new File(url);
 //    	String filename = file.getName();
     	defineImage(url, "-", 0, url, "-");
     	System.out.print("here");
-        GameObject object = new NonPlayer(Integer.parseInt(unique_id), url, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
-        object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
+        GameObject object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
+        object.setPos(xpos, ypos);//just to make sure; may be deleted later
         currentScene.addObject(object);
         return object;
     }

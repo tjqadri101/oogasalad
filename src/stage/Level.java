@@ -35,6 +35,10 @@ public class Level {
 		Scene scene = new Scene(sceneID);
 		mySceneMap.put(sceneID, scene);
 	}
+	
+	public void addScene(int sceneID, Scene scene){
+		mySceneMap.put(sceneID, scene);
+	}
 
 	public void addObject(int sceneID, GameObject object) {
 		mySceneMap.get(sceneID).addObject(object);
