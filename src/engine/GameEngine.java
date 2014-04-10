@@ -10,7 +10,7 @@ import objects.GameObject;
 import objects.NonPlayer;
 import objects.Player;
 
-import java.awt.Dimension;
+import java.awt.Dimension;//
 import java.util.ArrayList;
 import java.util.List;
 /*
@@ -18,23 +18,24 @@ import java.util.List;
  */
 public class GameEngine extends StdGame{
 
-    public static final Dimension SIZE = new Dimension(800, 600);
-    public static final String TITLE = "Platformer Game Editor";
+//    public static final Dimension SIZE = new Dimension(800, 600);
+//    public static final String TITLE = "Platformer Game Editor";
     public static final int FRAMES_PER_SECOND = 20;
     public static final int MAX_FRAMES_TO_SKIP = 2;
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
     
-    private String Mode = "Edit";//String or boolean ?
-    private Scene myCurrentScene;//is this necessary?
+    protected Game myGame;
+    
     private List<int[]> myCollsionPair = new ArrayList<int[]>();
     private int myCurrentLevelID = 1;
     private int myCurrentSceneID = 0;
+    private Scene myCurrentScene;//is this necessary?
+    private String Mode = "Edit";//String or boolean ?
     
-    protected Game myGame;
+    
     
     public GameEngine(){
-//    	initEngine(JGPOINT_X, JGPOINT_Y);//just for testing; will be deleted later
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     }
     
@@ -52,13 +53,6 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-//        defineImage("mm", "-", 0, "actor_default.png", "-");
-//        setBGImage("mm");
-        
-        defineMedia("example3.tbl");
-        setGameState("Edit");
-        
-		//setBGImage("bg");
     }
     
     public Game getGame(){
@@ -71,7 +65,8 @@ public class GameEngine extends StdGame{
     
 
     public void startEdit(){
-//    	removeObjects(null,0);	
+//    	removeObjects(null,0);
+    	setBGImage("bg");
     }
     public void doFrameEdit(){
     	moveObjects();
@@ -110,9 +105,9 @@ public class GameEngine extends StdGame{
     	myGame = mygame;
     }
     
-    public void createBackground(){
-    	//setBGColor(JGColor.cyan);
-        //setBGImage();
+    public void createBackground(String url){
+    	defineImage(url, "-", 0, url, "-");
+    	setBGImage(url);
     }
     
     public void doFrameTitle(){
@@ -216,7 +211,7 @@ public class GameEngine extends StdGame{
     	defineImage(url, "-", 0, url, "-");
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
-        myGame.setPlayer(object);
+        //myGame.setPlayer(object);
         return object;
     }
     
