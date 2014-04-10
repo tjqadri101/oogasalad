@@ -1,6 +1,5 @@
 package objects;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +13,7 @@ import jgame.JGObject;
 /*
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends PhysicalObject implements Serializable{
+public abstract class GameObject extends PhysicalObject {
 	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
