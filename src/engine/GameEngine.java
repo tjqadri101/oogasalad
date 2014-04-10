@@ -27,10 +27,10 @@ public class GameEngine extends StdGame{
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
     
-    private int currentLevelID = 1;
+    private int myCurrentLevelID = 1;
     private int currentSceneID = 0;
     private String Mode = "Edit";//String or boolean ?
-    private Scene currentScene;//ID or Object ?
+    private Scene myCurrentScene;//ID or Object ?
     private List<int[]> collsionPair = new ArrayList<int[]>();
     
     protected Game myGame;
@@ -55,13 +55,21 @@ public class GameEngine extends StdGame{
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
         //setBGColor(JGColor.blue);
-        defineImage("mm", "-", 0, "actor_default.png", "-");
-        setBGImage("mm");
+//        defineImage("mm", "-", 0, "actor_default.png", "-");
+//        setBGImage("mm");
         
         
         setGameState(Mode);
 //        defineMedia("TestMediaTable.tbl");
 //		setBGImage("StartGameBGImage");
+    }
+    
+    public Game getGame(){
+    	return myGame;
+    }
+    
+    public void setCurrentLevel(int currentLevelID){
+    	myCurrentLevelID = currentSceneID;
     }
     
 
@@ -92,12 +100,12 @@ public class GameEngine extends StdGame{
     	}
     }
     
-    public void setCurrentScene (int currentLevelID, int currentSceneID) {
-    	for(GameObject go: currentScene.getGameObjects()){
+    public void setCurrentScene (int currentSceneID) {
+    	for(GameObject go: myCurrentScene.getGameObjects()){
     		go.suspend();
     	}
-    	currentScene = myGame.getScene(currentLevelID, currentSceneID);
-    	for(GameObject go: currentScene.getGameObjects()){
+    	myCurrentScene = myGame.getScene(myCurrentLevelID, currentSceneID);
+    	for(GameObject go: myCurrentScene.getGameObjects()){
     		go.resume();
     	}
     	//setGameState(Mode);
@@ -197,7 +205,7 @@ public class GameEngine extends StdGame{
      */
     
     public int getCurrentLevelID(){
-    	return currentLevelID;
+    	return myCurrentLevelID;
     }
     
     public int getCurrentSceneID(){
@@ -234,7 +242,7 @@ public class GameEngine extends StdGame{
     	System.out.print("here");
         GameObject object = new NonPlayer(Integer.parseInt(unique_id), url, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
         object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
-        currentScene.addObject(object);
+        myCurrentScene.addObject(object);
         return object;
     }
 
