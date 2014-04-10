@@ -20,7 +20,6 @@ public class Game {
 	public static final int DEFAULT_SCORE = 0;
 	
 	protected Map<Integer, Level> myLevelMap;
-	protected Player myPlayer;
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
@@ -40,14 +39,6 @@ public class Game {
 	public void addScene(int levelID, int sceneID){
 		myLevelMap.get(levelID).addScene(sceneID);
 	}
-	
-	public void setPlayer(GameObject object){
-		myPlayer = (Player)object;
-	}
-	
-//	public void setPlayerXY(int levelID, int sceneID, int playerID, int x, int y) {
-//		myLevels.get(levelID).setPlayerXY(sceneID, playerID, x, y);
-//	}
 	
 	public void addObject(int levelID, int sceneID, GameObject object){
 		myLevelMap.get(levelID).addObject(sceneID, object);
