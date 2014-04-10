@@ -22,11 +22,11 @@ public class Level {
 		myID = id;
 		mySceneMap = new HashMap<Integer, Scene>(); 
 	}
-	
+
 	public int getID(){ 
 		return myID; 
 	}
-	
+
 	public void resetID(int id){
 		myID = id;
 	}
@@ -40,10 +40,6 @@ public class Level {
 		mySceneMap.get(sceneID).addObject(object);
 	}
 
-//	public void setPlayerXY(int sceneID, int playerID, int x, int y) {
-//		myScenes.get(sceneID).setPlayerXY(playerID, x, y);
-//	}
-	
 	public GameObject getObject(int sceneID, int objectID) {
 		return mySceneMap.get(sceneID).getObject(objectID);
 	}
@@ -55,7 +51,7 @@ public class Level {
 	public void removeScene(int sceneID) {
 		mySceneMap.remove(sceneID);
 	}
-	
+
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int sceneID: mySceneMap.keySet()){
@@ -74,7 +70,7 @@ public class Level {
 		}
 		return answer;
 	}
-	
+
 //	public List<Scene> getScenes() {
 //		List<Scene> answer = new ArrayList<Scene>();
 //		for(int sceneID: mySceneMap.keySet()){
@@ -88,5 +84,5 @@ public class Level {
 //			mySceneMap.put(scene.getID(), scene);
 //		}
 //	}
-	
+
 }

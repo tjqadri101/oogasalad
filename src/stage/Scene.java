@@ -14,6 +14,7 @@ import saladConstants.SaladConstants;
  * @author DavidChou, Justin Zhang
  */
 
+
 public class Scene {
 	
 	private int myID;
@@ -99,6 +100,7 @@ public class Scene {
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
+		answer.add(SaladConstants.MODIFY_SCENE + ",ID," + myID + ",PlayerInitialPosition," + initPlayerX + "," + initPlayerY);
 		return answer;
 	}
 }

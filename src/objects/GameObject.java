@@ -1,20 +1,19 @@
 package objects;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 import jboxGlue.PhysicalObject;
-import jgame.JGColor;
 import jgame.JGObject;
 /*
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends PhysicalObject implements Serializable{
+public abstract class GameObject extends PhysicalObject {
 	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
@@ -24,7 +23,7 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	protected String myMoveBehavior;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
-	protected HashMap<Integer, String> myCollisionMap;
+	protected Map<Integer, String> myCollisionMap;
 	protected int myLives;
 	protected int myUniqueID;
 	protected String myJumpBehavior;
