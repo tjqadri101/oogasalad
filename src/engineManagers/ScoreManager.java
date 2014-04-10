@@ -1,12 +1,11 @@
 package engineManagers;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import saladConstants.SaladConstants;
 
-public class ScoreManager implements Serializable {
+public class ScoreManager {
 	
 	public static final String INITIAL_SCORE = "InitialScore";
 	

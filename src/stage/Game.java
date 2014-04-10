@@ -9,6 +9,7 @@ import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import objects.GameObject;
+import objects.Player;
 /**
  * 
  * @author DavidChou, Justin Zhang
@@ -22,6 +23,7 @@ public class Game {
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
+	protected Player myPlayer;
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
@@ -75,12 +77,21 @@ public class Game {
 		}
 		return objects;
 	}
+	
+	public void setPlayer(Player player){
+		myPlayer = player;
+	}
+	
+	public Player getPlayer(){
+		return myPlayer;
+	}
 
 	public List<String> getAttributes() {
 		List <String> answer = new ArrayList<String>();
 		answer.addAll(myScoreManager.getAttributes()); 
 		answer.addAll(myInputManager.getAttributes()); 
 		answer.addAll(myTimerManager.getAttributes()); 
+		answer.addAll(myPlayer.getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}

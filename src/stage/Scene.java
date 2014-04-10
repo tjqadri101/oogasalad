@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import objects.GameObject;
-import objects.Player;
 import saladConstants.SaladConstants;
 
 /**
@@ -20,7 +19,6 @@ public class Scene {
 	private int myID;
 	private String myBackground;
 	private Map<Integer, GameObject> myObjectMap;
-	private Player myPlayer;
 	private double initPlayerX;
 	private double initPlayerY;
 	
@@ -40,10 +38,6 @@ public class Scene {
 	public void setPlayerInitPosition(double xpos, double ypos){
 		initPlayerX = xpos;
 		initPlayerY = ypos;
-	}
-	
-	public Player getPlayer(){
-		return myPlayer;
 	}
 	
 	public double[] getPlayerInitPosition(){
@@ -96,7 +90,6 @@ public class Scene {
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
 		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
-		answer.addAll(myPlayer.getAttributes());
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
