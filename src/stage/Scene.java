@@ -16,6 +16,9 @@ import saladConstants.SaladConstants;
 
 public class Scene {
 	
+	public static final double DEFAULT_PLAYER_X = 0;
+	public static final double DEFAULT_PLAYER_Y = 0;
+	
 	private int myID;
 	private String myBackground;
 	private Map<Integer, GameObject> myObjectMap;
@@ -24,6 +27,8 @@ public class Scene {
 	
 	public Scene(int id) {
 		myID = id;
+		initPlayerX = DEFAULT_PLAYER_X;
+		initPlayerY = DEFAULT_PLAYER_Y;
 		myObjectMap = new HashMap<Integer, GameObject>();
 	}
 		
@@ -51,6 +56,7 @@ public class Scene {
 	 * Called by GameEngine to display the GameObjects
 	 */
 	public List<GameObject> getGameObjects() {
+		if(myObjectMap.isEmpty()) return null;
 		List<GameObject> answer = new ArrayList<GameObject>();
 		for(int id: myObjectMap.keySet()){
 			answer.add(myObjectMap.get(id));
@@ -70,14 +76,17 @@ public class Scene {
 	}
 	
 	public String getBackgroundImage() {
+		if(myBackground == null) return null;
 		return myBackground;
 	}
 	
 	public GameObject getObject(int objectID) {
+		if(myObjectMap.isEmpty() || !myObjectMap.containsKey(objectID)) return null;
 		return myObjectMap.get(objectID);
 	}
 
 	public List<GameObject> getObjectsByColid(int colid){
+		if(myObjectMap.isEmpty()) return null;
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int objectID: myObjectMap.keySet()){
 			GameObject object = myObjectMap.get(objectID);

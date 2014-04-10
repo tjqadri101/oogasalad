@@ -1,3 +1,4 @@
+
 package engineTests;
 
 import objects.GameObject;
@@ -23,6 +24,8 @@ public class GameObjectTests extends TestCase {
 	    	myEngine.setGame(myGame);
 			myGame.addLevel(0);
 			myGame.addScene(0, 0);
+			myEngine.setCurrentScene(0);
+			myEngine.setCurrentLevel(0);
 	    }
 		
 		@Test
