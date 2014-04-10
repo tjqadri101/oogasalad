@@ -23,6 +23,11 @@ public final class SaladConstants {
 	public static final String ACTOR_PANEL = "Actor";
 	public static final String MEDIA_PANEL = "Media";
 	public static final String BEHAVIOR_PANEL = "Behavior";
-	
-	
+	public static final String ELEMENT_LABEL = "Element";
+	public static final String ROOT_ELEMENT_LABEL = "Root";
+	public static final String STATE_GAMEOVER = "GameOver";
+	public static final String STATE_STARTTITLE = "StartTitle";
+	public static final String STATE_STARTLEVEL = "StartLevel";
+	public static final String STATE_LEVELDONE = "LevelDone";
+	public static final String STATE_LIFELOST = "LifeLost";
 }

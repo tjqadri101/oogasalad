@@ -3,16 +3,12 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
 import stage.Game;
-import reflection.Reflection;
 /*
  * @Author: Justin (Zihao) Zhang
  */
@@ -21,8 +17,6 @@ public class DataController {
 	public static final String DEFAULT_CREATEORMODIFY = "KeyDataController";
 	
 	protected Game myGame;
-    protected int currentLevelID;
-    protected int currentSceneID;
 	protected GameFactory myFactory;
 	protected GameSaverAndLoader myGameSaverAndLoader;
 	protected GameEngine myGameEngine;
@@ -35,9 +29,10 @@ public class DataController {
 	
 	/*
 	 * Called by Game Authorizing Environment to display the engine inside its GUI
+	 * Return the Game Engine 
 	 */
-	public GameEngine initGameEngine(Game game){
-		myGame = game;
+	public GameEngine initGameEngine(){
+		myGame = new Game();
 		myGameEngine = new GameEngine();
 		myGameEngine.setGame(myGame);
 		myFactory = new GameFactory(myGameEngine);
@@ -50,9 +45,7 @@ public class DataController {
 	 * Input is a String order
 	 */
 	public void receiveOrder(String order){
-		String[] orders = order.split(",");
-		String methodName = myOrderReflector.getString(orders[0]);
-		Reflection.callMethod(this, methodName, order);	
+		callFactoryToProcess(order);
 	}
 	
 	
@@ -61,7 +54,7 @@ public class DataController {
 	 * Input is a url to the XML file created by the GAE
 	 */
 	public void exportXML(String url) throws ParserConfigurationException, IOException{
-		myGameSaverAndLoader.save(myGame, url);
+		myGameSaverAndLoader.save(myGame.getAttributes(), url);
 	}
 	
 	
@@ -70,7 +63,10 @@ public class DataController {
 	 * Input is a url to the XML file loaded by PlayView
 	 */
 	public void readXML(String url) throws Exception {
-//		return myGameSaverAndLoader.load(url);
+		List<String> orders = myGameSaverAndLoader.load(url);
+		for(String order: orders){
+			callFactoryToProcess(order);
+		}
 	}
 	
 	
@@ -79,15 +75,16 @@ public class DataController {
 	 * Input is an id number matched to the Game Object
 	 */
 	public List<String> getObjectInfo(int id){
-		return myGame.getGameObject(currentLevelID, currentSceneID, id).getAttributes();
+//		return myGame.getGameObject(currentLevelID, currentSceneID, id).getAttributes();
+		return null;
 	}
 	
 	public int getCurrentLevelID(){
-		return currentLevelID;
+		return myGameEngine.getCurrentLevelID();
 	}
 	
 	public int getCurrentSceneID(){
-		return currentSceneID;
+		return myGameEngine.getCurrentSceneID();
 	}
 	
 	
@@ -97,28 +94,9 @@ public class DataController {
 	 */
 	public void callFactoryToProcess(String order) {
 		try{
-			myFactory.processOrder(myGame, currentLevelID, currentSceneID, order);	
+//			myFactory.processOrder(order);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}
-	}
-	
-	/*
-	 * Do not call this method directly
-	 * This method is called within DataController by Reflection
-	 */
-	public void switchToScene(String order){
-		String[] orders = order.split(",");
-		currentSceneID = Integer.parseInt(orders[2]);
-		myGameEngine.setCurrentScene(currentLevelID, currentSceneID);
-	}
-	
-	/*
-	 * Do not call this method directly
-	 * This method is called within DataController by Reflection
-	 */
-	public void switchToLevel(String order){
-		String[] orders = order.split(",");
-		currentLevelID = Integer.parseInt(orders[2]);
 	}
 }

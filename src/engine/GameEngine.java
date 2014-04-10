@@ -12,6 +12,7 @@ import objects.Player;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 /*
@@ -26,6 +27,8 @@ public class GameEngine extends StdGame{
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
     
+    private int currentLevelID = 1;
+    private int currentSceneID = 0;
     private String Mode = "Edit";//String or boolean ?
     private Scene currentScene;//ID or Object ?
     private List<int[]> collsionPair = new ArrayList<int[]>();
@@ -34,7 +37,7 @@ public class GameEngine extends StdGame{
     
     public GameEngine(){
 //    	initEngine(JGPOINT_X, JGPOINT_Y);//just for testing; will be deleted later
-    	initEngineComponent(JGPOINT_X, JGPOINT_Y);
+    	initEngine(JGPOINT_X, JGPOINT_Y);
     }
     
     @Override
@@ -51,13 +54,25 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        //setGameState(Mode);
+        //setBGColor(JGColor.blue);
+        defineImage("mm", "-", 0, "actor_default.png", "-");
+        setBGImage("mm");
+        
+        
+        setGameState(Mode);
 //        defineMedia("TestMediaTable.tbl");
 //		setBGImage("StartGameBGImage");
     }
+    
 
     public void startEdit(){
     	//setBGImage(currentScene.getBackgroundImage());
+    	
+//    	defineImage("mm", "-", 0, "actor_default.png", "-");
+//        setBGImage("mm");
+//    	createPlayer(0, "actor_default.png", 0, 0, null, 0, 0, 0);
+    	
+    	setBGColor(JGColor.cyan);
     }
     public void doFrameEdit(){
     	moveObjects();
@@ -92,6 +107,11 @@ public class GameEngine extends StdGame{
     	myGame = mygame;
     }
     
+    public void createBackground(){
+    	//setBGColor(JGColor.cyan);
+        //setBGImage();
+    }
+    
     
     
     /*
@@ -101,7 +121,7 @@ public class GameEngine extends StdGame{
      */
     @Override
     public void doFrame(){
-    	
+    	//createBackground();
     }
     
     /*
@@ -109,6 +129,12 @@ public class GameEngine extends StdGame{
      * @see jgame.platform.StdGame#paintFrame()
      * For inGame states
      */
+    
+    public void doFrameTitle(){
+    	//setBGColor(JGColor.blue);
+    	//setGameState("Edit");
+    }
+    
     @Override
     public void paintFrame ()
     {
@@ -169,21 +195,46 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
+    
+    public int getCurrentLevelID(){
+    	return currentLevelID;
+    }
+    
+    public int getCurrentSceneID(){
+    	return currentSceneID;
+    }
+    
+    public GameObject createPlayer(String unique_id, String url, String xpos, String ypos, String name, String colid){
     	File file = new File(url);
     	String filename = file.getName();
-        GameObject object = new Player(unique_id, filename, xpos, ypos, name, colid);
-        object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        GameObject object = new Player(Integer.parseInt(unique_id), filename, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
+        object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
         myGame.setPlayer(object);
         return object;
     }
     
-    public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
+    public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int levelID, int sceneID){
+    	
     	File file = new File(url);
     	String filename = file.getName();
-        GameObject object = new NonPlayer(unique_id, filename, xpos, ypos, name, colid);
+    	defineImage(url, "-", 0, url, "-");
+    	
+        GameObject object = new Player(unique_id, filename, xpos, ypos, name, colid);
+        
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
-        myGame.addObject(levelID, sceneID, object);
+        //myGame.setPlayer(object);
+        System.out.print("here");
+        return object;
+    }
+    
+    public GameObject createActor(String unique_id, String url, String xpos, String ypos, String name, String colid){
+//    	File file = new File(url);
+//    	String filename = file.getName();
+    	defineImage(url, "-", 0, url, "-");
+    	System.out.print("here");
+        GameObject object = new NonPlayer(Integer.parseInt(unique_id), url, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
+        object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
+        currentScene.addObject(object);
         return object;
     }
 
@@ -200,5 +251,6 @@ public class GameEngine extends StdGame{
 //    	Mass returnObject = (Mass) thisObject;
 //    	return returnObject;
 //    }
+    
 
 }
