@@ -2,6 +2,7 @@ package saladConstants;
 
 public final class SaladConstants {
 	public static final String CREATE_PLAYER = "CreatePlayer";
+	public static final String MODIFY_PLAYER = "ModifyPlayer";
 	public static final String CREATE_ACTOR = "CreateActor";
 	public static final String MODIFY_ACTOR = "ModifyActor";
 	public static final String BACKGROUND = "Background";
@@ -24,8 +25,4 @@ public final class SaladConstants {
 	public static final String BEHAVIOR_PANEL = "Behavior";
 	public static final String ELEMENT_LABEL = "Element";
 	public static final String ROOT_ELEMENT_LABEL = "Root";
-
-
-	
-	
 }

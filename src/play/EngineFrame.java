@@ -13,27 +13,29 @@ import stage.Game;
 
 import engine.GameEngine;
 
-public class EnginePlayer extends JFrame{
+public class EngineFrame extends JFrame{
 
 	private JPanel myPanel;
 	private JMenuBar myMenuBar;
 
 	private DataController myController;
 	private GameEngine myEngine;
-	private Game myGame;
 	
-	public EnginePlayer() {
+	
+	public EngineFrame() {
 		myController = new DataController();
+		setPreferredSize(new Dimension(600, 800));
+		setLayout(new BorderLayout());
+		
+		
 		myMenuBar = new PlayMenuBar(myController);
 		setJMenuBar(myMenuBar);
-		myGame = new Game();
 		
-		myPanel = new JPanel();
-		myPanel.add(new GameEngine(myGame));
-		myPanel.setLayout(new BorderLayout());
-//		myPanel.add(GameEngine engine, BorderLayout.CENTER);
+		myEngine = new GameEngine();
+		myPanel = new EnginePanel(myController);
+		add(myPanel, BorderLayout.CENTER);
 		
-		setMinimumSize(new Dimension(600, 800));
+		pack();
 		setVisible(true);
 	}
 	

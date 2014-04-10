@@ -1,14 +1,12 @@
 package stage;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import objects.GameObject;
-import reflection.Reflection;
+import objects.Player;
 import saladConstants.SaladConstants;
 
 /**
@@ -16,16 +14,18 @@ import saladConstants.SaladConstants;
  * @author DavidChou, Justin Zhang
  */
 
-public class Scene implements Serializable{
 
+public class Scene {
+	
 	private int myID;
 	private String myBackground;
 	private Map<Integer, GameObject> myObjectMap;
-	private String myWinString;
-
+	private Player myPlayer;
+	private double initPlayerX;
+	private double initPlayerY;
 	
-	public Scene(int hash) {
-		myID = hash;
+	public Scene(int id) {
+		myID = id;
 		myObjectMap = new HashMap<Integer, GameObject>();
 	}
 		
@@ -37,10 +37,25 @@ public class Scene implements Serializable{
 		myObjectMap.put(object.getID(), object );
 	}
 	
-//	public void setPlayerXY(int playerID, int x, int y) {
-//		myObjects.get(playerID).setPos(x,y);
-//	}
-
+	public void setPlayerInitPosition(double xpos, double ypos){
+		initPlayerX = xpos;
+		initPlayerY = ypos;
+	}
+	
+	public Player getPlayer(){
+		return myPlayer;
+	}
+	
+	public double[] getPlayerInitPosition(){
+		double[] position = new double[2];
+		position[0] = initPlayerX;
+		position[1] = initPlayerY;
+		return position;
+	}
+	
+	/*
+	 * Called by GameEngine to display the GameObjects
+	 */
 	public List<GameObject> getGameObjects() {
 		List<GameObject> answer = new ArrayList<GameObject>();
 		for(int id: myObjectMap.keySet()){
@@ -48,12 +63,12 @@ public class Scene implements Serializable{
 		}
 		return answer;
 	}
-	
-	public void setObjects(List<GameObject> gameObjects){
-		for(GameObject object: gameObjects){
-			addObject(object);
-		}
-	}
+//	
+//	public void setObjects(List<GameObject> gameObjects){
+//		for(GameObject object: gameObjects){
+//			addObject(object);
+//		}
+//	}
 	
 	//need check
 	public void setBackgroundImage(String imageName) {
@@ -62,11 +77,6 @@ public class Scene implements Serializable{
 	
 	public String getBackgroundImage() {
 		return myBackground;
-	}
-	
-	//need check
-	public void setWinBehavior(String s) {
-		myWinString = s;
 	}
 	
 	public GameObject getObject(int objectID) {
@@ -86,6 +96,10 @@ public class Scene implements Serializable{
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_SCENE + ",ID," + myID + ",Image," + myBackground);
 		answer.add(SaladConstants.SWITCH_SCENE + ",ID," + myID + ",Image," + myBackground);
+		answer.addAll(myPlayer.getAttributes());
+		for(int a: myObjectMap.keySet()){
+			answer.addAll(myObjectMap.get(a).getAttributes());
+		}
 		return answer;
 	}
 }
