@@ -32,26 +32,17 @@ public class GAEController {
 	private AttributesPanel attributesPanel;
 	
 	public GAEController(){
-		createGAE(this);
+		//createGAE(this);
 		myDataController = new DataController();
 		myGameEngine = myDataController.initGameEngine(new Game());
 		g = new GAE(this);
-	}
-	
-	public void createGAE(GAEController gController){
-		JFrame mainFrame = new JFrame(TITLE);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fv = new FullView(gController);
-		mb = new MenuBar(gController);
-		mainFrame.add(fv, BorderLayout.CENTER);
-		mainFrame.add(mb, BorderLayout.NORTH);
-		mainFrame.pack();
-		mainFrame.setVisible(true);
-		System.out.println("help");
 		
 	}
+
 	
 	private void setUpVariables(){
+		fv = g.getFullView();
+		mb = g.getMenuBar();
 		map = fv.getMap();
 		attributesPanel = fv.getAttributes();
 	}
