@@ -21,7 +21,7 @@ public class EnginePanel extends JPanel {
 		game = new Game();
 		setLayout(new BorderLayout());
 		setPreferredSize(new Dimension(600,800));
-		gameEngine = dc.initGameEngine(game);
+		gameEngine = dc.initGameEngine();
 		add(gameEngine, BorderLayout.CENTER);
 		setVisible(true);
 	}
