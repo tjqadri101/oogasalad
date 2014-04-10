@@ -52,8 +52,9 @@ public class Scene {
 		return position;
 	}
 	
-	/*
+	/**
 	 * Called by GameEngine to display the GameObjects
+	 * @return a list of Game Objects for the current scene
 	 */
 	public List<GameObject> getGameObjects() {
 		List<GameObject> answer = new ArrayList<GameObject>();
@@ -69,17 +70,14 @@ public class Scene {
 	}
 	
 	public String getBackgroundImage() {
-		if(myBackground == null) return null;
 		return myBackground;
 	}
 	
 	public GameObject getObject(int objectID) {
-//		if(myObjectMap.isEmpty() || !myObjectMap.containsKey(objectID)) return null;
 		return myObjectMap.get(objectID);
 	}
 
 	public List<GameObject> getObjectsByColid(int colid){
-//		if(myObjectMap.isEmpty()) return null;
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int objectID: myObjectMap.keySet()){
 			GameObject object = myObjectMap.get(objectID);

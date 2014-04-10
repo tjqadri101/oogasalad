@@ -38,6 +38,13 @@ public final class SaladConstants {
 	public static final String COLLISION = "Collision";
 	public static final String DIE = "Die";
 	public static final String MOVE = "Move";
+	public static final String SHOOT = "Shoot";
 	public static final String POSITION = "Position";
 	public static final String NAME = "Name";
+	public static final String CHANGE_TO_ID = "ChangeToID";
+	public static final String CHANGE_COLLISION_ID = "ChangeCollisionID";
+	public static final String DELETE_LEVEL = "DeleteLevel";
+	public static final String DELETE_SCENE = "DeleteScene";
+	public static final String RESET_LEVEL_ID = "ResetLevelID";
+	public static final String COLLISION_TILE = "CollisionTile";
 }

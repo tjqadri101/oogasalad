@@ -11,7 +11,7 @@ import reflection.Reflection;
 import saladConstants.SaladConstants;
 import jboxGlue.PhysicalObject;
 import jgame.JGObject;
-/*
+/**
  * @Author: Justin (Zihao) Zhang
  */
 public abstract class GameObject extends PhysicalObject {
@@ -46,6 +46,12 @@ public abstract class GameObject extends PhysicalObject {
 		initObject(uniqueID, xpos, ypos);
 	}
 	
+	//may not be needed
+	public void setID(int uniqueID){
+		myUniqueID = uniqueID;
+	}
+	
+	//may not be needed
 	public int getID(){
 		return myUniqueID;
 	}
@@ -83,6 +89,10 @@ public abstract class GameObject extends PhysicalObject {
 	
 	public void die(){
 		behaviorNoParameterReflection(myBehaviors, myDieBehavior, "remove");	
+	}
+	
+	public void setCollisionID(int collisionID){
+		colid = collisionID;
 	}
 	
 	public void jump(){
@@ -149,7 +159,7 @@ public abstract class GameObject extends PhysicalObject {
 		// do nothing; image already set
 	}
 	
-	/*
+	/**
 	 * Should be called by the Parser class to get all attributes of the GameObject
 	 * Return a list of Strings that match with the Data Format but without Key 
 	 */
