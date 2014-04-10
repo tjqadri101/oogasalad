@@ -61,7 +61,7 @@ public class DataController {
 	 * Input is a url to the XML file created by the GAE
 	 */
 	public void exportXML(String url) throws ParserConfigurationException, IOException{
-		myGameSaverAndLoader.save(myGame, url);
+//		myGameSaverAndLoader.save(myGame, url);
 	}
 	
 	

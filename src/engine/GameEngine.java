@@ -37,6 +37,10 @@ public class GameEngine extends StdGame{
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     }
     
+    public Game getGame(){
+    	return myGame;
+    }
+    
     @Override
     public void initCanvas () {
         setCanvasSettings(1, // width of the canvas in tiles

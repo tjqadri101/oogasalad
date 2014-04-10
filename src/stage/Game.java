@@ -9,57 +9,56 @@ import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import objects.GameObject;
-import objects.Player;
 /**
  * 
  * @author DavidChou, Justin Zhang
  *
  */
 public class Game {
-	
+
 	public static final int DEFAULT_SCORE = 0;
-	
+
 	protected Map<Integer, Level> myLevelMap;
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
-	
+
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
 	}
-	
+
 	public void addLevel(int levelID) {
 		Level level = new Level(levelID);
 		myLevelMap.put(levelID, level);
 	}
-	
+
 	public void addScene(int levelID, int sceneID){
 		myLevelMap.get(levelID).addScene(sceneID);
 	}
-	
+
 	public void addObject(int levelID, int sceneID, GameObject object){
 		myLevelMap.get(levelID).addObject(sceneID, object);
 	}
-	
+
 	public GameObject getGameObject(int levelID, int sceneID, int objectID){
 		return myLevelMap.get(levelID).getObject(sceneID, objectID);
 	}
-	
+
 	public Scene getScene(int levelID, int sceneID){
 		return myLevelMap.get(levelID).getScene(sceneID);
 	}
-	
+
 	public void removeScene(int levelID, int sceneID) {
 		myLevelMap.get(levelID).removeScene(sceneID);
 	}
-	
+
 	public void removeLevel(int levelID) {
 		myLevelMap.remove(levelID);
 	}
-	
+
 	public void resetLevelID(int currentLevelID, int newLevelID) throws ResetLevelException{
 		if(myLevelMap.containsKey(newLevelID)) throw new ResetLevelException();
 		Level level = myLevelMap.get(currentLevelID);
@@ -67,7 +66,7 @@ public class Game {
 		myLevelMap.remove(currentLevelID);
 		myLevelMap.put(newLevelID, level);
 	}
-	
+
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int levelID: myLevelMap.keySet()){
@@ -76,7 +75,7 @@ public class Game {
 		}
 		return objects;
 	}
-	
+
 //	public List<String> getAttributes() {
 //		List <String> answer = new ArrayList<String>();
 //		answer.addAll(myScoreManager.getAttributes()); 
