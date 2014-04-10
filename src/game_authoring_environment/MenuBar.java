@@ -100,10 +100,9 @@ public class MenuBar extends JMenuBar{
 			return;
 		}
 			try {
-				FileReader fr = new FileReader(loadedFile);
-				BufferedReader reader = new BufferedReader(fr);
+				gController.getDataController().readXML(loadedFile.getAbsolutePath());
 			}
-			catch (IOException ioe) {
+			catch (Exception ioe) {
 				//ioe.printStackTrace();
 				System.exit(1);
 			}
@@ -112,7 +111,7 @@ public class MenuBar extends JMenuBar{
 	
 	private File chooseGameFile(String command){
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file", "xml");
-		final JFileChooser chooser = new JFileChooser();
+		final JFileChooser chooser =  ViewFactory.createJFileChooser();
 		chooser.setApproveButtonText(command);
 		chooser.setFileFilter(filter);
 		int actionDialog = chooser.showOpenDialog(this);
