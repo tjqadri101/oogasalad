@@ -28,7 +28,7 @@ public class GameEngine extends StdGame{
     public static final int JGPOINT_Y = 600;
     
     private int myCurrentLevelID = 1;
-    private int currentSceneID = 0;
+    private int myCurrentSceneID = 0;
     private String Mode = "Edit";//String or boolean ?
     private Scene myCurrentScene;//ID or Object ?
     private List<int[]> collsionPair = new ArrayList<int[]>();
@@ -71,7 +71,7 @@ public class GameEngine extends StdGame{
     }
     
     public void setCurrentLevel(int currentLevelID){
-    	myCurrentLevelID = currentSceneID;
+    	myCurrentLevelID = myCurrentSceneID;
     }
     
 
@@ -101,7 +101,7 @@ public class GameEngine extends StdGame{
     	collsionPair.add(new int[]{srccid,dstcid});
     	List<GameObject> objects = myGame.getObjectsByColid(dstcid);
     	for(GameObject o: objects){
-    		o.setCollisionBehavior(srccid, type);
+    		o.setCollisionBehavior(type, srccid);
     	}
     }
     
@@ -214,13 +214,13 @@ public class GameEngine extends StdGame{
     }
     
     public int getCurrentSceneID(){
-    	return currentSceneID;
+    	return myCurrentSceneID;
     }
     
     public GameObject createPlayer(String unique_id, String url, String xpos, String ypos, String name, String colid){
     	File file = new File(url);
     	String filename = file.getName();
-        GameObject object = new Player(Integer.parseInt(unique_id), filename, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
+        Player object = new Player(Integer.parseInt(unique_id), filename, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
         object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
         myGame.setPlayer(object);
         return object;
@@ -240,14 +240,14 @@ public class GameEngine extends StdGame{
         return object;
     }
     
-    public GameObject createActor(String unique_id, String url, String xpos, String ypos, String name, String colid){
+    public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
 //    	File file = new File(url);
 //    	String filename = file.getName();
     	defineImage(url, "-", 0, url, "-");
     	System.out.print("here");
-        GameObject object = new NonPlayer(Integer.parseInt(unique_id), url, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
-        object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
-        myCurrentScene.addObject(object);
+        GameObject object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
+        object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        myGame.getScene(myCurrentLevelID, myCurrentSceneID).addObject(object);
         return object;
     }
 
