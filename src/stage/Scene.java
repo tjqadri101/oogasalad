@@ -56,19 +56,13 @@ public class Scene {
 	 * Called by GameEngine to display the GameObjects
 	 */
 	public List<GameObject> getGameObjects() {
-		if(myObjectMap.isEmpty()) return null;
+//		if(myObjectMap.isEmpty()) return null;
 		List<GameObject> answer = new ArrayList<GameObject>();
 		for(int id: myObjectMap.keySet()){
 			answer.add(myObjectMap.get(id));
 		}
 		return answer;
 	}
-//	
-//	public void setObjects(List<GameObject> gameObjects){
-//		for(GameObject object: gameObjects){
-//			addObject(object);
-//		}
-//	}
 	
 	//need check
 	public void setBackgroundImage(String imageName) {

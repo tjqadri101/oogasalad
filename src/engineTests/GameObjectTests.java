@@ -9,7 +9,7 @@ import stage.Game;
 import engine.GameEngine;
 import junit.framework.TestCase;
 
-/*
+/**
  * @Author: Justin (Zihao) Zhang
  */
 
