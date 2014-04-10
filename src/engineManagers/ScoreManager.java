@@ -9,8 +9,6 @@ import saladConstants.SaladConstants;
  */
 public class ScoreManager {
 	
-	public static final String INITIAL_SCORE = "InitialScore";
-	
 	protected int myScore;
 	protected int initialScore;
 	
@@ -25,7 +23,7 @@ public class ScoreManager {
 	
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.MODIFY_SCOREMANAGER + "," + INITIAL_SCORE + "," + initialScore);
+		answer.add(SaladConstants.MODIFY_SCOREMANAGER + "," + SaladConstants.INITIAL_SCORE + "," + initialScore);
 		return answer;
 	}
 

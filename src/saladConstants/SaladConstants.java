@@ -30,4 +30,9 @@ public final class SaladConstants {
 	public static final String STATE_STARTLEVEL = "StartLevel";
 	public static final String STATE_LEVELDONE = "LevelDone";
 	public static final String STATE_LIFELOST = "LifeLost";
+	public static final String INITIAL_SCORE = "InitialScore";
+	public static final String ID = "ID";
+	public static final String IMAGE = "Image";
+	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
+	public static final String COLLISION_ID = "Colid";
 }
