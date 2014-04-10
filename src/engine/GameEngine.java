@@ -90,12 +90,11 @@ public class GameEngine extends StdGame{
     }
     
     public void setCurrentScene (int currentSceneID) {
-    	for(GameObject go: myCurrentScene.getGameObjects()){
+    	for(GameObject go: myGame.getScene(myCurrentLevelID, myCurrentSceneID).getGameObjects()){
     		go.suspend();
     	}
     	myCurrentSceneID = currentSceneID;
-    	myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
-    	for(GameObject go: myCurrentScene.getGameObjects()){
+    	for(GameObject go: myGame.getScene(myCurrentLevelID, myCurrentSceneID).getGameObjects()){
     		go.resume();
     	}
     	//setGameState(Mode);
@@ -211,7 +210,7 @@ public class GameEngine extends StdGame{
     	defineImage(url, "-", 0, url, "-");
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
-        //myGame.setPlayer(object);
+        myGame.setPlayer(object);
         return object;
     }
     
@@ -219,7 +218,7 @@ public class GameEngine extends StdGame{
     	defineImage(url, "-", 0, url, "-");
         GameObject object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
-        myCurrentScene.addObject(object);
+        myGame.getScene(myCurrentLevelID, myCurrentSceneID).addObject(object);
         return object;
     }
 

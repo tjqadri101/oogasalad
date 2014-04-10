@@ -22,16 +22,16 @@ public class GameObjectTests extends TestCase {
 	    	myGame = new Game();
 	    	myEngine = new GameEngine();
 	    	myEngine.setGame(myGame);
-			myGame.addLevel(0);
-			myGame.addScene(0, 0);
+			myGame.addLevel(1);
+			myGame.addScene(1, 0);
 			myEngine.setCurrentScene(0);
-			myEngine.setCurrentLevel(0);
+			myEngine.setCurrentLevel(1);
 	    }
 		
 		@Test
 		public void testCreateObjects(){
 			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0);
-			assertEquals(object, myGame.getGameObject(0, 0, 0));
+			assertEquals(object, myGame.getGameObject(1, 0, 0));
 		}
 		
 		@Test
