@@ -25,7 +25,7 @@ public class DataControllerTests {
 	public void testSwitchLevel(){
 		String order = "SwitchLevel,ID,1";
 		myDataController = new DataController();
-		myDataController.receiveOrder(order);
+//		myDataController.receiveOrder(order);
 		assertEquals(1, myDataController.getCurrentLevelID());
 	}
 	
@@ -33,7 +33,7 @@ public class DataControllerTests {
 	public void testSwitchScene(){
 		String order = "SwitchScene,ID,1";
 		myDataController = new DataController();
-		myDataController.receiveOrder(order);
+//		myDataController.receiveOrder(order);
 		assertEquals(1, myDataController.getCurrentSceneID());
 	}
 }
