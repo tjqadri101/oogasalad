@@ -10,9 +10,8 @@ import saladConstants.SaladConstants;
 
 /**
  * 
- * @author DavidChou, Justin Zhang
+ * @author Justin (Zihao) Zhang, DavidChou
  */
-
 
 public class Scene {
 	
@@ -74,7 +73,7 @@ public class Scene {
 	}
 	
 	public GameObject getObject(int objectID) {
-		if(myObjectMap.isEmpty() || !myObjectMap.containsKey(objectID)) return null;
+//		if(myObjectMap.isEmpty() || !myObjectMap.containsKey(objectID)) return null;
 		return myObjectMap.get(objectID);
 	}
 
