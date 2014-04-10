@@ -21,13 +21,13 @@ import stage.Scene;
 
 
 public class GameSaverAndLoader { 
-	private ReadXML myReader; 
-	private WriteXML myWriter; 
-
+	private XMLReader myXMLReader; 
+	private XMLWriter myXMLWriter; 
+	private Serializer mySerializer; 
 	
 	public GameSaverAndLoader(){ 
-		myReader = new ReadXML(); 
-		myWriter = new WriteXML(); 
+		myXMLReader = new XMLReader(); 
+		myXMLWriter = new XMLWriter(); 
 	}
 
 	/*
@@ -36,17 +36,45 @@ public class GameSaverAndLoader {
 	 * @return Nothing
 	 */
 	public void save(List<String> attributes, String url) throws IOException { 
-			myWriter.write(attributes, url); 
+			myXMLWriter.write(attributes, url); 
 	}
 	
+	public void save(Object obj, String url){
+		mySerializer.serialize(obj, url); 
+	}
 	/*
 	 *  
 	 * @param url String referencing location to store the game object
 	 * @return Game A game object
 	 */
 	public List<String> load(String url) throws Exception{
-		return myReader.read(url); 
+		return myXMLReader.read(url); 
 	}
 	
+	public static void main( String [] args){
+		GameEngine myEngine = new GameEngine();
+		myEngine.setGame(new Game());
+		Game myGame = myEngine.getGame();
+		myGame.addLevel(0);
+		myGame.addScene(0, 0); 
+		myEngine.setCurrentLevel(0);
+
+		myEngine.setCurrentScene(0);
+		myEngine.createActor(0, "actor_default.png", 0.0, 0.0, "Justin", 0);
+		
+		
+		GameSaverAndLoader a = new GameSaverAndLoader (); 
+		a.save(myGame, "Game"); 
+		Game test = new Game();
+		
+		
+		/*try {
+			test = a.load("Game");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+*/
+	}
 
 }

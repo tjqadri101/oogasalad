@@ -1,5 +1,7 @@
 package parser;
-
+/*
+ * author Anthony Olawo 
+ */
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,16 +15,21 @@ import org.xml.sax.SAXException;
 
 import saladConstants.SaladConstants;
 
-public class ReadXML extends SuperXML{
+public class XMLReader extends SuperXML{
 	private List<String> attributes; 
 	private NodeList myNodeList; 
 	private SaladConstants mySaladConstants;
 	
-	public ReadXML(){ 
+	public XMLReader(){ 
 		attributes = new ArrayList<String>(); 
 		mySaladConstants = new SaladConstants(); 
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see parser.SuperXML#read(java.lang.String)
+	 * 
+	 */
 	@Override
 	public List<String> read(String url){
 		myNodeList = parseNodeList(url); 
@@ -37,7 +44,10 @@ public class ReadXML extends SuperXML{
 		}
 		return attributes; 
 	}
-	
+	/*
+	 * @param url A string containing URL of file to be read
+	 * @return NodeList NodeList containing all the file's elements
+	 */
 	protected NodeList parseNodeList(String url){
 		Document temp = initDocument(url); 
 		temp.getDocumentElement().normalize(); 

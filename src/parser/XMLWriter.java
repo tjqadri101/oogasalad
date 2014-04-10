@@ -13,13 +13,17 @@ import org.w3c.dom.Element;
 
 import saladConstants.SaladConstants;
 
-public class WriteXML extends SuperXML{
+public class XMLWriter extends SuperXML{
 	private SaladConstants mySaladConstants; 
 	
-	public WriteXML(){ 
+	public XMLWriter(){ 
 	
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see parser.SuperXML#write(java.util.List, java.lang.String)
+	 */
 	@Override
 	public void write(List<String> attributes, String url){
 		myStreamResult = initStreamResult(url); 
@@ -37,7 +41,9 @@ public class WriteXML extends SuperXML{
 		transform(); 
 	}
 	
-	
+	/*
+	 * 
+	 */
 	private void transform(){
 		try {
 			myTransformer.transform(mySource, myStreamResult);
