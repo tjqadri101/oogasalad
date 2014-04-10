@@ -26,6 +26,26 @@ import controller.GAEController;
 import reflection.ReflectionException;
 import reflection.Reflection;
 
+/**
+ * 
+ * @author David Chou
+ *
+ */
+
+
+
+
+/*
+ * This class allows for the user to pick which game he or she would like to play.
+ * Current functionality only allows for opening a file and quitting the program.
+ * 
+ * Intended future functionality includes:
+ * 		-Not having to load an XML file but being able to choose a list of buttons.
+ * 			A separate box would have to open for this to occur.
+ * 		-Being able to open up a help page in order to see how to work the GUI.
+ * 		-Being able to save the game (This is an optional feature)
+ *
+ */
 @SuppressWarnings("serial")
 public class PlayMenuBar extends JMenuBar{
 	
@@ -52,14 +72,13 @@ public class PlayMenuBar extends JMenuBar{
 		}	
 	}
 	
-	private void openGameFile(){
+	private void openGameFile() throws Exception{
 		File loadedFile =  chooseGameFile("Load");
 		if(loadedFile == null) {
 			return;
 		}
 			try {
-				FileReader fr = new FileReader(loadedFile);
-				BufferedReader reader = new BufferedReader(fr);
+				myController.readXML(loadedFile.getAbsolutePath());
 			}
 			catch (IOException ioe) {
 				//ioe.printStackTrace();

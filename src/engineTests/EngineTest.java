@@ -6,8 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import engine.GameEngine;
-import game_authoring_environment.FullView;
-import game_authoring_environment.MenuBar;
 
 public class EngineTest {
 	public static void main(String[] arg){
@@ -19,9 +17,8 @@ public class EngineTest {
 		mainFrame.pack();
 		mainFrame.setVisible(true);
 		
-		
 		System.out.print("lol\n");
 		ge.createPlayer(0, "actor_default.png", 0, 0, null, 0);
-		//ge.createBackground();
+		ge.createBackground("actor_default.png");
     }
 }
