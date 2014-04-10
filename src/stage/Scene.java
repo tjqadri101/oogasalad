@@ -56,7 +56,6 @@ public class Scene {
 	 * Called by GameEngine to display the GameObjects
 	 */
 	public List<GameObject> getGameObjects() {
-//		if(myObjectMap.isEmpty()) return null;
 		List<GameObject> answer = new ArrayList<GameObject>();
 		for(int id: myObjectMap.keySet()){
 			answer.add(myObjectMap.get(id));
@@ -80,7 +79,7 @@ public class Scene {
 	}
 
 	public List<GameObject> getObjectsByColid(int colid){
-		if(myObjectMap.isEmpty()) return null;
+//		if(myObjectMap.isEmpty()) return null;
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int objectID: myObjectMap.keySet()){
 			GameObject object = myObjectMap.get(objectID);

@@ -37,7 +37,6 @@ public class EngineFrame extends JFrame{
 	private JMenuBar myMenuBar;
 
 	private DataController myController;
-	private GameEngine myEngine;
 	
 	
 	public EngineFrame() {
@@ -49,7 +48,6 @@ public class EngineFrame extends JFrame{
 		myMenuBar = new PlayMenuBar(myController);
 		setJMenuBar(myMenuBar);
 		
-		myEngine = new GameEngine();
 		myPanel = new EnginePanel(myController);
 		add(myPanel, BorderLayout.CENTER);
 		
