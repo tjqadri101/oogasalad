@@ -13,6 +13,24 @@ import stage.Game;
 
 import engine.GameEngine;
 
+/**
+ * 
+ * @author David Chou
+ *
+ */
+
+
+
+
+/*
+ * This class stores all of the different components of the Engine into one component.
+ * It also ensures that they can interact with each other. The current components are:
+ * 		Controller (inserted into the JPanel)
+ * 		MenuBar
+ * 			File
+ * 				Open
+ * 				Quit
+ */
 public class EngineFrame extends JFrame{
 
 	private JPanel myPanel;

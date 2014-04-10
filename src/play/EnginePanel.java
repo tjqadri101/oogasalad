@@ -10,6 +10,17 @@ import stage.Game;
 import controller.DataController;
 import engine.GameEngine;
 
+/**
+ * 
+ * @author David Chou
+ *
+ */
+
+
+/*
+ * This panel only stores the DataController, which holds the GameEngine. The GameEngine
+ * holds the Game. [DataController --> GameEngine --> Game]
+ */
 public class EnginePanel extends JPanel {
 	
 	private DataController dc;
