@@ -76,14 +76,14 @@ public class Game {
 		return objects;
 	}
 
-//	public List<String> getAttributes() {
-//		List <String> answer = new ArrayList<String>();
-//		answer.addAll(myScoreManager.getAttributes()); 
-//		answer.addAll(myInputManager.getAttributes()); 
-//		answer.addAll(myTimerManager.getAttributes()); 
-//		for(Integer key: myLevels.keySet()){
-//			answer.addAll(myLevels.get(key).getAttributes()); 
-//		}
-//		return answer;
-//	}
+	public List<String> getAttributes() {
+		List <String> answer = new ArrayList<String>();
+		answer.addAll(myScoreManager.getAttributes()); 
+		answer.addAll(myInputManager.getAttributes()); 
+		answer.addAll(myTimerManager.getAttributes()); 
+		for(Integer key: myLevelMap.keySet()){
+			answer.addAll(myLevelMap.get(key).getAttributes()); 
+		}
+		return answer;
+	}
 }
