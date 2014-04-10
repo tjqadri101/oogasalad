@@ -37,15 +37,15 @@ public class GameEngine extends StdGame{
     
     public GameEngine(){
 //    	initEngine(JGPOINT_X, JGPOINT_Y);//just for testing; will be deleted later
-    	initEngine(JGPOINT_X, JGPOINT_Y);
+    	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     }
     
     @Override
     public void initCanvas () {
-        setCanvasSettings(1, // width of the canvas in tiles
-                          1, // height of the canvas in tiles
-                          displayWidth(), // width of one tile
-                          displayHeight(), // height of one tile
+        setCanvasSettings(40, // width of the canvas in tiles
+                          30, // height of the canvas in tiles
+                          20, // width of one tile
+                          20, // height of one tile
                           null,// foreground colour -> use default colour white
                           null,// background colour -> use default colour black
                           null); // standard font -> use default font
@@ -58,8 +58,10 @@ public class GameEngine extends StdGame{
 //        defineImage("mm", "-", 0, "actor_default.png", "-");
 //        setBGImage("mm");
         
+        defineMedia("example3.tbl");
+        setGameState("Edit");
         
-        setGameState(Mode);
+		//setBGImage("bg");
 //        defineMedia("TestMediaTable.tbl");
 //		setBGImage("StartGameBGImage");
     }
@@ -80,7 +82,8 @@ public class GameEngine extends StdGame{
 //        setBGImage("mm");
 //    	createPlayer(0, "actor_default.png", 0, 0, null, 0, 0, 0);
     	
-    	setBGColor(JGColor.cyan);
+    	//setBGColor(JGColor.cyan);
+    	removeObjects(null,0);	
     }
     public void doFrameEdit(){
     	moveObjects();
@@ -89,7 +92,9 @@ public class GameEngine extends StdGame{
     	}
     }
     public void paintFrameEdit(){
-
+    	//drawImage("bg", 100, 200);
+    	drawImage(100, 200, "bg");
+    	drawString("Press space to start",pfWidth()/2,500,0);
     }
     
     public void addCollisionPair(int srccid, String type, int dstcid, int levelID, int sceneID){
