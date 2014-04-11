@@ -6,19 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.jbox2d.collision.CircleDef;
-import org.jbox2d.collision.ShapeDef;
-import org.jbox2d.dynamics.BodyDef;
-
 import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
-import jboxGlue.PhysicalObject;
+import jboxGlue.PhysicalObjectRect;
 import jgame.JGObject;
 /**
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends PhysicalObject {
+public abstract class GameObject extends PhysicalObjectRect {
 	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
@@ -37,26 +33,21 @@ public abstract class GameObject extends PhysicalObject {
 	protected double myJumpForceMagnitude;
 	protected String myShootBehavior;
 	
+	public static final double DEFAULT_WIDTH = 10;
+	public static final double DEFAULT_HEIGHT = 10;
+	public static final double DEFAULT_MASS = 10;
+	
 	protected void initObject(int uniqueID, double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
 		myLives = DEFAULT_LIVES; // change later
 		myUniqueID = uniqueID;
-		init();
 	}
 	
 	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId){
-		super(name, collisionId, gfxname);
+		super(name, collisionId, gfxname, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS);
 		initObject(uniqueID, xpos, ypos);
-	}
-	
-	protected void init()
-	{
-		ShapeDef shape = new ShapeDef();
-		createBody( shape );
-		int size = 10;
-		setBBox( -size, -size, 2*size, 2*size );
 	}
 	
 	//may not be needed
@@ -168,7 +159,7 @@ public abstract class GameObject extends PhysicalObject {
 	}
 	
 	@Override
-	protected void paintShape() {
+	public void paintShape() {
 		// do nothing; image already set
 	}
 	
