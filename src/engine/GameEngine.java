@@ -212,7 +212,7 @@ public class GameEngine extends StdGame{
     public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
     	defineImage(url, "-", 0, url, "-");
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
-        object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        //object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.setPlayer(object);
         return object;
     }

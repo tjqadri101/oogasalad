@@ -23,8 +23,8 @@ public class EngineTest {
 		mainFrame.pack();
 		mainFrame.setVisible(true);
 		System.out.print("lol\n");
-		ge.createPlayer(0, "actor_default.png", 0, 0, null, 0);
-		g.getPlayer().setSpeed(1, 2);
+		ge.createPlayer(0, "actor_default.png", 100, 100, null, 0);
+		//g.getPlayer().setForce(-10, -20);
 		//ge.createBackground("actor_default.png");
     }
 }
