@@ -129,12 +129,20 @@ public class DataController {
 	
 	
 	/**
-	 * Called by Game Authorizing Environment to read the info about a specific Game Object (i.e. Actor)
+	 * Called by Game Authorizing Environment to read the info about an Actor
 	 * @param an id number matched to the Game Object to get
 	 * @return a list of String orders attached to the Game Object
 	 */
-	public List<String> getObjectInfo(int id){
-		return myGame.getGameObject(myGameEngine.getCurrentLevelID(), myGameEngine.getCurrentSceneID(), id).getAttributes();
+	public List<String> getActorInfo(int id){
+		return myGame.getNonPlayer(myGameEngine.getCurrentLevelID(), myGameEngine.getCurrentSceneID(), id).getAttributes();
+	}
+	
+	/**
+	 * Called by Game Authorizing Environment to read the info about the Player
+	 * @return a list of String orders attached to Player
+	 */
+	public List<String> getPlayerInfo(){
+		return myGame.getPlayer().getAttributes();
 	}
 	
 	/**
