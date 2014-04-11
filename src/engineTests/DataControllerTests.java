@@ -22,18 +22,11 @@ public class DataControllerTests {
 	}
 	
 	@Test
-	public void testSwitchLevel(){
+	public void testConvertStringToObjects(){
 		String order = "SwitchLevel,ID,1";
 		myDataController = new DataController();
 //		myDataController.receiveOrder(order);
 		assertEquals(1, myDataController.getCurrentLevelID());
 	}
-	
-	@Test
-	public void testSwitchScene(){
-		String order = "SwitchScene,ID,1";
-		myDataController = new DataController();
-//		myDataController.receiveOrder(order);
-		assertEquals(1, myDataController.getCurrentSceneID());
-	}
+
 }
