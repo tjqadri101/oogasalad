@@ -53,7 +53,8 @@ public class DataController {
      * @return nothing
 	 */
 	public void receiveOrder(String order){
-		System.out.println("received order" + order);
+		System.out.println("received order " + order);
+		System.out.println(convertOrderToObjects(order));
 		callFactoryToProcess(convertOrderToObjects(order));
 	}
 	
@@ -61,7 +62,7 @@ public class DataController {
 	 * Do not call this method directly; called within DataController
 	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
 	 */
-	protected List<Object> convertOrderToObjects(String order){
+	public List<Object> convertOrderToObjects(String order){
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;

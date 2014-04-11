@@ -37,25 +37,28 @@ public class DataControllerTests {
 	public void testConvertStringToObjects(){
     	myDataController = new DataController();
     	myEngine = myDataController.initGameEngine();
+    	
 		String order = CREATE_ACTOR_ORDER;
-//		List<Object> tests = myDataController.convertOrderToObjects(order);
-//		for(Object o: tests){
-//			System.out.println(o);
-//		}
+		List<Object> tests = myDataController.convertOrderToObjects(order);
+		for(Object o: tests){
+			System.out.println(o +"       " +o.getClass());
+		}
+		
 		List<Object> objects = new ArrayList<Object>();
 		objects.add("CreateActor");
 		objects.add("ID");
-		objects.add(0);
+		objects.add((Integer)0);
 		objects.add("Image");
 		objects.add("actor_default.png");
 		objects.add("Position");
-		objects.add(0.0);
-		objects.add(0.0);
+		objects.add((Double)0.0);
+		objects.add((Double)0.0);
 		objects.add("Name");
 		objects.add("Hero");
-		objects.add("CollisionID");
-		objects.add(0);
-//		assertEquals(objects, tests);
+		objects.add((String)"CollisionID");
+		objects.add((Integer)0);
+		
+		assertEquals(objects, tests);
 	}
 
 }
