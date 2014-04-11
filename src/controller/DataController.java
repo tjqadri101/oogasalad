@@ -1,8 +1,10 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import engine.GameEngine;
@@ -45,8 +47,13 @@ public class DataController {
 	 * @param a list of objects: order
      * @return nothing
 	 */
-	public void receiveOrder(List<Object> order){
-		callFactoryToProcess(order);
+	public void receiveOrder(String order){
+		callFactoryToProcess(convertStringOrder(order));
+	}
+	
+	protected List<Object> convertStringOrder(String order){
+		List<Object> answer = new ArrayList<Object>();
+		return answer;
 	}
 	
 	
