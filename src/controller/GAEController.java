@@ -56,8 +56,9 @@ public class GAEController {
 	}
  	
 	public void createActor(int ID,String url,String name){
-		String order = SaladConstants.CREATE_ACTOR + ",ID,"+ID+",Image,"+url+",Position,0,0,Name,"+name;
-		//myDataController.receiveOrder(order);
+		String order = SaladConstants.CREATE_ACTOR + ",ID,"+ID+",Image,"+"actor_default.png"+",Position,0.0,0.0,Name,"+name+",CollisionID,"+0;
+//		String order = "CreateActor,ID,0,Image,actor_default.png,Position,0,0,Name,Hero,CollisionID,0";
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 		
 	}

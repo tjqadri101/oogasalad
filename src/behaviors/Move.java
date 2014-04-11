@@ -16,6 +16,6 @@ public class Move extends Movable{
    		velocity.y = (float) yspeed;
    		velocity.x = (float) xspeed;
    		myObject.getBody().setLinearVelocity(velocity);
-		myObject.setSpeed(xspeed, yspeed);
+//		myObject.setSpeed(xspeed, yspeed);
 	}
 }

@@ -4,6 +4,7 @@ import stage.Game;
 import stage.Scene;
 import jgame.JGColor;
 import jgame.JGFont;
+import jgame.JGObject;
 import jgame.JGPoint;
 import jgame.platform.StdGame;
 import objects.GameObject;
@@ -14,6 +15,7 @@ import java.awt.Dimension;//
 import java.util.ArrayList;
 import java.util.List;
 
+import jboxGlue.PhysicalObject;
 import jboxGlue.WorldManager;
 /**
  * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
@@ -70,7 +72,18 @@ public class GameEngine extends StdGame{
     
 
     public void startEdit(){
-//    	removeObjects(null,0);
+    	removeObjects(null,0);
+//    	defineImage("image", "-", 0, "actor_default.png", "-");
+//    	PhysicalObject c = new PhysicalObject("name", 0, "image"){
+//
+//			@Override
+//			protected void paintShape() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+////    		public void move(){this.x+=1;}
+//    	};
+//    	c.setSpeed(1, 1);
     }
     public void doFrameEdit(){
     	moveObjects();
