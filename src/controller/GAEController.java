@@ -32,6 +32,7 @@ public class GAEController {
 		//g = new GAE(this);
 		createLevel(1);
 		createScene(0,1);
+		switchScene(0,1);
 	}
 	
 	public void createGAE(GAEController gController){
@@ -115,9 +116,9 @@ public class GAEController {
 		
 	}
 	
-	public void switchScene(int ID){
-		String order = SaladConstants.SWITCH_SCENE + ",ID,"+ID;
-		//myDataController.receiveOrder(order);
+	public void switchScene(int ID, int levelID){
+		String order = SaladConstants.SWITCH_SCENE + ",ID,"+levelID+",ID,"+ID;
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
