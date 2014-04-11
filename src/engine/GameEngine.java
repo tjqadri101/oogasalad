@@ -221,7 +221,7 @@ public class GameEngine extends StdGame{
     	defineImage(url, "-", 0, url, "-");
     	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
-        myGame.getScene(myCurrentLevelID, myCurrentSceneID).addObject(object);
+        myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
         return object;
     }
     

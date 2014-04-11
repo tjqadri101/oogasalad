@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import objects.GameObject;
+import objects.NonPlayer;
 import objects.Player;
 
 import org.jbox2d.dynamics.Body;
@@ -27,8 +28,7 @@ public class EngineTest {
 		System.out.print("EngineTest starts");
 		game.addLevel(1);
 		game.addScene(1, 0);
-		engine.setCurrentScene(0);
-		engine.setCurrentLevel(1);
+		engine.setCurrentScene(1, 0);
 		NonPlayer actor = engine.createActor(0, "actor_default.png", 100, 100, null, 0);
 //		Velocity vec2 = new Velocity();
 		actor.setSpeed(5.0, 5.0);
