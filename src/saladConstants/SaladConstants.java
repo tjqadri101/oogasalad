@@ -47,4 +47,7 @@ public final class SaladConstants {
 	public static final String DELETE_SCENE = "DeleteScene";
 	public static final String RESET_LEVEL_ID = "ResetLevelID";
 	public static final String COLLISION_TILE = "CollisionTile";
+	public static final String TEST_XMLFILE_URL = "test.xml";
+	public static final String SET_KEY = "SetKey";
+	public static final String NULL_TOKEN = "NullToken";
 }
