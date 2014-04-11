@@ -37,22 +37,36 @@ public class EngineFrame extends JFrame{
 	private JMenuBar myMenuBar;
 
 	private DataController myController;
-	private GameEngine myEngine;
 	
 	
 	public EngineFrame() {
 		myController = new DataController();
+		initializeViewSpecs();
+		addMenu();
+		addPanel();
+		finalizeView();
+	}
+
+
+	private void initializeViewSpecs() {
 		setPreferredSize(new Dimension(600, 800));
 		setLayout(new BorderLayout());
-		
-		
-		myMenuBar = new PlayMenuBar(myController);
-		setJMenuBar(myMenuBar);
-		
-		myEngine = new GameEngine();
+	}
+
+
+	private void addPanel() {
 		myPanel = new EnginePanel(myController);
 		add(myPanel, BorderLayout.CENTER);
-		
+	}
+
+
+	private void addMenu() {
+		myMenuBar = new PlayMenuBar(myController);
+		setJMenuBar(myMenuBar);
+	}
+
+
+	private void finalizeView() {
 		pack();
 		setVisible(true);
 	}

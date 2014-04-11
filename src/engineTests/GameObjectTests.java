@@ -9,7 +9,7 @@ import stage.Game;
 import engine.GameEngine;
 import junit.framework.TestCase;
 
-/*
+/**
  * @Author: Justin (Zihao) Zhang
  */
 
@@ -51,6 +51,7 @@ public class GameObjectTests extends TestCase {
 		public void testModifyMove(){
 			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0);
 			object.setMoveBehavior("RegularMove", 1, 1);
+			object.move();
 //			assertEquals("RegularMove", object.myMoveBehavior);
 		}
 		

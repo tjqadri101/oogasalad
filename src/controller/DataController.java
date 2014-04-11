@@ -1,30 +1,36 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
+import reflection.Reflection;
 import stage.Game;
 /**
  * @Author: Justin (Zihao) Zhang
  */
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-	public static final String DEFAULT_CREATEORMODIFY = "KeyDataController";
+	public static final String DEFAULT_DATA_FORMAT = "DataFormat";
+	public static final String DEFAULT_REFLECTION_METHODS = "DataFormatReflection";
 	
 	protected Game myGame;
 	protected GameFactory myFactory;
 	protected GameSaverAndLoader myGameSaverAndLoader;
 	protected GameEngine myGameEngine;
-	protected ResourceBundle myOrderReflector;
+	protected ResourceBundle myDataFormat;
+	protected ResourceBundle myReflectionMethods;
 	
 	public DataController(){
 		myGameSaverAndLoader = new GameSaverAndLoader(); 
-		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
+		myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
+		myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
 	}
 	
 	/**
@@ -46,7 +52,52 @@ public class DataController {
      * @return nothing
 	 */
 	public void receiveOrder(String order){
-		callFactoryToProcess(order);
+		callFactoryToProcess(convertOrderToObjects(order));
+	}
+	
+	/**
+	 * Do not call this method directly; called within DataController
+	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
+	 */
+	protected List<Object> convertOrderToObjects(String order){
+		List<Object> answer = new ArrayList<Object>();
+		String[] orders = order.split(",");
+		int i = 0;
+		answer.add(orders[i]);
+		i ++;
+		while(i < orders.length){
+			answer.add(orders[i]);
+			System.out.println(orders[i]);
+			String type = myDataFormat.getString(orders[i]);
+			String[] types = type.split(","); 
+			i = i + 1;
+			for(int j = 0; j < types.length; j ++){
+				answer.add(Reflection.callMethod(this, myReflectionMethods.getString(types[j]), orders[i+j]));
+			}
+			i = i + types.length;
+		}
+		return answer;
+	}
+	
+	/**
+	 * Do not call this method directly; called by Reflection within DataController
+	 */
+	public Integer convertStringToInteger(String s){
+		return Integer.valueOf(s);
+	}
+	
+	/**
+	 * Do not call this method directly; called by Reflection within DataController
+	 */
+	public Double convertStringToDouble(String s){
+		return Double.valueOf(s);
+	}
+	
+	/**
+	 * Do not call this method directly; called by Reflection within DataController
+	 */
+	public String convertStringToString(String s){
+		return s;
 	}
 	
 	
@@ -68,7 +119,7 @@ public class DataController {
 	public void readXML(String url) throws Exception {
 		List<String> orders = myGameSaverAndLoader.load(url);
 		for(String order: orders){
-			callFactoryToProcess(order);
+			callFactoryToProcess(convertOrderToObjects(order));
 		}
 	}
 	
@@ -100,12 +151,12 @@ public class DataController {
 	
 	
 	/**
-	 * Do not call this method directly
-	 * This method is called within DataController by Reflection
+	 * Do not call this method directly; called within DataController
+	 * Called to enable factory to process the order
 	 */
-	public void callFactoryToProcess(String order) {
+	protected void callFactoryToProcess(List<Object> order) {
 		try{
-//			myFactory.processOrder(order);	
+			myFactory.processOrder(order);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}

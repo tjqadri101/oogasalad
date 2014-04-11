@@ -1,5 +1,7 @@
 package play;
 
+import game_authoring_environment.ViewFactory;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -89,7 +91,7 @@ public class PlayMenuBar extends JMenuBar{
 	
 	private File chooseGameFile(String command){
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file", "xml");
-		final JFileChooser chooser = new JFileChooser();
+		final JFileChooser chooser =  ViewFactory.createJFileChooser();
 		chooser.setApproveButtonText(command);
 		chooser.setFileFilter(filter);
 		int actionDialog = chooser.showOpenDialog(this);

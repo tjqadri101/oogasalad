@@ -108,7 +108,7 @@ public class Reflection
         catch (Exception e)
         {
             throw new ReflectionException("No matching public method " + name + 
-                                          " for " + target.getClass().getName());
+                                          " for " + target.getClass().getName(), e);
         }
     }
 
@@ -141,8 +141,7 @@ public class Reflection
         }
         catch (Exception e)
         {
-            throw new ReflectionException("No matching public method " + name +
-                                          " for " + target.getClass().getName());
+            throw new ReflectionException(e);
         }
     }
 

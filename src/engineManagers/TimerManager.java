@@ -9,7 +9,9 @@ import java.util.Map;
  * @Author: Justin (Zihao) Zhang
  */
 import saladConstants.SaladConstants;
-
+/**
+ * @Author: Justin (Zihao) Zhang
+ */
 public class TimerManager {
 	
 	protected Map<String, Integer> myTimerMap;
@@ -18,7 +20,7 @@ public class TimerManager {
 		myTimerMap = new HashMap<String, Integer>();
 	}
 	
-	public void setTimetoState(int time, String state){
+	public void setTimetoState(String state, int time){
 		myTimerMap.put(state, time);
 	}
 	

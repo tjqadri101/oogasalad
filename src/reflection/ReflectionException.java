@@ -13,4 +13,14 @@ public final class ReflectionException extends RuntimeException
     {
         super(s);
     }
+
+    public ReflectionException (String s, Throwable t)
+    {
+        super(s, t);
+    }
+
+    public ReflectionException (Throwable t)
+    {
+        super(t);
+    }
 }
