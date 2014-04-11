@@ -36,7 +36,6 @@ public class GameEngine extends StdGame{
     private List<int[]> myCollsionPair = new ArrayList<int[]>();
     private int myCurrentLevelID = 1;
     private int myCurrentSceneID = 0;
-    //private Scene myCurrentScene;
     private String Mode = "Edit";//String or boolean ?
     
     
@@ -66,11 +65,6 @@ public class GameEngine extends StdGame{
     	return myGame;
     }
     
-    public void setCurrentLevel(int currentLevelID){
-    	myCurrentLevelID = currentLevelID;
-    }
-    
-
     public void startEdit(){
     	removeObjects(null,0);
 //    	defineImage("image", "-", 0, "actor_default.png", "-");
@@ -106,11 +100,12 @@ public class GameEngine extends StdGame{
     	}
     }
     
-    public void setCurrentScene (int currentSceneID) {
-    	for(GameObject go: myGame.getScene(myCurrentLevelID, myCurrentSceneID).getGameObjects()){
+    public void setCurrentScene (int currentLevelID, int currentSceneID) {
+    	myCurrentLevelID = currentLevelID;
+    	myCurrentSceneID = currentSceneID;
+    	for(GameObject go: myGame.getScene(currentLevelID, currentSceneID).getGameObjects()){
     		go.suspend();
     	}
-    	myCurrentSceneID = currentSceneID;
     	for(GameObject go: myGame.getScene(myCurrentLevelID, myCurrentSceneID).getGameObjects()){
     		go.resume();
     	}
@@ -214,7 +209,7 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
+    public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
     	defineImage(url, "-", 0, url, "-");
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
@@ -222,9 +217,9 @@ public class GameEngine extends StdGame{
         return object;
     }
     
-    public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
+    public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
     	defineImage(url, "-", 0, url, "-");
-        GameObject object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
+    	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.getScene(myCurrentLevelID, myCurrentSceneID).addObject(object);
         return object;
