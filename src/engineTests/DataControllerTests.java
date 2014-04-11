@@ -41,7 +41,7 @@ public class DataControllerTests {
 		String order = CREATE_ACTOR_ORDER;
 		List<Object> tests = myDataController.convertOrderToObjects(order);
 		for(Object o: tests){
-			System.out.println(o +"       " +o.getClass());
+			System.out.println(o +"  ///Object Type: " +o.getClass());
 		}
 		
 		List<Object> objects = new ArrayList<Object>();

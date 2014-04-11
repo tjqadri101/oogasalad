@@ -32,6 +32,8 @@ public abstract class GameObject extends PhysicalObjectRect {
 	protected String myJumpBehavior;
 	protected double myJumpForceMagnitude;
 	protected String myShootBehavior;
+	protected double myInitX;
+	protected double myInitY;
 	
 	public static final double DEFAULT_WIDTH = 10;
 	public static final double DEFAULT_HEIGHT = 10;
@@ -41,6 +43,8 @@ public abstract class GameObject extends PhysicalObjectRect {
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
+		myInitX = xpos;
+		myInitY = ypos;
 		myLives = DEFAULT_LIVES; // change later
 		myUniqueID = uniqueID;
 	}
