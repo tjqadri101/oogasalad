@@ -58,7 +58,7 @@ public class DataController {
 	/**
 	 * Do not call this method directly; called within DataController
 	 */
-	public List<Object> convertOrderToObjects(String order){
+	protected List<Object> convertOrderToObjects(String order){
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;
@@ -71,34 +71,29 @@ public class DataController {
 			String[] types = type.split(","); 
 			i = i + 1;
 			for(int j = 0; j < types.length; j ++){
-				Object o = Reflection.callMethod(this, myReflectionMethods.getString(types[j]), orders[i+j]);
-				answer.add(o);
+				answer.add(Reflection.callMethod(this, myReflectionMethods.getString(types[j]), orders[i+j]));
 			}
 			i = i + types.length;
 		}
 		return answer;
 	}
 	
-	public Game getGame(){
-		return myGame;
-	}
-	
 	/**
-	 * Do not call this method directly; reflected within DataController
+	 * Do not call this method directly; called by Reflection within DataController
 	 */
 	public Integer convertStringToInteger(String s){
 		return Integer.valueOf(s);
 	}
 	
 	/**
-	 * Do not call this method directly; reflected within DataController
+	 * Do not call this method directly; called by Reflection within DataController
 	 */
 	public Double convertStringToDouble(String s){
 		return Double.valueOf(s);
 	}
 	
 	/**
-	 * Do not call this method directly; reflected within DataController
+	 * Do not call this method directly; called by Reflection within DataController
 	 */
 	public String convertStringToString(String s){
 		return s;
@@ -121,10 +116,10 @@ public class DataController {
 	 * @return nothing
 	 */
 	public void readXML(String url) throws Exception {
-//		List<List<Object>> orders = myGameSaverAndLoader.load(url);
-//		for(List<Object> order: orders){
-//			callFactoryToProcess(order);
-//		}
+		List<String> orders = myGameSaverAndLoader.load(url);
+		for(String order: orders){
+			callFactoryToProcess(convertOrderToObjects(order));
+		}
 	}
 	
 	
@@ -155,10 +150,9 @@ public class DataController {
 	
 	
 	/**
-	 * Do not call this method directly
-	 * This method is called within DataController by Reflection
+	 * Do not call this method directly; called within DataController
 	 */
-	public void callFactoryToProcess(List<Object> order) {
+	protected void callFactoryToProcess(List<Object> order) {
 		try{
 			myFactory.processOrder(order);	
 		} catch (Exception e){
