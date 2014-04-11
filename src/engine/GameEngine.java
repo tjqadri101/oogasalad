@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jboxGlue.WorldManager;
-/*
+/**
  * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
  */
 public class GameEngine extends StdGame{
@@ -116,7 +116,7 @@ public class GameEngine extends StdGame{
     	
     }
     
-    /*
+    /**
      * (non-Javadoc)
      * @see jgame.platform.StdGame#doFrame()
      * For inGame States
@@ -126,7 +126,7 @@ public class GameEngine extends StdGame{
     	
     }
     
-    /*
+    /**
      * (non-Javadoc)
      * @see jgame.platform.StdGame#paintFrame()
      * For inGame states
@@ -196,15 +196,6 @@ public class GameEngine extends StdGame{
     	return myCurrentSceneID;
     }
     
-//    public GameObject createPlayer(String unique_id, String url, String xpos, String ypos, String name, String colid){
-//    	File file = new File(url);
-//    	String filename = file.getName();
-//        Player object = new Player(Integer.parseInt(unique_id), filename, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
-//        object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
-//        myGame.setPlayer(object);
-//        return object;
-//    }
-    
     /** 
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
@@ -212,7 +203,7 @@ public class GameEngine extends StdGame{
     public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
     	defineImage(url, "-", 0, url, "-");
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
-        //object.setPos(xpos, ypos);//just to make sure; may be deleted later
+        object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.setPlayer(object);
         return object;
     }
@@ -223,11 +214,6 @@ public class GameEngine extends StdGame{
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.getScene(myCurrentLevelID, myCurrentSceneID).addObject(object);
         return object;
-    }
-
-    //what does this do?
-    public void removeActor(GameObject object){
-    	object.remove();
     }
     
     /*
