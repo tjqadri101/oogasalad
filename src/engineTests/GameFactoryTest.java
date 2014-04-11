@@ -51,7 +51,6 @@ public class GameFactoryTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        GameObject compObject = myEngine.createPlayer(0, "actor_default.png", 0.0, 0.0, "myActor", 0);
         assertEquals(myObject, myGame.getGameObject(1, 0, 0));
 
     }
