@@ -44,7 +44,7 @@ public class Level {
 		mySceneMap.get(sceneID).addObject(object);
 	}
 
-	public GameObject getObject(int sceneID, int objectID) {
+	public NonPlayer getNonPlayer(int sceneID, int objectID) {
 		return mySceneMap.get(sceneID).getObject(objectID);
 	}
 

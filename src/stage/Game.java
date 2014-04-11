@@ -9,6 +9,7 @@ import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import objects.GameObject;
+import objects.NonPlayer;
 import objects.Player;
 /**
  * A data structure that holds all the information about a game
@@ -69,7 +70,7 @@ public class Game {
 	 * @param the object ID
 	 * @return the Game Object that matched with the input IDs
 	 */
-	public GameObject getGameObject(int levelID, int sceneID, int objectID){
+	public NonPlayer getNonPlayer(int levelID, int sceneID, int objectID){
 		return myLevelMap.get(levelID).getObject(sceneID, objectID);
 	}
 
