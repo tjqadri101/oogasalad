@@ -59,7 +59,6 @@ public class DataController {
 	 * Do not call this method directly; called within DataController
 	 */
 	public List<Object> convertOrderToObjects(String order){
-		System.out.println("convertOrderToObjects Called");
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;
@@ -67,6 +66,7 @@ public class DataController {
 		i ++;
 		while(i < orders.length){
 			answer.add(orders[i]);
+			System.out.println(orders[i]);
 			String type = myDataFormat.getString(orders[i]);
 			String[] types = type.split(","); 
 			i = i + 1;

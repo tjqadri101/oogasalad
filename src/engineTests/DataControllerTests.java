@@ -12,7 +12,7 @@ import controller.DataController;
 import engine.GameEngine;
 
 public class DataControllerTests {
-	public static final String CREATE_ACTOR_ORDER = "CreateActor,ID,0,Image,actor_default.png,Position,0,0,Name,Hero";
+	public static final String CREATE_ACTOR_ORDER = "CreateActor,ID,0,Image,actor_default.png,Position,0,0,Name,Hero,CollisionID,0";
 	
 	protected DataController myDataController;
 	protected GameEngine myEngine;
@@ -43,17 +43,19 @@ public class DataControllerTests {
 			System.out.println(o);
 		}
 		List<Object> objects = new ArrayList<Object>();
-		objects.add("createPlayer");
+		objects.add("CreateActor");
 		objects.add("ID");
 		objects.add(0);
 		objects.add("Image");
 		objects.add("actor_default.png");
 		objects.add("Position");
-		objects.add(0);
-		objects.add(0);
+		objects.add(0.0);
+		objects.add(0.0);
 		objects.add("Name");
 		objects.add("Hero");
-		assertEquals(1, myDataController.getCurrentLevelID());
+		objects.add("CollisionID");
+		objects.add(0);
+		assertEquals(objects, tests);
 	}
 
 }
