@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.jbox2d.collision.CircleDef;
+import org.jbox2d.collision.ShapeDef;
+import org.jbox2d.dynamics.BodyDef;
+
 import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
@@ -39,11 +43,20 @@ public abstract class GameObject extends PhysicalObject {
 		setPos(xpos, ypos);
 		myLives = DEFAULT_LIVES; // change later
 		myUniqueID = uniqueID;
+		init();
 	}
 	
 	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId){
 		super(name, collisionId, gfxname);
 		initObject(uniqueID, xpos, ypos);
+	}
+	
+	protected void init()
+	{
+		ShapeDef shape = new ShapeDef();
+		createBody( shape );
+		int size = 10;
+		setBBox( -size, -size, 2*size, 2*size );
 	}
 	
 	//may not be needed
