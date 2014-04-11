@@ -51,7 +51,7 @@ public class XMLWriter {
 		String attribute; 
 		for(int i=0; i<attributes.size(); i++){
 			attribute = attributes.get(i); 
-			node = myDocument.createElement(mySaladConstants.ELEMENT_LABEL+"_"+i);
+			node = myDocument.createElement(mySaladConstants.ELEMENT_LABEL);
 			node.appendChild(myDocument.createTextNode(attribute)); 
 			root.appendChild(node); 		
 		}

@@ -11,6 +11,7 @@ import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
 import reflection.Reflection;
+import saladConstants.SaladConstants;
 import stage.Game;
 /**
  * @Author: Justin (Zihao) Zhang
@@ -28,7 +29,7 @@ public class DataController {
 	protected ResourceBundle myReflectionMethods;
 	
 	public DataController(){
-		myGameSaverAndLoader = new GameSaverAndLoader(); 
+//		myGameSaverAndLoader = new GameSaverAndLoader(); 
 		myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
 		myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
 	}
@@ -52,6 +53,8 @@ public class DataController {
      * @return nothing
 	 */
 	public void receiveOrder(String order){
+		System.out.println("received order " + order);
+		System.out.println(convertOrderToObjects(order));
 		callFactoryToProcess(convertOrderToObjects(order));
 	}
 	
@@ -59,7 +62,7 @@ public class DataController {
 	 * Do not call this method directly; called within DataController
 	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
 	 */
-	protected List<Object> convertOrderToObjects(String order){
+	public List<Object> convertOrderToObjects(String order){
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;
@@ -69,9 +72,11 @@ public class DataController {
 			answer.add(orders[i]);
 			String type = myDataFormat.getString(orders[i]);
 			String[] types = type.split(","); 
-			i = i + 1;
-			for(int j = 0; j < types.length; j ++){
-				answer.add(Reflection.callMethod(this, myReflectionMethods.getString(types[j]), orders[i+j]));
+			if(!types[0].equals(SaladConstants.NULL_TOKEN)){
+				i = i + 1;
+				for(int j = 0; j < types.length; j ++){
+					answer.add(Reflection.callMethod(this, myReflectionMethods.getString(types[j]), orders[i+j]));
+				}
 			}
 			i = i + types.length;
 		}

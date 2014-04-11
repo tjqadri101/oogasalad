@@ -39,11 +39,9 @@ public class XMLReader{
 		Node node; 
 		Element element; 
 		for(int i=0; i<myNodeList.getLength(); i++){ 
-			System.out.println("Nodelist length: "+myNodeList.getLength()); 
 			node = myNodeList.item(i); 
 			element = (Element)node; 
-			attributes.add(element.getElementsByTagName(
-					mySaladConstants.ELEMENT_LABEL+"_"+i).item(0).getTextContent());  
+			attributes.add(element.getTextContent());  
 		}
 		return attributes; 
 	}
@@ -54,7 +52,7 @@ public class XMLReader{
 	protected NodeList parseNodeList(String url){
 		initOOGASALADocument(url); 
 		myDocument.getDocumentElement().normalize(); 
-		return myDocument.getElementsByTagName(mySaladConstants.ROOT_ELEMENT_LABEL); 
+		return myDocument.getElementsByTagName(mySaladConstants.ELEMENT_LABEL); 
 	}
 	
 	/*
