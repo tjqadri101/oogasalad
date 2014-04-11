@@ -1,30 +1,36 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
+import reflection.Reflection;
 import stage.Game;
 /**
  * @Author: Justin (Zihao) Zhang
  */
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-	public static final String DEFAULT_CREATEORMODIFY = "KeyDataController";
+	public static final String DEFAULT_DATA_FORMAT = "DataFormat";
+	public static final String DEFAULT_REFLECTION_METHODS = "DataFormatReflection";
 	
 	protected Game myGame;
 	protected GameFactory myFactory;
 	protected GameSaverAndLoader myGameSaverAndLoader;
 	protected GameEngine myGameEngine;
-	protected ResourceBundle myOrderReflector;
+	protected ResourceBundle myDataFormat;
+	protected ResourceBundle myReflectionMethods;
 	
 	public DataController(){
 		myGameSaverAndLoader = new GameSaverAndLoader(); 
-		myOrderReflector = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_CREATEORMODIFY);
+		myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
+		myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
 	}
 	
 	/**
@@ -45,8 +51,43 @@ public class DataController {
 	 * @param a list of objects: order
      * @return nothing
 	 */
-	public void receiveOrder(List<Object> order){
-		callFactoryToProcess(order);
+	public void receiveOrder(String order){
+		callFactoryToProcess(convertStringOrder(order));
+	}
+	
+	/**
+	 * Do not call this method directly; used within DataController
+	 */
+	public List<Object> convertStringOrder(String order){
+		List<Object> answer = new ArrayList<Object>();
+		String[] orders = order.split(",");
+		int i = 0;
+		answer.add(orders[i]);
+		i ++;
+		while(i < orders.length){
+			answer.add(orders[i]);
+			String type = myDataFormat.getString(orders[i]);
+			String[] types = type.split(","); 
+			i = i + 1;
+			for(int j = 0; j < types.length; j ++){
+				Object o = Reflection.callMethod(this, myReflectionMethods.getString(types[j]), orders[i+j]);
+				answer.add(o);
+			}
+			i = i + types.length;
+		}
+		return answer;
+	}
+	
+	public Integer convertStringToInteger(String s){
+		return Integer.valueOf(s);
+	}
+	
+	public Double convertStringToDouble(String s){
+		return Double.valueOf(s);
+	}
+	
+	public String convertStringToString(String s){
+		return s;
 	}
 	
 	
