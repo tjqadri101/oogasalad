@@ -10,7 +10,7 @@ import saladConstants.SaladConstants;
 
 /**
  * 
- * @author DavidChou, Justin Zhang
+ * @author Justin (Zihao) Zhang, DavidChou
  *
  */
 public class Level {
@@ -22,11 +22,11 @@ public class Level {
 		myID = id;
 		mySceneMap = new HashMap<Integer, Scene>(); 
 	}
-	
+
 	public int getID(){ 
 		return myID; 
 	}
-	
+
 	public void resetID(int id){
 		myID = id;
 	}
@@ -35,15 +35,15 @@ public class Level {
 		Scene scene = new Scene(sceneID);
 		mySceneMap.put(sceneID, scene);
 	}
+	
+	public void addScene(int sceneID, Scene scene){
+		mySceneMap.put(sceneID, scene);
+	}
 
 	public void addObject(int sceneID, GameObject object) {
 		mySceneMap.get(sceneID).addObject(object);
 	}
 
-//	public void setPlayerXY(int sceneID, int playerID, int x, int y) {
-//		myScenes.get(sceneID).setPlayerXY(playerID, x, y);
-//	}
-	
 	public GameObject getObject(int sceneID, int objectID) {
 		return mySceneMap.get(sceneID).getObject(objectID);
 	}
@@ -55,7 +55,7 @@ public class Level {
 	public void removeScene(int sceneID) {
 		mySceneMap.remove(sceneID);
 	}
-	
+
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int sceneID: mySceneMap.keySet()){
@@ -67,26 +67,12 @@ public class Level {
 
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
-		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
+		answer.add(SaladConstants.CREATE_LEVEL + "," + SaladConstants.ID + "," + myID);
+		answer.add(SaladConstants.SWITCH_LEVEL + "," + SaladConstants.ID + "," + myID);
 		for(int a: mySceneMap.keySet()){
 			answer.addAll(mySceneMap.get(a).getAttributes());
 		}
 		return answer;
 	}
-	
-//	public List<Scene> getScenes() {
-//		List<Scene> answer = new ArrayList<Scene>();
-//		for(int sceneID: mySceneMap.keySet()){
-//			answer.add(mySceneMap.get(sceneID));
-//		}
-//		return answer;
-//	}
-//
-//	public void setScenes(List<Scene> scenes){
-//		for(Scene scene: scenes){
-//			mySceneMap.put(scene.getID(), scene);
-//		}
-//	}
-	
+
 }

@@ -23,6 +23,28 @@ public final class SaladConstants {
 	public static final String ACTOR_PANEL = "Actor";
 	public static final String MEDIA_PANEL = "Media";
 	public static final String BEHAVIOR_PANEL = "Behavior";
-	
-	
+	public static final String ELEMENT_LABEL = "Element";
+	public static final String ROOT_ELEMENT_LABEL = "Root";
+	public static final String STATE_GAMEOVER = "GameOver";
+	public static final String STATE_STARTTITLE = "StartTitle";
+	public static final String STATE_STARTLEVEL = "StartLevel";
+	public static final String STATE_LEVELDONE = "LevelDone";
+	public static final String STATE_LIFELOST = "LifeLost";
+	public static final String INITIAL_SCORE = "InitialScore";
+	public static final String ID = "ID";
+	public static final String IMAGE = "Image";
+	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
+	public static final String COLLISION_ID = "Colid";
+	public static final String COLLISION = "Collision";
+	public static final String DIE = "Die";
+	public static final String MOVE = "Move";
+	public static final String SHOOT = "Shoot";
+	public static final String POSITION = "Position";
+	public static final String NAME = "Name";
+	public static final String CHANGE_TO_ID = "ChangeToID";
+	public static final String CHANGE_COLLISION_ID = "ChangeCollisionID";
+	public static final String DELETE_LEVEL = "DeleteLevel";
+	public static final String DELETE_SCENE = "DeleteScene";
+	public static final String RESET_LEVEL_ID = "ResetLevelID";
+	public static final String COLLISION_TILE = "CollisionTile";
 }

@@ -32,11 +32,9 @@ public class GAEController {
 	private AttributesPanel attributesPanel;
 	
 	public GAEController(){
-		//createGAE(this);
 		myDataController = new DataController();
-		myGameEngine = myDataController.initGameEngine(new Game());
+	//	myGameEngine = myDataController.initGameEngine(new Game());
 		g = new GAE(this);
-		
 	}
 
 	
@@ -74,7 +72,7 @@ public class GAEController {
 	
 	public void modifyActorPosition(int ID, double xPos, double yPos){
 		String order = SaladConstants.MODIFY_ACTOR + ",ID,"+ID+",Position," + xPos + "," + yPos;
-		myDataController.receiveOrder(order);
+	//	myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
