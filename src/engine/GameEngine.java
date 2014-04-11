@@ -209,7 +209,7 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public GameObject createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
+    public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
     	defineImage(url, "-", 0, url, "-");
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
@@ -217,9 +217,9 @@ public class GameEngine extends StdGame{
         return object;
     }
     
-    public GameObject createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
+    public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
     	defineImage(url, "-", 0, url, "-");
-        GameObject object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
+    	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.getScene(myCurrentLevelID, myCurrentSceneID).addObject(object);
         return object;
