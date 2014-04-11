@@ -53,6 +53,7 @@ public class DataController {
      * @return nothing
 	 */
 	public void receiveOrder(String order){
+		System.out.println("received order" + order);
 		callFactoryToProcess(convertOrderToObjects(order));
 	}
 	
