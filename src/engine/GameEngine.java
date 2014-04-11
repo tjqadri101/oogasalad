@@ -36,7 +36,6 @@ public class GameEngine extends StdGame{
     private List<int[]> myCollsionPair = new ArrayList<int[]>();
     private int myCurrentLevelID = 1;
     private int myCurrentSceneID = 0;
-    //private Scene myCurrentScene;
     private String Mode = "Edit";//String or boolean ?
     
     
@@ -66,11 +65,6 @@ public class GameEngine extends StdGame{
     	return myGame;
     }
     
-    public void setCurrentLevel(int currentLevelID){
-    	myCurrentLevelID = currentLevelID;
-    }
-    
-
     public void startEdit(){
     	removeObjects(null,0);
 //    	defineImage("image", "-", 0, "actor_default.png", "-");
@@ -106,11 +100,12 @@ public class GameEngine extends StdGame{
     	}
     }
     
-    public void setCurrentScene (int currentSceneID) {
-    	for(GameObject go: myGame.getScene(myCurrentLevelID, myCurrentSceneID).getGameObjects()){
+    public void setCurrentScene (int currentLevelID, int currentSceneID) {
+    	myCurrentLevelID = currentLevelID;
+    	myCurrentSceneID = currentSceneID;
+    	for(GameObject go: myGame.getScene(currentLevelID, currentSceneID).getGameObjects()){
     		go.suspend();
     	}
-    	myCurrentSceneID = currentSceneID;
     	for(GameObject go: myGame.getScene(myCurrentLevelID, myCurrentSceneID).getGameObjects()){
     		go.resume();
     	}
