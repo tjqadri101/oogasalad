@@ -41,9 +41,16 @@ public class EngineFrame extends JFrame{
 	
 	public EngineFrame() {
 		myController = new DataController();
+		initializeViewSpecs();
 		addMenu();
 		addPanel();
 		finalizeView();
+	}
+
+
+	private void initializeViewSpecs() {
+		setPreferredSize(new Dimension(600, 800));
+		setLayout(new BorderLayout());
 	}
 
 
@@ -60,8 +67,6 @@ public class EngineFrame extends JFrame{
 
 
 	private void finalizeView() {
-		setPreferredSize(new Dimension(600, 800));
-		setLayout(new BorderLayout());
 		pack();
 		setVisible(true);
 	}
