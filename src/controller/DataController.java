@@ -57,6 +57,7 @@ public class DataController {
 	
 	/**
 	 * Do not call this method directly; called within DataController
+	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
 	 */
 	protected List<Object> convertOrderToObjects(String order){
 		List<Object> answer = new ArrayList<Object>();
@@ -151,6 +152,7 @@ public class DataController {
 	
 	/**
 	 * Do not call this method directly; called within DataController
+	 * Called to enable factory to process the order
 	 */
 	protected void callFactoryToProcess(List<Object> order) {
 		try{
