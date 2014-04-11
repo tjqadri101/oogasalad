@@ -39,10 +39,8 @@ public class XMLReader{
 		Node node; 
 		Element element; 
 		for(int i=0; i<myNodeList.getLength(); i++){ 
-			System.out.println("Nodelist length: "+myNodeList.getLength()); 
 			node = myNodeList.item(i); 
 			element = (Element)node; 
-			System.out.println(element.getTextContent()); 
 			attributes.add(element.getTextContent());  
 		}
 		return attributes; 
