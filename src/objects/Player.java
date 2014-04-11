@@ -30,7 +30,6 @@ public class Player extends GameObject {
 	}
 	
 	public void checkKeys(){
-		if(myKeyMap.isEmpty()) return; // just in case
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				Reflection.callMethod(this, myKeyMap.get(key));
@@ -58,14 +57,14 @@ public class Player extends GameObject {
 	@Override
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_PLAYER + ",ID," + myUniqueID + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName() + ",CollisionID," + colid);
-		answer.add(SaladConstants.MODIFY_PLAYER + ",ID," + myUniqueID + ",Move," + myMoveBehavior + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add(SaladConstants.MODIFY_PLAYER + ",ID," + myUniqueID + ",Die," + myDieBehavior);
+		answer.add(SaladConstants.CREATE_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
+		answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + myMoveBehavior + "," + mySetXSpeed + "," + mySetYSpeed);
+		answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + myDieBehavior);
 		for(int otherID: myCollisionMap.keySet()){
-			answer.add(SaladConstants.MODIFY_PLAYER + ",Colid," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
+			answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		for(int key: myKeyMap.keySet()){
-			answer.add(SaladConstants.MODIFY_PLAYER + ",SetKey," + key + "," + myKeyMap.get(key));
+			answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.SET_KEY + "," + key + "," + myKeyMap.get(key));
 		}
 		return answer;
 	}
