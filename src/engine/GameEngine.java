@@ -4,6 +4,7 @@ import stage.Game;
 import stage.Scene;
 import jgame.JGColor;
 import jgame.JGFont;
+import jgame.JGObject;
 import jgame.JGPoint;
 import jgame.platform.StdGame;
 import objects.GameObject;
@@ -13,7 +14,10 @@ import objects.Player;
 import java.awt.Dimension;//
 import java.util.ArrayList;
 import java.util.List;
-/*
+
+import jboxGlue.PhysicalObject;
+import jboxGlue.WorldManager;
+/**
  * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
  */
 public class GameEngine extends StdGame{
@@ -32,7 +36,7 @@ public class GameEngine extends StdGame{
     private List<int[]> myCollsionPair = new ArrayList<int[]>();
     private int myCurrentLevelID = 1;
     private int myCurrentSceneID = 0;
-    private Scene myCurrentScene;//is this necessary?
+    //private Scene myCurrentScene;
     private String Mode = "Edit";//String or boolean ?
     
     
@@ -54,6 +58,8 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
+        WorldManager.initWorld(this);
+        setGameState(Mode);
     }
     
     public Game getGame(){
@@ -67,7 +73,17 @@ public class GameEngine extends StdGame{
 
     public void startEdit(){
 //    	removeObjects(null,0);
-    	setBGImage("bg");
+    	defineImage("image", "-", 0, "actor_default.png", "-");
+    	PhysicalObject c = new PhysicalObject("name", 0, "image"){
+
+			@Override
+			protected void paintShape() {
+				// TODO Auto-generated method stub
+				
+			}
+//    		public void move(){this.x+=1;}
+    	};
+    	c.setSpeed(1, 1);
     }
     public void doFrameEdit(){
     	moveObjects();
@@ -114,7 +130,7 @@ public class GameEngine extends StdGame{
     	
     }
     
-    /*
+    /**
      * (non-Javadoc)
      * @see jgame.platform.StdGame#doFrame()
      * For inGame States
@@ -124,7 +140,7 @@ public class GameEngine extends StdGame{
     	
     }
     
-    /*
+    /**
      * (non-Javadoc)
      * @see jgame.platform.StdGame#paintFrame()
      * For inGame states
@@ -194,15 +210,6 @@ public class GameEngine extends StdGame{
     	return myCurrentSceneID;
     }
     
-//    public GameObject createPlayer(String unique_id, String url, String xpos, String ypos, String name, String colid){
-//    	File file = new File(url);
-//    	String filename = file.getName();
-//        Player object = new Player(Integer.parseInt(unique_id), filename, Double.parseDouble(xpos), Double.parseDouble(ypos), name, Integer.parseInt(colid));
-//        object.setPos(Double.parseDouble(xpos), Double.parseDouble(ypos));//just to make sure; may be deleted later
-//        myGame.setPlayer(object);
-//        return object;
-//    }
-    
     /** 
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
@@ -221,11 +228,6 @@ public class GameEngine extends StdGame{
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.getScene(myCurrentLevelID, myCurrentSceneID).addObject(object);
         return object;
-    }
-
-    //what does this do?
-    public void removeActor(GameObject object){
-    	object.remove();
     }
     
     /*
