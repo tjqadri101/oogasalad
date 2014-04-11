@@ -27,15 +27,14 @@ public class GameEngine extends StdGame{
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
     
-    protected Game myGame = new Game();
-//    protected Game myGame;
-    //still think it necessary to InitGame here
+    protected Game myGame;
     
     private List<int[]> myCollsionPair = new ArrayList<int[]>();
     private int myCurrentLevelID = 1;
     private int myCurrentSceneID = 0;
     //private Scene myCurrentScene;
     private String Mode = "Edit";//String or boolean ?
+    
     
     
     public GameEngine(){
@@ -57,6 +56,7 @@ public class GameEngine extends StdGame{
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
         WorldManager.initWorld(this);
+        setGameState(Mode);
     }
     
     public Game getGame(){
@@ -70,7 +70,6 @@ public class GameEngine extends StdGame{
 
     public void startEdit(){
 //    	removeObjects(null,0);
-    	setBGImage("bg");
     }
     public void doFrameEdit(){
     	moveObjects();
