@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import objects.GameObject;
+import objects.NonPlayer;
 import saladConstants.SaladConstants;
 
 /**
@@ -40,12 +41,12 @@ public class Level {
 		mySceneMap.put(sceneID, scene);
 	}
 
-	public void addObject(int sceneID, GameObject object) {
-		mySceneMap.get(sceneID).addObject(object);
+	public void addNonPlayer(int sceneID, NonPlayer object) {
+		mySceneMap.get(sceneID).addNonPlayer(object);
 	}
 
 	public NonPlayer getNonPlayer(int sceneID, int objectID) {
-		return mySceneMap.get(sceneID).getObject(objectID);
+		return mySceneMap.get(sceneID).getNonPlayer(objectID);
 	}
 
 	public Scene getScene(int sceneID){

@@ -37,7 +37,7 @@ public class Scene {
 		return myID; 
 	}
 	
-	public void addObject(NonPlayer object) {
+	public void addNonPlayer(NonPlayer object) {
 		myObjectMap.put(object.getID(), object );
 	}
 	

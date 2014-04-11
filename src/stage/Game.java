@@ -53,14 +53,15 @@ public class Game {
 	}
 	
 	/**
-	 * Called to add a new Game Object to a particular scene of a particular level
+	 * Called to add a new NonPlayer to a particular scene of a particular level
 	 * @param the level ID that the new Game Object belongs to 
 	 * @param the new scene ID that the new Game Object belongs to
 	 * @param the new Game Object
 	 * @return nothing
 	 */
-	public void addObject(int levelID, int sceneID, GameObject object){
-		myLevelMap.get(levelID).addObject(sceneID, object);
+	public void addNonPlayer(int levelID, int sceneID, NonPlayer object){
+		NonPlayer o = (NonPlayer) object;
+		myLevelMap.get(levelID).addNonPlayer(sceneID, o);
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class Game {
 	 * @return the Game Object that matched with the input IDs
 	 */
 	public NonPlayer getNonPlayer(int levelID, int sceneID, int objectID){
-		return myLevelMap.get(levelID).getObject(sceneID, objectID);
+		return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID);
 	}
 
 	/**
