@@ -1,18 +1,15 @@
+
 package engineTests;
 
 import objects.GameObject;
-import objects.NonPlayer;
 
 import org.junit.Test;
 
 import stage.Game;
-import stage.Level;
-import stage.Scene;
-import controller.DataController;
 import engine.GameEngine;
 import junit.framework.TestCase;
 
-/*
+/**
  * @Author: Justin (Zihao) Zhang
  */
 
@@ -25,33 +22,44 @@ public class GameObjectTests extends TestCase {
 	    	myGame = new Game();
 	    	myEngine = new GameEngine();
 	    	myEngine.setGame(myGame);
-//			Level level = new Level(0);
-//			myGame.addLevel(level);
-//			Scene scene = new Scene(0);
-//			myGame.addScene(0, scene);
+			myGame.addLevel(1);
+			myGame.addScene(1, 0);
+			myEngine.setCurrentScene(0);
+			myEngine.setCurrentLevel(1);
 	    }
 		
 		@Test
 		public void testCreateObjects(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
+			GameObject object = myEngine.createActor(0, "actor_default.png", 0, 0, "Hero", 0);
+			assertEquals(object, myGame.getGameObject(1, 0, 0));
+		}
+		
+		@Test
+		public void testGetAttributes(){
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0);
+			System.out.println(object.getAttributes());
 		}
 		
 		@Test
 		public void testModifyCollision(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
-			object.setCollisionBehavior(2, "HitterEliminateVictim");
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0);
+			object.setCollisionBehavior("HitterEliminateVictim", 2);
+//			assertEquals("HitterEliminateVictim", object.myCollisionMap.get(2));
 		}
 		
 		@Test
 		public void testModifyMove(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0);
 			object.setMoveBehavior("RegularMove", 1, 1);
+			myEngine.doFrameEdit();
+//			assertEquals("RegularMove", object.myMoveBehavior);
 		}
 		
 		@Test
 		public void testModifyDie(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 0, 0);
+			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0);
 			object.setDieBehavior("RegularRemove");
+//			assertEquals("RegularRemove", object.myDieBehavior);
 		}
 		
 		@Test

@@ -1,35 +1,41 @@
 package objects;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
-import jboxGlue.PhysicalObject;
-import jgame.JGColor;
+import jboxGlue.PhysicalObjectRect;
 import jgame.JGObject;
-/*
+/**
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends PhysicalObject implements Serializable{
+public abstract class GameObject extends PhysicalObjectRect {
 	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
 	protected ResourceBundle myBehaviors;
-	protected String myDieMethod;
-	protected String myMoveMethod;
+//	protected ScoreManager myScoreManager;
+	protected String myDieBehavior;
+	protected String myMoveBehavior;
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
-	protected HashMap<Integer, String> myCollisionMap;
+	protected Map<Integer, String> myCollisionMap;
+//	protected Map<Integer, String>
 	protected int myLives;
 	protected int myUniqueID;
 	protected String myJumpBehavior;
 	protected double myJumpForceMagnitude;
 	protected String myShootBehavior;
+	
+	public static final double DEFAULT_WIDTH = 10;
+	public static final double DEFAULT_HEIGHT = 10;
+	public static final double DEFAULT_MASS = 1;
 	
 	protected void initObject(int uniqueID, double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
@@ -40,16 +46,22 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	}
 	
 	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId){
-		super(name, collisionId, gfxname);
+		super(name, collisionId, gfxname, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS);
 		initObject(uniqueID, xpos, ypos);
 	}
 	
+	//may not be needed
+	public void resetID(int uniqueID){
+		myUniqueID = uniqueID;
+	}
+	
+	//may not be needed
 	public int getID(){
 		return myUniqueID;
 	}
 
 	public void setDieBehavior(String s){
-		myDieMethod = s;
+		myDieBehavior = s;
 	}
 	
 	public void loseLife(){
@@ -70,17 +82,21 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
 	}
 	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
-		myMoveMethod = s;
+		myMoveBehavior = s;
 		mySetXSpeed= xspeed;
 		mySetYSpeed = yspeed;
 	}
 	
-	public void setCollisionBehavior(int id, String s){
-		myCollisionMap.put(id, s);
+	public void setCollisionBehavior(String type, int id){
+		myCollisionMap.put(id, type);
 	}
 	
 	public void die(){
-		behaviorNoParameterReflection(myBehaviors, myDieMethod, "remove");	
+		behaviorNoParameterReflection(myBehaviors, myDieBehavior, "remove");	
+	}
+	
+	public void resetCollisionID(int collisionID){
+		colid = collisionID;
 	}
 	
 	public void jump(){
@@ -122,32 +138,44 @@ public abstract class GameObject extends PhysicalObject implements Serializable{
     }
 	
 	public void autoMove(){
-		if(myMoveMethod == null) return;
+		if(myMoveBehavior == null) return;
 		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveMethod), this);
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveBehavior), this);
 			Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);	
 		} catch (Exception e){
 			e.printStackTrace(); //should never reach here
 		}
 	}
 	
+	//need modification
+	public void shoot(){
+		if(myShootBehavior == null) return;
+		try{
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myShootBehavior), this);
+			Reflection.callMethod(behavior, "shoot"); // need modification
+		} catch (Exception e){
+			e.printStackTrace(); //should never reach here
+		}
+	}
+	
 	@Override
-	protected void paintShape() {
+	public void paintShape() {
 		// do nothing; image already set
 	}
 	
-	/*
+	/**
 	 * Should be called by the Parser class to get all attributes of the GameObject
 	 * Return a list of Strings that match with the Data Format but without Key 
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_ACTOR + ",ID," + colid + ",Image," + getGraphic() + ",Position," + x + "," + y + ",Name," + getName());
-		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Move," + myMoveMethod + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Die," + myDieMethod);
+		answer.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
+		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + myMoveBehavior + "," + mySetXSpeed + "," + mySetYSpeed);
+		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + myDieBehavior);
 		for(int otherID: myCollisionMap.keySet()){
-			answer.add(SaladConstants.MODIFY_ACTOR + ",ID," + colid + ",Collision," + myCollisionMap.get(otherID) + "," + otherID);
+			answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		return answer;
 	}
+	
 }

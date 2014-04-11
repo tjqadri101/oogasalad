@@ -1,6 +1,5 @@
 package stage;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,25 +10,33 @@ import saladConstants.SaladConstants;
 
 /**
  * 
- * @author DavidChou
+ * @author Justin (Zihao) Zhang, DavidChou
  *
  */
-public class Level implements Serializable {
+public class Level {
 
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
 
-	public Level(int hash) {
-		myID = hash;
+	public Level(int id) {
+		myID = id;
 		mySceneMap = new HashMap<Integer, Scene>(); 
 	}
-	
+
 	public int getID(){ 
 		return myID; 
 	}
 
+	public void resetID(int id){
+		myID = id;
+	}
+
 	public void addScene(int sceneID) {
 		Scene scene = new Scene(sceneID);
+		mySceneMap.put(sceneID, scene);
+	}
+	
+	public void addScene(int sceneID, Scene scene){
 		mySceneMap.put(sceneID, scene);
 	}
 
@@ -37,10 +44,6 @@ public class Level implements Serializable {
 		mySceneMap.get(sceneID).addObject(object);
 	}
 
-//	public void setPlayerXY(int sceneID, int playerID, int x, int y) {
-//		myScenes.get(sceneID).setPlayerXY(playerID, x, y);
-//	}
-	
 	public GameObject getObject(int sceneID, int objectID) {
 		return mySceneMap.get(sceneID).getObject(objectID);
 	}
@@ -52,7 +55,7 @@ public class Level implements Serializable {
 	public void removeScene(int sceneID) {
 		mySceneMap.remove(sceneID);
 	}
-	
+
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
 		for(int sceneID: mySceneMap.keySet()){
@@ -62,26 +65,14 @@ public class Level implements Serializable {
 		return objects;
 	}
 
-//	public List<String> getAttributes() {
-//		List<String> answer = new ArrayList<String>();
-//		answer.add(SaladConstants.CREATE_LEVEL + ",ID," + myID);
-//		answer.add(SaladConstants.SWITCH_LEVEL + ",ID," + myID);
-//		answer.addAll(getSceneAttributes());
-//		return answer;
-//	}
-	
-	public List<Scene> getScenes() {
-		List<Scene> answer = new ArrayList<Scene>();
-		for(int sceneID: mySceneMap.keySet()){
-			answer.add(mySceneMap.get(sceneID));
+	public List<String> getAttributes() {
+		List<String> answer = new ArrayList<String>();
+		answer.add(SaladConstants.CREATE_LEVEL + "," + SaladConstants.ID + "," + myID);
+		answer.add(SaladConstants.SWITCH_LEVEL + "," + SaladConstants.ID + "," + myID);
+		for(int a: mySceneMap.keySet()){
+			answer.addAll(mySceneMap.get(a).getAttributes());
 		}
 		return answer;
 	}
 
-	public void setScenes(List<Scene> scenes){
-		for(Scene scene: scenes){
-			mySceneMap.put(scene.getID(), scene);
-		}
-	}
-	
 }

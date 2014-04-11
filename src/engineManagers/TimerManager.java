@@ -1,6 +1,5 @@
 package engineManagers;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +9,10 @@ import java.util.Map;
  * @Author: Justin (Zihao) Zhang
  */
 import saladConstants.SaladConstants;
-
-public class TimerManager implements Serializable{
+/**
+ * @Author: Justin (Zihao) Zhang
+ */
+public class TimerManager {
 	
 	protected Map<String, Integer> myTimerMap;
 	
@@ -19,7 +20,7 @@ public class TimerManager implements Serializable{
 		myTimerMap = new HashMap<String, Integer>();
 	}
 	
-	public void setTimetoState(int time, String state){
+	public void setTimetoState(String state, int time){
 		myTimerMap.put(state, time);
 	}
 	

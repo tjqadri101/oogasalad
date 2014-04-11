@@ -11,29 +11,40 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import engine.GameEngine;
 import objects.GameObject;
+import objects.Player;
 import jgame.JGColor;
 import stage.Game;
 import stage.Level;
 import stage.Scene;
 
-//import com.google.gson.Gson; 
-//import com.google.gson.GsonBuilder;
 
 public class GameSaverAndLoader { 
-	private Parser myParser; 
+	private XMLReader myXMLReader; 
+	private XMLWriter myXMLWriter; 
 	
 	public GameSaverAndLoader(){ 
-		myParser = new Parser(); 
+		myXMLReader = new XMLReader(); 
+		myXMLWriter = new XMLWriter(); 
 	}
 
-	public void save(Game game, String url) throws IOException { 
-			myParser.write(game, url);
+	/*
+	 * @param game A game object 
+	 * @param url String referencing location to store the game object
+	 * @return Nothing
+	 */
+	public void save(List<String> attributes, String url) throws IOException { 
+			myXMLWriter.write(attributes, url); 
 	}
 	
-	public Game load(String url) throws Exception{
-		return myParser.read(url); 
+	/*
+	 *  
+	 * @param url String referencing location to store the game object
+	 * @return Game A game object
+	 */
+	public List<String> load(String url) throws Exception{
+		return myXMLReader.read(url); 
 	}
-	
 
 }
