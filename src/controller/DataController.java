@@ -52,13 +52,14 @@ public class DataController {
      * @return nothing
 	 */
 	public void receiveOrder(String order){
-		callFactoryToProcess(convertStringOrder(order));
+		callFactoryToProcess(convertOrderToObjects(order));
 	}
 	
 	/**
-	 * Do not call this method directly; used within DataController
+	 * Do not call this method directly; called within DataController
 	 */
-	public List<Object> convertStringOrder(String order){
+	public List<Object> convertOrderToObjects(String order){
+		System.out.println("convertOrderToObjects Called");
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;
@@ -78,14 +79,27 @@ public class DataController {
 		return answer;
 	}
 	
+	public Game getGame(){
+		return myGame;
+	}
+	
+	/**
+	 * Do not call this method directly; reflected within DataController
+	 */
 	public Integer convertStringToInteger(String s){
 		return Integer.valueOf(s);
 	}
 	
+	/**
+	 * Do not call this method directly; reflected within DataController
+	 */
 	public Double convertStringToDouble(String s){
 		return Double.valueOf(s);
 	}
 	
+	/**
+	 * Do not call this method directly; reflected within DataController
+	 */
 	public String convertStringToString(String s){
 		return s;
 	}
