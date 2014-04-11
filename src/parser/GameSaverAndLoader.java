@@ -21,13 +21,12 @@ import stage.Scene;
 
 
 public class GameSaverAndLoader { 
-	private ReadXML myReader; 
-	private WriteXML myWriter; 
-
+	private XMLReader myXMLReader; 
+	private XMLWriter myXMLWriter; 
 	
 	public GameSaverAndLoader(){ 
-		myReader = new ReadXML(); 
-		myWriter = new WriteXML(); 
+		myXMLReader = new XMLReader(); 
+		myXMLWriter = new XMLWriter(); 
 	}
 
 	/*
@@ -36,7 +35,7 @@ public class GameSaverAndLoader {
 	 * @return Nothing
 	 */
 	public void save(List<String> attributes, String url) throws IOException { 
-			myWriter.write(attributes, url); 
+			myXMLWriter.write(attributes, url); 
 	}
 	
 	/*
@@ -45,8 +44,7 @@ public class GameSaverAndLoader {
 	 * @return Game A game object
 	 */
 	public List<String> load(String url) throws Exception{
-		return myReader.read(url); 
+		return myXMLReader.read(url); 
 	}
-	
 
 }

@@ -1,5 +1,7 @@
 package behaviors;
 
+import org.jbox2d.common.Vec2;
+
 import objects.GameObject;
 
 public class Move extends Movable{
@@ -10,6 +12,10 @@ public class Move extends Movable{
 
 	@Override
 	public void move(double xspeed, double yspeed) {
-		myObject.setSpeed(xspeed, yspeed);
+		Vec2 velocity = myObject.getBody().getLinearVelocity();
+   		velocity.y = (float) yspeed;
+   		velocity.x = (float) xspeed;
+   		myObject.getBody().setLinearVelocity(velocity);
+//		myObject.setSpeed(xspeed, yspeed);
 	}
 }

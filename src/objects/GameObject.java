@@ -35,7 +35,7 @@ public abstract class GameObject extends PhysicalObjectRect {
 	
 	public static final double DEFAULT_WIDTH = 10;
 	public static final double DEFAULT_HEIGHT = 10;
-	public static final double DEFAULT_MASS = 10;
+	public static final double DEFAULT_MASS = 1;
 	
 	protected void initObject(int uniqueID, double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
