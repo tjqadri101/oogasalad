@@ -1,10 +1,17 @@
 package parser;
-
+/*
+ * @author Anthony Olawo 
+ */
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
@@ -13,35 +20,46 @@ import org.w3c.dom.Element;
 
 import saladConstants.SaladConstants;
 
-public class XMLWriter extends SuperXML{
-	private SaladConstants mySaladConstants; 
+
+public class XMLWriter {
+	private OOGASALADocument myOOGASALADocument; 
+	private Document myDocument; 
+	protected SaladConstants mySaladConstants; 
+	private TransformerFactory myTransformerFactory; 
+	private Transformer myTransformer; 
+	private DOMSource mySource;
+	private StreamResult myStreamResult;
 	
 	public XMLWriter(){ 
-	
+		myOOGASALADocument = new OOGASALADocument(); 
+		myDocument = myOOGASALADocument.getOOGASALADocument(); 
+		initSource(); 
+		initTransformer(); 
 	}
 	
+	
+	
 	/*
-	 * (non-Javadoc)
-	 * @see parser.SuperXML#write(java.util.List, java.lang.String)
+	 *@param attributes A list of strings to be written to file.
+	 *@param url URL of the file to be written to.
 	 */
-	@Override
 	public void write(List<String> attributes, String url){
 		myStreamResult = initStreamResult(url); 
-		Element root = myWriterDocument.createElement(mySaladConstants.ROOT_ELEMENT_LABEL); 
-		myWriterDocument.appendChild(root); 
+		Element root = myDocument.createElement(mySaladConstants.ROOT_ELEMENT_LABEL); 
+		myDocument.appendChild(root); 
 		Element node; 
 		String attribute; 
 		for(int i=0; i<attributes.size(); i++){
 			attribute = attributes.get(i); 
-			node = myWriterDocument.createElement(mySaladConstants.ELEMENT_LABEL+"_"+i);
-			node.appendChild(myWriterDocument.createTextNode(attribute)); 
+			node = myDocument.createElement(mySaladConstants.ELEMENT_LABEL+"_"+i);
+			node.appendChild(myDocument.createTextNode(attribute)); 
 			root.appendChild(node); 		
 		}
 		
 		transform(); 
 	}
 	
-	/*
+	/*Transorms the DOMSource mySource to StreamResult mySource. 
 	 * 
 	 */
 	private void transform(){
@@ -52,11 +70,37 @@ public class XMLWriter extends SuperXML{
 		} 
 	}
 	
-	protected StreamResult initStreamResult(String url){
+	/*
+	 * Initialises DOMSource mySource from the document myDocument. 
+	 */
+	private void initSource(){	
+		mySource = new DOMSource(myDocument); 
+	}
+	
+	/*
+	 * Initialises myTransformer from myTransformerFactory
+	 */
+	
+	private void initTransformer(){ 
+		myTransformerFactory = TransformerFactory.newInstance(); 
+		try {
+			myTransformer = myTransformerFactory.newTransformer();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+		}
+	}
+	
+	/*
+	 * Initialises a streamResult from url. 
+	 * @param url URL that the StreamResult will point to.
+	 * @return StreamResult Initialised StreamResult.
+	 */
+	
+	private StreamResult initStreamResult(String url){
 		myStreamResult = new StreamResult(url);
 		return myStreamResult; 
 	}
 	
-
+	
 
 }

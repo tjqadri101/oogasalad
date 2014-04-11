@@ -25,14 +25,15 @@ public class GameEngine extends StdGame{
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
     
-    protected Game myGame;
+    protected Game myGame = new Game();
+//    protected Game myGame;
+    //still think it necessary to InitGame here
     
     private List<int[]> myCollsionPair = new ArrayList<int[]>();
     private int myCurrentLevelID = 1;
     private int myCurrentSceneID = 0;
     private Scene myCurrentScene;//is this necessary?
     private String Mode = "Edit";//String or boolean ?
-    
     
     
     public GameEngine(){

@@ -23,7 +23,6 @@ import stage.Scene;
 public class GameSaverAndLoader { 
 	private XMLReader myXMLReader; 
 	private XMLWriter myXMLWriter; 
-	private Serializer mySerializer; 
 	
 	public GameSaverAndLoader(){ 
 		myXMLReader = new XMLReader(); 
@@ -39,9 +38,6 @@ public class GameSaverAndLoader {
 			myXMLWriter.write(attributes, url); 
 	}
 	
-	public void save(Object obj, String url){
-		mySerializer.serialize(obj, url); 
-	}
 	/*
 	 *  
 	 * @param url String referencing location to store the game object
@@ -49,32 +45,6 @@ public class GameSaverAndLoader {
 	 */
 	public List<String> load(String url) throws Exception{
 		return myXMLReader.read(url); 
-	}
-	
-	public static void main( String [] args){
-		GameEngine myEngine = new GameEngine();
-		myEngine.setGame(new Game());
-		Game myGame = myEngine.getGame();
-		myGame.addLevel(0);
-		myGame.addScene(0, 0); 
-		myEngine.setCurrentLevel(0);
-
-		myEngine.setCurrentScene(0);
-		myEngine.createActor(0, "actor_default.png", 0.0, 0.0, "Justin", 0);
-		
-		
-		GameSaverAndLoader a = new GameSaverAndLoader (); 
-		a.save(myGame, "Game"); 
-		Game test = new Game();
-		
-		
-		/*try {
-			test = a.load("Game");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-*/
 	}
 
 }

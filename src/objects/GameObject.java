@@ -19,7 +19,7 @@ public abstract class GameObject extends PhysicalObject {
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
-	protected transient ResourceBundle myBehaviors;
+	protected ResourceBundle myBehaviors;
 //	protected ScoreManager myScoreManager;
 	protected String myDieBehavior;
 	protected String myMoveBehavior;
