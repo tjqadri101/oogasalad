@@ -13,6 +13,8 @@ import objects.Player;
 import java.awt.Dimension;//
 import java.util.ArrayList;
 import java.util.List;
+
+import jboxGlue.WorldManager;
 /*
  * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
  */
@@ -30,7 +32,7 @@ public class GameEngine extends StdGame{
     private List<int[]> myCollsionPair = new ArrayList<int[]>();
     private int myCurrentLevelID = 1;
     private int myCurrentSceneID = 0;
-    private Scene myCurrentScene;//is this necessary?
+    //private Scene myCurrentScene;
     private String Mode = "Edit";//String or boolean ?
     
     
@@ -53,6 +55,7 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
+        WorldManager.initWorld(this);
     }
     
     public Game getGame(){
