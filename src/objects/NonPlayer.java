@@ -1,13 +1,10 @@
 package objects;
 
-import java.io.Serializable;
-
-import jgame.JGColor;
-
-public class NonPlayer extends GameObject implements Serializable {
+public class NonPlayer extends GameObject {
 
 	public NonPlayer(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionID) {
 		super(uniqueID, gfxname, xpos, ypos, name, collisionID);
+		setSpeed(10, 10);
 	}
 
 	@Override

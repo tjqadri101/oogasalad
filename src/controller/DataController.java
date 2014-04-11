@@ -67,7 +67,6 @@ public class DataController {
 		i ++;
 		while(i < orders.length){
 			answer.add(orders[i]);
-			System.out.println(orders[i]);
 			String type = myDataFormat.getString(orders[i]);
 			String[] types = type.split(","); 
 			i = i + 1;

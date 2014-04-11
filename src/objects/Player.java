@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jbox2d.common.Vec2;
+
 import reflection.Reflection;
 import saladConstants.SaladConstants;
-/*
+/**
  * @Author: Justin (Zihao) Zhang
  */
 public class Player extends GameObject {
+	public static final float XVEL = 5;
+	public static final float YVEL = 5;
 	
 	protected Map<Integer, String> myKeyMap;
 	
@@ -33,25 +37,38 @@ public class Player extends GameObject {
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				Reflection.callMethod(this, myKeyMap.get(key));
-				eng.clearKey(key);
+//				eng.clearKey(key);
 			}
 		}
 	}
 	
 	public void moveUp(){
-		if (y > 0) 	ydir = -1;
+		System.out.println("moveUp");
+//		if (y <= 0) return;
+		Vec2 velocity = myBody.getLinearVelocity();
+   		velocity.y = -YVEL;
+        myBody.setLinearVelocity(velocity);
 	}
 	
 	public void moveDown(){
-		if (y < eng.pfHeight())  	ydir = 1;
+		if (y >= eng.pfHeight()) return;
+		Vec2 velocity = myBody.getLinearVelocity();
+   		velocity.y = YVEL;
+        myBody.setLinearVelocity(velocity);
 	}
 	
 	public void moveLeft(){
-		if (x > 0)  			xdir = -1;
+		if (x <= 0) return;
+		Vec2 velocity = myBody.getLinearVelocity();
+   		velocity.x = -XVEL;
+        myBody.setLinearVelocity(velocity);
 	}
 	
 	public void moveRight(){
-		if (x < eng.pfWidth()) 	xdir = 1; 
+		if (x >= eng.pfWidth())	return;
+		Vec2 velocity = myBody.getLinearVelocity();
+   		velocity.x = XVEL;
+        myBody.setLinearVelocity(velocity);
 	}
 	
 	@Override
