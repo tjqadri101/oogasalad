@@ -72,18 +72,18 @@ public class GameEngine extends StdGame{
     
 
     public void startEdit(){
-//    	removeObjects(null,0);
-    	defineImage("image", "-", 0, "actor_default.png", "-");
-    	PhysicalObject c = new PhysicalObject("name", 0, "image"){
-
-			@Override
-			protected void paintShape() {
-				// TODO Auto-generated method stub
-				
-			}
-//    		public void move(){this.x+=1;}
-    	};
-    	c.setSpeed(1, 1);
+    	removeObjects(null,0);
+//    	defineImage("image", "-", 0, "actor_default.png", "-");
+//    	PhysicalObject c = new PhysicalObject("name", 0, "image"){
+//
+//			@Override
+//			protected void paintShape() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+////    		public void move(){this.x+=1;}
+//    	};
+//    	c.setSpeed(1, 1);
     }
     public void doFrameEdit(){
     	moveObjects();
