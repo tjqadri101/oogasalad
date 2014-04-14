@@ -30,6 +30,9 @@ public class GAEController {
 		myGameEngine = myDataController.initGameEngine();
 		createGAE(this);
 		//g = new GAE(this);
+		createLevel(1);
+		createScene(0,1);
+		switchScene(0,1);
 	}
 	
 	public void createGAE(GAEController gController){
@@ -56,11 +59,10 @@ public class GAEController {
 	}
  	
 	public void createActor(int ID,String url,String name){
-		String order = SaladConstants.CREATE_ACTOR + ",ID,"+ID+",Image,"+"actor_default.png"+",Position,0.0,0.0,Name,"+name+",CollisionID,"+0;
+		String order = SaladConstants.CREATE_ACTOR + ",ID,"+ID+",Image,"+"actor_default.png"+",Position,100.0,200.0,Name,"+name+",CollisionID,"+0;
 //		String order = "CreateActor,ID,0,Image,actor_default.png,Position,0,0,Name,Hero,CollisionID,0";
 		myDataController.receiveOrder(order);
-		System.out.println(order);
-		
+//		System.out.println(order);
 	}
 	
 	public void deleteActor(int ID){
@@ -84,7 +86,7 @@ public class GAEController {
 	}
 	public void createLevel(int ID){
 		String order = SaladConstants.CREATE_LEVEL + ",ID,"+ID;
-		//myDataController.receiveOrder(order);
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
@@ -101,9 +103,9 @@ public class GAEController {
 	}
 	
 	
-	public void createScene(int ID, String path){
-		String order = SaladConstants.CREATE_SCENE + ",ID,"+ID+",Image,"+path;
-		//myDataController.receiveOrder(order);
+	public void createScene(int ID, int levelID){
+		String order = SaladConstants.CREATE_SCENE + ",ID,"+levelID+",ID,"+ID;
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
@@ -114,9 +116,9 @@ public class GAEController {
 		
 	}
 	
-	public void switchScene(int ID){
-		String order = SaladConstants.SWITCH_SCENE + ",ID,"+ID;
-		//myDataController.receiveOrder(order);
+	public void switchScene(int ID, int levelID){
+		String order = SaladConstants.SWITCH_SCENE + ",ID,"+levelID+",ID,"+ID;
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	

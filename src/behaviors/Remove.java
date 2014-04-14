@@ -10,7 +10,7 @@ public class Remove extends Removable{
 
 	@Override
 	public void remove() {
-		myObject.destroy();
+//		myObject.destroy();
 		myObject.remove();
 	}
 }

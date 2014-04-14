@@ -53,7 +53,8 @@ public class DataController {
      * @return nothing
 	 */
 	public void receiveOrder(String order){
-		System.out.println("received order" + order);
+		System.out.println("DataController: " + "received order " + order);
+		System.out.println("DataController: " + convertOrderToObjects(order));
 		callFactoryToProcess(convertOrderToObjects(order));
 	}
 	
@@ -61,7 +62,7 @@ public class DataController {
 	 * Do not call this method directly; called within DataController
 	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
 	 */
-	protected List<Object> convertOrderToObjects(String order){
+	public List<Object> convertOrderToObjects(String order){
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;
@@ -128,12 +129,20 @@ public class DataController {
 	
 	
 	/**
-	 * Called by Game Authorizing Environment to read the info about a specific Game Object (i.e. Actor)
+	 * Called by Game Authorizing Environment to read the info about an Actor
 	 * @param an id number matched to the Game Object to get
 	 * @return a list of String orders attached to the Game Object
 	 */
-	public List<String> getObjectInfo(int id){
-		return myGame.getGameObject(myGameEngine.getCurrentLevelID(), myGameEngine.getCurrentSceneID(), id).getAttributes();
+	public List<String> getActorInfo(int id){
+		return myGame.getNonPlayer(myGameEngine.getCurrentLevelID(), myGameEngine.getCurrentSceneID(), id).getAttributes();
+	}
+	
+	/**
+	 * Called by Game Authorizing Environment to read the info about the Player
+	 * @return a list of String orders attached to Player
+	 */
+	public List<String> getPlayerInfo(){
+		return myGame.getPlayer().getAttributes();
 	}
 	
 	/**

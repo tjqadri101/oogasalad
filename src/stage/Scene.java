@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import objects.GameObject;
+import objects.NonPlayer;
 import saladConstants.SaladConstants;
 
 /**
@@ -20,7 +21,7 @@ public class Scene {
 	
 	protected int myID;
 	protected String myBackground;
-	protected Map<Integer, GameObject> myObjectMap;
+	protected Map<Integer, NonPlayer> myObjectMap;
 	protected double initPlayerX;
 	protected double initPlayerY;
 //	protected GoalManager myGoalManager;
@@ -29,14 +30,14 @@ public class Scene {
 		myID = id;
 		initPlayerX = DEFAULT_PLAYER_X;
 		initPlayerY = DEFAULT_PLAYER_Y;
-		myObjectMap = new HashMap<Integer, GameObject>();
+		myObjectMap = new HashMap<Integer, NonPlayer>();
 	}
 		
 	public int getID(){
 		return myID; 
 	}
 	
-	public void addObject(GameObject object) {
+	public void addNonPlayer(NonPlayer object) {
 		myObjectMap.put(object.getID(), object );
 	}
 	
@@ -73,7 +74,7 @@ public class Scene {
 		return myBackground;
 	}
 	
-	public GameObject getObject(int objectID) {
+	public NonPlayer getNonPlayer(int objectID) {
 		return myObjectMap.get(objectID);
 	}
 
