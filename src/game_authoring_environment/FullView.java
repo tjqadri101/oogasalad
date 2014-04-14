@@ -14,11 +14,11 @@ import controller.GAEController;
 		private static final int FULL_VIEW_HEIGHT = 768;
 		private static final int FULL_VIEW_WIDTH = 1024;
 		private static LeftPanel lp;
-		
+		private static RightPanel rp;
 		public FullView(GAEController gController){			
 			setOrientation(HORIZONTAL_SPLIT);
 			lp = new LeftPanel(gController);
-			RightPanel rp = new RightPanel(gController);
+			rp = new RightPanel(gController);
 			setLeftComponent(lp);
 			setRightComponent(rp);
 		}
@@ -30,4 +30,6 @@ import controller.GAEController;
 		public AttributesPanel getAttributes(){
 			return lp.getAttributes();
 		}
+		
+		
 	}

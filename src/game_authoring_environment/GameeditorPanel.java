@@ -27,10 +27,14 @@ public class GameeditorPanel extends Panel {
 	private SubPanel mySubPanel;
 	private PanelType superType;
 	private GAEController gController;
+	private String GameName;
+	private Integer DisplayWidth;
+	private Integer DisplayHeight;
 	
 	public GameeditorPanel(GAEController gController) {
 		super(PanelType.GAMEEDITOR);
 		this.gController = gController;
+		setDefaultValues();
 		makeSubPanel();
 		construct();
 	}
@@ -44,7 +48,14 @@ public class GameeditorPanel extends Panel {
 	
 
 	}
-
+	
+	private void setDefaultValues(){
+		GameName = "";
+		DisplayWidth = 480;
+		DisplayHeight = 360;
+		
+	}
+	
 	@Override
 	protected void makeSubPanel() {
 		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB,gController);
@@ -59,6 +70,9 @@ public class GameeditorPanel extends Panel {
 		return jb;
 	}
 	
+	public void update(){
+		construct();
+	}
 	
 	protected JComponent makeTable(){
 		 JTable table2 = new JTable();
@@ -67,7 +81,7 @@ public class GameeditorPanel extends Panel {
 				  "Value",
 				  "Type"};
 				
-				Object[][] data = {
+		Object[][] data = {
 				{"Name", new String(),
 				"text"},
 				{"Time", new Integer(0),
@@ -83,6 +97,7 @@ public class GameeditorPanel extends Panel {
 		
 		return t;
 	}
+	
 			
 
 }

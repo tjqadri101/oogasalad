@@ -124,7 +124,7 @@ public class GAEController {
 	}
 	
 	public void switchActiveTab(int index){
-		
+		attributesPanel.setTab(index);
 	}
 	
 }

@@ -28,8 +28,7 @@ public class AttributesPanel extends JTabbedPane {
 		ImageIcon gameEditorTabIcon = new ImageIcon(this.getClass().getResource("resources/GameeditorTabIcon.png"));
 		this.addTab("Game", gameEditorTabIcon, myGameEditorPanel);
 		this.addTab("Scene", sceneEditorTabIcon, mySceneEditorPanel);		
-		this.addTab("Actor", actorEditorTabIcon, myActorEditorPanel);
-		
+		this.addTab("Actor", actorEditorTabIcon, myActorEditorPanel);	
 	}
 
 	private void makePanels(GAEController gController) {

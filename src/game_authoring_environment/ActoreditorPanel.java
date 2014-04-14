@@ -50,6 +50,9 @@ public class ActoreditorPanel extends Panel {
 		JButton jb  = new JButton("test");
 		return jb;
 	}
+	public void update(){
+		
+	}
 	
 	public JComponent makeTable(){
 		 
@@ -73,6 +76,8 @@ public class ActoreditorPanel extends Panel {
 				return k;
 	}
 	
-	
+	public void updateTable(){
+		
+	}
 
 }
