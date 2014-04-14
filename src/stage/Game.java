@@ -15,14 +15,14 @@ import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
  * @author Main DavidChou, Justin (Zihao) Zhang
- * 
+ * @help Issac (Shenghan) Chen
  */
 public class Game {
 
 	public static final int DEFAULT_SCORE = 0;
 
 	protected Map<Integer, Level> myLevelMap;
-	protected Map<StateType, Transition> myNonLevelSceneMap;//added by Isaac
+	protected Map<StateType, Transition> myNonLevelSceneMap;
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
@@ -30,7 +30,7 @@ public class Game {
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
-		myNonLevelSceneMap = new HashMap<StateType, Transition>();//added by Isaac
+		myNonLevelSceneMap = new HashMap<StateType, Transition>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
@@ -167,10 +167,19 @@ public class Game {
 		return myPlayer;
 	}
 
-	//added by Isaac
+	/**
+	 * Called to add the non-level transition scenes to the Game
+	 * @param StateType
+	 * @return void
+	 */
 	public void addNonLevelScene(StateType type){
 		myNonLevelSceneMap.put(type, new Transition(type));
 	}
+	
+	/**
+	 * Called to get the non-level transition from the Game
+	 * @return a Transition
+	 */
 	public Transition getNonLevelScene(StateType type){
 		return myNonLevelSceneMap.get(type);
 	}
