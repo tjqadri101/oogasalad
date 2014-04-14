@@ -50,4 +50,5 @@ public final class SaladConstants {
 	public static final String TEST_XMLFILE_URL = "test.xml";
 	public static final String SET_KEY = "SetKey";
 	public static final String NULL_TOKEN = "NullToken";
+	public static final String RESET_LEVEL_EXCEPTION = "Level can not be reset!";
 }

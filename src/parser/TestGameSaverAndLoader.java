@@ -22,7 +22,7 @@ public class TestGameSaverAndLoader {
 	}
 
 	public void populateInputStrings(){ 
-		for(int i=0; i<5; i++){
+		for(int i=0; i<7; i++){
 			inputStrings.add("test_"+i); 
 		}
 	}
@@ -48,13 +48,13 @@ public class TestGameSaverAndLoader {
 	public void testListElementsOrder() throws Exception{
 		init(SaladConstants.TEST_XMLFILE_URL);
 		for(String attribute: inputStrings){
-			assertEquals(inputStrings.size(), outputStrings.size()); 
+			assertEquals(inputStrings, outputStrings); 
 		}
 	}
 
 	@Test
 	public void testListSizes(){
 		init(SaladConstants.TEST_XMLFILE_URL);
-		assertEquals(inputStrings, outputStrings); 
+		assertEquals(inputStrings.size(), outputStrings.size()); 
 	}
 }

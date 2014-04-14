@@ -43,8 +43,8 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		System.out.println("moveUp");
-//		if (y <= 0) return;
+		System.out.println("Player moveUp");
+		if (y <= 0) return;
 		Vec2 velocity = myBody.getLinearVelocity();
    		velocity.y = -YVEL;
         myBody.setLinearVelocity(velocity);

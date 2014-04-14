@@ -1,1 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><Root><Element_0>test_0</Element_0><Element_1>test_1</Element_1><Element_2>test_2</Element_2><Element_3>test_3</Element_3><Element_4>test_4</Element_4></Root>
+<list>
+  <string>test_0</string>
+  <string>test_1</string>
+  <string>test_2</string>
+  <string>test_3</string>
+  <string>test_4</string>
+  <string>test_5</string>
+  <string>test_6</string>
+</list>

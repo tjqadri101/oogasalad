@@ -30,21 +30,26 @@ public class OOGASALADocument {
 	 * Initialises a document.
 	 */
 	private void initDocument( ){ 
+		initDocumentBuilder();  
+		myDocument = myDocumentBuilder.newDocument(); 
+	}
+	
+	
+	private void initDocumentBuilder(){ 
 		myDocumentFactory = DocumentBuilderFactory.newInstance(); 
 		try {
 			myDocumentBuilder = myDocumentFactory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 		} 
-		myDocument = myDocumentBuilder.newDocument(); 
 	}
-	
 	/*
 	 * Initialises a document from a file. (One can then read from the file underneath)
 	 * @param url A string containing a file url.  
 	 */
-	private void initDocument(String url){ 
+	private void initDocument(String url) { 
 		myFile = new File(url); 
+		initDocumentBuilder(); 
 		try {
 			myDocument = myDocumentBuilder.parse(myFile);
 		} catch (SAXException e) {

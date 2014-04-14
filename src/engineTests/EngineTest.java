@@ -6,7 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import objects.GameObject;
+import objects.NonPlayer;
 import objects.Player;
+
+import org.jbox2d.dynamics.Body;
 
 import stage.Game;
 import engine.GameEngine;
@@ -14,26 +17,23 @@ import engine.GameEngine;
 public class EngineTest {
 	public static void main(String[] arg){
 		JFrame mainFrame = new JFrame("test");
-		GameEngine myEngine = new GameEngine();
-		Game g = new Game();
-		myEngine.setGame(g);
-		JPanel jp = new JPanel();
-		jp.add(myEngine);
-		mainFrame.add(jp, BorderLayout.CENTER);
+		GameEngine engine = new GameEngine();
+		Game game = new Game();
+		engine.setGame(game);
+		JPanel panel = new JPanel();
+		panel.add(engine);
+		mainFrame.add(panel, BorderLayout.CENTER);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
-		System.out.print("lol\n");
-		g.addLevel(1);
-		g.addScene(1, 0);
-		myEngine.setCurrentScene(0);
-		myEngine.setCurrentLevel(1);
-		myEngine.createPlayer(0, "actor_default.png", 200, 200, "hero", 0);
-		myEngine.createActor(1, "actor_default.png", 100, 100, "heroC", 1);
-		GameObject o = g.getGameObject(1, 0, 1);
-		Player p = g.getPlayer();
-		p.setKey('W', "moveUp");
-		o.setMoveBehavior("RegularMove", 3, 3);
-//		o.setForce(10, 10);
+		System.out.print("EngineTest starts");
+		game.addLevel(1);
+		game.addScene(1, 0);
+		engine.setCurrentScene(1, 0);
+		NonPlayer actor = engine.createActor(0, "actor_default.png", 500, 100, null, 0);
+//		Velocity vec2 = new Velocity();
+		actor.setMoveBehavior("RegularMove", 5, 5);
+		engine.doFrameEdit();
+//		g.getPlayer().setForce(-10, -20);
 //		ge.createBackground("actor_default.png");
     }
 }

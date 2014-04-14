@@ -50,7 +50,9 @@ public class GameFactory {
         mySceneID = ((GameEngine) myEngine).getCurrentSceneID();
         
         String instruction = (String) order.get(0);
+        System.out.println(order + "Printed From Data Factory");
         List<Object> objArgList = parseOrder(order, instruction);
+        System.out.println(objArgList + "Print after parsed");
         
         String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
         String methodToInvoke = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
@@ -86,9 +88,9 @@ public class GameFactory {
         int numArg = Integer.parseInt(GameReflectPara);
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
 
-        int[][] IDSelector = new int[][]{new int[]{(int) objArgList.get(0)},
-                                         new int[]{(int) objArgList.get(0),levelID},
-                                         new int[]{(int) objArgList.get(0),levelID, sceneID}};
+        int[][] IDSelector = new int[][]{new int[]{(Integer) objArgList.get(0)},
+                                         new int[]{(Integer) objArgList.get(0),levelID},
+                                         new int[]{(Integer) objArgList.get(0),levelID, sceneID}};
         //        Class<?> c = Class.forName(GameReflectionInfo);
         
         Object obj = Reflection.callMethod(game, GameRefMethod, IDSelector[numArg]);
