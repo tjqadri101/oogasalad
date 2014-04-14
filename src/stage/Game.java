@@ -11,6 +11,7 @@ import engineManagers.TimerManager;
 import objects.GameObject;
 import objects.NonPlayer;
 import objects.Player;
+import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
  * @author Main DavidChou, Justin (Zihao) Zhang
@@ -21,6 +22,7 @@ public class Game {
 	public static final int DEFAULT_SCORE = 0;
 
 	protected Map<Integer, Level> myLevelMap;
+	protected Map<StateType, Transition> myNonLevelSceneMap;//added by Isaac
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
@@ -28,6 +30,7 @@ public class Game {
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
+		myNonLevelSceneMap = new HashMap<StateType, Transition>();//added by Isaac
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
@@ -164,6 +167,14 @@ public class Game {
 		return myPlayer;
 	}
 
+	//added by Isaac
+	public void addNonLevelScene(StateType type){
+		myNonLevelSceneMap.put(type, new Transition(type));
+	}
+	public Transition getNonLevelScene(StateType type){
+		return myNonLevelSceneMap.get(type);
+	}
+	
 	/**
 	 * Called to get the Attributes of the whole Game
 	 * @return a list of Objects that matched with the GAE Data Format
@@ -177,6 +188,12 @@ public class Game {
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
+		
+		//added by Isaac
+		for(Transition value: myNonLevelSceneMap.values()){
+			answer.addAll(value.getAttributes()); 
+		}
+		
 		return answer;
 	}
 }

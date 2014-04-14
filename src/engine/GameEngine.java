@@ -2,6 +2,8 @@ package engine;
 
 import stage.Game;
 import stage.Scene;
+import stage.Transition;
+import stage.Transition.StateType;
 import jgame.JGColor;
 import jgame.JGFont;
 import jgame.JGObject;
@@ -29,18 +31,18 @@ public class GameEngine extends StdGame{
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
     
-    protected Game myGame = new Game();
-//    protected Game myGame;
-    //still think it necessary to InitGame here
-    
-    private List<int[]> myCollsionPair = new ArrayList<int[]>();
-    private int myCurrentLevelID = 1;
-    private int myCurrentSceneID = 0;
-    private String Mode = "Edit";//String or boolean ?
-    
+    protected Game myGame;
+    protected List<int[]> myCollsionPair;
+    protected int myCurrentLevelID;
+    protected int myCurrentSceneID;
+    protected Scene myCurrentScene;
+    protected boolean isEditingMode;
     
     public GameEngine(){
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
+    	myCollsionPair = new ArrayList<int[]>();
+    	myGame = new Game();//Steve: still think it necessary to InitGame here
+    	isEditingMode = true;//how to initialize it ?
     }
     
     @Override
@@ -57,73 +59,43 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        WorldManager.initWorld(this);
-        setGameState(Mode);
+        WorldManager.initWorld(this);//not sure
+        if(isEditingMode){
+        	setGameState("Edit");
+        }
     }
     
-    public Game getGame(){
-    	return myGame;
-    }
+    
+    
+    
     
     public void startEdit(){
-    	removeObjects(null,0);
-//    	defineImage("image", "-", 0, "actor_default.png", "-");
-//    	PhysicalObject c = new PhysicalObject("name", 0, "image"){
-//
-//			@Override
-//			protected void paintShape() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-////    		public void move(){this.x+=1;}
-//    	};
-//    	c.setSpeed(1, 1);
+    	removeObjects(null,0);//remove?
     }
     public void doFrameEdit(){
     	moveObjects();
-    	for (int[] cp: myCollsionPair){
-    		checkCollision(cp[0], cp[1]);
+    	for (int[] pair: myCollsionPair){
+    		checkCollision(pair[0], pair[1]);
     	}
     }
     public void paintFrameEdit(){
-    	
+		drawString("You are in Editing Mode right now. This is a test message. ",
+			pfWidth()/2,pfHeight()/2,0);
     }
     
     
     
-    //questionable
-    public void addCollisionPair(int srccid, String type, int dstcid, int levelID, int sceneID){
-    	myCollsionPair.add(new int[]{srccid,dstcid});
-    	List<GameObject> objects = myGame.getObjectsByColid(dstcid);
-    	for(GameObject o: objects){
-    		o.setCollisionBehavior(type, srccid);
-    	}
+    public void defineLevel(){
+    	level += 1;
+    	setCurrentScene(level, 0);
+    	//restore the player ? depending on playing mode
     }
     
-    public void setCurrentScene (int currentLevelID, int currentSceneID) {
-    	myCurrentLevelID = currentLevelID;
-    	myCurrentSceneID = currentSceneID;
-    	for(GameObject go: myGame.getScene(currentLevelID, currentSceneID).getGameObjects()){
-    		go.suspend();
-    	}
-    	for(GameObject go: myGame.getScene(myCurrentLevelID, myCurrentSceneID).getGameObjects()){
-    		go.resume();
-    	}
-    	//setGameState(Mode);
+    public void initNewLife(){
+    	//restore the player
     }
     
-    public void setGame (Game mygame) {
-    	myGame = mygame;
-    }
     
-    public void createBackground(String url){
-    	defineImage(url, "-", 0, url, "-");
-    	setBGImage(url);
-    }
-    
-    public void doFrameTitle(){
-    	
-    }
     
     /**
      * (non-Javadoc)
@@ -132,7 +104,10 @@ public class GameEngine extends StdGame{
      */
     @Override
     public void doFrame(){
-    	
+    	if(!isEditingMode){
+    		super.doFrame();
+    	}
+    	//else
     }
     
     /**
@@ -141,19 +116,40 @@ public class GameEngine extends StdGame{
      * For inGame states
      */
     @Override
-    public void paintFrame (){
-    	
+    public void paintFrame(){
+    	if(!isEditingMode){
+    		super.paintFrame();
+    	}
+    	//else
     }
     
-    @Override
-    public void doFrameEnterHighscore(){
-    	
+    
+    
+    public void StartTitle(){
+    	setTransition(StateType.Title);
     }
     
-    @Override
-    public void paintFrameStartLevel(){
-    	
+    public void StartStartGame(){
+    	setTransition(StateType.StartGame);
     }
+    
+    public void StartStartLevel(){
+    	setTransition(StateType.StartLevel);
+    }
+
+    public void StartLevelDone(){
+    	setTransition(StateType.LevelDone);
+    }
+    
+    public void StartLifeLost(){
+    	setTransition(StateType.LifeLost);
+    }
+    
+    public void StartGameOver(){
+    	setTransition(StateType.GameOver);
+    }
+    
+    
     
     @Override
     public void paintFrameTitle(){
@@ -161,20 +157,15 @@ public class GameEngine extends StdGame{
     }
     
     @Override
-    public void paintFrameEnterHighscore(){
+    public void paintFrameStartGame(){
     	
     }
     
     @Override
-    public void paintFrameGameOver(){
+    public void paintFrameStartLevel(){
     	
     }
-    
-    @Override
-    public void paintFrameHighscores(){
-    	
-    }
-    
+
     @Override
     public void paintFrameLevelDone(){
     	
@@ -185,17 +176,88 @@ public class GameEngine extends StdGame{
     	
     }
     
+    @Override
+    public void paintFrameGameOver(){
+    	
+    }
+    
+    @Override
+    public void paintFrameEnterHighscore(){
+    	
+    }
+    
+    @Override
+    public void paintFrameHighscores(){
+    	
+    }
+    
     @Override 
     public void paintFramePaused(){
     	
     }
     
-    @Override
-    public void paintFrameStartGame(){
-    	
+    
+    
+    
+    
+    private void loadImage(String path){
+    	//scaling might be done here; dimension parameters needed
+    	defineImage(path, "-", 0, path, "-");
+    }
+    
+    private void setTransition(StateType type){
+    	Transition trans = myGame.getNonLevelScene(type);
+    	String url = trans.getBackground();
+    	if(url != null){
+    		loadImage(url);
+        	setBGImage(url);
+    	}
+    	//something else to do ?
     }
     
     
+    
+    //questionable; should be in the Game; are IDs needed ?
+    public void addCollisionPair(int srccid, String type, int dstcid){
+    	myCollsionPair.add(new int[]{srccid,dstcid});
+    	List<GameObject> objects = myGame.getObjectsByColid(dstcid);
+    	for(GameObject o: objects){
+    		o.setCollisionBehavior(type, srccid);
+    	}
+    }
+    
+    public void setCurrentScene (int currentLevelID, int currentSceneID) {
+    	if(myCurrentScene != null){
+    		for(GameObject go: myCurrentScene.getGameObjects()){
+        		go.suspend();
+        	}
+    	}
+    	myCurrentLevelID = currentLevelID;
+    	myCurrentSceneID = currentSceneID;
+    	myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
+    	String url = myCurrentScene.getBackgroundImage();
+    	if(url != null){
+    		loadImage(url);
+        	setBGImage(url);
+    	}
+    	for(GameObject go: myCurrentScene.getGameObjects()){
+    		go.resume();
+    	}
+    }
+    
+    public void createBackground(String url){
+    	myCurrentScene.setBackgroundImage(url);
+    	loadImage(url);
+    	setBGImage(url);
+    }
+    
+    public void setGame (Game mygame) {
+    	myGame = mygame;
+    }
+    
+    public Game getGame(){
+    	return myGame;
+    }
     
     public int getCurrentLevelID(){
     	return myCurrentLevelID;
@@ -210,18 +272,24 @@ public class GameEngine extends StdGame{
      * Return a created GameObject 
      */
     public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
-    	defineImage(url, "-", 0, url, "-");
+    	loadImage(url);
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.setPlayer(object);
+        if(!isEditingMode){
+        	object.suspend();//not sure how things are created for playing the game
+        }
         return object;
     }
     
     public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
-    	defineImage(url, "-", 0, url, "-");
+    	loadImage(url);
     	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
-        myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
+        myCurrentScene.addNonPlayer(object);
+        if(!isEditingMode){
+        	object.suspend();//not sure how things are created for playing the game
+        }
         return object;
     }
     
@@ -234,5 +302,4 @@ public class GameEngine extends StdGame{
 //    	return returnObject;
 //    }
     
-
 }

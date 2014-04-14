@@ -1,17 +1,18 @@
 package stage;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Transition {
 	
-	private StateType myType;
-	private String myBackground;
-	private Map<double[], String> myInstructionMap;
-	private int frame_to_stay;
-	private char continue_game_key;
+	protected StateType myType;
+	protected String myBackground;
+	protected Map<double[], String> myInstructionMap;
+	protected int frame_to_stay;
+	protected char continue_game_key;
 	
-	Transition(StateType type){
+	public Transition(StateType type){
 		myType = type;
 		myInstructionMap = new HashMap<double[], String>();
 	}
@@ -28,6 +29,14 @@ public class Transition {
 		frame_to_stay = frame;
 	}
 	
+	public void addInstruction(double xpos, double ypos, String instrution){
+		myInstructionMap.put(new double[]{xpos, ypos}, instrution);
+	}
+	
+	public StateType getType(){
+		return myType;
+	}
+
 	public String getBackground(){
 		return myBackground;
 	}
@@ -40,9 +49,17 @@ public class Transition {
 		return frame_to_stay;
 	}
 	
+	public Map<double[], String> getInstructions(){
+		return myInstructionMap;
+	}
 	
+	public List<String> getAttributes() {
+		//what's the convention ?
+		return null;
+	}
 	
 	public enum StateType {
 		Title, InGame, StartGame, StartLevel, LevelDone, LifeLost, GameOver;
 	}
+	
 }
