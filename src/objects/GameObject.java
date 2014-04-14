@@ -6,15 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.jbox2d.collision.PolygonDef;
+import org.jbox2d.common.Vec2;
+
 import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
+import jboxGlue.PhysicalObject;
 import jboxGlue.PhysicalObjectRect;
+import jboxGlue.WorldManager;
 import jgame.JGObject;
 /**
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends PhysicalObjectRect {
+public abstract class GameObject extends PhysicalObject {
 	public static final int DEFAULT_LIVES = 1;
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
@@ -42,16 +47,44 @@ public abstract class GameObject extends PhysicalObjectRect {
 	protected void initObject(int uniqueID, double xpos, double ypos){
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
+		init(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS); // change later
 		setPos(xpos, ypos);
 		myInitX = xpos;
 		myInitY = ypos;
-		myLives = DEFAULT_LIVES; // change later
+		setLives(DEFAULT_LIVES); // change later
 		myUniqueID = uniqueID;
+		// copy the position and rotation from the JBox world to the JGame world
+		updatePositionInJGame();
+	}
+
+	protected void updatePositionInJGame() {
+		Vec2 position = myBody.getPosition();
+		x = position.x;
+		y = position.y;
+		myRotation = -myBody.getAngle();
 	}
 	
+	@Override
+	public void setPos(double x, double y){
+		super.setPos(x, y);
+		myInitX = x;
+		myInitY = y;
+	}
+	
+//	protected void updatePosition
+	
 	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId){
-		super(name, collisionId, gfxname, DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS);
+		super(name, collisionId, gfxname);
 		initObject(uniqueID, xpos, ypos);
+	}
+	
+	public void init( double width, double height, double mass )
+	{
+		PolygonDef shape = new PolygonDef();
+		shape.density = (float)mass;
+		shape.setAsBox( (float)width, (float)height );
+		createBody( shape );
+		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
 	}
 	
 	//may not be needed
@@ -143,6 +176,7 @@ public abstract class GameObject extends PhysicalObjectRect {
 	
 	public void autoMove(){
 		if(myMoveBehavior == null) return;
+		System.out.println("autoMove called");
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveBehavior), this);
 			Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);	

@@ -1,10 +1,12 @@
 package stage;
+
+import saladConstants.SaladConstants;
+
 /**
  * @Author: Justin (Zihao) Zhang
  */
 
 public class ResetLevelException extends Exception {
-	private String myExceptionString = "Level can not be reset!";
 	
 	public ResetLevelException(){
 		super();
@@ -12,7 +14,7 @@ public class ResetLevelException extends Exception {
 	
 	@Override
 	public String getMessage(){
-		return myExceptionString;
+		return SaladConstants.RESET_LEVEL_EXCEPTION;
 	}
 }
 
