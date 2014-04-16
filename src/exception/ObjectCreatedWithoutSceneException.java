@@ -1,14 +1,10 @@
-package stage;
+package exception;
 
 import saladConstants.SaladConstants;
 
-/**
- * @Author: Justin (Zihao) Zhang
- */
+public class ObjectCreatedWithoutSceneException extends Exception{
 
-public class ResetLevelException extends Exception {
-	
-	public ResetLevelException(){
+	public ObjectCreatedWithoutSceneException(){
 		super();
 	}
 	
@@ -17,4 +13,3 @@ public class ResetLevelException extends Exception {
 		return SaladConstants.RESET_LEVEL_EXCEPTION;
 	}
 }
-

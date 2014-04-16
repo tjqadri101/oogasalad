@@ -27,5 +27,13 @@ public class GAE {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		return frame;
 	}
+	
+	public FullView getFullView(){
+		return fv;
+	}
+	
+	public MenuBar getMenuBar(){
+		return mb;
+	}
 
 }

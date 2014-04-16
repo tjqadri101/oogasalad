@@ -41,7 +41,6 @@ public class ViewFactory {
 		chooser.setCurrentDirectory(new File("./"));
 
 		return chooser;
-		
 	}
 	
 	public static JComponent createDropDownMenuTable(){

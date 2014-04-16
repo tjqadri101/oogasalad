@@ -1,7 +1,9 @@
 package controller;
 
+import game_authoring_environment.AttributesPanel;
 import game_authoring_environment.FullView;
 import game_authoring_environment.GAE;
+import game_authoring_environment.LeftPanel;
 import game_authoring_environment.MenuBar;
 
 import java.awt.BorderLayout;
@@ -9,6 +11,8 @@ import java.awt.Image;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 
 import engine.GameEngine;
 import saladConstants.SaladConstants;
@@ -24,26 +28,27 @@ public class GAEController {
 	private static GAEController gController;
 	private HashMap<String, Image> availableImages;
 	private GameEngine myGameEngine;
+	private HashMap<String, JPanel> map;
+	private AttributesPanel attributesPanel;
 	
 	public GAEController(){
 		myDataController = new DataController();
+
 		myGameEngine = myDataController.initGameEngine();
-		createGAE(this);
-		//g = new GAE(this);
+		//createGAE(this);
+		g = new GAE(this);
+		createLevel(1);
+		createScene(0,1);
+		switchScene(0,1);
 	}
+
 	
-	public void createGAE(GAEController gController){
-		JFrame mainFrame = new JFrame(TITLE);
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fv = new FullView(gController);
-		mb = new MenuBar(gController);
-		mainFrame.add(fv, BorderLayout.CENTER);
-		mainFrame.add(mb, BorderLayout.NORTH);
-		mainFrame.pack();
-		mainFrame.setVisible(true);
-		System.out.println("help");
+	private void setUpVariables(){
+		fv = g.getFullView();
+		mb = g.getMenuBar();
+		map = fv.getMap();
+		attributesPanel = fv.getAttributes();
 	}
-	
 	
 	public GameEngine getEngine(){
 		return myGameEngine;
@@ -72,7 +77,7 @@ public class GAEController {
 	
 	public void modifyActorPosition(int ID, double xPos, double yPos){
 		String order = SaladConstants.MODIFY_ACTOR + ",ID,"+ID+",Position," + xPos + "," + yPos;
-		myDataController.receiveOrder(order);
+	//	myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
@@ -83,7 +88,7 @@ public class GAEController {
 	}
 	public void createLevel(int ID){
 		String order = SaladConstants.CREATE_LEVEL + ",ID,"+ID;
-		//myDataController.receiveOrder(order);
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
@@ -100,9 +105,9 @@ public class GAEController {
 	}
 	
 	
-	public void createScene(int ID, String path){
-		String order = SaladConstants.CREATE_SCENE + ",ID,"+ID+",Image,"+path;
-		//myDataController.receiveOrder(order);
+	public void createScene(int ID, int levelID){
+		String order = SaladConstants.CREATE_SCENE + ",ID,"+levelID+",ID,"+ID;
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
@@ -113,9 +118,9 @@ public class GAEController {
 		
 	}
 	
-	public void switchScene(int ID){
-		String order = SaladConstants.SWITCH_SCENE + ",ID,"+ID;
-		//myDataController.receiveOrder(order);
+	public void switchScene(int ID, int levelID){
+		String order = SaladConstants.SWITCH_SCENE + ",ID,"+levelID+",ID,"+ID;
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
@@ -124,7 +129,7 @@ public class GAEController {
 	}
 	
 	public void switchActiveTab(int index){
-		
+		attributesPanel.setTab(index);
 	}
 	
 }
