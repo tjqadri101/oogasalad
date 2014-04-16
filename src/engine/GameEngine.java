@@ -59,7 +59,13 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        WorldManager.initWorld(this);//not sure
+        
+        defineImage("mytile","#",1,"marble16.gif","-");
+		defineImage("emptytile",".",0,"null","-");
+        setTiles(0,0,new String[] { "#.............","","","","","","","","","","","","","","","","","","","","","","","","","","","#....","#....","########################################" });
+        setTiles(1,0,new String[] { "........#" });
+		setTileSettings("#",2,0);// what is this ?
+        
         if(isEditingMode){
         	setGameState("Edit");
         }
@@ -151,50 +157,50 @@ public class GameEngine extends StdGame{
     
     
     
-    @Override
-    public void paintFrameTitle(){
-    	
-    }
-    
-    @Override
-    public void paintFrameStartGame(){
-    	
-    }
-    
-    @Override
-    public void paintFrameStartLevel(){
-    	
-    }
-
-    @Override
-    public void paintFrameLevelDone(){
-    	
-    }
-    
-    @Override
-    public void paintFrameLifeLost(){
-    	
-    }
-    
-    @Override
-    public void paintFrameGameOver(){
-    	
-    }
-    
-    @Override
-    public void paintFrameEnterHighscore(){
-    	
-    }
-    
-    @Override
-    public void paintFrameHighscores(){
-    	
-    }
-    
-    @Override 
-    public void paintFramePaused(){
-    	
-    }
+//    @Override
+//    public void paintFrameTitle(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameStartGame(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameStartLevel(){
+//    	
+//    }
+//
+//    @Override
+//    public void paintFrameLevelDone(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameLifeLost(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameGameOver(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameEnterHighscore(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameHighscores(){
+//    	
+//    }
+//    
+//    @Override 
+//    public void paintFramePaused(){
+//    	
+//    }
     
     
     
@@ -271,9 +277,9 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
+    public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
-    	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
+    	Player object = new Player(unique_id, url, xpos, ypos, name, colid, lives);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.setPlayer(object);
         if(!isEditingMode){
@@ -282,9 +288,9 @@ public class GameEngine extends StdGame{
         return object;
     }
     
-    public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
+    public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
-    	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
+    	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid, lives);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myCurrentScene.addNonPlayer(object);
         if(!isEditingMode){
