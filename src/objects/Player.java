@@ -13,13 +13,13 @@ import saladConstants.SaladConstants;
  * @Author: Justin (Zihao) Zhang
  */
 public class Player extends GameObject {
-	public static final float XVEL = 5;
-	public static final float YVEL = 5;
+//	public static final List<String> directionKeys = {"moveUp, moveDown, moveRight, moveLeft"};
 	
 	protected Map<Integer, String> myKeyMap;
+	protected double mySpeed;
 	
-	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionID) {
-		super(uniqueID, gfxname, xpos, ypos, name, collisionID);
+	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives) {
+		super(uniqueID, gfxname, xpos, ypos, name, collisionId, lives);
 		myKeyMap = new HashMap<Integer, String>();
 	}
 	
@@ -30,6 +30,7 @@ public class Player extends GameObject {
 	@Override
 	public void move(){
 		super.move();
+		setDir(0, 0);
 		checkKeys();
 	}
 	
@@ -43,32 +44,19 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		System.out.println("Player moveUp");
-		if (y <= 0) return;
-		Vec2 velocity = myBody.getLinearVelocity();
-   		velocity.y = -YVEL;
-        myBody.setLinearVelocity(velocity);
+		if (y > 0) ydir = -1;
 	}
 	
 	public void moveDown(){
-		if (y >= eng.pfHeight()) return;
-		Vec2 velocity = myBody.getLinearVelocity();
-   		velocity.y = YVEL;
-        myBody.setLinearVelocity(velocity);
+		if (y < eng.pfHeight()) ydir = 1;
 	}
 	
 	public void moveLeft(){
-		if (x <= 0) return;
-		Vec2 velocity = myBody.getLinearVelocity();
-   		velocity.x = -XVEL;
-        myBody.setLinearVelocity(velocity);
+		if (x > 0) xdir = -1;
 	}
 	
 	public void moveRight(){
-		if (x >= eng.pfWidth())	return;
-		Vec2 velocity = myBody.getLinearVelocity();
-   		velocity.x = XVEL;
-        myBody.setLinearVelocity(velocity);
+		if (x < eng.pfWidth())	xdir = 1;
 	}
 	
 	@Override
