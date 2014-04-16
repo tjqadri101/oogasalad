@@ -59,13 +59,7 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        
-        defineImage("mytile","#",1,"marble16.gif","-");
-		defineImage("emptytile",".",0,"null","-");
-        setTiles(0,0,new String[] { "#.............","","","","","","","","","","","","","","","","","","","","","","","","","","","#....","#....","########################################" });
-        setTiles(1,0,new String[] { "........#" });
-		setTileSettings("#",2,0);// what is this ?
-        
+        setTiles();//why?
         if(isEditingMode){
         	setGameState("Edit");
         }
@@ -203,6 +197,14 @@ public class GameEngine extends StdGame{
 //    }
     
     
+    
+    public void setTiles(){
+    	defineImage("mytile","#",1,"marble16.gif","-");
+		defineImage("emptytile",".",0,"null","-");
+        setTiles(0,0,new String[] { "#.............","","","","","","","","","","","","","","","","","","","","","","","","","","","#....","#....","########################################" });
+        setTiles(1,0,new String[] { "........#" });
+		setTileSettings("#",2,0);// what is this ?
+    }
     
     
     
