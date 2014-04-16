@@ -38,11 +38,10 @@ public class GameEngine extends StdGame{
     protected Scene myCurrentScene;
     protected boolean isEditingMode;
     
-    public GameEngine(){
+    public GameEngine(boolean editing){
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     	myCollsionPair = new ArrayList<int[]>();
-    	myGame = new Game();//Steve: still think it necessary to InitGame here
-    	isEditingMode = true;//how to initialize it ?
+    	isEditingMode = editing;
     }
     
     @Override
@@ -74,6 +73,7 @@ public class GameEngine extends StdGame{
     }
     public void doFrameEdit(){
     	moveObjects();
+    	//checkCollision(0, 0);
     	for (int[] pair: myCollsionPair){
     		checkCollision(pair[0], pair[1]);
     	}
@@ -208,7 +208,7 @@ public class GameEngine extends StdGame{
     
     
     
-    private void loadImage(String path){
+    public void loadImage(String path){
     	//scaling might be done here; dimension parameters needed
     	defineImage(path, "-", 0, path, "-");
     }
