@@ -47,7 +47,6 @@ public class DataController {
 		return myGameEngine;
 	}
 	
-	
 	/**
 	 * Called by Game Authorizing Environment to send the command String
 	 * @param a list of objects: order
