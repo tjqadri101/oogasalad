@@ -29,11 +29,10 @@ public class EngineTest {
 		game.addLevel(1);
 		game.addScene(1, 0);
 		engine.setCurrentScene(1, 0);
-		NonPlayer actor = engine.createActor(0, "actor_default.png", 500, 100, null, 0);
-//		Velocity vec2 = new Velocity();
-		actor.setMoveBehavior("RegularMove", 5, 5);
-		engine.doFrameEdit();
-//		g.getPlayer().setForce(-10, -20);
-//		ge.createBackground("actor_default.png");
+		//NonPlayer actor = engine.createActor(0, "actor_default.png", 500, 100, null, 0, 1);
+		
+		//actor.setMoveBehavior("RegularMove", -5, 5);
+		Player player = engine.createPlayer(0, "actor_default.png", 500, 100, null, 0, 1);
+		//engine.createBackground("actor_default.png");
     }
 }
