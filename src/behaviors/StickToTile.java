@@ -10,12 +10,7 @@ public class StickToTile extends TileCollision {
 
 	@Override
 	public void collide(int tilecid, int tx, int ty, int txsize, int tysize) {
-//		if(myObject.x > tx){
-//			myObject.setSpeed(0, myObject.yspeed);
-//		}
-//		else if(myObject.y > ty)
-//			
-//		}
+		myObject.setSpeed(0);
 		myObject.setPos(myObject.getLastX(), myObject.getLastY());
 	}
 
