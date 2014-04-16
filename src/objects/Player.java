@@ -28,6 +28,7 @@ public class Player extends GameObject {
 		String string = myKeyBundle.getString("NonClearKeys");
 		String[] nonclear = string.split(",");
 		myNonClearKeys = Util.convertStringArrayToList(nonclear);
+		Util.printStringList(myNonClearKeys);
 	}
 	
 	public void setKey(int key, String type){
@@ -47,6 +48,7 @@ public class Player extends GameObject {
 				String methodName = myKeyMap.get(key);
 				Reflection.callMethod(this, methodName);
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
+				System.out.println("methodName: " + methodName + " " + myNonClearKeys.contains(methodName));
 			}
 		}
 	}
