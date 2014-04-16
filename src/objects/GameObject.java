@@ -35,6 +35,8 @@ public abstract class GameObject extends JGObject {
 	protected double myInitY;
 	protected int myInitLives;
 	
+	public boolean in_the_air = false;//
+	
 	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);

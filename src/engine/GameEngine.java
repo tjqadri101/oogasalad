@@ -42,6 +42,7 @@ public class GameEngine extends StdGame{
     public GameEngine(boolean editing){
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     	myCollsionPair = new ArrayList<int[]>();
+    	myTileCollsionPair = new ArrayList<int[]>();
     	isEditingMode = editing;
     }
     
@@ -74,7 +75,6 @@ public class GameEngine extends StdGame{
     }
     public void doFrameEdit(){
     	moveObjects();
-    	checkBGCollision(1, 1);
     	
     	for (int[] pair: myCollsionPair){
     		checkCollision(pair[0], pair[1]);
@@ -207,7 +207,7 @@ public class GameEngine extends StdGame{
     	defineImage("mytile","#",1,"marble16.gif","-");
 		defineImage("emptytile",".",0,"null","-");
         setTiles(0,0,new String[] { "#.............","","","","","","","","","","","","","","","","","","","","","","","","","","","#....","#....","########################################" });
-        setTiles(1,0,new String[] { "........#" });
+        setTiles(39,29,new String[] { "#" });
 		setTileSettings("#",2,0);// what is this ?
     }
     
