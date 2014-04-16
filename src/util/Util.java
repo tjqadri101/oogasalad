@@ -16,7 +16,7 @@ public class Util {
 	public static void printStringList(List<String> list){
 		System.out.println("StringList starts: ");
 		for(String s: list){
-			System.out.print(s + " ");
+			System.out.print(s + ",");
 		}
 		System.out.print("//StringList ends.");
 		System.out.println();

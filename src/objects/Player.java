@@ -25,10 +25,8 @@ public class Player extends GameObject {
 		super(uniqueID, gfxname, xpos, ypos, name, collisionId, lives);
 		myKeyMap = new HashMap<Integer, String>();
 		myKeyBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS);
-		String string = myKeyBundle.getString("NonClearKeys");
-		String[] nonclear = string.split(",");
+		String[] nonclear = myKeyBundle.getString("NonClearKeys").split(",");
 		myNonClearKeys = Util.convertStringArrayToList(nonclear);
-		Util.printStringList(myNonClearKeys);
 	}
 	
 	public void setKey(int key, String type){
@@ -48,7 +46,7 @@ public class Player extends GameObject {
 				String methodName = myKeyMap.get(key);
 				Reflection.callMethod(this, methodName);
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
-				System.out.println("methodName: " + methodName + " " + myNonClearKeys.contains(methodName));
+//				System.out.println("methodName: " + methodName + " " + myNonClearKeys.contains(methodName));
 			}
 		}
 	}
