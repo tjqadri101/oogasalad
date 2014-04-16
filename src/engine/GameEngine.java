@@ -33,6 +33,7 @@ public class GameEngine extends StdGame{
     
     protected Game myGame;
     protected List<int[]> myCollsionPair;
+    protected List<int[]> myTileCollsionPair;
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
     protected Scene myCurrentScene;
@@ -73,9 +74,13 @@ public class GameEngine extends StdGame{
     }
     public void doFrameEdit(){
     	moveObjects();
-    	//checkCollision(0, 0);
+    	checkBGCollision(1, 1);
+    	
     	for (int[] pair: myCollsionPair){
     		checkCollision(pair[0], pair[1]);
+    	}
+    	for (int[] pair: myTileCollsionPair){
+    		checkBGCollision(pair[0], pair[1]);
     	}
     }
     public void paintFrameEdit(){
@@ -231,6 +236,14 @@ public class GameEngine extends StdGame{
     	List<GameObject> objects = myGame.getObjectsByColid(dstcid);
     	for(GameObject o: objects){
     		o.setCollisionBehavior(type, srccid);
+    	}
+    }
+    
+     public void addTileCollisionPair(int tilecid, String type, int objectcid){
+    	myTileCollsionPair.add(new int[]{tilecid, objectcid});
+    	List<GameObject> objects = myGame.getObjectsByColid(objectcid);
+    	for(GameObject o: objects){
+    		o.setTileCollisionBehavior(type, tilecid);
     	}
     }
     
