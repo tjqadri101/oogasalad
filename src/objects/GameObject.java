@@ -24,6 +24,7 @@ public abstract class GameObject extends JGObject {
 	protected double mySetXSpeed;
 	protected double mySetYSpeed;
 	protected Map<Integer, String> myCollisionMap;
+	protected Map<Integer, String> myTileCollisionMap;
 //	protected Map<Integer, String>
 	protected int myLives;
 	protected int myUniqueID;
@@ -38,6 +39,7 @@ public abstract class GameObject extends JGObject {
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
+		myTileCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
@@ -99,6 +101,10 @@ public abstract class GameObject extends JGObject {
 		myCollisionMap.put(id, type);
 	}
 	
+	public void setTileCollisionBehavior(String type, int tileID){
+		myTileCollisionMap.put(tileID, type);
+	}
+	
 	public void die(){
 		behaviorNoParameterReflection(myBehaviors, myDieBehavior, "remove");	
 	}
@@ -149,6 +155,17 @@ public abstract class GameObject extends JGObject {
 			e.printStackTrace(); // should never reach here
 		}
     }
+	
+	@Override
+	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
+		if(!myTileCollisionMap.containsKey(tilecid)) return;
+		try{
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myTileCollisionMap.get(tilecid)), this);
+			Reflection.callMethod(behavior, "collide", tilecid, tx, ty, txsize, tysize);	
+		} catch (Exception e){
+			e.printStackTrace(); // should never reach here
+		} 
+	}
 	
 	public void autoMove(){
 		if(myMoveBehavior == null) return;
