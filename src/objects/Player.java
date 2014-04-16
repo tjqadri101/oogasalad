@@ -36,7 +36,7 @@ public class Player extends GameObject {
 	@Override
 	public void move(){
 		super.move();
-		setDir(0, 0);
+		//setDir(0, 0);
 		checkKeys();
 	}
 	
@@ -52,19 +52,19 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		if (y > 0) ydir = -1;
+		if (y > 0) y -= 1;
 	}
 	
 	public void moveDown(){
-		if (y < eng.pfHeight()) ydir = 1;
+		if (y < eng.pfHeight()) y += 1;
 	}
 	
 	public void moveLeft(){
-		if (x > 0) xdir = -1;
+		if (x > 0) x -= 1;
 	}
 	
 	public void moveRight(){
-		if (x < eng.pfWidth())	xdir = 1;
+		if (x < eng.pfWidth())	x += 1;
 	}
 	
 	@Override
