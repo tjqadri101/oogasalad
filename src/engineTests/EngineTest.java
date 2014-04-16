@@ -25,15 +25,20 @@ public class EngineTest {
 		mainFrame.add(panel, BorderLayout.CENTER);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
-		System.out.print("EngineTest starts");
 		game.addLevel(1);
 		game.addScene(1, 0);
 		engine.setCurrentScene(1, 0);
-		NonPlayer actor = engine.createActor(0, "actor_default.png", 500, 100, null, 0);
-//		Velocity vec2 = new Velocity();
-		actor.setMoveBehavior("RegularMove", 5, 5);
-		engine.doFrameEdit();
-//		g.getPlayer().setForce(-10, -20);
-//		ge.createBackground("actor_default.png");
+		NonPlayer actor = engine.createActor(0, "actor_default.png", 100.0, 500.0, null, 0, 1);
+		//actor.setCollisionBehavior("HitterEliminateVictim", 0);
+		//engine.setTiles();
+		//actor.setMoveBehavior("RegularMove", -5, 5);
+		Player player = engine.createPlayer(0, "actor_default.png", 500, 100, null, 0, 1);
+		engine.addCollisionPair(0, "HitterEliminateVictim", 0);
+		player.setKey('W', "moveUp");
+		player.setKey('S', "moveDown");
+		player.setKey('A', "moveLeft");
+		player.setKey('D', "moveRight");
+		player.setSpeed(3.0);
+		//engine.createBackground("actor_default.png");
     }
 }

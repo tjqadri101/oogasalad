@@ -38,11 +38,10 @@ public class GameEngine extends StdGame{
     protected Scene myCurrentScene;
     protected boolean isEditingMode;
     
-    public GameEngine(){
+    public GameEngine(boolean editing){
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     	myCollsionPair = new ArrayList<int[]>();
-    	myGame = new Game();//Steve: still think it necessary to InitGame here
-    	isEditingMode = true;//how to initialize it ?
+    	isEditingMode = editing;
     }
     
     @Override
@@ -59,7 +58,7 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        WorldManager.initWorld(this);//not sure
+        setTiles();//why?
         if(isEditingMode){
         	setGameState("Edit");
         }
@@ -74,6 +73,7 @@ public class GameEngine extends StdGame{
     }
     public void doFrameEdit(){
     	moveObjects();
+    	//checkCollision(0, 0);
     	for (int[] pair: myCollsionPair){
     		checkCollision(pair[0], pair[1]);
     	}
@@ -151,56 +151,64 @@ public class GameEngine extends StdGame{
     
     
     
-    @Override
-    public void paintFrameTitle(){
-    	
+//    @Override
+//    public void paintFrameTitle(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameStartGame(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameStartLevel(){
+//    	
+//    }
+//
+//    @Override
+//    public void paintFrameLevelDone(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameLifeLost(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameGameOver(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameEnterHighscore(){
+//    	
+//    }
+//    
+//    @Override
+//    public void paintFrameHighscores(){
+//    	
+//    }
+//    
+//    @Override 
+//    public void paintFramePaused(){
+//    	
+//    }
+    
+    
+    
+    public void setTiles(){
+    	defineImage("mytile","#",1,"marble16.gif","-");
+		defineImage("emptytile",".",0,"null","-");
+        setTiles(0,0,new String[] { "#.............","","","","","","","","","","","","","","","","","","","","","","","","","","","#....","#....","########################################" });
+        setTiles(1,0,new String[] { "........#" });
+		setTileSettings("#",2,0);// what is this ?
     }
     
-    @Override
-    public void paintFrameStartGame(){
-    	
-    }
-    
-    @Override
-    public void paintFrameStartLevel(){
-    	
-    }
-
-    @Override
-    public void paintFrameLevelDone(){
-    	
-    }
-    
-    @Override
-    public void paintFrameLifeLost(){
-    	
-    }
-    
-    @Override
-    public void paintFrameGameOver(){
-    	
-    }
-    
-    @Override
-    public void paintFrameEnterHighscore(){
-    	
-    }
-    
-    @Override
-    public void paintFrameHighscores(){
-    	
-    }
-    
-    @Override 
-    public void paintFramePaused(){
-    	
-    }
     
     
-    
-    
-    
-    private void loadImage(String path){
+    public void loadImage(String path){
     	//scaling might be done here; dimension parameters needed
     	defineImage(path, "-", 0, path, "-");
     }
@@ -271,9 +279,9 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid){
+    public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
-    	Player object = new Player(unique_id, url, xpos, ypos, name, colid);
+    	Player object = new Player(unique_id, url, xpos, ypos, name, colid, lives);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.setPlayer(object);
         if(!isEditingMode){
@@ -282,9 +290,9 @@ public class GameEngine extends StdGame{
         return object;
     }
     
-    public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid){
+    public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
-    	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid);
+    	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid, lives);
         object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myCurrentScene.addNonPlayer(object);
         if(!isEditingMode){

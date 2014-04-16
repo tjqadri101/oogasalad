@@ -6,21 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.jbox2d.collision.PolygonDef;
-import org.jbox2d.common.Vec2;
-
 import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
-import jboxGlue.PhysicalObject;
-import jboxGlue.PhysicalObjectRect;
-import jboxGlue.WorldManager;
 import jgame.JGObject;
 /**
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends PhysicalObject {
-	public static final int DEFAULT_LIVES = 1;
+public abstract class GameObject extends JGObject {
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
@@ -39,29 +32,15 @@ public abstract class GameObject extends PhysicalObject {
 	protected String myShootBehavior;
 	protected double myInitX;
 	protected double myInitY;
+	protected int myInitLives;
 	
-	public static final double DEFAULT_WIDTH = 10;
-	public static final double DEFAULT_HEIGHT = 10;
-	public static final double DEFAULT_MASS = 1;
-	
-	protected void initObject(int uniqueID, double xpos, double ypos){
+	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives){
+		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
-		init(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS); // change later
 		setPos(xpos, ypos);
-		myInitX = xpos;
-		myInitY = ypos;
-		setLives(DEFAULT_LIVES); // change later
+		setLives(lives); // change later
 		myUniqueID = uniqueID;
-		// copy the position and rotation from the JBox world to the JGame world
-		updatePositionInJGame();
-	}
-
-	protected void updatePositionInJGame() {
-		Vec2 position = myBody.getPosition();
-		x = position.x;
-		y = position.y;
-		myRotation = -myBody.getAngle();
 	}
 	
 	@Override
@@ -71,28 +50,15 @@ public abstract class GameObject extends PhysicalObject {
 		myInitY = y;
 	}
 	
-//	protected void updatePosition
-	
-	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId){
-		super(name, collisionId, gfxname);
-		initObject(uniqueID, xpos, ypos);
+	public void restore(){
+		setPos(myInitX, myInitY);
+		setLives(myInitLives);
 	}
 	
-	public void init( double width, double height, double mass )
-	{
-		PolygonDef shape = new PolygonDef();
-		shape.density = (float)mass;
-		shape.setAsBox( (float)width, (float)height );
-		createBody( shape );
-		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
-	}
-	
-	//may not be needed
 	public void resetID(int uniqueID){
 		myUniqueID = uniqueID;
 	}
 	
-	//may not be needed
 	public int getID(){
 		return myUniqueID;
 	}
@@ -106,7 +72,12 @@ public abstract class GameObject extends PhysicalObject {
 	}
 	
 	public void setLives(int lives){
+		myInitLives = lives;
 		myLives = lives;
+	}
+	
+	public int getLives(){
+		return myLives;
 	}
 	
 	public void setJumpBehavior(String s, double forceMagnitude){
@@ -146,6 +117,12 @@ public abstract class GameObject extends PhysicalObject {
 		}
 	}
 	
+	/**
+	 * Do not call this method directly
+	 * @param ResourceBundle
+	 * @param myString
+	 * @param methodName
+	 */
 	protected void behaviorNoParameterReflection(ResourceBundle myBundle, String myString, String methodName){
 		if(myString == null) return;
 		try{
@@ -158,7 +135,6 @@ public abstract class GameObject extends PhysicalObject {
 	
 	@Override
 	public void move(){
-		super.move();
 		if(myLives <= 0) die();
 	}
 	
@@ -196,14 +172,10 @@ public abstract class GameObject extends PhysicalObject {
 		}
 	}
 	
-	@Override
-	public void paintShape() {
-		// do nothing; image already set
-	}
-	
 	/**
 	 * Should be called by the Parser class to get all attributes of the GameObject
 	 * Return a list of Strings that match with the Data Format but without Key 
+	 * @return a list of Strings
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
@@ -215,5 +187,34 @@ public abstract class GameObject extends PhysicalObject {
 		}
 		return answer;
 	}
+	
+//	public void init( double width, double height, double mass )
+//	{
+//		PolygonDef shape = new PolygonDef();
+//		shape.density = (float)mass;
+//		shape.setAsBox( (float)width, (float)height );
+//		createBody( shape );
+//		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
+//	}
+	
+//	protected void initObject(int uniqueID, double xpos, double ypos){
+//	myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
+//	myCollisionMap = new HashMap<Integer, String>();
+//	init(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS);
+//	setPos(xpos, ypos);
+//	myInitX = xpos;
+//	myInitY = ypos;
+//	setLives(DEFAULT_LIVES); // change later
+//	myUniqueID = uniqueID;
+//	 //copy the position and rotation from the JBox world to the JGame world
+//	updatePositionInJGame();
+//}
+
+//protected void updatePositionInJGame() {
+//	Vec2 position = myBody.getPosition();
+//	x = position.x;
+//	y = position.y;
+//	myRotation = -myBody.getAngle();
+//}
 	
 }

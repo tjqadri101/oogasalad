@@ -36,11 +36,12 @@ public class DataController {
 	
 	/**
 	 * Called by Game Authorizing Environment to display the engine inside its GUI
+	 * @param A boolean indicating whether the engine is in editing mode or playing mode
      * @return Game Engine
 	 */
-	public GameEngine initGameEngine(){
+	public GameEngine initGameEngine(boolean isEditing){
 		myGame = new Game();
-		myGameEngine = new GameEngine();
+		myGameEngine = new GameEngine(isEditing);
 		myGameEngine.setGame(myGame);
 		myFactory = new GameFactory(myGameEngine);
 		return myGameEngine;

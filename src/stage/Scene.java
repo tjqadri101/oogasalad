@@ -65,9 +65,8 @@ public class Scene {
 		return answer;
 	}
 	
-	//need check
-	public void setBackgroundImage(String imageName) {
-		myBackground = imageName;
+	public void setBackgroundImage(String fileName) {
+		myBackground = fileName;
 	}
 	
 	public String getBackgroundImage() {
