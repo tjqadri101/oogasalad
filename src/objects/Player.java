@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.jbox2d.common.Vec2;
-
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 import util.Util;

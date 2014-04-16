@@ -10,6 +10,6 @@ public class Eliminate extends Collision{
 
 	@Override
 	public void collide(GameObject hitter) {
-		myObject.die(); // changed to lifeLost() later
+		myObject.die(); 
 	}
 }
