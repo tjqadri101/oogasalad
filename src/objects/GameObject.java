@@ -38,6 +38,7 @@ public abstract class GameObject extends JGObject {
 	protected String myShootBehavior;
 	protected double myInitX;
 	protected double myInitY;
+	protected int myInitLives;
 	
 //	protected void initObject(int uniqueID, double xpos, double ypos){
 //		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
@@ -86,6 +87,11 @@ public abstract class GameObject extends JGObject {
 //		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
 //	}
 	
+	public void restore(){
+		setPos(myInitX, myInitY);
+		setLives(myInitLives);
+	}
+	
 	//may not be needed
 	public void resetID(int uniqueID){
 		myUniqueID = uniqueID;
@@ -105,7 +111,12 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void setLives(int lives){
+		myInitLives = lives;
 		myLives = lives;
+	}
+	
+	public int getLives(){
+		return myLives;
 	}
 	
 	public void setJumpBehavior(String s, double forceMagnitude){

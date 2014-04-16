@@ -10,7 +10,9 @@ public class Remove extends Removable{
 
 	@Override
 	public void remove() {
-//		myObject.destroy();
-		myObject.remove();
+		myObject.loseLife();
+		if(myObject.getLives() <= 0){
+			myObject.remove();	
+		}
 	}
 }

@@ -10,6 +10,6 @@ public class NonJumpable {
 	}
 	
 	public void jump(double forceMagnitude){
-		myObject.setForce(0, 0); 
+//		myObject.setForce(0, 0); 
 	}
 }

@@ -10,6 +10,6 @@ public class Jump {
 	}
 	
 	public void jump(double forceMagnitude){
-		myObject.setForce(0, forceMagnitude); //need to check the sign
+//		myObject.setForce(0, forceMagnitude); //need to check the sign
 	}
 }
