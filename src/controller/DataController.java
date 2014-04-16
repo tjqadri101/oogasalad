@@ -29,7 +29,7 @@ public class DataController {
 	protected ResourceBundle myReflectionMethods;
 	
 	public DataController(){
-//		myGameSaverAndLoader = new GameSaverAndLoader(); 
+		myGameSaverAndLoader = new GameSaverAndLoader(); 
 		myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
 		myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
 	}
@@ -54,7 +54,6 @@ public class DataController {
 	 */
 	public void receiveOrder(String order){
 		System.out.println("DataController: " + "received order " + order);
-		System.out.println("DataController: " + convertOrderToObjects(order));
 		callFactoryToProcess(convertOrderToObjects(order));
 	}
 	

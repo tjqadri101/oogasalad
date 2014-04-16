@@ -197,12 +197,9 @@ public class Game {
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
-		
-		//added by Isaac
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
 		}
-		
 		return answer;
 	}
 }
