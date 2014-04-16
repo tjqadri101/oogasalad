@@ -4,9 +4,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 import engine.GameEngine;
 import objects.GameObject;
 import reflection.Reflection;
@@ -32,13 +36,15 @@ public class GameFactory {
     public static final String RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_FORMAT= "DataFormat";
     public static final String DEFAULT_PATH= "FactoryOrderPath"; 
-    protected ResourceBundle myFormat, myPath, myReflection;
+    public static final String DEFAULT_METHOD= "FactoryTypeMethod";
+    protected ResourceBundle myFormat, myPath, myMethod;
     
     public GameFactory(GameEngine engine){
         myEngine = engine;
         myGame = ((GameEngine) myEngine).getGame();
         myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
         myPath = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_PATH);
+        myMethod = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_METHOD);
     }
     
     /**
@@ -50,12 +56,17 @@ public class GameFactory {
         mySceneID = ((GameEngine) myEngine).getCurrentSceneID();
         
         String instruction = (String) order.get(0);
-        System.out.println(order + "Printed From Data Factory");
-        List<Object> objArgList = parseOrder(order, instruction);
-        System.out.println(objArgList + "Print after parsed");
+//        System.out.println(order + "Printed From Data Factory");
+        List<Object> objArgList = (List<Object>) parseOrder(order, instruction).get("Argument");
+        List<String> typeMethodList =  (List<String>) parseOrder(order, instruction).get("Type");
+        System.out.println("the typeMethodList in the gameFactory after parsed is " + typeMethodList);
+//        System.out.println(objArgList + "Print after parsed");
+        
+        
         
         String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
-        String methodToInvoke = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
+        String methodToInvoke = myMethod.getString(typeMethodList.get(1));
+//        String methodToInvoke = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
         String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
         String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
         
@@ -103,16 +114,23 @@ public class GameFactory {
      * @param instruction
      * @return
      */
-    public List<Object> parseOrder (List<Object> order, String instruction) {
-        String tokens = myFormat.getString(instruction);
-        List<String> tokenList = Arrays.asList(tokens.split("\\,"));
+    public Map<String, List<?>> parseOrder (List<Object> order, String instruction) {
+        String orderTokens = myFormat.getString(instruction);
+        List<String> tokenList = Arrays.asList(orderTokens.split("\\,"));
         List<Object> argumentList = new ArrayList<Object>();
+        List<String> typeList = new ArrayList<String>();
         for(int i = 1; i < order.size(); i ++){
             if(tokenList.get(i-1).equals("ParameterToken")){
                 argumentList.add(order.get(i));
             }
+            if(tokenList.get(i-1).equals("TypeToken")){
+                typeList.add((String) order.get(i));
+            }
         }
-        return argumentList;
+        Map<String, List<?>> returnMap = new HashMap<String, List<?>>();
+        returnMap.put("Argument", argumentList);
+        returnMap.put("Type", typeList);
+        return returnMap;
     }
     
     // Need to implement if the order format is not changed. Discuss tmr

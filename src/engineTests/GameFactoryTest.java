@@ -31,8 +31,7 @@ public class GameFactoryTest extends TestCase{
         myEngine.setGame(myGame);
             myGame.addLevel(1);
             myGame.addScene(1, 0);
-            myEngine.setCurrentScene(0);
-            myEngine.setCurrentLevel(1);
+            myEngine.setCurrentScene(1, 0);
             
         myFactory = new GameFactory(myEngine);
     }
@@ -40,7 +39,7 @@ public class GameFactoryTest extends TestCase{
     @Test
     public void testCreateActor() throws FactoryException{
 
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"Image","actor_default.png",
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",
                                                        "position",0.0,0.0,"Name","myActor","CollisionID",0};
 
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
@@ -51,7 +50,7 @@ public class GameFactoryTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(myObject, myGame.getGameObject(1, 0, 0));
+        assertEquals(myObject, myGame.getNonPlayer(1, 0, 0));
 
     }
     @Test
@@ -66,7 +65,7 @@ public class GameFactoryTest extends TestCase{
 
         List<Object> parsedObjList = null;
         try {
-            parsedObjList = myFactory.parseOrder(CREATEPLAYER_OBJECT_LIST, (String) CREATEPLAYER_OBJECT_LIST.get(0));
+            parsedObjList = (List<Object>) myFactory.parseOrder(CREATEPLAYER_OBJECT_LIST, (String) CREATEPLAYER_OBJECT_LIST.get(0)).get("Argument");
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
