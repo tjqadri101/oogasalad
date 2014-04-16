@@ -4,23 +4,32 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.jbox2d.common.Vec2;
 
 import reflection.Reflection;
 import saladConstants.SaladConstants;
+import util.Util;
 /**
  * @Author: Justin (Zihao) Zhang
  */
 public class Player extends GameObject {
-//	public static final List<String> directionKeys = {"moveUp, moveDown, moveRight, moveLeft"};
+    public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
+    public static final String DEFAULT_NONCLEAR_KEYS = "PlayerKeys";
 	
 	protected Map<Integer, String> myKeyMap;
 	protected double mySpeed;
+	protected ResourceBundle myKeyBundle;
+	protected List<String> myNonClearKeys;
 	
 	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives) {
 		super(uniqueID, gfxname, xpos, ypos, name, collisionId, lives);
 		myKeyMap = new HashMap<Integer, String>();
+		myKeyBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS);
+		String string = myKeyBundle.getString("NonClearKeys");
+		String[] nonclear = string.split(",");
+		myNonClearKeys = Util.convertStringArrayToList(nonclear);
 	}
 	
 	public void setKey(int key, String type){
@@ -37,8 +46,9 @@ public class Player extends GameObject {
 	public void checkKeys(){
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
-				Reflection.callMethod(this, myKeyMap.get(key));
-//				eng.clearKey(key);
+				String methodName = myKeyMap.get(key);
+				Reflection.callMethod(this, methodName);
+				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
 			}
 		}
 	}

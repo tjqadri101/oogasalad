@@ -10,7 +10,6 @@ public class Move extends Movable{
 
 	@Override
 	public void move(double xspeed, double yspeed) {
-		System.out.println("move called: " + xspeed + " " + yspeed);
 		myObject.setSpeed(xspeed, yspeed);
 	}
 }
