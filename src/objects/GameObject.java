@@ -157,7 +157,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	@Override
-	public void hit (JGObject other)
+	public void hit(JGObject other)
     {
 		if(!myCollisionMap.containsKey(other.colid)) return;
 		try{
@@ -181,7 +181,6 @@ public abstract class GameObject extends JGObject {
 	
 	public void autoMove(){
 		if(myMoveBehavior == null) return;
-		System.out.println("autoMove called");
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveBehavior), this);
 			Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);	
@@ -216,34 +215,5 @@ public abstract class GameObject extends JGObject {
 		}
 		return answer;
 	}
-	
-//	public void init( double width, double height, double mass )
-//	{
-//		PolygonDef shape = new PolygonDef();
-//		shape.density = (float)mass;
-//		shape.setAsBox( (float)width, (float)height );
-//		createBody( shape );
-//		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
-//	}
-	
-//	protected void initObject(int uniqueID, double xpos, double ypos){
-//	myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
-//	myCollisionMap = new HashMap<Integer, String>();
-//	init(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS);
-//	setPos(xpos, ypos);
-//	myInitX = xpos;
-//	myInitY = ypos;
-//	setLives(DEFAULT_LIVES); // change later
-//	myUniqueID = uniqueID;
-//	 //copy the position and rotation from the JBox world to the JGame world
-//	updatePositionInJGame();
-//}
-
-//protected void updatePositionInJGame() {
-//	Vec2 position = myBody.getPosition();
-//	x = position.x;
-//	y = position.y;
-//	myRotation = -myBody.getAngle();
-//}
 	
 }

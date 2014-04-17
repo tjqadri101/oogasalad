@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import reflection.Reflection;
 import saladConstants.SaladConstants;
@@ -18,7 +17,6 @@ public class Player extends GameObject {
     public static final double DEFAULT_SPEED = 3;
 	
 	protected Map<Integer, String> myKeyMap;
-//	protected double mySpeed;
 	protected List<String> myNonClearKeys;
 	protected List<String> mySuperMethods;
 	
@@ -27,7 +25,6 @@ public class Player extends GameObject {
 		myKeyMap = new HashMap<Integer, String>();
 		myNonClearKeys = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
 		mySuperMethods = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
-//		setMoveSpeed(DEFAULT_SPEED);
 	}
 	
 	public void setKey(int key, String type){
@@ -41,18 +38,12 @@ public class Player extends GameObject {
 		checkKeys();
 	}
 	
-	
-//	public void setMoveSpeed(double speed){
-//		mySpeed = speed;
-//	}
-	
 	public void checkKeys(){
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				String methodName = myKeyMap.get(key);
 				Reflection.callMethod(this, methodName);
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
-//				System.out.println("methodName: " + methodName + " " + myNonClearKeys.contains(methodName));
 			}
 		}
 	}

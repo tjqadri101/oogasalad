@@ -10,11 +10,10 @@ public class Jump extends Jumpable{
 	
 	public void jump(double magnitude){
 		if(!myObject.getIsAir()){
+			System.out.println("jump called not in air");
+			myObject.setDir(myObject.xdir, 1);
 			myObject.yspeed -= magnitude;
 			myObject.setIsAir(true);
-		}
-		if(myObject.getIsAir()) {
-			myObject.yspeed+=0.1;
 		}
 	}
 }

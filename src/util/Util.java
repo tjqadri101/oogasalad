@@ -14,7 +14,7 @@ public class Util {
 	/**
 	 * Convert an array of Strings to a List of Strings
 	 * @param array
-	 * @return
+	 * @return a list of Strings
 	 */
 	public static List<String> convertStringArrayToList(String[] array){
 		List<String> answer = new ArrayList<String>();
@@ -42,7 +42,7 @@ public class Util {
 	 * @param path to the properties file
 	 * @param key in the properties file that maps to the values
 	 * @param splitter, the character used to separate values (Strings) in the properties file for the given key
-	 * @return
+	 * @return a list of Strings
 	 */
 	public static List<String> getListFromPropertiesFile(String path, String key, String splitter){
 		ResourceBundle bundle = ResourceBundle.getBundle(path);
