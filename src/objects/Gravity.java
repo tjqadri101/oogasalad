@@ -15,6 +15,7 @@ public class Gravity {
 	}
 	
 	public void applyGravity(GameObject object){
+		if (object == null) return;
 		object.yspeed += myMagnitude;
 	}
 

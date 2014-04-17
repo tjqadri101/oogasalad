@@ -27,7 +27,7 @@ public class GameEngine extends StdGame{
 
 //    public static final Dimension SIZE = new Dimension(800, 600);
 //    public static final String TITLE = "Platformer Game Editor";
-    public static final int FRAMES_PER_SECOND = 70;
+    public static final int FRAMES_PER_SECOND = 100;
     public static final int MAX_FRAMES_TO_SKIP = 2;
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
@@ -60,7 +60,7 @@ public class GameEngine extends StdGame{
         setTiles(0, 0, 0, 0, 0, "null");//why?
         
         setPFSize(120,36);
-//		setPFWrap(true,false,0,0);
+		//setPFWrap(false,true,0,0);
         
         if(isEditingMode){
         	setGameState("Edit");
@@ -75,26 +75,19 @@ public class GameEngine extends StdGame{
     	removeObjects(null,0);//remove?
     }
     public void doFrameEdit(){
-    	if (myGame == null) return;
-    	
+    	if (myGame == null) return;	
     	moveObjects();
     	
-    	if (myGame.getPlayer() != null){
-    		
+    	
     		myGame.getGravity().applyGravity(myGame.getPlayer());
-    	}
-    	
-    	
-    	
-    	if (myGame != null && myGame.getPlayer() != null){
-    		setViewOffset((int) myGame.getPlayer().x,(int) myGame.getPlayer().y,true);
-    	}
-    	
     	for (int[] pair: myGame.getCollisionPair()){
     		checkCollision(pair[0], pair[1]);
     	}
     	for (int[] pair: myGame.getTileCollisionPair()){
     		checkBGCollision(pair[0], pair[1]);
+    	}
+    	if (myGame.getPlayer() != null){
+    		setViewOffset((int) myGame.getPlayer().x,(int) myGame.getPlayer().y,true);
     	}
     	
     }
@@ -106,7 +99,7 @@ public class GameEngine extends StdGame{
     
     
     public void defineLevel(){
-    	level += 1;
+    	level += 1;//shouldn't be here
     	setCurrentScene(level, 0);
     	//restore the player ? depending on playing mode
     }
@@ -217,6 +210,7 @@ public class GameEngine extends StdGame{
 //    }
     
     
+    
     //unfinished
     public void setTiles(int top, int left, int width, int height, int cid, String imgfile){
     	
@@ -236,7 +230,7 @@ public class GameEngine extends StdGame{
     
     
     //unfinished
-    public void loadImage(String path){
+    private void loadImage(String path){
     	//scaling might be done here; dimension parameters needed
     	defineImage(path, "-", 0, path, "-");
     }
