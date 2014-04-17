@@ -125,7 +125,8 @@ public class Reflection
     {
         try
         {
-            for (Method current : target.getClass().getDeclaredMethods())
+//            for (Method current : target.getClass().getDeclaredMethods())
+            for (Method current : target.getClass().getMethods())
             {
                 if (name.equals(current.getName()))
                 {

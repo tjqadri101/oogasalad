@@ -26,7 +26,7 @@ public class Game {
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
-	protected Player myPlayer;
+	private Player myPlayer;
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
@@ -146,7 +146,7 @@ public class Game {
 			Level level = myLevelMap.get(levelID);
 			objects.addAll(level.getObjectsByColid(colid));
 		}
-		if(myPlayer.colid == colid) objects.add(myPlayer);
+		if(getPlayer().colid == colid) objects.add(getPlayer());
 		return objects;
 	}
 	
@@ -156,7 +156,7 @@ public class Game {
 	 * @return nothing
 	 */
 	public void setPlayer(Player player){
-		myPlayer = player;
+		setPlayer(player);
 	}
 	
 	/**
@@ -164,7 +164,7 @@ public class Game {
 	 * @return Player Object
 	 */
 	public Player getPlayer(){
-		return myPlayer;
+		return getPlayer();
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class Game {
 		answer.addAll(myScoreManager.getAttributes()); 
 		answer.addAll(myInputManager.getAttributes()); 
 		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(myPlayer.getAttributes());
+		answer.addAll(getPlayer().getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
@@ -205,4 +205,5 @@ public class Game {
 		
 		return answer;
 	}
+
 }
