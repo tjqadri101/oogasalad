@@ -27,7 +27,7 @@ public class GameEngine extends StdGame{
 
 //    public static final Dimension SIZE = new Dimension(800, 600);
 //    public static final String TITLE = "Platformer Game Editor";
-    public static final int FRAMES_PER_SECOND = 100;
+    public static final int FRAMES_PER_SECOND = 35;
     public static final int MAX_FRAMES_TO_SKIP = 2;
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
@@ -59,7 +59,7 @@ public class GameEngine extends StdGame{
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
         setTiles(0, 0, 0, 0, 0, "null");//why?
         
-        setPFSize(120,36);
+        setPFSize(1200,36);
 		//setPFWrap(false,true,0,0);
         
         if(isEditingMode){
@@ -77,19 +77,17 @@ public class GameEngine extends StdGame{
     public void doFrameEdit(){
     	if (myGame == null) return;	
     	moveObjects();
-    	
-    	
-    		myGame.getGravity().applyGravity(myGame.getPlayer());
+    	myGame.getGravity().applyGravity(myGame.getPlayer());
     	for (int[] pair: myGame.getCollisionPair()){
     		checkCollision(pair[0], pair[1]);
     	}
     	for (int[] pair: myGame.getTileCollisionPair()){
     		checkBGCollision(pair[0], pair[1]);
     	}
-    	if (myGame.getPlayer() != null){
-    		setViewOffset((int) myGame.getPlayer().x,(int) myGame.getPlayer().y,true);
+    	Player player = myGame.getPlayer();
+    	if (player != null){
+    		setViewOffset((int) player.x+player.getXSize()/2,(int) player.y+player.getYSize()/2,true);
     	}
-    	
     }
     public void paintFrameEdit(){
 		drawString("You are in Editing Mode right now. This is a test message. ",
@@ -213,8 +211,8 @@ public class GameEngine extends StdGame{
     
     //unfinished
     public void setTiles(int top, int left, int width, int height, int cid, String imgfile){
-    	
-    	defineImage("",((Integer) cid).toString(),cid,imgfile,"-");
+    	if (cid > 9) return;
+    	defineImage(((Integer) cid).toString(),((Integer) cid).toString(),cid,imgfile,"-");
     	String temp = "";
     	for(int i=0;i<width;i++){
     		temp += cid;

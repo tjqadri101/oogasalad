@@ -36,8 +36,9 @@ public class EngineTest {
 		engine.setCurrentScene(1, 0);
 		game.setGravity(0.1);
 		
-		engine.setTiles(0,29,120,1,1,"brick.png");
-		engine.setTiles(20,20,10,1,1,"brick.png");
+		engine.setTiles(0,30,980,1,2,"brick.png");
+		engine.setTiles(20,15,10,1,2,"brick.png");
+		engine.setTiles(30,30,5,1,0,"null");
 		//engine.setTiles(0,0,40,1,1,"brick.png");
 		engine.createBackground("bg.png");
 		
@@ -57,7 +58,7 @@ public class EngineTest {
 //		player.setSpeed(3,0);
 		
 		game.addCollisionPair(1, "HitterEliminateVictim", 2);
-		game.addTileCollisionPair(1, "StayOnTile", 1);
-		game.addTileCollisionPair(1, "StayOnTile", 2);
+		game.addTileCollisionPair(2, "StayOnTile", 1);
+		game.addTileCollisionPair(2, "StayOnTile", 2);
 	}
 }
