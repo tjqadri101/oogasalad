@@ -33,6 +33,7 @@ public class GameEngine extends StdGame{
     
     protected Game myGame;
     protected List<int[]> myCollsionPair;
+    protected List<int[]> myTileCollsionPair;
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
     protected Scene myCurrentScene;
@@ -41,6 +42,7 @@ public class GameEngine extends StdGame{
     public GameEngine(boolean editing){
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     	myCollsionPair = new ArrayList<int[]>();
+    	myTileCollsionPair = new ArrayList<int[]>();
     	isEditingMode = editing;
     }
     
@@ -73,9 +75,12 @@ public class GameEngine extends StdGame{
     }
     public void doFrameEdit(){
     	moveObjects();
-    	//checkCollision(0, 0);
+    	
     	for (int[] pair: myCollsionPair){
     		checkCollision(pair[0], pair[1]);
+    	}
+    	for (int[] pair: myTileCollsionPair){
+    		checkBGCollision(pair[0], pair[1]);
     	}
     }
     public void paintFrameEdit(){
@@ -201,8 +206,8 @@ public class GameEngine extends StdGame{
     public void setTiles(){
     	defineImage("mytile","#",1,"marble16.gif","-");
 		defineImage("emptytile",".",0,"null","-");
-        setTiles(0,0,new String[] { "#.............","","","","","","","","","","","","","","","","","","","","","","","","","","","#....","#....","########################################" });
-        setTiles(1,0,new String[] { "........#" });
+        setTiles(0,0,new String[] { "#......................................#","","","","","","","","","","","","","","","","","","","","","","","","","","","","","########################################" });
+        setTiles(19,14,new String[] { "##","##" });
 		setTileSettings("#",2,0);// what is this ?
     }
     
@@ -214,6 +219,7 @@ public class GameEngine extends StdGame{
     }
     
     private void setTransition(StateType type){
+    	//setSequences(startgame_ingame, 0, leveldone_ingame, 0, lifelost_ingame, 0, gameover_ingame, 0);
     	Transition trans = myGame.getNonLevelScene(type);
     	String url = trans.getBackground();
     	if(url != null){
@@ -231,6 +237,14 @@ public class GameEngine extends StdGame{
     	List<GameObject> objects = myGame.getObjectsByColid(dstcid);
     	for(GameObject o: objects){
     		o.setCollisionBehavior(type, srccid);
+    	}
+    }
+    
+     public void addTileCollisionPair(int tilecid, String type, int objectcid){
+    	myTileCollsionPair.add(new int[]{tilecid, objectcid});
+    	List<GameObject> objects = myGame.getObjectsByColid(objectcid);
+    	for(GameObject o: objects){
+    		o.setTileCollisionBehavior(type, tilecid);
     	}
     }
     
@@ -282,7 +296,6 @@ public class GameEngine extends StdGame{
     public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid, lives);
-        object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.setPlayer(object);
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game
@@ -293,7 +306,6 @@ public class GameEngine extends StdGame{
     public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid, lives);
-        object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myCurrentScene.addNonPlayer(object);
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game

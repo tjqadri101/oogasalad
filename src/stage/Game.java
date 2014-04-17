@@ -14,7 +14,7 @@ import objects.Player;
 import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
- * @author Main DavidChou, Justin (Zihao) Zhang
+ * @author Main David Chou, Justin (Zihao) Zhang
  * @help Issac (Shenghan) Chen
  */
 public class Game {
@@ -26,7 +26,9 @@ public class Game {
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
-	private Player myPlayer;
+	protected Player myPlayer;
+    protected List<int[]> myCollisionPair;
+    protected List<int[]> myTileCollisionPair;
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
@@ -156,7 +158,7 @@ public class Game {
 	 * @return nothing
 	 */
 	public void setPlayer(Player player){
-		setPlayer(player);
+		myPlayer = player;
 	}
 	
 	/**
@@ -164,7 +166,7 @@ public class Game {
 	 * @return Player Object
 	 */
 	public Player getPlayer(){
-		return getPlayer();
+		return myPlayer;
 	}
 
 	/**
@@ -185,6 +187,50 @@ public class Game {
 	}
 	
 	/**
+	 * Add collision pairs
+	 * @param srccid
+	 * @param type
+	 * @param dstcid
+	 */
+    public void addCollisionPair(int srccid, String type, int dstcid){
+    	myCollisionPair.add(new int[]{srccid,dstcid});
+    	List<GameObject> objects = getObjectsByColid(dstcid);
+    	for(GameObject o: objects){
+    		o.setCollisionBehavior(type, srccid);
+    	}
+    }
+    
+    /**
+     * Get the collision pair
+     * @return
+     */
+    public List<int[]> getCollisionPair(){
+    	return myCollisionPair;
+    }
+    
+    /**
+     * Get the tile collision pair
+     * @return
+     */
+    public List<int[]> getTileCollisionPair(){
+    	return myTileCollisionPair;
+    }
+    
+    /**
+     * Add tile collision pairs
+     * @param tilecid
+     * @param type
+     * @param objectcid
+     */
+    public void addTileCollisionPair(int tilecid, String type, int objectcid){
+    	myTileCollisionPair.add(new int[]{tilecid, objectcid});
+    	List<GameObject> objects = getObjectsByColid(objectcid);
+    	for(GameObject o: objects){
+    		o.setTileCollisionBehavior(type, tilecid);
+    	}
+    }
+	
+	/**
 	 * Called to get the Attributes of the whole Game
 	 * @return a list of Objects that matched with the GAE Data Format
 	 */
@@ -197,12 +243,9 @@ public class Game {
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
-		
-		//added by Isaac
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
 		}
-		
 		return answer;
 	}
 

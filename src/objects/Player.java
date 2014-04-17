@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 import reflection.Reflection;
 import saladConstants.SaladConstants;
@@ -15,18 +14,17 @@ import util.Util;
 public class Player extends GameObject {
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_NONCLEAR_KEYS = "PlayerKeys";
+    public static final double DEFAULT_SPEED = 3;
 	
 	protected Map<Integer, String> myKeyMap;
-	protected double mySpeed;
-	protected ResourceBundle myKeyBundle;
 	protected List<String> myNonClearKeys;
+	protected List<String> mySuperMethods;
 	
 	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives) {
 		super(uniqueID, gfxname, xpos, ypos, name, collisionId, lives);
 		myKeyMap = new HashMap<Integer, String>();
-		myKeyBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS);
-		String[] nonclear = myKeyBundle.getString("NonClearKeys").split(",");
-		myNonClearKeys = Util.convertStringArrayToList(nonclear);
+		myNonClearKeys = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
+		mySuperMethods = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
 	}
 	
 	public void setKey(int key, String type){
@@ -36,7 +34,7 @@ public class Player extends GameObject {
 	@Override
 	public void move(){
 		super.move();
-		setDir(0, 0);
+		if(!myIsAir) setDir(0, 0);
 		checkKeys();
 	}
 	
@@ -46,7 +44,6 @@ public class Player extends GameObject {
 				String methodName = myKeyMap.get(key);
 				Reflection.callMethod(this, methodName);
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
-//				System.out.println("methodName: " + methodName + " " + myNonClearKeys.contains(methodName));
 			}
 		}
 	}

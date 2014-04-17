@@ -24,6 +24,7 @@ public abstract class GameObject extends JGObject {
 	private double mySetXSpeed;
 	protected double mySetYSpeed;
 	protected Map<Integer, String> myCollisionMap;
+	protected Map<Integer, String> myTileCollisionMap;
 //	protected Map<Integer, String>
 	protected int myLives;
 	protected int myUniqueID;
@@ -34,13 +35,17 @@ public abstract class GameObject extends JGObject {
 	protected double myInitY;
 	protected int myInitLives;
 	
+	protected boolean myIsAir; 
+	
 	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
+		myTileCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
+		myIsAir = false;
 	}
 	
 	@Override
@@ -61,6 +66,14 @@ public abstract class GameObject extends JGObject {
 	
 	public int getID(){
 		return myUniqueID;
+	}
+	
+	public void setIsAir(boolean isAir){
+		myIsAir = isAir;
+	}
+	
+	public boolean getIsAir(){
+		return myIsAir;
 	}
 
 	public void setDieBehavior(String s){
@@ -99,6 +112,10 @@ public abstract class GameObject extends JGObject {
 		myCollisionMap.put(id, type);
 	}
 	
+	public void setTileCollisionBehavior(String type, int tileID){
+		myTileCollisionMap.put(tileID, type);
+	}
+	
 	public void die(){
 		behaviorNoParameterReflection(myBehaviors, getMyDieBehavior(), "remove");	
 	}
@@ -108,6 +125,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void jump(){
+		System.out.println("jump called");
 		if(myJumpBehavior == null) return;
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myJumpBehavior), this);
@@ -139,7 +157,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	@Override
-	public void hit (JGObject other)
+	public void hit(JGObject other)
     {
 		if(!myCollisionMap.containsKey(other.colid)) return;
 		try{
@@ -150,9 +168,19 @@ public abstract class GameObject extends JGObject {
 		}
     }
 	
+	@Override
+	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
+		if(!myTileCollisionMap.containsKey(tilecid)) return;
+		try{
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myTileCollisionMap.get(tilecid)), this);
+			Reflection.callMethod(behavior, "collide", tilecid, tx, ty, txsize, tysize);	
+		} catch (Exception e){
+			e.printStackTrace(); // should never reach here
+		} 
+	}
+	
 	public void autoMove(){
-		if(getMyMoveBehavior() == null) return;
-		System.out.println("autoMove called");
+		if(myMoveBehavior == null) return;
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(getMyMoveBehavior()), this);
 			Reflection.callMethod(behavior, "move", getMySetXSpeed(), mySetYSpeed);	
@@ -262,5 +290,4 @@ public abstract class GameObject extends JGObject {
 //	y = position.y;
 //	myRotation = -myBody.getAngle();
 //}
-	
 }
