@@ -38,9 +38,9 @@ public class EngineTest {
 		//engine.setTiles();
 		engine.createBackground("bg.png");
 		
-		NonPlayer actor = engine.createActor(0, "actor_default.png", 300.0, 500.0, null, 2, 1);
+		NonPlayer actor = engine.createActor(0, "actor_default.png", 300.0, 450.0, null, 2, 1);
 		actor.setDieBehavior("RegularDie");
-		//actor.setMoveBehavior("RegularMove", -5, 5);
+		//actor.setMoveBehavior("RegularMove", -1, 0);
 		
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 400, null, 1, 1);
 		player.setDieBehavior("RegularDie");

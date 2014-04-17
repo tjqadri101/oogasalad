@@ -27,8 +27,8 @@ public class Game {
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	protected Player myPlayer;
-    protected List<int[]> myCollsionPair;
-    protected List<int[]> myTileCollsionPair;
+    protected List<int[]> myCollisionPair;
+    protected List<int[]> myTileCollisionPair;
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
@@ -193,11 +193,27 @@ public class Game {
 	 * @param dstcid
 	 */
     public void addCollisionPair(int srccid, String type, int dstcid){
-    	myCollsionPair.add(new int[]{srccid,dstcid});
+    	myCollisionPair.add(new int[]{srccid,dstcid});
     	List<GameObject> objects = getObjectsByColid(dstcid);
     	for(GameObject o: objects){
     		o.setCollisionBehavior(type, srccid);
     	}
+    }
+    
+    /**
+     * Get the collision pair
+     * @return
+     */
+    public List<int[]> getCollisionPair(){
+    	return myCollisionPair;
+    }
+    
+    /**
+     * Get the tile collision pair
+     * @return
+     */
+    public List<int[]> getTileCollisionPair(){
+    	return myTileCollisionPair;
     }
     
     /**
@@ -207,7 +223,7 @@ public class Game {
      * @param objectcid
      */
     public void addTileCollisionPair(int tilecid, String type, int objectcid){
-    	myTileCollsionPair.add(new int[]{tilecid, objectcid});
+    	myTileCollisionPair.add(new int[]{tilecid, objectcid});
     	List<GameObject> objects = getObjectsByColid(objectcid);
     	for(GameObject o: objects){
     		o.setTileCollisionBehavior(type, tilecid);
