@@ -44,11 +44,15 @@ public class EngineTest {
 		
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 400, null, 1, 1);
 		player.setDieBehavior("RegularDie");
+		player.setJumpBehavior("Jump", 5.0);
+		player.setDieBehavior("RegularDie");
+		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
 		player.setKey('W', "moveUp");
 		player.setKey('S', "moveDown");
-		//player.setSpeed(3.0);
+		player.setKey('J', "jump");
+		player.setSpeed(3.0);
 		
 		engine.addCollisionPair(1, "HitterEliminateVictim", 2);
 		engine.addTileCollisionPair(1, "StickToTile", 1);

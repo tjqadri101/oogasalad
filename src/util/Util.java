@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 /**
  * 
  * @author Main Justin (Zihao) Zhang
@@ -25,6 +26,12 @@ public class Util {
 			System.out.print(s + "/");
 		}
 		System.out.print("//StringList print ends.");
+	}
+	
+	public static List<String> getListFromBundle(String path, String key, String splitter){
+		ResourceBundle bundle = ResourceBundle.getBundle(path);
+		String[] array = bundle.getString(key).split(splitter);
+		return Util.convertStringArrayToList(array);
 	}
 
 }

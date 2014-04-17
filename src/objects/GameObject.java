@@ -35,7 +35,7 @@ public abstract class GameObject extends JGObject {
 	protected double myInitY;
 	protected int myInitLives;
 	
-	public boolean in_the_air = false;//
+	protected boolean myIsAir; 
 	
 	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
@@ -45,6 +45,7 @@ public abstract class GameObject extends JGObject {
 		setPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
+		myIsAir = false;
 	}
 	
 	@Override
@@ -65,6 +66,14 @@ public abstract class GameObject extends JGObject {
 	
 	public int getID(){
 		return myUniqueID;
+	}
+	
+	public void setIsAir(boolean isAir){
+		myIsAir = isAir;
+	}
+	
+	public boolean getIsAir(){
+		return myIsAir;
 	}
 
 	public void setDieBehavior(String s){
@@ -116,6 +125,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void jump(){
+		System.out.println("jump called");
 		if(myJumpBehavior == null) return;
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myJumpBehavior), this);

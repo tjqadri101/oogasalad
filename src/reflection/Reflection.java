@@ -102,7 +102,7 @@ public class Reflection
     {
         try
         {
-            Method toCall = target.getClass().getDeclaredMethod(name, new Class[0]);
+            Method toCall = target.getClass().getMethod(name, new Class[0]);
             return toCall.invoke(target, new Object[0]);
         }
         catch (Exception e)
@@ -112,7 +112,7 @@ public class Reflection
         }
     }
 
-
+    
     /**
      * Given a target object with a method of the given name that takes 
      * the given actual parameters, call the named method on that object 
@@ -125,7 +125,7 @@ public class Reflection
     {
         try
         {
-            for (Method current : target.getClass().getDeclaredMethods())
+            for (Method current : target.getClass().getMethods())
             {
                 if (name.equals(current.getName()))
                 {
@@ -144,7 +144,7 @@ public class Reflection
             throw new ReflectionException(e);
         }
     }
-
+    
 
     /**
      * Given a target object with an instance variable with the given name,

@@ -14,7 +14,7 @@ import objects.Player;
 import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
- * @author Main DavidChou, Justin (Zihao) Zhang
+ * @author Main David Chou, Justin (Zihao) Zhang
  * @help Issac (Shenghan) Chen
  */
 public class Game {

@@ -18,15 +18,20 @@ public class Player extends GameObject {
 	
 	protected Map<Integer, String> myKeyMap;
 	protected double mySpeed;
-	protected ResourceBundle myKeyBundle;
 	protected List<String> myNonClearKeys;
+	protected List<String> mySuperMethods;
 	
 	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives) {
 		super(uniqueID, gfxname, xpos, ypos, name, collisionId, lives);
 		myKeyMap = new HashMap<Integer, String>();
-		myKeyBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS);
-		String[] nonclear = myKeyBundle.getString("NonClearKeys").split(",");
-		myNonClearKeys = Util.convertStringArrayToList(nonclear);
+		myNonClearKeys = getListFromBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
+		mySuperMethods = getListFromBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
+	}
+	
+	protected List<String> getListFromBundle(String path, String key, String splitter){
+		ResourceBundle bundle = ResourceBundle.getBundle(path);
+		String[] array = bundle.getString(key).split(splitter);
+		return Util.convertStringArrayToList(array);
 	}
 	
 	public void setKey(int key, String type){
@@ -36,7 +41,7 @@ public class Player extends GameObject {
 	@Override
 	public void move(){
 		super.move();
-		//setDir(0, 0);
+		setDir(0, 0);
 		checkKeys();
 	}
 	
@@ -44,6 +49,7 @@ public class Player extends GameObject {
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				String methodName = myKeyMap.get(key);
+				System.out.println("methodName:/" + methodName + "/");
 				Reflection.callMethod(this, methodName);
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
 //				System.out.println("methodName: " + methodName + " " + myNonClearKeys.contains(methodName));
@@ -52,19 +58,19 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		if (y > 0) y -= 1;
+		if (y > 0) ydir = -1;
 	}
 	
 	public void moveDown(){
-		if (y < eng.pfHeight()) y += 1;
+		if (y < eng.pfHeight()) ydir = 1;
 	}
 	
 	public void moveLeft(){
-		if (x > 0) x -= 1;
+		if (x > 0) xdir = -1;
 	}
 	
 	public void moveRight(){
-		if (x < eng.pfWidth())	x += 1;
+		if (x < eng.pfWidth())	xdir = 1;
 	}
 	
 	@Override
