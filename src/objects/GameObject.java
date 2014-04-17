@@ -218,19 +218,33 @@ public abstract class GameObject extends JGObject {
 		GameEngine engine = (GameEngine) eng;
 		double xface = xdir * xspeed;
 		double yface = ydir * yspeed;
-		double shootXSpeed = 0;
-		double shootYSpeed = 0;
-		double xpos = 0;
-		double ypos = 0;
+		double shootXSpeed, shootYSpeed, xpos, ypos;
 		if(xface < 0){
 			xpos = x - myShootXSize;
-			shootXSpeed = 
+			shootXSpeed = -myShootSpeed;
+		}
+		else if (xface > 0){
+			xpos = x + myXSize;
+			shootXSpeed = myShootSpeed;
 		}
 		else{
-			xpos = x + myXSize;
+			xpos = x + myXSize/2;
+			shootXSpeed = 0;
+		}
+		if(yface < 0){
+			ypos = y - myShootYSize;
+			shootYSpeed = -myShootSpeed;
+		}
+		else if (yface > 0){
+			ypos = y + myYSize; 
+			shootYSpeed = myShootSpeed;
+		}
+		else{
+			ypos = y + myYSize/2;
+			shootYSpeed = 0;
 		}
 		NonPlayer object = engine.createActor(SaladConstants.SHOOT_UNIQUE_ID, myShootImage, xpos, ypos, SaladConstants.SHOOT_NAME, myShootColid, SaladConstants.SHOOT_LIVES);
-		
+		object.setSpeed(shootXSpeed, shootYSpeed);
 	}
 	
 	/**
