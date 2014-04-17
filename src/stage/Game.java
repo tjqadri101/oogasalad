@@ -148,7 +148,7 @@ public class Game {
 			Level level = myLevelMap.get(levelID);
 			objects.addAll(level.getObjectsByColid(colid));
 		}
-		if(myPlayer.colid == colid) objects.add(myPlayer);
+		if(getPlayer().colid == colid) objects.add(getPlayer());
 		return objects;
 	}
 	
@@ -239,7 +239,7 @@ public class Game {
 		answer.addAll(myScoreManager.getAttributes()); 
 		answer.addAll(myInputManager.getAttributes()); 
 		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(myPlayer.getAttributes());
+		answer.addAll(getPlayer().getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
@@ -248,4 +248,5 @@ public class Game {
 		}
 		return answer;
 	}
+
 }

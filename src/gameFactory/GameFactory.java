@@ -33,10 +33,11 @@ public class GameFactory {
     private String myOrder;
     private int  myLevelID, mySceneID;
     private Game myGame;
+    private Map<String,List<?>> parsedMap;
     public static final String RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_FORMAT= "DataFormat";
     public static final String DEFAULT_PATH= "FactoryOrderPath"; 
-    public static final String DEFAULT_METHOD= "FactoryTypeMethod";
+    public static final String DEFAULT_METHOD= "TypeMethodMatcher";
     protected ResourceBundle myFormat, myPath, myMethod;
     
     public GameFactory(GameEngine engine){
@@ -56,24 +57,19 @@ public class GameFactory {
         mySceneID = ((GameEngine) myEngine).getCurrentSceneID();
         
         String instruction = (String) order.get(0);
-//        System.out.println(order + "Printed From Data Factory");
-        List<Object> objArgList = (List<Object>) parseOrder(order, instruction).get("Argument");
-        List<String> typeMethodList =  (List<String>) parseOrder(order, instruction).get("Type");
-        System.out.println("the typeMethodList in the gameFactory after parsed is " + typeMethodList);
-//        System.out.println(objArgList + "Print after parsed");
-        
-        
+        parsedMap = parseOrder(order, instruction);
+        List<Object> objArgList = (List<Object>) parsedMap.get("Argument");
+        List<String> typeMethodList =  (List<String>) parsedMap.get("Type");
+//        System.out.println("the typeMethodList in the gameFactory after parsed is " + typeMethodList);
         
         String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
-//        String methodToInvoke = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
-        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
-        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
+        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
+        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
         
         return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", myLevelID, mySceneID, objArgList, 
                               methodToInvoke, myGame, GameRefMethod, GameRefPara);
     }
-
     
     /**
      * Creation or modification via Engine (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
@@ -97,12 +93,13 @@ public class GameFactory {
                                       throws FactoryException {
 
         int numArg = Integer.parseInt(GameReflectPara);
-        Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
+        int objectID = (int) objArgList.remove(0);
 
-        int[][] IDSelector = new int[][]{new int[]{(Integer) objArgList.get(0)},
-                                         new int[]{(Integer) objArgList.get(0),levelID},
-                                         new int[]{(Integer) objArgList.get(0),levelID, sceneID}};
-        //        Class<?> c = Class.forName(GameReflectionInfo);
+        Object[][] IDSelector = new Object[][]{new Object[]{objectID},
+                                new Object[]{levelID, objectID},
+                                new Object[]{levelID, sceneID, objectID}};
+
+        Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
         
         Object obj = Reflection.callMethod(game, GameRefMethod, IDSelector[numArg]);
         return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);
@@ -115,15 +112,15 @@ public class GameFactory {
      * @return
      */
     public Map<String, List<?>> parseOrder (List<Object> order, String instruction) {
-        String orderTokens = myFormat.getString(instruction);
-        List<String> tokenList = Arrays.asList(orderTokens.split("\\,"));
+        String formatToken = myFormat.getString(instruction);
+        List<String> formatTokenList = Arrays.asList(formatToken.split("\\,"));
         List<Object> argumentList = new ArrayList<Object>();
         List<String> typeList = new ArrayList<String>();
         for(int i = 1; i < order.size(); i ++){
-            if(tokenList.get(i-1).equals("ParameterToken")){
+            if(formatTokenList.get(i-1).equals("ParameterToken")){
                 argumentList.add(order.get(i));
             }
-            if(tokenList.get(i-1).equals("TypeToken")){
+            if(formatTokenList.get(i-1).equals("TypeToken")){
                 typeList.add((String) order.get(i));
             }
         }

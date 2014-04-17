@@ -20,9 +20,9 @@ public abstract class GameObject extends JGObject {
     
 	protected ResourceBundle myBehaviors;
 //	protected ScoreManager myScoreManager;
-	protected String myDieBehavior;
-	protected String myMoveBehavior;
-	protected double mySetXSpeed;
+	private String myDieBehavior;
+	private String myMoveBehavior;
+	private double mySetXSpeed;
 	protected double mySetYSpeed;
 	protected Map<Integer, String> myCollisionMap;
 	protected Map<Integer, String> myTileCollisionMap;
@@ -96,7 +96,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void setDieBehavior(String s){
-		myDieBehavior = s;
+		setMyDieBehavior(s);
 	}
 	
 	public void loseLife(){
@@ -127,8 +127,8 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
-		myMoveBehavior = s;
-		mySetXSpeed= xspeed;
+		setMyMoveBehavior(s);
+		setMySetXSpeed(xspeed);
 		mySetYSpeed = yspeed;
 	}
 	
@@ -141,7 +141,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void die(){
-		behaviorNoParameterReflection(myBehaviors, myDieBehavior, "remove");	
+		behaviorNoParameterReflection(myBehaviors, getMyDieBehavior(), "remove");	
 	}
 	
 	public void resetCollisionID(int collisionID){
@@ -206,8 +206,8 @@ public abstract class GameObject extends JGObject {
 	public void autoMove(){
 		if(myMoveBehavior == null) return;
 		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveBehavior), this);
-			Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);	
+			Object behavior = Reflection.createInstance(myBehaviors.getString(getMyMoveBehavior()), this);
+			Reflection.callMethod(behavior, "move", getMySetXSpeed(), mySetYSpeed);	
 		} catch (Exception e){
 			e.printStackTrace(); //should never reach here
 		}
@@ -255,12 +255,86 @@ public abstract class GameObject extends JGObject {
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
-		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + myMoveBehavior + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + myDieBehavior);
+		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
+		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
 		for(int otherID: myCollisionMap.keySet()){
 			answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		return answer;
 	}
 	
+/* @NOTE:
+ * The following getter and setters used for GameFactoryTest
+ * Will remove them once finished
+ */
+    /**
+     * @return the myMoveBehavior
+     */
+    public String getMyMoveBehavior () {
+        return myMoveBehavior;
+    }
+
+    /**
+     * @param myMoveBehavior the myMoveBehavior to set
+     */
+    public void setMyMoveBehavior (String myMoveBehavior) {
+        this.myMoveBehavior = myMoveBehavior;
+    }
+
+    /**
+     * @return the mySetXSpeed
+     */
+    public double getMySetXSpeed () {
+        return mySetXSpeed;
+    }
+
+    /**
+     * @param mySetXSpeed the mySetXSpeed to set
+     */
+    public void setMySetXSpeed (double mySetXSpeed) {
+        this.mySetXSpeed = mySetXSpeed;
+    }
+
+    /**
+     * @return the myDieBehavior
+     */
+    public String getMyDieBehavior () {
+        return myDieBehavior;
+    }
+
+    /**
+     * @param myDieBehavior the myDieBehavior to set
+     */
+    public void setMyDieBehavior (String myDieBehavior) {
+        this.myDieBehavior = myDieBehavior;
+    }
+	
+//	public void init( double width, double height, double mass )
+//	{
+//		PolygonDef shape = new PolygonDef();
+//		shape.density = (float)mass;
+//		shape.setAsBox( (float)width, (float)height );
+//		createBody( shape );
+//		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
+//	}
+	
+//	protected void initObject(int uniqueID, double xpos, double ypos){
+//	myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
+//	myCollisionMap = new HashMap<Integer, String>();
+//	init(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS);
+//	setPos(xpos, ypos);
+//	myInitX = xpos;
+//	myInitY = ypos;
+//	setLives(DEFAULT_LIVES); // change later
+//	myUniqueID = uniqueID;
+//	 //copy the position and rotation from the JBox world to the JGame world
+//	updatePositionInJGame();
+//}
+
+//protected void updatePositionInJGame() {
+//	Vec2 position = myBody.getPosition();
+//	x = position.x;
+//	y = position.y;
+//	myRotation = -myBody.getAngle();
+//}
 }
