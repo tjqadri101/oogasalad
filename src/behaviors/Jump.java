@@ -13,7 +13,7 @@ public class Jump extends Jumpable{
 			myObject.yspeed -= magnitude;
 			myObject.setIsAir(true);
 		}
-		else {
+		if(myObject.getIsAir()) {
 			myObject.yspeed+=0.1;
 		}
 	}
