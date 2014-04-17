@@ -27,7 +27,7 @@ public class GameEngine extends StdGame{
 
 //    public static final Dimension SIZE = new Dimension(800, 600);
 //    public static final String TITLE = "Platformer Game Editor";
-    public static final int FRAMES_PER_SECOND = 35;
+    public static final int FRAMES_PER_SECOND = 70;
     public static final int MAX_FRAMES_TO_SKIP = 2;
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;

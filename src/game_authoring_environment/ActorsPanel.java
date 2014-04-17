@@ -23,7 +23,7 @@ public class ActorsPanel extends Panel {
 	private SubPanel mySubPanel;
 	private JList myActorsList;
 	private int myActorsCount = 1;
-	private int mySeletedIndex = -1;
+	private int mySelectedIndex = -1;
 	private GAEController gController;
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	
@@ -49,8 +49,10 @@ public class ActorsPanel extends Panel {
 		     public void mouseClicked(MouseEvent e) {
 		    	 if (e.getClickCount() == 1 && listModel.size()!= 0) {
 		    		 //single clicked
-		    		 mySeletedIndex = myActorsList.locationToIndex(e.getPoint());
+		    		 mySelectedIndex = myActorsList.locationToIndex(e.getPoint());
 		    		 //need to change attribute display to current actor
+		    		 gController.updateSelectedActorID(getSelectedActorID());
+		    		 gController.switchActiveTab(2); //actor tab is at index 2
 		          }
 		    	 
 		    	 else if (e.getClickCount() == 2 && listModel.size()!= 0) {
@@ -106,14 +108,18 @@ public class ActorsPanel extends Panel {
 	}
 	
 	private void deleteActors(){		
-		if(mySeletedIndex > -1){
+		if(mySelectedIndex > -1){
 			//delete scene here			
-			String actorName = listModel.get(mySeletedIndex);
-			int actorID = Integer.parseInt(actorName.split(" ")[actorName.split(" ").length-1]);
-			gController.deleteActor(actorID);
-			listModel.remove(mySeletedIndex);
-			mySeletedIndex = -1;
+			gController.deleteActor(getSelectedActorID());
+			listModel.remove(mySelectedIndex);
+			mySelectedIndex = -1;
 		}		
+	}
+	
+	private int getSelectedActorID(){
+		String actorName = listModel.get(mySelectedIndex);
+		int actorID = Integer.parseInt(actorName.split(" ")[actorName.split(" ").length-1]);
+		return actorID;
 	}
 	
 }

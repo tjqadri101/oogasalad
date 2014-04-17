@@ -20,7 +20,7 @@ public class ScenePanel extends Panel{
 	private SubPanel mySubPanel;
 	private JList myScenesList;
 	private int mySceneCount = 0;
-	private int mySeletedIndex = -1;
+	private int mySelectedIndex = -1;
 	private DefaultListModel<String> listModel = new DefaultListModel<String>();
 	private GAEController gController;
 	
@@ -29,7 +29,9 @@ public class ScenePanel extends Panel{
 		this.gController = gController;
 		makeSubPanel();
 		construct();
+		gController.createLevel(1);
 		addScene();
+		
 	}
 
 	@Override
@@ -47,17 +49,26 @@ public class ScenePanel extends Panel{
 		     public void mouseClicked(MouseEvent e) {
 		    	 if (e.getClickCount() == 1 && listModel.size()!= 0) {
 		    		 //single clicked
-		    		 mySeletedIndex = myScenesList.locationToIndex(e.getPoint());	
+		    		 mySelectedIndex = myScenesList.locationToIndex(e.getPoint());	
 		    		 //need to change attribute display to current scene
+		    		 switchToScene();
+		    		 gController.updateSelectedSceneID(getSelectedSceneID());
+		    		 gController.switchActiveTab(1);// scene tab is index 1
+		    		 
 		          }
 		    	 
 		    	 else if (e.getClickCount() == 2 && listModel.size()!= 0) {
 		             //double clicked
 		          }
 		     }
+			
 		 };
 		 myScenesList.addMouseListener(mouseListener);
 		
+	}
+	
+	private void switchToScene() {
+		gController.switchScene(1, getSelectedSceneID());// TODO!!!!! need to add variation to level, currently all 1		
 	}
 
 	@Override
@@ -95,28 +106,28 @@ public class ScenePanel extends Panel{
 		return outPanel;
 	}
 	
-	private void addScene(){
-		if(mySceneCount==0){
-			listModel.addElement("Initial Scene");
-			//add scene here
-			mySceneCount++;
-		}
-		else{
+	private void addScene(){		
 			listModel.addElement("Scene " + mySceneCount);
 			//add scene here
+			gController.createScene(1,mySceneCount);
+			gController.switchScene(1,mySceneCount);
 			mySceneCount++;
-		}
 		
 	}
 	
 	private void deleteScene(){		
-		if(mySeletedIndex > 0){
-			//delete scene here
-			String sceneName = listModel.get(mySeletedIndex);
-			int sceneID = Integer.parseInt(sceneName.split(" ")[sceneName.split(" ").length-1]);
-			listModel.remove(mySeletedIndex);
-			mySeletedIndex = -1;
+		if(mySelectedIndex > 0){
+			//delete scene here			
+			gController.deleteScene(getSelectedSceneID());
+			listModel.remove(mySelectedIndex);
+			mySelectedIndex = -1;
 		}		
+	}
+	
+	private int getSelectedSceneID(){
+		String sceneName = listModel.get(mySelectedIndex);
+		int sceneID = Integer.parseInt(sceneName.split(" ")[sceneName.split(" ").length-1]);
+		return sceneID;
 	}
 			
 }
