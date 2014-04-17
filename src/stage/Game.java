@@ -9,13 +9,14 @@ import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import objects.GameObject;
+import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
 import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
  * @author Main David Chou, Justin (Zihao) Zhang
- * @help Issac (Shenghan) Chen
+ * @help Isaac (Shenghan) Chen
  */
 public class Game {
 
@@ -29,6 +30,7 @@ public class Game {
 	protected Player myPlayer;
     protected List<int[]> myCollisionPair;
     protected List<int[]> myTileCollisionPair;
+    protected Gravity myGravity;
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
@@ -36,6 +38,9 @@ public class Game {
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
+		myCollisionPair = new ArrayList<int[]>();
+    	myTileCollisionPair = new ArrayList<int[]>();
+    	myGravity = new Gravity();
 	}
 
 	/**
@@ -187,6 +192,22 @@ public class Game {
 	}
 	
 	/**
+	 * Set gravity magnitude
+	 * @param magnitude
+	 */
+    public void setGravity(double magnitude){
+    	myGravity.setMagnitude(magnitude);
+    }
+    
+    /**
+	 * Get gravity
+	 * @return 
+	 */
+    public Gravity getGravity(){
+    	return myGravity;
+    }
+	
+	/**
 	 * Add collision pairs
 	 * @param srccid
 	 * @param type
@@ -246,6 +267,7 @@ public class Game {
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
 		}
+		//Apply changes to the newly added collision pairs and gravity
 		return answer;
 	}
 

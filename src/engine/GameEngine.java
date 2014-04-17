@@ -10,6 +10,7 @@ import jgame.JGObject;
 import jgame.JGPoint;
 import jgame.platform.StdGame;
 import objects.GameObject;
+import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
 
@@ -26,14 +27,12 @@ public class GameEngine extends StdGame{
 
 //    public static final Dimension SIZE = new Dimension(800, 600);
 //    public static final String TITLE = "Platformer Game Editor";
-    public static final int FRAMES_PER_SECOND = 20;
+    public static final int FRAMES_PER_SECOND = 70;
     public static final int MAX_FRAMES_TO_SKIP = 2;
     public static final int JGPOINT_X = 800;
     public static final int JGPOINT_Y = 600;
     
     protected Game myGame;
-    protected List<int[]> myCollsionPair;
-    protected List<int[]> myTileCollsionPair;
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
     protected Scene myCurrentScene;
@@ -41,8 +40,6 @@ public class GameEngine extends StdGame{
     
     public GameEngine(boolean editing){
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
-    	myCollsionPair = new ArrayList<int[]>();
-    	myTileCollsionPair = new ArrayList<int[]>();
     	isEditingMode = editing;
     }
     
@@ -60,7 +57,11 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        setTiles();//why?
+        setTiles(0, 0, 0, 0, 0, "null");//why?
+        
+        setPFSize(120,36);
+//		setPFWrap(true,false,0,0);
+        
         if(isEditingMode){
         	setGameState("Edit");
         }
@@ -74,18 +75,32 @@ public class GameEngine extends StdGame{
     	removeObjects(null,0);//remove?
     }
     public void doFrameEdit(){
+    	if (myGame == null) return;
+    	
     	moveObjects();
     	
-    	for (int[] pair: myCollsionPair){
+    	if (myGame.getPlayer() != null){
+    		
+    		myGame.getGravity().applyGravity(myGame.getPlayer());
+    	}
+    	
+    	
+    	
+    	if (myGame != null && myGame.getPlayer() != null){
+    		setViewOffset((int) myGame.getPlayer().x,(int) myGame.getPlayer().y,true);
+    	}
+    	
+    	for (int[] pair: myGame.getCollisionPair()){
     		checkCollision(pair[0], pair[1]);
     	}
-    	for (int[] pair: myTileCollsionPair){
+    	for (int[] pair: myGame.getTileCollisionPair()){
     		checkBGCollision(pair[0], pair[1]);
     	}
+    	
     }
     public void paintFrameEdit(){
 		drawString("You are in Editing Mode right now. This is a test message. ",
-			pfWidth()/2,pfHeight()/2,0);
+			pfWidth()/2,pfHeight()/2,0,true);
     }
     
     
@@ -202,22 +217,31 @@ public class GameEngine extends StdGame{
 //    }
     
     
-    
-    public void setTiles(){
-    	defineImage("mytile","#",1,"marble16.gif","-");
-		defineImage("emptytile",".",0,"null","-");
-        setTiles(0,0,new String[] { "#......................................#","","","","","","","","","","","","","","","","","","","","","","","","","","","","","########################################" });
-        setTiles(19,14,new String[] { "##","##" });
-		setTileSettings("#",2,0);// what is this ?
+    //unfinished
+    public void setTiles(int top, int left, int width, int height, int cid, String imgfile){
+    	
+    	defineImage("",((Integer) cid).toString(),cid,imgfile,"-");
+    	String temp = "";
+    	for(int i=0;i<width;i++){
+    		temp += cid;
+    	}
+    	String[] array = new String[height];
+    	for(int j=0;j<height;j++){
+    		array[j] = temp;
+    	}
+    	setTiles(top,left,array);
+//		setTileSettings("#",2,0);// what is this ?
     }
     
     
     
+    //unfinished
     public void loadImage(String path){
     	//scaling might be done here; dimension parameters needed
     	defineImage(path, "-", 0, path, "-");
     }
     
+    //unfinished
     private void setTransition(StateType type){
     	//setSequences(startgame_ingame, 0, leveldone_ingame, 0, lifelost_ingame, 0, gameover_ingame, 0);
     	Transition trans = myGame.getNonLevelScene(type);
@@ -230,23 +254,6 @@ public class GameEngine extends StdGame{
     }
     
     
-    
-    //questionable; should be in the Game; are IDs needed ?
-    public void addCollisionPair(int srccid, String type, int dstcid){
-    	myCollsionPair.add(new int[]{srccid,dstcid});
-    	List<GameObject> objects = myGame.getObjectsByColid(dstcid);
-    	for(GameObject o: objects){
-    		o.setCollisionBehavior(type, srccid);
-    	}
-    }
-    
-     public void addTileCollisionPair(int tilecid, String type, int objectcid){
-    	myTileCollsionPair.add(new int[]{tilecid, objectcid});
-    	List<GameObject> objects = myGame.getObjectsByColid(objectcid);
-    	for(GameObject o: objects){
-    		o.setTileCollisionBehavior(type, tilecid);
-    	}
-    }
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
     	if(myCurrentScene != null){
@@ -293,9 +300,9 @@ public class GameEngine extends StdGame{
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
      */
-    public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
+    public Player createPlayer(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
-    	Player object = new Player(unique_id, url, xpos, ypos, name, colid, lives);
+    	Player object = new Player(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);
         myGame.setPlayer(object);
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game
@@ -303,9 +310,9 @@ public class GameEngine extends StdGame{
         return object;
     }
     
-    public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
+    public NonPlayer createActor(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
-    	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid, lives);
+    	NonPlayer object = new NonPlayer(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);
         myCurrentScene.addNonPlayer(object);
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game

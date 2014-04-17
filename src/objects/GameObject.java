@@ -54,7 +54,7 @@ public abstract class GameObject extends JGObject {
 		setPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
-		myIsAir = false;
+		myIsAir = true;//might be changed (noted by Isaac)
 		myXSize = xsize;
 		myYSize = ysize;
 	}
