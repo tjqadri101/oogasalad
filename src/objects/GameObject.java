@@ -44,8 +44,6 @@ public abstract class GameObject extends JGObject {
 	protected int myXSize;
 	protected int myYSize;
 	
-	protected boolean myIsAir; 
-	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
@@ -54,7 +52,6 @@ public abstract class GameObject extends JGObject {
 		setPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
-		myIsAir = true;//might be changed (noted by Isaac)
 		myXSize = xsize;
 		myYSize = ysize;
 	}
@@ -85,14 +82,6 @@ public abstract class GameObject extends JGObject {
 	
 	public int getID(){
 		return myUniqueID;
-	}
-	
-	public void setIsAir(boolean isAir){
-		myIsAir = isAir;
-	}
-	
-	public boolean getIsAir(){
-		return myIsAir;
 	}
 
 	public void setDieBehavior(String s){

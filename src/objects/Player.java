@@ -14,7 +14,7 @@ import util.Util;
 public class Player extends GameObject {
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_NONCLEAR_KEYS = "PlayerKeys";
-    public static final double DEFAULT_SPEED = 3;
+    public static final double DEFAULT_SPEED = 5;
 	
 	protected Map<Integer, String> myKeyMap;
 	protected List<String> myNonClearKeys;
@@ -34,7 +34,6 @@ public class Player extends GameObject {
 	@Override
 	public void move(){
 		super.move();
-//		if(!myIsAir) setDir(0, 0);
 		checkKeys();
 	}
 	
@@ -49,19 +48,19 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		if (y > 0) {y += -5;}
+		if (y > 0) {y -= DEFAULT_SPEED;}
 	}
 	
 	public void moveDown(){
-		if (y+getYSize() < eng.pfHeight()) {y += 5;}
+		if (y+getYSize() < eng.pfHeight()) {y += DEFAULT_SPEED;}
 	}
 	
 	public void moveLeft(){
-		if (x > 0) {x -= 5;}
+		if (x > 0) {x -= DEFAULT_SPEED;}
 	}
 	
 	public void moveRight(){
-		if (x+getXSize() < eng.pfWidth()){x += 5;}
+		if (x+getXSize() < eng.pfWidth()) {x += DEFAULT_SPEED;}
 	}
 	
 	@Override
