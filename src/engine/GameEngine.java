@@ -206,8 +206,8 @@ public class GameEngine extends StdGame{
     public void setTiles(){
     	defineImage("mytile","#",1,"marble16.gif","-");
 		defineImage("emptytile",".",0,"null","-");
-        setTiles(0,0,new String[] { "#.............","","","","","","","","","","","","","","","","","","","","","","","","","","","#....","#....","########################################" });
-        setTiles(39,29,new String[] { "#" });
+        setTiles(0,0,new String[] { "#......................................#","","","","","","","","","","","","","","","","","","","","","","","","","","","","","########################################" });
+        setTiles(19,14,new String[] { "##","##" });
 		setTileSettings("#",2,0);// what is this ?
     }
     
@@ -219,6 +219,7 @@ public class GameEngine extends StdGame{
     }
     
     private void setTransition(StateType type){
+    	//setSequences(startgame_ingame, 0, leveldone_ingame, 0, lifelost_ingame, 0, gameover_ingame, 0);
     	Transition trans = myGame.getNonLevelScene(type);
     	String url = trans.getBackground();
     	if(url != null){
@@ -295,7 +296,6 @@ public class GameEngine extends StdGame{
     public Player createPlayer(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	Player object = new Player(unique_id, url, xpos, ypos, name, colid, lives);
-        object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myGame.setPlayer(object);
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game
@@ -306,7 +306,6 @@ public class GameEngine extends StdGame{
     public NonPlayer createActor(int unique_id, String url, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	NonPlayer object = new NonPlayer(unique_id, url, xpos, ypos, name, colid, lives);
-        object.setPos(xpos, ypos);//just to make sure; may be deleted later
         myCurrentScene.addNonPlayer(object);
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game
