@@ -42,11 +42,11 @@ public class EngineTest {
 		//engine.setTiles(0,0,40,1,1,"brick.png");
 		engine.createBackground("bg.png");
 		
-		NonPlayer actor = engine.createActor(0, "Mario.png", 0, 0, 600.0, 450.0, null, 2, 1);
+		NonPlayer actor = engine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
 		actor.setDieBehavior("RegularDie");
 		//actor.setMoveBehavior("RegularMove", -2, 1);
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100, 200, null, 1, 1);
+		Player player = engine.createPlayer(456, "actor_default.png", 100, 100, 100, 200, null, 1, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);
 		player.setKey('L', "die");

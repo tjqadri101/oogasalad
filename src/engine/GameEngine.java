@@ -75,7 +75,8 @@ public class GameEngine extends StdGame{
     	removeObjects(null,0);//remove?
     }
     public void doFrameEdit(){
-    	if (myGame == null) return;	
+    	if (myGame == null) return;
+    	getClickedID();
     	moveObjects();
     	myGame.getGravity().applyGravity(myGame.getPlayer());
     	for (int[] pair: myGame.getCollisionPair()){
@@ -92,6 +93,7 @@ public class GameEngine extends StdGame{
     public void paintFrameEdit(){
 		drawString("You are in Editing Mode right now. This is a test message. ",
 			pfWidth()/2,pfHeight()/2,0,true);
+		drawRect(getMouseX(),getMouseY(),20,20,false,true);
     }
     
     
@@ -225,7 +227,27 @@ public class GameEngine extends StdGame{
 //		setTileSettings("#",2,0);// what is this ?
     }
     
-    
+    public int getClickedID(){
+    	List<GameObject> list = new ArrayList<GameObject>();
+    	if (getMouseButton(1)){
+    		for(GameObject go: myCurrentScene.getGameObjects()){
+    			if (go.x < getMouseX() && getMouseX() < go.x + go.getXSize() 
+    					&& go.y < getMouseY() && getMouseY() < go.y + go.getYSize()){
+    				list.add(go);
+    			}
+    		}
+    		Player player = myGame.getPlayer();
+    		if (player != null && player.x < getMouseX() && getMouseX() < player.x + player.getXSize() 
+    				&& player.y < getMouseY() && getMouseY() < player.y + player.getYSize()){
+    			list.add(player);
+    		}
+    	}
+    	if (list.size() != 1){
+    		return 0;
+    	}
+    	System.out.println("ID "+list.get(0).getID());
+    	return list.get(0).getID();
+    }
     
     //unfinished
     private void loadImage(String path){
