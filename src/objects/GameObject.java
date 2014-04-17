@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import engine.GameEngine;
 import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
@@ -34,10 +35,18 @@ public abstract class GameObject extends JGObject {
 	protected double myInitX;
 	protected double myInitY;
 	protected int myInitLives;
+	protected int myShootFrequency;
+	protected String myShootImage;
+	protected int myShootColid;
+	protected int myShootXSize; 
+	protected int myShootYSize;
+	protected double myShootSpeed;
+	protected int myXSize;
+	protected int myYSize;
 	
 	protected boolean myIsAir; 
 	
-	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives){
+	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
@@ -46,6 +55,16 @@ public abstract class GameObject extends JGObject {
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
 		myIsAir = false;
+		myXSize = xsize;
+		myYSize = ysize;
+	}
+	
+	public int getXSize(){
+		return myXSize;
+	}
+	
+	public int getYSize(){
+		return myYSize;
 	}
 	
 	@Override
@@ -98,8 +117,13 @@ public abstract class GameObject extends JGObject {
 		myJumpForceMagnitude = forceMagnitude;
 	}
 	
-	public void setShootBehavior(String s){
-		myShootBehavior = s;
+	public void setShootBehavior(int frequency, String imageName, int xsize, int ysize, int colid, double speed){
+		myShootFrequency = frequency;
+		myShootImage = imageName;
+		myShootColid = colid;
+		myShootXSize = xsize;
+		myShootYSize = ysize;
+		myShootSpeed = speed;
 	}
 	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
@@ -189,15 +213,24 @@ public abstract class GameObject extends JGObject {
 		}
 	}
 	
-	//need modification
 	public void shoot(){
-		if(myShootBehavior == null) return;
-		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myShootBehavior), this);
-			Reflection.callMethod(behavior, "shoot"); // need modification
-		} catch (Exception e){
-			e.printStackTrace(); //should never reach here
+		if(myShootImage == null) return;
+		GameEngine engine = (GameEngine) eng;
+		double xface = xdir * xspeed;
+		double yface = ydir * yspeed;
+		double shootXSpeed = 0;
+		double shootYSpeed = 0;
+		double xpos = 0;
+		double ypos = 0;
+		if(xface < 0){
+			xpos = x - myShootXSize;
+			shootXSpeed = 
 		}
+		else{
+			xpos = x + myXSize;
+		}
+		NonPlayer object = engine.createActor(SaladConstants.SHOOT_UNIQUE_ID, myShootImage, xpos, ypos, SaladConstants.SHOOT_NAME, myShootColid, SaladConstants.SHOOT_LIVES);
+		
 	}
 	
 	/**
