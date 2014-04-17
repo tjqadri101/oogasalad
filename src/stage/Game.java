@@ -27,6 +27,8 @@ public class Game {
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	protected Player myPlayer;
+    protected List<int[]> myCollsionPair;
+    protected List<int[]> myTileCollsionPair;
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
@@ -183,6 +185,34 @@ public class Game {
 	public Transition getNonLevelScene(StateType type){
 		return myNonLevelSceneMap.get(type);
 	}
+	
+	/**
+	 * Add collision pairs
+	 * @param srccid
+	 * @param type
+	 * @param dstcid
+	 */
+    public void addCollisionPair(int srccid, String type, int dstcid){
+    	myCollsionPair.add(new int[]{srccid,dstcid});
+    	List<GameObject> objects = getObjectsByColid(dstcid);
+    	for(GameObject o: objects){
+    		o.setCollisionBehavior(type, srccid);
+    	}
+    }
+    
+    /**
+     * Add tile collision pairs
+     * @param tilecid
+     * @param type
+     * @param objectcid
+     */
+    public void addTileCollisionPair(int tilecid, String type, int objectcid){
+    	myTileCollsionPair.add(new int[]{tilecid, objectcid});
+    	List<GameObject> objects = getObjectsByColid(objectcid);
+    	for(GameObject o: objects){
+    		o.setTileCollisionBehavior(type, tilecid);
+    	}
+    }
 	
 	/**
 	 * Called to get the Attributes of the whole Game

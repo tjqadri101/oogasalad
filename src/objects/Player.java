@@ -15,23 +15,19 @@ import util.Util;
 public class Player extends GameObject {
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_NONCLEAR_KEYS = "PlayerKeys";
+    public static final double DEFAULT_SPEED = 3;
 	
 	protected Map<Integer, String> myKeyMap;
-	protected double mySpeed;
+//	protected double mySpeed;
 	protected List<String> myNonClearKeys;
 	protected List<String> mySuperMethods;
 	
 	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives) {
 		super(uniqueID, gfxname, xpos, ypos, name, collisionId, lives);
 		myKeyMap = new HashMap<Integer, String>();
-		myNonClearKeys = getListFromBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
-		mySuperMethods = getListFromBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
-	}
-	
-	protected List<String> getListFromBundle(String path, String key, String splitter){
-		ResourceBundle bundle = ResourceBundle.getBundle(path);
-		String[] array = bundle.getString(key).split(splitter);
-		return Util.convertStringArrayToList(array);
+		myNonClearKeys = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
+		mySuperMethods = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
+//		setMoveSpeed(DEFAULT_SPEED);
 	}
 	
 	public void setKey(int key, String type){
@@ -41,15 +37,19 @@ public class Player extends GameObject {
 	@Override
 	public void move(){
 		super.move();
-		setDir(0, 0);
+		if(!myIsAir) setDir(0, 0);
 		checkKeys();
 	}
+	
+	
+//	public void setMoveSpeed(double speed){
+//		mySpeed = speed;
+//	}
 	
 	public void checkKeys(){
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				String methodName = myKeyMap.get(key);
-				System.out.println("methodName:/" + methodName + "/");
 				Reflection.callMethod(this, methodName);
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
 //				System.out.println("methodName: " + methodName + " " + myNonClearKeys.contains(methodName));
