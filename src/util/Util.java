@@ -28,7 +28,7 @@ public class Util {
 		System.out.print("//StringList print ends.");
 	}
 	
-	public static List<String> getListFromBundle(String path, String key, String splitter){
+	public static List<String> getListFromPropertiesFile(String path, String key, String splitter){
 		ResourceBundle bundle = ResourceBundle.getBundle(path);
 		String[] array = bundle.getString(key).split(splitter);
 		return Util.convertStringArrayToList(array);
