@@ -232,7 +232,7 @@ public abstract class GameObject extends JGObject {
 			ypos = y + myYSize/2;
 			shootYSpeed = 0;
 		}
-		NonPlayer object = engine.createActor(SaladConstants.SHOOT_UNIQUE_ID, myShootImage, xpos, ypos, SaladConstants.SHOOT_NAME, myShootColid, SaladConstants.SHOOT_LIVES);
+		NonPlayer object = engine.createActor(SaladConstants.SHOOT_UNIQUE_ID, myShootImage, myShootXSize, myShootYSize, xpos, ypos, SaladConstants.SHOOT_NAME, myShootColid, SaladConstants.SHOOT_LIVES);
 		object.setSpeed(shootXSpeed, shootYSpeed);
 	}
 	
