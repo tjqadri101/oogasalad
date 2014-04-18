@@ -173,6 +173,14 @@ public class Game {
 	public Player getPlayer(){
 		return myPlayer;
 	}
+	
+	/** Method Polymorphism to facilitate the reflection call @Siyang
+         * Called to get the Player from the Game
+         * @return Player Object
+         */
+        public Player getPlayer(int levelID, int sceneID, int objectID){
+                return myPlayer;
+        }
 
 	/**
 	 * Called to add the non-level transition scenes to the Game
