@@ -190,7 +190,7 @@ public class ActoreditorPanel extends Panel {
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
-			Object curValue = myTable.getValueAt(row, column);
+			Object curValue = myTabl+e.getValueAt(row, column);
         	if (curValue instanceof JComboBox) {
         		renderer = (JComboBox)curValue;    
             } else if (curValue instanceof String) {
