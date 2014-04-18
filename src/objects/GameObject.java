@@ -12,6 +12,8 @@ import reflection.Reflection;
 import saladConstants.SaladConstants;
 import jgame.JGObject;
 /**
+ * GameObject is the superclass of Player and NonPlayer
+ * GameObject is a game unit that can execute certain actions and interactions 
  * @Author: Justin (Zihao) Zhang
  */
 public abstract class GameObject extends JGObject {
@@ -56,10 +58,18 @@ public abstract class GameObject extends JGObject {
 		myYSize = ysize;
 	}
 	
+	/**
+	 * Get the x size of the object image
+	 * @return int
+	 */
 	public int getXSize(){
 		return myXSize;
 	}
 	
+	/**
+	 * Get the y size of the object image
+	 * @return int
+	 */
 	public int getYSize(){
 		return myYSize;
 	}
@@ -71,41 +81,82 @@ public abstract class GameObject extends JGObject {
 		myInitY = y;
 	}
 	
+	/**
+	 * Restore to original state within a scene
+	 * Used for live-editing
+	 */
 	public void restore(){
 		setPos(myInitX, myInitY);
 		setLives(myInitLives);
 	}
 	
+	/**
+	 * Reset the unique ID
+	 * @param the new uniqueID
+	 */
 	public void resetID(int uniqueID){
 		myUniqueID = uniqueID;
 	}
 	
+	/**
+	 * Get the unique ID
+	 * @return int
+	 */
 	public int getID(){
 		return myUniqueID;
 	}
-
+	
+	/**
+	 * Set the Die Behavior
+	 * @param a String specifying one of the die behaviors
+	 */
 	public void setDieBehavior(String s){
 		myDieBehavior = s;
 	}
 	
+	/**
+	 * Decrement the number of lives
+	 */
 	public void loseLife(){
 		myLives --;
 	}
 	
+	/**
+	 * Initialize the number of lives
+	 * @param lives
+	 */
 	public void setLives(int lives){
 		myInitLives = lives;
 		myLives = lives;
 	}
 	
+	/**
+	 * Get current number of lives
+	 * @return
+	 */
 	public int getLives(){
 		return myLives;
 	}
 	
-	public void setJumpBehavior(String s, double forceMagnitude){
+	/**
+	 * Set the jump behavior
+	 * @param String specifying one of the jump behaviors
+	 * @param Magnitude of the initial jump speed
+	 */
+	public void setJumpBehavior(String s, double magnitude){
 		myJumpBehavior = s;
-		myJumpForceMagnitude = forceMagnitude;
+		myJumpForceMagnitude = magnitude;
 	}
 	
+	/**
+	 * Set the shoot behavior
+	 * @param frequency: number of bullets for one shoot
+	 * @param imageName: the file name of the image of the bullet
+	 * @param xsize: the x size of the image of the bullet
+	 * @param ysize: the y size of the image of the bullet
+	 * @param colid: the collision ID of the bullet
+	 * @param speed: the speed of the bullet
+	 */
 	public void setShootBehavior(int frequency, String imageName, int xsize, int ysize, int colid, double speed){
 		myShootFrequency = frequency;
 		myShootImage = imageName;
@@ -115,16 +166,32 @@ public abstract class GameObject extends JGObject {
 		myShootSpeed = speed;
 	}
 	
+	/**
+	 * Set the move behavior
+	 * @param s: String specifying the move behavior
+	 * @param xspeed: the x speed 
+	 * @param yspeed: the y speed
+	 */
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
 		myMoveBehavior = s;
 		mySetXSpeed = xspeed;
 		mySetYSpeed = yspeed;
 	}
 	
-	public void setCollisionBehavior(String type, int id){
-		myCollisionMap.put(id, type);
+	/**
+	 * Set the collision behavior
+	 * @param type: String specifying the collision behavior
+	 * @param id: the collision ID of the hitter
+	 */
+	public void setCollisionBehavior(String type, int otherColid){
+		myCollisionMap.put(otherColid, type);
 	}
 	
+	/**
+	 * Set the tile collision behavior
+	 * @param type: String specifying the tile collision behavior
+	 * @param tileID: the tile collision ID
+	 */
 	public void setTileCollisionBehavior(String type, int tileID){
 		myTileCollisionMap.put(tileID, type);
 	}
@@ -133,6 +200,10 @@ public abstract class GameObject extends JGObject {
 		behaviorNoParameterReflection(myBehaviors, getMyDieBehavior(), "remove");	
 	}
 	
+	/**
+	 * Reset the collision ID
+	 * @param new collisionID
+	 */
 	public void resetCollisionID(int collisionID){
 		colid = collisionID;
 	}
@@ -278,35 +349,4 @@ public abstract class GameObject extends JGObject {
     public String getMyDieBehavior () {
         return myDieBehavior;
     }
-
-
-	
-//	public void init( double width, double height, double mass )
-//	{
-//		PolygonDef shape = new PolygonDef();
-//		shape.density = (float)mass;
-//		shape.setAsBox( (float)width, (float)height );
-//		createBody( shape );
-//		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
-//	}
-	
-//	protected void initObject(int uniqueID, double xpos, double ypos){
-//	myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
-//	myCollisionMap = new HashMap<Integer, String>();
-//	init(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS);
-//	setPos(xpos, ypos);
-//	myInitX = xpos;
-//	myInitY = ypos;
-//	setLives(DEFAULT_LIVES); // change later
-//	myUniqueID = uniqueID;
-//	 //copy the position and rotation from the JBox world to the JGame world
-//	updatePositionInJGame();
-//}
-
-//protected void updatePositionInJGame() {
-//	Vec2 position = myBody.getPosition();
-//	x = position.x;
-//	y = position.y;
-//	myRotation = -myBody.getAngle();
-//}
 }
