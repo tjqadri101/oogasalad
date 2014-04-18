@@ -66,7 +66,7 @@ public class GAEController {
 	public void createActor(int ID,String url,String name){
 		String order = SaladConstants.CREATE_ACTOR + ",ID,"+ID+",ActorImage,"+"actor_default.png"+",100,100,Position,100.0,200.0,Name,"+name+",CollisionID,"+0+",Lives,"+1;
 		System.out.println(order);
-		//myDataController.receiveOrder(order);
+		myDataController.receiveOrder(order);
 		
 	}
 	
