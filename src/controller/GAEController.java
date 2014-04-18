@@ -125,6 +125,10 @@ public class GAEController {
 		
 	}
 	
+	public void updateAttributesActorInfo(){
+		attributesPanel.updateActorInfo(selectedActorID);
+	}
+	
 	public void switchActiveTab(int index){
 		attributesPanel.setTab(index);
 	}
