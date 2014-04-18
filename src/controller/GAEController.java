@@ -37,6 +37,7 @@ public class GAEController {
 		myGameEngine = myDataController.initGameEngine();
 		//createGAE(this);
 		g = new GAE(this);
+		setUpVariables();
 		createLevel(1);
 		createScene(0,1);
 		switchScene(0,1);
@@ -130,6 +131,15 @@ public class GAEController {
 	
 	public void switchActiveTab(int index){
 		attributesPanel.setTab(index);
+	}
+	
+	
+	public void setActorImage(int ID, String fileURL){
+		String order = SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + ID + SaladConstants.IMAGE;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+		
+		
 	}
 	
 }

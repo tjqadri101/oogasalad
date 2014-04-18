@@ -98,7 +98,6 @@ public class GameeditorPanel extends Panel {
 		return t;
 	}
 	
-			
-
+	
 }
 
