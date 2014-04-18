@@ -1,5 +1,6 @@
 package controller;
 
+import game_authoring_environment.ActorsPanel;
 import game_authoring_environment.AttributesPanel;
 import game_authoring_environment.FullView;
 import game_authoring_environment.GAE;
@@ -27,8 +28,9 @@ public class GAEController {
 	private static MenuBar mb; 
 	private HashMap<String, Image> availableImages;
 	private GameEngine myGameEngine;
-	private HashMap<String, JPanel> map;
+	private HashMap<String, JPanel> panelMap;
 	private AttributesPanel attributesPanel;
+	private ActorsPanel actorsPanel;
 	
 	private int selectedSceneID;
 	private int selectedActorID;
@@ -42,11 +44,14 @@ public class GAEController {
 
 	
 	private void setUpVariables(){
+		
 		fv = g.getFullView();
 		mb = g.getMenuBar();
-		map = fv.getMap();
+		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
+		
 	}
+	
 	
 	public GameEngine getEngine(){
 		return myGameEngine;
@@ -148,6 +153,11 @@ public class GAEController {
 	
 	public void updateSelectedActorID(int newID){
 		selectedActorID = newID;
+	}
+	
+	public void updateActorImage(String imageURL,String name){
+		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
+		ap.setActorImage(selectedActorID, imageURL, name);
 	}
 
 	

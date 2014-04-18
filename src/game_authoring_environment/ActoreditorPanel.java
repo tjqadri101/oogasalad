@@ -2,6 +2,8 @@ package game_authoring_environment;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.imageio.ImageIO;
@@ -12,6 +14,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.GAEController;
 
@@ -33,8 +38,7 @@ public class ActoreditorPanel extends Panel {
 	protected void construct() {
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
-		this.add(new FileChooser(), BorderLayout.CENTER);
-		this.add(new JScrollPane(makeTable()), BorderLayout.SOUTH);
+		this.add(makeTable(), BorderLayout.CENTER);
 	}
 
 	@Override
@@ -47,7 +51,7 @@ public class ActoreditorPanel extends Panel {
 
 	@Override
 	protected JComponent makeSubPanelItems() {
-		JButton jb  = new JButton("test");
+		JButton jb  = makeChooseImageButton();
 		return jb;
 	}
 	public void update(){
@@ -77,6 +81,37 @@ public class ActoreditorPanel extends Panel {
 	}
 	
 	public void updateTable(){
+		
+	}
+	
+	private JButton makeChooseImageButton(){
+		JButton b = ViewFactory.createJButton("Select Actor Image");
+		b.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				chooseActorImage("Select Actor Image");
+			}			
+		});
+		return b;
+	}
+	
+	private void chooseActorImage(String displayText) {
+		try{
+			JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+			UIManager.put("FileChooser.openDialogTitleText", displayText);
+			SwingUtilities.updateComponentTreeUI(chooser);
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(
+					"jpg", "gif","png","jpeg");
+			chooser.setFileFilter(filter);
+			int returnVal = chooser.showOpenDialog(getParent());
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				String path = chooser.getSelectedFile().getPath();
+				String name = chooser.getSelectedFile().getName();
+				gController.updateActorImage(path,name);
+			}			
+		}catch(Exception e){
+			
+		}
 		
 	}
 
