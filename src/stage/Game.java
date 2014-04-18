@@ -21,6 +21,7 @@ import stage.Transition.StateType;
 public class Game {
 
 	public static final int DEFAULT_SCORE = 0;
+	public static final int NONUSE_ID = 0;
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<StateType, Transition> myNonLevelSceneMap;
@@ -154,7 +155,7 @@ public class Game {
 			Level level = myLevelMap.get(levelID);
 			objects.addAll(level.getObjectsByColid(colid));
 		}
-		if(getPlayer().colid == colid) objects.add(getPlayer());
+		if(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID));
 		return objects;
 	}
 	
@@ -167,21 +168,15 @@ public class Game {
 		myPlayer = player;
 	}
 	
-	/**
-	 * Called to get the Player from the Game
-	 * @return Player Object
-	 */
-	public Player getPlayer(){
-		return myPlayer;
-	}
-	
-	/** Method Polymorphism to facilitate the reflection call @Siyang
-         * Called to get the Player from the Game
-         * @return Player Object
-         */
-        public Player getPlayer(int levelID, int sceneID, int objectID){
-                return myPlayer;
-        }
+	/** 
+     * Called to get the Player from the Game
+     * Parameters needed but not used to facilitate GameFactory for Reflection
+     * @param levelID, sceneID, objectID
+     * @return Player Object
+     */
+    public Player getPlayer(int levelID, int sceneID, int objectID){
+    	return myPlayer;
+    }
 
 	/**
 	 * Called to add the non-level transition scenes to the Game
@@ -209,8 +204,8 @@ public class Game {
     }
     
     /**
-	 * Get gravity
-	 * @return 
+	 * Get gravity for the engine to apply the force
+	 * @return Gravity
 	 */
     public Gravity getGravity(){
     	return myGravity;
@@ -279,7 +274,7 @@ public class Game {
 		answer.addAll(myScoreManager.getAttributes()); 
 		answer.addAll(myInputManager.getAttributes()); 
 		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(getPlayer().getAttributes());
+		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
@@ -291,9 +286,9 @@ public class Game {
 	}
 	
 	/**
-         * Called to get the self instance of the game
-         * @return a the current Game
-         */
+     * Called to get the self instance of the game
+     * @return a the current Game
+     */
 	public Game getGame(int foo){
 	    return this;
 	}
