@@ -79,14 +79,14 @@ public class GameEngine extends StdGame{
     	if (myGame == null) return;
     	getClickedID();
     	moveObjects();
-    	myGame.getGravity().applyGravity(myGame.getPlayer());
+    	myGame.getGravity().applyGravity(myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID));
     	for (int[] pair: myGame.getCollisionPair()){
     		checkCollision(pair[0], pair[1]);
     	}
     	for (int[] pair: myGame.getTileCollisionPair()){
     		checkBGCollision(pair[0], pair[1]);
     	}
-    	Player player = myGame.getPlayer();
+    	Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
     	if (player != null){
     		setViewOffset((int) player.x+player.getXSize()/2,(int) player.y+player.getYSize()/2,true);
     	}
@@ -237,7 +237,7 @@ public class GameEngine extends StdGame{
     				list.add(go);
     			}
     		}
-    		Player player = myGame.getPlayer();
+    		Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
     		if (player != null && player.x < getMouseX() && getMouseX() < player.x + player.getXSize() 
     				&& player.y < getMouseY() && getMouseY() < player.y + player.getYSize()){
     			list.add(player);
