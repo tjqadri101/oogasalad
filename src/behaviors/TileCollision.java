@@ -9,5 +9,5 @@ public abstract class TileCollision {
 		myObject = o;
 	}
 	
-	public abstract void collide(int tilecid, int tx, int ty, int txsize, int tysize);
+	public abstract void collide(Object ... args);
 }

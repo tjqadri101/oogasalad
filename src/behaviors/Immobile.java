@@ -9,7 +9,7 @@ public class Immobile extends Movable {
 	}
 
 	@Override
-	public void move(double xspeed, double yspeed) {
+	public void move(Object ... args) {
 		// do nothing
 	}
 }

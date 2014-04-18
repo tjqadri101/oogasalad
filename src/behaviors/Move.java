@@ -9,7 +9,10 @@ public class Move extends Movable{
 	}
 
 	@Override
-	public void move(double xspeed, double yspeed) {
+	public void move(Object ... args) {
+		double xspeed, yspeed;
+		xspeed = (Double) args[0];
+		yspeed = (Double) args[1];
 		myObject.setSpeed(xspeed, yspeed);
 	}
 }

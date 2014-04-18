@@ -8,7 +8,13 @@ public class Jump extends Jumpable{
 		super(o);
 	}
 	
-	public void jump(double magnitude){
-			myObject.yspeed -= magnitude;
+	/**
+	 * 
+	 * @param magnitude
+	 */
+	@Override
+	public void jump(Object ... args){
+		double magnitude = (Double) args[0];
+		myObject.yspeed -= magnitude;
 	}
 }

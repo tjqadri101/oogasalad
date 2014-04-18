@@ -9,5 +9,5 @@ public abstract class Movable {
 		myObject = o;
 	}
 	
-	public abstract void move(double xspeed, double yspeed);
+	public abstract void move(Object ... args);
 }

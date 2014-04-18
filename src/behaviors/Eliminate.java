@@ -9,7 +9,7 @@ public class Eliminate extends Collision{
 	}
 
 	@Override
-	public void collide(GameObject hitter) {
+	public void collide(Object ... args) {
 		myObject.die(); 
 	}
 }

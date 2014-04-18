@@ -9,5 +9,5 @@ public abstract class Jumpable {
 		myObject = o;
 	}
 	
-	public abstract void jump(double magnitude);
+	public abstract void jump(Object ... args);
 }

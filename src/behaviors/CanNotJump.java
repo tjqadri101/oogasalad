@@ -8,7 +8,8 @@ public class CanNotJump extends Jumpable {
 		super(o);
 	}
 	
-	public void jump(double magnitude){
+	@Override
+	public void jump(Object ... args){
 		// do nothing
 	}
 }

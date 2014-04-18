@@ -8,9 +8,13 @@ public class PerishTogether extends Collision{
 		super(o);
 	}
 
+	/**
+	 * @param GameObject Hitter
+	 */
 	@Override
-	public void collide(GameObject hitter) {
+	public void collide(Object ... args) {
 		myObject.die();
+		GameObject hitter = (GameObject) args[0];
 		hitter.die();
 	}
 }
