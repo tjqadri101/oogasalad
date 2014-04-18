@@ -76,6 +76,11 @@ public class Scene {
 	public NonPlayer getNonPlayer(int objectID) {
 		return myObjectMap.get(objectID);
 	}
+	
+	public void deleteNonPlayer(int objectID) {
+		getNonPlayer(objectID).remove();
+		myObjectMap.remove(objectID);
+	}
 
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
