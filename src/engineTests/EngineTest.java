@@ -40,7 +40,7 @@ public class EngineTest {
 		engine.setTiles(20,15,10,1,2,"brick.png");
 		engine.setTiles(30,30,5,1,0,"null");
 		//engine.setTiles(0,0,40,1,1,"brick.png");
-		engine.createBackground("bg.png");
+		engine.setBackground("bg.png");
 		
 		NonPlayer actor = engine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
 		actor.setDieBehavior("RegularDie");

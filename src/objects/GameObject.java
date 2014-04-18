@@ -85,7 +85,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void setDieBehavior(String s){
-		setMyDieBehavior(s);
+		myDieBehavior = s;
 	}
 	
 	public void loseLife(){
@@ -116,8 +116,8 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
-		setMyMoveBehavior(s);
-		setMySetXSpeed(xspeed);
+		myMoveBehavior = s;
+		mySetXSpeed = xspeed;
 		mySetYSpeed = yspeed;
 	}
 	
@@ -263,12 +263,6 @@ public abstract class GameObject extends JGObject {
         return myMoveBehavior;
     }
 
-    /**
-     * @param myMoveBehavior the myMoveBehavior to set
-     */
-    public void setMyMoveBehavior (String myMoveBehavior) {
-        this.myMoveBehavior = myMoveBehavior;
-    }
 
     /**
      * @return the mySetXSpeed
@@ -277,12 +271,6 @@ public abstract class GameObject extends JGObject {
         return mySetXSpeed;
     }
 
-    /**
-     * @param mySetXSpeed the mySetXSpeed to set
-     */
-    public void setMySetXSpeed (double mySetXSpeed) {
-        this.mySetXSpeed = mySetXSpeed;
-    }
 
     /**
      * @return the myDieBehavior
@@ -291,12 +279,7 @@ public abstract class GameObject extends JGObject {
         return myDieBehavior;
     }
 
-    /**
-     * @param myDieBehavior the myDieBehavior to set
-     */
-    public void setMyDieBehavior (String myDieBehavior) {
-        this.myDieBehavior = myDieBehavior;
-    }
+
 	
 //	public void init( double width, double height, double mass )
 //	{

@@ -17,7 +17,7 @@ import gameFactory.FactoryException;
 import gameFactory.GameFactory;
 /**
  * @Author: Steve (Siyang) Wang
- * tests the create
+ * tests the Actor related order: creation and modification
  */
 public class GameFactoryActorTest extends TestCase{
     
@@ -35,7 +35,7 @@ public class GameFactoryActorTest extends TestCase{
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
         
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",3,3,
                                                        "position",0.0,0.0,"Name","myActor","CollisionID",0, "Lives",1};
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         myActor = (NonPlayer) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
@@ -44,9 +44,9 @@ public class GameFactoryActorTest extends TestCase{
     @Test
     public void testDFParser() throws IndexOutOfBoundsException{
 
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreatePlayer","ID", 7, "Image", "actor_default.png",
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreatePlayer","ID", 7, "Image", "actor_default.png",3,3,
                                                        "position", 20.0, 30.0, "Name", "myPlayer", "CollisionID", 0, "Lives",1};
-        Object[] PARSED_OBJECT_ARRAY = new Object[] {7, "actor_default.png",
+        Object[] PARSED_OBJECT_ARRAY = new Object[] {7, "actor_default.png",3,3,
                                                      20.0, 30.0, "myPlayer", 0, 1};
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         List<Object> PARSED_OBJECT_LIST = Arrays.asList(PARSED_OBJECT_ARRAY);
@@ -65,7 +65,7 @@ public class GameFactoryActorTest extends TestCase{
     @Test
     public void testCreateActor() throws FactoryException{
 
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",3,3,
                                                        "position",0.0,0.0,"Name","myActor","CollisionID",0, "Lives",1};
 
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
@@ -172,5 +172,23 @@ public class GameFactoryActorTest extends TestCase{
         }
         assertEquals("ShowCorpse", myGame.getNonPlayer(1, 0, 0).getMyDieBehavior());
     }
+    
+/* Will implement when the Game/Engine is ready
+ *   
+ *   @Test
+    public void testDeleteActor() throws FactoryException{
+
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"DeleteActor","ID",0};
+
+        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        NonPlayer myObject = null;
+        try {
+            myObject = (NonPlayer) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        assertEquals(null, myGame.getNonPlayer(1, 0, 0));
+    }*/
 
 }

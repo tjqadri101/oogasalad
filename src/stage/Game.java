@@ -32,6 +32,7 @@ public class Game {
     protected List<int[]> myTileCollisionPair;
     protected Gravity myGravity;
 
+
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
@@ -173,6 +174,14 @@ public class Game {
 	public Player getPlayer(){
 		return myPlayer;
 	}
+	
+	/** Method Polymorphism to facilitate the reflection call @Siyang
+         * Called to get the Player from the Game
+         * @return Player Object
+         */
+        public Player getPlayer(int levelID, int sceneID, int objectID){
+                return myPlayer;
+        }
 
 	/**
 	 * Called to add the non-level transition scenes to the Game
@@ -219,6 +228,16 @@ public class Game {
     	for(GameObject o: objects){
     		o.setCollisionBehavior(type, srccid);
     	}
+    }
+    
+    /**
+	 * Called to delete an existing Game Object from a particular scene of a particular level
+	 * @param the level ID that the Game Object belongs to 
+	 * @param the scene ID that the Game Object belongs to
+	 * @param the object ID
+	 */
+    public void deleteNonPlayer(int levelID, int sceneID, int objectID){
+    	getScene(levelID, sceneID).deleteNonPlayer(objectID);
     }
     
     /**
@@ -269,6 +288,21 @@ public class Game {
 		}
 		//Apply changes to the newly added collision pairs and gravity
 		return answer;
+	}
+	
+	/**
+         * Called to get the self instance of the game
+         * @return a the current Game
+         */
+	public Game getGame(int foo){
+	    return this;
+	}
+	
+	/* @Siyang: 
+	 * The following getter added to facilitate testing. 
+	 */
+	public Map<Integer, Level> getMyLevelMap(){
+	    return myLevelMap;
 	}
 
 }

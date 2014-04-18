@@ -1,6 +1,7 @@
 package engine;
 
 import stage.Game;
+import stage.ResetLevelException;
 import stage.Scene;
 import stage.Transition;
 import stage.Transition.StateType;
@@ -288,7 +289,7 @@ public class GameEngine extends StdGame{
     	}
     }
     
-    public void createBackground(String url){
+    public void setBackground(String url){
     	myCurrentScene.setBackgroundImage(url);
     	loadImage(url);
     	setBGImage(url);
@@ -308,6 +309,39 @@ public class GameEngine extends StdGame{
     
     public int getCurrentSceneID(){
     	return myCurrentSceneID;
+    }
+    
+    public void createLevel(int levelID){
+    	myGame.addLevel(levelID);
+    }
+    
+    public void deleteLevel(int levelID){
+    	myGame.removeLevel(levelID);
+    }
+    
+    public void resetLevelID(int oldID, int newID){
+    	try {
+			myGame.resetLevelID(oldID, newID);
+		} catch (ResetLevelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void createScene(int levelID, int sceneID){
+    	myGame.addScene(levelID, sceneID);
+    }
+    
+    public void deleteScene(int levelID, int sceneID){
+    	myGame.removeScene(levelID, sceneID);
+    }
+    
+    public void setInitPos(double xpos, double ypos){
+    	myCurrentScene.setPlayerInitPosition(xpos, ypos);
+    }
+    
+    public void deleteActor(int unique_id){
+    	myCurrentScene.deleteNonPlayer(unique_id);
     }
     
     /** 

@@ -77,6 +77,7 @@ public class ActorsPanel extends Panel {
 						mySelectedRow = myActorsTable.getSelectedRow();	
 						gController.updateSelectedActorID(getSelectedActorID());
 						gController.switchActiveTab(2); //actor tab is at index 2
+						gController.updateAttributesActorInfo();
 					}
 				}
 			}
