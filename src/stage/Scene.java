@@ -65,9 +65,8 @@ public class Scene {
 		return answer;
 	}
 	
-	//need check
-	public void setBackgroundImage(String imageName) {
-		myBackground = imageName;
+	public void setBackgroundImage(String fileName) {
+		myBackground = fileName;
 	}
 	
 	public String getBackgroundImage() {
@@ -76,6 +75,11 @@ public class Scene {
 	
 	public NonPlayer getNonPlayer(int objectID) {
 		return myObjectMap.get(objectID);
+	}
+	
+	public void deleteNonPlayer(int objectID) {
+		getNonPlayer(objectID).remove();
+		myObjectMap.remove(objectID);
 	}
 
 	public List<GameObject> getObjectsByColid(int colid){

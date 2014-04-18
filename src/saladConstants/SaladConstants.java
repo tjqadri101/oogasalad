@@ -51,4 +51,7 @@ public final class SaladConstants {
 	public static final String SET_KEY = "SetKey";
 	public static final String NULL_TOKEN = "NullToken";
 	public static final String RESET_LEVEL_EXCEPTION = "Level can not be reset!";
+	public static final int SHOOT_UNIQUE_ID = -1;
+	public static final int SHOOT_LIVES = 1;
+	public static final String SHOOT_NAME = "ShootObjects";
 }

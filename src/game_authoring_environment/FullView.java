@@ -11,8 +11,7 @@ import controller.GAEController;
 
 	public class FullView extends JSplitPane{
 
-		private static final int FULL_VIEW_HEIGHT = 768;
-		private static final int FULL_VIEW_WIDTH = 1024;
+
 		private static LeftPanel lp;
 		private static RightPanel rp;
 		public FullView(GAEController gController){			

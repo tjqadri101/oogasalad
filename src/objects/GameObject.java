@@ -6,31 +6,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.jbox2d.collision.PolygonDef;
-import org.jbox2d.common.Vec2;
-
+import engine.GameEngine;
 import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
-import jboxGlue.PhysicalObject;
-import jboxGlue.PhysicalObjectRect;
-import jboxGlue.WorldManager;
 import jgame.JGObject;
 /**
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends PhysicalObject {
-	public static final int DEFAULT_LIVES = 1;
+public abstract class GameObject extends JGObject {
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
 	protected ResourceBundle myBehaviors;
 //	protected ScoreManager myScoreManager;
-	protected String myDieBehavior;
-	protected String myMoveBehavior;
-	protected double mySetXSpeed;
+	private String myDieBehavior;
+	private String myMoveBehavior;
+	private double mySetXSpeed;
 	protected double mySetYSpeed;
 	protected Map<Integer, String> myCollisionMap;
+	protected Map<Integer, String> myTileCollisionMap;
 //	protected Map<Integer, String>
 	protected int myLives;
 	protected int myUniqueID;
@@ -39,29 +34,34 @@ public abstract class GameObject extends PhysicalObject {
 	protected String myShootBehavior;
 	protected double myInitX;
 	protected double myInitY;
+	protected int myInitLives;
+	protected int myShootFrequency;
+	protected String myShootImage;
+	protected int myShootColid;
+	protected int myShootXSize; 
+	protected int myShootYSize;
+	protected double myShootSpeed;
+	protected int myXSize;
+	protected int myYSize;
 	
-	public static final double DEFAULT_WIDTH = 10;
-	public static final double DEFAULT_HEIGHT = 10;
-	public static final double DEFAULT_MASS = 1;
-	
-	protected void initObject(int uniqueID, double xpos, double ypos){
+	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
+		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
 		myCollisionMap = new HashMap<Integer, String>();
-		init(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS); // change later
+		myTileCollisionMap = new HashMap<Integer, String>();
 		setPos(xpos, ypos);
-		myInitX = xpos;
-		myInitY = ypos;
-		setLives(DEFAULT_LIVES); // change later
+		setLives(lives); // change later
 		myUniqueID = uniqueID;
-		// copy the position and rotation from the JBox world to the JGame world
-		updatePositionInJGame();
+		myXSize = xsize;
+		myYSize = ysize;
 	}
-
-	protected void updatePositionInJGame() {
-		Vec2 position = myBody.getPosition();
-		x = position.x;
-		y = position.y;
-		myRotation = -myBody.getAngle();
+	
+	public int getXSize(){
+		return myXSize;
+	}
+	
+	public int getYSize(){
+		return myYSize;
 	}
 	
 	@Override
@@ -71,28 +71,15 @@ public abstract class GameObject extends PhysicalObject {
 		myInitY = y;
 	}
 	
-//	protected void updatePosition
-	
-	protected GameObject(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId){
-		super(name, collisionId, gfxname);
-		initObject(uniqueID, xpos, ypos);
+	public void restore(){
+		setPos(myInitX, myInitY);
+		setLives(myInitLives);
 	}
 	
-	public void init( double width, double height, double mass )
-	{
-		PolygonDef shape = new PolygonDef();
-		shape.density = (float)mass;
-		shape.setAsBox( (float)width, (float)height );
-		createBody( shape );
-		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
-	}
-	
-	//may not be needed
 	public void resetID(int uniqueID){
 		myUniqueID = uniqueID;
 	}
 	
-	//may not be needed
 	public int getID(){
 		return myUniqueID;
 	}
@@ -106,7 +93,12 @@ public abstract class GameObject extends PhysicalObject {
 	}
 	
 	public void setLives(int lives){
+		myInitLives = lives;
 		myLives = lives;
+	}
+	
+	public int getLives(){
+		return myLives;
 	}
 	
 	public void setJumpBehavior(String s, double forceMagnitude){
@@ -114,13 +106,18 @@ public abstract class GameObject extends PhysicalObject {
 		myJumpForceMagnitude = forceMagnitude;
 	}
 	
-	public void setShootBehavior(String s){
-		myShootBehavior = s;
+	public void setShootBehavior(int frequency, String imageName, int xsize, int ysize, int colid, double speed){
+		myShootFrequency = frequency;
+		myShootImage = imageName;
+		myShootColid = colid;
+		myShootXSize = xsize;
+		myShootYSize = ysize;
+		myShootSpeed = speed;
 	}
 	
 	public void setMoveBehavior(String s, double xspeed, double yspeed){
 		myMoveBehavior = s;
-		mySetXSpeed= xspeed;
+		mySetXSpeed = xspeed;
 		mySetYSpeed = yspeed;
 	}
 	
@@ -128,8 +125,12 @@ public abstract class GameObject extends PhysicalObject {
 		myCollisionMap.put(id, type);
 	}
 	
+	public void setTileCollisionBehavior(String type, int tileID){
+		myTileCollisionMap.put(tileID, type);
+	}
+	
 	public void die(){
-		behaviorNoParameterReflection(myBehaviors, myDieBehavior, "remove");	
+		behaviorNoParameterReflection(myBehaviors, getMyDieBehavior(), "remove");	
 	}
 	
 	public void resetCollisionID(int collisionID){
@@ -137,6 +138,7 @@ public abstract class GameObject extends PhysicalObject {
 	}
 	
 	public void jump(){
+		System.out.println("jump called");
 		if(myJumpBehavior == null) return;
 		try{
 			Object behavior = Reflection.createInstance(myBehaviors.getString(myJumpBehavior), this);
@@ -146,6 +148,12 @@ public abstract class GameObject extends PhysicalObject {
 		}
 	}
 	
+	/**
+	 * Do not call this method directly
+	 * @param ResourceBundle
+	 * @param myString
+	 * @param methodName
+	 */
 	protected void behaviorNoParameterReflection(ResourceBundle myBundle, String myString, String methodName){
 		if(myString == null) return;
 		try{
@@ -158,12 +166,11 @@ public abstract class GameObject extends PhysicalObject {
 	
 	@Override
 	public void move(){
-		super.move();
 		if(myLives <= 0) die();
 	}
 	
 	@Override
-	public void hit (JGObject other)
+	public void hit(JGObject other)
     {
 		if(!myCollisionMap.containsKey(other.colid)) return;
 		try{
@@ -174,46 +181,132 @@ public abstract class GameObject extends PhysicalObject {
 		}
     }
 	
+	@Override
+	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
+		if(!myTileCollisionMap.containsKey(tilecid)) return;
+		try{
+			Object behavior = Reflection.createInstance(myBehaviors.getString(myTileCollisionMap.get(tilecid)), this);
+			Reflection.callMethod(behavior, "collide", tilecid, tx, ty, txsize, tysize);	
+		} catch (Exception e){
+			e.printStackTrace(); // should never reach here
+		} 
+	}
+	
 	public void autoMove(){
 		if(myMoveBehavior == null) return;
-		System.out.println("autoMove called");
 		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myMoveBehavior), this);
-			Reflection.callMethod(behavior, "move", mySetXSpeed, mySetYSpeed);	
+			Object behavior = Reflection.createInstance(myBehaviors.getString(getMyMoveBehavior()), this);
+			Reflection.callMethod(behavior, "move", getMySetXSpeed(), mySetYSpeed);	
 		} catch (Exception e){
 			e.printStackTrace(); //should never reach here
 		}
 	}
 	
-	//need modification
 	public void shoot(){
-		if(myShootBehavior == null) return;
-		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myShootBehavior), this);
-			Reflection.callMethod(behavior, "shoot"); // need modification
-		} catch (Exception e){
-			e.printStackTrace(); //should never reach here
+		if(myShootImage == null) return;
+		GameEngine engine = (GameEngine) eng;
+		double xface = xdir * xspeed;
+		double yface = ydir * yspeed;
+		double shootXSpeed, shootYSpeed, xpos, ypos;
+		if(xface < 0){
+			xpos = x - myShootXSize;
+			shootXSpeed = -myShootSpeed;
 		}
-	}
-	
-	@Override
-	public void paintShape() {
-		// do nothing; image already set
+		else if (xface > 0){
+			xpos = x + myXSize;
+			shootXSpeed = myShootSpeed;
+		}
+		else{
+			xpos = x + myXSize/2;
+			shootXSpeed = 0;
+		}
+		if(yface < 0){
+			ypos = y - myShootYSize;
+			shootYSpeed = -myShootSpeed;
+		}
+		else if (yface > 0){
+			ypos = y + myYSize; 
+			shootYSpeed = myShootSpeed;
+		}
+		else{
+			ypos = y + myYSize/2;
+			shootYSpeed = 0;
+		}
+		NonPlayer object = engine.createActor(SaladConstants.SHOOT_UNIQUE_ID, myShootImage, myShootXSize, myShootYSize, xpos, ypos, SaladConstants.SHOOT_NAME, myShootColid, SaladConstants.SHOOT_LIVES);
+		object.setSpeed(shootXSpeed, shootYSpeed);
 	}
 	
 	/**
 	 * Should be called by the Parser class to get all attributes of the GameObject
 	 * Return a list of Strings that match with the Data Format but without Key 
+	 * @return a list of Strings
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
-		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + myMoveBehavior + "," + mySetXSpeed + "," + mySetYSpeed);
-		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + myDieBehavior);
+		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
+		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
 		for(int otherID: myCollisionMap.keySet()){
 			answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionMap.get(otherID) + "," + otherID);
 		}
 		return answer;
 	}
 	
+/* @NOTE:
+ * The following getter and setters used for GameFactoryTest
+ * Will remove them once finished
+ */
+    /**
+     * @return the myMoveBehavior
+     */
+    public String getMyMoveBehavior () {
+        return myMoveBehavior;
+    }
+
+
+    /**
+     * @return the mySetXSpeed
+     */
+    public double getMySetXSpeed () {
+        return mySetXSpeed;
+    }
+
+
+    /**
+     * @return the myDieBehavior
+     */
+    public String getMyDieBehavior () {
+        return myDieBehavior;
+    }
+
+
+	
+//	public void init( double width, double height, double mass )
+//	{
+//		PolygonDef shape = new PolygonDef();
+//		shape.density = (float)mass;
+//		shape.setAsBox( (float)width, (float)height );
+//		createBody( shape );
+//		setBBox( -(int)width/2, -(int)height/2, (int)width, (int)height );
+//	}
+	
+//	protected void initObject(int uniqueID, double xpos, double ypos){
+//	myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
+//	myCollisionMap = new HashMap<Integer, String>();
+//	init(DEFAULT_WIDTH, DEFAULT_HEIGHT, DEFAULT_MASS);
+//	setPos(xpos, ypos);
+//	myInitX = xpos;
+//	myInitY = ypos;
+//	setLives(DEFAULT_LIVES); // change later
+//	myUniqueID = uniqueID;
+//	 //copy the position and rotation from the JBox world to the JGame world
+//	updatePositionInJGame();
+//}
+
+//protected void updatePositionInJGame() {
+//	Vec2 position = myBody.getPosition();
+//	x = position.x;
+//	y = position.y;
+//	myRotation = -myBody.getAngle();
+//}
 }

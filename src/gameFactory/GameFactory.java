@@ -4,9 +4,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Set;
 import engine.GameEngine;
 import objects.GameObject;
 import reflection.Reflection;
@@ -29,16 +33,19 @@ public class GameFactory {
     private String myOrder;
     private int  myLevelID, mySceneID;
     private Game myGame;
+    private Map<String,List<?>> parsedMap;
     public static final String RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_FORMAT= "DataFormat";
     public static final String DEFAULT_PATH= "FactoryOrderPath"; 
-    protected ResourceBundle myFormat, myPath, myReflection;
+    public static final String DEFAULT_METHOD= "TypeMethodMatcher";
+    protected ResourceBundle myFormat, myPath, myMethod;
     
     public GameFactory(GameEngine engine){
         myEngine = engine;
         myGame = ((GameEngine) myEngine).getGame();
         myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
         myPath = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_PATH);
+        myMethod = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_METHOD);
     }
     
     /**
@@ -50,19 +57,19 @@ public class GameFactory {
         mySceneID = ((GameEngine) myEngine).getCurrentSceneID();
         
         String instruction = (String) order.get(0);
-        System.out.println(order + "Printed From Data Factory");
-        List<Object> objArgList = parseOrder(order, instruction);
-        System.out.println(objArgList + "Print after parsed");
+        parsedMap = parseOrder(order, instruction);
+        List<Object> objArgList = (List<Object>) parsedMap.get("Argument");
+        List<String> typeMethodList =  (List<String>) parsedMap.get("Type");
+//        System.out.println("the typeMethodList in the gameFactory after parsed is " + typeMethodList);
         
         String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
-        String methodToInvoke = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
-        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
-        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
+        String methodToInvoke = myMethod.getString(typeMethodList.get(1));
+        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
+        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
         
         return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", myLevelID, mySceneID, objArgList, 
                               methodToInvoke, myGame, GameRefMethod, GameRefPara);
     }
-
     
     /**
      * Creation or modification via Engine (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
@@ -86,12 +93,13 @@ public class GameFactory {
                                       throws FactoryException {
 
         int numArg = Integer.parseInt(GameReflectPara);
-        Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
+        int objectID = (int) objArgList.remove(0);
 
-        int[][] IDSelector = new int[][]{new int[]{(Integer) objArgList.get(0)},
-                                         new int[]{(Integer) objArgList.get(0),levelID},
-                                         new int[]{(Integer) objArgList.get(0),levelID, sceneID}};
-        //        Class<?> c = Class.forName(GameReflectionInfo);
+        Object[][] IDSelector = new Object[][]{new Object[]{objectID},
+                                new Object[]{levelID, objectID},
+                                new Object[]{levelID, sceneID, objectID}};
+
+        Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
         
         Object obj = Reflection.callMethod(game, GameRefMethod, IDSelector[numArg]);
         return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);
@@ -103,16 +111,23 @@ public class GameFactory {
      * @param instruction
      * @return
      */
-    public List<Object> parseOrder (List<Object> order, String instruction) {
-        String tokens = myFormat.getString(instruction);
-        List<String> tokenList = Arrays.asList(tokens.split("\\,"));
+    public Map<String, List<?>> parseOrder (List<Object> order, String instruction) {
+        String formatToken = myFormat.getString(instruction);
+        List<String> formatTokenList = Arrays.asList(formatToken.split("\\,"));
         List<Object> argumentList = new ArrayList<Object>();
+        List<String> typeList = new ArrayList<String>();
         for(int i = 1; i < order.size(); i ++){
-            if(tokenList.get(i-1).equals("ParameterToken")){
+            if(formatTokenList.get(i-1).equals("ParameterToken")){
                 argumentList.add(order.get(i));
             }
+            if(formatTokenList.get(i-1).equals("TypeToken")){
+                typeList.add((String) order.get(i));
+            }
         }
-        return argumentList;
+        Map<String, List<?>> returnMap = new HashMap<String, List<?>>();
+        returnMap.put("Argument", argumentList);
+        returnMap.put("Type", typeList);
+        return returnMap;
     }
     
     // Need to implement if the order format is not changed. Discuss tmr

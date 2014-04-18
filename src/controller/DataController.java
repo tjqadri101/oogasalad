@@ -29,23 +29,23 @@ public class DataController {
 	protected ResourceBundle myReflectionMethods;
 	
 	public DataController(){
-//		myGameSaverAndLoader = new GameSaverAndLoader(); 
+		myGameSaverAndLoader = new GameSaverAndLoader(); 
 		myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
 		myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
 	}
 	
 	/**
 	 * Called by Game Authorizing Environment to display the engine inside its GUI
+	 * @param A boolean indicating whether the engine is in editing mode or playing mode
      * @return Game Engine
 	 */
-	public GameEngine initGameEngine(){
+	public GameEngine initGameEngine(boolean isEditing){
 		myGame = new Game();
-		myGameEngine = new GameEngine();
+		myGameEngine = new GameEngine(isEditing);
 		myGameEngine.setGame(myGame);
 		myFactory = new GameFactory(myGameEngine);
 		return myGameEngine;
 	}
-	
 	
 	/**
 	 * Called by Game Authorizing Environment to send the command String
@@ -54,7 +54,6 @@ public class DataController {
 	 */
 	public void receiveOrder(String order){
 		System.out.println("DataController: " + "received order " + order);
-		System.out.println("DataController: " + convertOrderToObjects(order));
 		callFactoryToProcess(convertOrderToObjects(order));
 	}
 	

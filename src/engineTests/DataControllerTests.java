@@ -12,7 +12,7 @@ import controller.DataController;
 import engine.GameEngine;
 
 public class DataControllerTests {
-	public static final String CREATE_ACTOR_ORDER = "CreateActor,ID,0,Image,actor_default.png,Position,0,0,Name,Hero,CollisionID,0";
+	public static final String CREATE_ACTOR_ORDER = "CreateActor,ID,0,Image,actor_default.png,Position,0,0,Name,Hero,CollisionID,0,Lives,1";
 	
 	protected DataController myDataController;
 	protected GameEngine myEngine;
@@ -20,7 +20,7 @@ public class DataControllerTests {
 
 	protected void setUp(){
     	myDataController = new DataController();
-    	myEngine = myDataController.initGameEngine();
+    	myEngine = myDataController.initGameEngine(true);
 //		myGame.addLevel(1);
 //		myGame.addScene(1, 0);
 //		myEngine.setCurrentScene(0);
@@ -35,8 +35,6 @@ public class DataControllerTests {
 	
 	@Test
 	public void testConvertStringToObjects(){
-    	myDataController = new DataController();
-    	myEngine = myDataController.initGameEngine();
     	
 		String order = CREATE_ACTOR_ORDER;
 		List<Object> tests = myDataController.convertOrderToObjects(order);
@@ -57,6 +55,8 @@ public class DataControllerTests {
 		objects.add("Hero");
 		objects.add((String)"CollisionID");
 		objects.add((Integer)0);
+		objects.add("Lives");
+		objects.add((Integer)1);
 		
 		assertEquals(objects, tests);
 	}

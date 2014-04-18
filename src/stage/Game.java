@@ -9,31 +9,39 @@ import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import objects.GameObject;
+import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
 import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
- * @author Main DavidChou, Justin (Zihao) Zhang
- * 
+ * @author Main David Chou, Justin (Zihao) Zhang
+ * @help Isaac (Shenghan) Chen
  */
 public class Game {
 
 	public static final int DEFAULT_SCORE = 0;
 
 	protected Map<Integer, Level> myLevelMap;
-	protected Map<StateType, Transition> myNonLevelSceneMap;//added by Isaac
+	protected Map<StateType, Transition> myNonLevelSceneMap;
 	protected ScoreManager myScoreManager;
 	protected InputManager myInputManager;
 	protected TimerManager myTimerManager;
 	protected Player myPlayer;
+    protected List<int[]> myCollisionPair;
+    protected List<int[]> myTileCollisionPair;
+    protected Gravity myGravity;
+
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
-		myNonLevelSceneMap = new HashMap<StateType, Transition>();//added by Isaac
+		myNonLevelSceneMap = new HashMap<StateType, Transition>();
 		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 		myInputManager = new InputManager();
 		myTimerManager = new TimerManager();
+		myCollisionPair = new ArrayList<int[]>();
+    	myTileCollisionPair = new ArrayList<int[]>();
+    	myGravity = new Gravity();
 	}
 
 	/**
@@ -146,7 +154,7 @@ public class Game {
 			Level level = myLevelMap.get(levelID);
 			objects.addAll(level.getObjectsByColid(colid));
 		}
-		if(myPlayer.colid == colid) objects.add(myPlayer);
+		if(getPlayer().colid == colid) objects.add(getPlayer());
 		return objects;
 	}
 	
@@ -166,14 +174,101 @@ public class Game {
 	public Player getPlayer(){
 		return myPlayer;
 	}
+	
+	/** Method Polymorphism to facilitate the reflection call @Siyang
+         * Called to get the Player from the Game
+         * @return Player Object
+         */
+        public Player getPlayer(int levelID, int sceneID, int objectID){
+                return myPlayer;
+        }
 
-	//added by Isaac
+	/**
+	 * Called to add the non-level transition scenes to the Game
+	 * @param StateType
+	 * @return void
+	 */
 	public void addNonLevelScene(StateType type){
 		myNonLevelSceneMap.put(type, new Transition(type));
 	}
+	
+	/**
+	 * Called to get the non-level transition from the Game
+	 * @return a Transition
+	 */
 	public Transition getNonLevelScene(StateType type){
 		return myNonLevelSceneMap.get(type);
 	}
+	
+	/**
+	 * Set gravity magnitude
+	 * @param magnitude
+	 */
+    public void setGravity(double magnitude){
+    	myGravity.setMagnitude(magnitude);
+    }
+    
+    /**
+	 * Get gravity
+	 * @return 
+	 */
+    public Gravity getGravity(){
+    	return myGravity;
+    }
+	
+	/**
+	 * Add collision pairs
+	 * @param srccid
+	 * @param type
+	 * @param dstcid
+	 */
+    public void addCollisionPair(int srccid, String type, int dstcid){
+    	myCollisionPair.add(new int[]{srccid,dstcid});
+    	List<GameObject> objects = getObjectsByColid(dstcid);
+    	for(GameObject o: objects){
+    		o.setCollisionBehavior(type, srccid);
+    	}
+    }
+    
+    /**
+	 * Called to delete an existing Game Object from a particular scene of a particular level
+	 * @param the level ID that the Game Object belongs to 
+	 * @param the scene ID that the Game Object belongs to
+	 * @param the object ID
+	 */
+    public void deleteNonPlayer(int levelID, int sceneID, int objectID){
+    	getScene(levelID, sceneID).deleteNonPlayer(objectID);
+    }
+    
+    /**
+     * Get the collision pair
+     * @return
+     */
+    public List<int[]> getCollisionPair(){
+    	return myCollisionPair;
+    }
+    
+    /**
+     * Get the tile collision pair
+     * @return
+     */
+    public List<int[]> getTileCollisionPair(){
+    	return myTileCollisionPair;
+    }
+    
+    /**
+     * Add tile collision pairs
+     * @param tilecid
+     * @param type
+     * @param objectcid
+     */
+    public void addTileCollisionPair(int tilecid, String type, int objectcid){
+    	myTileCollisionPair.add(new int[]{tilecid, objectcid});
+    	List<GameObject> objects = getObjectsByColid(objectcid);
+    	for(GameObject o: objects){
+    		o.setTileCollisionBehavior(type, tilecid);
+    	}
+    }
 	
 	/**
 	 * Called to get the Attributes of the whole Game
@@ -184,16 +279,30 @@ public class Game {
 		answer.addAll(myScoreManager.getAttributes()); 
 		answer.addAll(myInputManager.getAttributes()); 
 		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(myPlayer.getAttributes());
+		answer.addAll(getPlayer().getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
-		
-		//added by Isaac
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
 		}
-		
+		//Apply changes to the newly added collision pairs and gravity
 		return answer;
 	}
+	
+	/**
+         * Called to get the self instance of the game
+         * @return a the current Game
+         */
+	public Game getGame(int foo){
+	    return this;
+	}
+	
+	/* @Siyang: 
+	 * The following getter added to facilitate testing. 
+	 */
+	public Map<Integer, Level> getMyLevelMap(){
+	    return myLevelMap;
+	}
+
 }

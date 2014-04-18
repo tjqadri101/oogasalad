@@ -1,5 +1,6 @@
 package game_authoring_environment;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 
 import javax.swing.ImageIcon;
@@ -11,6 +12,12 @@ import controller.GAEController;
 
 public class AttributesPanel extends JTabbedPane {
 	
+	private static final int FULL_VIEW_HEIGHT = 768;
+	private static final int FULL_VIEW_WIDTH = 1024;
+	private static final int LEFT_PANEL_HEIGHT = FULL_VIEW_HEIGHT;
+	private static final int LEFT_PANEL_WIDTH = FULL_VIEW_WIDTH * 1/5+70;
+	
+	
 	private JPanel myActorEditorPanel;
 	private JPanel mySceneEditorPanel;
 	private JPanel myGameEditorPanel;
@@ -19,6 +26,7 @@ public class AttributesPanel extends JTabbedPane {
 
 		makePanels(gController);
 		addTabs();
+		this.setPreferredSize(new Dimension(LEFT_PANEL_HEIGHT/2,LEFT_PANEL_WIDTH));
 		
 	}
 	
@@ -49,6 +57,11 @@ public class AttributesPanel extends JTabbedPane {
 		map.put(SaladConstants.ACTOR_EDITOR_PANEL, myActorEditorPanel);
 		
 		return map;
+	}
+
+	public void updateActorInfo(int actorID) {
+		((ActoreditorPanel) myActorEditorPanel).updateInfo(actorID);
+		
 	}
 	
 }

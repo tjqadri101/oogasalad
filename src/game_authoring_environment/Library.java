@@ -18,7 +18,6 @@ public class Library extends JTabbedPane {
 	private static final int LIBRARY_PANEL_WIDTH = FULL_VIEW_WIDTH * 1/5;
 	
 	private JPanel myScenesPanel;
-	private JPanel myMediaPanel;
 	private JPanel myBehaviorsPanel;
 	private JPanel myActorsPanel;
 
@@ -32,18 +31,15 @@ public class Library extends JTabbedPane {
 	private void addTabs() {
 		ImageIcon sceneTabIcon = new ImageIcon(this.getClass().getResource("resources/sceneIcon.png"));
 		ImageIcon actorsTabIcon = new ImageIcon(this.getClass().getResource("resources/actorsIcon.png"));
-		ImageIcon mediaTabIcon = new ImageIcon(this.getClass().getResource("resources/mediaIcon.png"));
 		ImageIcon behaviorsTabIcon = new ImageIcon(this.getClass().getResource("resources/behaviorsIcon.png"));
 		this.addTab("",sceneTabIcon, myScenesPanel);
 		this.addTab( "", actorsTabIcon, myActorsPanel);
-		this.addTab( "", mediaTabIcon, myMediaPanel);
 		this.addTab( "", behaviorsTabIcon, myBehaviorsPanel);
 		
 	}
 
 	private void makePanels(GAEController gController) {
 		myScenesPanel = ViewFactory.buildPanel(PanelType.SCENE,gController);
-		myMediaPanel = ViewFactory.buildPanel(PanelType.MEDIA,gController);
 		myBehaviorsPanel = ViewFactory.buildPanel(PanelType.BEHAVIORS,gController);
 		myActorsPanel = ViewFactory.buildPanel(PanelType.ACTORS,gController);
 		
@@ -53,7 +49,6 @@ public class Library extends JTabbedPane {
 		map.put(SaladConstants.BEHAVIOR_PANEL, myBehaviorsPanel);
 		map.put(SaladConstants.SCENE_PANEL, myScenesPanel);
 		map.put(SaladConstants.ACTOR_PANEL, myActorsPanel);
-		map.put(SaladConstants.MEDIA_PANEL, myBehaviorsPanel);
 		return map;
 	}
 	

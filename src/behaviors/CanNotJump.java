@@ -2,13 +2,13 @@ package behaviors;
 
 import objects.GameObject;
 
-public class Jump extends Jumpable{
+public class CanNotJump extends Jumpable {
 	
-	public Jump(GameObject o){
+	public CanNotJump(GameObject o){
 		super(o);
 	}
 	
 	public void jump(double magnitude){
-			myObject.yspeed -= magnitude;
+		// do nothing
 	}
 }
