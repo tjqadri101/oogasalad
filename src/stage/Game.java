@@ -32,6 +32,7 @@ public class Game {
     protected List<int[]> myTileCollisionPair;
     protected Gravity myGravity;
 
+
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
@@ -277,6 +278,21 @@ public class Game {
 		}
 		//Apply changes to the newly added collision pairs and gravity
 		return answer;
+	}
+	
+	/**
+         * Called to get the self instance of the game
+         * @return a the current Game
+         */
+	public Game getGame(int foo){
+	    return this;
+	}
+	
+	/* @Siyang: 
+	 * The following getter added to facilitate testing. 
+	 */
+	public Map<Integer, Level> getMyLevelMap(){
+	    return myLevelMap;
 	}
 
 }

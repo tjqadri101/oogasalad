@@ -25,6 +25,10 @@ public class GameFactoryLevelSceneTest extends TestCase{
     protected Game myGame;
     protected GameFactory myFactory;
     protected NonPlayer myActor;
+    protected static final Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreatePlayer","ID",0,"PlayerImage","actor_default.png",3,3,
+                                                                          "position",20.0,30.0,"Name","myPlayer","CollisionID",0, "Lives",1};
+    protected static final Object[] PARSED_OBJECT_ARRAY = new Object[] {0, "actor_default.png",3,3,
+                                                                      20.0, 30.0, "myPlayer", 0, 1};
 
     protected void setUp(){
         myGame = new Game();
@@ -35,19 +39,11 @@ public class GameFactoryLevelSceneTest extends TestCase{
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
         
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",
-                                                       "position",0.0,0.0,"Name","myActor","CollisionID",0, "Lives",1};
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myActor = (NonPlayer) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
     }
     
     @Test
     public void testDFParser() throws IndexOutOfBoundsException{
 
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreatePlayer","ID", 7, "Image", "actor_default.png",
-                                                       "position", 20.0, 30.0, "Name", "myPlayer", "CollisionID", 0, "Lives",1};
-        Object[] PARSED_OBJECT_ARRAY = new Object[] {7, "actor_default.png",
-                                                     20.0, 30.0, "myPlayer", 0, 1};
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         List<Object> PARSED_OBJECT_LIST = Arrays.asList(PARSED_OBJECT_ARRAY);
 
@@ -63,114 +59,113 @@ public class GameFactoryLevelSceneTest extends TestCase{
     }
     
     @Test
-    public void testCreateActor() throws FactoryException{
+    public void testCreateLevel() throws FactoryException{
 
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",
-                                                       "position",0.0,0.0,"Name","myActor","CollisionID",0, "Lives",1};
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
 
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        NonPlayer myObject = null;
+        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
         try {
-            myObject = (NonPlayer) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+            myFactory.processOrder(CREATELEVEL_OBJECT_LIST);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(myObject, myGame.getNonPlayer(1, 0, 0));
+        assertEquals(2, myGame.getMyLevelMap().size());
 // here the levelID=1, SceneID=0, objID=0
     }
-    
-    @Test
-    public void testModifyActorSpeed() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Speed", 5.0, 5.0};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        System.out.println("the speed in the speed test is " + myGame.getNonPlayer(1, 0, 0).xspeed);
-        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
-    }
-    
-    @Test
-    public void testModifyActorChangetoID() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeToID", 1};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
-    }
-    
-    @Test
-    public void testModifyActorChangeCollisionID() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeCollisionID", 1};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(1, myGame.getNonPlayer(1, 0, 0).colid);
-    }
-    
-    @Test
-    public void testModifyActorPosition() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Position", 100.0, 100.0};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(100.0, myGame.getNonPlayer(1, 0, 0).x);
-        assertEquals(100.0, myGame.getNonPlayer(1, 0, 0).y);
-    }
-    
-    @Test
-    public void testModifyActorMove() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Move","RegularMove", 10.0, 10.0};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals("RegularMove", myGame.getNonPlayer(1, 0, 0).getMyMoveBehavior());
-        assertEquals(10.0, myGame.getNonPlayer(1, 0, 0).getMySetXSpeed());
-    }
-    
-    @Test
-    public void testModifyActorDie() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Die","ShowCorpse"};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals("ShowCorpse", myGame.getNonPlayer(1, 0, 0).getMyDieBehavior());
-    }
+//    
+//    @Test
+//    public void testModifyActorSpeed() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Speed", 5.0, 5.0};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        System.out.println("the speed in the speed test is " + myGame.getNonPlayer(1, 0, 0).xspeed);
+//        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
+//    }
+//    
+//    @Test
+//    public void testModifyActorChangetoID() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeToID", 1};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
+//    }
+//    
+//    @Test
+//    public void testModifyActorChangeCollisionID() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeCollisionID", 1};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals(1, myGame.getNonPlayer(1, 0, 0).colid);
+//    }
+//    
+//    @Test
+//    public void testModifyActorPosition() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Position", 100.0, 100.0};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals(100.0, myGame.getNonPlayer(1, 0, 0).x);
+//        assertEquals(100.0, myGame.getNonPlayer(1, 0, 0).y);
+//    }
+//    
+//    @Test
+//    public void testModifyActorMove() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Move","RegularMove", 10.0, 10.0};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals("RegularMove", myGame.getNonPlayer(1, 0, 0).getMyMoveBehavior());
+//        assertEquals(10.0, myGame.getNonPlayer(1, 0, 0).getMySetXSpeed());
+//    }
+//    
+//    @Test
+//    public void testModifyActorDie() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Die","ShowCorpse"};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals("ShowCorpse", myGame.getNonPlayer(1, 0, 0).getMyDieBehavior());
+//    }
 
 }

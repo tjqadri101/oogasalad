@@ -172,5 +172,23 @@ public class GameFactoryActorTest extends TestCase{
         }
         assertEquals("ShowCorpse", myGame.getNonPlayer(1, 0, 0).getMyDieBehavior());
     }
+    
+/* Will implement when the Game/Engine is ready
+ *   
+ *   @Test
+    public void testDeleteActor() throws FactoryException{
+
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"DeleteActor","ID",0};
+
+        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        NonPlayer myObject = null;
+        try {
+            myObject = (NonPlayer) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        assertEquals(null, myGame.getNonPlayer(1, 0, 0));
+    }*/
 
 }
