@@ -14,14 +14,14 @@ import util.Util;
 public class Player extends GameObject {
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_NONCLEAR_KEYS = "PlayerKeys";
-    public static final double DEFAULT_SPEED = 3;
+    public static final double DEFAULT_SPEED = 5;
 	
 	protected Map<Integer, String> myKeyMap;
 	protected List<String> myNonClearKeys;
 	protected List<String> mySuperMethods;
 	
-	public Player(int uniqueID, String gfxname, double xpos, double ypos, String name, int collisionId, int lives) {
-		super(uniqueID, gfxname, xpos, ypos, name, collisionId, lives);
+	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives) {
+		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives);
 		myKeyMap = new HashMap<Integer, String>();
 		myNonClearKeys = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
 		mySuperMethods = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
@@ -34,7 +34,6 @@ public class Player extends GameObject {
 	@Override
 	public void move(){
 		super.move();
-		if(!myIsAir) setDir(0, 0);
 		checkKeys();
 	}
 	
@@ -49,19 +48,19 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		if (y > 0) ydir = -1;
+		if (y > 0) {y -= DEFAULT_SPEED;}
 	}
 	
 	public void moveDown(){
-		if (y < eng.pfHeight()) ydir = 1;
+		if (y+getYSize() < eng.pfHeight()) {y += DEFAULT_SPEED;}
 	}
 	
 	public void moveLeft(){
-		if (x > 0) xdir = -1;
+		if (x > 0) {x -= DEFAULT_SPEED;}
 	}
 	
 	public void moveRight(){
-		if (x < eng.pfWidth())	xdir = 1;
+		if (x+getXSize() < eng.pfWidth()) {x += DEFAULT_SPEED;}
 	}
 	
 	@Override
