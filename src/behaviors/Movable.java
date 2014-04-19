@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public abstract class Movable {
@@ -9,5 +11,5 @@ public abstract class Movable {
 		myObject = o;
 	}
 	
-	public abstract void move(Object ... args);
+	public abstract void move(List<Object> objects);
 }

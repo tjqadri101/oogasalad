@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public class Move extends Movable{
@@ -9,10 +11,10 @@ public class Move extends Movable{
 	}
 
 	@Override
-	public void move(Object ... args) {
+	public void move(List<Object> objects) {
 		double xspeed, yspeed;
-		xspeed = (Double) args[0];
-		yspeed = (Double) args[1];
+		xspeed = (Double) objects.get(0);
+		yspeed = (Double) objects.get(1);
 		myObject.setSpeed(xspeed, yspeed);
 	}
 }

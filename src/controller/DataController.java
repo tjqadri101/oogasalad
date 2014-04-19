@@ -62,13 +62,14 @@ public class DataController {
 	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
 	 */
 	public List<Object> convertOrderToObjects(String order){
+		System.out.println("convertOrderToObjects called");
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;
-		answer.add(orders[i]);
+		answer.add(orders[i]); //add key
 		i ++;
 		while(i < orders.length){
-			answer.add(orders[i]);
+			answer.add(orders[i]); //add type
 			String type = myDataFormat.getString(orders[i]);
 			String[] types = type.split(","); 
 			if(!types[0].equals(SaladConstants.NULL_TOKEN)){

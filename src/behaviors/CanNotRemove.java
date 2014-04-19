@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public class CanNotRemove extends Removable{
@@ -9,7 +11,7 @@ public class CanNotRemove extends Removable{
 	}
 
 	@Override
-	public void remove() {
+	public void remove(List<Object> params) {
 		// do nothing
 	}
 }

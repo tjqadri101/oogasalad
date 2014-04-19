@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public abstract class Jumpable {
@@ -9,5 +11,5 @@ public abstract class Jumpable {
 		myObject = o;
 	}
 	
-	public abstract void jump(Object ... args);
+	public abstract void jump(List<Object> params);
 }
