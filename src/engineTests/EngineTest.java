@@ -49,16 +49,18 @@ public class EngineTest {
 		Player player = engine.createPlayer(456, "actor_default.png", 100, 100, 100, 200, null, 1, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);
+		player.setShootBehavior("SlowShoot", "ball20-red.gif", 20, 20, 3, 5.0);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
 		player.setKey('W', "moveUp");
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
-//		player.setSpeed(3,0);
+		player.setKey('B', "shoot");
 		
 		game.addCollisionPair(1, "HitterEliminateVictim", 2);
 		game.addTileCollisionPair(2, "StayOnTile", 1);
 		game.addTileCollisionPair(2, "StayOnTile", 2);
+		game.addCollisionPair(3, "PerishTogether", 2);
 	}
 }

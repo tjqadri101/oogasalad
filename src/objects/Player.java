@@ -48,19 +48,31 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		if (y > 0) {y -= DEFAULT_SPEED;}
+		if (y > 0) {
+			y -= DEFAULT_SPEED;
+			ydir = -1;
+		}
 	}
 	
 	public void moveDown(){
-		if (y+getYSize() < eng.pfHeight()) {y += DEFAULT_SPEED;}
+		if (y+getYSize() < eng.pfHeight()) {
+			y += DEFAULT_SPEED;
+			ydir = 1;
+		}
 	}
 	
 	public void moveLeft(){
-		if (x > 0) {x -= DEFAULT_SPEED;}
+		if (x > 0) {
+			x -= DEFAULT_SPEED;
+			xdir = -1;
+		}
 	}
 	
 	public void moveRight(){
-		if (x+getXSize() < eng.pfWidth()) {x += DEFAULT_SPEED;}
+		if (x+getXSize() < eng.pfWidth()) {
+			x += DEFAULT_SPEED;
+			xdir = 1;
+		}
 	}
 	
 	@Override

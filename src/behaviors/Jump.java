@@ -17,6 +17,7 @@ public class Jump extends Jumpable{
 	@Override
 	public void jump(List<Object> params){
 		double magnitude = (Double) params.get(0);
+		myObject.ydir = 1;
 		myObject.yspeed -= magnitude;
 	}
 }
