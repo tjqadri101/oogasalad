@@ -18,6 +18,8 @@ public class Level {
 
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
+	protected String myWinBehavior;
+	protected List<Object> myWinParameters;
 
 	public Level(int id) {
 		myID = id;
@@ -56,6 +58,22 @@ public class Level {
 	public void removeScene(int sceneID) {
 		mySceneMap.remove(sceneID);
 	}
+	
+	public void setWinBehavior(String type, Object ... args){
+		myWinBehavior = type;
+		myWinParameters = new ArrayList<Object>();
+		for(int i = 0; i < args.length; i ++){
+			myWinParameters.add(args[i]);
+		}
+	}
+	
+	public String getWinBehavior(){
+		return myWinBehavior;
+	}
+	
+	public List<Object> getWinParameters(){
+		return myWinParameters;
+	}
 
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
@@ -75,5 +93,12 @@ public class Level {
 		}
 		return answer;
 	}
+	
+	/* @Siyang: 
+         * The following getter added to facilitate testing. 
+         */
+        public Map<Integer, Scene> getMySceneMap(){
+            return mySceneMap;
+        }       
 
 }

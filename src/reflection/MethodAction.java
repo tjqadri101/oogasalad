@@ -57,7 +57,7 @@ public class MethodAction implements ActionListener
         try
         {
             myMethod.invoke(myReceiver, myArgs);
-        }
+        }	
         catch (Exception e)
         {
             throw new ReflectionException(e.getMessage());

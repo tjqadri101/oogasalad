@@ -1,5 +1,7 @@
 package controller;
 
+import imagebuffer.ImageBuffer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,7 @@ import stage.Game;
  */
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-	public static final String DEFAULT_DATA_FORMAT = "DataFormat";
+	public static final String DEFAULT_DATA_FORMAT = "TypeFormat";
 	public static final String DEFAULT_REFLECTION_METHODS = "DataFormatReflection";
 	
 	protected Game myGame;
@@ -27,11 +29,13 @@ public class DataController {
 	protected GameEngine myGameEngine;
 	protected ResourceBundle myDataFormat;
 	protected ResourceBundle myReflectionMethods;
+	protected ImageBuffer myImageBuffer;
 	
 	public DataController(){
 		myGameSaverAndLoader = new GameSaverAndLoader(); 
 		myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
 		myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
+		myImageBuffer = new ImageBuffer();
 	}
 	
 	/**
@@ -62,7 +66,6 @@ public class DataController {
 	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
 	 */
 	public List<Object> convertOrderToObjects(String order){
-		System.out.println("convertOrderToObjects called");
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;
@@ -172,5 +175,9 @@ public class DataController {
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}
+	}
+	
+	public void uploadImage(int x, int y, String source) throws IOException {
+		myImageBuffer.resizedUpload(x, y, source);
 	}
 }
