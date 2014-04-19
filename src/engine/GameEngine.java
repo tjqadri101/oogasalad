@@ -88,26 +88,30 @@ public class GameEngine extends StdGame{
     }
     //drag;move->gravity->collision->setViewOffset
     public void doFrameEdit(){
-    	if (myGame == null) return;
+    	timer++;//
+    	if (myCurrentScene == null) return;
     	if(!drag()){
-    		createTiles();
     		moveObjects();
-    		myGame.getGravity().applyGravity(myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID));
+    		Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
+    		Gravity g = myGame.getGravity();
+    		g.applyGravity(player);
+    		for(GameObject go: myCurrentScene.getGameObjects()){
+    			g.applyGravity(go);
+    		}
     		for (int[] pair: myGame.getCollisionPair()){
-        		checkCollision(pair[0], pair[1]);
-        	}
-        	for (int[] pair: myGame.getTileCollisionPair()){
-        		checkBGCollision(pair[0], pair[1]);
-        	}
-        	Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
-        	if (player != null){
-        		setViewOffset((int) player.x+player.getXSize()/2,(int) player.y+player.getYSize()/2,true);
-        	}
+    			checkCollision(pair[0], pair[1]);
+    		}
+    		for (int[] pair: myGame.getTileCollisionPair()){
+    			checkBGCollision(pair[0], pair[1]);
+    		}
+    		if (player != null){
+    			setViewOffset((int) player.x+player.getXSize()/2,(int) player.y+player.getYSize()/2,true);
+    		}
     	}
     	setViewOffsetEdit();
     }
 
-    private void setViewOffsetEdit() {
+    private boolean setViewOffsetEdit() {
     	int XOfs = 0;
     	int YOfs = 0;
     	if (0 < getMouseX() && getMouseX() < 0.1*viewWidth()){
@@ -123,6 +127,7 @@ public class GameEngine extends StdGame{
     		YOfs += 10;
     	}
     	setViewOffset(viewXOfs()+XOfs,viewYOfs()+YOfs,false);
+    	return XOfs != 0 || YOfs != 0;
     }
     public void paintFrameEdit(){
 		drawString("You are in Editing Mode right now. This is a test message. ",
@@ -333,23 +338,23 @@ public class GameEngine extends StdGame{
     	myTileImgFile = imgfile;
     }
     
-    public void createTiles(){
-    	boolean currentMouseClicked = getMouseButton(1);
-    	
-    	if (!myMouseClicked && currentMouseClicked){
-    		myTileX = getMouseX()/20;
-    		myTileY = getMouseY()/20;
-    	}
-    	if (myMouseClicked && !currentMouseClicked){
-    		int tileX = getMouseX()/20;
-    		int tileY = getMouseY()/20;
-    		createTiles(Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1, myTileCid, myTileImgFile);
-    	}
-    	if (myMouseClicked && currentMouseClicked){
-    		
-    	}
-    	myMouseClicked = currentMouseClicked;
-    }
+//    public void createTiles(){
+//    	boolean currentMouseClicked = getMouseButton(1);
+//    	
+//    	if (!myMouseClicked && currentMouseClicked){
+//    		myTileX = getMouseX()/20;
+//    		myTileY = getMouseY()/20;
+//    	}
+//    	if (myMouseClicked && !currentMouseClicked){
+//    		int tileX = getMouseX()/20;
+//    		int tileY = getMouseY()/20;
+//    		createTiles(Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1, myTileCid, myTileImgFile);
+//    	}
+//    	if (myMouseClicked && currentMouseClicked){
+//    		
+//    	}
+//    	myMouseClicked = currentMouseClicked;
+//    }
     
     //unfinished
     private void loadImage(String path){
