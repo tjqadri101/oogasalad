@@ -96,6 +96,15 @@ public class Game {
 	public Scene getScene(int levelID, int sceneID){
 		return myLevelMap.get(levelID).getScene(sceneID);
 	}
+	
+	/**
+	 * Get an existing level by ID
+	 * @param levelID
+	 * @return Level
+	 */
+	public Level getLevel(int levelID){
+		return myLevelMap.get(levelID);
+	}
 
 	/**
 	 * Called to remove an existing scene from a particular level
@@ -281,9 +290,9 @@ public class Game {
 	 */
 	public List<String> getAttributes() {
 		List <String> answer = new ArrayList<String>();
-		answer.addAll(myScoreManager.getAttributes()); 
-		answer.addAll(myInputManager.getAttributes()); 
-		answer.addAll(myTimerManager.getAttributes()); 
+//		answer.addAll(myScoreManager.getAttributes()); 
+//		answer.addAll(myInputManager.getAttributes()); 
+//		answer.addAll(myTimerManager.getAttributes()); 
 		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
