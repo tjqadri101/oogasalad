@@ -3,6 +3,7 @@ package imagebuffer;
 import game_authoring_environment.ViewFactory;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -44,11 +45,18 @@ public class ImageBuffer {
 	 * Allows for image choosing, physical image creation, and image storing
 	 * into the proper file
 	 */
-	public void loadAndSave() throws IOException {
+	public void upload() throws IOException {
 		setPath();
 		if (chosenFile != null) copyFile();
 	}
 
+	public void resizedUpload(int x, int y) throws IOException {
+		setPath();
+		if (chosenFile != null) {
+			copyFile();
+			resizeImage(x, y);
+		}
+	}
 	/*
 	 * Create a dialog box to ask the user for a file URL
 	 */
@@ -72,6 +80,7 @@ public class ImageBuffer {
 		if (actionDialog != JFileChooser.APPROVE_OPTION) {
 			return;
 		}
+		chosenFile = chooser.getSelectedFile();
 		fileName = chosenFile.getName();
 	}
 	
@@ -91,4 +100,22 @@ public class ImageBuffer {
 		return finalPath;
 	}
 
+	public void resizeImage(int x, int y) throws IOException {
+		//read file
+		File output = new File (finalPath);
+		BufferedImage img = ImageIO.read(output);
+		
+		//resize the image
+		int w = img.getWidth();  
+	    int h = img.getHeight();  
+	    BufferedImage resized = new BufferedImage(x, y, img.getType());  
+	    Graphics2D g = resized.createGraphics();  
+	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+	    RenderingHints.VALUE_INTERPOLATION_BILINEAR);  
+	    g.drawImage(img, 0, 0, x, y, 0, 0, w, h, null);  
+	    g.dispose();  
+	    
+	    //write image to file
+	    ImageIO.write(resized, "jpg", output);
+	}
 }
