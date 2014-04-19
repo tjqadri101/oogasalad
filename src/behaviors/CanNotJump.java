@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public class CanNotJump extends Jumpable {
@@ -8,7 +10,8 @@ public class CanNotJump extends Jumpable {
 		super(o);
 	}
 	
-	public void jump(double magnitude){
+	@Override
+	public void jump(List<Object> params){
 		// do nothing
 	}
 }

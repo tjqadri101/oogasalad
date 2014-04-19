@@ -48,33 +48,45 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		if (y > 0) {y -= DEFAULT_SPEED;}
+		if (y > 0) {
+			y -= DEFAULT_SPEED;
+			ydir = -1;
+		}
 	}
 	
 	public void moveDown(){
-		if (y+getYSize() < eng.pfHeight()) {y += DEFAULT_SPEED;}
+		if (y+getYSize() < eng.pfHeight()) {
+			y += DEFAULT_SPEED;
+			ydir = 1;
+		}
 	}
 	
 	public void moveLeft(){
-		if (x > 0) {x -= DEFAULT_SPEED;}
+		if (x > 0) {
+			x -= DEFAULT_SPEED;
+			xdir = -1;
+		}
 	}
 	
 	public void moveRight(){
-		if (x+getXSize() < eng.pfWidth()) {x += DEFAULT_SPEED;}
+		if (x+getXSize() < eng.pfWidth()) {
+			x += DEFAULT_SPEED;
+			xdir = 1;
+		}
 	}
 	
 	@Override
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
-		answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
-		answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
-		for(int otherID: myCollisionMap.keySet()){
-			answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionMap.get(otherID) + "," + otherID);
-		}
-		for(int key: myKeyMap.keySet()){
-			answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.SET_KEY + "," + key + "," + myKeyMap.get(key));
-		}
+//		answer.add(SaladConstants.CREATE_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
+//		answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
+//		answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
+//		for(int otherID: myCollisionMap.keySet()){
+//			answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionMap.get(otherID) + "," + otherID);
+//		}
+//		for(int key: myKeyMap.keySet()){
+//			answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.SET_KEY + "," + key + "," + myKeyMap.get(key));
+//		}
 		return answer;
 	}
 

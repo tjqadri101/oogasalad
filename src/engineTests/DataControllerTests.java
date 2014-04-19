@@ -12,7 +12,7 @@ import controller.DataController;
 import engine.GameEngine;
 
 public class DataControllerTests {
-	public static final String CREATE_ACTOR_ORDER = "CreateActor,ID,0,Image,actor_default.png,Position,0,0,Name,Hero,CollisionID,0,Lives,1";
+	public static final String CREATE_ACTOR_ORDER = "CreateActor,ID,0,PlayerImage,actor_default.png,20,20,Position,0.0,0.0,Name,Hero,CollisionID,0,Lives,1";
 	
 	protected DataController myDataController;
 	protected GameEngine myEngine;
@@ -21,10 +21,10 @@ public class DataControllerTests {
 	protected void setUp(){
     	myDataController = new DataController();
     	myEngine = myDataController.initGameEngine(true);
-//		myGame.addLevel(1);
-//		myGame.addScene(1, 0);
-//		myEngine.setCurrentScene(0);
-//		myEngine.setCurrentLevel(0);    
+//    	myGame = myEngine.getGame();
+		myGame.addLevel(1);
+		myGame.addScene(1, 0);
+		myEngine.setCurrentScene(1, 0); 
 	}
     
 	@Test
@@ -34,7 +34,13 @@ public class DataControllerTests {
 	}
 	
 	@Test
-	public void testConvertStringToObjects(){
+	public void testConvertStringToObjects(){ 
+    	myDataController = new DataController();
+    	myEngine = myDataController.initGameEngine(true);
+    	myGame = myEngine.getGame();
+		myGame.addLevel(1);
+		myGame.addScene(1, 0);
+		myEngine.setCurrentScene(1, 0); 
     	
 		String order = CREATE_ACTOR_ORDER;
 		List<Object> tests = myDataController.convertOrderToObjects(order);
@@ -46,8 +52,10 @@ public class DataControllerTests {
 		objects.add("CreateActor");
 		objects.add("ID");
 		objects.add((Integer)0);
-		objects.add("Image");
+		objects.add("PlayerImage");
 		objects.add("actor_default.png");
+		objects.add((Integer) 20);
+		objects.add((Integer) 20);
 		objects.add("Position");
 		objects.add((Double)0.0);
 		objects.add((Double)0.0);

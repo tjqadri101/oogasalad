@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public class Immobile extends Movable {
@@ -9,7 +11,7 @@ public class Immobile extends Movable {
 	}
 
 	@Override
-	public void move(double xspeed, double yspeed) {
+	public void move(List<Object> objects) {
 		// do nothing
 	}
 }

@@ -36,29 +36,34 @@ public class EngineTest {
 		engine.setCurrentScene(1, 0);
 		game.setGravity(0.1);
 		
-		engine.setTiles(0,30,980,1,2,"brick.png");
-		engine.setTiles(20,15,10,1,2,"brick.png");
-		engine.setTiles(30,30,5,1,0,"null");
-		//engine.setTiles(0,0,40,1,1,"brick.png");
+		engine.createTiles(0,30,980,1,2,"brick.png");
+		engine.createTiles(20,15,10,1,2,"brick.png");
+		engine.createTiles(30,30,5,1,0,"null");
+//		engine.setDefaultTiles(0, "null");
+		engine.setDefaultTiles(2, "brick.png");
+//		engine.createTiles(0,0,40,1,1,"brick.png");
 		engine.setBackground("bg.png");
 		
 		NonPlayer actor = engine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
 		actor.setDieBehavior("RegularDie");
-		//actor.setMoveBehavior("RegularMove", -2, 1);
+//		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
+		actor.setMoveBehavior("BackForthMove", 1.0);
 		
-		Player player = engine.createPlayer(456, "actor_default.png", 100, 100, 100, 200, null, 1, 1);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);
+		player.setShootBehavior("SlowShoot", "ball20-red.gif", 20, 20, 3, 5.0);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
 		player.setKey('W', "moveUp");
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
-//		player.setSpeed(3,0);
+		player.setKey('B', "shoot");
 		
 		game.addCollisionPair(1, "HitterEliminateVictim", 2);
 		game.addTileCollisionPair(2, "StayOnTile", 1);
 		game.addTileCollisionPair(2, "StayOnTile", 2);
+		game.addCollisionPair(3, "PerishTogether", 2);
 	}
 }
