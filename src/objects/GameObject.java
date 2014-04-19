@@ -20,37 +20,45 @@ public abstract class GameObject extends JGObject {
     public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
-	protected ResourceBundle myBehaviors;
 //	protected ScoreManager myScoreManager;
-	private String myDieBehavior;
-	private String myMoveBehavior;
-	private double mySetXSpeed;
-	protected double mySetYSpeed;
-	protected Map<Integer, String> myCollisionMap;
-	protected Map<Integer, String> myTileCollisionMap;
-//	protected Map<Integer, String>
-	protected int myLives;
-	protected int myUniqueID;
+    
+	protected ResourceBundle myBehaviors;
+	protected String myDieBehavior;
+	protected String myMoveBehavior;
 	protected String myJumpBehavior;
-	protected double myJumpForceMagnitude;
 	protected String myShootBehavior;
-	protected double myInitX;
-	protected double myInitY;
-	protected int myInitLives;
+	protected Map<Integer, String> myCollisionBehavior;
+	protected Map<Integer, String> myTileCollisionBehavior;
+	
 	protected int myShootFrequency;
 	protected String myShootImage;
 	protected int myShootColid;
 	protected int myShootXSize; 
 	protected int myShootYSize;
 	protected double myShootSpeed;
+	
 	protected int myXSize;
 	protected int myYSize;
+	protected double myInitX;
+	protected double myInitY;
+	protected int myInitLives;
+	protected int myLives;
+	protected int myUniqueID;
+
+	protected List<Object> myShootParameters;
+	protected List<Object> myDieParameters;
+	protected List<Object> myMoveParameters;
+	protected List<Object> myJumpParameters;
+	protected Map<Integer, List<Object>> myCollisionParameters;
+	protected Map<Integer, List<Object>> myTileCollisionParameters;
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
-		myCollisionMap = new HashMap<Integer, String>();
-		myTileCollisionMap = new HashMap<Integer, String>();
+		myCollisionBehavior = new HashMap<Integer, String>();
+		myCollisionParameters = new HashMap<Integer, List<Object>>();
+		myTileCollisionBehavior = new HashMap<Integer, String>();
+		myTileCollisionParameters = new HashMap<Integer, List<Object>>();
 		setPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
@@ -110,8 +118,12 @@ public abstract class GameObject extends JGObject {
 	 * Set the Die Behavior
 	 * @param a String specifying one of the die behaviors
 	 */
-	public void setDieBehavior(String s){
+	public void setDieBehavior(String s, Object ... args){
 		myDieBehavior = s;
+		myDieParameters = new ArrayList<Object>();
+		for(int i = 0; i < args.length; i ++){
+			myDieParameters.add(args[i]);
+		}
 	}
 	
 	/**
@@ -143,27 +155,25 @@ public abstract class GameObject extends JGObject {
 	 * @param String specifying one of the jump behaviors
 	 * @param Magnitude of the initial jump speed
 	 */
-	public void setJumpBehavior(String s, double magnitude){
+	public void setJumpBehavior(String s, Object ... args){
 		myJumpBehavior = s;
-		myJumpForceMagnitude = magnitude;
+		myJumpParameters = new ArrayList<Object>();
+		for(int i = 0; i < args.length; i ++){
+			myJumpParameters.add(args[i]);
+		}
 	}
 	
-	/**
-	 * Set the shoot behavior
-	 * @param frequency: number of bullets for one shoot
-	 * @param imageName: the file name of the image of the bullet
-	 * @param xsize: the x size of the image of the bullet
-	 * @param ysize: the y size of the image of the bullet
-	 * @param colid: the collision ID of the bullet
-	 * @param speed: the speed of the bullet
-	 */
-	public void setShootBehavior(int frequency, String imageName, int xsize, int ysize, int colid, double speed){
-		myShootFrequency = frequency;
-		myShootImage = imageName;
-		myShootColid = colid;
-		myShootXSize = xsize;
-		myShootYSize = ysize;
-		myShootSpeed = speed;
+    /**
+     * Set the shoot behavior
+     * @param s: shoot type
+     * @param args: parameters
+     */
+	public void setShootBehavior(String s, Object ... args){
+		myShootBehavior = s;
+		myShootParameters = new ArrayList<Object>();
+		for(int i = 0; i < args.length; i ++){
+			myShootParameters.add(args[i]);
+		}
 	}
 	
 	/**
@@ -172,10 +182,12 @@ public abstract class GameObject extends JGObject {
 	 * @param xspeed: the x speed 
 	 * @param yspeed: the y speed
 	 */
-	public void setMoveBehavior(String s, double xspeed, double yspeed){
+	public void setMoveBehavior(String s, Object ... args){
 		myMoveBehavior = s;
-		mySetXSpeed = xspeed;
-		mySetYSpeed = yspeed;
+		myMoveParameters = new ArrayList<Object>();
+		for(int i = 0; i < args.length; i ++){
+			myMoveParameters.add(args[i]);
+		}
 	}
 	
 	/**
@@ -183,8 +195,13 @@ public abstract class GameObject extends JGObject {
 	 * @param type: String specifying the collision behavior
 	 * @param id: the collision ID of the hitter
 	 */
-	public void setCollisionBehavior(String type, int otherColid){
-		myCollisionMap.put(otherColid, type);
+	public void setCollisionBehavior(String type, int otherColid, Object ... args){
+		myCollisionBehavior.put(otherColid, type);
+		List<Object> objects = new ArrayList<Object>();
+		for(int i = 0; i < args.length; i ++){
+			objects.add(args[i]);
+		}
+		myCollisionParameters.put(otherColid, objects);
 	}
 	
 	/**
@@ -192,12 +209,18 @@ public abstract class GameObject extends JGObject {
 	 * @param type: String specifying the tile collision behavior
 	 * @param tileID: the tile collision ID
 	 */
-	public void setTileCollisionBehavior(String type, int tileID){
-		myTileCollisionMap.put(tileID, type);
+	public void setTileCollisionBehavior(String type, int tileColid, Object ... args){
+		myTileCollisionBehavior.put(tileColid, type);
+		List<Object> objects = new ArrayList<Object>();
+		for(int i = 0; i < args.length; i ++){
+			objects.add(args[i]);
+		}
+		myTileCollisionParameters.put(tileColid, objects);
 	}
 	
 	public void die(){
-		behaviorNoParameterReflection(myBehaviors, getMyDieBehavior(), "remove");	
+		if(myDieBehavior == null) return;
+		behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, "remove");	
 	}
 	
 	/**
@@ -209,14 +232,8 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void jump(){
-		System.out.println("jump called");
 		if(myJumpBehavior == null) return;
-		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myJumpBehavior), this);
-			Reflection.callMethod(behavior, "jump", myJumpForceMagnitude);	
-		} catch (Exception e){
-			e.printStackTrace(); //should never reach here
-		}
+		behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, "jump");
 	}
 	
 	/**
@@ -225,11 +242,11 @@ public abstract class GameObject extends JGObject {
 	 * @param myString
 	 * @param methodName
 	 */
-	protected void behaviorNoParameterReflection(ResourceBundle myBundle, String myString, String methodName){
+	protected void behaviorReflection(ResourceBundle myBundle, String myString, List<Object> objects, String methodName){
 		if(myString == null) return;
 		try{
 			Object behavior = Reflection.createInstance(myBundle.getString(myString), this);
-			Reflection.callMethod(behavior, methodName);	
+			Reflection.callMethod(behavior, methodName, objects);	
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}
@@ -243,68 +260,33 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void hit(JGObject other)
     {
-		if(!myCollisionMap.containsKey(other.colid)) return;
-		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myCollisionMap.get(other.colid)), this);
-			Reflection.callMethod(behavior, "collide", other);	
-		} catch (Exception e){
-			e.printStackTrace(); // should never reach here
-		}
+		if(!myCollisionBehavior.containsKey(other.colid)) return;
+		List<Object> params = myCollisionParameters.get(other.colid);
+		params.add(other); //add the hitter to the end of the parameter list
+		behaviorReflection(myBehaviors, myCollisionBehavior.get(other.colid), params, "collide");
     }
 	
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
-		if(!myTileCollisionMap.containsKey(tilecid)) return;
-		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(myTileCollisionMap.get(tilecid)), this);
-			Reflection.callMethod(behavior, "collide", tilecid, tx, ty, txsize, tysize);	
-		} catch (Exception e){
-			e.printStackTrace(); // should never reach here
-		} 
+		if(!myTileCollisionBehavior.containsKey(tilecid)) return;
+		List<Object> params = myTileCollisionParameters.get(tilecid);
+		params.add(tilecid);
+		params.add(tx);
+		params.add(ty);
+		params.add(txsize);
+		params.add(tysize);
+		behaviorReflection(myBehaviors, myTileCollisionBehavior.get(tilecid), params, "collide");
 	}
 	
 	public void autoMove(){
 		if(myMoveBehavior == null) return;
-		try{
-			Object behavior = Reflection.createInstance(myBehaviors.getString(getMyMoveBehavior()), this);
-			Reflection.callMethod(behavior, "move", getMySetXSpeed(), mySetYSpeed);	
-		} catch (Exception e){
-			e.printStackTrace(); //should never reach here
-		}
+		behaviorReflection(myBehaviors, myMoveBehavior, myMoveParameters, "move");
 	}
 	
 	public void shoot(){
-		if(myShootImage == null) return;
-		GameEngine engine = (GameEngine) eng;
-		double xface = xdir * xspeed;
-		double yface = ydir * yspeed;
-		double shootXSpeed, shootYSpeed, xpos, ypos;
-		if(xface < 0){
-			xpos = x - myShootXSize;
-			shootXSpeed = -myShootSpeed;
-		}
-		else if (xface > 0){
-			xpos = x + myXSize;
-			shootXSpeed = myShootSpeed;
-		}
-		else{
-			xpos = x + myXSize/2;
-			shootXSpeed = 0;
-		}
-		if(yface < 0){
-			ypos = y - myShootYSize;
-			shootYSpeed = -myShootSpeed;
-		}
-		else if (yface > 0){
-			ypos = y + myYSize; 
-			shootYSpeed = myShootSpeed;
-		}
-		else{
-			ypos = y + myYSize/2;
-			shootYSpeed = 0;
-		}
-		NonPlayer object = engine.createActor(SaladConstants.SHOOT_UNIQUE_ID, myShootImage, myShootXSize, myShootYSize, xpos, ypos, SaladConstants.SHOOT_NAME, myShootColid, SaladConstants.SHOOT_LIVES);
-		object.setSpeed(shootXSpeed, shootYSpeed);
+		if(myShootBehavior == null) return;
+		List<Object> params = myShootParameters;
+		behaviorReflection(myBehaviors, myShootBehavior, params, "shoot");
 	}
 	
 	/**
@@ -314,12 +296,12 @@ public abstract class GameObject extends JGObject {
 	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
-		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
-		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
-		for(int otherID: myCollisionMap.keySet()){
-			answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionMap.get(otherID) + "," + otherID);
-		}
+//		answer.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
+//		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
+//		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
+//		for(int otherID: myCollisionBehavior.keySet()){
+//			answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionBehavior.get(otherID) + "," + otherID);
+//		}
 		return answer;
 	}
 	
@@ -333,15 +315,6 @@ public abstract class GameObject extends JGObject {
     public String getMyMoveBehavior () {
         return myMoveBehavior;
     }
-
-
-    /**
-     * @return the mySetXSpeed
-     */
-    public double getMySetXSpeed () {
-        return mySetXSpeed;
-    }
-
 
     /**
      * @return the myDieBehavior

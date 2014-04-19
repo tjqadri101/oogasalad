@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public class StayOnTile extends TileCollision {
@@ -9,7 +11,6 @@ public class StayOnTile extends TileCollision {
 	}
 
 	/**
-	 * 
 	 * @param tilecid
 	 * @param tx
 	 * @param ty
@@ -17,7 +18,7 @@ public class StayOnTile extends TileCollision {
 	 * @param tysize
 	 */
 	@Override
-	public void collide(Object ... args) {
+	public void collide(List<Object> objects) {
 		myObject.setSpeed(0);
 		myObject.setPos(myObject.getLastX(), myObject.getLastY());
 	}

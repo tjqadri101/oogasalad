@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public abstract class Collision {
@@ -9,5 +11,5 @@ public abstract class Collision {
 		myObject = o;
 	}
 	
-	public abstract void collide(Object ... args);
+	public abstract void collide(List<Object> objects);
 }

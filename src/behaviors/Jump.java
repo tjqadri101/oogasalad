@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public class Jump extends Jumpable{
@@ -13,8 +15,8 @@ public class Jump extends Jumpable{
 	 * @param magnitude
 	 */
 	@Override
-	public void jump(Object ... args){
-		double magnitude = (Double) args[0];
+	public void jump(List<Object> params){
+		double magnitude = (Double) params.get(0);
 		myObject.yspeed -= magnitude;
 	}
 }

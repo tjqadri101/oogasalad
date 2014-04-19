@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public class PerishTogether extends Collision{
@@ -12,9 +14,9 @@ public class PerishTogether extends Collision{
 	 * @param GameObject Hitter
 	 */
 	@Override
-	public void collide(Object ... args) {
+	public void collide(List<Object> objects) {
 		myObject.die();
-		GameObject hitter = (GameObject) args[0];
+		GameObject hitter = (GameObject) objects.get(0);
 		hitter.die();
 	}
 }
