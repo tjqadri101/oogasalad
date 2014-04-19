@@ -25,6 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import controller.GAEController;
 import reflection.ReflectionException;
 import reflection.Reflection;
+import reflection.MethodAction;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
@@ -125,9 +126,10 @@ public class MenuBar extends JMenuBar{
 	
 	private JComponent makeMenuItem(String label, String method) {
 		JMenuItem m = new JMenuItem(label);
-
-		try {
-			final Method onClickMethod = MenuBar.class
+		MethodAction action = new MethodAction(getCurrentInstance() ,method);
+		m.addActionListener(action);
+		/*try {
+			final Method onClickMethod = getCurrentInstance().getClass()
 					.getDeclaredMethod(method);
 			m.addActionListener(new ActionListener() {
 				@Override
@@ -146,10 +148,12 @@ public class MenuBar extends JMenuBar{
 
 		} catch (Exception e) {
 			throw new ReflectionException(e.getMessage());
-		}
+		}*/
 		return m;
 	}
 	
+	
+
 	private MenuBar getCurrentInstance(){
 		return this;
 	}

@@ -25,6 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import controller.DataController;
 import controller.GAEController;
+import reflection.MethodAction;
 import reflection.ReflectionException;
 import reflection.Reflection;
 
@@ -101,8 +102,9 @@ public class PlayMenuBar extends JMenuBar {
 
 	private JComponent makeMenuItem(String label, String method) {
 		JMenuItem m = new JMenuItem(label);
-
-		try {
+		MethodAction action = new MethodAction(getCurrentInstance() ,method);
+		m.addActionListener(action);
+		/*try {
 			final Method onClickMethod = PlayMenuBar.class
 					.getDeclaredMethod(method);
 			m.addActionListener(new ActionListener() {
@@ -121,7 +123,7 @@ public class PlayMenuBar extends JMenuBar {
 
 		} catch (Exception e) {
 			throw new ReflectionException(e.getMessage());
-		}
+		}*/
 		return m;
 	}
 
