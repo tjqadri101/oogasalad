@@ -21,6 +21,13 @@ public abstract class GameObject extends JGObject {
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
 //	protected ScoreManager myScoreManager;
+	protected int myXSize;
+	protected int myYSize;
+	protected double myInitX;
+	protected double myInitY;
+	protected int myInitLives;
+	protected int myLives;
+	protected int myUniqueID;
     
 	protected ResourceBundle myBehaviors;
 	protected String myDieBehavior;
@@ -29,21 +36,6 @@ public abstract class GameObject extends JGObject {
 	protected String myShootBehavior;
 	protected Map<Integer, String> myCollisionBehavior;
 	protected Map<Integer, String> myTileCollisionBehavior;
-	
-	protected int myShootFrequency;
-	protected String myShootImage;
-	protected int myShootColid;
-	protected int myShootXSize; 
-	protected int myShootYSize;
-	protected double myShootSpeed;
-	
-	protected int myXSize;
-	protected int myYSize;
-	protected double myInitX;
-	protected double myInitY;
-	protected int myInitLives;
-	protected int myLives;
-	protected int myUniqueID;
 
 	protected List<Object> myShootParameters;
 	protected List<Object> myDieParameters;
