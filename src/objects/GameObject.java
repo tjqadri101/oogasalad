@@ -135,7 +135,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myDieParameters.add(args[i]);
 		}
-		addAttributes(myDieBehavior, myDieParameters);
+		addAttributes(SaladConstants.ID, myUniqueID, myDieBehavior, myDieBehavior, myDieParameters);
 	}
 	
 	/**
@@ -143,9 +143,19 @@ public abstract class GameObject extends JGObject {
 	 * @param s
 	 * @param params
 	 */
-	protected void addAttributes(String s, List<Object> params){
+	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, List<Object> params){
 		StringBuilder attribute = new StringBuilder();
-		attribute.append(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + s);
+		attribute.append(SaladConstants.MODIFY_ACTOR + "," + firstType + "," + param + "," + secondType + "," + typeToken);
+		for(Object o: params){
+			String att = o.toString();
+			attribute.append("," + att);
+		}
+		myAttributes.add(attribute.toString());
+	}
+	
+	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, int integerToken, List<Object> params){
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(SaladConstants.MODIFY_ACTOR + "," + firstType + "," + param + "," + secondType + "," + typeToken + "," + integerToken);
 		for(Object o: params){
 			String att = o.toString();
 			attribute.append("," + att);
@@ -188,7 +198,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myJumpParameters.add(args[i]);
 		}
-		addAttributes(myJumpBehavior, myJumpParameters);
+		addAttributes(SaladConstants.ID, myUniqueID, myJumpBehavior, myJumpBehavior, myJumpParameters);
 	}
 	
     /**
@@ -202,7 +212,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myShootParameters.add(args[i]);
 		}
-		addAttributes(myShootBehavior, myShootParameters);
+		addAttributes(SaladConstants.ID, myUniqueID, myShootBehavior, myShootBehavior, myShootParameters);
 	}
 	
 	/**
@@ -217,7 +227,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myMoveParameters.add(args[i]);
 		}
-		addAttributes(myMoveBehavior, myMoveParameters);
+		addAttributes(SaladConstants.ID, myUniqueID, myMoveBehavior, myMoveBehavior, myMoveParameters);
 	}
 	
 	/**
@@ -232,6 +242,7 @@ public abstract class GameObject extends JGObject {
 			objects.add(args[i]);
 		}
 		myCollisionParameters.put(otherColid, objects);
+		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, otherColid, objects);
 	}
 	
 	/**
@@ -246,6 +257,7 @@ public abstract class GameObject extends JGObject {
 			objects.add(args[i]);
 		}
 		myTileCollisionParameters.put(tileColid, objects);
+		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, tileColid, objects);
 	}
 	
 	public void die(){
@@ -327,11 +339,6 @@ public abstract class GameObject extends JGObject {
 	 * @return a list of Strings
 	 */
 	public List<String> getAttributes(){
-//		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
-//		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
-//		for(int otherID: myCollisionBehavior.keySet()){
-//			answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionBehavior.get(otherID) + "," + otherID);
-//		}
 		return myAttributes;
 	}
 	
