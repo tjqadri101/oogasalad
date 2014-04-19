@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import engineManagers.ScoreManager;
+//import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 import jgame.JGObject;
@@ -27,6 +27,9 @@ public abstract class GameObject extends JGObject {
 	protected int myUniqueID;
 	protected int myJumpTimes;
 	protected boolean myIsInAir;
+	protected double myInitXSpeed;
+	protected double myInitYSpeed;
+	protected List<String> myAttributes;
     
 	protected ResourceBundle myBehaviors;
 	protected String myDieBehavior;
@@ -55,6 +58,12 @@ public abstract class GameObject extends JGObject {
 		myUniqueID = uniqueID;
 		myXSize = xsize;
 		myYSize = ysize;
+		myAttributes = new ArrayList<String>();
+		
+		myAttributes.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
+				SaladConstants.IMAGE + "," + getGraphic() + "," + myXSize + "," + myYSize + "," +
+				SaladConstants.POSITION + "," + myInitX + "," + myInitY + "," + SaladConstants.NAME + "," + getName() + "," + 
+				SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.LIVES + "," + myInitLives);
 	}
 	
 	/**
@@ -78,6 +87,14 @@ public abstract class GameObject extends JGObject {
 		super.setPos(x, y);
 		myInitX = x;
 		myInitY = y;
+		myAttributes.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.POSITION + "," + myInitX + "," + myInitY);
+	}
+	
+	@Override
+	public void setSpeed(double xspeed, double yspeed){
+		super.setSpeed(xspeed, yspeed);
+		myInitXSpeed = xspeed;
+		myInitYSpeed = yspeed;
 	}
 	
 	/**
@@ -288,14 +305,12 @@ public abstract class GameObject extends JGObject {
 	 * @return a list of Strings
 	 */
 	public List<String> getAttributes(){
-		List<String> answer = new ArrayList<String>();
-//		answer.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
 //		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
 //		answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
 //		for(int otherID: myCollisionBehavior.keySet()){
 //			answer.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionBehavior.get(otherID) + "," + otherID);
 //		}
-		return answer;
+		return myAttributes;
 	}
 	
 /* @NOTE:

@@ -271,7 +271,7 @@ public class GameEngine extends StdGame{
     
     
     //unfinished
-    public void createTiles(int top, int left, int width, int height, int cid, String imgfile){
+    public void createTiles(int cid, String imgfile, int top, int left, int width, int height){
     	if (cid > 9) return;
     	defineImage(((Integer) cid).toString(),((Integer) cid).toString(),cid,imgfile,"-");
     	String temp = "";
@@ -325,7 +325,7 @@ public class GameEngine extends StdGame{
     		if (myClickedID == -1){
     			int tileX = MouseX/20;
     			int tileY = MouseY/20;
-    			createTiles(Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1, myTileCid, myTileImgFile);
+    			createTiles(myTileCid, myTileImgFile, Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1);
     		}
     		myClickedID = -1;
     	}
