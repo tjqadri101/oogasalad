@@ -18,6 +18,7 @@ import java.nio.channels.FileChannel;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -37,6 +38,8 @@ public class ImageBuffer {
 	private String finalPath;
 	private File chosenFile;
 	private String fileName;
+	private String source;
+	private JPanel container;
 
 	public ImageBuffer( ) {
 		
@@ -46,56 +49,49 @@ public class ImageBuffer {
 	 * Allows for image choosing, physical image creation, and image storing
 	 * into the proper file
 	 */
-	public void upload(String finalDestination) throws IOException {
-		setPath(finalDestination);
-		if (chosenFile != null) copyFile();
+	public void upload(String source) throws IOException {
+		makeFile(source);
+		setPath();
+		if (chosenFile != null) {
+			copyFile();
+		}
 	}
 	
 	/*
 	 * Same as the above method, except it allows for resizing of the image
 	 */
-	public void resizedUpload(int x, int y, String finalDestination) throws IOException {
-		setPath(finalDestination);
+	public void resizedUpload(int x, int y, String source) throws IOException {
+		makeFile(source);
+		setPath();
 		if (chosenFile != null) {
 			copyFile();
 			resizeImage(x, y);
 		}
 	}
 
-	public void setPath() {
-		finalPath = DEFAULT_FOLDER_PATH + fileName;
-	}
-	
-	public void setPath(String finalDestination) {
-		finalPath = finalDestination + fileName;
-	}
-
-	public void makeFile(String url) throws MalformedURLException {
-		URL source = new URL (url);
-		File f = new File (source.getFile());
+	/*
+	 * Create the file from the String URL given from the user
+	 */
+	public void makeFile(String source) throws MalformedURLException {
+		File f = new File (source);
 		chosenFile = f;
 		fileName = chosenFile.getName();
 	}
 	
+	/*
+	 * Sets the destination for the copied file
+	 */
+	public void setPath() {
+		finalPath = DEFAULT_FOLDER_PATH + fileName;
+		System.out.println(finalPath);
+	}
 	
-//	TESTING FOR URL GRABBING
-	
-//	/*
-//	 * Create a dialog box to ask the user for a file URL
-//	 */
-//	private void chooseImage() {
-//		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg",
-//				"png", "gif", "jpeg");
-//		JFileChooser chooser = ViewFactory.createJFileChooser();
-//		chooser.setApproveButtonText("Open");
-//		chooser.setFileFilter(filter);
-//		int actionDialog = chooser.showOpenDialog(container);
-//		if (actionDialog != JFileChooser.APPROVE_OPTION) {
-//			return;
-//		}
-//		chosenFile = chooser.getSelectedFile();
-//		fileName = chosenFile.getName();
-//	}
+	/*
+	 * Allows the user to choose a new place to copy the file
+	 */
+	public void setPath(String finalDestination) {
+		finalPath = finalDestination + fileName;
+	}
 	
 	/*
 	 * This method will transfer the chosenFile to the final destination
@@ -137,4 +133,23 @@ public class ImageBuffer {
 	    //write image to file
 	    ImageIO.write(resized, "jpg", output);
 	}
+	
+//	TESTING FOR URL GRABBING
+	
+	/*
+	 * Create a dialog box to ask the user for a file URL
+	 */
+//	private void chooseFile() {
+//		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg",
+//				"png", "gif", "jpeg");
+//		JFileChooser chooser = ViewFactory.createJFileChooser();
+//		chooser.setApproveButtonText("Open");
+//		chooser.setFileFilter(filter);
+//		int actionDialog = chooser.showOpenDialog(container);
+//		if (actionDialog != JFileChooser.APPROVE_OPTION) {
+//			return;
+//		}
+//		chosenFile = chooser.getSelectedFile();
+//		fileName = chosenFile.getName();
+//	}
 }
