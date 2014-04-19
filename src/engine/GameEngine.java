@@ -72,7 +72,7 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        createTiles(0, 0, 0, 0, 0, "null");//why?
+        createTiles(0, "null", 0, 0, 0, 0);//why?
         
         setPFSize(1200,36);
 		//setPFWrap(false,true,0,0);

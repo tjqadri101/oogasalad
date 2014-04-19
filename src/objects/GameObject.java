@@ -87,7 +87,8 @@ public abstract class GameObject extends JGObject {
 		super.setPos(x, y);
 		myInitX = x;
 		myInitY = y;
-		myAttributes.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.POSITION + "," + myInitX + "," + myInitY);
+		myAttributes.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
+				SaladConstants.POSITION + "," + myInitX + "," + myInitY);
 	}
 	
 	@Override
@@ -95,6 +96,8 @@ public abstract class GameObject extends JGObject {
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
 		myInitYSpeed = yspeed;
+		myAttributes.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
+				SaladConstants.SPEED + "," + myInitXSpeed + "," + myInitYSpeed);
 	}
 	
 	/**
@@ -132,6 +135,22 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myDieParameters.add(args[i]);
 		}
+		addAttributes(myDieBehavior, myDieParameters);
+	}
+	
+	/**
+	 * Add attribute for behaviors already set
+	 * @param s
+	 * @param params
+	 */
+	protected void addAttributes(String s, List<Object> params){
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + s);
+		for(Object o: params){
+			String att = o.toString();
+			attribute.append("," + att);
+		}
+		myAttributes.add(attribute.toString());
 	}
 	
 	/**
@@ -169,6 +188,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myJumpParameters.add(args[i]);
 		}
+		addAttributes(myJumpBehavior, myJumpParameters);
 	}
 	
     /**
@@ -182,6 +202,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myShootParameters.add(args[i]);
 		}
+		addAttributes(myShootBehavior, myShootParameters);
 	}
 	
 	/**
@@ -196,6 +217,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myMoveParameters.add(args[i]);
 		}
+		addAttributes(myMoveBehavior, myMoveParameters);
 	}
 	
 	/**
