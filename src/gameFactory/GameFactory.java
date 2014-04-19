@@ -29,7 +29,7 @@ import reflection.*;
  * @VirtualCo-Author: Issac (Shenghan) Chen
  */
 public class GameFactory {
-    private JGEngine myEngine;
+    private GameEngine myEngine;
     private String myOrder;
     private int  myLevelID, mySceneID;
     private Game myGame;
@@ -39,6 +39,10 @@ public class GameFactory {
     public static final String DEFAULT_PATH= "FactoryOrderPath"; 
     public static final String DEFAULT_METHOD= "TypeMethodMatcher";
     protected ResourceBundle myFormat, myPath, myMethod;
+        private String instruction;
+        private List<Object> objArgList;
+        private List<String> typeMethodList;
+    
     
     public GameFactory(GameEngine engine){
         myEngine = engine;
@@ -56,52 +60,57 @@ public class GameFactory {
         myLevelID = ((GameEngine) myEngine).getCurrentLevelID();
         mySceneID = ((GameEngine) myEngine).getCurrentSceneID();
         
-        String instruction = (String) order.get(0);
+        instruction = (String) order.get(0);
         parsedMap = parseOrder(order, instruction);
         List<Object> objArgList = (List<Object>) parsedMap.get("Argument");
-        List<String> typeMethodList =  (List<String>) parsedMap.get("Type");
 //        System.out.println("the typeMethodList in the gameFactory after parsed is " + typeMethodList);
-        
+               
         String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
-        String methodToInvoke = myMethod.getString(typeMethodList.get(1));
-        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);
-        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
+        String RFIndicator = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);   
+        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
+        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
         
+        Object refObj = Reflection.callMethod(this, "get"+RFIndicator); 
         return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", myLevelID, mySceneID, objArgList, 
-                              methodToInvoke, myGame, GameRefMethod, GameRefPara);
+                                                  refObj, GameRefMethod, GameRefPara);
     }
     
     /**
      * Creation or modification via Engine (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
      */
     @SuppressWarnings("unused")
-    public GameObject EngineReflect (int levelID, int sceneID, List<Object> objArgList, 
-                                String methodToInvoke, Game game, String GameReflectInfo, String GameRefPara) 
+    public GameObject oneStepReflect (int levelID, int sceneID, List<Object> objArgList, 
+                                      Object refObj, String GameReflectInfo, String GameRefPara) 
                                         throws FactoryException {
-
+        
+        String methodToInvoke = myMethod.getString(instruction);
+        
         Object[] objArgArray = objArgList.toArray(new Object[objArgList.size()]);
 
-        return (GameObject) Reflection.callMethod(myEngine, methodToInvoke, objArgArray);
+        return (GameObject) Reflection.callMethod(refObj, methodToInvoke, objArgArray);
     }
     
     /**
-     * Creation or modification via Game (See FactoryOrderPath.Properties or exhaustive list of create/modify through Game)
+     * Creation or modification via Game (See FactoryOrderPath.Properties for exhaustive list of create/modify through Game)
      */
     @SuppressWarnings("unused")
-    public GameObject GameReflect (int levelID, int sceneID, List<Object> objArgList, 
-                              String methodToInvoke, Game game, String GameRefMethod, String GameReflectPara) 
+    public GameObject twoStepReflect (int levelID, int sceneID, List<Object> objArgList, 
+                                      Object refObj, String GameRefMethod, String GameReflectPara) 
                                       throws FactoryException {
+        
+        List<String> typeMethodList =  (List<String>) parsedMap.get("Type");
+        String methodToInvoke = myMethod.getString(typeMethodList.get(1));
 
         int numArg = Integer.parseInt(GameReflectPara);
         int objectID = (int) objArgList.remove(0);
 
         Object[][] IDSelector = new Object[][]{new Object[]{objectID},
-                                new Object[]{levelID, objectID},
+                                new Object[]{levelID, sceneID},
                                 new Object[]{levelID, sceneID, objectID}};
 
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
         
-        Object obj = Reflection.callMethod(game, GameRefMethod, IDSelector[numArg]);
+        Object obj = Reflection.callMethod(refObj, GameRefMethod, IDSelector[numArg]);
         return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);
     }
     
@@ -109,7 +118,7 @@ public class GameFactory {
      * Only couple things as argument, use reflection to create or modify object instance.
      * @param order
      * @param instruction
-     * @return
+     * @return Map<String, List<Obj>>
      */
     public Map<String, List<?>> parseOrder (List<Object> order, String instruction) {
         String formatToken = myFormat.getString(instruction);
@@ -129,15 +138,18 @@ public class GameFactory {
         returnMap.put("Type", typeList);
         return returnMap;
     }
-    
-    // Need to implement if the order format is not changed. Discuss tmr
-    private int intParse(String s){
-        return 0;
-        
+
+    /**
+     * Getting Game instance to reflect upon. To be called using the reflection to get refObj*/
+    public Game getGame () {
+        return myGame;
     }
     
-    private double doubleParse(String s){
-        return 0.0;
+    /**
+     * Getting Engine instance to reflect upon. To be called using the reflection to get refObj*/
+    public GameEngine getEngine () {
+        return (GameEngine) myEngine;
+//        return (Game) Reflection.callMethod(myEngine, methodToInvoke, objArgArray);
     }
     
     /**
