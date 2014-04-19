@@ -62,7 +62,6 @@ public class DataController {
 	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
 	 */
 	public List<Object> convertOrderToObjects(String order){
-		System.out.println("convertOrderToObjects called");
 		List<Object> answer = new ArrayList<Object>();
 		String[] orders = order.split(",");
 		int i = 0;

@@ -52,7 +52,7 @@ public class EngineTest {
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);
-		player.setShootBehavior("SlowShoot", "ball20-red.gif", 20, 20, 3, 5.0);
+		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, 3, 5.0, 10);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
