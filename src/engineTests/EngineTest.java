@@ -49,6 +49,8 @@ public class EngineTest {
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
 		actor.setMoveBehavior("BackForthMove", 5.0);
 		
+		game.getLevel(1).setWinBehavior("WinByTime", 400);
+		
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);

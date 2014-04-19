@@ -148,6 +148,10 @@ public class GameEngine extends StdGame{
     		int tileY = myMouseY/20;
     		drawRect((double)Math.min(myTileX,tileX)*20,(double)Math.min(myTileY,tileY)*20,(double)(Math.abs(myTileX-tileX)+1)*20,(double)(Math.abs(myTileY-tileY)+1)*20,false,false);
 		}
+    	if(checkGoal()){
+    		drawString("Win!!!!!!!!!!!!!!!! ",
+    				viewWidth()/2,viewHeight()/2+100,0,true);
+    	}
     }
     
     
