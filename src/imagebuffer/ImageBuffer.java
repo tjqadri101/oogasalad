@@ -45,7 +45,7 @@ public class ImageBuffer {
 	 */
 	public void loadAndSave() throws IOException {
 		chooseImage();
-		copyFile();
+		if (chosenFile != null) copyFile();
 	}
 
 	/*
