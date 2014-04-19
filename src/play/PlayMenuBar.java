@@ -102,28 +102,31 @@ public class PlayMenuBar extends JMenuBar {
 
 	private JComponent makeMenuItem(String label, String method) {
 		JMenuItem m = new JMenuItem(label);
+		
+		/*try {
+		final Method onClickMethod = PlayMenuBar.class
+				.getDeclaredMethod(method);
+		m.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				try {
+					onClickMethod.setAccessible(true);
+					onClickMethod.invoke(getCurrentInstance());
+					onClickMethod.setAccessible(false);
+				} catch (Exception e1) {
+					throw new ReflectionException(e1.getMessage());
+				}
+			}
+		});
+
+	} catch (Exception e) {
+		throw new ReflectionException(e.getMessage());
+	}*/
+		
 		MethodAction action = new MethodAction(getCurrentInstance() ,method);
 		m.addActionListener(action);
-		/*try {
-			final Method onClickMethod = PlayMenuBar.class
-					.getDeclaredMethod(method);
-			m.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-
-					try {
-						onClickMethod.setAccessible(true);
-						onClickMethod.invoke(getCurrentInstance());
-						onClickMethod.setAccessible(false);
-					} catch (Exception e1) {
-						throw new ReflectionException(e1.getMessage());
-					}
-				}
-			});
-
-		} catch (Exception e) {
-			throw new ReflectionException(e.getMessage());
-		}*/
+		
 		return m;
 	}
 
