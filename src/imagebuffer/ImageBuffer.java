@@ -7,6 +7,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
@@ -29,7 +30,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ImageBuffer {
 
-	private static final String FOLDER_PATH = "src/images/";
+	private static final String DEFAULT_FOLDER_PATH = "src/images/";
 	private String finalPath;
 	private File chosenFile;
 	private JComponent container;
@@ -44,14 +45,24 @@ public class ImageBuffer {
 	 * into the proper file
 	 */
 	public void loadAndSave() throws IOException {
-		chooseImage();
+		setPath();
 		if (chosenFile != null) copyFile();
 	}
 
 	/*
 	 * Create a dialog box to ask the user for a file URL
 	 */
-	public void chooseImage() {
+	public void setPath() {
+		chooseImage();
+		finalPath = DEFAULT_FOLDER_PATH + fileName;
+	}
+	
+	public void setPath(String finalDestination) {
+		chooseImage();
+		finalPath = finalDestination + fileName;
+	}
+
+	private void chooseImage() {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg",
 				"png", "gif", "jpeg");
 		JFileChooser chooser = ViewFactory.createJFileChooser();
@@ -61,13 +72,10 @@ public class ImageBuffer {
 		if (actionDialog != JFileChooser.APPROVE_OPTION) {
 			return;
 		}
-		chosenFile = chooser.getSelectedFile();
 		fileName = chosenFile.getName();
-		finalPath = FOLDER_PATH + fileName;
 	}
 	
 	public void copyFile( ) throws IOException {
-
 	    FileInputStream fis = new FileInputStream(chosenFile); 
 	    FileOutputStream fos = new FileOutputStream(finalPath);  
 	    FileChannel srcChannel = fis.getChannel();  
@@ -77,6 +85,10 @@ public class ImageBuffer {
 	    destChannel.close();  
 	    fis.close();  
 	    fos.close();      
+	}
+	
+	public String getFinalPath() {
+		return finalPath;
 	}
 
 }
