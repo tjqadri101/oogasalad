@@ -16,6 +16,10 @@ public class Gravity {
 		return null; // need revision
 	}
 	
+	/**
+	 * 
+	 * @param GameObject object
+	 */
 	public void applyGravity(GameObject object){
 		if (object == null) return;
 		if(object.getName() == SaladConstants.SHOOT_NAME) return;

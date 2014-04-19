@@ -27,6 +27,8 @@ public abstract class GameObject extends JGObject {
 	protected int myInitLives;
 	protected int myLives;
 	protected int myUniqueID;
+	protected int myJumpTimes;
+	protected boolean myIsInAir;
     
 	protected ResourceBundle myBehaviors;
 	protected String myDieBehavior;
@@ -223,6 +225,8 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void jump(){
+		myJumpTimes ++;
+		myIsInAir = true;
 		if(myJumpBehavior == null) return;
 		behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, "jump");
 	}
@@ -259,6 +263,7 @@ public abstract class GameObject extends JGObject {
 	
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
+//		myInAirCounter = 0;
 		if(!myTileCollisionBehavior.containsKey(tilecid)) return;
 		List<Object> params = myTileCollisionParameters.get(tilecid);
 		params.add(tilecid);

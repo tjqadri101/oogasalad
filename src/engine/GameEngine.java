@@ -77,10 +77,13 @@ public class GameEngine extends StdGame{
         if(isEditingMode){
         	setGameState("Edit");
         }
+//        this.addGameState("InGame");
     }
     
     
-    
+    public void checkGoal(){
+    	
+    }
     
     
     public void startEdit(){
@@ -88,6 +91,7 @@ public class GameEngine extends StdGame{
     }
     //drag;move->gravity->collision->setViewOffset
     public void doFrameEdit(){
+    	timer++;
     	if (myGame == null) return;
     	if(!drag()){
     		createTiles();
