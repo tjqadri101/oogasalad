@@ -168,8 +168,6 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
-<<<<<<< HEAD
-	
 	public void setActorImage(int ID, String fileURL){
 		String order = SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + ID + SaladConstants.IMAGE;
 		myDataController.receiveOrder(order);
@@ -177,7 +175,6 @@ public class GAEController {
 		
 		
 	}
-=======
 	public void updateActorImage(String imageURL,String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
@@ -186,7 +183,5 @@ public class GAEController {
 	public void setActorImageURL(String URL){
 		
 	}
-
->>>>>>> 8b7e4cbde2b1a224588d9c6d7b830e68c5e115db
 	
 }
