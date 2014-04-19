@@ -66,11 +66,11 @@ public class MenuBar extends JMenuBar{
 	}
 	
 	//temporarily added for testing purposes
-	private void doNothing(){
+	public void doNothing(){
 		
 	}
 	
-	private void closeProgram(){
+	public void closeProgram(){
 	
 		int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit", "Quitting", JOptionPane.YES_NO_OPTION);
 		if(n==JOptionPane.YES_OPTION){
@@ -78,7 +78,7 @@ public class MenuBar extends JMenuBar{
 		}	
 	}
 
-	private void saveGameFile(){
+	public void saveGameFile(){
 		File saveFile = chooseGameFile("Save");
 		if(saveFile == null){
 			return;
@@ -95,7 +95,7 @@ public class MenuBar extends JMenuBar{
 		}
 	}
 	
-	private void openGameFile(){
+	public void openGameFile(){
 		File loadedFile =  chooseGameFile("Load");
 		if(loadedFile == null) {
 			return;
@@ -110,7 +110,7 @@ public class MenuBar extends JMenuBar{
 		
 	}
 	
-	private File chooseGameFile(String command){
+	public File chooseGameFile(String command){
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("XML file", "xml");
 		final JFileChooser chooser =  ViewFactory.createJFileChooser();
 		chooser.setApproveButtonText(command);
