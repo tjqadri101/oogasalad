@@ -276,8 +276,7 @@ public abstract class GameObject extends JGObject {
 	
 	public void shoot(){
 		if(myShootBehavior == null) return;
-		List<Object> params = myShootParameters;
-		behaviorReflection(myBehaviors, myShootBehavior, params, "shoot");
+		behaviorReflection(myBehaviors, myShootBehavior, myShootParameters, "shoot");
 	}
 	
 	/**

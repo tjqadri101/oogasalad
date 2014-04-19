@@ -38,7 +38,7 @@ public class Util {
 	}
 	
 	/**
-	 * Get a list of Strings from a properties file which maps the key to values separated by commas
+	 * Get a list of Strings from a properties file which maps the key parameter to values separated by commas
 	 * @param path to the properties file
 	 * @param key in the properties file that maps to the values
 	 * @param splitter, the character used to separate values (Strings) in the properties file for the given key
