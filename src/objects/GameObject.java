@@ -16,8 +16,6 @@ import jgame.JGObject;
  * @Author: Justin (Zihao) Zhang
  */
 public abstract class GameObject extends JGObject {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-    public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
 //	protected ScoreManager myScoreManager;
 	protected int myXSize;
@@ -47,7 +45,7 @@ public abstract class GameObject extends JGObject {
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
-		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
+		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
 		myCollisionBehavior = new HashMap<Integer, String>();
 		myCollisionParameters = new HashMap<Integer, List<Object>>();
 		myTileCollisionBehavior = new HashMap<Integer, String>();

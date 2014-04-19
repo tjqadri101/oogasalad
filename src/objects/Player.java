@@ -7,7 +7,7 @@ import java.util.Map;
 
 import reflection.Reflection;
 import saladConstants.SaladConstants;
-import util.Util;
+import util.SaladUtil;
 /**
  * @Author: Justin (Zihao) Zhang
  */
@@ -23,8 +23,8 @@ public class Player extends GameObject {
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives);
 		myKeyMap = new HashMap<Integer, String>();
-		myNonClearKeys = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
-		mySuperMethods = Util.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
+		myNonClearKeys = SaladUtil.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
+		mySuperMethods = SaladUtil.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
 	}
 	
 	public void setKey(int key, String type){

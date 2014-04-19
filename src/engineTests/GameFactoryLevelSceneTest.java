@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import jgame.platform.JGEngine;
 import objects.GameObject;
 import objects.NonPlayer;
@@ -74,98 +75,38 @@ public class GameFactoryLevelSceneTest extends TestCase{
         assertEquals(2, myGame.getMyLevelMap().size());
 // here the levelID=1, SceneID=0, objID=0
     }
-//    
-//    @Test
-//    public void testModifyActorSpeed() throws FactoryException{
-//        
-//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Speed", 5.0, 5.0};
-//
-//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-//        try {
-//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            fail("Exception");
-//        }
-//        System.out.println("the speed in the speed test is " + myGame.getNonPlayer(1, 0, 0).xspeed);
-//        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
-//    }
-//    
-//    @Test
-//    public void testModifyActorChangetoID() throws FactoryException{
-//        
-//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeToID", 1};
-//
-//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-//        try {
-//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            fail("Exception");
-//        }
-//        assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
-//    }
-//    
-//    @Test
-//    public void testModifyActorChangeCollisionID() throws FactoryException{
-//        
-//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeCollisionID", 1};
-//
-//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-//        try {
-//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            fail("Exception");
-//        }
-//        assertEquals(1, myGame.getNonPlayer(1, 0, 0).colid);
-//    }
-//    
-//    @Test
-//    public void testModifyActorPosition() throws FactoryException{
-//        
-//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Position", 100.0, 100.0};
-//
-//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-//        try {
-//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            fail("Exception");
-//        }
-//        assertEquals(100.0, myGame.getNonPlayer(1, 0, 0).x);
-//        assertEquals(100.0, myGame.getNonPlayer(1, 0, 0).y);
-//    }
-//    
-//    @Test
-//    public void testModifyActorMove() throws FactoryException{
-//        
-//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Move","RegularMove", 10.0, 10.0};
-//
-//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-//        try {
-//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            fail("Exception");
-//        }
-//        assertEquals("RegularMove", myGame.getNonPlayer(1, 0, 0).getMyMoveBehavior());
-//        assertEquals(10.0, myGame.getNonPlayer(1, 0, 0).getMySetXSpeed());
-//    }
-//    
-//    @Test
-//    public void testModifyActorDie() throws FactoryException{
-//        
-//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Die","ShowCorpse"};
-//
-//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-//        try {
-//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            fail("Exception");
-//        }
-//        assertEquals("ShowCorpse", myGame.getNonPlayer(1, 0, 0).getMyDieBehavior());
-//    }
+    
+    
+    @Test
+    public void testDeleteLevel() throws FactoryException{
 
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"DeleteLevel","ID",2};
+
+        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
+        try {
+            myFactory.processOrder(CREATELEVEL_OBJECT_LIST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        assertEquals(1, myGame.getMyLevelMap().size());
+// here the levelID=1, SceneID=0, objID=0
+    }
+    
+    @Test
+    public void testResetLevelID() throws FactoryException{
+        
+        Object[] UNPARSED_ORDER = new Object[] {"ResetLevelID","ID",1,"ID", 3};
+
+        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        Set<Integer> keys = myGame.getMyLevelMap().keySet();
+        assertTrue(keys.contains(3));
+    }
 }

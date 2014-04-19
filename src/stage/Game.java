@@ -96,6 +96,15 @@ public class Game {
 	public Scene getScene(int levelID, int sceneID){
 		return myLevelMap.get(levelID).getScene(sceneID);
 	}
+	
+	/**
+	 * Get an existing level by ID
+	 * @param levelID
+	 * @return Level
+	 */
+	public Level getLevel(int levelID){
+		return myLevelMap.get(levelID);
+	}
 
 	/**
 	 * Called to remove an existing scene from a particular level
