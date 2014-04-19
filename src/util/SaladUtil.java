@@ -3,13 +3,15 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import reflection.Reflection;
 /**
  * 
  * @author Main Justin (Zihao) Zhang
  * Intended for use of some general methods
  *
  */
-public class Util {
+public class SaladUtil {
 	
 	/**
 	 * Convert an array of Strings to a List of Strings
@@ -47,7 +49,24 @@ public class Util {
 	public static List<String> getListFromPropertiesFile(String path, String key, String splitter){
 		ResourceBundle bundle = ResourceBundle.getBundle(path);
 		String[] array = bundle.getString(key).split(splitter);
-		return Util.convertStringArrayToList(array);
+		return SaladUtil.convertStringArrayToList(array);
+	}
+	
+	/**
+	 * Do not call this method directly
+	 * @param ResourceBundle
+	 * @param myString
+	 * @param methodName
+	 */
+	public static Object behaviorReflection(ResourceBundle myBundle, String myString, List<Object> objects, String methodName, Object constructorParam){
+		if(myString == null) return null;
+		try{
+			Object behavior = Reflection.createInstance(myBundle.getString(myString), constructorParam);
+			return Reflection.callMethod(behavior, methodName, objects);	
+		} catch (Exception e){
+			e.printStackTrace(); // should never reach here
+			return null;
+		}
 	}
 
 }

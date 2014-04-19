@@ -96,6 +96,15 @@ public class Game {
 	public Scene getScene(int levelID, int sceneID){
 		return myLevelMap.get(levelID).getScene(sceneID);
 	}
+	
+	/**
+	 * Get an existing level by ID
+	 * @param levelID
+	 * @return Level
+	 */
+	public Level getLevel(int levelID){
+		return myLevelMap.get(levelID);
+	}
 
 	/**
 	 * Called to remove an existing scene from a particular level
@@ -176,6 +185,16 @@ public class Game {
      */
     public Player getPlayer(int levelID, int sceneID, int objectID){
     	return myPlayer;
+    }
+    
+    /** @Siyang: added for the sake of testing
+     * Called to get the Player from the Game
+     * Parameters needed but not used to facilitate GameFactory for Reflection
+     * @param levelID, sceneID, objectID
+     * @return Player Object
+     */
+    public Player getPlayer(){
+        return myPlayer;
     }
 
 	/**
@@ -271,10 +290,10 @@ public class Game {
 	 */
 	public List<String> getAttributes() {
 		List <String> answer = new ArrayList<String>();
-		answer.addAll(myScoreManager.getAttributes()); 
-		answer.addAll(myInputManager.getAttributes()); 
-		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
+//		answer.addAll(myScoreManager.getAttributes()); 
+//		answer.addAll(myInputManager.getAttributes()); 
+//		answer.addAll(myTimerManager.getAttributes()); 
+//		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
@@ -298,6 +317,6 @@ public class Game {
 	 */
 	public Map<Integer, Level> getMyLevelMap(){
 	    return myLevelMap;
-	}
+	}	
 
 }

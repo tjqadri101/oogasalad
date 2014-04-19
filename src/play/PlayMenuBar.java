@@ -1,3 +1,8 @@
+/**
+*@author David Chou
+*@help Talal Javed Qadri
+ */
+
 package play;
 
 import game_authoring_environment.ViewFactory;

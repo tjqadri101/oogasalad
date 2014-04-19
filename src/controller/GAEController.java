@@ -1,3 +1,7 @@
+/**
+ * @author Talal Javed Qadri and Nick Pan
+ */
+
 package controller;
 
 import game_authoring_environment.ActorsPanel;

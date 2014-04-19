@@ -1,4 +1,6 @@
-
+/**
+ * @author Talal Javed Qadri
+ */
 package game_authoring_environment;
 
 import java.awt.event.ActionEvent;
@@ -30,7 +32,7 @@ import reflection.MethodAction;
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
 	
-	private GAEController gController;
+	public GAEController gController;
 
 	public MenuBar(GAEController gController){
 		super();
@@ -124,7 +126,7 @@ public class MenuBar extends JMenuBar{
 
 	}
 	
-	private JComponent makeMenuItem(String label, String method) {
+	public JComponent makeMenuItem(String label, String method) {
 		JMenuItem m = new JMenuItem(label);
 		
 		/*try {

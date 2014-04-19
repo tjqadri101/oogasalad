@@ -1,10 +1,12 @@
 package engine;
 
+import saladConstants.SaladConstants;
 import stage.Game;
 import stage.ResetLevelException;
 import stage.Scene;
 import stage.Transition;
 import stage.Transition.StateType;
+import util.SaladUtil;
 import jgame.JGColor;
 import jgame.JGFont;
 import jgame.JGObject;
@@ -18,6 +20,7 @@ import objects.Player;
 import java.awt.Dimension;//
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import jboxGlue.PhysicalObject;
 import jboxGlue.WorldManager;
@@ -77,10 +80,18 @@ public class GameEngine extends StdGame{
         if(isEditingMode){
         	setGameState("Edit");
         }
+//        this.addGameState("InGame");
     }
     
     
-    
+    public boolean checkGoal(){
+    	if(myCurrentScene == null) return false;
+    	String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
+    	List<Object> winParameters = myGame.getLevel(myCurrentLevelID).getWinParameters();
+    	ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
+    	Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior, winParameters, "checkGoal", this);
+    	return (Boolean) answer;
+    }
     
     
     public void startEdit(){
@@ -138,6 +149,10 @@ public class GameEngine extends StdGame{
     		int tileY = myMouseY/20;
     		drawRect((double)Math.min(myTileX,tileX)*20,(double)Math.min(myTileY,tileY)*20,(double)(Math.abs(myTileX-tileX)+1)*20,(double)(Math.abs(myTileY-tileY)+1)*20,false,false);
 		}
+    	if(checkGoal()){
+    		drawString("Win!!!!!!!!!!!!!!!! ",
+    				viewWidth()/2,viewHeight()/2+100,0,true);
+    	}
     }
     
     

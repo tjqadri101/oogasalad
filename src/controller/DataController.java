@@ -20,7 +20,7 @@ import stage.Game;
  */
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-	public static final String DEFAULT_DATA_FORMAT = "DataFormat";
+	public static final String DEFAULT_DATA_FORMAT = "TypeFormat";
 	public static final String DEFAULT_REFLECTION_METHODS = "DataFormatReflection";
 	
 	protected Game myGame;

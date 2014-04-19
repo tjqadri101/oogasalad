@@ -16,8 +16,6 @@ import jgame.JGObject;
  * @Author: Justin (Zihao) Zhang
  */
 public abstract class GameObject extends JGObject {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-    public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
     
 //	protected ScoreManager myScoreManager;
 	protected int myXSize;
@@ -27,6 +25,8 @@ public abstract class GameObject extends JGObject {
 	protected int myInitLives;
 	protected int myLives;
 	protected int myUniqueID;
+	protected int myJumpTimes;
+	protected boolean myIsInAir;
     
 	protected ResourceBundle myBehaviors;
 	protected String myDieBehavior;
@@ -45,7 +45,7 @@ public abstract class GameObject extends JGObject {
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
-		myBehaviors = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_BEHAVIOR);
+		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
 		myCollisionBehavior = new HashMap<Integer, String>();
 		myCollisionParameters = new HashMap<Integer, List<Object>>();
 		myTileCollisionBehavior = new HashMap<Integer, String>();
@@ -223,6 +223,8 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void jump(){
+		myJumpTimes ++;
+		myIsInAir = true;
 		if(myJumpBehavior == null) return;
 		behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, "jump");
 	}
@@ -259,6 +261,7 @@ public abstract class GameObject extends JGObject {
 	
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
+//		myInAirCounter = 0;
 		if(!myTileCollisionBehavior.containsKey(tilecid)) return;
 		List<Object> params = myTileCollisionParameters.get(tilecid);
 		params.add(tilecid);
@@ -311,5 +314,12 @@ public abstract class GameObject extends JGObject {
      */
     public String getMyDieBehavior () {
         return myDieBehavior;
+    }
+    
+    /**
+     * @return the myInitX
+     */
+    public double getMyInitX() {
+        return myInitX;
     }
 }
