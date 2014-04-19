@@ -283,7 +283,7 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
+//		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
