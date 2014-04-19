@@ -1,3 +1,4 @@
+
 package game_authoring_environment;
 
 import java.awt.event.ActionEvent;
@@ -24,6 +25,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import controller.GAEController;
 import reflection.ReflectionException;
 import reflection.Reflection;
+import reflection.MethodAction;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
@@ -52,7 +54,6 @@ public class MenuBar extends JMenuBar{
 		editMenu.add(makeMenuItem("Redo", "doNothing"));
 		editMenu.add(makeMenuItem("Cut", "doNothing"));
 		editMenu.add(makeMenuItem("Copy", "doNothing"));
-		editMenu.add(makeMenuItem("Paste", "doNothing"));
 		editMenu.add(makeMenuItem("Paste", "doNothing"));
 		return editMenu;
 	}
@@ -125,31 +126,37 @@ public class MenuBar extends JMenuBar{
 	
 	private JComponent makeMenuItem(String label, String method) {
 		JMenuItem m = new JMenuItem(label);
+		
+		/*try {
+		final Method onClickMethod = getCurrentInstance().getClass()
+				.getDeclaredMethod(method);
+		m.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 
-		try {
-			final Method onClickMethod = MenuBar.class
-					.getDeclaredMethod(method);
-			m.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-
-					try {
-						onClickMethod.setAccessible(true);
-						onClickMethod.invoke(getCurrentInstance());
-						onClickMethod.setAccessible(false);
-					}
-					catch (Exception e1) {
-						throw new ReflectionException(e1.getMessage());
-					}
+				try {
+					onClickMethod.setAccessible(true);
+					onClickMethod.invoke(getCurrentInstance());
+					onClickMethod.setAccessible(false);
 				}
-			});
+				catch (Exception e1) {
+					throw new ReflectionException(e1.getMessage());
+				}
+			}
+		});
 
-		} catch (Exception e) {
-			throw new ReflectionException(e.getMessage());
-		}
+	} catch (Exception e) {
+		throw new ReflectionException(e.getMessage());
+	}*/
+		
+		MethodAction action = new MethodAction(getCurrentInstance() ,method);
+		m.addActionListener(action);
+		
 		return m;
 	}
 	
+	
+
 	private MenuBar getCurrentInstance(){
 		return this;
 	}

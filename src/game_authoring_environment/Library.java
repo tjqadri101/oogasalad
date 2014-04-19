@@ -6,6 +6,8 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import saladConstants.SaladConstants;
 import controller.GAEController;
@@ -20,12 +22,22 @@ public class Library extends JTabbedPane {
 	private JPanel myScenesPanel;
 	private JPanel myBehaviorsPanel;
 	private JPanel myActorsPanel;
+	private GAEController controller;
 
 	public Library(GAEController gController){
+		controller = gController;
 		setPreferredSize(new Dimension(LIBRARY_PANEL_WIDTH, LIBRARY_PANEL_HEIGHT));
-		makePanels(gController);
+		makePanels(controller);
 		addTabs();
-		
+	
+		ChangeListener changeListener = new ChangeListener() {
+		      public void stateChanged(ChangeEvent changeEvent) {
+		        JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+		        int index = sourceTabbedPane.getSelectedIndex();
+		        controller.switchActiveAttributesTab(index);
+		      }
+		    };
+		    this.addChangeListener(changeListener);
 	}
 
 	private void addTabs() {
