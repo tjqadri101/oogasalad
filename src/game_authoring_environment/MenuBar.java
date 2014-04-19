@@ -30,7 +30,7 @@ import reflection.MethodAction;
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
 	
-	private GAEController gController;
+	public GAEController gController;
 
 	public MenuBar(GAEController gController){
 		super();
@@ -43,7 +43,17 @@ public class MenuBar extends JMenuBar{
 	private JMenu createFileMenu(){
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(makeMenuItem("Save As...", "saveGameFile"));
-		fileMenu.add(makeMenuItem("Open", "openGameFile"));
+		JMenuItem m = new JMenuItem("Open");
+		m.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				openGameFile();
+				
+			}
+		});
+		fileMenu.add(m);
+		
+		//fileMenu.add(makeMenuItem("Open", "openGameFile"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
 	}
@@ -124,7 +134,7 @@ public class MenuBar extends JMenuBar{
 
 	}
 	
-	private JComponent makeMenuItem(String label, String method) {
+	public JComponent makeMenuItem(String label, String method) {
 		JMenuItem m = new JMenuItem(label);
 		
 		/*try {
