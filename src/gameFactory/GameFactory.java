@@ -102,7 +102,7 @@ public class GameFactory {
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
 
         int numArg = Integer.parseInt(GameReflectPara);
-        int objectID = (int) objArgList.remove(0);
+        int objectID = (Integer) objArgList.remove(0);
 
         Object[][] IDSelector = new Object[][]{new Object[]{objectID},
                                 new Object[]{levelID, sceneID},
