@@ -11,6 +11,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 
 import javax.imageio.ImageIO;
@@ -31,59 +33,73 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ImageBuffer {
 
-	private static final String DEFAULT_FOLDER_PATH = "src/images/";
+	private static final String DEFAULT_FOLDER_PATH = "src/engine/";
 	private String finalPath;
 	private File chosenFile;
-	private JComponent container;
 	private String fileName;
 
-	public ImageBuffer(JComponent component) {
-		container = component;
+	public ImageBuffer( ) {
+		
 	}
 
 	/*
 	 * Allows for image choosing, physical image creation, and image storing
 	 * into the proper file
 	 */
-	public void upload() throws IOException {
-		setPath();
+	public void upload(String finalDestination) throws IOException {
+		setPath(finalDestination);
 		if (chosenFile != null) copyFile();
 	}
-
-	public void resizedUpload(int x, int y) throws IOException {
-		setPath();
+	
+	/*
+	 * Same as the above method, except it allows for resizing of the image
+	 */
+	public void resizedUpload(int x, int y, String finalDestination) throws IOException {
+		setPath(finalDestination);
 		if (chosenFile != null) {
 			copyFile();
 			resizeImage(x, y);
 		}
 	}
-	/*
-	 * Create a dialog box to ask the user for a file URL
-	 */
+
 	public void setPath() {
-		chooseImage();
 		finalPath = DEFAULT_FOLDER_PATH + fileName;
 	}
 	
 	public void setPath(String finalDestination) {
-		chooseImage();
 		finalPath = finalDestination + fileName;
 	}
 
-	private void chooseImage() {
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg",
-				"png", "gif", "jpeg");
-		JFileChooser chooser = ViewFactory.createJFileChooser();
-		chooser.setApproveButtonText("Open");
-		chooser.setFileFilter(filter);
-		int actionDialog = chooser.showOpenDialog(container);
-		if (actionDialog != JFileChooser.APPROVE_OPTION) {
-			return;
-		}
-		chosenFile = chooser.getSelectedFile();
+	public void makeFile(String url) throws MalformedURLException {
+		URL source = new URL (url);
+		File f = new File (source.getFile());
+		chosenFile = f;
 		fileName = chosenFile.getName();
 	}
 	
+	
+//	TESTING FOR URL GRABBING
+	
+//	/*
+//	 * Create a dialog box to ask the user for a file URL
+//	 */
+//	private void chooseImage() {
+//		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg",
+//				"png", "gif", "jpeg");
+//		JFileChooser chooser = ViewFactory.createJFileChooser();
+//		chooser.setApproveButtonText("Open");
+//		chooser.setFileFilter(filter);
+//		int actionDialog = chooser.showOpenDialog(container);
+//		if (actionDialog != JFileChooser.APPROVE_OPTION) {
+//			return;
+//		}
+//		chosenFile = chooser.getSelectedFile();
+//		fileName = chosenFile.getName();
+//	}
+	
+	/*
+	 * This method will transfer the chosenFile to the final destination
+	 */
 	public void copyFile( ) throws IOException {
 	    FileInputStream fis = new FileInputStream(chosenFile); 
 	    FileOutputStream fos = new FileOutputStream(finalPath);  
@@ -100,6 +116,9 @@ public class ImageBuffer {
 		return finalPath;
 	}
 
+	/*
+	 * Allows the image to be resized according to user specifications
+	 */
 	public void resizeImage(int x, int y) throws IOException {
 		//read file
 		File output = new File (finalPath);
