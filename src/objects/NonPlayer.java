@@ -11,10 +11,4 @@ public class NonPlayer extends GameObject {
 		super.move();
 		autoMove();
 	}
-	
-//	@Override
-//	public void setSpeed(double x, double y){
-//	    super.setSpeed(x, y);
-//	}
-
 }

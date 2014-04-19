@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import objects.GameObject;
 
 public class Eliminate extends Collision{
@@ -9,7 +11,7 @@ public class Eliminate extends Collision{
 	}
 
 	@Override
-	public void collide(GameObject hitter) {
+	public void collide(List<Object> objects) {
 		myObject.die(); 
 	}
 }
