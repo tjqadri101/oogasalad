@@ -37,6 +37,17 @@ public class GameEngine extends StdGame{
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
     protected Scene myCurrentScene;
+    
+    protected int myMouseX;
+    protected int myMouseY;
+    protected boolean myMouseClicked;
+    protected int myClickedID;
+    
+    protected int myTileX;
+    protected int myTileY;
+    protected int myTileCid;
+    protected String myTileImgFile;
+    
     protected boolean isEditingMode;
     
     public GameEngine(boolean editing){
@@ -58,7 +69,7 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        setTiles(0, 0, 0, 0, 0, "null");//why?
+        createTiles(0, 0, 0, 0, 0, "null");//why?
         
         setPFSize(1200,36);
 		//setPFWrap(false,true,0,0);
@@ -75,26 +86,53 @@ public class GameEngine extends StdGame{
     public void startEdit(){
     	removeObjects(null,0);//remove?
     }
+    //drag;move->gravity->collision->setViewOffset
     public void doFrameEdit(){
     	if (myGame == null) return;
-    	getClickedID();
-    	moveObjects();
-    	myGame.getGravity().applyGravity(myGame.getPlayer());
-    	for (int[] pair: myGame.getCollisionPair()){
-    		checkCollision(pair[0], pair[1]);
+    	if(!drag()){
+    		createTiles();
+    		moveObjects();
+    		myGame.getGravity().applyGravity(myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID));
+    		for (int[] pair: myGame.getCollisionPair()){
+        		checkCollision(pair[0], pair[1]);
+        	}
+        	for (int[] pair: myGame.getTileCollisionPair()){
+        		checkBGCollision(pair[0], pair[1]);
+        	}
+        	Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
+        	if (player != null){
+        		setViewOffset((int) player.x+player.getXSize()/2,(int) player.y+player.getYSize()/2,true);
+        	}
     	}
-    	for (int[] pair: myGame.getTileCollisionPair()){
-    		checkBGCollision(pair[0], pair[1]);
+    	setViewOffsetEdit();
+    }
+
+    private void setViewOffsetEdit() {
+    	int XOfs = 0;
+    	int YOfs = 0;
+    	if (0 < getMouseX() && getMouseX() < 0.1*viewWidth()){
+    		XOfs -= 10;
     	}
-    	Player player = myGame.getPlayer();
-    	if (player != null){
-    		setViewOffset((int) player.x+player.getXSize()/2,(int) player.y+player.getYSize()/2,true);
+    	if (0.9*viewWidth() < getMouseX() && getMouseX() < viewWidth()){
+    		XOfs += 10;
     	}
+    	if (0 < getMouseY() && getMouseY() < 0.1*viewHeight()){
+    		YOfs -= 10;	
+    	}
+    	if (0.9*viewHeight() < getMouseY() && getMouseY() < viewHeight()){
+    		YOfs += 10;
+    	}
+    	setViewOffset(viewXOfs()+XOfs,viewYOfs()+YOfs,false);
     }
     public void paintFrameEdit(){
 		drawString("You are in Editing Mode right now. This is a test message. ",
 			pfWidth()/2,pfHeight()/2,0,true);
-		drawRect(getMouseX(),getMouseY(),20,20,false,true);
+		drawRect(getMouseX()+viewXOfs(),getMouseY()+viewYOfs(),20,20,false,true,true);
+		if(myMouseClicked && myClickedID == -1){
+			int tileX = myMouseX/20;
+    		int tileY = myMouseY/20;
+    		drawRect((double)Math.min(myTileX,tileX)*20,(double)Math.min(myTileY,tileY)*20,(double)(Math.abs(myTileX-tileX)+1)*20,(double)(Math.abs(myTileY-tileY)+1)*20,false,false);
+		}
     }
     
     
@@ -213,7 +251,7 @@ public class GameEngine extends StdGame{
     
     
     //unfinished
-    public void setTiles(int top, int left, int width, int height, int cid, String imgfile){
+    public void createTiles(int top, int left, int width, int height, int cid, String imgfile){
     	if (cid > 9) return;
     	defineImage(((Integer) cid).toString(),((Integer) cid).toString(),cid,imgfile,"-");
     	String temp = "";
@@ -231,23 +269,86 @@ public class GameEngine extends StdGame{
     public int getClickedID(){
     	List<GameObject> list = new ArrayList<GameObject>();
     	if (getMouseButton(1)){
+    		int MouseX = getMouseX()+viewXOfs();
+        	int MouseY = getMouseY()+viewYOfs();
+    		Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
+    		if (player != null && player.x < MouseX && MouseX < player.x + player.getXSize() 
+    				&& player.y < MouseY && MouseY < player.y + player.getYSize()){
+    			list.add(player);
+    		}
     		for(GameObject go: myCurrentScene.getGameObjects()){
-    			if (go.x < getMouseX() && getMouseX() < go.x + go.getXSize() 
-    					&& go.y < getMouseY() && getMouseY() < go.y + go.getYSize()){
+    			if (go.isAlive() && go.x < MouseX && MouseX < go.x + go.getXSize() 
+    					&& go.y < MouseY && MouseY < go.y + go.getYSize()){
     				list.add(go);
     			}
     		}
-    		Player player = myGame.getPlayer();
-    		if (player != null && player.x < getMouseX() && getMouseX() < player.x + player.getXSize() 
-    				&& player.y < getMouseY() && getMouseY() < player.y + player.getYSize()){
-    			list.add(player);
-    		}
     	}
-    	if (list.size() != 1){
-    		return 0;
+    	if (list.isEmpty()){
+    		return -1;
     	}
     	System.out.println("ID "+list.get(0).getID());
     	return list.get(0).getID();
+    }
+    
+    public boolean drag(){
+    	boolean drag = false;
+    	boolean currentMouseClicked = getMouseButton(1);
+    	int MouseX = getMouseX()+viewXOfs();
+    	int MouseY = getMouseY()+viewYOfs();
+    	
+    	if (!myMouseClicked && currentMouseClicked){
+    		myClickedID = getClickedID();
+    		myTileX = MouseX/20;
+    		myTileY = MouseY/20;
+    	}
+    	if (myMouseClicked && !currentMouseClicked){
+    		if (myClickedID == -1){
+    			int tileX = MouseX/20;
+    			int tileY = MouseY/20;
+    			createTiles(Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1, myTileCid, myTileImgFile);
+    		}
+    		myClickedID = -1;
+    	}
+    	if (myMouseClicked && currentMouseClicked){
+    		if (myClickedID > 0){
+    			NonPlayer actor = myCurrentScene.getNonPlayer(myClickedID);
+    			actor.x+=MouseX-myMouseX;
+    			actor.y+=MouseY-myMouseY;
+    		}
+    		if (myClickedID == 0){
+    			Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
+    			player.x+=MouseX-myMouseX;
+    			player.y+=MouseY-myMouseY;
+    		}
+    		drag = myClickedID > -1;
+    	}
+    	myMouseClicked = currentMouseClicked;
+    	myMouseX = MouseX;
+    	myMouseY = MouseY;
+    	return drag;
+    }
+    
+    public void setDefaultTiles(int cid, String imgfile){
+    	myTileCid = cid;
+    	myTileImgFile = imgfile;
+    }
+    
+    public void createTiles(){
+    	boolean currentMouseClicked = getMouseButton(1);
+    	
+    	if (!myMouseClicked && currentMouseClicked){
+    		myTileX = getMouseX()/20;
+    		myTileY = getMouseY()/20;
+    	}
+    	if (myMouseClicked && !currentMouseClicked){
+    		int tileX = getMouseX()/20;
+    		int tileY = getMouseY()/20;
+    		createTiles(Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1, myTileCid, myTileImgFile);
+    	}
+    	if (myMouseClicked && currentMouseClicked){
+    		
+    	}
+    	myMouseClicked = currentMouseClicked;
     }
     
     //unfinished

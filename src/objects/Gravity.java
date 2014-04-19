@@ -1,5 +1,7 @@
 package objects;
 
+import saladConstants.SaladConstants;
+
 public class Gravity {
 	
 	protected double myMagnitude;
@@ -16,7 +18,13 @@ public class Gravity {
 	
 	public void applyGravity(GameObject object){
 		if (object == null) return;
-		object.yspeed += myMagnitude;
+		if(object.getName() == SaladConstants.SHOOT_NAME) return;
+		if(object.ydir == -1){
+			object.yspeed -= myMagnitude;
+		}
+		else if (object.ydir == 1){
+			object.yspeed += myMagnitude;	
+		}
 	}
 
 }
