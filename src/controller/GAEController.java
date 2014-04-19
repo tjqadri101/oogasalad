@@ -133,7 +133,7 @@ public class GAEController {
 		attributesPanel.updateActorInfo(selectedActorID);
 	}
 	
-	public void switchActiveTab(int index){
+	public void switchActiveAttributesTab(int index){
 		attributesPanel.setTab(index);
 	}
 
@@ -150,6 +150,7 @@ public class GAEController {
 		//myDataController.receiveOrder(order);	
 	}
 
+	
 
 	public DataController getDataController(){
 		return myDataController;
@@ -166,6 +167,10 @@ public class GAEController {
 	public void updateActorImage(String imageURL,String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
+	}
+	
+	public void setActorImageURL(String URL){
+		
 	}
 
 	

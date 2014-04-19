@@ -28,6 +28,7 @@ public class ImageBufferTest extends JFrame {
 	
 	public static void main (String args[]) throws IOException {
 		ImageBufferTest ibt = new ImageBufferTest();
-		ibt.myImageBuffer.loadAndSave();
+//		ibt.myImageBuffer.upload();
+		ibt.myImageBuffer.resizedUpload(50, 50);
 	}
 }
