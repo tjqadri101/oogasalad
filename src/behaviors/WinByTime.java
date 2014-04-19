@@ -16,7 +16,7 @@ public class WinByTime extends Winnable{
 	@Override
 	public boolean checkGoal(List<Object> params) {
 		int timeLimit = (Integer) params.get(0);
-    	System.out.println("checkGoal called " + myEngine.timer + " " + timeLimit);
+//    	System.out.println("checkGoal called " + myEngine.timer + " " + timeLimit);
 		if(myEngine.timer >= timeLimit) return true;
 		return false;
 	}

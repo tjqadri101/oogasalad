@@ -54,6 +54,8 @@ public final class SaladConstants {
 	public static final int SHOOT_UNIQUE_ID = -1;
 	public static final int SHOOT_LIVES = 1;
 	public static final String SHOOT_NAME = "ShootObjects";
+	public static final String LIVES = "Lives";
+	public static final String SPEED = "Speed";
 	
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";

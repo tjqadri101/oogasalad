@@ -15,6 +15,7 @@ import parser.GameSaverAndLoader;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 import stage.Game;
+import util.SaladUtil;
 /**
  * @Author: Justin (Zihao) Zhang
  */
@@ -125,6 +126,7 @@ public class DataController {
 	 */
 	public void readXML(String url) throws Exception {
 		List<String> orders = myGameSaverAndLoader.load(url);
+		SaladUtil.printStringList(orders);
 		for(String order: orders){
 			callFactoryToProcess(convertOrderToObjects(order));
 		}
