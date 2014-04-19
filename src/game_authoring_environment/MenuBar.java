@@ -1,4 +1,6 @@
-
+/**
+ * @author Talal Javed Qadri
+ */
 package game_authoring_environment;
 
 import java.awt.event.ActionEvent;
@@ -43,17 +45,7 @@ public class MenuBar extends JMenuBar{
 	private JMenu createFileMenu(){
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(makeMenuItem("Save As...", "saveGameFile"));
-		JMenuItem m = new JMenuItem("Open");
-		m.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				openGameFile();
-				
-			}
-		});
-		fileMenu.add(m);
-		
-		//fileMenu.add(makeMenuItem("Open", "openGameFile"));
+		fileMenu.add(makeMenuItem("Open", "openGameFile"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
 	}
