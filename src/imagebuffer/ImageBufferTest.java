@@ -15,7 +15,7 @@ public class ImageBufferTest extends JFrame {
 	
 	public ImageBufferTest() {
 		myPanel = createPanel();
-		myImageBuffer = new ImageBuffer(myPanel);
+		myImageBuffer = new ImageBuffer();
 	}
 	
 	public JPanel createPanel() {
@@ -29,6 +29,6 @@ public class ImageBufferTest extends JFrame {
 	public static void main (String args[]) throws IOException {
 		ImageBufferTest ibt = new ImageBufferTest();
 //		ibt.myImageBuffer.upload();
-		ibt.myImageBuffer.resizedUpload(50, 50);
+		ibt.myImageBuffer.resizedUpload(50, 50, "src/images");
 	}
 }
