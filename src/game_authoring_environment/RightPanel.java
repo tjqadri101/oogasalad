@@ -25,7 +25,7 @@ import controller.GAEController;
 
 public class RightPanel extends JSplitPane {
 
-	public double curID, curXPos, curYPos;
+	public double curXPos, curYPos;
 	public String fieldName;
 	public GAEController myGAEController;
 	public static final double ID_STEP = 1d;
@@ -41,11 +41,8 @@ public class RightPanel extends JSplitPane {
 	
 	private JComponent createSpinnerPanel(GAEController gController){
 		JPanel spinnerPanel = new JPanel();
-		addLabeledPositionSpinner(spinnerPanel, "ID", "curID", ID_STEP);
 		addLabeledPositionSpinner(spinnerPanel, "X", "curXPos",POSIT_STEP);
 		addLabeledPositionSpinner(spinnerPanel, "Y", "curYPos", POSIT_STEP);
-		addLabeledPositionSpinner(spinnerPanel, "W", "", POSIT_STEP);
-		addLabeledPositionSpinner(spinnerPanel, "H", "", POSIT_STEP);
 		return spinnerPanel;
 	}
 	
@@ -68,7 +65,7 @@ public class RightPanel extends JSplitPane {
 						Class<?> c1 = getCurInstance().getClass();
 						Field field1 = c1.getField(curSpinner.getName());
 						field1.set(getCurInstance(),curSpinner.getValue());
-						myGAEController.modifyActorPosition((int) curID, curXPos, curYPos);
+						myGAEController.modifyActorPositionOnly(curXPos, curYPos);
 					}
 					 catch (Exception e2)
 				        {
