@@ -85,6 +85,7 @@ public class GameEngine extends StdGame{
     
     
     public boolean checkGoal(){
+    	if(myCurrentScene == null) return false;
     	String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
     	List<Object> winParameters = myGame.getLevel(myCurrentLevelID).getWinParameters();
     	ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
