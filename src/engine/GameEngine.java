@@ -36,11 +36,18 @@ public class GameEngine extends StdGame{
     protected Game myGame;
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
+    protected Scene myCurrentScene;
+    
     protected int myMouseX;
     protected int myMouseY;
     protected boolean myMouseClicked;
-    protected int myClickedID = -1;
-    protected Scene myCurrentScene;
+    protected int myClickedID;
+    
+    protected int myTileX;
+    protected int myTileY;
+    protected int myTileCid;
+    protected String myTileImgFile;
+    
     protected boolean isEditingMode;
     
     public GameEngine(boolean editing){
@@ -62,7 +69,7 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        setTiles(0, 0, 0, 0, 0, "null");//why?
+        createTiles(0, 0, 0, 0, 0, "null");//why?
         
         setPFSize(1200,36);
 		//setPFWrap(false,true,0,0);
@@ -83,6 +90,7 @@ public class GameEngine extends StdGame{
     public void doFrameEdit(){
     	if (myGame == null) return;
     	if(!drag()){
+    		createTiles();
     		moveObjects();
     		myGame.getGravity().applyGravity(myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID));
     		for (int[] pair: myGame.getCollisionPair()){
@@ -120,6 +128,11 @@ public class GameEngine extends StdGame{
 		drawString("You are in Editing Mode right now. This is a test message. ",
 			pfWidth()/2,pfHeight()/2,0,true);
 		drawRect(getMouseX()+viewXOfs(),getMouseY()+viewYOfs(),20,20,false,true,true);
+		if(myMouseClicked && myClickedID == -1){
+			int tileX = myMouseX/20;
+    		int tileY = myMouseY/20;
+    		drawRect((double)Math.min(myTileX,tileX)*20,(double)Math.min(myTileY,tileY)*20,(double)(Math.abs(myTileX-tileX)+1)*20,(double)(Math.abs(myTileY-tileY)+1)*20,false,false);
+		}
     }
     
     
@@ -238,7 +251,7 @@ public class GameEngine extends StdGame{
     
     
     //unfinished
-    public void setTiles(int top, int left, int width, int height, int cid, String imgfile){
+    public void createTiles(int top, int left, int width, int height, int cid, String imgfile){
     	if (cid > 9) return;
     	defineImage(((Integer) cid).toString(),((Integer) cid).toString(),cid,imgfile,"-");
     	String temp = "";
@@ -278,14 +291,22 @@ public class GameEngine extends StdGame{
     }
     
     public boolean drag(){
+    	boolean drag = false;
     	boolean currentMouseClicked = getMouseButton(1);
     	int MouseX = getMouseX()+viewXOfs();
     	int MouseY = getMouseY()+viewYOfs();
     	
     	if (!myMouseClicked && currentMouseClicked){
     		myClickedID = getClickedID();
+    		myTileX = MouseX/20;
+    		myTileY = MouseY/20;
     	}
     	if (myMouseClicked && !currentMouseClicked){
+    		if (myClickedID == -1){
+    			int tileX = MouseX/20;
+    			int tileY = MouseY/20;
+    			createTiles(Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1, myTileCid, myTileImgFile);
+    		}
     		myClickedID = -1;
     	}
     	if (myMouseClicked && currentMouseClicked){
@@ -299,11 +320,35 @@ public class GameEngine extends StdGame{
     			player.x+=MouseX-myMouseX;
     			player.y+=MouseY-myMouseY;
     		}
+    		drag = myClickedID > -1;
     	}
     	myMouseClicked = currentMouseClicked;
     	myMouseX = MouseX;
     	myMouseY = MouseY;
-    	return myClickedID > -1;
+    	return drag;
+    }
+    
+    public void setDefaultTiles(int cid, String imgfile){
+    	myTileCid = cid;
+    	myTileImgFile = imgfile;
+    }
+    
+    public void createTiles(){
+    	boolean currentMouseClicked = getMouseButton(1);
+    	
+    	if (!myMouseClicked && currentMouseClicked){
+    		myTileX = getMouseX()/20;
+    		myTileY = getMouseY()/20;
+    	}
+    	if (myMouseClicked && !currentMouseClicked){
+    		int tileX = getMouseX()/20;
+    		int tileY = getMouseY()/20;
+    		createTiles(Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1, myTileCid, myTileImgFile);
+    	}
+    	if (myMouseClicked && currentMouseClicked){
+    		
+    	}
+    	myMouseClicked = currentMouseClicked;
     }
     
     //unfinished
