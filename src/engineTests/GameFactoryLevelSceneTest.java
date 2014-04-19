@@ -61,7 +61,7 @@ public class GameFactoryLevelSceneTest extends TestCase{
     @Test
     public void testCreateLevel() throws FactoryException{
 
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","LevelID",2};
 
         List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
 
