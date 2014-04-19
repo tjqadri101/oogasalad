@@ -315,4 +315,11 @@ public abstract class GameObject extends JGObject {
     public String getMyDieBehavior () {
         return myDieBehavior;
     }
+    
+    /**
+     * @return the myInitX
+     */
+    public double getMyInitX() {
+        return myInitX;
+    }
 }

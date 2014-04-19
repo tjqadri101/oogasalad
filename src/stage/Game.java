@@ -186,6 +186,16 @@ public class Game {
     public Player getPlayer(int levelID, int sceneID, int objectID){
     	return myPlayer;
     }
+    
+    /** @Siyang: added for the sake of testing
+     * Called to get the Player from the Game
+     * Parameters needed but not used to facilitate GameFactory for Reflection
+     * @param levelID, sceneID, objectID
+     * @return Player Object
+     */
+    public Player getPlayer(){
+        return myPlayer;
+    }
 
 	/**
 	 * Called to add the non-level transition scenes to the Game
@@ -307,6 +317,6 @@ public class Game {
 	 */
 	public Map<Integer, Level> getMyLevelMap(){
 	    return myLevelMap;
-	}
+	}	
 
 }

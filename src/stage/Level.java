@@ -93,5 +93,12 @@ public class Level {
 		}
 		return answer;
 	}
+	
+	/* @Siyang: 
+         * The following getter added to facilitate testing. 
+         */
+        public Map<Integer, Scene> getMySceneMap(){
+            return mySceneMap;
+        }       
 
 }
