@@ -54,7 +54,6 @@ public class MenuBar extends JMenuBar{
 		editMenu.add(makeMenuItem("Cut", "doNothing"));
 		editMenu.add(makeMenuItem("Copy", "doNothing"));
 		editMenu.add(makeMenuItem("Paste", "doNothing"));
-		editMenu.add(makeMenuItem("Paste", "doNothing"));
 		return editMenu;
 	}
 	
