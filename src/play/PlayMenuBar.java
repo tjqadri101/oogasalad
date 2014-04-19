@@ -63,7 +63,7 @@ public class PlayMenuBar extends JMenuBar {
 		return fileMenu;
 	}
 
-	private void closeProgram() {
+	public void closeProgram() {
 
 		int n = JOptionPane.showConfirmDialog(null,
 				"Are you sure you want to quit", "Quitting",
@@ -73,7 +73,7 @@ public class PlayMenuBar extends JMenuBar {
 		}
 	}
 
-	private void openGameFile() throws Exception {
+	public void openGameFile() throws Exception {
 		File loadedFile = chooseGameFile("Load");
 		if (loadedFile == null) {
 			return;
@@ -86,7 +86,7 @@ public class PlayMenuBar extends JMenuBar {
 		}
 	}
 
-	private File chooseGameFile(String command) {
+	public File chooseGameFile(String command) {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"XML file", "xml");
 		final JFileChooser chooser = ViewFactory.createJFileChooser();
