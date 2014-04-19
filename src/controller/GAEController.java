@@ -100,6 +100,10 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	public void modifyActorPositionOnly(double xPos, double yPos){
+		modifyActorPosition(selectedActorID, xPos, yPos);
+	}
+	
 	public void modifyActorSpeed(int ID, double xSpeed, double ySpeed){
 		String order = SaladConstants.MODIFY_ACTOR + ",ID,"+ID+",Position," + xSpeed + "," + ySpeed;
 		//myDataController.receiveOrder(order);
