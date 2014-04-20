@@ -84,8 +84,6 @@ public abstract class GameObject extends JGObject {
 		super.setPos(x, y);
 		myInitX = x;
 		myInitY = y;
-		myAttributes.add(ModificationString() + "," + SaladConstants.ID + "," + myUniqueID + "," + 
-				SaladConstants.POSITION + "," + myInitX + "," + myInitY);
 	}
 	
 	/**
