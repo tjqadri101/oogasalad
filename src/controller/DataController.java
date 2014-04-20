@@ -1,5 +1,7 @@
 package controller;
 
+import imagebuffer.ImageBuffer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +15,13 @@ import parser.GameSaverAndLoader;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 import stage.Game;
+import util.SaladUtil;
 /**
  * @Author: Justin (Zihao) Zhang
  */
 public class DataController {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-	public static final String DEFAULT_DATA_FORMAT = "DataFormat";
+	public static final String DEFAULT_DATA_FORMAT = "TypeFormat";
 	public static final String DEFAULT_REFLECTION_METHODS = "DataFormatReflection";
 	
 	protected Game myGame;
@@ -27,11 +30,13 @@ public class DataController {
 	protected GameEngine myGameEngine;
 	protected ResourceBundle myDataFormat;
 	protected ResourceBundle myReflectionMethods;
+	protected ImageBuffer myImageBuffer;
 	
 	public DataController(){
 		myGameSaverAndLoader = new GameSaverAndLoader(); 
 		myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
 		myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
+		myImageBuffer = new ImageBuffer();
 	}
 	
 	/**
@@ -121,6 +126,7 @@ public class DataController {
 	 */
 	public void readXML(String url) throws Exception {
 		List<String> orders = myGameSaverAndLoader.load(url);
+		SaladUtil.printStringList(orders);
 		for(String order: orders){
 			callFactoryToProcess(convertOrderToObjects(order));
 		}
@@ -171,5 +177,9 @@ public class DataController {
 		} catch (Exception e){
 			e.printStackTrace(); // should never reach here
 		}
+	}
+	
+	public void uploadImage(int x, int y, String source) throws IOException {
+		myImageBuffer.resizedUpload(x, y, source);
 	}
 }

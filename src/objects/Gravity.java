@@ -12,10 +12,18 @@ public class Gravity {
 		myMagnitude = magnitude;
 	}
 	
+	/**
+	 * 
+	 * @return String Attribute
+	 */
 	public String getAttributes(){
-		return null; // need revision
+		return SaladConstants.MODIFY_GRAVITY + "," + SaladConstants.GRAVITY_MAGNITUDE + "," + myMagnitude;
 	}
 	
+	/**
+	 * 
+	 * @param GameObject object
+	 */
 	public void applyGravity(GameObject object){
 		if (object == null) return;
 		if(object.getName() == SaladConstants.SHOOT_NAME) return;

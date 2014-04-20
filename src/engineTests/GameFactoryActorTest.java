@@ -155,7 +155,7 @@ public class GameFactoryActorTest extends TestCase{
             fail("Exception");
         }
         assertEquals("RegularMove", myGame.getNonPlayer(1, 0, 0).getMyMoveBehavior());
-        assertEquals(10.0, myGame.getNonPlayer(1, 0, 0).getMySetXSpeed());
+//        assertEquals(10.0, myGame.getNonPlayer(1, 0, 0).getMyInitX());
     }
     
     @Test

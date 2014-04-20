@@ -5,9 +5,12 @@ import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.Date;
 import java.util.EventObject;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
@@ -37,6 +40,7 @@ import controller.GAEController;
 public class ActoreditorPanel extends Panel {
 	
 	private static final Integer[] levelList = {1,2,3,4,5,6,7,8,9,10};
+	
 
 	private SubPanel mySubPanel;
 	private PanelType superType;
@@ -44,6 +48,7 @@ public class ActoreditorPanel extends Panel {
 	private GAEController gController;
 	private DefaultTableModel myTableModel;
 	private JTable myTable;
+	private HashMap<Integer,Object> classMap = new HashMap<Integer,Object>();
 
 	public ActoreditorPanel(GAEController gController) {
 		super(PanelType.ACTOREDITOR);
@@ -55,6 +60,7 @@ public class ActoreditorPanel extends Panel {
 	@Override
 	protected void construct() {
 		makeTable();
+		init();
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
 		this.add(new JScrollPane(myTable), BorderLayout.CENTER);
@@ -131,23 +137,70 @@ public class ActoreditorPanel extends Panel {
 				String path = chooser.getSelectedFile().getPath();
 				String name = chooser.getSelectedFile().getName();
 				gController.updateActorImage(path,name);
+				gController.modifyActorImage(name, 100,100);
 			}			
 		}catch(Exception e){
 
 		}
 
 	}
+	
+	private void init(){
+		final JTextField tf = new JTextField("apple");
+		Object[] firstRow = {"Name", tf,"String"}; // each row should be in this format
+		tf.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("new text:" + tf.getText());	
+				// do something here (change name etc)
+			}			
+		});
+		
+		myTableModel.addRow(firstRow); // actually adding to the table
+		classMap.put(0,firstRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)
+		
+		
+		JComboBox testComboBox = new JComboBox(levelList);
+		Object[] secondRow = {"Level",testComboBox,"int"};
+		testComboBox.setSelectedIndex(0);
+		testComboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange() == ItemEvent.SELECTED){
+					System.out.println("new selected item:"+arg0.getItem().toString());
+					// call the change method in GAEController here (change level;change scene etc)
+				}				
+			}
+		});		
+		myTableModel.addRow(secondRow);
+		classMap.put(1,secondRow[1]);
+		
+		JCheckBox jb = new JCheckBox();
+		Object[] thirdRow = {"TestBoo",jb,"boolen"};
+		jb.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange() == ItemEvent.SELECTED){
+					System.out.println("now checked:"+true);
+					// call the change method in GAEController here
+				}
+				else{
+					System.out.println("now checked:"+false);
+					// call the change method in GAEController here
+				}
+			}
+		});	
+		
+		myTableModel.addRow(thirdRow);
+		classMap.put(2,thirdRow[1]);
+
+		
+	}
 
 	public void updateInfo(int actorID){
 		System.out.println("updating actorID:"+actorID);
-		Object[] data = {"Name", "apple","String"};
-		myTableModel.addRow(data);
-		JComboBox comboBox = new JComboBox();
-		Object[] data2 = {"Level",comboBox,"int"};
-		//		comboBox.setSelectedIndex(0);
-
-
-		myTableModel.addRow(data2);
+		// update info here
+		
 	}
 
 	private class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
@@ -164,22 +217,15 @@ public class ActoreditorPanel extends Panel {
 
 		@Override
 		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-			Object curValue = myTable.getValueAt(row, column);
-			if (curValue instanceof JComboBox) {
-				JComboBox newBox = new JComboBox(levelList);
-				editor = new DefaultCellEditor(newBox);    
-			} else if (curValue instanceof String) {
-				editor = new DefaultCellEditor(new JTextField());
-			} else if (curValue instanceof Boolean) {
-				editor = new DefaultCellEditor(new JCheckBox());
+			if (classMap.get(row) instanceof JComboBox) {
+				editor = new DefaultCellEditor((JComboBox) classMap.get(row));    
+			} else if (classMap.get(row) instanceof JTextField) {
+				editor = new JTextFieldCellEditor((JTextField) classMap.get(row));
+			} else if (classMap.get(row) instanceof JCheckBox) {
+				editor = new DefaultCellEditor((JCheckBox)classMap.get(row));
 			}
 
 			return editor.getTableCellEditorComponent(table, value, isSelected, row, column);
-		}
-
-		@Override
-		public boolean shouldSelectCell(EventObject anEvent){
-			return false;
 		}
 
 	}
@@ -190,21 +236,36 @@ public class ActoreditorPanel extends Panel {
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
-			Object curValue = myTable.getValueAt(row, column);
-        	if (curValue instanceof JComboBox) {
-        		renderer = (JComboBox)curValue;    
-            } else if (curValue instanceof String) {
-            	renderer = new JLabel((String)value);
-            } else if (curValue instanceof Boolean) {
-            	renderer = new DefaultTableCellRenderer();
+        	if (classMap.get(row) instanceof JComboBox) {
+        		renderer = (JComboBox)classMap.get(row);    
+            } else if (classMap.get(row) instanceof JTextField) {
+            	renderer = (JTextField) classMap.get(row);
+            } else if (classMap.get(row) instanceof JCheckBox) {
+            	renderer = (JCheckBox)classMap.get(row);
             }
 
             return renderer;
 		}
     	
     } 
+	
+	private class JTextFieldCellEditor extends AbstractCellEditor implements TableCellEditor {
 
+		  JComponent component;
+		  
+		  public JTextFieldCellEditor(JTextField jt){
+			  component = jt;
+		  }
 
+		  public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+		      int rowIndex, int vColIndex) {
 
+		    return component;
+		  }
+
+		  public Object getCellEditorValue() {
+		    return ((JTextField) component).getText();
+		  }
+		}
 
 }

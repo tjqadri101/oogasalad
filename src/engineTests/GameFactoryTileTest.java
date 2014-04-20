@@ -22,10 +22,10 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * @Author: Steve (Siyang) Wang
- * tests the functionality related to Player, including creation and modification
+ * tests the functionality of Tile 
  */
 
-public class GameFactoryPlayerTest extends TestCase{
+public class GameFactoryTileTest extends TestCase{
     
     protected GameEngine myEngine;
     protected Game myGame;

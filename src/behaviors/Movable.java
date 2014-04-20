@@ -7,7 +7,7 @@ import objects.GameObject;
 public abstract class Movable {
 	protected GameObject myObject; 
 	
-	public Movable(GameObject o){
+	protected Movable(GameObject o){
 		myObject = o;
 	}
 	
