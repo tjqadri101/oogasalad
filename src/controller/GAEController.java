@@ -14,9 +14,11 @@ import game_authoring_environment.MenuBar;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 
 
 
@@ -327,8 +329,23 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
-	
+	public void updateActorImage(String imageURL, String name){
+		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
+		ap.setActorImage(selectedActorID, imageURL, name);
+	}
 
+	public void setActorImageURL(String URL){
+		String xval = "100";
+		String yval = "100";
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public List<String> getAttributes(){
+		List<String> s = myDataController.getActorInfo(selectedActorID);
+		return s;
+	}
 	
 	
 	/*public void createPlayer(int ID,String url,String name){
