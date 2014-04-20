@@ -29,34 +29,36 @@ public class GameObjectTests extends TestCase {
 		
 		@Test
 		public void testCreateObjects(){
-			GameObject object = myEngine.createActor(0, "actor_default.png", 0, 0, "Hero", 0, 1);
+			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
 			assertEquals(object, myGame.getNonPlayer(1, 0, 0));
 		}
 		
 		@Test
 		public void testGetAttributes(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 1);
+			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
+			object.setCollisionBehavior("HitterEliminateVictim", 2);
+			object.setMoveBehavior("RegularMove", 1.0, 1.0);
+			object.setDieBehavior("RegularRemove");
 			System.out.println(object.getAttributes());
 		}
 		
 		@Test
 		public void testModifyCollision(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 1);
+			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
 			object.setCollisionBehavior("HitterEliminateVictim", 2);
 //			assertEquals("HitterEliminateVictim", object.myCollisionMap.get(2));
 		}
 		
 		@Test
 		public void testModifyMove(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 1);
-			object.setMoveBehavior("RegularMove", 1, 1);
-			myEngine.doFrameEdit();
+			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
+			object.setMoveBehavior("RegularMove", 1.0, 1.0);
 //			assertEquals("RegularMove", object.myMoveBehavior);
 		}
 		
 		@Test
 		public void testModifyDie(){
-			GameObject object = myEngine.createActor(1, "actor_default.png", 0, 0, "Hero", 0, 1);
+			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
 			object.setDieBehavior("RegularRemove");
 //			assertEquals("RegularRemove", object.myDieBehavior);
 		}
