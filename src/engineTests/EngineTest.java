@@ -50,8 +50,6 @@ public class EngineTest {
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
 		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		
-		System.out.println(game.getNonPlayer(1, 0, 123));
-		
 		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 5);
 		goomba.setDieBehavior("RegularRemove");
 		goomba.setMoveBehavior("BackForthMove",5.0, 10);

@@ -481,7 +481,6 @@ public class GameEngine extends StdGame{
     	loadImage(url);
     	NonPlayer object = new NonPlayer(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);
         if(unique_id != SaladConstants.NULL_UNIQUE_ID){
-//        	myCurrentScene.addNonPlayer(object);
         	myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
         }
         if(!isEditingMode){
