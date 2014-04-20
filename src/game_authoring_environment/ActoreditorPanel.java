@@ -60,11 +60,9 @@ public class ActoreditorPanel extends Panel {
 
 	@Override
 	protected void construct() {
-		makeTable();
-		init();
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
-		this.add(new JScrollPane(myTable), BorderLayout.CENTER);
+		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 	}
 
 	@Override
@@ -84,7 +82,62 @@ public class ActoreditorPanel extends Panel {
 		updateTable();
 	}
 
-	public void makeTable(){
+	private JTable createTable(){
+		ActorEditorTable table = new ActorEditorTable();
+		
+		return table;
+	}
+	
+	
+	public void updateTable(){
+		List<String> s = gController.getAttributes();
+		String firstrow = s.get(0);
+		String[] strings = firstrow.split(",");
+		for(String k : strings){
+			System.out.println(k);
+		}
+	}
+
+	private JButton makeChooseImageButton(){
+		JButton b = ViewFactory.createJButton("Select Actor Image");
+		b.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				chooseActorImage("Select Actor Image");
+			}			
+		});
+		return b;
+	}
+
+	
+	
+	
+	private void chooseActorImage(String displayText) {
+		try{
+			JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+			UIManager.put("FileChooser.openDialogTitleText", displayText);
+			SwingUtilities.updateComponentTreeUI(chooser);
+			FileNameExtensionFilter filter = new FileNameExtensionFilter(
+					"jpg", "gif","png","jpeg");
+			chooser.setFileFilter(filter);
+			int returnVal = chooser.showOpenDialog(getParent());
+			if(returnVal == JFileChooser.APPROVE_OPTION) {
+				String path = chooser.getSelectedFile().getPath();
+				String name = chooser.getSelectedFile().getName();
+			//	gController.updateActorImage(path,name);
+				gController.setActorImageURL(path);
+			}			
+		}catch(Exception e){
+
+		}
+
+	}
+	
+	public void updateInfo(int actorID){
+		System.out.println("updating actorID:"+actorID);	
+	}
+	
+/*	public void makeTable(){
 		myTable = new JTable();
 		myTableModel = new DefaultTableModel(new Object[]{"Property","","Type"}, 0){
 			@Override
@@ -109,48 +162,7 @@ public class ActoreditorPanel extends Panel {
 		myTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableCellRenderer());
 	}
 
-	public void updateTable(){
-		List<String> s = gController.getAttributes();
-		String firstrow = s.get(0);
-		String[] strings = firstrow.split(",");
-		for(String k : strings){
-			System.out.println(k);
-		}
-	}
-
-	private JButton makeChooseImageButton(){
-		JButton b = ViewFactory.createJButton("Select Actor Image");
-		b.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed (ActionEvent e){
-				chooseActorImage("Select Actor Image");
-			}			
-		});
-		return b;
-	}
-
-	private void chooseActorImage(String displayText) {
-		try{
-			JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
-			UIManager.put("FileChooser.openDialogTitleText", displayText);
-			SwingUtilities.updateComponentTreeUI(chooser);
-			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-					"jpg", "gif","png","jpeg");
-			chooser.setFileFilter(filter);
-			int returnVal = chooser.showOpenDialog(getParent());
-			if(returnVal == JFileChooser.APPROVE_OPTION) {
-				String path = chooser.getSelectedFile().getPath();
-				String name = chooser.getSelectedFile().getName();
-				gController.uploadImage(100, 100, path);
-				gController.updateActorImage(path,name);
-				gController.setActorImageURL(name);
-
-			}			
-		}catch(Exception e){
-
-		}
-
-	}
+	
 	
 	private void init(){
 		final JTextField tf = new JTextField("apple");
@@ -203,9 +215,7 @@ public class ActoreditorPanel extends Panel {
 		
 	}
 
-	public void updateInfo(int actorID){
-		System.out.println("updating actorID:"+actorID);	
-	}
+
 
 	private class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
 		private TableCellEditor editor;
@@ -270,6 +280,6 @@ public class ActoreditorPanel extends Panel {
 		  public Object getCellEditorValue() {
 		    return ((JTextField) component).getText();
 		  }
-		}
+		} */
 
 }

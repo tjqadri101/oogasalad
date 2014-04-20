@@ -31,15 +31,15 @@ public abstract class PanelTable extends JTable{
 
 	
 	protected DefaultTableModel myTableModel;
-	protected JTable myTable;
 	protected HashMap<Integer,Object> classMap = new HashMap<Integer,Object>();
 	
 	public PanelTable(){
+		new JTable();
+		makeTable();
+		init();
 	}
 
-	
-	public JTable makeTable(){
-		myTable = new JTable();
+	public void makeTable(){
 		System.out.println("table is beign made");
 		myTableModel = new DefaultTableModel(new Object[]{"Property","","Type"}, 0){
 			@Override
@@ -60,10 +60,9 @@ public abstract class PanelTable extends JTable{
 		};
 
 
-		myTable.setModel(myTableModel);
-		myTable.getColumnModel().getColumn(1).setCellEditor(new CustomTableCellEditor());
-		myTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableCellRenderer()); 
-		return myTable;
+		this.setModel(myTableModel);
+		this.getColumnModel().getColumn(1).setCellEditor(new CustomTableCellEditor());
+		this.getColumnModel().getColumn(1).setCellRenderer(new CustomTableCellRenderer()); 
 	}
 
 	abstract void updateTable();
@@ -71,7 +70,6 @@ public abstract class PanelTable extends JTable{
 	
 	abstract void init();
 
-	
 
 	private class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
 		private TableCellEditor editor;
