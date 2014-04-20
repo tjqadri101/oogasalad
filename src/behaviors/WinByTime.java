@@ -3,7 +3,11 @@ package behaviors;
 import java.util.List;
 
 import engine.GameEngine;
-
+/**
+ * @param int time limit
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class WinByTime extends Winnable{
 
 	public WinByTime(GameEngine engine) {
@@ -11,7 +15,7 @@ public class WinByTime extends Winnable{
 	}
     
 	/**
-	 * @param time limit
+	 * @param inttime limit
 	 */
 	@Override
 	public boolean checkGoal(List<Object> params) {

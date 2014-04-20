@@ -4,7 +4,12 @@ import java.util.List;
 
 import engine.GameEngine;
 import objects.GameObject;
-
+/**
+ * @param double amplitude of the moving pattern
+ * @param int latency; larger latency leads to slower speed
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class BackForthMove extends Movable{
 //	public static final int TIME_BUFFER = 10;
 

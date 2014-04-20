@@ -3,7 +3,12 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
-
+/**
+ * @param double magnitude
+ * @param int jump times allowed while in the air
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class Jump extends Jumpable{
 	
 	public Jump(GameObject o){
