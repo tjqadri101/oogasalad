@@ -41,7 +41,7 @@ public class EngineTest {
 		engine.createTiles(2,"brick.png",20,15,10,1);
 		engine.createTiles(0,"null",30,30,5,1);
 //		engine.setDefaultTiles(0, "null");
-		engine.setDefaultTiles(2, "brick.png");
+		engine.setDefaultTiles(0, "null");
 //		engine.createTiles(0,0,40,1,1,"brick.png");
 		engine.setBackground("bg.png");
 		
@@ -81,7 +81,8 @@ public class EngineTest {
 		game.addTileCollisionPair(2, "StayOnTile", 2);
 		game.addCollisionPair(3, "PerishTogether", 2);
 		
-		game.getLevel(1).setWinBehavior("WinByTime", 400);
-//		game.getLevel(1).setWinBehavior("WinByCollision", actor);
+//	        game.getLevel(1).setWinBehavior("WinByTime", 400);
+                game.getLevel(1).setWinBehavior("WinByRemove", actor);
+
 	}
 }

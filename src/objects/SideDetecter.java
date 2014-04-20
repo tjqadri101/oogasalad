@@ -22,8 +22,7 @@ public class SideDetecter extends GameObject{
 //		setPos(myParent.x, myParent.y);
 		x = myParent.x;
 		y = myParent.y;
-		System.out.println(x+" "+y);
-		setSDBBox(myDirection);
+		System.out.println(getBBox());
 	}
 	
 	//for testing only
@@ -31,8 +30,6 @@ public class SideDetecter extends GameObject{
 		super.hit(other);
 		System.out.println("lol");
 	}
-	
-	//for testing only
 	public void paint(){
 		switch(myDirection){
 		case 0: 

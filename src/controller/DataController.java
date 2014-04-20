@@ -179,7 +179,21 @@ public class DataController {
 		}
 	}
 	
+	/**
+	 * Called by GAE to save and resize the image
+	 * @param x
+	 * @param y
+	 * @param source
+	 * @throws IOException
+	 */
 	public void uploadImage(int x, int y, String source) throws IOException {
 		myImageBuffer.resizedUpload(x, y, source);
+	}
+	
+	/**
+	 * Called by the Player to reset the Game
+	 */
+	public void resetGame() {
+		myGameEngine.StartStartGame();
 	}
 }

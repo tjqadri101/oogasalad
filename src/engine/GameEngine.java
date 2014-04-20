@@ -316,7 +316,7 @@ public class GameEngine extends StdGame{
     			list.add(myPlayer);
     		}
     		for(GameObject go: myCurrentScene.getGameObjects()){
-    			if (go.isAlive() && go.x < MouseX && MouseX < go.x + go.getXSize() 
+    			if (!go.is_suspended && go.isAlive() && go.x < MouseX && MouseX < go.x + go.getXSize() 
     					&& go.y < MouseY && MouseY < go.y + go.getYSize()){
     				list.add(go);
     			}
