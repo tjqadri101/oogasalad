@@ -4,6 +4,7 @@ public final class SaladConstants {
 	
 	public static final String SEPERATER = ",";
 	
+	
 	public static final String CREATE_LEVEL = "CreateLevel";
 	public static final String SWITCH_LEVEL = "SwitchLevel";
 	public static final String MODIFY_LEVEL = "ModifyLevel";
@@ -14,9 +15,11 @@ public final class SaladConstants {
 	public static final String DELETE_SCENE = "DeleteScene";
 	public static final String RESET_LEVEL_ID = "ResetLevelID";
 	
+	
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
 	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
+	
 	
 	public static final String GAME_EDITOR_PANEL = "GameEditor";
 	public static final String ACTOR_EDITOR_PANEL = "ActorEditor";
@@ -28,6 +31,7 @@ public final class SaladConstants {
 	public static final String ELEMENT_LABEL = "Element";
 	public static final String ROOT_ELEMENT_LABEL = "Root";
 	
+	
 	public static final String STATE_GAMEOVER = "GameOver";
 	public static final String STATE_STARTTITLE = "StartTitle";
 	public static final String STATE_STARTLEVEL = "StartLevel";
@@ -35,12 +39,15 @@ public final class SaladConstants {
 	public static final String STATE_LIFELOST = "LifeLost";
 	public static final String INITIAL_SCORE = "InitialScore";
 	
+	
 	public static final String CREATE_PLAYER = "CreatePlayer";
 	public static final String MODIFY_PLAYER = "ModifyPlayer";
 	public static final String CREATE_ACTOR = "CreateActor";
 	public static final String MODIFY_ACTOR = "ModifyActor";
 	
+	
 	public static final String TEST_XMLFILE_URL = "test.xml";
+	
 	
 	public static final String BACKGROUND = "Background";
 	public static final String ID = "ID";
@@ -56,7 +63,7 @@ public final class SaladConstants {
     public static final String HITTER_ELIMINATE_VICTIM  = "HitterEliminateVictim";
     public static final String STAY_ON_TILE = "StayOnTile";
 	public static final String REGULAR_MOVE = "RegularMove";
-	public static final String REGULAR_REMOVE = "RegularRemove";
+	public static final String REGULAR_REMOVE = "RegularDie";
 	public static final String IMMOBILE = "Immobile";
 	public static final String SLOW_SHOOT = "SlowShoot";
 	public static final String QUICK_SHOOT = "QuickShoot";
@@ -85,12 +92,17 @@ public final class SaladConstants {
     public static final String MODIFY_ACTOR_IMAGE = "ModifyActorImage";
     public static final String WIN_BY_TIME = "WinByTime";
     
+    
 	public static final String NULL_TOKEN = "NullToken";
 	public static final String RESET_LEVEL_EXCEPTION = "Level can not be reset!";
 	
+	
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
+    
+    
+    public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
 
-
+    public static final int PLAYER_ID = 0;
 	
 }

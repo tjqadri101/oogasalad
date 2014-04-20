@@ -81,6 +81,7 @@ public class GameEngine extends StdGame{
     public boolean checkGoal(){
     	if(myCurrentScene == null) return false;
     	String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
+    	if(winBehavior == null) return false;
     	List<Object> winParameters = myGame.getLevel(myCurrentLevelID).getWinParameters();
     	ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
     	Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior, winParameters, "checkGoal", this);
@@ -315,7 +316,7 @@ public class GameEngine extends StdGame{
     			list.add(myPlayer);
     		}
     		for(GameObject go: myCurrentScene.getGameObjects()){
-    			if (go.isAlive() && go.x < MouseX && MouseX < go.x + go.getXSize() 
+    			if (!go.is_suspended && go.isAlive() && go.x < MouseX && MouseX < go.x + go.getXSize() 
     					&& go.y < MouseY && MouseY < go.y + go.getYSize()){
     				list.add(go);
     			}
@@ -480,7 +481,7 @@ public class GameEngine extends StdGame{
     	loadImage(url);
     	NonPlayer object = new NonPlayer(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);
         if(unique_id != SaladConstants.NULL_UNIQUE_ID){
-        	myCurrentScene.addNonPlayer(object);
+        	myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
         }
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game

@@ -147,7 +147,7 @@ public class DataController {
 	 * @return a list of String orders attached to Player
 	 */
 	public List<String> getPlayerInfo(){
-		return myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID).getAttributes();
+		return myGame.getPlayer(Game.NONUSE_ID).getAttributes();
 	}
 	
 	/**
@@ -179,7 +179,21 @@ public class DataController {
 		}
 	}
 	
+	/**
+	 * Called by GAE to save and resize the image
+	 * @param x
+	 * @param y
+	 * @param source
+	 * @throws IOException
+	 */
 	public void uploadImage(int x, int y, String source) throws IOException {
 		myImageBuffer.resizedUpload(x, y, source);
+	}
+	
+	/**
+	 * Called by the Player to reset the Game
+	 */
+	public void resetGame() {
+		myGameEngine.StartStartGame();
 	}
 }

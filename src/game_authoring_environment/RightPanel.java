@@ -67,7 +67,7 @@ public class RightPanel extends JSplitPane {
 						Class<?> c1 = getCurInstance().getClass();
 						Field field1 = c1.getField(curSpinner.getName());
 						field1.set(getCurInstance(),curSpinner.getValue());
-						myGAEController.modifyActorPositionOnly(curXPos, curYPos);
+						myGAEController.modifyActorPosNoID(curXPos, curYPos);
 					}
 					 catch (Exception e2)
 				        {

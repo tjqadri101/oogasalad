@@ -64,6 +64,7 @@ public class PlayMenuBar extends JMenuBar {
 	public JMenu createFileMenu() {
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(makeMenuItem("Open", "openGameFile"));
+		fileMenu.add(makeMenuItem("New Game", "newGame"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
 	}
@@ -89,6 +90,10 @@ public class PlayMenuBar extends JMenuBar {
 			// ioe.printStackTrace();
 			System.exit(1);
 		}
+	}
+	
+	public void newGame() throws Exception {
+		
 	}
 
 	public File chooseGameFile(String command) {
@@ -129,7 +134,7 @@ public class PlayMenuBar extends JMenuBar {
 		throw new ReflectionException(e.getMessage());
 	}*/
 		
-		MethodAction action = new MethodAction(getCurrentInstance() ,method);
+		MethodAction action = new MethodAction(getCurrentInstance(), method);
 		m.addActionListener(action);
 		
 		return m;
