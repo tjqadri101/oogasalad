@@ -2,28 +2,21 @@ package engine;
 
 import saladConstants.SaladConstants;
 import stage.Game;
-import stage.ResetLevelException;
 import stage.Scene;
 import stage.Transition;
 import stage.Transition.StateType;
 import util.SaladUtil;
 import jgame.JGColor;
-import jgame.JGFont;
-import jgame.JGObject;
-import jgame.JGPoint;
 import jgame.platform.StdGame;
 import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
 
-import java.awt.Dimension;//
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import jboxGlue.PhysicalObject;
-import jboxGlue.WorldManager;
 /**
  * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
  */
@@ -46,8 +39,8 @@ public class GameEngine extends StdGame{
     protected int myMouseY;
     protected int myMouseButton;
     protected int myClickedID;
-    protected boolean myViewOffsetPlayer;
-    protected int myViewOffsetRate;
+    protected boolean myViewOffsetPlayer = true;
+    protected int myViewOffsetRate = 1;
     
     protected int myTileX;
     protected int myTileY;
@@ -77,6 +70,7 @@ public class GameEngine extends StdGame{
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
         createTiles(0, "null", 0, 0, 0, 0);//why?
         
+        //setTileSettings("#",2,0);
 		//setPFWrap(false,true,0,0);
         
         if(isEditingMode){
@@ -98,12 +92,15 @@ public class GameEngine extends StdGame{
     public void startEdit(){
     	removeObjects(null,0);//remove?
     }
+    
     //drag;move->gravity->collision->setViewOffset
     public void doFrameEdit(){
     	timer++;//
     	if (myCurrentScene == null) return;
+    	
     	boolean viewOffset = false;
-    	if(!drag()){
+    	if(drag()) myViewOffsetPlayer = false;
+    	else{
     		moveObjects();
     		Gravity g = myGame.getGravity();
     		g.applyGravity(myPlayer);
@@ -117,21 +114,22 @@ public class GameEngine extends StdGame{
     			checkBGCollision(pair[0], pair[1]);
     		}
     		viewOffset = setViewOffsetEdit();
-    		if(viewOffset) myViewOffsetPlayer = false;
-    		if (myPlayer != null && !viewOffset){
-    			
-    			if (myViewOffsetRate > 1) myViewOffsetRate -= 1;
-    			if(isEditingMode && !myViewOffsetPlayer) myViewOffsetRate = 50;//indicates how long it takes to set view offset; when >1 player shakes while walking
-    			int desired_viewXOfs = (int) myPlayer.x+myPlayer.getXSize()/2-viewWidth()/2;
-    			int desired_viewYOfs = (int) myPlayer.y+myPlayer.getYSize()/2-viewHeight()/2;
-    			int x_diff = (desired_viewXOfs-viewXOfs())/myViewOffsetRate;
-    			int y_diff = (desired_viewYOfs-viewYOfs())/myViewOffsetRate;
-    			if (x_diff*y_diff == 0) myViewOffsetPlayer = true;
-    			setViewOffset(x_diff+viewXOfs(),y_diff+viewYOfs(),false);    			
-    		}
+    		if(!viewOffset) setViewOffsetPlayer();
+    		else myViewOffsetPlayer = false;
     	}
     	if(!viewOffset) setViewOffsetEdit();
     }
+
+	private void setViewOffsetPlayer() {
+		if (myPlayer != null){
+			if(myViewOffsetRate > 1) myViewOffsetRate -= 1;
+			if(isEditingMode && !myViewOffsetPlayer) myViewOffsetRate = 35;
+			myViewOffsetPlayer = true;
+			int desired_viewXOfs = (int) myPlayer.x+myPlayer.getXSize()/2-viewWidth()/2;
+			int desired_viewYOfs = (int) myPlayer.y+myPlayer.getYSize()/2-viewHeight()/2;
+			setViewOffset((desired_viewXOfs-viewXOfs())/myViewOffsetRate+viewXOfs(),(desired_viewYOfs-viewYOfs())/myViewOffsetRate+viewYOfs(),false);    			
+		}
+	}
 
     private boolean setViewOffsetEdit() {
     	int speed = 10;
@@ -156,9 +154,9 @@ public class GameEngine extends StdGame{
     	setViewOffset(viewXOfs()+XOfs,viewYOfs()+YOfs,false);
     	return XOfs != 0 || YOfs != 0;
     }
+    
     public void paintFrameEdit(){
-		drawString("You are in Editing Mode right now. This is a test message. ",
-			pfWidth()/2,pfHeight()/2,0,true);
+		drawString("You are in Editing Mode right now. This is a test message.",pfWidth()/2,pfHeight()/2,0,true);
 		if (myPlayer != null){
 			drawRect(myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/5,myPlayer.getXSize(),10,true,true,true);
 			drawString("lol help!",myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/2,0,true);
@@ -306,7 +304,6 @@ public class GameEngine extends StdGame{
     		array[j] = temp;
     	}
     	setTiles(top,left,array);
-//		setTileSettings("#",2,0);// what is this ?
     }
     
     public int getClickedID(){
@@ -328,7 +325,6 @@ public class GameEngine extends StdGame{
     	if (list.isEmpty()){
     		return -1;
     	}
-    	System.out.println("ID "+list.get(0).getID());
     	return list.get(0).getID();
     }
     
