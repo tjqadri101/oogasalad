@@ -70,7 +70,7 @@ public final class SaladConstants {
 	public static final String CHANGE_COLLISION_ID = "ChangeCollisionID";
 //	public static final String COLLISION_TILE = "CollisionTile"; // may not be needed
 	public static final String SET_KEY = "SetKey";
-	public static final int SHOOT_UNIQUE_ID = -1;
+	public static final int NULL_UNIQUE_ID = -1;
 	public static final int SHOOT_LIVES = 1;
 	public static final String SHOOT_NAME = "ShootObjects";
 	public static final String LIVES = "Lives";

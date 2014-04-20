@@ -143,7 +143,14 @@ public class GameEngine extends StdGame{
     public void paintFrameEdit(){
 		drawString("You are in Editing Mode right now. This is a test message. ",
 			pfWidth()/2,pfHeight()/2,0,true);
-		drawRect(getMouseX()+viewXOfs(),getMouseY()+viewYOfs(),20,20,false,true,true);
+		
+		Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
+		if (player != null){
+			drawRect(player.x+player.getXSize()/2,player.y-player.getYSize()/5,player.getXSize(),10,true,true,true);
+			drawString("lol help!",player.x+player.getXSize()/2,player.y-player.getYSize()/2,0,true);
+		}
+		
+//		drawRect(getMouseX()+viewXOfs(),getMouseY()+viewYOfs(),20,20,false,true,true);
 		if(myMouseClicked && myClickedID == -1){
 			int tileX = myMouseX/20;
     		int tileY = myMouseY/20;
@@ -372,8 +379,9 @@ public class GameEngine extends StdGame{
 //    }
     
     //unfinished
-    private void loadImage(String path){
+    public void loadImage(String path){
     	//scaling might be done here; dimension parameters needed
+    	if (path == null) return;
     	defineImage(path, "-", 0, path, "-");
     }
     
@@ -449,7 +457,9 @@ public class GameEngine extends StdGame{
     public NonPlayer createActor(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	NonPlayer object = new NonPlayer(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);
-        myCurrentScene.addNonPlayer(object);
+        if(unique_id != SaladConstants.NULL_UNIQUE_ID){
+        	myCurrentScene.addNonPlayer(object);
+        }
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game
         }

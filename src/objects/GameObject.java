@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,8 @@ public abstract class GameObject extends JGObject {
 	protected Map<Integer, List<Object>> myCollisionParameters;
 	protected Map<Integer, List<Object>> myTileCollisionParameters;
 	
+	protected SideDetecter[] mySideDetecters;//plz review
+	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
@@ -55,12 +58,13 @@ public abstract class GameObject extends JGObject {
 		myCollisionParameters = new HashMap<Integer, List<Object>>();
 		myTileCollisionBehavior = new HashMap<Integer, String>();
 		myTileCollisionParameters = new HashMap<Integer, List<Object>>();
-		setPos(xpos, ypos);
+		setInitPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
 		myXSize = xsize;
 		myYSize = ysize;
 		myAttributes = new ArrayList<String>();
+		mySideDetecters = new SideDetecter[4];//plz review
 	}
 	
 	/**
@@ -79,8 +83,7 @@ public abstract class GameObject extends JGObject {
 		return myYSize;
 	}
 	
-	@Override
-	public void setPos(double x, double y){
+	public void setInitPos(double x, double y){
 		super.setPos(x, y);
 		myInitX = x;
 		myInitY = y;
@@ -111,7 +114,7 @@ public abstract class GameObject extends JGObject {
 	 * Used for live-editing
 	 */
 	public void restore(){
-		setPos(myInitX, myInitY);
+		setInitPos(myInitX, myInitY);
 		setLives(myInitLives);
 	}
 	
@@ -372,4 +375,26 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
+    
+    //plz review
+	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
+		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+		if (dir == -1) return;
+		SideDetecter sd = mySideDetecters[dir];
+		if (sd == null){
+			sd = new SideDetecter(this,dir);
+			mySideDetecters[dir] = sd;
+		}
+		sd.setCollisionBehavior(type, otherColid, args);
+		
+	}
+	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
+		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+		if (dir == -1) return;
+		SideDetecter sd = mySideDetecters[dir];
+		if (sd == null){
+			mySideDetecters[dir] = new SideDetecter(this,dir);
+		}
+		sd.setTileCollisionBehavior(type, tileColid, args);
+	}
 }
