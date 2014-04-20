@@ -39,14 +39,14 @@ import javax.swing.table.TableCellRenderer;
 public class ActorEditorTable extends PanelTable{
 
 	private static final Integer[] levelList = {1,2,3,4,5,6,7,8,9,10};
-	private JTable myTable;
+
+	
 	public ActorEditorTable() {
-		myTable = makeTable();
-		init();
+		super();
 	}
 	
 	@Override
-	void init() {
+	public void init() {
 
 		final JTextField tf = new JTextField("test");
 		Object[] firstRow = {"Name", tf,"String"}; // each row should be in this format
