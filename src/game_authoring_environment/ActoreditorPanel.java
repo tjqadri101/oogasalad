@@ -144,6 +144,7 @@ public class ActoreditorPanel extends Panel {
 				gController.uploadImage(100, 100, path);
 				gController.updateActorImage(path,name);
 				gController.setActorImageURL(name);
+
 			}			
 		}catch(Exception e){
 

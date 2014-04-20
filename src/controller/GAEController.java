@@ -599,7 +599,7 @@ public class GAEController {
 		modifyActorQuickShoot(selectedActorID, url, xSize, ySize, colID, speed, numBullets);
 	}
 	
-	public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
+	/*public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
 						SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER+SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER + url + 
 						SaladConstants.SEPERATER +  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + time;
@@ -607,24 +607,25 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	/**
+	*//**
      * Modify actor's corpse showing property without providing actor id. The selectedActorID is used.
-     */
+     *//*
 	public void modifyActorShowCorpseNoID(String url, int xSize, int ySize, int time){
 		modifyActorShowCorpse(selectedActorID, url, xSize, ySize, time);
 	}
+	*/
 	
-	
-	public void createTile(int colID, String url){
-		String order = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID + ",TileImage," + url;
+	public void setDragTile(int colID, String url){
+		String order = SaladConstants.SET_DRAG_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID +
+				SaladConstants.SEPERATER + SaladConstants.DRAG_IMAGE + SaladConstants.SEPERATER + url;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	public void setDragTile(int colID, String url, int leftXPos, int topYPos, int width, int height){
-		String order = SaladConstants.SET_DRAG_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID + ",DragImage," +
-						url + SaladConstants.SEPERATER + leftXPos + SaladConstants.SEPERATER + topYPos + SaladConstants.SEPERATER + width + SaladConstants.SEPERATER + 
-						height;
+	public void createTile(int colID, String url, int leftXPos, int topYPos, int width, int height){
+		String order = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID
+				+ SaladConstants.SEPERATER +SaladConstants.TILE_IMAGE + SaladConstants.SEPERATER +url + SaladConstants.SEPERATER + leftXPos 
+				+ SaladConstants.SEPERATER + topYPos + SaladConstants.SEPERATER + width + SaladConstants.SEPERATER + height;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -642,6 +643,111 @@ public class GAEController {
 		deleteActor(selectedActorID);
 	}
 	
+	public void deleteLevel(int levelID){
+		String order = SaladConstants.DELETE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+	public void resetLevelID(int oldLevelID, int newLevelID){
+		String order = SaladConstants.RESET_LEVEL_ID + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+oldLevelID + SaladConstants.SEPERATER
+				+ SaladConstants.ID + SaladConstants.SEPERATER+newLevelID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+	
+	public void createLevel(int levelID){
+		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+	public void switchScene(int levelID, int sceneID){
+		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
+						SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void deleteScene(int levelID, int sceneID){
+		String order = SaladConstants.DELETE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
+				SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
+		myDataController.receiveOrder(order);	
+		System.out.println(order);
+	}
+	
+	public void createScene(int levelID, int sceneID){
+		String order = SaladConstants.CREATE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
+				SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifySceneBackground(String path){
+		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.BACKGROUND + SaladConstants.SEPERATER + path;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+		
+	
+	public void modifyScenePlayerInitPos(double xPos, double yPos){
+		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.PLAYER_INIT_POS + SaladConstants.SEPERATER + xPos + 
+						SaladConstants.SEPERATER + yPos;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	public void createGoalCollision(int bossID){
+		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPERATER +  SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPERATER + 
+				SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPERATER + bossID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}	
+	
+	public void createGoalTime(int time){
+		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPERATER +  SaladConstants.WIN_BY_TIME + SaladConstants.SEPERATER + 
+				SaladConstants.WIN_BY_TIME + SaladConstants.SEPERATER + time;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void createGoalTileCollision(int curPlayerID, int leftXPos, int topYPos, int width, int height){
+		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPERATER +  SaladConstants.WIN_BY_TILE_COLLISION+ SaladConstants.SEPERATER + 
+				curPlayerID + SaladConstants.SEPERATER + leftXPos + SaladConstants.SEPERATER + topYPos + SaladConstants.SEPERATER + width + SaladConstants.SEPERATER
+				+ height;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Create tile collision winning goal without providing player id. The already specified playerID is used.
+     */
+	public void createGoalTileCollisionNoID(int leftXPos, int topYPos, int width, int height){
+		createGoalTileCollision(playerID,leftXPos, topYPos, width,height);
+	}
+	
+	public void modifyGravityMagnitude(double magnitude){
+		String order = SaladConstants.MODIFY_GRAVITY + SaladConstants.SEPERATER +  SaladConstants.GRAVITY_MAGNITUDE+ SaladConstants.SEPERATER + magnitude;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+	public List<String> getAttributes(){
+		List<String> s = myDataController.getActorInfo(selectedActorID);
+		return s;
+	}
+
+	public void updateAttributesActorInfo(){
+		attributesPanel.updateActorInfo(selectedActorID);
+	}
+	
+	public void switchActiveAttributesTab(int index){
+		attributesPanel.setTab(index);
+	}
+		
+	
 	public DataController getDataController(){
 		return myDataController;
 	}
@@ -658,55 +764,11 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
-
-	
-	public void createLevel(int ID){
-		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
-		myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
-
-	public void createScene(int levelID, int sceneID){
-		String order = SaladConstants.CREATE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
-				SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
-		myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	public void switchScene(int levelID, int sceneID){
-		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
-						SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
-		myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
+	//Kat's method for testing
 	/**Modify the thumbnail in Actor panel*/
 	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
-	}
-
-	public void setActorImageURL(String URL){
-		String xval = "100";
-		String yval = "100";
-		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
-		myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-
-	public List<String> getAttributes(){
-		List<String> s = myDataController.getActorInfo(selectedActorID);
-		return s;
-	}
-
-	public void updateAttributesActorInfo(){
-		attributesPanel.updateActorInfo(selectedActorID);
-	}
-	
-	public void switchActiveAttributesTab(int index){
-		attributesPanel.setTab(index);
 	}
 	
 	/**Called to get the url image into our engine package*/
@@ -717,8 +779,14 @@ public class GAEController {
 			e.printStackTrace();
 		}
 	}
-	
-		
+
+	public void setActorImageURL(String URL){
+		String xval = "100";
+		String yval = "100";
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	
 	/*public void createPlayer(int ID,String url,String name){
 		String order = SaladConstants.CREATE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER+url+",Position,0,0,Name,"+name;
