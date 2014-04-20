@@ -7,13 +7,13 @@ import objects.Player;
 
 import engine.GameEngine;
 
-public class WinByCollision extends Winnable{
+public class WinByRemove extends Winnable{
 
-    public WinByCollision(GameEngine engine) {
-                super(engine);
-        }
-        
-            
+	public WinByRemove(GameEngine engine) {
+		super(engine);
+	}
+	
+	    
         /**
          * @param target, player
          */
