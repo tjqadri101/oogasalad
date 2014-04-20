@@ -49,9 +49,13 @@ public class EngineTest {
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
 		actor.setMoveBehavior("BackForthMove", 5.0);
 		
-		game.getLevel(1).setWinBehavior("WinByTime", 400);
+		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 5);
+		goomba.setDieBehavior("RegularDie");
+		goomba.setMoveBehavior("BackForthMove",2.0);
+// Q: why this does not come to ground?
+		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 5);
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 1);
+		Player player = engine.createPlayer(0, "actor_default.png", 50, 50, 100.0, 200.0, null, 1, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);
 		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, 3, 5.0, 5);
@@ -67,5 +71,8 @@ public class EngineTest {
 		game.addTileCollisionPair(2, "StayOnTile", 1);
 		game.addTileCollisionPair(2, "StayOnTile", 2);
 		game.addCollisionPair(3, "PerishTogether", 2);
+		
+//	        game.getLevel(1).setWinBehavior("WinByTime", 400);
+                game.getLevel(1).setWinBehavior("WinByCollision", actor);
 	}
 }
