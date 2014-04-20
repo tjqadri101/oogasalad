@@ -46,7 +46,6 @@ public class XMLWriter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		 out.println(myXStream.toXML(attributes));
 		 out.close(); 
 	}
 	
