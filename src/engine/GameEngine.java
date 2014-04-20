@@ -40,11 +40,14 @@ public class GameEngine extends StdGame{
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
     protected Scene myCurrentScene;
+    protected Player myPlayer;
     
     protected int myMouseX;
     protected int myMouseY;
-    protected boolean myMouseClicked;
+    protected int myMouseButton;
     protected int myClickedID;
+    protected boolean myViewOffsetPlayer;
+    protected int myViewOffsetRate;
     
     protected int myTileX;
     protected int myTileY;
@@ -74,13 +77,11 @@ public class GameEngine extends StdGame{
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
         createTiles(0, "null", 0, 0, 0, 0);//why?
         
-        setPFSize(1200,36);
 		//setPFWrap(false,true,0,0);
         
         if(isEditingMode){
         	setGameState("Edit");
         }
-//        this.addGameState("InGame");
     }
     
     
@@ -101,11 +102,11 @@ public class GameEngine extends StdGame{
     public void doFrameEdit(){
     	timer++;//
     	if (myCurrentScene == null) return;
+    	boolean viewOffset = false;
     	if(!drag()){
     		moveObjects();
-    		Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
     		Gravity g = myGame.getGravity();
-    		g.applyGravity(player);
+    		g.applyGravity(myPlayer);
     		for(GameObject go: myCurrentScene.getGameObjects()){
     			g.applyGravity(go);
     		}
@@ -115,27 +116,42 @@ public class GameEngine extends StdGame{
     		for (int[] pair: myGame.getTileCollisionPair()){
     			checkBGCollision(pair[0], pair[1]);
     		}
-    		if (player != null){
-    			setViewOffset((int) player.x+player.getXSize()/2,(int) player.y+player.getYSize()/2,true);
+    		viewOffset = setViewOffsetEdit();
+    		if(viewOffset) myViewOffsetPlayer = false;
+    		if (myPlayer != null && !viewOffset){
+    			
+    			if (myViewOffsetRate > 1) myViewOffsetRate -= 1;
+    			if(isEditingMode && !myViewOffsetPlayer) myViewOffsetRate = 50;//indicates how long it takes to set view offset; when >1 player shakes while walking
+    			int desired_viewXOfs = (int) myPlayer.x+myPlayer.getXSize()/2-viewWidth()/2;
+    			int desired_viewYOfs = (int) myPlayer.y+myPlayer.getYSize()/2-viewHeight()/2;
+    			int x_diff = (desired_viewXOfs-viewXOfs())/myViewOffsetRate;
+    			int y_diff = (desired_viewYOfs-viewYOfs())/myViewOffsetRate;
+    			if (x_diff*y_diff == 0) myViewOffsetPlayer = true;
+    			setViewOffset(x_diff+viewXOfs(),y_diff+viewYOfs(),false);    			
     		}
     	}
-    	setViewOffsetEdit();
+    	if(!viewOffset) setViewOffsetEdit();
     }
 
     private boolean setViewOffsetEdit() {
+    	int speed = 10;
+    	double margin = 0.1;
+    	if (!isEditingMode) return false;
     	int XOfs = 0;
     	int YOfs = 0;
-    	if (0 < getMouseX() && getMouseX() < 0.1*viewWidth()){
-    		XOfs -= 10;
+    	double x_ratio = 1.0*getMouseX()/viewWidth();
+    	double y_ratio = 1.0*getMouseY()/viewHeight();
+    	if (0 <= x_ratio && x_ratio <= margin){
+    		XOfs -= speed*(1-x_ratio/margin);
     	}
-    	if (0.9*viewWidth() < getMouseX() && getMouseX() < viewWidth()){
-    		XOfs += 10;
+    	if ((1-margin) <= x_ratio && x_ratio <= 1){
+    		XOfs += speed*(1-(1-x_ratio)/margin);
     	}
-    	if (0 < getMouseY() && getMouseY() < 0.1*viewHeight()){
-    		YOfs -= 10;	
+    	if (0 <= y_ratio && y_ratio <= margin){
+    		YOfs -= speed*(1-y_ratio/margin);
     	}
-    	if (0.9*viewHeight() < getMouseY() && getMouseY() < viewHeight()){
-    		YOfs += 10;
+    	if ((1-margin) <= y_ratio && y_ratio <= 1){
+    		YOfs += speed*(1-(1-y_ratio)/margin);
     	}
     	setViewOffset(viewXOfs()+XOfs,viewYOfs()+YOfs,false);
     	return XOfs != 0 || YOfs != 0;
@@ -143,23 +159,23 @@ public class GameEngine extends StdGame{
     public void paintFrameEdit(){
 		drawString("You are in Editing Mode right now. This is a test message. ",
 			pfWidth()/2,pfHeight()/2,0,true);
-		
-		Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
-		if (player != null){
-			drawRect(player.x+player.getXSize()/2,player.y-player.getYSize()/5,player.getXSize(),10,true,true,true);
-			drawString("lol help!",player.x+player.getXSize()/2,player.y-player.getYSize()/2,0,true);
+		if (myPlayer != null){
+			drawRect(myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/5,myPlayer.getXSize(),10,true,true,true);
+			drawString("lol help!",myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/2,0,true);
 		}
 		
 //		drawRect(getMouseX()+viewXOfs(),getMouseY()+viewYOfs(),20,20,false,true,true);
-		if(myMouseClicked && myClickedID == -1){
-			int tileX = myMouseX/20;
-    		int tileY = myMouseY/20;
-    		drawRect((double)Math.min(myTileX,tileX)*20,(double)Math.min(myTileY,tileY)*20,(double)(Math.abs(myTileX-tileX)+1)*20,(double)(Math.abs(myTileY-tileY)+1)*20,false,false);
-		}
+		
     	if(checkGoal()){
     		drawString("Win!!!!!!!!!!!!!!!! ",
     				viewWidth()/2,viewHeight()/2+100,0,true);
     	}
+    	if(myMouseButton!=0 && myClickedID == -1){
+			int tileX = myMouseX/20;
+    		int tileY = myMouseY/20;
+    		if(myMouseButton==3) setColor(JGColor.red);//should only be applied to the last line
+    		drawRect((double)Math.min(myTileX,tileX)*20,(double)Math.min(myTileY,tileY)*20,(double)(Math.abs(myTileX-tileX)+1)*20,(double)(Math.abs(myTileY-tileY)+1)*20,false,false);
+		}
     }
     
     
@@ -298,10 +314,9 @@ public class GameEngine extends StdGame{
     	if (getMouseButton(1)){
     		int MouseX = getMouseX()+viewXOfs();
         	int MouseY = getMouseY()+viewYOfs();
-    		Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
-    		if (player != null && player.x < MouseX && MouseX < player.x + player.getXSize() 
-    				&& player.y < MouseY && MouseY < player.y + player.getYSize()){
-    			list.add(player);
+    		if (myPlayer != null && myPlayer.x < MouseX && MouseX < myPlayer.x + myPlayer.getXSize() 
+    				&& myPlayer.y < MouseY && MouseY < myPlayer.y + myPlayer.getYSize()){
+    			list.add(myPlayer);
     		}
     		for(GameObject go: myCurrentScene.getGameObjects()){
     			if (go.isAlive() && go.x < MouseX && MouseX < go.x + go.getXSize() 
@@ -319,37 +334,48 @@ public class GameEngine extends StdGame{
     
     public boolean drag(){
     	boolean drag = false;
-    	boolean currentMouseClicked = getMouseButton(1);
+    	boolean currentMouse1 = getMouseButton(1);
+    	boolean currentMouse3 = getMouseButton(3);
     	int MouseX = getMouseX()+viewXOfs();
     	int MouseY = getMouseY()+viewYOfs();
+    	int tileX = MouseX/20;
+		int tileY = MouseY/20;
     	
-    	if (!myMouseClicked && currentMouseClicked){
+    	if (myMouseButton!=1 && currentMouse1){
     		myClickedID = getClickedID();
-    		myTileX = MouseX/20;
-    		myTileY = MouseY/20;
+    		myTileX = tileX;
+    		myTileY = tileY;
     	}
-    	if (myMouseClicked && !currentMouseClicked){
+    	if (myMouseButton==1 && !currentMouse1){
     		if (myClickedID == -1){
-    			int tileX = MouseX/20;
-    			int tileY = MouseY/20;
     			createTiles(myTileCid, myTileImgFile, Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1);
     		}
     		myClickedID = -1;
     	}
-    	if (myMouseClicked && currentMouseClicked){
+    	if (myMouseButton==1 && currentMouse1){
     		if (myClickedID > 0){
     			NonPlayer actor = myCurrentScene.getNonPlayer(myClickedID);
     			actor.x+=MouseX-myMouseX;
     			actor.y+=MouseY-myMouseY;
     		}
     		if (myClickedID == 0){
-    			Player player = myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID);
-    			player.x+=MouseX-myMouseX;
-    			player.y+=MouseY-myMouseY;
+    			myPlayer.x+=MouseX-myMouseX;
+    			myPlayer.y+=MouseY-myMouseY;
     		}
     		drag = myClickedID > -1;
     	}
-    	myMouseClicked = currentMouseClicked;
+    	
+    	if (myMouseButton!=3 && currentMouse3){
+    		myTileX = tileX;
+    		myTileY = tileY;
+    	}
+    	if (myMouseButton==3 && !currentMouse3){
+    		createTiles(0, "null", Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1);
+    	}
+    	
+    	myMouseButton = 0;
+    	if(currentMouse1) myMouseButton = 1;
+    	if(currentMouse3) myMouseButton = 3;
     	myMouseX = MouseX;
     	myMouseY = MouseY;
     	return drag;
@@ -448,6 +474,7 @@ public class GameEngine extends StdGame{
     	loadImage(url);
     	Player object = new Player(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);
         myGame.setPlayer(object);
+        myPlayer = object;
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game
         }

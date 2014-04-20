@@ -48,7 +48,6 @@ public abstract class GameObject extends JGObject {
 	protected List<Object> myJumpParameters;
 	protected Map<Integer, List<Object>> myCollisionParameters;
 	protected Map<Integer, List<Object>> myTileCollisionParameters;
-	
 	protected SideDetecter[] mySideDetecters;//plz review
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
@@ -386,14 +385,14 @@ public abstract class GameObject extends JGObject {
 			mySideDetecters[dir] = sd;
 		}
 		sd.setCollisionBehavior(type, otherColid, args);
-		
 	}
 	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
 		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
 		if (dir == -1) return;
 		SideDetecter sd = mySideDetecters[dir];
 		if (sd == null){
-			mySideDetecters[dir] = new SideDetecter(this,dir);
+			sd = new SideDetecter(this,dir);
+			mySideDetecters[dir] = sd;
 		}
 		sd.setTileCollisionBehavior(type, tileColid, args);
 	}
