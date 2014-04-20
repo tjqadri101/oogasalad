@@ -137,6 +137,7 @@ public class ActoreditorPanel extends Panel {
 				String path = chooser.getSelectedFile().getPath();
 				String name = chooser.getSelectedFile().getName();
 				gController.updateActorImage(path,name);
+				gController.modifyActorImage(name, 100,100);
 			}			
 		}catch(Exception e){
 
