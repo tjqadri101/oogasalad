@@ -147,7 +147,7 @@ public class DataController {
 	 * @return a list of String orders attached to Player
 	 */
 	public List<String> getPlayerInfo(){
-		return myGame.getPlayer(Game.NONUSE_ID, Game.NONUSE_ID, Game.NONUSE_ID).getAttributes();
+		return myGame.getPlayer(Game.NONUSE_ID).getAttributes();
 	}
 	
 	/**

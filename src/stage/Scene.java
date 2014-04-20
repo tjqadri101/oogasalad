@@ -37,6 +37,7 @@ public class Scene {
 	}
 	
 	public void addNonPlayer(NonPlayer object) {
+		System.out.println("Scene addNonPlayer: " + " " + object.getAttributes());
 		myObjectMap.put(object.getID(), object);
 	}
 	

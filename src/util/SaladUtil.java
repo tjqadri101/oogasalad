@@ -40,6 +40,19 @@ public class SaladUtil {
 	}
 	
 	/**
+	 * Print a list of Strings separated by '/'
+	 * @param list
+	 */
+	public static void printObjectList(List<Object> list){
+		System.out.println();
+		System.out.print("StringList print starts: ");
+		for(Object s: list){
+			System.out.print(s.toString() + "/");
+		}
+		System.out.print("//StringList print ends.");
+	}
+	
+	/**
 	 * Get a list of Strings from a properties file which maps the key parameter to values separated by commas
 	 * @param path to the properties file
 	 * @param key in the properties file that maps to the values

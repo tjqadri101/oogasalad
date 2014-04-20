@@ -72,8 +72,8 @@ public class Game {
 	 * @return nothing
 	 */
 	public void addNonPlayer(int levelID, int sceneID, NonPlayer object){
-		NonPlayer o = (NonPlayer) object;
-		myLevelMap.get(levelID).addNonPlayer(sceneID, o);
+		System.out.println("Game addNonPlayer: " + levelID + " " + sceneID + " " + object.getAttributes());
+		myLevelMap.get(levelID).addNonPlayer(sceneID, object);
 	}
 
 	/**
@@ -84,7 +84,9 @@ public class Game {
 	 * @return the Game Object that matched with the input IDs
 	 */
 	public NonPlayer getNonPlayer(int levelID, int sceneID, int objectID){
-		return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID);
+		NonPlayer o = myLevelMap.get(levelID).getNonPlayer(sceneID, objectID);
+		System.out.println("getNonPlayer: " + o.getAttributes());
+		return o;
 	}
 
 	/**
@@ -165,7 +167,7 @@ public class Game {
 			Level level = myLevelMap.get(levelID);
 			objects.addAll(level.getObjectsByColid(colid));
 		}
-		if(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID));
+		if(getPlayer(NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID));
 		return objects;
 	}
 	
@@ -184,18 +186,8 @@ public class Game {
      * @param levelID, sceneID, objectID
      * @return Player Object
      */
-    public Player getPlayer(int levelID, int sceneID, int objectID){
+    public Player getPlayer(int playerID){
     	return myPlayer;
-    }
-    
-    /** @Siyang: added for the sake of testing
-     * Called to get the Player from the Game
-     * Parameters needed but not used to facilitate GameFactory for Reflection
-     * @param levelID, sceneID, objectID
-     * @return Player Object
-     */
-    public Player getPlayer(){
-        return myPlayer;
     }
 
 	/**
@@ -286,7 +278,7 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
+		answer.addAll(getPlayer(NONUSE_ID).getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
