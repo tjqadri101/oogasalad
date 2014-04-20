@@ -26,7 +26,7 @@ import controller.GAEController;
 
 public class ActorsPanel extends Panel {
 
-	private static final String ACTOR_DEFAULT_IMAGE = "resources/actor_blank.png";
+	private static final String ACTOR_DEFAULT_IMAGE = "actor_blank.png";
 
 	private SubPanel mySubPanel;
 	private JTable myActorsTable;
@@ -122,7 +122,7 @@ public class ActorsPanel extends Panel {
 
 	private void addActors(){		
 		String newActorName = "Actor " + myActorsCount;		
-		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, "Actor " + myActorsCount);
+		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, 100, 100,100.0,200.0, "Actor " + myActorsCount, 1, 1);
 		ImageIcon icon = urlToScaledImageIcon("src/game_authoring_environment/resources/actor_blank.png");
 		Object toAdd[] = {icon , newActorName, ""};
 		actorsTableModel.addRow(toAdd);
