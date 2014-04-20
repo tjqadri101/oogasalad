@@ -329,6 +329,7 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
+
 	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);

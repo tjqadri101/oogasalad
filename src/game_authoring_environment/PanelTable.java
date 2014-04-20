@@ -1,14 +1,15 @@
 package game_authoring_environment;
 
-import game_authoring_environment.ActoreditorPanel.CustomTableCellEditor;
-import game_authoring_environment.ActoreditorPanel.CustomTableCellRenderer;
-import game_authoring_environment.ActoreditorPanel.JTextFieldCellEditor;
+import game_authoring_environment.PanelTable.CustomTableCellEditor;
+import game_authoring_environment.PanelTable.CustomTableCellRenderer;
+import game_authoring_environment.PanelTable.JTextFieldCellEditor;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.HashMap;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
@@ -29,11 +30,17 @@ import javax.swing.table.TableCellRenderer;
 	
 
 
-public class PanelTable {
+public abstract class PanelTable extends JTable{
 
-	private DefaultTableModel myTableModel;
-	private JTable myTable;
 	
+	protected DefaultTableModel myTableModel;
+	protected JTable myTable;
+	protected HashMap<Integer,Object> classMap = new HashMap<Integer,Object>();
+	
+	public PanelTable(){
+		makeTable();
+		init();
+	}
 	
 	public void makeTable(){
 		myTable = new JTable();
@@ -58,16 +65,14 @@ public class PanelTable {
 
 		myTable.setModel(myTableModel);
 		myTable.getColumnModel().getColumn(1).setCellEditor(new CustomTableCellEditor());
-		myTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableCellRenderer());
+		myTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableCellRenderer()); 
 	}
 
-	public void updateTable(){
-
-	}
+	abstract void updateTable();
 
 	
-	private void init(){
-		final JTextField tf = new JTextField("apple");
+	abstract void init();
+		/*final JTextField tf = new JTextField("apple");
 		Object[] firstRow = {"Name", tf,"String"}; // each row should be in this format
 		tf.addActionListener(new ActionListener(){
 			@Override
@@ -114,15 +119,9 @@ public class PanelTable {
 		
 		myTableModel.addRow(thirdRow);
 		classMap.put(2,thirdRow[1]);
-
-		
-	}
-
-	public void updateInfo(int actorID){
-		System.out.println("updating actorID:"+actorID);
-		// update info here
-		
-	}
+		}
+		*/
+	
 
 	private class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
 		private TableCellEditor editor;
