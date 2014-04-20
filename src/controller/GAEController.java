@@ -14,9 +14,11 @@ import game_authoring_environment.MenuBar;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 
 
 
@@ -72,6 +74,7 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	
 	public void modifyPlayerSpeed(int ID,double xSpeed, double ySpeed){
 		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
 						SaladConstants.SPEED + SaladConstants.SEPERATER+xSpeed+ SaladConstants.SEPERATER + ySpeed;
@@ -79,6 +82,13 @@ public class GAEController {
 		System.out.println(order);
 	}
  	
+	/**
+     * Modify player's speed without providing player id. The default player id of 0 is used since there can only be 1 player.
+     */
+	public void modifyPlayerSpeedNoID(double xSpeed, double ySpeed){
+		modifyPlayerSpeed(SaladConstants.PLAYER_ID,xSpeed, ySpeed);
+	}
+	
 	
 	public void createActor(int ID,String url, int xSize, int ySize, double xPos, double yPos, String name, int colID, int lives){
 		String order = SaladConstants.CREATE_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
@@ -97,11 +107,25 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void modifyActorImage(String url, int xSize, int ySize){
-		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+selectedActorID+SaladConstants.SEPERATER + 
+	/**
+     * Modify actor's speed without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorSpeedNoID(double xSpeed, double ySpeed){
+		modifyActorSpeed(selectedActorID,xSpeed, ySpeed);
+	}
+	
+	public void modifyActorImage(int ID, String url, int xSize, int ySize){
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ ID +SaladConstants.SEPERATER + 
 						SaladConstants.IMAGE + SaladConstants.SEPERATER+url + SaladConstants.SEPERATER + xSize + SaladConstants.SEPERATER + ySize;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
+	}
+	
+	/**
+     * Modify actor's image without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorImageNoID( String url, int xSize, int ySize){
+		modifyActorImage(selectedActorID, url, xSize, ySize);
 	}
 	
 	public void modifyActorID(int oldID,int newID){
@@ -109,6 +133,13 @@ public class GAEController {
 						SaladConstants.CHANGE_TO_ID + SaladConstants.SEPERATER+newID;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
+	}
+	
+	/**
+     * Modify actor's ID without providing old actor id. The selectedActorID is used for the old id.
+     */
+	public void modifyActorIDNoOldID(int newID){
+		modifyActorID(selectedActorID, newID);
 	}
  	
 	public void modifyActorColID(int oldColID,int newColID){
@@ -123,6 +154,13 @@ public class GAEController {
 						SaladConstants.POSITION + SaladConstants.SEPERATER+xPos+ SaladConstants.SEPERATER + yPos;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
+	}
+	
+	/**
+     * Modify actor's position without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorPosNoID(double xPos, double yPos){
+		modifyActorPos(selectedActorID, xPos, yPos);
 	}
 	
 	public void modifyActorExplode(int colID, int colIDTarget, String url, int xSize, int ySize){
@@ -167,6 +205,12 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	/**
+     * Modify actor's regular move property without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorRegMoveNoID(double xSpeed, double ySpeed){
+		modifyActorRegMove(selectedActorID, xSpeed, ySpeed);
+	}
 	
 	public void modifyActorRegRemove(int ID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
@@ -175,6 +219,12 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	/**
+     * Modify actor by doing a regular remove without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorRegRemoveNoID(){
+		modifyActorRegRemove(selectedActorID);
+	}
 	
 	public void modifyActorImmortal(int ID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
@@ -183,6 +233,12 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	/**
+     * Modify actor by making it immortal without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorImmortalNoID(){
+		modifyActorImmortal(selectedActorID);
+	}
 	
 	public void modifyActorImmobile(int ID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
@@ -191,6 +247,12 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	/**
+     * Modify actor by making it immobile without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorImmobileNoID(){
+		modifyActorImmobile(selectedActorID);
+	}
 	
 	public void modifyActorSlowShoot(int ID, String url, int xSize, int ySize, int colID, double speed){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
@@ -198,6 +260,13 @@ public class GAEController {
 						+  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + colID + SaladConstants.SEPERATER + speed;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
+	}
+	
+	/**
+     * Modify actor's shoot property by slowing it without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorSlowShootNoID(String url, int xSize, int ySize, int colID, double speed){
+		modifyActorSlowShoot(selectedActorID, url, xSize, ySize, colID, speed);
 	}
 	
 	public void modifyActorQuickShoot(int ID, String url, int xSize, int ySize, int colID, double speed, int numBullets){
@@ -209,6 +278,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	/**
+     * Modify actor's shoot property by quickening it without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorQuickShootNoID(String url, int xSize, int ySize, int colID, double speed, int numBullets){
+		modifyActorQuickShoot(selectedActorID, url, xSize, ySize, colID, speed, numBullets);
+	}
+	
 	public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
 						SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER+SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER + url + 
@@ -216,6 +292,14 @@ public class GAEController {
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	
+	/**
+     * Modify actor's corpse showing property without providing actor id. The selectedActorID is used.
+     */
+	public void modifyActorShowCorpseNoID(String url, int xSize, int ySize, int time){
+		modifyActorShowCorpse(selectedActorID, url, xSize, ySize, time);
+	}
+	
 	
 	public void createTile(int colID, String url){
 		String order = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID + ",TileImage," + url;
@@ -229,81 +313,6 @@ public class GAEController {
 						height;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
-	}
-	
-	public void createLevel(int ID){
-		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
-		System.out.println(order);
-		myDataController.receiveOrder(order);
-		
-	}
-
-
-	public void createScene(int levelID, int sceneID){
-		String order = SaladConstants.CREATE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
-		System.out.println(order);
-		myDataController.receiveOrder(order);
-		
-	}
-
-
-	public void modifyActorPosition(int ID, double xPos, double yPos){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.POSITION + SaladConstants.SEPERATER + xPos + SaladConstants.SEPERATER + yPos;
-		myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	public void modifyActorPositionOnly(double xPos, double yPos){
-		modifyActorPosition(selectedActorID, xPos, yPos);
-	}
-	
-	public void modifyScene(int ID, String function){
-		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+ function;
-		//myDataController.receiveOrder(order);
-		System.out.println(order);
-		
-	}
-
-
-	public void modifyLevel(int ID, String function){
-		String order = SaladConstants.MODIFY_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+ function;
-		//myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	public void switchLevel(int ID){
-		String order = SaladConstants.SWITCH_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
-		//myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	
-	public void switchScene(int levelID, int sceneID){
-		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
-		System.out.println(order);
-		myDataController.receiveOrder(order);
-		
-	}
-	
-	public void updateAttributesActorInfo(){
-		attributesPanel.updateActorInfo(selectedActorID);
-	}
-	
-	public void switchActiveAttributesTab(int index){
-		attributesPanel.setTab(index);
-	}
-
-
-	public void deleteActor(int ID){
-		String order = "DeleteActor,ID,"+ID;
-		System.out.println(order);
-		//myDataController.receiveOrder(order);				
-	}
-	
-	public void deleteScene(int sceneID){
-		String order = "ModifyScene,ID,"+sceneID+",DeleteScene";
-		System.out.println(order);
-		//myDataController.receiveOrder(order);	
 	}
 
 	
@@ -320,15 +329,23 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
-	public void updateActorImage(String imageURL,String name){
+	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
 	}
-	
-	public void setActorImageURL(String URL){
-		
-	}
 
+	public void setActorImageURL(String URL){
+		String xval = "100";
+		String yval = "100";
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public List<String> getAttributes(){
+		List<String> s = myDataController.getActorInfo(selectedActorID);
+		return s;
+	}
 	
 	
 	/*public void createPlayer(int ID,String url,String name){

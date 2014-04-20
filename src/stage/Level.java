@@ -8,6 +8,7 @@ import java.util.Map;
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
+import util.SaladUtil;
 
 /**
  * 
@@ -65,6 +66,7 @@ public class Level {
 		for(int i = 0; i < args.length; i ++){
 			myWinParameters.add(args[i]);
 		}
+		SaladUtil.printObjectList(myWinParameters); // test use
 	}
 	
 	public String getWinBehavior(){

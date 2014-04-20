@@ -3,11 +3,13 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
+import objects.NonPlayer;
+import stage.Game;
 import engine.GameEngine;
 
 public class WinByCollision extends Winnable{
 
-	protected WinByCollision(GameEngine engine) {
+	public WinByCollision(GameEngine engine) {
 		super(engine);
 	}
 	
@@ -18,8 +20,8 @@ public class WinByCollision extends Winnable{
     @Override
     public boolean checkGoal(List<Object> params) {
     	int id = (Integer) params.get(0);
-    	GameObject object = myEngine.getGame().getNonPlayer(myEngine.getCurrentLevelID(), myEngine.getCurrentSceneID(), id);
-    	return myEngine.getGame().getPlayer().isAlive() && !object.isAlive();
+    	NonPlayer object = myEngine.getGame().getNonPlayer(myEngine.getCurrentLevelID(), myEngine.getCurrentSceneID(), id);
+    	return myEngine.getGame().getPlayer(Game.NONUSE_ID).isAlive() && !object.isAlive();
     }
 
 }
