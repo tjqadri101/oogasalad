@@ -598,7 +598,7 @@ public class GAEController {
 		modifyActorQuickShoot(selectedActorID, url, xSize, ySize, colID, speed, numBullets);
 	}
 	
-	public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
+	/*public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
 						SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER+SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER + url + 
 						SaladConstants.SEPERATER +  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + time;
@@ -606,13 +606,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	/**
+	*//**
      * Modify actor's corpse showing property without providing actor id. The selectedActorID is used.
-     */
+     *//*
 	public void modifyActorShowCorpseNoID(String url, int xSize, int ySize, int time){
 		modifyActorShowCorpse(selectedActorID, url, xSize, ySize, time);
 	}
-	
+	*/
 	
 	public void createTile(int colID, String url){
 		String order = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID + ",TileImage," + url;
@@ -641,31 +641,40 @@ public class GAEController {
 		deleteActor(selectedActorID);
 	}
 	
-	public DataController getDataController(){
-		return myDataController;
-	}
-	
-	public void updateSelectedSceneID(int newID){
-		selectedSceneID = newID;
-	}
-	
-	public void updatePlayerID(int newID){
-		playerID = newID;
-	}
-	
-	public void updateSelectedActorID(int newID){
-		selectedActorID = newID;
-	}
-	
-
-	
-	public void createLevel(int ID){
-		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
+	public void deleteLevel(int levelID){
+		String order = SaladConstants.DELETE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 
+	public void resetLevelID(int oldLevelID, int newLevelID){
+		String order = SaladConstants.RESET_LEVEL_ID + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+oldLevelID + SaladConstants.SEPERATER
+				+ SaladConstants.ID + SaladConstants.SEPERATER+newLevelID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 
+	
+	public void createLevel(int levelID){
+		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+	public void switchScene(int levelID, int sceneID){
+		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
+						SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void deleteScene(int levelID, int sceneID){
+		String order = SaladConstants.DELETE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
+				SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
+		myDataController.receiveOrder(order);	
+		System.out.println(order);
+	}
+	
 	public void createScene(int levelID, int sceneID){
 		String order = SaladConstants.CREATE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
 				SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
@@ -673,12 +682,7 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void switchScene(int levelID, int sceneID){
-		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
-						SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
-		myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
+	
 	
 	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
@@ -705,6 +709,22 @@ public class GAEController {
 	
 	public void switchActiveAttributesTab(int index){
 		attributesPanel.setTab(index);
+	}
+	
+	public DataController getDataController(){
+		return myDataController;
+	}
+	
+	public void updateSelectedSceneID(int newID){
+		selectedSceneID = newID;
+	}
+	
+	public void updatePlayerID(int newID){
+		playerID = newID;
+	}
+	
+	public void updateSelectedActorID(int newID){
+		selectedActorID = newID;
 	}
 	
 	
