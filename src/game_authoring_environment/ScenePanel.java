@@ -118,7 +118,7 @@ public class ScenePanel extends Panel{
 	private void deleteScene(){		
 		if(mySelectedIndex > 0){
 			//delete scene here			
-			gController.deleteScene(getSelectedSceneID());
+			gController.deleteScene(1,getSelectedSceneID());// level ID = 1 here is hardcoded, need to modify later
 			listModel.remove(mySelectedIndex);
 			mySelectedIndex = -1;
 		}		

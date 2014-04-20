@@ -133,6 +133,10 @@ public class ActoreditorPanel extends Panel {
 
 	}
 	
+	public void updateInfo(int actorID){
+		System.out.println("updating actorID:"+actorID);	
+	}
+	
 /*	public void makeTable(){
 		myTable = new JTable();
 		myTableModel = new DefaultTableModel(new Object[]{"Property","","Type"}, 0){
@@ -211,9 +215,7 @@ public class ActoreditorPanel extends Panel {
 		
 	}
 
-	public void updateInfo(int actorID){
-		System.out.println("updating actorID:"+actorID);	
-	}
+
 
 	private class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
 		private TableCellEditor editor;
