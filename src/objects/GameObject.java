@@ -82,6 +82,11 @@ public abstract class GameObject extends JGObject {
 		return myYSize;
 	}
 	
+	/**
+	 * Set the initial position of the object in a scene
+	 * @param x
+	 * @param y
+	 */
 	public void setInitPos(double x, double y){
 		super.setPos(x, y);
 		myInitX = x;
@@ -89,8 +94,9 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Do not call this method directly
+	 * Used for getAttributes() method
+	 * @return String
 	 */
 	protected String ModificationString(){
 		if(myIsPlayer){
@@ -286,6 +292,22 @@ public abstract class GameObject extends JGObject {
 		myIsInAir = true;
 		if(myJumpBehavior == null) return;
 		behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, "jump");
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getJumpTimes(){
+		return myJumpTimes;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean getIsInAir(){
+		return myIsInAir;
 	}
 	
 	/**

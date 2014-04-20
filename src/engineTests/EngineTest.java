@@ -46,17 +46,17 @@ public class EngineTest {
 		engine.setBackground("bg.png");
 		
 		NonPlayer actor = engine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
-		actor.setDieBehavior("RegularDie");
+		actor.setDieBehavior("RegularRemove");
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
-		actor.setMoveBehavior("BackForthMove", 5.0);
+		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		
 		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 5);
-		goomba.setDieBehavior("RegularDie");
-		goomba.setMoveBehavior("BackForthMove",2.0);
+		goomba.setDieBehavior("RegularRemove");
+		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 
 		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 5);
-		mushroom.setDieBehavior("RegularDie");
-		mushroom.setMoveBehavior("BackForthMove",6.0);
+		mushroom.setDieBehavior("RegularRemove");
+		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 		
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
 		player.loseLife();
