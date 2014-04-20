@@ -36,7 +36,6 @@ public class GAEController {
 	private HashMap<String, JPanel> panelMap;
 	private AttributesPanel attributesPanel;
 	private ActorsPanel actorsPanel;
-	public static final String comma = ",";
 	private int selectedSceneID;
 	private int selectedActorID;
 	
@@ -64,155 +63,176 @@ public class GAEController {
 	
 	
 	public void createPlayer(int ID,String url, int xSize, int ySize, double xPos, double yPos, String name, int colID, int lives){
-		String order = SaladConstants.CREATE_PLAYER + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.IMAGE + comma+url+ comma + xSize + comma + 
-						ySize +comma + SaladConstants.POSITION + comma + xPos + comma + yPos + comma + SaladConstants.NAME + comma+name + ",CollisionID," 
-						+ colID + comma + SaladConstants.LIVES + comma + lives;
+		String order = SaladConstants.CREATE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER +
+						SaladConstants.IMAGE + SaladConstants.SEPERATER+url+ SaladConstants.SEPERATER + xSize + SaladConstants.SEPERATER + ySize +
+						SaladConstants.SEPERATER + SaladConstants.POSITION + SaladConstants.SEPERATER + xPos + SaladConstants.SEPERATER + yPos + 
+						SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER+name + ",CollisionID," + colID + SaladConstants.SEPERATER + 
+						SaladConstants.LIVES + SaladConstants.SEPERATER + lives;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyPlayerSpeed(int ID,double xSpeed, double ySpeed){
-		String order = SaladConstants.MODIFY_PLAYER + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.SPEED + comma+xSpeed+ comma + ySpeed;
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.SPEED + SaladConstants.SEPERATER+xSpeed+ SaladConstants.SEPERATER + ySpeed;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
  	
 	
 	public void createActor(int ID,String url, int xSize, int ySize, double xPos, double yPos, String name, int colID, int lives){
-		String order = SaladConstants.CREATE_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.IMAGE + comma+url+ comma + xSize + comma 
-						+ ySize +comma + SaladConstants.POSITION + comma + xPos + comma + yPos + comma + SaladConstants.NAME + comma+name + ",CollisionID,"
-						+ colID +  comma + SaladConstants.LIVES + comma + lives;
+		String order = SaladConstants.CREATE_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.IMAGE + SaladConstants.SEPERATER+url+ SaladConstants.SEPERATER + xSize + SaladConstants.SEPERATER + ySize +
+						SaladConstants.SEPERATER + SaladConstants.POSITION + SaladConstants.SEPERATER + xPos + SaladConstants.SEPERATER + yPos + 
+						SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER+name + ",CollisionID,"+ colID +  SaladConstants.SEPERATER + 
+						SaladConstants.LIVES + SaladConstants.SEPERATER + lives;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyActorSpeed(int ID, double xSpeed, double ySpeed){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.SPEED + comma+xSpeed + comma + ySpeed;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+				       SaladConstants.SPEED + SaladConstants.SEPERATER+xSpeed + SaladConstants.SEPERATER + ySpeed;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyActorImage(String url, int xSize, int ySize){
-		String order = SaladConstants.MODIFY_ACTOR_IMAGE + comma + SaladConstants.ID + comma+selectedActorID+comma + SaladConstants.IMAGE + comma+url + comma + xSize +
-							comma + ySize;
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+selectedActorID+SaladConstants.SEPERATER + 
+						SaladConstants.IMAGE + SaladConstants.SEPERATER+url + SaladConstants.SEPERATER + xSize + SaladConstants.SEPERATER + ySize;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyActorID(int oldID,int newID){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+oldID+comma + SaladConstants.CHANGE_TO_ID + comma+newID;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+oldID+SaladConstants.SEPERATER +  
+						SaladConstants.CHANGE_TO_ID + SaladConstants.SEPERATER+newID;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
  	
 	public void modifyActorColID(int oldColID,int newColID){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+oldColID+comma + SaladConstants.CHANGE_COLLISION_ID + comma +newColID;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+oldColID+SaladConstants.SEPERATER + 
+						SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPERATER +newColID;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyActorPos(int ID,double xPos, double yPos){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.POSITION + comma+xPos+ comma + yPos;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.POSITION + SaladConstants.SEPERATER+xPos+ SaladConstants.SEPERATER + yPos;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyActorExplode(int colID, int colIDTarget, String url, int xSize, int ySize){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.COLLISION_ID + comma+colID+comma + SaladConstants.EXPLODE + comma + 
-						SaladConstants.EXPLODE+ comma + colIDTarget + comma + url + comma + xSize + comma + ySize;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+					SaladConstants.SEPERATER + SaladConstants.EXPLODE + SaladConstants.SEPERATER + SaladConstants.EXPLODE+ SaladConstants.SEPERATER + colIDTarget + 
+					SaladConstants.SEPERATER + url + SaladConstants.SEPERATER + xSize + SaladConstants.SEPERATER + ySize;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyActorHitElimVic(int colID,int colIDTarget){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.COLLISION_ID + comma+colID+comma + SaladConstants.HITTER_ELIMINATE_VICTIM + comma + 
-						SaladConstants.HITTER_ELIMINATE_VICTIM + comma + colIDTarget;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+						SaladConstants.SEPERATER + SaladConstants.HITTER_ELIMINATE_VICTIM + SaladConstants.SEPERATER + SaladConstants.HITTER_ELIMINATE_VICTIM + 
+						SaladConstants.SEPERATER + colIDTarget;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void modifyActorPerishTog(int colID, int colIDTarget){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.COLLISION_ID + comma+colID+comma + SaladConstants.PERISH_TOGETHER + comma +
-						SaladConstants.PERISH_TOGETHER+ comma + colIDTarget;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+						SaladConstants.SEPERATER + SaladConstants.PERISH_TOGETHER + SaladConstants.SEPERATER + SaladConstants.PERISH_TOGETHER+ SaladConstants.SEPERATER + colIDTarget;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void modifyActorStayOnTile(int colID, int tileColID){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.COLLISION_ID + comma+colID+comma + SaladConstants.STAY_ON_TILE + comma +
-						SaladConstants.STAY_ON_TILE+ comma + tileColID;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+						SaladConstants.SEPERATER + SaladConstants.STAY_ON_TILE + SaladConstants.SEPERATER + SaladConstants.STAY_ON_TILE+ SaladConstants.SEPERATER + 
+						tileColID;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void modifyActorRegMove(int ID, double xSpeed, double ySpeed){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.REGULAR_MOVE + comma +
-						SaladConstants.REGULAR_MOVE+ comma +xSpeed + comma + ySpeed;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.REGULAR_MOVE + SaladConstants.SEPERATER + SaladConstants.REGULAR_MOVE+ SaladConstants.SEPERATER +xSpeed + 
+						SaladConstants.SEPERATER + ySpeed;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void modifyActorRegRemove(int ID){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.REGULAR_REMOVE + comma
-						+SaladConstants.REGULAR_REMOVE;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.REGULAR_REMOVE + SaladConstants.SEPERATER +SaladConstants.REGULAR_REMOVE;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void modifyActorImmortal(int ID){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.IMMORTAL + comma+SaladConstants.IMMORTAL;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.IMMORTAL + SaladConstants.SEPERATER+SaladConstants.IMMORTAL;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void modifyActorImmobile(int ID){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.IMMOBILE + comma+SaladConstants.IMMOBILE;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.IMMOBILE + SaladConstants.SEPERATER+SaladConstants.IMMOBILE;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void modifyActorSlowShoot(int ID, String url, int xSize, int ySize, int colID, double speed){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.SLOW_SHOOT + 
-						comma+SaladConstants.SLOW_SHOOT + comma + url + comma +  xSize + comma + ySize + comma + colID + comma + speed;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.SLOW_SHOOT + SaladConstants.SEPERATER+SaladConstants.SLOW_SHOOT + SaladConstants.SEPERATER + url + SaladConstants.SEPERATER 
+						+  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + colID + SaladConstants.SEPERATER + speed;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyActorQuickShoot(int ID, String url, int xSize, int ySize, int colID, double speed, int numBullets){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.QUICK_SHOOT + 
-						comma+SaladConstants.QUICK_SHOOT + comma + url + comma +  xSize + comma + ySize + comma + colID + comma + speed + comma + numBullets;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.QUICK_SHOOT + SaladConstants.SEPERATER+SaladConstants.QUICK_SHOOT + SaladConstants.SEPERATER + url + 
+						SaladConstants.SEPERATER +  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + colID + SaladConstants.SEPERATER + speed +
+						SaladConstants.SEPERATER + numBullets;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.SHOW_CORPSE + 
-						comma+SaladConstants.SHOW_CORPSE + comma + url + comma +  xSize + comma + ySize + comma + time;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER+SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER + url + 
+						SaladConstants.SEPERATER +  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + time;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void createTile(int colID, String url){
-		String order = SaladConstants.CREATE_TILE + comma + SaladConstants.COLLISION_ID + comma + colID + ",TileImage," + url;
+		String order = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID + ",TileImage," + url;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void setDragTile(int colID, String url, int leftXPos, int topYPos, int width, int height){
-		String order = SaladConstants.SET_DRAG_TILE + comma + SaladConstants.COLLISION_ID + comma + colID + ",DragImage," + url + comma + leftXPos + comma + topYPos + comma + width + comma + height;
+		String order = SaladConstants.SET_DRAG_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID + ",DragImage," +
+						url + SaladConstants.SEPERATER + leftXPos + SaladConstants.SEPERATER + topYPos + SaladConstants.SEPERATER + width + SaladConstants.SEPERATER + 
+						height;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void createLevel(int ID){
-		String order = SaladConstants.CREATE_LEVEL + comma + SaladConstants.ID + comma+ID;
+		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
 		System.out.println(order);
 		myDataController.receiveOrder(order);
 		
@@ -220,7 +240,7 @@ public class GAEController {
 
 
 	public void createScene(int levelID, int sceneID){
-		String order = SaladConstants.CREATE_SCENE + comma + SaladConstants.ID + comma+levelID+comma + SaladConstants.ID + comma+sceneID;
+		String order = SaladConstants.CREATE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
 		System.out.println(order);
 		myDataController.receiveOrder(order);
 		
@@ -228,7 +248,7 @@ public class GAEController {
 
 
 	public void modifyActorPosition(int ID, double xPos, double yPos){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.POSITION + comma + xPos + comma + yPos;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.POSITION + SaladConstants.SEPERATER + xPos + SaladConstants.SEPERATER + yPos;
 	//	myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -238,7 +258,7 @@ public class GAEController {
 	}
 	
 	public void modifyScene(int ID, String function){
-		String order = SaladConstants.MODIFY_SCENE + comma + SaladConstants.ID + comma+ID+ function;
+		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+ function;
 		//myDataController.receiveOrder(order);
 		System.out.println(order);
 		
@@ -246,20 +266,20 @@ public class GAEController {
 
 
 	public void modifyLevel(int ID, String function){
-		String order = SaladConstants.MODIFY_LEVEL + comma + SaladConstants.ID + comma+ID+ function;
+		String order = SaladConstants.MODIFY_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+ function;
 		//myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void switchLevel(int ID){
-		String order = SaladConstants.SWITCH_LEVEL + comma + SaladConstants.ID + comma+ID;
+		String order = SaladConstants.SWITCH_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
 		//myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void switchScene(int levelID, int sceneID){
-		String order = SaladConstants.SWITCH_SCENE + comma + SaladConstants.ID + comma+levelID+comma + SaladConstants.ID + comma+sceneID;
+		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
 		System.out.println(order);
 		myDataController.receiveOrder(order);
 		
@@ -312,20 +332,20 @@ public class GAEController {
 	
 	
 	/*public void createPlayer(int ID,String url,String name){
-		String order = SaladConstants.CREATE_PLAYER + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.IMAGE + comma+url+",Position,0,0,Name,"+name;
+		String order = SaladConstants.CREATE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER+url+",Position,0,0,Name,"+name;
 		//myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
  	
 	public void createActor(int ID,String url,String name){
-		String order = SaladConstants.CREATE_ACTOR + comma + SaladConstants.ID + comma+ID+",ActorImage,"+"actor_default.png"+",100,100,Position,100.0,200.0,Name,"+name+",CollisionID,"+0+",Lives,"+1;
+		String order = SaladConstants.CREATE_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+",ActorImage,"+"actor_default.png"+",100,100,Position,100.0,200.0,Name,"+name+",CollisionID,"+0+",Lives,"+1;
 		System.out.println(order);
 		myDataController.receiveOrder(order);
 		
 	}
 	
 	public void createLevel(int ID){
-		String order = SaladConstants.CREATE_LEVEL + comma + SaladConstants.ID + comma+ID;
+		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
 		System.out.println(order);
 		//myDataController.receiveOrder(order);
 		
@@ -333,7 +353,7 @@ public class GAEController {
 
 
 	public void createScene(int levelID, int sceneID){
-		String order = SaladConstants.CREATE_SCENE + comma + SaladConstants.ID + comma+levelID+comma + SaladConstants.ID + comma+sceneID;
+		String order = SaladConstants.CREATE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
 		System.out.println(order);
 		//myDataController.receiveOrder(order);
 		
@@ -341,7 +361,7 @@ public class GAEController {
 
 
 	public void modifyActorPosition(int ID, double xPos, double yPos){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.POSITION + comma + xPos + comma + yPos;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.POSITION + SaladConstants.SEPERATER + xPos + SaladConstants.SEPERATER + yPos;
 	//	myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -351,12 +371,12 @@ public class GAEController {
 	}
 	
 	public void modifyActorSpeed(int ID, double xSpeed, double ySpeed){
-		String order = SaladConstants.MODIFY_ACTOR + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.POSITION + comma + xSpeed + comma + ySpeed;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.POSITION + SaladConstants.SEPERATER + xSpeed + SaladConstants.SEPERATER + ySpeed;
 		//myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	public void modifyScene(int ID, String function){
-		String order = SaladConstants.MODIFY_SCENE + comma + SaladConstants.ID + comma+ID+ function;
+		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+ function;
 		//myDataController.receiveOrder(order);
 		System.out.println(order);
 		
@@ -364,20 +384,20 @@ public class GAEController {
 
 
 	public void modifyLevel(int ID, String function){
-		String order = SaladConstants.MODIFY_LEVEL + comma + SaladConstants.ID + comma+ID+ function;
+		String order = SaladConstants.MODIFY_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+ function;
 		//myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	public void switchLevel(int ID){
-		String order = SaladConstants.SWITCH_LEVEL + comma + SaladConstants.ID + comma+ID;
+		String order = SaladConstants.SWITCH_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
 		//myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
 	
 	public void switchScene(int levelID, int sceneID){
-		String order = SaladConstants.SWITCH_SCENE + comma + SaladConstants.ID + comma+levelID+comma + SaladConstants.ID + comma+sceneID;
+		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
 		System.out.println(order);
 		//myDataController.receiveOrder(order);
 		
