@@ -158,7 +158,7 @@ public class GameEngine extends StdGame{
 		drawString("You are in Editing Mode right now. This is a test message.",viewWidth()/2,viewHeight()/2,0,false);
 		if (myPlayer != null){
 			drawRect(myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,myPlayer.getXSize()/2,10,false,true);
-			drawRect(myPlayer.x+myPlayer.getXSize()/2*(1-0.5/myPlayer.getLives()),myPlayer.y-myPlayer.getYSize()/13.5,myPlayer.getXSize()/2*(1-1.0/myPlayer.getLives()),10,true,true);
+			drawRect(myPlayer.x+(0.5+myPlayer.getLives()/10.0)*myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,(myPlayer.getLives()/5.0)*myPlayer.getXSize()/2,10,true,true);
 			drawString("lol help!",myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/3,0,true);
 		}
 		

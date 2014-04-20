@@ -50,16 +50,15 @@ public class EngineTest {
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
 		actor.setMoveBehavior("BackForthMove", 5.0);
 		
-		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 5);
+		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 1);
 		goomba.setDieBehavior("RegularDie");
 		goomba.setMoveBehavior("BackForthMove",2.0);
 
-		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 5);
+		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 1);
 		mushroom.setDieBehavior("RegularDie");
 		mushroom.setMoveBehavior("BackForthMove",6.0);
 		
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
-		player.loseLife();
 //		player.setBBox(0, 0, 100, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);
@@ -71,12 +70,13 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
-//		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
-//		player.addSDCollisionBehavior("left", "PerishTogether", 2);
-//		player.addSDCollisionBehavior("right", "PerishTogether", 2);
-//		game.getCollisionPair().add(new int[]{1,2});
+		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
+		player.addSDCollisionBehavior("left", "PerishTogether", 2);
+		player.addSDCollisionBehavior("right", "PerishTogether", 2);
+		game.getCollisionPair().add(new int[]{1,2});
 		
-		game.addCollisionPair(1, "HitterEliminateVictim", 2);
+//		game.addCollisionPair(2, "HitterEliminateVictim", 1);
+//		game.addCollisionPair(1, "HitterEliminateVictim", 2);
 		game.addTileCollisionPair(2, "StayOnTile", 1);
 		game.addTileCollisionPair(2, "StayOnTile", 2);
 		game.addCollisionPair(3, "PerishTogether", 2);
