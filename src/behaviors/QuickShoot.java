@@ -6,7 +6,16 @@ import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
-
+/**
+ * @param String bullet's Image Name
+ * @param int x size of the image
+ * @param int y size of the image
+ * @param int collision ID of the bullet
+ * @param double absolute speed of the bullet
+ * @param int bullets per shoot
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class QuickShoot extends Shootable{
 
 	public QuickShoot(GameObject o) {

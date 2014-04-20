@@ -40,8 +40,10 @@ public class GAEController {
 	private ActorsPanel actorsPanel;
 	private int selectedSceneID;
 	private int selectedActorID;
+	private int playerID;
 	
 	public GAEController(){
+		playerID = SaladConstants.PLAYER_ID;
 		myDataController = new DataController();
 		myGameEngine = myDataController.initGameEngine(true);
 		g = new GAE(this);	
@@ -83,11 +85,322 @@ public class GAEController {
 	}
  	
 	/**
-     * Modify player's speed without providing player id. The default player id of 0 is used since there can only be 1 player.
+     * Modify player's speed without providing player id. The already set player ID is used.
      */
 	public void modifyPlayerSpeedNoID(double xSpeed, double ySpeed){
-		modifyPlayerSpeed(SaladConstants.PLAYER_ID,xSpeed, ySpeed);
+		modifyPlayerSpeed(playerID,xSpeed, ySpeed);
 	}
+	
+	public void modifyPlayerImage(int ID, String url, int xSize, int ySize){
+		String order = SaladConstants.MODIFY_PLAYER_IMAGE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ ID +SaladConstants.SEPERATER + 
+						SaladConstants.IMAGE + SaladConstants.SEPERATER+url + SaladConstants.SEPERATER + xSize + SaladConstants.SEPERATER + ySize;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player's image without providing player id. The already specified player ID is used.
+     */
+	public void modifyPlayerImageNoID( String url, int xSize, int ySize){
+		modifyPlayerImage(playerID, url, xSize, ySize);
+	}
+	
+	public void modifyPlayerID(int oldID,int newID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+oldID+SaladConstants.SEPERATER +  
+						SaladConstants.CHANGE_TO_ID + SaladConstants.SEPERATER+newID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player's ID without providing old player id. The already specified player ID is used for the old id.
+     */
+	public void modifyPlayerIDNoOldID(int newID){
+		modifyPlayerID(playerID, newID);
+	}
+	
+	public void modifyPlayerColID(int oldColID,int newColID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+oldColID+SaladConstants.SEPERATER + 
+						SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPERATER +newColID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyPlayerPos(int ID,double xPos, double yPos){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.POSITION + SaladConstants.SEPERATER+xPos+ SaladConstants.SEPERATER + yPos;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player's position without providing player id. The already specified playerID is used.
+     */
+	public void modifyPlayerPosNoID(double xPos, double yPos){
+		modifyPlayerPos(playerID, xPos, yPos);
+	}
+	
+	public void modifyPlayerExplode(int colID, int colIDTarget, String url, int xSize, int ySize){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+					SaladConstants.SEPERATER + SaladConstants.EXPLODE + SaladConstants.SEPERATER + SaladConstants.EXPLODE+ SaladConstants.SEPERATER + colIDTarget + 
+					SaladConstants.SEPERATER + url + SaladConstants.SEPERATER + xSize + SaladConstants.SEPERATER + ySize;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyPlayerHitElimVic(int colID,int colIDTarget){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+						SaladConstants.SEPERATER + SaladConstants.HITTER_ELIMINATE_VICTIM + SaladConstants.SEPERATER + SaladConstants.HITTER_ELIMINATE_VICTIM + 
+						SaladConstants.SEPERATER + colIDTarget;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	public void modifyPlayerPerishTog(int colID, int colIDTarget){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+						SaladConstants.SEPERATER + SaladConstants.PERISH_TOGETHER + SaladConstants.SEPERATER + SaladConstants.PERISH_TOGETHER+ SaladConstants.SEPERATER + colIDTarget;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyPlayerCannotCollide(int colID, int tileColID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+						SaladConstants.SEPERATER + SaladConstants.CAN_NOT_COLLIDE + SaladConstants.SEPERATER + SaladConstants.CAN_NOT_COLLIDE;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyPlayerStayOnTile(int colID, int tileColID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+						SaladConstants.SEPERATER + SaladConstants.STAY_ON_TILE + SaladConstants.SEPERATER + SaladConstants.STAY_ON_TILE+ SaladConstants.SEPERATER + 
+						tileColID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+/*	
+	public void modifyPlayerRegMove(int ID, double xSpeed, double ySpeed){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.REGULAR_MOVE + SaladConstants.SEPERATER + SaladConstants.REGULAR_MOVE+ SaladConstants.SEPERATER +xSpeed + 
+						SaladConstants.SEPERATER + ySpeed;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	*//**
+     * Modify player's regular move property without providing player id. The already specified playerID is used.
+     *//*
+	public void modifyPlayerRegMoveNoID(double xSpeed, double ySpeed){
+		modifyPlayerRegMove(playerID, xSpeed, ySpeed);
+	}
+	*/
+	public void modifyPlayerRegRemove(int ID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.REGULAR_REMOVE + SaladConstants.SEPERATER +SaladConstants.REGULAR_REMOVE;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player by doing a regular remove without providing player id. The already specified playerID is used.
+     */
+	public void modifyPlayerRegRemoveNoID(){
+		modifyPlayerRegRemove(playerID);
+	}
+	
+	public void modifyPlayerImmortal(int ID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.IMMORTAL + SaladConstants.SEPERATER+SaladConstants.IMMORTAL;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player by making it immortal without providing player id. The already specified playerID is used.
+     */
+	public void modifyPlayerImmortalNoID(){
+		modifyPlayerImmortal(playerID);
+	}
+	
+/*	public void modifyPlayerImmobile(int ID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.IMMOBILE + SaladConstants.SEPERATER+SaladConstants.IMMOBILE;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	*//**
+     * Modify player by making it immobile without providing player id. The already specified playerID is used.
+     *//*
+	public void modifyPlayerImmobileNoID(){
+		modifyPlayerImmobile(playerID);
+	}*/
+	
+	public void modifyPlayerSlowShoot(int ID, String url, int xSize, int ySize, int colID, double speed){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.SLOW_SHOOT + SaladConstants.SEPERATER+SaladConstants.SLOW_SHOOT + SaladConstants.SEPERATER + url + SaladConstants.SEPERATER 
+						+  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + colID + SaladConstants.SEPERATER + speed;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player's shoot property by slowing it without providing player id. The already specified playerID is used.
+     */
+	public void modifyPlayerSlowShootNoID(String url, int xSize, int ySize, int colID, double speed){
+		modifyPlayerSlowShoot(playerID, url, xSize, ySize, colID, speed);
+	}
+	
+	public void modifyPlayerQuickShoot(int ID, String url, int xSize, int ySize, int colID, double speed, int numBullets){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.QUICK_SHOOT + SaladConstants.SEPERATER+SaladConstants.QUICK_SHOOT + SaladConstants.SEPERATER + url + 
+						SaladConstants.SEPERATER +  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + colID + SaladConstants.SEPERATER + speed +
+						SaladConstants.SEPERATER + numBullets;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player's shoot property by quickening it without providing player id. The already specified playerID is used.
+     */
+	public void modifyPlayerQuickShootNoID(String url, int xSize, int ySize, int colID, double speed, int numBullets){
+		modifyPlayerQuickShoot(playerID, url, xSize, ySize, colID, speed, numBullets);
+	}
+	
+	public void modifyPlayerShowCorpse(int ID, String url, int xSize, int ySize, int time){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+						SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER+SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER + url + 
+						SaladConstants.SEPERATER +  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + time;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player's corpse showing property without providing player id. The already specified playerID is used.
+     */
+	public void modifyPlayerShowCorpseNoID(String url, int xSize, int ySize, int time){
+		modifyPlayerShowCorpse(playerID, url, xSize, ySize, time);
+	}
+	
+	public void modifyPlayerJumpBehavior(int ID, double magnitude, double numJumps){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+				SaladConstants.JUMP + SaladConstants.SEPERATER+SaladConstants.JUMP + SaladConstants.SEPERATER + magnitude + 
+				SaladConstants.SEPERATER +  numJumps;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Modify player's jump behavior without providing player id. The already specified playerID is used.
+     */
+	public void modifyPlayerJumpBehaviorNoID( double magnitude, double numJumps){
+		modifyPlayerJumpBehavior(playerID, magnitude, numJumps);
+	}
+	public void modifyPlayerKeyUp(int ID, int key){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+				SaladConstants.SET_KEY + SaladConstants.SEPERATER+ key + SaladConstants.SEPERATER + SaladConstants.MOVE_UP;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	/**
+     * Modify player's moveUp key without providing player id. The already specified playerID is used for the id.
+     */
+	public void modifyPlayerKeyUpNoID(int key){
+		modifyPlayerKeyUp(playerID, key);
+	}
+	
+	public void modifyPlayerKeyDown(int ID, int key){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+				SaladConstants.SET_KEY + SaladConstants.SEPERATER+ key + SaladConstants.SEPERATER + SaladConstants.MOVE_DOWN;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	/**
+     * Modify player's moveDown key without providing player id. The already specified playerID is used for the id.
+     */
+	public void modifyPlayerKeyDownNoID(int key){
+		modifyPlayerKeyDown(playerID, key);
+	}
+	
+	public void modifyPlayerKeyLeft(int ID, int key){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+				SaladConstants.SET_KEY + SaladConstants.SEPERATER+ key + SaladConstants.SEPERATER + SaladConstants.MOVE_LEFT;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	/**
+     * Modify player's moveLeft key without providing player id. The already specified playerID is used for the id.
+     */
+	public void modifyPlayerKeyLeftNoID(int key){
+		modifyPlayerKeyLeft(playerID, key);
+	}
+	
+	public void modifyPlayerKeyRight(int ID, int key){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+				SaladConstants.SET_KEY + SaladConstants.SEPERATER+ key + SaladConstants.SEPERATER + SaladConstants.MOVE_RIGHT;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	/**
+     * Modify player's moveRight key without providing player id. The already specified playerID is used for the id.
+     */
+	public void modifyPlayerKeyRighttNoID(int key){
+		modifyPlayerKeyRight(playerID, key);
+	}
+	
+	public void modifyPlayerKeyShoot(int ID, int key){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+				SaladConstants.SET_KEY + SaladConstants.SEPERATER+ key + SaladConstants.SEPERATER + SaladConstants.SHOOT_KEY;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	/**
+     * Modify player's shoot key without providing player id. The already specified playerID is used for the id.
+     */
+	public void modifyPlayerKeyShoottNoID(int key){
+		modifyPlayerKeyShoot(playerID, key);
+	}
+	
+	public void modifyPlayerKeyJump(int ID, int key){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
+				SaladConstants.SET_KEY + SaladConstants.SEPERATER+ key + SaladConstants.SEPERATER + SaladConstants.JUMP_KEY;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	/**
+     * Modify player's jump key without providing player id. The already specified playerID is used for the id.
+     */
+	public void modifyPlayerKeyJumpNoID(int key){
+		modifyPlayerKeyJump(playerID, key);
+	}
+	
+	
+	public void deletePlayer(int ID){
+		String order = SaladConstants.DELETE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + ID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Delete player without providing player id. The already specified playerID is used for the id.
+     */
+	public void deletePlayerNoID(){
+		deletePlayer(playerID);
+	}
+	
 	
 	
 	public void createActor(int ID,String url, int xSize, int ySize, double xPos, double yPos, String name, int colID, int lives){
@@ -315,8 +628,19 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void deleteActor(int ID){
+		String order = SaladConstants.DELETE_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + ID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	
-
+	/**
+     * Delete actor without providing actor id. The selectedActorID is used.
+     */
+	public void deleteActorNoID(){
+		deleteActor(selectedActorID);
+	}
+	
 	public DataController getDataController(){
 		return myDataController;
 	}
@@ -325,8 +649,35 @@ public class GAEController {
 		selectedSceneID = newID;
 	}
 	
+	public void updatePlayerID(int newID){
+		playerID = newID;
+	}
+	
 	public void updateSelectedActorID(int newID){
 		selectedActorID = newID;
+	}
+	
+
+	
+	public void createLevel(int ID){
+		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+
+	public void createScene(int levelID, int sceneID){
+		String order = SaladConstants.CREATE_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
+				SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void switchScene(int levelID, int sceneID){
+		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
+						SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
 	}
 	
 
@@ -343,9 +694,18 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+
 	public List<String> getAttributes(){
 		List<String> s = myDataController.getActorInfo(selectedActorID);
 		return s;
+	}
+
+	public void updateAttributesActorInfo(){
+		attributesPanel.updateActorInfo(selectedActorID);
+	}
+	
+	public void switchActiveAttributesTab(int index){
+		attributesPanel.setTab(index);
 	}
 	
 	

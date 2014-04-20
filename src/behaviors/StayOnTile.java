@@ -3,7 +3,11 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
-
+/**
+ * No parameter needed
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class StayOnTile extends TileCollision {
 
 	public StayOnTile(GameObject o) {
