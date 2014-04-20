@@ -25,9 +25,9 @@ public class Game {
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<StateType, Transition> myNonLevelSceneMap;
-	protected ScoreManager myScoreManager;
-	protected InputManager myInputManager;
-	protected TimerManager myTimerManager;
+//	protected ScoreManager myScoreManager;
+//	protected InputManager myInputManager;
+//	protected TimerManager myTimerManager;
 	protected Player myPlayer;
     protected List<int[]> myCollisionPair;
     protected List<int[]> myTileCollisionPair;
@@ -37,9 +37,9 @@ public class Game {
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
-		myScoreManager = new ScoreManager(DEFAULT_SCORE);
-		myInputManager = new InputManager();
-		myTimerManager = new TimerManager();
+//		myScoreManager = new ScoreManager(DEFAULT_SCORE);
+//		myInputManager = new InputManager();
+//		myTimerManager = new TimerManager();
 		myCollisionPair = new ArrayList<int[]>();
     	myTileCollisionPair = new ArrayList<int[]>();
     	myGravity = new Gravity();
@@ -286,23 +286,15 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
-//		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
+		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
-		}
-		//Apply changes to the newly added collision pairs and gravity
+		} // need check if before level or after
+		answer.add(myGravity.getAttributes());
 		return answer;
-	}
-	
-	/**
-     * Called to get the self instance of the game
-     * @return a the current Game
-     */
-	public Game getGame(int foo){
-	    return this;
 	}
 	
 	/* @Siyang: 

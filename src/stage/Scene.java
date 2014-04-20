@@ -24,7 +24,6 @@ public class Scene {
 	protected Map<Integer, NonPlayer> myObjectMap;
 	protected double initPlayerX;
 	protected double initPlayerY;
-//	protected GoalManager myGoalManager;
 	
 	public Scene(int id) {
 		myID = id;
@@ -97,12 +96,11 @@ public class Scene {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_SCENE + "," + SaladConstants.ID + "," + myID);
-		answer.add(SaladConstants.SWITCH_SCENE + "," + SaladConstants.ID + "," + myID);
 		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.BACKGROUND + "," + myBackground);
+		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.PLAYER_INITIAL_POSITION + "," + initPlayerX + "," + initPlayerY);
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
-		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.PLAYER_INITIAL_POSITION + "," + initPlayerX + "," + initPlayerY);
 		return answer;
 	}
 }

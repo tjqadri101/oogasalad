@@ -12,7 +12,6 @@ public final class SaladConstants {
 	public static final String CREATE_SCENE = "CreateScene";
 	public static final String SWITCH_SCENE = "SwitchScene";
 	public static final String MODIFY_SCENE = "ModifyScene";
-	public static final String MODIFY_GOALMANAGER = "ModifyGoalManager";
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
 	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
@@ -60,4 +59,5 @@ public final class SaladConstants {
 	public static final String GRAVITY_MAGNITUDE = "Magnitude";
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
+    public static final String CREATE_GOAL = "CreateGoal";
 }
