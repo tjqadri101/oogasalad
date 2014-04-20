@@ -100,6 +100,6 @@ public final class SaladConstants {
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
 
-
+    public static final int PLAYER_ID = 0;
 	
 }
