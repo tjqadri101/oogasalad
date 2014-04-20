@@ -58,7 +58,8 @@ public class EngineTest {
 		mushroom.setDieBehavior("RegularDie");
 		mushroom.setMoveBehavior("BackForthMove",6.0);
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 1);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
+		player.loseLife();
 //		player.setBBox(0, 0, 100, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);

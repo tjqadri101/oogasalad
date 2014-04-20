@@ -68,7 +68,6 @@ public class GameEngine extends StdGame{
     @Override
     public void initGame () {
         setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        createTiles(0, "null", 0, 0, 0, 0);//why?
         
         //setTileSettings("#",2,0);
 		//setPFWrap(false,true,0,0);
@@ -114,7 +113,6 @@ public class GameEngine extends StdGame{
     			checkBGCollision(pair[0], pair[1]);
     		}
     		viewOffset = setViewOffsetEdit();
-    		System.out.println(viewOffset);
     		if(!viewOffset) setViewOffsetPlayer();
     		else myViewOffsetPlayer = false;
     	}
@@ -157,17 +155,17 @@ public class GameEngine extends StdGame{
     }
     
     public void paintFrameEdit(){
-		drawString("You are in Editing Mode right now. This is a test message.",pfWidth()/2,pfHeight()/2,0,true);
+		drawString("You are in Editing Mode right now. This is a test message.",viewWidth()/2,viewHeight()/2,0,false);
 		if (myPlayer != null){
-			drawRect(myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/5,myPlayer.getXSize(),10,true,true,true);
-			drawString("lol help!",myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/2,0,true);
+			drawRect(myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,myPlayer.getXSize()/2,10,false,true);
+			drawRect(myPlayer.x+myPlayer.getXSize()/2*(1-0.5/myPlayer.getLives()),myPlayer.y-myPlayer.getYSize()/13.5,myPlayer.getXSize()/2*(1-1.0/myPlayer.getLives()),10,true,true);
+			drawString("lol help!",myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/3,0,true);
 		}
 		
 //		drawRect(getMouseX()+viewXOfs(),getMouseY()+viewYOfs(),20,20,false,true,true);
 		
     	if(checkGoal()){
-    		drawString("Win!!!!!!!!!!!!!!!! ",
-    				viewWidth()/2,viewHeight()/2+100,0,true);
+    		drawString("Win!!!!!!!!!!!!!!!!",viewWidth()/2,viewHeight()/2+100,0,false);
     	}
     	if(myMouseButton!=0 && myClickedID == -1){
 			int tileX = myMouseX/20;
