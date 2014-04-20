@@ -103,6 +103,6 @@ public final class SaladConstants {
     
     public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
 
-
+    public static final int PLAYER_ID = 0;
 	
 }
