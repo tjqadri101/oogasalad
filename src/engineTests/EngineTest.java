@@ -61,7 +61,7 @@ public class EngineTest {
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
 //		player.setBBox(0, 0, 100, 1);
 		player.setDieBehavior("RegularDie");
-		player.setJumpBehavior("Jump", 5.0);
+		player.setJumpBehavior("Jump", 5.0, 1);
 		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, 3, 5.0, 5);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
@@ -75,14 +75,15 @@ public class EngineTest {
 		player.addSDCollisionBehavior("right", "PerishTogether", 2);
 		game.getCollisionPair().add(new int[]{1,2});
 		
-//		game.addCollisionPair(2, "HitterEliminateVictim", 1);
-//		game.addCollisionPair(1, "HitterEliminateVictim", 2);
+		game.addCollisionPair(2, "HitterEliminateVictim", 1);
+		game.addCollisionPair(1, "HitterEliminateVictim", 2);
 		game.addTileCollisionPair(2, "StayOnTile", 1);
 		game.addTileCollisionPair(2, "StayOnTile", 2);
 		game.addCollisionPair(3, "PerishTogether", 2);
 		
-//	        game.getLevel(1).setWinBehavior("WinByTime", 400);
-                game.getLevel(1).setWinBehavior("WinByRemove", actor);
+//	      game.getLevel(1).setWinBehavior("WinByTime", 400);
+//        game.getLevel(1).setWinBehavior("WinByCollision", 123);
+        game.getLevel(1).setWinBehavior("WinByTileCollision", 0, 700, 450, 50, 50);
 
 	}
 }

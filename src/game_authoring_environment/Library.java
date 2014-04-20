@@ -30,14 +30,6 @@ public class Library extends JTabbedPane {
 		makePanels(controller);
 		addTabs();
 	
-		ChangeListener changeListener = new ChangeListener() {
-		      public void stateChanged(ChangeEvent changeEvent) {
-		        JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-		        int index = sourceTabbedPane.getSelectedIndex();
-		        controller.switchActiveAttributesTab(index);
-		      }
-		    };
-		    this.addChangeListener(changeListener);
 	}
 
 	private void addTabs() {

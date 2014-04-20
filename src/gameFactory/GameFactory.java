@@ -29,15 +29,17 @@ import reflection.*;
  * @VirtualCo-Author: Issac (Shenghan) Chen
  */
 public class GameFactory {
+    
     private GameEngine myEngine;
     private String myOrder;
     private int  myLevelID, mySceneID;
     private Game myGame;
     private Map<String,List<?>> parsedMap;
-    public static final String RESOURCE_PACKAGE = "engineResources/";
-    public static final String DEFAULT_FORMAT= "DataFormat";
-    public static final String DEFAULT_PATH= "FactoryOrderPath"; 
-    public static final String DEFAULT_METHOD= "TypeMethodMatcher";
+    private static final String NO_PARAMETER = "";
+    private static final String RESOURCE_PACKAGE = "engineResources/";
+    private static final String DEFAULT_FORMAT= "DataFormat";
+    private static final String DEFAULT_PATH= "FactoryOrderPath"; 
+    private static final String DEFAULT_METHOD= "TypeMethodMatcher";
     protected ResourceBundle myFormat, myPath, myMethod;
         private String instruction;
         private List<Object> objArgList;
@@ -93,24 +95,31 @@ public class GameFactory {
     /**
      * Creation or modification via Game (See FactoryOrderPath.Properties for exhaustive list of create/modify through Game)
      */
+    // TODO: to extract if selection and IDSelector into another layer of reflection
     @SuppressWarnings("unused")
     public GameObject twoStepReflect (int levelID, int sceneID, List<Object> objArgList, 
                                       Object refObj, String GameRefMethod, String GameReflectPara) 
                                       throws FactoryException {
+        Object obj = null;
         
         List<String> typeMethodList =  (List<String>) parsedMap.get("Type");
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
 
-        int numArg = Integer.parseInt(GameReflectPara);
         int objectID = (Integer) objArgList.remove(0);
 
-        Object[][] IDSelector = new Object[][]{new Object[]{objectID},
+        Object[][] IDSelector = new Object[][]{new Object[]{levelID},
                                 new Object[]{levelID, sceneID},
                                 new Object[]{levelID, sceneID, objectID}};
-
+        //new Object[]{objectID},
+        if (!GameReflectPara.equals(NO_PARAMETER)){
+            int numArg = Integer.parseInt(GameReflectPara);
+            obj = Reflection.callMethod(refObj, GameRefMethod, IDSelector[numArg]);
+        }
+        else{
+            obj = Reflection.callMethod(refObj, GameRefMethod);
+            // the case for player, gravity... those who does not take-in any parameter
+        }
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
-        
-        Object obj = Reflection.callMethod(refObj, GameRefMethod, IDSelector[numArg]);
         return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);
     }
     

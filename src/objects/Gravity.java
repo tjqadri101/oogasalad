@@ -6,7 +6,9 @@ public class Gravity {
 	
 	protected double myMagnitude;
 	
-	public Gravity(){}
+	public Gravity(){
+		myMagnitude = SaladConstants.DEFAULT_GRAVITY_MAGNITUDE;
+	}
 	
 	public void setMagnitude(double magnitude){
 		myMagnitude = magnitude;

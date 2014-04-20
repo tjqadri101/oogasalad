@@ -3,7 +3,12 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
-
+/**
+ * @param double xspeed
+ * @param double yspeed
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class Move extends Movable{
 	
 	public Move(GameObject o) {

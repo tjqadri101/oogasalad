@@ -104,7 +104,9 @@ public final class SaladConstants {
 	
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
-    
+
+    public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
+
     public static final int PLAYER_ID = 0;
     
 	public static final String MOVE_UP = "moveUp";
