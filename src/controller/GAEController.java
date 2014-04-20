@@ -672,6 +672,14 @@ public class GAEController {
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	
+	public void switchScene(int levelID, int sceneID){
+		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
+						SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
@@ -685,13 +693,6 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-
-	public void switchScene(int levelID, int sceneID){
-		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+levelID+SaladConstants.SEPERATER + 
-						SaladConstants.ID + SaladConstants.SEPERATER+sceneID;
-		myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
 
 	public List<String> getAttributes(){
 		List<String> s = myDataController.getActorInfo(selectedActorID);
