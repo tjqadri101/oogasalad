@@ -92,8 +92,8 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void modifyActorImage(int ID,int url, int xSize, int ySize){
-		String order = SaladConstants.MODIFY_ACTOR_IMAGE + comma + SaladConstants.ID + comma+ID+comma + SaladConstants.IMAGE + comma+url + comma + xSize +
+	public void modifyActorImage(String url, int xSize, int ySize){
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + comma + SaladConstants.ID + comma+selectedActorID+comma + SaladConstants.IMAGE + comma+url + comma + xSize +
 							comma + ySize;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -214,7 +214,7 @@ public class GAEController {
 	public void createLevel(int ID){
 		String order = SaladConstants.CREATE_LEVEL + comma + SaladConstants.ID + comma+ID;
 		System.out.println(order);
-		//myDataController.receiveOrder(order);
+		myDataController.receiveOrder(order);
 		
 	}
 
@@ -222,7 +222,7 @@ public class GAEController {
 	public void createScene(int levelID, int sceneID){
 		String order = SaladConstants.CREATE_SCENE + comma + SaladConstants.ID + comma+levelID+comma + SaladConstants.ID + comma+sceneID;
 		System.out.println(order);
-		//myDataController.receiveOrder(order);
+		myDataController.receiveOrder(order);
 		
 	}
 
@@ -261,7 +261,7 @@ public class GAEController {
 	public void switchScene(int levelID, int sceneID){
 		String order = SaladConstants.SWITCH_SCENE + comma + SaladConstants.ID + comma+levelID+comma + SaladConstants.ID + comma+sceneID;
 		System.out.println(order);
-		//myDataController.receiveOrder(order);
+		myDataController.receiveOrder(order);
 		
 	}
 	

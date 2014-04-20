@@ -53,7 +53,7 @@ public class ScenePanel extends Panel{
 		    		 //need to change attribute display to current scene
 		    		 switchToScene();
 		    		 gController.updateSelectedSceneID(getSelectedSceneID());
-		    		 gController.switchActiveTab(1);// scene tab is index 1
+		    		 gController.switchActiveAttributesTab(1);// scene tab is index 1
 		    		 
 		          }
 		    	 
