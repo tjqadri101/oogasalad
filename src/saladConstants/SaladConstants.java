@@ -96,7 +96,8 @@ public final class SaladConstants {
     public static final String MODIFY_ACTOR_IMAGE = "ModifyActorImage";
     public static final String MODIFY_PLAYER_IMAGE = "ModifyPlayerImage";
     public static final String WIN_BY_TIME = "WinByTime";
-    
+    public static final String WIN_BY_COLLISION = "WinByCollsion";
+    public static final String WIN_BY_TILE_COLLISION = "WinByTileCollision";
     
 	public static final String NULL_TOKEN = "NullToken";
 	public static final String RESET_LEVEL_EXCEPTION = "Level can not be reset!";
@@ -115,6 +116,9 @@ public final class SaladConstants {
 	public static final String MOVE_RIGHT = "moveRight";
 	public static final String SHOOT_KEY = "shoot";
 	public static final String JUMP_KEY = "jump";
+
+
+	public static final String PLAYER_INIT_POS = "PlayerInitialPosition";
 
 
 	

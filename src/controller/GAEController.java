@@ -614,16 +614,17 @@ public class GAEController {
 	}
 	*/
 	
-	public void createTile(int colID, String url){
-		String order = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID + ",TileImage," + url;
+	public void setDragTile(int colID, String url){
+		String order = SaladConstants.SET_DRAG_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID +
+				SaladConstants.SEPERATER + SaladConstants.DRAG_IMAGE + SaladConstants.SEPERATER + url;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	public void setDragTile(int colID, String url, int leftXPos, int topYPos, int width, int height){
-		String order = SaladConstants.SET_DRAG_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID + ",DragImage," +
-						url + SaladConstants.SEPERATER + leftXPos + SaladConstants.SEPERATER + topYPos + SaladConstants.SEPERATER + width + SaladConstants.SEPERATER + 
-						height;
+	public void createTile(int colID, String url, int leftXPos, int topYPos, int width, int height){
+		String order = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID
+				+ SaladConstants.SEPERATER +SaladConstants.TILE_IMAGE + SaladConstants.SEPERATER +url + SaladConstants.SEPERATER + leftXPos 
+				+ SaladConstants.SEPERATER + topYPos + SaladConstants.SEPERATER + width + SaladConstants.SEPERATER + height;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -682,21 +683,54 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	
-	
-	public void updateActorImage(String imageURL, String name){
-		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
-		ap.setActorImage(selectedActorID, imageURL, name);
-	}
-
-	public void setActorImageURL(String URL){
-		String xval = "100";
-		String yval = "100";
-		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
+	public void modifySceneBackground(String path){
+		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.BACKGROUND + SaladConstants.SEPERATER + path;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
+	public void modifyScenePlayerInitPos(double xPos, double yPos){
+		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.PLAYER_INIT_POS + SaladConstants.SEPERATER + xPos + 
+						SaladConstants.SEPERATER + yPos;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void createGoalCollision(int bossID){
+		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPERATER +  SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPERATER + 
+				SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPERATER + bossID;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	public void createGoalTime(int time){
+		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPERATER +  SaladConstants.WIN_BY_TIME + SaladConstants.SEPERATER + 
+				SaladConstants.WIN_BY_TIME + SaladConstants.SEPERATER + time;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void createGoalTileCollision(int curPlayerID, int leftXPos, int topYPos, int width, int height){
+		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPERATER +  SaladConstants.WIN_BY_TILE_COLLISION+ SaladConstants.SEPERATER + 
+				curPlayerID + SaladConstants.SEPERATER + leftXPos + SaladConstants.SEPERATER + topYPos + SaladConstants.SEPERATER + width + SaladConstants.SEPERATER
+				+ height;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+     * Create tile collision winning goal without providing player id. The already specified playerID is used.
+     */
+	public void createGoalTileCollisionNoID(int leftXPos, int topYPos, int width, int height){
+		createGoalTileCollision(playerID,leftXPos, topYPos, width,height);
+	}
+	
+	public void modifyGravityMagnitude(double magnitude){
+		String order = SaladConstants.MODIFY_GRAVITY + SaladConstants.SEPERATER +  SaladConstants.GRAVITY_MAGNITUDE+ SaladConstants.SEPERATER + magnitude;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 
 	public List<String> getAttributes(){
 		List<String> s = myDataController.getActorInfo(selectedActorID);
@@ -727,6 +761,19 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
+	//Kat's method for testing
+	public void updateActorImage(String imageURL, String name){
+		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
+		ap.setActorImage(selectedActorID, imageURL, name);
+	}
+
+	public void setActorImageURL(String URL){
+		String xval = "100";
+		String yval = "100";
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
+		myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	
 	/*public void createPlayer(int ID,String url,String name){
 		String order = SaladConstants.CREATE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER+url+",Position,0,0,Name,"+name;
