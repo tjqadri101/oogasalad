@@ -13,6 +13,7 @@ import game_authoring_environment.MenuBar;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -680,6 +681,7 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	/**Modify the thumbnail in Actor panel*/
 	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
@@ -707,6 +709,16 @@ public class GAEController {
 		attributesPanel.setTab(index);
 	}
 	
+	/**Called to get the url image into our engine package*/
+	public void uploadImage(int xSize,int ySize, String url){
+		try {
+			myDataController.uploadImage(xSize, ySize, url);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+		
 	
 	/*public void createPlayer(int ID,String url,String name){
 		String order = SaladConstants.CREATE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER+url+",Position,0,0,Name,"+name;
@@ -815,10 +827,6 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
-	public void updateActorImage(String imageURL,String name){
-		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
-		ap.setActorImage(selectedActorID, imageURL, name);
-	}
 	
 	public void setActorImageURL(String URL){
 		
