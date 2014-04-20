@@ -45,7 +45,6 @@ public class Level {
 	}
 
 	public void addNonPlayer(int sceneID, NonPlayer object) {
-		System.out.println("Level addNonPlayer: " + sceneID + " " + object.getAttributes());
 		mySceneMap.get(sceneID).addNonPlayer(object);
 	}
 

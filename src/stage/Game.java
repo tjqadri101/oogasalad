@@ -72,7 +72,6 @@ public class Game {
 	 * @return nothing
 	 */
 	public void addNonPlayer(int levelID, int sceneID, NonPlayer object){
-		System.out.println("Game addNonPlayer: " + levelID + " " + sceneID + " " + object.getAttributes());
 		myLevelMap.get(levelID).addNonPlayer(sceneID, object);
 	}
 
@@ -84,9 +83,7 @@ public class Game {
 	 * @return the Game Object that matched with the input IDs
 	 */
 	public NonPlayer getNonPlayer(int levelID, int sceneID, int objectID){
-		NonPlayer o = myLevelMap.get(levelID).getNonPlayer(sceneID, objectID);
-		System.out.println("getNonPlayer: " + o.getAttributes());
-		return o;
+		return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID);
 	}
 
 	/**
