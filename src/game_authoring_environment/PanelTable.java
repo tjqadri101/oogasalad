@@ -1,8 +1,5 @@
 package game_authoring_environment;
 
-import game_authoring_environment.PanelTable.CustomTableCellEditor;
-import game_authoring_environment.PanelTable.CustomTableCellRenderer;
-import game_authoring_environment.PanelTable.JTextFieldCellEditor;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -38,12 +35,12 @@ public abstract class PanelTable extends JTable{
 	protected HashMap<Integer,Object> classMap = new HashMap<Integer,Object>();
 	
 	public PanelTable(){
-		makeTable();
-		init();
 	}
+
 	
-	public void makeTable(){
+	public JTable makeTable(){
 		myTable = new JTable();
+		System.out.println("table is beign made");
 		myTableModel = new DefaultTableModel(new Object[]{"Property","","Type"}, 0){
 			@Override
 			public Class<?> getColumnClass(int col) {					
@@ -66,61 +63,14 @@ public abstract class PanelTable extends JTable{
 		myTable.setModel(myTableModel);
 		myTable.getColumnModel().getColumn(1).setCellEditor(new CustomTableCellEditor());
 		myTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableCellRenderer()); 
+		return myTable;
 	}
 
 	abstract void updateTable();
 
 	
 	abstract void init();
-		/*final JTextField tf = new JTextField("apple");
-		Object[] firstRow = {"Name", tf,"String"}; // each row should be in this format
-		tf.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("new text:" + tf.getText());	
-				// do something here (change name etc)
-			}			
-		});
-		
-		myTableModel.addRow(firstRow); // actually adding to the table
-		classMap.put(0,firstRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)
-		
-		
-		JComboBox testComboBox = new JComboBox(levelList);
-		Object[] secondRow = {"Level",testComboBox,"int"};
-		testComboBox.setSelectedIndex(0);
-		testComboBox.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				if(arg0.getStateChange() == ItemEvent.SELECTED){
-					System.out.println("new selected item:"+arg0.getItem().toString());
-					// call the change method in GAEController here (change level;change scene etc)
-				}				
-			}
-		});		
-		myTableModel.addRow(secondRow);
-		classMap.put(1,secondRow[1]);
-		
-		JCheckBox jb = new JCheckBox();
-		Object[] thirdRow = {"TestBoo",jb,"boolen"};
-		jb.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				if(arg0.getStateChange() == ItemEvent.SELECTED){
-					System.out.println("now checked:"+true);
-					// call the change method in GAEController here
-				}
-				else{
-					System.out.println("now checked:"+false);
-					// call the change method in GAEController here
-				}
-			}
-		});	
-		
-		myTableModel.addRow(thirdRow);
-		classMap.put(2,thirdRow[1]);
-		}
-		*/
+
 	
 
 	private class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
