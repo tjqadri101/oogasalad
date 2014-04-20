@@ -44,7 +44,7 @@ public class GameeditorPanel extends Panel {
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
 		//this.add(makeTable(), BorderLayout.SOUTH);
-		this.add(makeTable(), BorderLayout.CENTER);
+		this.add(createTable(), BorderLayout.CENTER);
 	
 
 	}
@@ -72,6 +72,13 @@ public class GameeditorPanel extends Panel {
 	
 	public void update(){
 		construct();
+	}
+	
+	private JTable createTable(){
+		ActorEditorTable table = new ActorEditorTable();
+		table.makeTable();
+		table.init();
+		return table;
 	}
 	
 	protected JComponent makeTable(){

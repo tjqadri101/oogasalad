@@ -52,6 +52,7 @@ public class GameEngine extends StdGame{
     public GameEngine(boolean editing){
     	initEngineComponent(JGPOINT_X, JGPOINT_Y);
     	isEditingMode = editing;
+    	setDefaultTiles(0,"brick.png");///testing delete this
     }
     
     @Override

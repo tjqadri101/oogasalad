@@ -6,7 +6,11 @@ import objects.GameObject;
 import objects.NonPlayer;
 import stage.Game;
 import engine.GameEngine;
-
+/**
+ * @param int object's ID
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class WinByCollision extends Winnable{
 
 	public WinByCollision(GameEngine engine) {
