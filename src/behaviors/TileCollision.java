@@ -7,7 +7,7 @@ import objects.GameObject;
 public abstract class TileCollision {
 	protected GameObject myObject; 
 	
-	public TileCollision(GameObject o){
+	protected TileCollision(GameObject o){
 		myObject = o;
 	}
 	

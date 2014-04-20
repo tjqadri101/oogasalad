@@ -24,7 +24,6 @@ public class Scene {
 	protected Map<Integer, NonPlayer> myObjectMap;
 	protected double initPlayerX;
 	protected double initPlayerY;
-//	protected GoalManager myGoalManager;
 	
 	public Scene(int id) {
 		myID = id;
@@ -38,14 +37,17 @@ public class Scene {
 	}
 	
 	public void addNonPlayer(NonPlayer object) {
-		myObjectMap.put(object.getID(), object );
+		myObjectMap.put(object.getID(), object);
 	}
 	
 	public void setPlayerInitPosition(double xpos, double ypos){
 		initPlayerX = xpos;
 		initPlayerY = ypos;
 	}
-	
+	/**
+	 * Get the Player's initial position in this scene
+	 * @return a double array[]; the first index refers to the x pos; the second index refers to the y pos
+	 */
 	public double[] getPlayerInitPosition(){
 		double[] position = new double[2];
 		position[0] = initPlayerX;
@@ -93,12 +95,12 @@ public class Scene {
 	
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.BACKGROUND + "," + myBackground);
-		answer.add(SaladConstants.SWITCH_SCENE + "," + SaladConstants.ID + "," + myID);
+		answer.add(SaladConstants.CREATE_SCENE + "," + SaladConstants.ID + "," + myID);
+		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.BACKGROUND + "," + myBackground);
+		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.PLAYER_INITIAL_POSITION + "," + initPlayerX + "," + initPlayerY);
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
-		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.PLAYER_INITIAL_POSITION + "," + initPlayerX + "," + initPlayerY);
 		return answer;
 	}
 }

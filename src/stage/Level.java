@@ -87,11 +87,31 @@ public class Level {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(SaladConstants.CREATE_LEVEL + "," + SaladConstants.ID + "," + myID);
-		answer.add(SaladConstants.SWITCH_LEVEL + "," + SaladConstants.ID + "," + myID);
+		answer.add(addAttributes(myWinBehavior, myWinBehavior, myWinParameters));
 		for(int a: mySceneMap.keySet()){
-			answer.addAll(mySceneMap.get(a).getAttributes());
+			List<String> sceneAttribute = mySceneMap.get(a).getAttributes();
+			String switchScene = SaladConstants.SWITCH_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.ID + "," + mySceneMap.get(a).getID(); 
+			sceneAttribute.add(1, switchScene);
+			answer.addAll(sceneAttribute);
 		}
 		return answer;
+	}
+	
+	/**
+	 * Add attribute for behaviors already set
+	 * @param type
+	 * @param typeToken: same as type
+	 * @param params
+	 * @return String attribute
+	 */
+	protected String addAttributes(String type, String typeToken, List<Object> params){
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(SaladConstants.CREATE_GOAL + "," + type + "," + typeToken);
+		for(Object o: params){
+			String att = o.toString();
+			attribute.append("," + att);
+		}
+		return attribute.toString();
 	}
 	
 	/* @Siyang: 

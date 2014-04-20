@@ -34,7 +34,7 @@ public class EngineTest {
 		game.addLevel(1);
 		game.addScene(1, 0);
 		engine.setCurrentScene(1, 0);
-		game.setGravity(0.1);
+		game.getGravity().setMagnitude(0.1);
 		
 		engine.createTiles(2,"brick.png",0,30,980,1);
 		engine.createTiles(2,"brick.png",20,15,10,1);

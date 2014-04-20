@@ -432,39 +432,6 @@ public class GameEngine extends StdGame{
     	return myCurrentSceneID;
     }
     
-    public void createLevel(int levelID){
-    	myGame.addLevel(levelID);
-    }
-    
-    public void deleteLevel(int levelID){
-    	myGame.removeLevel(levelID);
-    }
-    
-    public void resetLevelID(int oldID, int newID){
-    	try {
-			myGame.resetLevelID(oldID, newID);
-		} catch (ResetLevelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-    
-    public void createScene(int levelID, int sceneID){
-    	myGame.addScene(levelID, sceneID);
-    }
-    
-    public void deleteScene(int levelID, int sceneID){
-    	myGame.removeScene(levelID, sceneID);
-    }
-    
-    public void setInitPos(double xpos, double ypos){
-    	myCurrentScene.setPlayerInitPosition(xpos, ypos);
-    }
-    
-    public void deleteActor(int unique_id){
-    	myCurrentScene.deleteNonPlayer(unique_id);
-    }
-    
     /** 
      * Should be called by the GameFactory to createPlayer
      * Return a created GameObject 
@@ -488,14 +455,5 @@ public class GameEngine extends StdGame{
         }
         return object;
     }
-    
-    /*
-     * For reference only
-     */
-//	private Mass getMassById(String id){
-//    	Object thisObject = this.getObject(id);
-//    	Mass returnObject = (Mass) thisObject;
-//    	return returnObject;
-//    }
     
 }

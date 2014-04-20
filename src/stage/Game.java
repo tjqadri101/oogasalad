@@ -25,9 +25,9 @@ public class Game {
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<StateType, Transition> myNonLevelSceneMap;
-	protected ScoreManager myScoreManager;
-	protected InputManager myInputManager;
-	protected TimerManager myTimerManager;
+//	protected ScoreManager myScoreManager;
+//	protected InputManager myInputManager;
+//	protected TimerManager myTimerManager;
 	protected Player myPlayer;
     protected List<int[]> myCollisionPair;
     protected List<int[]> myTileCollisionPair;
@@ -37,9 +37,9 @@ public class Game {
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
-		myScoreManager = new ScoreManager(DEFAULT_SCORE);
-		myInputManager = new InputManager();
-		myTimerManager = new TimerManager();
+//		myScoreManager = new ScoreManager(DEFAULT_SCORE);
+//		myInputManager = new InputManager();
+//		myTimerManager = new TimerManager();
 		myCollisionPair = new ArrayList<int[]>();
     	myTileCollisionPair = new ArrayList<int[]>();
     	myGravity = new Gravity();
@@ -131,8 +131,9 @@ public class Game {
 	 * @param the new level ID 
 	 * @return nothing
 	 */
-	public void resetLevelID(int currentLevelID, int newLevelID) throws ResetLevelException{
-		if(myLevelMap.containsKey(newLevelID)) throw new ResetLevelException();
+	public void resetLevelID(int currentLevelID, int newLevelID) {
+//		if(myLevelMap.containsKey(newLevelID)) throw new ResetLevelException();
+		if(myLevelMap.containsKey(newLevelID)) return;
 		Level level = myLevelMap.get(currentLevelID);
 		level.resetID(newLevelID);
 		myLevelMap.remove(currentLevelID);
@@ -213,14 +214,6 @@ public class Game {
 	public Transition getNonLevelScene(StateType type){
 		return myNonLevelSceneMap.get(type);
 	}
-	
-	/**
-	 * Set gravity magnitude
-	 * @param magnitude
-	 */
-    public void setGravity(double magnitude){
-    	myGravity.setMagnitude(magnitude);
-    }
     
     /**
 	 * Get gravity for the engine to apply the force
@@ -293,23 +286,15 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
-//		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
+		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
-		}
-		//Apply changes to the newly added collision pairs and gravity
+		} // need check if before level or after
+		answer.add(myGravity.getAttributes());
 		return answer;
-	}
-	
-	/**
-     * Called to get the self instance of the game
-     * @return a the current Game
-     */
-	public Game getGame(int foo){
-	    return this;
 	}
 	
 	/* @Siyang: 

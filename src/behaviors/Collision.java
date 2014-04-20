@@ -7,7 +7,7 @@ import objects.GameObject;
 public abstract class Collision {
 	protected GameObject myObject; 
 	
-	public Collision(GameObject o){
+	protected Collision(GameObject o){
 		myObject = o;
 	}
 	
