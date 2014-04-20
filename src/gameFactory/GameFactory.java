@@ -55,7 +55,7 @@ public class GameFactory {
         
         objArgList = (List<Object>) p.parseParameter(order);
         typeMethodList =  (List<String>) p.parseType(order);
-        instruction = (String) typeMethodList.get(0);
+        instruction = p.getOrderKey(order);
         
 //        System.out.println("the typeMethodList in the gameFactory after parsed is " + typeMethodList);
                
@@ -109,31 +109,6 @@ public class GameFactory {
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
         return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);
     }
-    
-    /**
-     * Only couple things as argument, use reflection to create or modify object instance.
-     * @param order
-     * @param instruction
-     * @return Map<String, List<Obj>>
-     */
-    public Map<String, List<?>> parseOrder (List<Object> order, String instruction) {
-        String formatToken = myFormat.getString(instruction);
-        List<String> formatTokenList = Arrays.asList(formatToken.split("\\,"));
-        List<Object> argumentList = new ArrayList<Object>();
-        List<String> typeList = new ArrayList<String>();
-        for(int i = 1; i < order.size(); i ++){
-            if(formatTokenList.get(i-1).equals("ParameterToken")){
-                argumentList.add(order.get(i));
-            }
-            if(formatTokenList.get(i-1).equals("TypeToken")){
-                typeList.add((String) order.get(i));
-            }
-        }
-        Map<String, List<?>> returnMap = new HashMap<String, List<?>>();
-        returnMap.put("Argument", argumentList);
-        returnMap.put("Type", typeList);
-        return returnMap;
-    }
 
     /**
      * Getting Game instance to reflect upon. To be called using the reflection to get refObj
@@ -149,8 +124,6 @@ public class GameFactory {
         return (GameEngine) myEngine;
 
     }
-    
-
     
     /**
      * Test the legitimacy of an order passed from GAE

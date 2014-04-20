@@ -11,8 +11,8 @@ import stage.Game;
 import engine.GameEngine;
 
 /** Intended for universal parsing in the program
- * @author Steve (Siyang) Wang
- * @Co-author: Justin (Zihao) Zhang
+ * @author Justin (Zihao) Zhang 
+ * @Co-author Steve (Siyang) Wang
  */
 
 public class IParser {
@@ -23,8 +23,6 @@ public class IParser {
     private static Map<String,List<?>> parsedResults = new HashMap<String, List<?>>();
     public static ResourceBundle myDataFormat;
     public static ResourceBundle myReflectionMethods;
-    private static Object self;
-    private static Object SaladUtil;
 
     /**
      * Called to parse a String order into a Map of String to Parsed Result (i.e. "ParameterList" to List<Obejct>") 
@@ -80,6 +78,10 @@ public class IParser {
             return (List<Object>) parseToMap(order).get("Parameter");
     }
     
+    public String getOrderKey(String order){
+            return order.split(",")[0];
+    }
+    
     /**
      * Do not call this method directly; called by Reflection within DataController
      */
@@ -99,6 +101,15 @@ public class IParser {
      */
     public String convertStringToString(String s){
         return s;
+    }
+    
+    /**
+     * Test the legitimacy of an order passed from GAE
+     */
+    @SuppressWarnings("unused")
+    private void testLegitimateOrder (String order) {
+        if (!order.contains(",")) 
+            throw new IllegalArgumentException("String " + order + " does not contain =");
     }
 
     
