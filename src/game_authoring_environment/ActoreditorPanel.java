@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
@@ -80,7 +81,7 @@ public class ActoreditorPanel extends Panel {
 		return jb;
 	}
 	public void update(){
-
+		updateTable();
 	}
 
 	public void makeTable(){
@@ -103,14 +104,18 @@ public class ActoreditorPanel extends Panel {
 			}
 		};
 
-
 		myTable.setModel(myTableModel);
 		myTable.getColumnModel().getColumn(1).setCellEditor(new CustomTableCellEditor());
 		myTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableCellRenderer());
 	}
 
 	public void updateTable(){
-
+		List<String> s = gController.getAttributes();
+		String firstrow = s.get(0);
+		String[] strings = firstrow.split(",");
+		for(String k : strings){
+			System.out.println(k);
+		}
 	}
 
 	private JButton makeChooseImageButton(){
@@ -168,7 +173,6 @@ public class ActoreditorPanel extends Panel {
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					System.out.println("new selected item:"+arg0.getItem().toString());
-					// call the change method in GAEController here (change level;change scene etc)
 				}				
 			}
 		});		
@@ -198,9 +202,7 @@ public class ActoreditorPanel extends Panel {
 	}
 
 	public void updateInfo(int actorID){
-		System.out.println("updating actorID:"+actorID);
-		// update info here
-		
+		System.out.println("updating actorID:"+actorID);	
 	}
 
 	private class CustomTableCellEditor extends AbstractCellEditor implements TableCellEditor {
