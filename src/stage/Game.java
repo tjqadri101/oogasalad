@@ -131,8 +131,9 @@ public class Game {
 	 * @param the new level ID 
 	 * @return nothing
 	 */
-	public void resetLevelID(int currentLevelID, int newLevelID) throws ResetLevelException{
-		if(myLevelMap.containsKey(newLevelID)) throw new ResetLevelException();
+	public void resetLevelID(int currentLevelID, int newLevelID) {
+//		if(myLevelMap.containsKey(newLevelID)) throw new ResetLevelException();
+		if(myLevelMap.containsKey(newLevelID)) return;
 		Level level = myLevelMap.get(currentLevelID);
 		level.resetID(newLevelID);
 		myLevelMap.remove(currentLevelID);
