@@ -56,7 +56,8 @@ public final class SaladConstants {
 	public static final String SHOOT_NAME = "ShootObjects";
 	public static final String LIVES = "Lives";
 	public static final String SPEED = "Speed";
-	
+	public static final String MODIFY_GRAVITY = "ModifyGravity";
+	public static final String GRAVITY_MAGNITUDE = "Magnitude";
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
 }

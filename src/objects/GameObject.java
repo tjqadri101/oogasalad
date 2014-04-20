@@ -30,6 +30,8 @@ public abstract class GameObject extends JGObject {
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
 	protected List<String> myAttributes;
+	
+	protected boolean myIsPlayer;//need change
     
 	protected ResourceBundle myBehaviors;
 	protected String myDieBehavior;
@@ -59,11 +61,6 @@ public abstract class GameObject extends JGObject {
 		myXSize = xsize;
 		myYSize = ysize;
 		myAttributes = new ArrayList<String>();
-		
-		myAttributes.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
-				SaladConstants.IMAGE + "," + getGraphic() + "," + myXSize + "," + myYSize + "," +
-				SaladConstants.POSITION + "," + myInitX + "," + myInitY + "," + SaladConstants.NAME + "," + getName() + "," + 
-				SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.LIVES + "," + myInitLives);
 	}
 	
 	/**
@@ -87,8 +84,19 @@ public abstract class GameObject extends JGObject {
 		super.setPos(x, y);
 		myInitX = x;
 		myInitY = y;
-		myAttributes.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
+		myAttributes.add(ModificationString() + "," + SaladConstants.ID + "," + myUniqueID + "," + 
 				SaladConstants.POSITION + "," + myInitX + "," + myInitY);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected String ModificationString(){
+		if(myIsPlayer){
+			return SaladConstants.MODIFY_PLAYER;
+		}
+		return SaladConstants.MODIFY_ACTOR;
 	}
 	
 	@Override
@@ -96,7 +104,7 @@ public abstract class GameObject extends JGObject {
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
 		myInitYSpeed = yspeed;
-		myAttributes.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
+		myAttributes.add(ModificationString() + "," + SaladConstants.ID + "," + myUniqueID + "," + 
 				SaladConstants.SPEED + "," + myInitXSpeed + "," + myInitYSpeed);
 	}
 	
@@ -145,7 +153,7 @@ public abstract class GameObject extends JGObject {
 	 */
 	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, List<Object> params){
 		StringBuilder attribute = new StringBuilder();
-		attribute.append(SaladConstants.MODIFY_ACTOR + "," + firstType + "," + param + "," + secondType + "," + typeToken);
+		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken);
 		for(Object o: params){
 			String att = o.toString();
 			attribute.append("," + att);
@@ -155,7 +163,7 @@ public abstract class GameObject extends JGObject {
 	
 	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, int integerToken, List<Object> params){
 		StringBuilder attribute = new StringBuilder();
-		attribute.append(SaladConstants.MODIFY_ACTOR + "," + firstType + "," + param + "," + secondType + "," + typeToken + "," + integerToken);
+		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken + "," + integerToken);
 		for(Object o: params){
 			String att = o.toString();
 			attribute.append("," + att);

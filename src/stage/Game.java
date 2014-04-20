@@ -213,14 +213,6 @@ public class Game {
 	public Transition getNonLevelScene(StateType type){
 		return myNonLevelSceneMap.get(type);
 	}
-	
-	/**
-	 * Set gravity magnitude
-	 * @param magnitude
-	 */
-    public void setGravity(double magnitude){
-    	myGravity.setMagnitude(magnitude);
-    }
     
     /**
 	 * Get gravity for the engine to apply the force

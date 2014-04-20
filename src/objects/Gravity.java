@@ -12,8 +12,12 @@ public class Gravity {
 		myMagnitude = magnitude;
 	}
 	
+	/**
+	 * 
+	 * @return String Attribute
+	 */
 	public String getAttributes(){
-		return null; // need revision
+		return SaladConstants.MODIFY_GRAVITY + "," + SaladConstants.GRAVITY_MAGNITUDE + "," + myMagnitude;
 	}
 	
 	/**
