@@ -10,6 +10,7 @@ import objects.GameObject;
 import objects.NonPlayer;
 import org.junit.Test;
 import stage.Game;
+import util.IParser;
 import jgame.platform.StdGame;
 import junit.framework.TestCase;
 import engine.GameEngine;
@@ -38,7 +39,10 @@ public class GameFactoryActorTest extends TestCase{
         Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",3,3,
                                                        "position",0.0,0.0,"Name","myActor","CollisionID",0, "Lives",1};
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myActor = (NonPlayer) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+        String STRINGINPUT = "CreateActor,ID,0,ActorImage,actor_default.png,3,3," +
+        		"position,0.0,0.0,Name,myActor,CollisionID,0, Lives,1";
+        myActor = (NonPlayer) myFactory.processOrder(STRINGINPUT);
+//        myActor = (NonPlayer) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
     }
     
     @Test
@@ -48,12 +52,14 @@ public class GameFactoryActorTest extends TestCase{
                                                        "position", 20.0, 30.0, "Name", "myPlayer", "CollisionID", 0, "Lives",1};
         Object[] PARSED_OBJECT_ARRAY = new Object[] {7, "actor_default.png",3,3,
                                                      20.0, 30.0, "myPlayer", 0, 1};
+        String STRINGINPUT = "CreateActor,ID,0,ActorImage,actor_default.png,3,3," +
+                "position,0.0,0.0,Name,myActor,CollisionID,0, Lives,1";
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         List<Object> PARSED_OBJECT_LIST = Arrays.asList(PARSED_OBJECT_ARRAY);
 
         List<Object> parsedObjList = null;
         try {
-            parsedObjList = (List<Object>) myFactory.parseOrder(CREATEPLAYER_OBJECT_LIST, (String) CREATEPLAYER_OBJECT_LIST.get(0)).get("Argument");
+            parsedObjList = IParser.parseParameter(STRINGINPUT); 
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
