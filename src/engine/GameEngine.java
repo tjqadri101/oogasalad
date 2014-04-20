@@ -114,6 +114,7 @@ public class GameEngine extends StdGame{
     			checkBGCollision(pair[0], pair[1]);
     		}
     		viewOffset = setViewOffsetEdit();
+    		System.out.println(viewOffset);
     		if(!viewOffset) setViewOffsetPlayer();
     		else myViewOffsetPlayer = false;
     	}
@@ -139,16 +140,16 @@ public class GameEngine extends StdGame{
     	int YOfs = 0;
     	double x_ratio = 1.0*getMouseX()/viewWidth();
     	double y_ratio = 1.0*getMouseY()/viewHeight();
-    	if (0 <= x_ratio && x_ratio <= margin){
+    	if (0 < x_ratio && x_ratio < margin){
     		XOfs -= speed*(1-x_ratio/margin);
     	}
-    	if ((1-margin) <= x_ratio && x_ratio <= 1){
+    	if ((1-margin) < x_ratio && x_ratio < 1){
     		XOfs += speed*(1-(1-x_ratio)/margin);
     	}
-    	if (0 <= y_ratio && y_ratio <= margin){
+    	if (0 < y_ratio && y_ratio < margin){
     		YOfs -= speed*(1-y_ratio/margin);
     	}
-    	if ((1-margin) <= y_ratio && y_ratio <= 1){
+    	if ((1-margin) < y_ratio && y_ratio < 1){
     		YOfs += speed*(1-(1-y_ratio)/margin);
     	}
     	setViewOffset(viewXOfs()+XOfs,viewYOfs()+YOfs,false);
