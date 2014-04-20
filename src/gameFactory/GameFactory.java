@@ -1,28 +1,17 @@
 package gameFactory;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import java.util.Set;
 import engine.GameEngine;
 import objects.GameObject;
 import reflection.Reflection;
-import reflection.ReflectionException;
-
 import gameFactory.FactoryException;
-import objects.GameObject;
-import reflection.Reflection;
 import stage.Game;
-import jgame.JGObject;
-import jgame.platform.JGEngine;
-import reflection.*;
+import util.IParser;
 
 /**
  * @Author: Steve (Siyang) Wang, 
@@ -31,9 +20,9 @@ import reflection.*;
 public class GameFactory {
     
     private GameEngine myEngine;
-    private String myOrder;
     private int  myLevelID, mySceneID;
     private Game myGame;
+    private IParser p;
     private Map<String,List<?>> parsedMap;
     private static final String NO_PARAMETER = "";
     private static final String RESOURCE_PACKAGE = "engineResources/";
@@ -44,7 +33,7 @@ public class GameFactory {
         private String instruction;
         private List<Object> objArgList;
         private List<String> typeMethodList;
-    
+        
     
     public GameFactory(GameEngine engine){
         myEngine = engine;
@@ -52,19 +41,22 @@ public class GameFactory {
         myFormat = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_FORMAT);
         myPath = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_PATH);
         myMethod = ResourceBundle.getBundle(RESOURCE_PACKAGE + DEFAULT_METHOD);
+        p = new IParser();
     }
     
     /**
      * only public method, takes in creation or modification order
      */
-    public GameObject processOrder(List<Object> order) {
+    @SuppressWarnings("unchecked")
+    public GameObject processOrder(String order) {
         
         myLevelID = ((GameEngine) myEngine).getCurrentLevelID();
         mySceneID = ((GameEngine) myEngine).getCurrentSceneID();
         
-        instruction = (String) order.get(0);
-        parsedMap = parseOrder(order, instruction);
-        List<Object> objArgList = (List<Object>) parsedMap.get("Argument");
+        objArgList = (List<Object>) p.parseParameter(order);
+        typeMethodList =  (List<String>) p.parseType(order);
+        instruction = (String) typeMethodList.get(0);
+        
 //        System.out.println("the typeMethodList in the gameFactory after parsed is " + typeMethodList);
                
         String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
@@ -73,15 +65,14 @@ public class GameFactory {
         String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
         
         Object refObj = Reflection.callMethod(this, "get"+RFIndicator); 
-        return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", myLevelID, mySceneID, objArgList, 
+        return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", myLevelID, mySceneID, 
                                                   refObj, GameRefMethod, GameRefPara);
     }
     
     /**
      * Creation or modification via Engine (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
      */
-    @SuppressWarnings("unused")
-    public GameObject oneStepReflect (int levelID, int sceneID, List<Object> objArgList, 
+    public GameObject oneStepReflect (int levelID, int sceneID, 
                                       Object refObj, String GameReflectInfo, String GameRefPara) 
                                         throws FactoryException {
         
@@ -95,18 +86,14 @@ public class GameFactory {
     /**
      * Creation or modification via Game (See FactoryOrderPath.Properties for exhaustive list of create/modify through Game)
      */
-    // TODO: to extract if selection and IDSelector into another layer of reflection
-    @SuppressWarnings("unused")
-    public GameObject twoStepReflect (int levelID, int sceneID, List<Object> objArgList, 
+    @SuppressWarnings("unchecked")
+    public GameObject twoStepReflect (int levelID, int sceneID, 
                                       Object refObj, String GameRefMethod, String GameReflectPara) 
                                       throws FactoryException {
         Object obj = null;
-        
-        List<String> typeMethodList =  (List<String>) parsedMap.get("Type");
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
 
         int objectID = (Integer) objArgList.remove(0);
-
         Object[][] IDSelector = new Object[][]{new Object[]{levelID},
                                 new Object[]{levelID, sceneID},
                                 new Object[]{levelID, sceneID, objectID}};
@@ -117,7 +104,7 @@ public class GameFactory {
         }
         else{
             obj = Reflection.callMethod(refObj, GameRefMethod);
-            // the case for player, gravity... those who does not take-in any parameter
+            // when getting player, gravity... those who does not take-in any parameter
         }
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
         return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);
@@ -149,21 +136,26 @@ public class GameFactory {
     }
 
     /**
-     * Getting Game instance to reflect upon. To be called using the reflection to get refObj*/
+     * Getting Game instance to reflect upon. To be called using the reflection to get refObj
+     * Do not call this directly*/
     public Game getGame () {
         return myGame;
     }
     
     /**
-     * Getting Engine instance to reflect upon. To be called using the reflection to get refObj*/
+     * Getting Engine instance to reflect upon. To be called using the reflection to get refObj
+     * Do not call this directly*/
     public GameEngine getEngine () {
         return (GameEngine) myEngine;
-//        return (Game) Reflection.callMethod(myEngine, methodToInvoke, objArgArray);
+
     }
+    
+
     
     /**
      * Test the legitimacy of an order passed from GAE
      */
+    @SuppressWarnings("unused")
     private void testLegitimateOrder (String order) {
         if (!order.contains(",")) 
             throw new IllegalArgumentException("String " + order + " does not contain =");
