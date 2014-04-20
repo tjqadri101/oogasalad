@@ -696,13 +696,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	
 	public void createGoalCollision(int bossID){
 		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPERATER +  SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPERATER + 
 				SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPERATER + bossID;
 		myDataController.receiveOrder(order);
 		System.out.println(order);
-	}
-	
+	}	
 	
 	public void createGoalTime(int time){
 		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPERATER +  SaladConstants.WIN_BY_TIME + SaladConstants.SEPERATER + 
