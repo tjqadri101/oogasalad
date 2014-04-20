@@ -42,8 +42,10 @@ public final class SaladConstants {
 	
 	public static final String CREATE_PLAYER = "CreatePlayer";
 	public static final String MODIFY_PLAYER = "ModifyPlayer";
+	public static final String DELETE_PLAYER = "DeletePlayer";
 	public static final String CREATE_ACTOR = "CreateActor";
 	public static final String MODIFY_ACTOR = "ModifyActor";
+	public static final String DELETE_ACTOR = "DeleteActor";
 	
 	
 	public static final String TEST_XMLFILE_URL = "test.xml";
@@ -59,6 +61,7 @@ public final class SaladConstants {
 	public static final String MOVE = "Move";
 	public static final String EXPLODE = "Explode";
 	public static final String SHOOT = "Shoot";
+	public static final String JUMP = "Jump";
 	public static final String PERISH_TOGETHER = "PerishTogether";
     public static final String HITTER_ELIMINATE_VICTIM  = "HitterEliminateVictim";
     public static final String STAY_ON_TILE = "StayOnTile";
@@ -69,6 +72,7 @@ public final class SaladConstants {
 	public static final String QUICK_SHOOT = "QuickShoot";
 	public static final String SHOW_CORPSE = "ShowCorpse";
 	public static final String IMMORTAL = "Immortal";
+	public static final String CAN_NOT_COLLIDE = "CanNotCollide";
     
     
 	public static final String POSITION = "Position";
@@ -90,6 +94,7 @@ public final class SaladConstants {
     public static final String TILE_IMAGE = "TileImage";
     public static final String DRAG_IMAGE = "DragImage";
     public static final String MODIFY_ACTOR_IMAGE = "ModifyActorImage";
+    public static final String MODIFY_PLAYER_IMAGE = "ModifyPlayerImage";
     public static final String WIN_BY_TIME = "WinByTime";
     
     
@@ -99,7 +104,22 @@ public final class SaladConstants {
 	
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
     public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
-
+    
     public static final int PLAYER_ID = 0;
+    
+	public static final String MOVE_UP = "moveUp";
+	public static final String MOVE_DOWN = "moveDown";
+	public static final String MOVE_LEFT = "moveLeft";
+	public static final String MOVE_RIGHT = "moveRight";
+	public static final String SHOOT_KEY = "shoot";
+	public static final String JUMP_KEY = "jump";
+
+
+	
+
+
+	
+
+
 	
 }
