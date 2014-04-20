@@ -52,8 +52,10 @@ public class EngineTest {
 		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 5);
 		goomba.setDieBehavior("RegularDie");
 		goomba.setMoveBehavior("BackForthMove",2.0);
-// Q: why this does not come to ground?
+
 		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 5);
+		mushroom.setDieBehavior("RegularDie");
+		mushroom.setMoveBehavior("BackForthMove",6.0);
 		
 		Player player = engine.createPlayer(0, "actor_default.png", 50, 50, 100.0, 200.0, null, 1, 1);
 		player.setDieBehavior("RegularDie");
