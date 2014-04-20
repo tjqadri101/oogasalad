@@ -699,6 +699,13 @@ public class GAEController {
 		return s;
 	}
 
+	public void updateAttributesActorInfo(){
+		attributesPanel.updateActorInfo(selectedActorID);
+	}
+	
+	public void switchActiveAttributesTab(int index){
+		attributesPanel.setTab(index);
+	}
 	
 	
 	/*public void createPlayer(int ID,String url,String name){
