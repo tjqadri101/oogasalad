@@ -1,6 +1,7 @@
 package objects;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ public abstract class GameObject extends JGObject {
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
 	protected List<String> myAttributes;
+	
+	protected boolean myIsPlayer;//need change
     
 	protected ResourceBundle myBehaviors;
 	protected String myDieBehavior;
@@ -45,6 +48,7 @@ public abstract class GameObject extends JGObject {
 	protected List<Object> myJumpParameters;
 	protected Map<Integer, List<Object>> myCollisionParameters;
 	protected Map<Integer, List<Object>> myTileCollisionParameters;
+	protected SideDetecter[] mySideDetecters;//plz review
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
 		super(name, true, xpos, ypos, collisionId, gfxname);
@@ -53,17 +57,13 @@ public abstract class GameObject extends JGObject {
 		myCollisionParameters = new HashMap<Integer, List<Object>>();
 		myTileCollisionBehavior = new HashMap<Integer, String>();
 		myTileCollisionParameters = new HashMap<Integer, List<Object>>();
-		setPos(xpos, ypos);
+		setInitPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
 		myXSize = xsize;
 		myYSize = ysize;
 		myAttributes = new ArrayList<String>();
-		
-		myAttributes.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
-				SaladConstants.IMAGE + "," + getGraphic() + "," + myXSize + "," + myYSize + "," +
-				SaladConstants.POSITION + "," + myInitX + "," + myInitY + "," + SaladConstants.NAME + "," + getName() + "," + 
-				SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.LIVES + "," + myInitLives);
+		mySideDetecters = new SideDetecter[4];//plz review
 	}
 	
 	/**
@@ -82,13 +82,21 @@ public abstract class GameObject extends JGObject {
 		return myYSize;
 	}
 	
-	@Override
-	public void setPos(double x, double y){
+	public void setInitPos(double x, double y){
 		super.setPos(x, y);
 		myInitX = x;
 		myInitY = y;
-		myAttributes.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
-				SaladConstants.POSITION + "," + myInitX + "," + myInitY);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected String ModificationString(){
+		if(myIsPlayer){
+			return SaladConstants.MODIFY_PLAYER;
+		}
+		return SaladConstants.MODIFY_ACTOR;
 	}
 	
 	@Override
@@ -96,7 +104,7 @@ public abstract class GameObject extends JGObject {
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
 		myInitYSpeed = yspeed;
-		myAttributes.add(SaladConstants.MODIFY_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 
+		myAttributes.add(ModificationString() + "," + SaladConstants.ID + "," + myUniqueID + "," + 
 				SaladConstants.SPEED + "," + myInitXSpeed + "," + myInitYSpeed);
 	}
 	
@@ -105,7 +113,7 @@ public abstract class GameObject extends JGObject {
 	 * Used for live-editing
 	 */
 	public void restore(){
-		setPos(myInitX, myInitY);
+		setInitPos(myInitX, myInitY);
 		setLives(myInitLives);
 	}
 	
@@ -145,7 +153,7 @@ public abstract class GameObject extends JGObject {
 	 */
 	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, List<Object> params){
 		StringBuilder attribute = new StringBuilder();
-		attribute.append(SaladConstants.MODIFY_ACTOR + "," + firstType + "," + param + "," + secondType + "," + typeToken);
+		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken);
 		for(Object o: params){
 			String att = o.toString();
 			attribute.append("," + att);
@@ -155,7 +163,7 @@ public abstract class GameObject extends JGObject {
 	
 	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, int integerToken, List<Object> params){
 		StringBuilder attribute = new StringBuilder();
-		attribute.append(SaladConstants.MODIFY_ACTOR + "," + firstType + "," + param + "," + secondType + "," + typeToken + "," + integerToken);
+		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken + "," + integerToken);
 		for(Object o: params){
 			String att = o.toString();
 			attribute.append("," + att);
@@ -366,4 +374,26 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
+    
+    //plz review
+	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
+		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+		if (dir == -1) return;
+		SideDetecter sd = mySideDetecters[dir];
+		if (sd == null){
+			sd = new SideDetecter(this,dir);
+			mySideDetecters[dir] = sd;
+		}
+		sd.setCollisionBehavior(type, otherColid, args);
+	}
+	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
+		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+		if (dir == -1) return;
+		SideDetecter sd = mySideDetecters[dir];
+		if (sd == null){
+			sd = new SideDetecter(this,dir);
+			mySideDetecters[dir] = sd;
+		}
+		sd.setTileCollisionBehavior(type, tileColid, args);
+	}
 }

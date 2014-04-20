@@ -34,11 +34,12 @@ public class EngineTest {
 		game.addLevel(1);
 		game.addScene(1, 0);
 		engine.setCurrentScene(1, 0);
-		game.setGravity(0.1);
+		game.getGravity().setMagnitude(0.1);
 		
-		engine.createTiles(0,30,980,1,2,"brick.png");
-		engine.createTiles(20,15,10,1,2,"brick.png");
-		engine.createTiles(30,30,5,1,0,"null");
+		engine.setPFSize(1200,40);
+		engine.createTiles(2,"brick.png",0,30,1180,1);
+		engine.createTiles(2,"brick.png",20,15,10,1);
+		engine.createTiles(0,"null",30,30,5,1);
 //		engine.setDefaultTiles(0, "null");
 		engine.setDefaultTiles(2, "brick.png");
 //		engine.createTiles(0,0,40,1,1,"brick.png");
@@ -49,9 +50,17 @@ public class EngineTest {
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
 		actor.setMoveBehavior("BackForthMove", 5.0);
 		
-		game.getLevel(1).setWinBehavior("WinByTime", 400);
+		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 5);
+		goomba.setDieBehavior("RegularDie");
+		goomba.setMoveBehavior("BackForthMove",2.0);
+
+		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 5);
+		mushroom.setDieBehavior("RegularDie");
+		mushroom.setMoveBehavior("BackForthMove",6.0);
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 1);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
+		player.loseLife();
+//		player.setBBox(0, 0, 100, 1);
 		player.setDieBehavior("RegularDie");
 		player.setJumpBehavior("Jump", 5.0);
 		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, 3, 5.0, 5);
@@ -62,10 +71,17 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
+//		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
+//		player.addSDCollisionBehavior("left", "PerishTogether", 2);
+//		player.addSDCollisionBehavior("right", "PerishTogether", 2);
+//		game.getCollisionPair().add(new int[]{1,2});
 		
 		game.addCollisionPair(1, "HitterEliminateVictim", 2);
 		game.addTileCollisionPair(2, "StayOnTile", 1);
 		game.addTileCollisionPair(2, "StayOnTile", 2);
 		game.addCollisionPair(3, "PerishTogether", 2);
+		
+		game.getLevel(1).setWinBehavior("WinByTime", 400);
+//		game.getLevel(1).setWinBehavior("WinByCollision", actor);
 	}
 }

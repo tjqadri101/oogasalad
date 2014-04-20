@@ -53,7 +53,7 @@ public class SaladUtil {
 	}
 	
 	/**
-	 * Do not call this method directly
+	 * General Reflection Method 
 	 * @param ResourceBundle
 	 * @param myString
 	 * @param methodName
