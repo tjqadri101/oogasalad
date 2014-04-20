@@ -55,7 +55,7 @@ public class DataController {
 	/**
 	 * Called by Game Authorizing Environment to send the command String
 	 * @param a list of objects: order
-     * @return nothing
+         * @return nothing
 	 */
 	public void receiveOrder(String order){
 		System.out.println("DataController: " + "received order " + order);

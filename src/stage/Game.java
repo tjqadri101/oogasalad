@@ -219,7 +219,7 @@ public class Game {
 	 * Get gravity for the engine to apply the force
 	 * @return Gravity
 	 */
-    public Gravity getGravity(){
+    public Gravity getGravity(Object ... args){
     	return myGravity;
     }
 	
