@@ -89,8 +89,15 @@ public abstract class GameObject extends JGObject {
 	 */
 	public void setInitPos(double x, double y){
 		super.setPos(x, y);
+		System.out.println("GameObject: setInitPos called" );
 		myInitX = x;
 		myInitY = y;
+	}
+	
+	@Override
+	public void setPos(double x, double y){
+		super.setPos(x, y);
+		System.out.println("GameObject: setPos called" );
 	}
 	
 	/**

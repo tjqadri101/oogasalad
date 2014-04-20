@@ -249,7 +249,7 @@ public class GAEController {
 
 	public void modifyActorPosition(int ID, double xPos, double yPos){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + SaladConstants.POSITION + SaladConstants.SEPERATER + xPos + SaladConstants.SEPERATER + yPos;
-	//	myDataController.receiveOrder(order);
+		myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
