@@ -25,8 +25,7 @@ public class CollisionManager {
 		myAttributes = new ArrayList<String>();
 	}
 	
-// @Justin: 
-// Note: I have modified the order of parameters into hitter...victim
+
 	public void addCollisionPair(int hitterColid, String type, int victimColid, Object ... args){
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
 		StringBuilder attribute = new StringBuilder();
@@ -38,7 +37,6 @@ public class CollisionManager {
 		myAttributes.add(attribute.toString());
 		objects.add(0, type);
 		String pair = hitterColid + SaladConstants.SEPERATER + victimColid;
-//		SaladUtil.printObjectList(objects);
 		myCollisionMap.put(pair, objects);
 	}
 	
@@ -53,18 +51,15 @@ public class CollisionManager {
 		myAttributes.add(attribute.toString());
 		objects.add(0, type);
 		String pair = tileColid + SaladConstants.SEPERATER + victimColid;
-//		SaladUtil.printObjectList(objects);
 		myTileCollisionMap.put(pair, objects);
 	}
 	
 	public List<Object> getCollisionBehavior(int victimColid, int hitterColid){
-//		System.out.println("getCollisionBehavior: " + victimColid + " " + hitterColid);
 		String pair = hitterColid + SaladConstants.SEPERATER + victimColid;
 		return myCollisionMap.get(pair);
 	}
 	
 	public List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
-//		System.out.println("getTileCollisionBehavior: " + victimColid + " " + tileColid);
 		String pair = tileColid + SaladConstants.SEPERATER + victimColid;
 		return myTileCollisionMap.get(pair);
 	}
