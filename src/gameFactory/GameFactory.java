@@ -21,6 +21,7 @@ public class GameFactory {
     private Game myGame;
     private IParser p;
     private static final String NO_PARAMETER = "\"\"";
+    private static final String REGEX = "\\,";
     private static final String RESOURCE_PACKAGE = "engineResources/";
     private static final String DEFAULT_FORMAT= "DataFormat";
     private static final String DEFAULT_PATH= "OrderPath"; 
@@ -52,10 +53,10 @@ public class GameFactory {
         instruction = p.getOrderKey(order);
 
         //      TODO: Simplify code below:       
-        String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
-        String RFIndicator = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);   
-        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
-        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
+        String reflectionChoice = Arrays.asList(myPath.getString(instruction).split(REGEX)).get(0);
+        String RFIndicator = Arrays.asList(myPath.getString(instruction).split(REGEX)).get(1);   
+        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split(REGEX)).get(2);
+        String GameRefPara= Arrays.asList(myPath.getString(instruction).split(REGEX)).get(3);
 
         Object refObj = Reflection.callMethod(this, "get"+RFIndicator); 
         return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", 
@@ -73,11 +74,11 @@ public class GameFactory {
         String methodToInvoke = myMethod.getString(instruction);
         Object[] objArgArray;
         
-        if(!(GameReflectPara.equals(NO_PARAMETER))){
+        if (!(GameReflectPara.equals(NO_PARAMETER))) {
             int numArg = Integer.parseInt(GameReflectPara);
             objArgArray = idSelector(numArg); 
         }
-        else{
+        else {
             objArgArray = objArgList.toArray(new Object[objArgList.size()]);
         }
         return (GameObject) Reflection.callMethod(refObj, methodToInvoke, objArgArray);

@@ -19,6 +19,8 @@ public class CollisionManager {
 		myTileCollisionMap = new HashMap<String, List<Object>>();
 	}
 	
+// @Justin: 
+// Note: I have modified the order of parameters into hitter...victim
 	public void addCollisionPair(int hitterColid, String type, int victimColid, Object ... args){
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
 		objects.add(0, type);

@@ -82,7 +82,10 @@ public class EngineTest {
 //		game.addTileCollisionPair(2, "StayOnTile", 1);
 //		game.addTileCollisionPair(2, "StayOnTile", 2);
 //		game.addCollisionPair(3, "PerishTogether", 2);
-		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 1);
+		
+		
+/*Changed the ID ordering from 2,"HitterEliminateVictim",1 to the one below. Some NPE appeared. */ 
+		game.getCollisionManager().addCollisionPair(1, "HitterEliminateVictim", 2);
 		game.getCollisionManager().addTileCollisionPair(1, "StayOnTile", 2);
 		game.getCollisionManager().addTileCollisionPair(2, "StayOnTile", 2);
 		
