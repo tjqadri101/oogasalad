@@ -44,15 +44,11 @@ public abstract class GameObject extends JGObject {
 	protected String myMoveBehavior;
 	protected String myJumpBehavior;
 	protected String myShootBehavior;
-//	protected Map<Integer, String> myCollisionBehavior;
-//	protected Map<Integer, String> myTileCollisionBehavior;
 
 	protected List<Object> myShootParameters;
 	protected List<Object> myDieParameters;
 	protected List<Object> myMoveParameters;
 	protected List<Object> myJumpParameters;
-//	protected Map<Integer, List<Object>> myCollisionParameters;
-//	protected Map<Integer, List<Object>> myTileCollisionParameters;
 	protected SideDetecter[] mySideDetecters;//plz review
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager){
@@ -279,35 +275,6 @@ public abstract class GameObject extends JGObject {
 		addAttributes(SaladConstants.ID, myUniqueID, myMoveBehavior, myMoveBehavior, myMoveParameters);
 	}
 	
-//	/**
-//	 * Set the collision behavior
-//	 * @param type: String specifying the collision behavior
-//	 * @param id: the collision ID of the hitter
-//	 */
-//	public void setCollisionBehavior(String type, int otherColid, Object ... args){
-//		myCollisionBehavior.put(otherColid, type);
-//		List<Object> objects = new ArrayList<Object>();
-//		for(int i = 0; i < args.length; i ++){
-//			objects.add(args[i]);
-//		}
-//		myCollisionParameters.put(otherColid, objects);
-//		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, otherColid, objects);
-//	}
-	
-//	/**
-//	 * Set the tile collision behavior
-//	 * @param type: String specifying the tile collision behavior
-//	 * @param tileID: the tile collision ID
-//	 */
-//	public void setTileCollisionBehavior(String type, int tileColid, Object ... args){
-//		myTileCollisionBehavior.put(tileColid, type);
-//		List<Object> objects = new ArrayList<Object>();
-//		for(int i = 0; i < args.length; i ++){
-//			objects.add(args[i]);
-//		}
-//		myTileCollisionParameters.put(tileColid, objects);
-//		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, tileColid, objects);
-//	}
 	
 	public void die(){
 		if(myDieBehavior == null) return;
@@ -336,7 +303,7 @@ public abstract class GameObject extends JGObject {
 	
 	/**
 	 * 
-	 * @return
+	 * @return int jump times
 	 */
 	public int getJumpTimes(){
 		return myJumpTimes;
@@ -344,7 +311,7 @@ public abstract class GameObject extends JGObject {
 	
 	/**
 	 * 
-	 * @return
+	 * @return boolean if is in air
 	 */
 	public boolean getIsInAir(){
 		return myIsInAir;
@@ -378,6 +345,7 @@ public abstract class GameObject extends JGObject {
 		if(parameters == null) return; // just to make sure
 		String collisionBehavior = (String) parameters.get(0);
 		parameters.remove(0);
+		parameters.add(0, other);
 		behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide");
     }
 	
