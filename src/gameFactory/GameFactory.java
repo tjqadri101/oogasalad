@@ -1,10 +1,7 @@
 package gameFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import engine.GameEngine;
 import objects.GameObject;
@@ -23,7 +20,6 @@ public class GameFactory {
     private int  myLevelID, mySceneID;
     private Game myGame;
     private IParser p;
-    private Map<String,List<?>> parsedMap;
     private static final String NO_PARAMETER = "";
     private static final String RESOURCE_PACKAGE = "engineResources/";
     private static final String DEFAULT_FORMAT= "DataFormat";
@@ -57,8 +53,7 @@ public class GameFactory {
         typeMethodList =  (List<String>) p.parseType(order);
         instruction = p.getOrderKey(order);
         
-//        System.out.println("the typeMethodList in the gameFactory after parsed is " + typeMethodList);
-               
+//      TODO: Simplify code below:       
         String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
         String RFIndicator = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);   
         String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
@@ -70,7 +65,9 @@ public class GameFactory {
     }
     
     /**
-     * Creation or modification via Engine (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
+     * Creation or modification through oneStep reflection:
+     *  invoke method directly
+     *  (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
      */
     public GameObject oneStepReflect (int levelID, int sceneID, 
                                       Object refObj, String GameReflectInfo, String GameRefPara) 
@@ -84,7 +81,10 @@ public class GameFactory {
     }
     
     /**
-     * Creation or modification via Game (See FactoryOrderPath.Properties for exhaustive list of create/modify through Game)
+     * Creation or modification through twoStep Reflection 
+     *          First need to grab the instance of object
+     *          Then need invoke method on the instance
+     *  (See FactoryOrderPath.Properties for exhaustive list of create/modify through Game)
      */
     @SuppressWarnings("unchecked")
     public GameObject twoStepReflect (int levelID, int sceneID, 
@@ -93,11 +93,12 @@ public class GameFactory {
         Object obj = null;
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
 
+//      TODO: Simplify code below:
         int objectID = (Integer) objArgList.remove(0);
         Object[][] IDSelector = new Object[][]{new Object[]{levelID},
                                 new Object[]{levelID, sceneID},
                                 new Object[]{levelID, sceneID, objectID}};
-        //new Object[]{objectID},
+        
         if (!GameReflectPara.equals(NO_PARAMETER)){
             int numArg = Integer.parseInt(GameReflectPara);
             obj = Reflection.callMethod(refObj, GameRefMethod, IDSelector[numArg]);
@@ -125,14 +126,6 @@ public class GameFactory {
 
     }
     
-    /**
-     * Test the legitimacy of an order passed from GAE
-     */
-    @SuppressWarnings("unused")
-    private void testLegitimateOrder (String order) {
-        if (!order.contains(",")) 
-            throw new IllegalArgumentException("String " + order + " does not contain =");
-    }
 }
 
 /*      // Optional parsing by splitting strings, converting them into respective types, and concatonate to Obj Array 

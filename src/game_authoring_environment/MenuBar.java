@@ -21,6 +21,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -62,14 +63,29 @@ public class MenuBar extends JMenuBar{
 	
 	private JMenu createHelpMenu(){
 		JMenu helpMenu = new JMenu("Help");
+<<<<<<< HEAD
 		helpMenu.add(makeMenuItem("About", "createAndShowHelpPanel()"));
 		helpMenu.add(makeMenuItem("Help page", "createAndShowAboutPanel()"));
+=======
+		helpMenu.add(makeMenuItem("About", "createAboutPanel"));
+		helpMenu.add(makeMenuItem("Help page", "createHelpPanel"));
+>>>>>>> f2281d740efcbf58e789f95d4f5c68388f4f42c5
 		return helpMenu;
 	}
 	
 	//temporarily added for testing purposes
 	public void doNothing(){
 		
+	}
+	
+	public void createHelpPanel(){
+		HelpPanel helpPanel = new HelpPanel();
+		helpPanel.createAndShowHelpPanel();
+	}
+	
+	public void createAboutPanel(){
+		AboutPanel aboutPanel = new AboutPanel();
+		aboutPanel.createAndShowAboutPanel();
 	}
 	
 	public void closeProgram(){
