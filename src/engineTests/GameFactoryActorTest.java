@@ -36,8 +36,6 @@ public class GameFactoryActorTest extends TestCase{
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
         
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",3,3,
-                                                       "position",0.0,0.0,"Name","myActor","CollisionID",0, "Lives",1};
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         String STRINGINPUT = "CreateActor,ID,0,ActorImage,actor_default.png,3,3," +
         		"position,0.0,0.0,Name,myActor,CollisionID,0, Lives,1";
@@ -196,5 +194,9 @@ public class GameFactoryActorTest extends TestCase{
         }
         assertEquals(null, myGame.getNonPlayer(1, 0, 0));
     }*/
+    
+
+//    Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",3,3,
+//                                                   "position",0.0,0.0,"Name","myActor","CollisionID",0, "Lives",1};
 
 }

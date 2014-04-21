@@ -59,7 +59,7 @@ public class DataController {
 	 */
 	public void receiveOrder(String order){
 		System.out.println("DataController: " + "received order " + order);
-		callFactoryToProcess(convertOrderToObjects(order));
+		callFactoryToProcess(order);
 	}
 	
 	/**
@@ -128,7 +128,7 @@ public class DataController {
 		List<String> orders = myGameSaverAndLoader.load(url);
 		SaladUtil.printStringList(orders);
 		for(String order: orders){
-			callFactoryToProcess(convertOrderToObjects(order));
+			callFactoryToProcess(order);
 		}
 	}
 	
@@ -171,7 +171,7 @@ public class DataController {
 	 * Do not call this method directly; called within DataController
 	 * Called to enable factory to process the order
 	 */
-	protected void callFactoryToProcess(List<Object> order) {
+	protected void callFactoryToProcess(String order) {
 		try{
 			myFactory.processOrder(order);	
 		} catch (Exception e){

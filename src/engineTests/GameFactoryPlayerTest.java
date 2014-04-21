@@ -11,6 +11,7 @@ import objects.NonPlayer;
 import objects.Player;
 import org.junit.Test;
 import stage.Game;
+import util.IParser;
 import jgame.platform.StdGame;
 import engine.GameEngine;
 import gameFactory.FactoryException;
@@ -31,10 +32,14 @@ public class GameFactoryPlayerTest extends TestCase{
     protected Game myGame;
     protected GameFactory myFactory;
     protected Player myPlayer;
+    IParser p = new IParser();
     protected static final Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreatePlayer","ID",0,"PlayerImage","actor_default.png",3,3,
                                                                           "position",20.0,30.0,"Name","myPlayer","CollisionID",0, "Lives",1};
     protected static final Object[] PARSED_OBJECT_ARRAY = new Object[] {0, "actor_default.png",3,3,
                                                                       20.0, 30.0, "myPlayer", 0, 1};
+    protected static final String UNPARSED_STRING = "CreatePlayer,ID,0,Image,actor_default.png,3,3," +
+            "Position,20.0,30.0,Name,myActor,CollisionID,0,Lives,1";
+    
     protected void setUp(){
         myGame = new Game();
         myEngine = new GameEngine(true);
@@ -43,27 +48,31 @@ public class GameFactoryPlayerTest extends TestCase{
             myGame.addScene(1, 0);
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
-        
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myPlayer = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+
+        myPlayer = (Player) myFactory.processOrder(UNPARSED_STRING);
     }
     
     @Test
-    public void testDFParser() throws IndexOutOfBoundsException{
+    public void testParseAll() throws IndexOutOfBoundsException{
+
+        String UNPARSED_STRING = "CreatePlayer,ID,0,Image,actor_default.png,3,3," +
+                        "Position,20.0,30.0,Name,myActor,CollisionID,0,Lives,1";
+        
+        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreatePlayer","ID",0,"Image","actor_default.png",3,3,
+                                                       "Position",20.0,30.0,"Name","myActor","CollisionID",0,"Lives",1};
 
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        List<Object> PARSED_OBJECT_LIST = Arrays.asList(PARSED_OBJECT_ARRAY);
 
         List<Object> parsedObjList = null;
         try {
-            parsedObjList = (List<Object>) myFactory.parseOrder(CREATEPLAYER_OBJECT_LIST, (String) CREATEPLAYER_OBJECT_LIST.get(0)).get("Argument");
+            parsedObjList = p.parseAll(UNPARSED_STRING); 
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(parsedObjList, PARSED_OBJECT_LIST);
-        assertEquals(parsedObjList.get(1),"actor_default.png");
+        assertEquals(parsedObjList, CREATEPLAYER_OBJECT_LIST);
     }
+    
     
     @Test
     public void testCreatePlayer() throws FactoryException{
@@ -71,7 +80,7 @@ public class GameFactoryPlayerTest extends TestCase{
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         Player myObject = null;
         try {
-            myObject = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+            myObject = (Player) myFactory.processOrder(UNPARSED_STRING);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
