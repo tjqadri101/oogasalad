@@ -1,60 +1,39 @@
 package game_authoring_environment;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
-import java.util.Date;
-import java.util.EventObject;
-import java.util.HashMap;
-import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor;
-import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.event.CellEditorListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
+
+import controller.GAEController;
 
 public class ActorEditorTable extends PanelTable{
 
-	private static final Integer[] levelList = {1,2,3,4,5,6,7,8,9,10};
-
+	private static final String[] moveTypes = {"Immobile", "Regular", "Cyclical"};
+	private static final String[] shootTypes = {"None", "Slow Shoot", "Quick Shoot"};
+	private static final String[] dieTypes = {"Immortal", "Disappear", "Show Corpse"};
+	//private static final String[] collisionTypes = {"Explode", "Hitter Eliminate Victim"};
 	
-	public ActorEditorTable() {
+	private GAEController gController;
+	
+	public ActorEditorTable(GAEController controller) {
 		super();
+		gController = controller;
 	}
 	
 	@Override
 	public void init() {
 
 		final JTextField tf = new JTextField("test");
-		Object[] firstRow = {"Name", tf,"String"}; // each row should be in this format
+		Object[] firstRow = {"Name", tf}; // each row should be in this format
 		tf.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("new text:" + tf.getText());	
-				// do something here (change name etc)
 			}			
 		});
 		
@@ -62,10 +41,32 @@ public class ActorEditorTable extends PanelTable{
 		classMap.put(0,firstRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)
 		
 		
-		JComboBox testComboBox = new JComboBox(levelList);
-		Object[] secondRow = {"Level",testComboBox,"int"};
-		testComboBox.setSelectedIndex(0);
-		testComboBox.addItemListener(new ItemListener() {
+		JComboBox moveTypesBox = new JComboBox(moveTypes);
+		Object[] secondRow = {"MoveBehavior", moveTypesBox};
+		moveTypesBox.setSelectedIndex(0);
+		moveTypesBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange() == ItemEvent.SELECTED){
+					String str = arg0.getItem().toString();
+					System.out.println("new selected item:"+arg0.getItem().toString());
+					switch(str){
+					case "Regular":
+						gController.modifyActorRegMoveNoID(5, 5);
+					case "Immobile":
+						gController.modifyActorImmobileNoID();
+					}
+				}				
+			}
+		});
+		myTableModel.addRow(secondRow); // actually adding to the table
+		classMap.put(1,secondRow[1]);
+		
+		
+		JComboBox shootTypesBox = new JComboBox(shootTypes);
+		Object[] thirdRow = {"Shoot Behavior", shootTypesBox};
+		shootTypesBox.setSelectedIndex(0);
+		shootTypesBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
@@ -74,11 +75,28 @@ public class ActorEditorTable extends PanelTable{
 				}				
 			}
 		});		
-		myTableModel.addRow(secondRow);
-		classMap.put(1,secondRow[1]);
+		myTableModel.addRow(thirdRow);
+		classMap.put(2,thirdRow[1]);
+		
+		
+		JComboBox dieTypesBox = new JComboBox(dieTypes);
+		Object[] fourthRow = {"Death Behavior", dieTypesBox};
+		dieTypesBox.setSelectedIndex(0);
+		dieTypesBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange() == ItemEvent.SELECTED){
+					System.out.println("new selected item:"+arg0.getItem().toString());
+					// call the change method in GAEController here (change level;change scene etc)
+				}				
+			}
+		});		
+		myTableModel.addRow(fourthRow);
+		classMap.put(3,fourthRow[1]);
+		
 		
 		JCheckBox jb = new JCheckBox();
-		Object[] thirdRow = {"TestBoo",jb,"boolen"};
+		Object[] fifthRow = {"TestBoo", jb};
 		jb.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
@@ -93,8 +111,8 @@ public class ActorEditorTable extends PanelTable{
 			}
 		});	
 		
-		myTableModel.addRow(thirdRow);
-		classMap.put(2,thirdRow[1]);
+		myTableModel.addRow(fifthRow);
+		classMap.put(4,fifthRow[1]);
 	}
 
 	@Override

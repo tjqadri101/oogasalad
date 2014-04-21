@@ -20,22 +20,15 @@ import util.SaladUtil;
  * @Author: Justin (Zihao) Zhang
  */
 public class DataController {
-	public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-	public static final String DEFAULT_DATA_FORMAT = "TypeFormat";
-	public static final String DEFAULT_REFLECTION_METHODS = "DataFormatReflection";
 	
 	protected Game myGame;
 	protected GameFactory myFactory;
 	protected GameSaverAndLoader myGameSaverAndLoader;
 	protected GameEngine myGameEngine;
-	protected ResourceBundle myDataFormat;
-	protected ResourceBundle myReflectionMethods;
 	protected ImageBuffer myImageBuffer;
 	
 	public DataController(){
 		myGameSaverAndLoader = new GameSaverAndLoader(); 
-		myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
-		myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
 		myImageBuffer = new ImageBuffer();
 	}
 	
@@ -60,52 +53,6 @@ public class DataController {
 	public void receiveOrder(String order){
 		System.out.println("DataController: " + "received order " + order);
 		callFactoryToProcess(order);
-	}
-	
-	/**
-	 * Do not call this method directly; called within DataController
-	 * Called to convert String order to a list of Objects in their original data format (i.e. Integer)
-	 */
-	public List<Object> convertOrderToObjects(String order){
-		List<Object> answer = new ArrayList<Object>();
-		String[] orders = order.split(",");
-		int i = 0;
-		answer.add(orders[i]); //add key
-		i ++;
-		while(i < orders.length){
-			answer.add(orders[i]); //add type
-			String type = myDataFormat.getString(orders[i]);
-			String[] types = type.split(","); 
-			if(!types[0].equals(SaladConstants.NULL_TOKEN)){
-				i = i + 1;
-				for(int j = 0; j < types.length; j ++){
-					answer.add(Reflection.callMethod(this, myReflectionMethods.getString(types[j]), orders[i+j]));
-				}
-			}
-			i = i + types.length;
-		}
-		return answer;
-	}
-	
-	/**
-	 * Do not call this method directly; called by Reflection within DataController
-	 */
-	public Integer convertStringToInteger(String s){
-		return Integer.valueOf(s);
-	}
-	
-	/**
-	 * Do not call this method directly; called by Reflection within DataController
-	 */
-	public Double convertStringToDouble(String s){
-		return Double.valueOf(s);
-	}
-	
-	/**
-	 * Do not call this method directly; called by Reflection within DataController
-	 */
-	public String convertStringToString(String s){
-		return s;
 	}
 	
 	

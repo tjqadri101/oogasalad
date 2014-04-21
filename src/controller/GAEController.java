@@ -1,5 +1,5 @@
 /**
- * @author Talal Javed Qadri and Nick Pan
+ * @author Talal Javed Qadri and Nick Pan and Kat Krieger
  */
 
 package controller;
@@ -771,7 +771,7 @@ public class GAEController {
 	
 	//Kat's method for testing
 	/**Modify the thumbnail in Actor panel*/
-	public void updateActorImage(String imageURL, String name){
+	public void updateActorPanelThumbnail(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
 	}

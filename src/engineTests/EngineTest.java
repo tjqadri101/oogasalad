@@ -13,6 +13,7 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
+		
 	public static void main(String[] arg){
 		
 		GameEngine engine = new GameEngine(true);
@@ -23,6 +24,7 @@ public class EngineTest {
 		JPanel panel = new JPanel();
 		panel.add(engine);
 		mainFrame.add(panel, BorderLayout.CENTER);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
     }
