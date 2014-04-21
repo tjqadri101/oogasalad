@@ -45,7 +45,7 @@ public class MenuBar extends JMenuBar{
 	
 	private JMenu createFileMenu(){
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(makeMenuItem("Save As...", "saveGameFile"));
+		fileMenu.add(makeMenuItem("Save As", "saveGameFile"));
 		fileMenu.add(makeMenuItem("Open", "openGameFile"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
@@ -63,13 +63,8 @@ public class MenuBar extends JMenuBar{
 	
 	private JMenu createHelpMenu(){
 		JMenu helpMenu = new JMenu("Help");
-<<<<<<< HEAD
-		helpMenu.add(makeMenuItem("About", "createAndShowHelpPanel()"));
-		helpMenu.add(makeMenuItem("Help page", "createAndShowAboutPanel()"));
-=======
 		helpMenu.add(makeMenuItem("About", "createAboutPanel"));
 		helpMenu.add(makeMenuItem("Help page", "createHelpPanel"));
->>>>>>> f2281d740efcbf58e789f95d4f5c68388f4f42c5
 		return helpMenu;
 	}
 	
@@ -102,8 +97,7 @@ public class MenuBar extends JMenuBar{
 			return;
 		}
 		if (!saveFile.getName().endsWith(".xml")) {
-			saveFile = new File(saveFile.getAbsolutePath() + ".xml");
-			
+			saveFile = new File(saveFile.getAbsolutePath() + ".xml");		
 		}
 		try {
 			gController.getDataController().exportXML(saveFile.getAbsolutePath());
@@ -141,6 +135,8 @@ public class MenuBar extends JMenuBar{
 		return curFile;
 
 	}
+	
+	
 	
 	public JComponent makeMenuItem(String label, String method) {
 		JMenuItem m = new JMenuItem(label);
