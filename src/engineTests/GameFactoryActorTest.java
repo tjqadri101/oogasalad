@@ -163,9 +163,10 @@ public class GameFactoryActorTest extends TestCase{
 ////        assertEquals(10.0, myGame.getNonPlayer(1, 0, 0).getMyInitX());
 //    }
 
+    // Problem: if called when there is only one object, return error
     @Test
-    public void testModifyActorCollisionBehavior() throws FactoryException{
-        String SET_COL_BEHAVIOR = "ModifyActor,Colid,1,HitterEliminateVictim,HitterEliminateVictim,2";
+    public void testModifyCollisionBehavior() throws FactoryException{
+        String SET_COL_BEHAVIOR = "ModifyCollisionBehavior,Colid,1,HitterEliminateVictim,HitterEliminateVictim,2";
 //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Die","ShowCorpse"};
 //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
         try {
@@ -174,8 +175,7 @@ public class GameFactoryActorTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        Set<String> set = (Set<String>) myGame.getNonPlayer(1, 0, 0).getMyCollisionBehavior().values();
-        assert(set.contains("HitterEliminateVictim"));
+        assertEquals("HitterEliminateVictim", myGame.getNonPlayer(1,0,0).getMyCollisionBehavior().get(2));
     }
 
 ///* Will implement when the Game/Engine is ready
