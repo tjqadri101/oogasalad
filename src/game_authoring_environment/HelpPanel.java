@@ -25,7 +25,7 @@ public class HelpPanel extends JPanel {
 	public HelpPanel() {	
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		try {
-			htmlString = readFile("help.html");
+			htmlString = readFile("./src/game_authoring_environment/resources/help.html");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

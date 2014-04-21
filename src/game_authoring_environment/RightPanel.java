@@ -24,6 +24,7 @@ import reflection.ReflectionException;
 import java.lang.reflect.Field;
 
 import controller.GAEController;
+import engineTests.EngineTest;
 
 public class RightPanel extends JSplitPane {
 

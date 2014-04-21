@@ -1,39 +1,19 @@
 package game_authoring_environment;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.io.File;
-import java.util.Date;
-import java.util.EventObject;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.swing.AbstractCellEditor;
-import javax.swing.DefaultCellEditor;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.event.CellEditorListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
+
 
 import controller.GAEController;
 
@@ -120,13 +100,15 @@ public class ActoreditorPanel extends Panel {
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
 				String path = chooser.getSelectedFile().getPath();
 				String name = chooser.getSelectedFile().getName();
-				//gController.updateActor(path,name);
+
 				gController.modifyActorImageNoID(path, 100, 100);
+
+				gController.uploadImage(100, 100, path);
+				gController.updateActorPanelThumbnail(path,name);
+				gController.setActorImageURL(name);
 			}			
 		}catch(Exception e){
-
 		}
-
 	}
 	
 	public void updateInfo(int actorID){

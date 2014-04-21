@@ -25,7 +25,7 @@ public class AboutPanel extends JPanel {
 	public AboutPanel() {	
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		try {
-			htmlString = readFile("about.html");
+			htmlString = readFile("./src/game_authoring_environment/resources/about.html");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,7 +75,7 @@ public class AboutPanel extends JPanel {
 
 	public void createAndShowAboutPanel() {
 		//Create and set up the window.
-		JFrame frame = new JFrame("About");
+		JFrame frame = new JFrame("OOGASalad by iTeam");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		//Add content to the window.

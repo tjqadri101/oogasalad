@@ -43,7 +43,7 @@ public class GAEController {
 	private int selectedActorID;
 	private int playerID;
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	public GAEController(){
 		playerID = SaladConstants.PLAYER_ID;
@@ -61,7 +61,7 @@ public class GAEController {
 		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
 		//test code below
-		//setDragTile(2,"brick.png");		
+		setDragTile(2,"brick.png");		
 		
 	}
 	
@@ -770,7 +770,7 @@ public class GAEController {
 	
 	//Kat's method for testing
 	/**Modify the thumbnail in Actor panel*/
-	public void updateActorImage(String imageURL, String name){
+	public void updateActorPanelThumbnail(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
 	}
