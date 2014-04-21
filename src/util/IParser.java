@@ -23,6 +23,14 @@ public class IParser {
     private static Map<String,List<?>> parsedResults = new HashMap<String, List<?>>();
     public static ResourceBundle myDataFormat;
     public static ResourceBundle myReflectionMethods;
+    
+    /**
+     * Test the legitimacy of an order passed
+     */
+    private void testLegitimateOrder (String order) {
+        if (!order.contains(",")) 
+            throw new IllegalArgumentException("String " + order + " does not contain,");
+    }
 
     /**
      * Called to parse a String order into a Map of String to Parsed Result (i.e. "ParameterList" to List<Obejct>") 
@@ -38,6 +46,7 @@ public class IParser {
             List<String> typeAnswer = new ArrayList<String>();
             List<Object> parameterAnswer = new ArrayList<Object>();
             
+            testLegitimateOrder(order);
             String[] orders = order.split(",");
             int i = 0;
             allAnswer.add(orders[i]); //add key
@@ -102,15 +111,7 @@ public class IParser {
     public String convertStringToString(String s){
         return s;
     }
-    
-    /**
-     * Test the legitimacy of an order passed from GAE
-     */
-    @SuppressWarnings("unused")
-    private void testLegitimateOrder (String order) {
-        if (!order.contains(",")) 
-            throw new IllegalArgumentException("String " + order + " does not contain =");
-    }
+
 
     
 }
