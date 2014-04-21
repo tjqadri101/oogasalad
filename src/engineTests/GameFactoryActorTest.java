@@ -55,26 +55,6 @@ public class GameFactoryActorTest extends TestCase{
         myFactory.processOrder(CREATE_ACTOR);
     }
     
-    @Test
-    public void testDFParser() throws IndexOutOfBoundsException{
-
-        Object[] PARSED_PARAMETER_OBJECT = new Object[] {0, "actor_default.png",3,3,
-                                                     20.0, 30.0, "myActor", 0, 1}; 
-        List<Object> supposedResult = Arrays.asList(PARSED_PARAMETER_OBJECT);
-        
-        String STRINGINPUT = "CreateActor,ID,0,Image,actor_default.png,3,3," +
-                "Position,20.0,30.0,Name,myActor,CollisionID,0,Lives,1";
-        List<Object> result = null;
-        
-        try {
-            result = p.parseParameter(STRINGINPUT); 
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(supposedResult, result);
-//        assertEquals(parsedObjList.get(1),"actor_default.png");
-    }
 
     @Test
     public void testCreateActor() throws FactoryException{
