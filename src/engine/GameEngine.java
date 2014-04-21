@@ -15,6 +15,7 @@ import objects.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -304,6 +305,11 @@ public class GameEngine extends StdGame{
     		array[j] = temp;
     	}
     	setTiles(top,left,array);
+    	
+//    	Map<String, List<int[]>> map = myCurrentScene.getTileMap();
+//    	if (!map.containsKey((imgfile)))
+//    		map.put(imgfile, new ArrayList<int[]>());
+//    	map.get(imgfile).add(new int[]{cid,top,left,width,height});
     }
     
     public int getClickedID(){
@@ -401,8 +407,7 @@ public class GameEngine extends StdGame{
 //    }
     
     //unfinished
-    public void loadImage(String path){
-    	//scaling might be done here; dimension parameters needed
+    private void loadImage(String path){
     	if (path == null) return;
     	defineImage(path, "-", 0, path, "-");
     }
@@ -431,10 +436,8 @@ public class GameEngine extends StdGame{
     	myCurrentSceneID = currentSceneID;
     	myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
     	String url = myCurrentScene.getBackgroundImage();
-    	if(url != null){
-    		loadImage(url);
-        	setBGImage(url);
-    	}
+    	loadImage(url);
+    	setBGImage(url);
     	for(GameObject go: myCurrentScene.getGameObjects()){
     		go.resume();
     	}
@@ -462,10 +465,27 @@ public class GameEngine extends StdGame{
     	return myCurrentSceneID;
     }
     
-    /** 
-     * Should be called by the GameFactory to createPlayer
-     * Return a created GameObject 
-     */
+    public void setSceneSize(int xsize, int ysize){
+    	myCurrentScene.setSize(xsize, ysize);
+    	setPFSize(xsize, ysize);
+    }
+    
+    private void modifyImage(GameObject object, String imgfile, int xsize, int ysize){
+    	loadImage(imgfile);
+    	object.setImage(imgfile);//animation
+    	object.setSize(xsize, ysize);
+    }
+    
+    public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize){
+    	GameObject object = myGame.getNonPlayer(myCurrentLevelID, myCurrentSceneID, unique_id);
+    	modifyImage(object, imgfile, xsize, ysize);
+    }
+    
+    public void modifyPlayerImage(int unique_id, String imgfile, int xsize, int ysize){
+    	GameObject object = myGame.getPlayer(unique_id);
+    	modifyImage(object, imgfile, xsize, ysize);
+    }
+    
     public Player createPlayer(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	Player object = new Player(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);

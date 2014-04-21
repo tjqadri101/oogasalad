@@ -1,5 +1,5 @@
 /**
- * @author Talal Javed Qadri and Nick Pan
+ * @author Talal Javed Qadri and Nick Pan and Kat Krieger
  */
 
 package controller;
@@ -43,7 +43,7 @@ public class GAEController {
 	private int selectedActorID;
 	private int playerID;
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	public GAEController(){
 		playerID = SaladConstants.PLAYER_ID;
@@ -77,7 +77,7 @@ public class GAEController {
 						SaladConstants.SEPERATER + SaladConstants.POSITION + SaladConstants.SEPERATER + xPos + SaladConstants.SEPERATER + yPos + 
 						SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER+name + ",CollisionID," + colID + SaladConstants.SEPERATER + 
 						SaladConstants.LIVES + SaladConstants.SEPERATER + lives;
-		if (!DEBUG) if (!DEBUG) myDataController.receiveOrder(order);
+		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
@@ -415,6 +415,7 @@ public class GAEController {
 						SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER+name + ",CollisionID,"+ colID +  SaladConstants.SEPERATER + 
 						SaladConstants.LIVES + SaladConstants.SEPERATER + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
+		this.modifyActorStayOnTile(colID, 2);
 		System.out.println(order);
 	}
 	
@@ -603,7 +604,7 @@ public class GAEController {
 		modifyActorQuickShoot(selectedActorID, url, xSize, ySize, colID, speed, numBullets);
 	}
 	
-	/*public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
+	public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
 						SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER+SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER + url + 
 						SaladConstants.SEPERATER +  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + time;
@@ -611,13 +612,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	*//**
+	/**
      * Modify actor's corpse showing property without providing actor id. The selectedActorID is used.
-     *//*
+     */
 	public void modifyActorShowCorpseNoID(String url, int xSize, int ySize, int time){
 		modifyActorShowCorpse(selectedActorID, url, xSize, ySize, time);
 	}
-	*/
+	
 	
 	public void setDragTile(int colID, String url){
 		String order = SaladConstants.SET_DRAG_TILE + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colID +
@@ -787,7 +788,7 @@ public class GAEController {
 	public void setActorImageURL(String URL){
 		String xval = "100";
 		String yval = "100";
-		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

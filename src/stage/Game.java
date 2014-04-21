@@ -163,7 +163,7 @@ public class Game {
 			Level level = myLevelMap.get(levelID);
 			objects.addAll(level.getObjectsByColid(colid));
 		}
-		if(getPlayer(NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID));
+		if(getPlayer(NONUSE_ID) != null && getPlayer(NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID));
 		return objects;
 	}
 	
@@ -238,7 +238,7 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(getPlayer(NONUSE_ID).getAttributes());
+//		answer.addAll(getPlayer(NONUSE_ID).getAttributes());
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
@@ -246,6 +246,7 @@ public class Game {
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
 		answer.add(myGravity.getAttributes());
+		
 		return answer;
 	}
 	

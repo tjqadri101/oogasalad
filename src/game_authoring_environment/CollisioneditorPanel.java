@@ -22,7 +22,7 @@ import javax.swing.table.TableModel;
 
 import controller.GAEController;
 
-public class GameeditorPanel extends Panel {
+public class CollisioneditorPanel extends Panel {
 	
 	private SubPanel mySubPanel;
 	private PanelType superType;
@@ -33,7 +33,7 @@ public class GameeditorPanel extends Panel {
 	private DefaultTableModel myTableModel;
 	private JTable myTable;
 	
-	public GameeditorPanel(GAEController gController) {
+	public CollisioneditorPanel(GAEController gController) {
 		super(PanelType.GAMEEDITOR);
 		this.gController = gController;
 		setDefaultValues();

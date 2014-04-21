@@ -13,6 +13,7 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
+		
 	public static void main(String[] arg){
 		
 		GameEngine engine = new GameEngine(true);
@@ -23,6 +24,7 @@ public class EngineTest {
 		JPanel panel = new JPanel();
 		panel.add(engine);
 		mainFrame.add(panel, BorderLayout.CENTER);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
     }
@@ -60,7 +62,7 @@ public class EngineTest {
 		
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
 //		player.setBBox(0, 0, 100, 1);
-		player.setDieBehavior("RegularDie");
+		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
 		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, 3, 5.0, 5);
 		player.setKey('L', "die");
