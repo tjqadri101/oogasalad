@@ -344,7 +344,7 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void hit(JGObject other)
     {
-		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager.getTileCollisionBehavior(colid, other.colid));
+		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager.getCollisionBehavior(colid, other.colid));
 		if(parameters == null) return; // just to make sure
 		String collisionBehavior = (String) parameters.get(0);
 		parameters.remove(0);
