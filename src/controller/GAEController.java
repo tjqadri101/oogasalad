@@ -1,5 +1,5 @@
 /**
- * @author Talal Javed Qadri and Nick Pan
+ * @author Talal Javed Qadri and Nick Pan and Kat Krieger
  */
 
 package controller;

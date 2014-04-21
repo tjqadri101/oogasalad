@@ -32,16 +32,18 @@ public abstract class PanelTable extends JTable{
 	
 	protected DefaultTableModel myTableModel;
 	protected HashMap<Integer,Object> classMap = new HashMap<Integer,Object>();
+	protected Object[] headerObject;
 	
 	public PanelTable(){
 		new JTable();
+		headerObject = new Object[]{"Property",""};
 		makeTable();
 		init();
+		
 	}
 
 	public void makeTable(){
-		System.out.println("table is beign made");
-		myTableModel = new DefaultTableModel(new Object[]{"Property","","Type"}, 0){
+		myTableModel = new DefaultTableModel(headerObject, 0){
 			@Override
 			public Class<?> getColumnClass(int col) {					
 				return super.getColumnClass(col);
