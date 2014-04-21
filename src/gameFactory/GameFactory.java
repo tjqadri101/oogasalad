@@ -1,7 +1,9 @@
 package gameFactory;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import engine.GameEngine;
 import objects.GameObject;
@@ -75,8 +77,7 @@ public class GameFactory {
         Object[] objArgArray;
         
         if (!(GameReflectPara.equals(NO_PARAMETER))) {
-            int numArg = Integer.parseInt(GameReflectPara);
-            objArgArray = idSelector(numArg); 
+            objArgArray = idSelector(GameReflectPara); 
         }
         else {
             objArgArray = objArgList.toArray(new Object[objArgList.size()]);
@@ -96,8 +97,7 @@ public class GameFactory {
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
 
         if (!GameReflectPara.equals(NO_PARAMETER)){
-            int numArg = Integer.parseInt(GameReflectPara);
-            obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(numArg));
+            obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(GameReflectPara));
         }
         else{
             obj = Reflection.callMethod(refObj, GameRefMethod);
@@ -112,12 +112,14 @@ public class GameFactory {
      * @param sceneID
      * @return the desired array parameter
      */
-    private Object[] idSelector (int numArg) {
+    private Object[] idSelector (String numArg) {
         int objectID = (Integer) objArgList.remove(0);
-        Object[][] IDAugmentor = new Object[][]{new Object[]{myLevelID},
-                                                new Object[]{myLevelID, mySceneID},
-                                                new Object[]{myLevelID, mySceneID, objectID}};
-        return (Object[]) IDAugmentor[numArg];
+        Map<String,Object[]> am = new HashMap<String,Object[]>();
+        am.put("level", new Object[]{myLevelID});
+        am.put("objectID", new Object[]{objectID});
+        am.put("LevelScene", new Object[]{myLevelID, mySceneID});
+        am.put("LevelSceneObject",new Object[]{myLevelID, mySceneID, objectID});
+        return am.get(numArg);
     }
 
 
