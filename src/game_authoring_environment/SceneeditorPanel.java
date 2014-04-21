@@ -82,6 +82,7 @@ public class SceneeditorPanel extends Panel {
 				String name = chooser.getSelectedFile().getName();
 				gController.uploadImage(800, 600, path);
 				gController.modifySceneBackground(path);
+
 			}			
 		}catch(Exception e){
 

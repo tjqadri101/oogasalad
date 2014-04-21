@@ -690,7 +690,7 @@ public class GAEController {
 	}
 	
 	public void modifySceneBackground(String path){
-		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.BACKGROUND + SaladConstants.SEPERATER + path;
+		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + selectedSceneID + SaladConstants.SEPERATER + SaladConstants.BACKGROUND + SaladConstants.SEPERATER + path;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
