@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.CollisionManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 import util.SaladUtil;
@@ -20,8 +21,8 @@ public class Player extends GameObject {
 	protected List<String> myNonClearKeys;
 	protected List<String> mySuperMethods;
 	
-	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives) {
-		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives);
+	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager) {
+		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager);
 		myIsPlayer = true;
 		
 		myAttributes.add(SaladConstants.CREATE_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + 

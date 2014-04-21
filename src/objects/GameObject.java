@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+
+import engineManagers.CollisionManager;
 //import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
@@ -19,6 +21,8 @@ import jgame.JGObject;
 public abstract class GameObject extends JGObject {
     
 //	protected ScoreManager myScoreManager;
+	protected CollisionManager myCollisionManager;
+	
 	protected int myXSize;
 	protected int myYSize;
 	protected double myInitX;
@@ -50,7 +54,7 @@ public abstract class GameObject extends JGObject {
 	protected Map<Integer, List<Object>> myTileCollisionParameters;
 	protected SideDetecter[] mySideDetecters;//plz review
 	
-	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
+	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager){
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
 		myCollisionBehavior = new HashMap<Integer, String>();
@@ -63,6 +67,7 @@ public abstract class GameObject extends JGObject {
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
 		mySideDetecters = new SideDetecter[4];//plz review
+		myCollisionManager = collisionManager;
 	}
 	
 	/**
@@ -343,10 +348,11 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void hit(JGObject other)
     {
-		if(!myCollisionBehavior.containsKey(other.colid)) return;
-		List<Object> params = myCollisionParameters.get(other.colid);
-		params.add(other); //add the hitter to the end of the parameter list
-		behaviorReflection(myBehaviors, myCollisionBehavior.get(other.colid), params, "collide");
+		List<Object> parameters = myCollisionManager.getCollisionBehavior(colid, other.colid);
+		if(parameters == null) return; // just to make sure
+		String collisionBehavior = (String) parameters.get(0);
+		parameters.remove(0);
+		behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide");
     }
 	
 	@Override
