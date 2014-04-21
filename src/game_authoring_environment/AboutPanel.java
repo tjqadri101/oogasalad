@@ -1,4 +1,4 @@
-package view;
+package game_authoring_environment;
 
 /*
  * @author Anthony Olawo 
@@ -38,14 +38,14 @@ public class AboutPanel extends JPanel {
 		add(about_Panel);
 	}
 	
-	public JLabel setUpLabel(JLabel label){
+	private JLabel setUpLabel(JLabel label){
 		label = new JLabel(htmlString);
 		label.setVerticalAlignment(SwingConstants.CENTER);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		return label; 
 	}
 	
-	public JPanel setUpPanel(JPanel panel, JScrollPane scrollPane){
+	private JPanel setUpPanel(JPanel panel, JScrollPane scrollPane){
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.setBorder(BorderFactory.createCompoundBorder(
@@ -57,7 +57,7 @@ public class AboutPanel extends JPanel {
 	}
 
 	
-	String readFile(String fileName) throws IOException {
+	private String readFile(String fileName) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		try {
 			StringBuilder sb = new StringBuilder();
