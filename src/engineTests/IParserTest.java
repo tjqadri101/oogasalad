@@ -29,18 +29,6 @@ public class IParserTest extends TestCase{
             myGame.addScene(1, 0);
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
-        
-//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",3,3,
-//                                                       "position",0.0,0.0,"Name","myActor","CollisionID",0, "Lives",1};
-//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-//        String STRINGINPUT = "CreateActor,ID,0,ActorImage,actor_default.png,3,3," +
-//                        "position,0.0,0.0,Name,myActor,CollisionID,0, Lives,1";
-//        myActor = (NonPlayer) myFactory.processOrder(STRINGINPUT);
-//
-//        
-//        
-//        Object[] PARSED_OBJECT_ARRAY = new Object[] {7, "actor_default.png",3,3,
-//                                                     20.0, 30.0, "myPlayer", 0, 1};
     }
     
     @Test
