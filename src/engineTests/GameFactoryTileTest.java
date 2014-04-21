@@ -44,8 +44,8 @@ public class GameFactoryTileTest extends TestCase{
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
         
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myPlayer = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+//        myPlayer = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
     }
     
     @Test
