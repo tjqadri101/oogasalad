@@ -100,11 +100,11 @@ public class GameEngine extends StdGame{
     	if(drag()) myViewOffsetPlayer = false;
     	else{
     		moveObjects();
-//    		Gravity g = myGame.getGravity();
-//    		g.applyGravity(myPlayer);
-//    		for(GameObject go: myCurrentScene.getGameObjects()){
-//    			g.applyGravity(go);
-//    		}
+    		Gravity g = myGame.getGravity();
+    		g.applyGravity(myPlayer);
+    		for(GameObject go: myCurrentScene.getGameObjects()){
+    			g.applyGravity(go);
+    		}
     		for (int[] pair: myGame.getCollisionManager().getCollisionPair()){
     			checkCollision(pair[0], pair[1]);
     		}
