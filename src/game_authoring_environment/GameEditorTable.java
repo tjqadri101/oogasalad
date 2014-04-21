@@ -14,7 +14,7 @@ import controller.GAEController;
 public class GameEditorTable extends PanelTable {
 
 	private GAEController gController;
-	private static final String[] goalTypes = {"Position", "Time", "Collide"}; 
+	private static final String[] goalTypes = {"Position", "Time"}; 
 	
 	public GameEditorTable(GAEController c) {
 		gController = c;
@@ -35,9 +35,21 @@ public class GameEditorTable extends PanelTable {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
+					String str = arg0.getItem().toString();
 					System.out.println("new selected item:"+arg0.getItem().toString());
-					// call the change method in GAEController here (change level;change scene etc)
-				}				
+					switch(str){
+					case "Position":
+						gController.createGoalTileCollisionNoID(500, 200, 1, 1);
+						break;
+					case "Time":
+						gController.createGoalTime(200);
+						break;
+			
+					default:
+						break;
+					}
+				}
+				
 			}
 		});		
 		myTableModel.addRow(firstRow);

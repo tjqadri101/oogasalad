@@ -13,9 +13,9 @@ import controller.GAEController;
 
 public class ActorEditorTable extends PanelTable{
 
-	private static final String[] moveTypes = {"Immobile", "Regular", "Cyclical"};
+	private static final String[] moveTypes = {"Immobile", "Regular", /*"Cyclical"*/};
 	private static final String[] shootTypes = {"None", "Slow Shoot", "Quick Shoot"};
-	private static final String[] dieTypes = {"Immortal", "Disappear", "Show Corpse"};
+	private static final String[] dieTypes = {"Immortal", /*"Disappear",*/ "Show Corpse"};
 	//private static final String[] collisionTypes = {"Explode", "Hitter Eliminate Victim"};
 	
 	private GAEController gController;
@@ -53,8 +53,10 @@ public class ActorEditorTable extends PanelTable{
 					switch(str){
 					case "Regular":
 						gController.modifyActorRegMoveNoID(5, 5);
+						break;
 					case "Immobile":
 						gController.modifyActorImmobileNoID();
+						break;
 					}
 				}				
 			}
@@ -74,9 +76,13 @@ public class ActorEditorTable extends PanelTable{
 					System.out.println("new selected item:"+arg0.getItem().toString());
 					switch(str){
 					case "Slow Shoot":
-					//	gController.modifyActorQuickShootNoID(, 1, 1, 1, 1, 10);
+						gController.modifyActorSlowShootNoID("bullet.png", 1, 1, 1, 1);
+						break;
 					case "Quick Shoot":
-						gController.modifyActorImmobileNoID();
+						gController.modifyActorQuickShootNoID("bullet.png", 2, 2, 2, 2, 10);
+						break;
+					default:
+						break;
 					}
 				}				
 			}
@@ -92,16 +98,26 @@ public class ActorEditorTable extends PanelTable{
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
+					String str = arg0.getItem().toString();
 					System.out.println("new selected item:"+arg0.getItem().toString());
-					// call the change method in GAEController here (change level;change scene etc)
-				}				
+					switch(str){
+					case "Immortal":
+						gController.modifyPlayerImmortalNoID();
+						break;
+					case "Show Corpse":
+						gController.modifyActorShowCorpseNoID("bullet.png", 10, 10, 10);
+						break;
+					default:
+						break;
+					}
+				}
 			}
 		});		
 		myTableModel.addRow(fourthRow);
 		classMap.put(3,fourthRow[1]);
 		
 		
-		JCheckBox jb = new JCheckBox();
+	/*	JCheckBox jb = new JCheckBox();
 		Object[] fifthRow = {"TestBoo", jb};
 		jb.addItemListener(new ItemListener() {
 			@Override
@@ -119,11 +135,12 @@ public class ActorEditorTable extends PanelTable{
 		
 		myTableModel.addRow(fifthRow);
 		classMap.put(4,fifthRow[1]);
+		*/
 	}
 
 	@Override
 	void updateTable() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

@@ -24,7 +24,7 @@ public class SceneEditorTable extends PanelTable {
 
 	@Override
 	void init() {
-		JComboBox goalTypesBox = new JComboBox(goalTypes);
+		/*JComboBox goalTypesBox = new JComboBox(goalTypes);
 		Object[] firstRow = {"Death Behavior", goalTypesBox};
 		goalTypesBox.setSelectedIndex(0);
 		goalTypesBox.addItemListener(new ItemListener() {
@@ -37,7 +37,7 @@ public class SceneEditorTable extends PanelTable {
 			}
 		});		
 		myTableModel.addRow(firstRow);
-		classMap.put(0,firstRow[1]);
+		classMap.put(0,firstRow[1]);*/
 		
 	}
 
