@@ -1,11 +1,12 @@
 package objects;
 
+import engineManagers.CollisionManager;
 import saladConstants.SaladConstants;
 
 public class NonPlayer extends GameObject {
 
-	public NonPlayer(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives) {
-		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives);
+	public NonPlayer(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager) {
+		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager);
 		myIsPlayer = false;
 		
 		myAttributes.add(SaladConstants.CREATE_ACTOR + "," + SaladConstants.ID + "," + myUniqueID + "," + 

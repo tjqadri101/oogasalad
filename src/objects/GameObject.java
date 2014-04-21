@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import engineManagers.CollisionManager;
 //import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
+import util.SaladUtil;
 import jgame.JGObject;
 /**
  * GameObject is the superclass of Player and NonPlayer
@@ -19,6 +21,8 @@ import jgame.JGObject;
 public abstract class GameObject extends JGObject {
     
 //	protected ScoreManager myScoreManager;
+	protected CollisionManager myCollisionManager;
+	
 	protected int myXSize;
 	protected int myYSize;
 	protected double myInitX;
@@ -39,30 +43,27 @@ public abstract class GameObject extends JGObject {
 	protected String myMoveBehavior;
 	protected String myJumpBehavior;
 	protected String myShootBehavior;
-	protected Map<Integer, String> myCollisionBehavior;
-	protected Map<Integer, String> myTileCollisionBehavior;
+//	protected Map<Integer, String> myCollisionBehavior;
+//	protected Map<Integer, String> myTileCollisionBehavior;
 
 	protected List<Object> myShootParameters;
 	protected List<Object> myDieParameters;
 	protected List<Object> myMoveParameters;
 	protected List<Object> myJumpParameters;
-	protected Map<Integer, List<Object>> myCollisionParameters;
-	protected Map<Integer, List<Object>> myTileCollisionParameters;
+//	protected Map<Integer, List<Object>> myCollisionParameters;
+//	protected Map<Integer, List<Object>> myTileCollisionParameters;
 	protected SideDetecter[] mySideDetecters;//plz review
 	
-	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
+	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager){
 		super(name, true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
-		myCollisionBehavior = new HashMap<Integer, String>();
-		myCollisionParameters = new HashMap<Integer, List<Object>>();
-		myTileCollisionBehavior = new HashMap<Integer, String>();
-		myTileCollisionParameters = new HashMap<Integer, List<Object>>();
 		setInitPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
 		mySideDetecters = new SideDetecter[4];//plz review
+		myCollisionManager = collisionManager;
 	}
 	
 	/**
@@ -253,35 +254,35 @@ public abstract class GameObject extends JGObject {
 		addAttributes(SaladConstants.ID, myUniqueID, myMoveBehavior, myMoveBehavior, myMoveParameters);
 	}
 	
-	/**
-	 * Set the collision behavior
-	 * @param type: String specifying the collision behavior
-	 * @param id: the collision ID of the hitter
-	 */
-	public void setCollisionBehavior(String type, int otherColid, Object ... args){
-		myCollisionBehavior.put(otherColid, type);
-		List<Object> objects = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
-			objects.add(args[i]);
-		}
-		myCollisionParameters.put(otherColid, objects);
-		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, otherColid, objects);
-	}
+//	/**
+//	 * Set the collision behavior
+//	 * @param type: String specifying the collision behavior
+//	 * @param id: the collision ID of the hitter
+//	 */
+//	public void setCollisionBehavior(String type, int otherColid, Object ... args){
+//		myCollisionBehavior.put(otherColid, type);
+//		List<Object> objects = new ArrayList<Object>();
+//		for(int i = 0; i < args.length; i ++){
+//			objects.add(args[i]);
+//		}
+//		myCollisionParameters.put(otherColid, objects);
+//		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, otherColid, objects);
+//	}
 	
-	/**
-	 * Set the tile collision behavior
-	 * @param type: String specifying the tile collision behavior
-	 * @param tileID: the tile collision ID
-	 */
-	public void setTileCollisionBehavior(String type, int tileColid, Object ... args){
-		myTileCollisionBehavior.put(tileColid, type);
-		List<Object> objects = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
-			objects.add(args[i]);
-		}
-		myTileCollisionParameters.put(tileColid, objects);
-		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, tileColid, objects);
-	}
+//	/**
+//	 * Set the tile collision behavior
+//	 * @param type: String specifying the tile collision behavior
+//	 * @param tileID: the tile collision ID
+//	 */
+//	public void setTileCollisionBehavior(String type, int tileColid, Object ... args){
+//		myTileCollisionBehavior.put(tileColid, type);
+//		List<Object> objects = new ArrayList<Object>();
+//		for(int i = 0; i < args.length; i ++){
+//			objects.add(args[i]);
+//		}
+//		myTileCollisionParameters.put(tileColid, objects);
+//		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, tileColid, objects);
+//	}
 	
 	public void die(){
 		if(myDieBehavior == null) return;
@@ -343,23 +344,26 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void hit(JGObject other)
     {
-		if(!myCollisionBehavior.containsKey(other.colid)) return;
-		List<Object> params = myCollisionParameters.get(other.colid);
-		params.add(other); //add the hitter to the end of the parameter list
-		behaviorReflection(myBehaviors, myCollisionBehavior.get(other.colid), params, "collide");
+		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager.getTileCollisionBehavior(colid, other.colid));
+		if(parameters == null) return; // just to make sure
+		String collisionBehavior = (String) parameters.get(0);
+		parameters.remove(0);
+		behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide");
     }
 	
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
 //		myInAirCounter = 0;
-		if(!myTileCollisionBehavior.containsKey(tilecid)) return;
-		List<Object> params = myTileCollisionParameters.get(tilecid);
-		params.add(tilecid);
-		params.add(tx);
-		params.add(ty);
-		params.add(txsize);
-		params.add(tysize);
-		behaviorReflection(myBehaviors, myTileCollisionBehavior.get(tilecid), params, "collide");
+		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager.getTileCollisionBehavior(colid, tilecid));
+		if(parameters == null) return; // just to make sure
+		String collisionBehavior = (String) parameters.get(0);
+		parameters.remove(0);
+		parameters.add(tilecid);
+		parameters.add(tx);
+		parameters.add(ty);
+		parameters.add(txsize);
+		parameters.add(tysize);
+		behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide");
 	}
 	
 	public void autoMove(){
@@ -406,32 +410,26 @@ public abstract class GameObject extends JGObject {
         return myInitX;
     }
     
-    //plz review
-	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
-		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-		if (dir == -1) return;
-		SideDetecter sd = mySideDetecters[dir];
-		if (sd == null){
-			sd = new SideDetecter(this,dir);
-			mySideDetecters[dir] = sd;
-		}
-		sd.setCollisionBehavior(type, otherColid, args);
-	}
-	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
-		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-		if (dir == -1) return;
-		SideDetecter sd = mySideDetecters[dir];
-		if (sd == null){
-			sd = new SideDetecter(this,dir);
-			mySideDetecters[dir] = sd;
-		}
-		sd.setTileCollisionBehavior(type, tileColid, args);
-	}
-
-/** 
- * @Siyang Written to test the setMyCollisionBehavior
- */
-    public Map<Integer, String> getMyCollisionBehavior () {
-        return myCollisionBehavior;
-    }
+//    //plz review
+//	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
+//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+//		if (dir == -1) return;
+//		SideDetecter sd = mySideDetecters[dir];
+//		if (sd == null){
+//			sd = new SideDetecter(this,dir);
+//			mySideDetecters[dir] = sd;
+//		}
+//		sd.setCollisionBehavior(type, otherColid, args);
+//	}
+//	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
+//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+//		if (dir == -1) return;
+//		SideDetecter sd = mySideDetecters[dir];
+//		if (sd == null){
+//			sd = new SideDetecter(this,dir);
+//			mySideDetecters[dir] = sd;
+//		}
+//		sd.setTileCollisionBehavior(type, tileColid, args);
+//	}
+	
 }

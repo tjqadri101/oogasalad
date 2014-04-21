@@ -16,6 +16,7 @@ import objects.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 /**
@@ -23,12 +24,14 @@ import java.util.ResourceBundle;
  */
 public class GameEngine extends StdGame{
 
-//    public static final Dimension SIZE = new Dimension(800, 600);
-//    public static final String TITLE = "Platformer Game Editor";
     public static final int FRAMES_PER_SECOND = 70;
     public static final int MAX_FRAMES_TO_SKIP = 2;
-    public static final int JGPOINT_X = 800;
-    public static final int JGPOINT_Y = 600;
+    public static final int JGPOINT_X = 800;//
+    public static final int JGPOINT_Y = 600;//
+    public static final int CANVAS_WIDTH = 40;
+    public static final int CANVAS_HEIGHT = 30;
+    public static final int TILE_WIDTH = 20;
+    public static final int TILE_HEIGHT = 20;
     
     protected Game myGame;
     protected int myCurrentLevelID;
@@ -57,13 +60,7 @@ public class GameEngine extends StdGame{
     
     @Override
     public void initCanvas () {
-        setCanvasSettings(40, // width of the canvas in tiles
-                          30, // height of the canvas in tiles
-                          20, // width of one tile
-                          20, // height of one tile
-                          null,// foreground colour -> use default colour white
-                          null,// background colour -> use default colour black
-                          null); // standard font -> use default font
+        setCanvasSettings(CANVAS_WIDTH,CANVAS_HEIGHT,TILE_WIDTH,TILE_HEIGHT,null,null,null);
     }
 
     @Override
@@ -108,10 +105,10 @@ public class GameEngine extends StdGame{
     		for(GameObject go: myCurrentScene.getGameObjects()){
     			g.applyGravity(go);
     		}
-    		for (int[] pair: myGame.getCollisionPair()){
+    		for (int[] pair: myGame.getCollisionManager().getCollisionPair()){
     			checkCollision(pair[0], pair[1]);
     		}
-    		for (int[] pair: myGame.getTileCollisionPair()){
+    		for (int[] pair: myGame.getCollisionManager().getTileCollisionPair()){
     			checkBGCollision(pair[0], pair[1]);
     		}
     		viewOffset = setViewOffsetEdit();
@@ -293,7 +290,7 @@ public class GameEngine extends StdGame{
     
     
     //unfinished
-    public void createTiles(int cid, String imgfile, int top, int left, int width, int height){
+    public void createTiles(int cid, String imgfile, int left, int top, int width, int height){
     	if (cid > 9) return;
     	defineImage(((Integer) cid).toString(),((Integer) cid).toString(),cid,imgfile,"-");
     	String temp = "";
@@ -304,12 +301,9 @@ public class GameEngine extends StdGame{
     	for(int j=0;j<height;j++){
     		array[j] = temp;
     	}
-    	setTiles(top,left,array);
-    	
-//    	Map<String, List<int[]>> map = myCurrentScene.getTileMap();
-//    	if (!map.containsKey((imgfile)))
-//    		map.put(imgfile, new ArrayList<int[]>());
-//    	map.get(imgfile).add(new int[]{cid,top,left,width,height});
+    	setTiles(left,top,array);
+    	myCurrentScene.getTileImageMap().put(cid, imgfile);
+//    	myCurrentScene.updateTiles(cid, left, top, width, height);
     }
     
     public int getClickedID(){
@@ -322,6 +316,7 @@ public class GameEngine extends StdGame{
     			list.add(myPlayer);
     		}
     		for(GameObject go: myCurrentScene.getGameObjects()){
+    			//suspended?
     			if (!go.is_suspended && go.isAlive() && go.x < MouseX && MouseX < go.x + go.getXSize() 
     					&& go.y < MouseY && MouseY < go.y + go.getYSize()){
     				list.add(go);
@@ -435,6 +430,17 @@ public class GameEngine extends StdGame{
     	myCurrentLevelID = currentLevelID;
     	myCurrentSceneID = currentSceneID;
     	myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
+    	int xsize = myCurrentScene.getXSize();
+    	int ysize = myCurrentScene.getYSize();
+    	if (myCurrentScene.getXSize() != 0 && myCurrentScene.getXSize() != 0){
+    		setPFSize(xsize, ysize);
+    	}
+    	for (Entry<Integer, String> entry: myCurrentScene.getTileImageMap().entrySet()){
+    		Integer cid = entry.getKey();
+    		String imgfile = entry.getValue();
+    		defineImage(cid.toString(),cid.toString(),cid,imgfile,"-");
+    	}
+    	setTiles(0, 0, myCurrentScene.getTiles());
     	String url = myCurrentScene.getBackgroundImage();
     	loadImage(url);
     	setBGImage(url);
@@ -466,6 +472,7 @@ public class GameEngine extends StdGame{
     }
     
     public void setSceneSize(int xsize, int ysize){
+    	myCurrentScene.resizeTiles(xsize, ysize);
     	myCurrentScene.setSize(xsize, ysize);
     	setPFSize(xsize, ysize);
     }
@@ -488,7 +495,7 @@ public class GameEngine extends StdGame{
     
     public Player createPlayer(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
-    	Player object = new Player(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);
+    	Player object = new Player(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives, myGame.getCollisionManager());
         myGame.setPlayer(object);
         myPlayer = object;
         if(!isEditingMode){
@@ -499,7 +506,7 @@ public class GameEngine extends StdGame{
     
     public NonPlayer createActor(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
-    	NonPlayer object = new NonPlayer(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives);
+    	NonPlayer object = new NonPlayer(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives, myGame.getCollisionManager());
         if(unique_id != SaladConstants.NULL_UNIQUE_ID){
         	myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
         }

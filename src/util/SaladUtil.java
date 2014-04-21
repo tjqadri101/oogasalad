@@ -34,9 +34,10 @@ public class SaladUtil {
         System.out.println();
         System.out.print("StringList print starts: ");
         for(String s: list){
-            System.out.print(s + "/");
+            System.out.print("/" + s);
         }
-        System.out.print("//StringList print ends.");
+        System.out.println("/StringList print ends.");
+        System.out.println();
     }
 
     /**
@@ -93,6 +94,19 @@ public class SaladUtil {
 			objects.add(args[i]);
 		}
 		return objects;
+    }
+    
+    /**
+     * 
+     * @param objects
+     * @return
+     */
+    public static List<Object> copyObjectList(List<Object> objects){
+    	List<Object> answer = new ArrayList<Object>();
+    	for(Object o: objects){
+    		answer.add(o);
+    	}
+    	return answer;
     }
 
 }
