@@ -242,6 +242,7 @@ public class Game {
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
+		answer.addAll(myCollisionManager.getAttributes());
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after

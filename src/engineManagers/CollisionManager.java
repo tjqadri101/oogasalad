@@ -1,5 +1,6 @@
 package engineManagers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +10,6 @@ import java.util.Set;
 
 import objects.GameObject;
 import objects.SideDetecter;
-
 import saladConstants.SaladConstants;
 import util.SaladUtil;
 
@@ -17,16 +17,25 @@ public class CollisionManager {
 	
 	protected Map<String, List<Object>> myCollisionMap;
 	protected Map<String, List<Object>> myTileCollisionMap;
+	protected List<String> myAttributes;
 	
 	public CollisionManager(){
 		myCollisionMap = new HashMap<String, List<Object>>();
 		myTileCollisionMap = new HashMap<String, List<Object>>();
+		myAttributes = new ArrayList<String>();
 	}
 	
 // @Justin: 
 // Note: I have modified the order of parameters into hitter...victim
 	public void addCollisionPair(int hitterColid, String type, int victimColid, Object ... args){
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(SaladConstants.MODIFY_COLLISION_BEHAVIOR + "," + SaladConstants.COLLISION_ID + hitterColid + "," + type + "," + type + "," + victimColid);
+		for(Object o: objects){
+			String att = o.toString();
+			attribute.append("," + att);
+		}
+		myAttributes.add(attribute.toString());
 		objects.add(0, type);
 		String pair = hitterColid + SaladConstants.SEPERATER + victimColid;
 //		SaladUtil.printObjectList(objects);
@@ -35,6 +44,13 @@ public class CollisionManager {
 	
 	public void addTileCollisionPair(int victimColid, String type, int tileColid, Object ... args){
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR + "," + SaladConstants.COLLISION_ID + victimColid + "," + type + "," + type + "," + tileColid);
+		for(Object o: objects){
+			String att = o.toString();
+			attribute.append("," + att);
+		}
+		myAttributes.add(attribute.toString());
 		objects.add(0, type);
 		String pair = tileColid + SaladConstants.SEPERATER + victimColid;
 //		SaladUtil.printObjectList(objects);
@@ -83,5 +99,9 @@ public class CollisionManager {
 		SideDetecter sd = object.getSideDetecters()[dir];
 		if (sd == null) object.getSideDetecters()[dir] = new SideDetecter(object,dir,cid);
 		else sd.colid = cid;
+	}
+	
+	public List<String> getAttributes(){
+		return myAttributes;
 	}
 }
