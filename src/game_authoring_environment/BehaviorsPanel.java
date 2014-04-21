@@ -43,5 +43,6 @@ public class BehaviorsPanel extends Panel {
 		return new JLabel("");
 		
 	}
+	
 
 }
