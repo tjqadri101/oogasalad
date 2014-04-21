@@ -43,7 +43,7 @@ public class GAEController {
 	private int selectedActorID;
 	private int playerID;
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	public GAEController(){
 		playerID = SaladConstants.PLAYER_ID;
