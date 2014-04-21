@@ -19,7 +19,7 @@ public final class SaladConstants {
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
 	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
-	
+	public static final String MODIFY_BACKGROUND = "ModifyBackground";
 	
 	public static final String GAME_EDITOR_PANEL = "GameEditor";
 	public static final String ACTOR_EDITOR_PANEL = "ActorEditor";
