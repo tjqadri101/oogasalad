@@ -238,7 +238,7 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
-		if(getPlayer(NONUSE_ID)) != null){
+		if(getPlayer(NONUSE_ID) != null){
 			answer.addAll(getPlayer(NONUSE_ID).getAttributes());	
 		}
 		for(Integer key: myLevelMap.keySet()){
