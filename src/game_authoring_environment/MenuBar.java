@@ -22,6 +22,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -45,7 +46,14 @@ public class MenuBar extends JMenuBar{
 	
 	private JMenu createFileMenu(){
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(makeMenuItem("Save As", "saveGameFile"));
+		//fileMenu.add(makeMenuItem("Save As...", "saveGameFile"));
+		JMenuItem m = new JMenuItem("Save As...");
+		m.addActionListener(new ActionListener(){
+			@Override
+			 public void actionPerformed (ActionEvent event){
+				saveGameFile();
+		}});
+		fileMenu.add(m);
 		fileMenu.add(makeMenuItem("Open", "openGameFile"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
