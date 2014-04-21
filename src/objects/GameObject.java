@@ -313,6 +313,11 @@ public abstract class GameObject extends JGObject {
 		behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, "remove");	
 	}
 	
+	public void ground(){
+		setSpeed(0);
+		setPos(getLastX(), getLastY());
+	}
+	
 	/**
 	 * Reset the collision ID
 	 * @param new collisionID

@@ -23,8 +23,7 @@ public class StayOnTile extends TileCollision {
 	 */
 	@Override
 	public void collide(List<Object> objects) {
-		myObject.setSpeed(0);
-		myObject.setPos(myObject.getLastX(), myObject.getLastY());
+		myObject.ground();
 	}
 
 }

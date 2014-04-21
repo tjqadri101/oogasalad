@@ -1,11 +1,10 @@
 package objects;
 
-import jgame.JGObject;
 import saladConstants.SaladConstants;
 
 public class SideDetecter extends GameObject{
 
-	public static final double DETECTER_FACTOR = 0.1;
+	public static final double DETECTER_FACTOR = 0.25;
 
 	protected GameObject myParent;
 	protected int myDirection;
@@ -19,31 +18,31 @@ public class SideDetecter extends GameObject{
 	}
 
 	public void move(){
-//		setPos(myParent.x, myParent.y);
-		x = myParent.x;
-		y = myParent.y;
-		System.out.println(getBBox());
+		setPos(myParent.x, myParent.y);
 	}
 	
 	public void die(){
 		myParent.die();
 	}
 	
+	public void ground(){
+		myParent.ground();
+	}
+	
 	public void paint(){
 		switch(myDirection){
 		case 0: 
-			eng.drawRect(x+myParent.getXSize()*DETECTER_FACTOR, y, (int)(myParent.getXSize()*(1-2*DETECTER_FACTOR)), 1, true, false);
+			eng.drawRect(x+myParent.getXSize()*DETECTER_FACTOR, y, (int)(myParent.getXSize()*(1-2*DETECTER_FACTOR)), 2, true, false);
 			break;
 		case 1: 
-			eng.drawRect(x+myParent.getXSize()*DETECTER_FACTOR, y+myParent.getYSize(), (int)(myParent.getXSize()*(1-2*DETECTER_FACTOR)), 1, true, false);
+			eng.drawRect(x+myParent.getXSize()*DETECTER_FACTOR, y+myParent.getYSize(), (int)(myParent.getXSize()*(1-2*DETECTER_FACTOR)), 2, true, false);
 			break;
 		case 2: 
-			eng.drawRect(x, y+myParent.getYSize()*DETECTER_FACTOR, 1, (int)(myParent.getYSize()*(1-2*DETECTER_FACTOR)), true, false);
+			eng.drawRect(x, y+myParent.getYSize()*DETECTER_FACTOR, 2, (int)(myParent.getYSize()*(1-2*DETECTER_FACTOR)), true, false);
 			break;
 		case 3: 
-			eng.drawRect(x+myParent.getXSize(), y+myParent.getYSize()*DETECTER_FACTOR, 1, (int)(myParent.getYSize()*(1-2*DETECTER_FACTOR)), true, false);
+			eng.drawRect(x+myParent.getXSize(), y+myParent.getYSize()*DETECTER_FACTOR, 2, (int)(myParent.getYSize()*(1-2*DETECTER_FACTOR)), true, false);
 			break;
-		default: break;
 		}
 	}
 

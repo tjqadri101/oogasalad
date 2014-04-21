@@ -59,11 +59,11 @@ public class EngineTest {
 		mushroom.setDieBehavior("RegularRemove");
 		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 1);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 6);
 //		player.setBBox(0, 0, 100, 1);
 		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
-		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, 3, 5.0, 5);
+		player.setShootBehavior("SlowShoot", "ball20-red.gif", 20, 20, 3, 5.0, 5);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
@@ -76,10 +76,10 @@ public class EngineTest {
 		game.getCollisionManager().setSideCollisionDetecter(player, "bottom", 5);
 		game.getCollisionManager().setSideCollisionDetecter(player, "right", 6);
 		game.getCollisionManager().setSideCollisionDetecter(player, "left", 6);
-//		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 1);
+		game.getCollisionManager().addCollisionPair(3, "PerishTogether", 2);//bug
 		game.getCollisionManager().addCollisionPair(5, "HitterEliminateVictim", 2);
 		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 6);
-		game.getCollisionManager().addTileCollisionPair(1, "StayOnTile", 2);
+		game.getCollisionManager().addTileCollisionPair(5, "StayOnTile", 2);
 		game.getCollisionManager().addTileCollisionPair(2, "StayOnTile", 2);
 		
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
