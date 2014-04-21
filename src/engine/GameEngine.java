@@ -302,7 +302,7 @@ public class GameEngine extends StdGame{
     	}
     	setTiles(left,top,array);
     	myCurrentScene.getTileImageMap().put(cid, imgfile);
-    	myCurrentScene.updateTiles(cid, left, top, width, height);
+//    	myCurrentScene.updateTiles(cid, left, top, width, height);
     }
     
     public int getClickedID(){
@@ -434,7 +434,7 @@ public class GameEngine extends StdGame{
     	if (myCurrentScene.getXSize() != 0 && myCurrentScene.getXSize() != 0){
     		setPFSize(xsize, ysize);
     	}
-    	setTiles(0, 0, myCurrentScene.getTiles());
+//    	setTiles(0, 0, myCurrentScene.getTiles());
     	String url = myCurrentScene.getBackgroundImage();
     	loadImage(url);
     	setBGImage(url);

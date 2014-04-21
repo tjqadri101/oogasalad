@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-
 import engineManagers.CollisionManager;
 //import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
+import util.SaladUtil;
 import jgame.JGObject;
 /**
  * GameObject is the superclass of Player and NonPlayer
@@ -344,7 +344,7 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void hit(JGObject other)
     {
-		List<Object> parameters = myCollisionManager.getCollisionBehavior(colid, other.colid);
+		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager.getTileCollisionBehavior(colid, other.colid));
 		if(parameters == null) return; // just to make sure
 		String collisionBehavior = (String) parameters.get(0);
 		parameters.remove(0);
@@ -354,7 +354,7 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
 //		myInAirCounter = 0;
-		List<Object> parameters = myCollisionManager.getTileCollisionBehavior(colid, tilecid);
+		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager.getTileCollisionBehavior(colid, tilecid));
 		if(parameters == null) return; // just to make sure
 		String collisionBehavior = (String) parameters.get(0);
 		parameters.remove(0);

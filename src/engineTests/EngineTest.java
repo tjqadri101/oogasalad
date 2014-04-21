@@ -72,9 +72,9 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
-		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
-		player.addSDCollisionBehavior("left", "PerishTogether", 2);
-		player.addSDCollisionBehavior("right", "PerishTogether", 2);
+//		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
+//		player.addSDCollisionBehavior("left", "PerishTogether", 2);
+//		player.addSDCollisionBehavior("right", "PerishTogether", 2);
 //		game.getCollisionPair().add(new int[]{1,2});
 //		
 //		game.addCollisionPair(2, "HitterEliminateVictim", 1);
@@ -83,6 +83,8 @@ public class EngineTest {
 //		game.addTileCollisionPair(2, "StayOnTile", 2);
 //		game.addCollisionPair(3, "PerishTogether", 2);
 		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 1);
+		game.getCollisionManager().addTileCollisionPair(1, "StayOnTile", 2);
+		game.getCollisionManager().addTileCollisionPair(2, "StayOnTile", 2);
 		
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
 //        game.getLevel(1).setWinBehavior("WinByCollision", 123);
