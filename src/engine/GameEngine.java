@@ -423,6 +423,7 @@ public class GameEngine extends StdGame{
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
     	if(myCurrentScene != null){
+    		setPFSize(myCurrentScene.getXSize(), myCurrentScene.getYSize());
     		for(GameObject go: myCurrentScene.getGameObjects()){
         		go.suspend();
         	}
@@ -430,11 +431,6 @@ public class GameEngine extends StdGame{
     	myCurrentLevelID = currentLevelID;
     	myCurrentSceneID = currentSceneID;
     	myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
-    	int xsize = myCurrentScene.getXSize();
-    	int ysize = myCurrentScene.getYSize();
-    	if (myCurrentScene.getXSize() != 0 && myCurrentScene.getXSize() != 0){
-    		setPFSize(xsize, ysize);
-    	}
     	for (Entry<Integer, String> entry: myCurrentScene.getTileImageMap().entrySet()){
     		Integer cid = entry.getKey();
     		String imgfile = entry.getValue();
