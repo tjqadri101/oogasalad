@@ -67,6 +67,14 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	/**
+	 * Get the collision manager associated with this object
+	 * @return myCollisionManager
+	 */
+	public CollisionManager getCollisionManager(){
+		return myCollisionManager;
+	}
+	
+	/**
 	 * Set the dimension of the object image
 	 * @param xsize
 	 * @param ysize

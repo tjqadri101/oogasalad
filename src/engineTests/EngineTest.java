@@ -42,7 +42,6 @@ public class EngineTest {
 		engine.createTiles(2,"brick.png",0,30,1180,1);
 		engine.createTiles(2,"brick.png",20,15,10,1);
 		engine.createTiles(0,"null",30,30,5,1);
-//		engine.setDefaultTiles(0, "null");
 		engine.setDefaultTiles(2, "brick.png");
 //		engine.createTiles(0,0,40,1,1,"brick.png");
 		engine.setBackground("bg.png");
@@ -52,11 +51,11 @@ public class EngineTest {
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
 		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		
-		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 5);
+		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 1);
 		goomba.setDieBehavior("RegularRemove");
 		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 
-		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 5);
+		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 1);
 		mushroom.setDieBehavior("RegularRemove");
 		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 		
@@ -72,7 +71,7 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
-		player.suspend();
+//		player.suspend();
 //		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
 //		player.addSDCollisionBehavior("left", "PerishTogether", 2);
 //		player.addSDCollisionBehavior("right", "PerishTogether", 2);
@@ -83,9 +82,8 @@ public class EngineTest {
 //		game.addTileCollisionPair(2, "StayOnTile", 1);
 //		game.addTileCollisionPair(2, "StayOnTile", 2);
 //		game.addCollisionPair(3, "PerishTogether", 2);
-		
-		
-/*Changed the ID ordering from 2,"HitterEliminateVictim",1 to the one below. Some NPE appeared. */ 
+		 
+		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 1);
 		game.getCollisionManager().addCollisionPair(1, "HitterEliminateVictim", 2);
 		game.getCollisionManager().addTileCollisionPair(1, "StayOnTile", 2);
 		game.getCollisionManager().addTileCollisionPair(2, "StayOnTile", 2);
@@ -93,6 +91,5 @@ public class EngineTest {
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
 //        game.getLevel(1).setWinBehavior("WinByCollision", 123);
         game.getLevel(1).setWinBehavior("WinByTileCollision", 0, 700, 450, 50, 50);
-
 	}
 }
