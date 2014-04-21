@@ -43,7 +43,7 @@ public class GAEController {
 	private int selectedActorID;
 	private int playerID;
 	
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
 	public GAEController(){
 		playerID = SaladConstants.PLAYER_ID;
@@ -61,7 +61,7 @@ public class GAEController {
 		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
 		//test code below
-		setDragTile(2,"brick.png");		
+		//setDragTile(2,"brick.png");		
 		
 	}
 	
@@ -415,6 +415,7 @@ public class GAEController {
 						SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER+name + ",CollisionID,"+ colID +  SaladConstants.SEPERATER + 
 						SaladConstants.LIVES + SaladConstants.SEPERATER + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
+		this.modifyActorStayOnTile(colID, 2);
 		System.out.println(order);
 	}
 	
@@ -770,7 +771,7 @@ public class GAEController {
 	
 	//Kat's method for testing
 	/**Modify the thumbnail in Actor panel*/
-	public void updateActorPanelThumbnail(String imageURL, String name){
+	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
 		ap.setActorImage(selectedActorID, imageURL, name);
 	}
@@ -787,7 +788,7 @@ public class GAEController {
 	public void setActorImageURL(String URL){
 		String xval = "100";
 		String yval = "100";
-		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
+		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

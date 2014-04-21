@@ -70,8 +70,14 @@ public class ActorEditorTable extends PanelTable{
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
+					String str = arg0.getItem().toString();
 					System.out.println("new selected item:"+arg0.getItem().toString());
-					// call the change method in GAEController here (change level;change scene etc)
+					switch(str){
+					case "Slow Shoot":
+					//	gController.modifyActorQuickShootNoID(, 1, 1, 1, 1, 10);
+					case "Quick Shoot":
+						gController.modifyActorImmobileNoID();
+					}
 				}				
 			}
 		});		

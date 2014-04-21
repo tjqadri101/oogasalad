@@ -427,4 +427,11 @@ public abstract class GameObject extends JGObject {
 		}
 		sd.setTileCollisionBehavior(type, tileColid, args);
 	}
+
+/** 
+ * @Siyang Written to test the setMyCollisionBehavior
+ */
+    public Map<Integer, String> getMyCollisionBehavior () {
+        return myCollisionBehavior;
+    }
 }
