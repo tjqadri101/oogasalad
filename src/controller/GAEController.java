@@ -508,7 +508,7 @@ public class GAEController {
 	
 	
 	public void modifyActorStayOnTile(int colID, int tileColID){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+		String order = "ModifyTileCollisionBehavior" + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
 						SaladConstants.SEPERATER + SaladConstants.STAY_ON_TILE + SaladConstants.SEPERATER + SaladConstants.STAY_ON_TILE+ SaladConstants.SEPERATER + 
 						tileColID;
 		if (!DEBUG) myDataController.receiveOrder(order);

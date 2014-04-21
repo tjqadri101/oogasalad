@@ -76,6 +76,14 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	/**
+	 * Get the side collision detecters associated with this object
+	 * @return mySideDetecters
+	 */
+	public SideDetecter[] getSideDetecters(){
+		return mySideDetecters;
+	}
+	
+	/**
 	 * Set the dimension of the object image
 	 * @param xsize
 	 * @param ysize
@@ -218,6 +226,14 @@ public abstract class GameObject extends JGObject {
 	 */
 	public int getLives(){
 		return myLives;
+	}
+	
+	/**
+	 * Get number of initial lives
+	 * @return
+	 */
+	public int getInitLives(){
+		return myInitLives;
 	}
 	
 	/**
@@ -426,7 +442,7 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
-    
+
     /**
      * @return the Gfx info
      */
@@ -464,4 +480,5 @@ public abstract class GameObject extends JGObject {
 //		sd.setTileCollisionBehavior(type, tileColid, args);
 //	}
 	
+
 }

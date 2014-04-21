@@ -103,6 +103,7 @@ public class SaladUtil {
      */
     public static List<Object> copyObjectList(List<Object> objects){
     	List<Object> answer = new ArrayList<Object>();
+    	if (objects == null) return null;
     	for(Object o: objects){
     		answer.add(o);
     	}

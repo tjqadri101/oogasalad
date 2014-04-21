@@ -95,7 +95,6 @@ public class GameEngine extends StdGame{
     public void doFrameEdit(){
     	timer++;//
     	if (myCurrentScene == null) return;
-    	
     	boolean viewOffset = false;
     	if(drag()) myViewOffsetPlayer = false;
     	else{
@@ -335,8 +334,8 @@ public class GameEngine extends StdGame{
     	boolean currentMouse3 = getMouseButton(3);
     	int MouseX = getMouseX()+viewXOfs();
     	int MouseY = getMouseY()+viewYOfs();
-    	int tileX = MouseX/20;
-		int tileY = MouseY/20;
+    	int tileX = Math.max(MouseX/20,0);
+		int tileY = Math.max(MouseY/20,0);
     	
     	if (myMouseButton!=1 && currentMouse1){
     		myClickedID = getClickedID();
@@ -369,7 +368,6 @@ public class GameEngine extends StdGame{
     	if (myMouseButton==3 && !currentMouse3){
     		createTiles(0, "null", Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1);
     	}
-    	
     	myMouseButton = 0;
     	if(currentMouse1) myMouseButton = 1;
     	if(currentMouse3) myMouseButton = 3;
