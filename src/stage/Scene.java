@@ -36,6 +36,7 @@ public class Scene {
 		initPlayerX = DEFAULT_PLAYER_X;
 		initPlayerY = DEFAULT_PLAYER_Y;
 		myObjectMap = new HashMap<Integer, NonPlayer>();
+		setSize(GameEngine.CANVAS_WIDTH,GameEngine.CANVAS_HEIGHT);
 		initTiles();
 	}
 	
@@ -48,14 +49,12 @@ public class Scene {
 	}
 	
 	protected void initTiles(){
-		int width = GameEngine.CANVAS_WIDTH;
-		int height = GameEngine.CANVAS_HEIGHT;
 		String temp = "";
-    	for(int i=0;i<width;i++){
+    	for(int i=0;i<getXSize();i++){
     		temp += 0;
     	}
-    	String[] array = new String[height];
-    	for(int j=0;j<height;j++){
+    	String[] array = new String[getYSize()];
+    	for(int j=0;j<getYSize();j++){
     		array[j] = temp;
     	}
 		myTiles = array;
@@ -68,8 +67,8 @@ public class Scene {
 		String suffix = "";
 		int suffix_length = Math.max(xsize-getXSize(),0);
     	for(int i=0;i<xsize;i++){
-    		empty_line += 0;
     		if(i==suffix_length) suffix=empty_line;
+    		empty_line += 0;
     	}
 		String[] array = new String[ysize];
 		for (int j=0;j<Math.min(ysize,getYSize());j++){
@@ -78,6 +77,7 @@ public class Scene {
 		for (int j=Math.min(ysize,getYSize());j<ysize;j++){
 			array[j] = empty_line;
 		}
+		myTiles = array;
 	}
 	
 	public void updateTiles(int cid, int left, int top, int width, int height){

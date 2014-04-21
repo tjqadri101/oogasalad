@@ -38,12 +38,12 @@ public class EngineTest {
 		engine.setCurrentScene(1, 0);
 		game.getGravity().setMagnitude(0.1);
 		
-		engine.setPFSize(1200,40);
+		engine.setSceneSize(1200,40);
 		engine.createTiles(2,"brick.png",0,30,1180,1);
 		engine.createTiles(2,"brick.png",20,15,10,1);
 		engine.createTiles(0,"null",30,30,5,1);
 //		engine.setDefaultTiles(0, "null");
-		engine.setDefaultTiles(0, "null");
+		engine.setDefaultTiles(2, "brick.png");
 //		engine.createTiles(0,0,40,1,1,"brick.png");
 		engine.setBackground("bg.png");
 		
@@ -72,6 +72,7 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
+		player.suspend();
 //		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
 //		player.addSDCollisionBehavior("left", "PerishTogether", 2);
 //		player.addSDCollisionBehavior("right", "PerishTogether", 2);
