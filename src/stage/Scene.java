@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engine.GameEngine;
+
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
@@ -34,7 +36,7 @@ public class Scene {
 		initPlayerX = DEFAULT_PLAYER_X;
 		initPlayerY = DEFAULT_PLAYER_Y;
 		myObjectMap = new HashMap<Integer, NonPlayer>();
-		myTileImageMap = new HashMap<Integer, String>();
+		initTiles();
 	}
 	
 	public Map<Integer, String> getTileImageMap(){
@@ -43,6 +45,50 @@ public class Scene {
 	
 	public String[] getTiles(){
 		return myTiles;
+	}
+	
+	protected void initTiles(){
+		int width = GameEngine.CANVAS_WIDTH;
+		int height = GameEngine.CANVAS_HEIGHT;
+		String temp = "";
+    	for(int i=0;i<width;i++){
+    		temp += 0;
+    	}
+    	String[] array = new String[height];
+    	for(int j=0;j<height;j++){
+    		array[j] = temp;
+    	}
+		myTiles = array;
+		myTileImageMap = new HashMap<Integer, String>();
+		myTileImageMap.put(0, "null");
+	}
+	
+	public void resizeTiles(int xsize, int ysize){
+		String empty_line = "";
+		String suffix = "";
+		int suffix_length = Math.max(xsize-getXSize(),0);
+    	for(int i=0;i<xsize;i++){
+    		empty_line += 0;
+    		if(i==suffix_length) suffix=empty_line;
+    	}
+		String[] array = new String[ysize];
+		for (int j=0;j<Math.min(ysize,getYSize());j++){
+			array[j] = myTiles[j].substring(0,Math.min(xsize,getXSize()))+suffix;
+		}
+		for (int j=Math.min(ysize,getYSize());j<ysize;j++){
+			array[j] = empty_line;
+		}
+	}
+	
+	public void updateTiles(int cid, int left, int top, int width, int height){
+		String temp = "";
+    	for(int i=0;i<Math.min(width,getXSize()-left);i++){
+    		temp += cid;
+    	}
+		for (int j=top;j<Math.min(top+height,getYSize());j++){
+			String str = myTiles[j];
+			myTiles[j] = str.substring(0, left)+temp+str.substring(left+temp.length());
+		}
 	}
 	
 	/**

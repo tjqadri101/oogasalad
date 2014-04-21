@@ -16,6 +16,7 @@ import objects.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 /**
@@ -434,6 +435,11 @@ public class GameEngine extends StdGame{
     	if (myCurrentScene.getXSize() != 0 && myCurrentScene.getXSize() != 0){
     		setPFSize(xsize, ysize);
     	}
+    	for (Entry<Integer, String> entry: myCurrentScene.getTileImageMap().entrySet()){
+    		Integer cid = entry.getKey();
+    		String imgfile = entry.getValue();
+    		defineImage(cid.toString(),cid.toString(),cid,imgfile,"-");
+    	}
     	setTiles(0, 0, myCurrentScene.getTiles());
     	String url = myCurrentScene.getBackgroundImage();
     	loadImage(url);
@@ -466,6 +472,7 @@ public class GameEngine extends StdGame{
     }
     
     public void setSceneSize(int xsize, int ysize){
+    	myCurrentScene.resizeTiles(xsize, ysize);
     	myCurrentScene.setSize(xsize, ysize);
     	setPFSize(xsize, ysize);
     }
