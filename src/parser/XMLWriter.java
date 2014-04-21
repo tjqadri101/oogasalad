@@ -43,6 +43,7 @@ public class XMLWriter {
 		 try {
 			out = new PrintWriter(url);
 			xml = myXStream.toXML(attributes);
+			System.out.println("XMLWriter: "+xml); 
 			out.write(xml); 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
