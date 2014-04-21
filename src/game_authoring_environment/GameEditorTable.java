@@ -29,7 +29,7 @@ public class GameEditorTable extends PanelTable {
 	@Override
 	void init() {
 		JComboBox goalTypesBox = new JComboBox(goalTypes);
-		Object[] firstRow = {"Death Behavior", goalTypesBox};
+		Object[] firstRow = {"Goal of Game", goalTypesBox};
 		goalTypesBox.setSelectedIndex(0);
 		goalTypesBox.addItemListener(new ItemListener() {
 			@Override

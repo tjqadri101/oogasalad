@@ -17,7 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.GAEController;
 
-public class ActoreditorPanel extends Panel {
+public class PlayereditorPanel extends Panel {
 	
 	private static final Integer[] levelList = {1,2,3,4,5,6,7,8,9,10};
 	
@@ -26,9 +26,8 @@ public class ActoreditorPanel extends Panel {
 	private GAEController gController;
 	private JTable myTable;
 
-	public ActoreditorPanel(GAEController gController) {
-		super(PanelType.ACTOREDITOR);
-		
+	public PlayereditorPanel(GAEController gController) {
+		super(PanelType.PLAYEREDITOR);
 		this.gController = gController;
 		makeSubPanel();
 		construct();
@@ -75,11 +74,11 @@ public class ActoreditorPanel extends Panel {
 	}
 
 	private JButton makeChooseButton(){
-		JButton b = ViewFactory.createJButton("Select Actor Image");
+		JButton b = ViewFactory.createJButton("Select Player Image");
 		b.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				chooseActor("Select Actor ");
+				chooseActor("Select Player ");
 			}			
 		});
 		return b;
@@ -101,18 +100,15 @@ public class ActoreditorPanel extends Panel {
 				String path = chooser.getSelectedFile().getPath();
 				String name = chooser.getSelectedFile().getName();
 
-				//gController.modifyActorImageNoID(path, 100, 100);
-
-				gController.uploadImage(100, 100, path);
-				gController.updateActorImage(path,name);
-				gController.setActorImageURL(name);
+				gController.modifyPlayerImageNoID(path, 100, 100);
 			}			
 		}catch(Exception e){
 		}
 	}
 	
 	public void updateInfo(int actorID){
-		System.out.println("updating actorID:"+actorID);	
+		System.out.println("updating playerID:"+actorID);	
 	}
 
 }
+
