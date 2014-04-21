@@ -1,0 +1,225 @@
+
+<html>
+<body>
+<h3> Commands </h3>
+<table border="1">
+  <tr>
+    <th> Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>FORWARD pixels or  FD pixels </td>
+    <td>moves turtle forward in its current heading by pixels distance and returns the value of pixels</td>
+  </tr>
+  <tr>
+    <td>BACK pixels or BK pixels</td>
+    <td>moves turtle backward in its current heading by pixels distance and returns the value of pixels</td>
+  </tr>
+ 
+  <tr>
+    <td>LEFT degrees or LT degrees </td>
+    <td>turns turtle counterclockwise by degrees angle and returns the value of degrees</td>
+  </tr>
+  <tr>
+    <td>RIGHT degrees or RT degrees</td>
+    <td>turns turtle clockwise by degrees angle and returns the value of degrees</td>
+  </tr>
+  <tr>
+    <td>SETHEADING degrees or SETH degrees</td>
+    <td>turns turtle to an absolute heading and returns number of degrees moved</td>
+  </tr>
+  <tr>
+    <td>SETXY x y or GOTO x y</td>
+    <td>moves turtle to an absolute screen position, where (0, 0) is the center of the screen and returns the distance turtle moved</td>
+  </tr>
+  <tr>
+    <td>PENDOWN or PD</td>
+    <td>puts pen down such that when the turtle moves, it leaves a trail and returns 1</td>
+  </tr>
+  <tr>
+    <td>PENUP or PU</td>
+    <td>puts pen up such that when the turtle moves, it does not leave a trail and returns 0</td>
+  </tr>
+  <tr>
+    <td>SHOWTURTLE or ST</td>
+    <td>makes turtle visible and returns 1</td>
+  </tr>
+  <tr>
+    <td>HIDETURTLE or HT</td>
+    <td>makes turtle invisible and returns 0</td>
+  </tr>
+  <tr>
+    <td>FORWARD pixels or  FD pixels </td>
+    <td>moves turtle forward in its current heading by pixels distance and returns the value of pixels</td>
+  </tr>
+  <tr>
+    <td>HOME</td>
+    <td>moves turtle to the center of the screen (0 0) and returns the distance turtle moved</td>
+  </tr>
+<tr>
+    <td>CLEARSCREEN or CS</td>
+    <td>erases turtle's trails and sends it to the home position and returns the distance turtle moved</td>
+  </tr>
+
+</table>
+
+
+
+<h3> Turtle Queries </h3>
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td> XCOR </td>
+    <td>returns the turtle's X coordinate from the center of the screen
+</td>
+  </tr>
+  <tr>
+    <td> YCOR </td>
+    <td>returns the turtle's Y coordinate from the center of the screen
+</td>
+  </tr>
+ 
+  <tr>
+    <td>PENDOWN? PENDOWNP</td>
+    <td>returns 1 if turtle's pen is down, 0 if it is up
+</td>
+  </tr>
+  <tr>
+    <td>SHOWING? SHOWINGP</td>
+    <td>returns 1 if turtle is showing, 0 if it is hiding</td>
+  </tr>
+  
+</table>
+
+<h3> Math Operations </h3>
+<table border="1">
+  <tr>
+    <th> Name</th>
+    <th>Description</th>
+  </tr>
+<tr>
+    <td>SUM expr1 expr2 &#43; expr1 expr2</td>
+    <td>returns sum of the values of expr1 and expr2</td>
+  </tr>
+<tr>
+    <td>DIFFERENCE expr1 expr2 &#45; expr1 expr2</td>
+    <td>returns difference of the values of expr1 and expr2</td>
+  </tr>
+<tr>
+    <td>PRODUCT expr1 expr2 &#42; expr1 expr2</td>
+    <td>returns product of the values of expr1 and expr2</td>
+  </tr>
+<tr>
+    <td>QUOTIENT expr1 expr2 &#47; expr1 expr2</td>
+    <td>returns quotient of the values of expr1 and expr2</td>
+  </tr>
+<tr>
+    <td>REMAINDER expr1 expr2 &#37; expr1 expr2</td>
+    <td>returns negative of the values of expr
+</td>
+  </tr>
+<tr>
+    <td>MINUS expr &#126; expr</td>
+    <td>returns integer remainder on dividing the values of expr1 by expr2
+</td>
+  </tr>
+<tr>
+    <td>RANDOM max</td>
+    <td>returns random non-negative number strictly less than max</td>
+  </tr>
+<tr>
+<tr>
+    <td>SIN degrees	</td>
+    <td>returns sine of degrees</td>
+  </tr>
+<tr>
+    <td>COS degrees	</td>
+    <td>returns cosine of degrees</td>
+  </tr>
+<tr>
+    <td>TAN degrees	</td>
+    <td>returns tangent of degrees
+note, since this function is defined continuously, take appropriate action (i.e., divide-by-zero might silently return zero)</td>
+  </tr>
+<tr>
+    <td>ATAN degrees	</td>
+    <td>returns arctangent of degrees
+note, since this function is defined continuously, take appropriate action (i.e., divide-by-zero might silently return zero)</td>
+  </tr>
+<tr>
+    <td>LOG expr	</td>
+    <td>returns natural log of expr</td>
+  </tr>
+<tr>
+    <td>POW base exponent</td>
+    <td>returns base raised to the power of the exponent</td>
+ </tr>
+</table>
+
+<h3> Boolean Operations </h3>
+<table border="1">
+  <tr>
+    <th> Name</th>
+    <th>Description</th>
+  </tr>
+<tr>
+    <td>LESS? expr1 expr2 LESSP expr1 expr2</td>
+    <td>returns 1 if the value of expr1 is strictly less than the value of expr2, otherwise 0</td>
+  </tr>
+<tr>
+    <td>GREATER? expr1 expr2 GREATERP expr1 expr2</td>
+    <td>returns 1 if the value of expr1 is strictly greater than the value of expr2, otherwise 0</td>
+  </tr>
+<tr>
+    <td>EQUAL? expr1 expr2 EQUALP expr1 expr2</td>
+    <td>returns 1 if the value of expr1 and the value of expr2 are equal, otherwise 0 </td>
+  </tr>
+<tr>
+    <td>NOTEQUAL? expr1 expr2 NOTEQUALP expr1 expr2  </td>
+    <td>returns 1 if the value of expr1 and the value of expr2 are not equal, otherwise 0 </td>
+  </tr>
+<tr>
+    <td>AND test1 test2	</td>
+    <td>returns 1 if test1 and test2 are non-zero, otherwise 0 </td>
+  </tr>
+<tr>
+    <td>OR test1 test2</td>
+    <td>rreturns 1 if test1 or test2 are non-zero, otherwise 0 </td>
+  </tr>
+<tr>
+    <td>NOT test	</td>
+    <td>returns 1 if test is 0 and 0 if test is non-zero</td>
+  </tr>
+
+</table>
+
+
+<h3>Control Structures </h3>
+<table border="1">
+  <tr>
+    <th> Name</th>
+    <th>Description</th>
+  </tr>
+<tr>
+    <td>REPEAT expr [ command(s) ]	</td>
+    <td>runs the commands given in the list the value of expr number of times
+returns the value of the final command executed
+note, the value of the current iteration, starting at 1, is automatically assigned to the variable :repcount so that it can be accessed by the commands</td>
+  </tr>
+<tr>
+    <td>IF expr [ command(s) ]	</td>
+    <td>if expr is not 0, runs the commands given in the list and returns the value of the final command executed</td>
+  </tr>
+<tr>
+    <td>IFELSE expr [ trueCommand(s) ]  [ falseCommand(s) ]</td>
+    <td>if expr is not 0, runs the trueCommands given in the first list, otherwise runs the falseCommands given in the second list
+returns the value of the final command executed </td>
+  </tr>
+
+</table>
+
+<body>
+</html>
