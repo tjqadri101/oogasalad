@@ -58,7 +58,7 @@ public class PlayereditorPanel extends Panel {
 	}
 
 	private JTable createTable(){
-		myTable = new ActorEditorTable(gController);
+		myTable = new PlayerEditorTable(gController);
 		
 		return myTable;
 	}
