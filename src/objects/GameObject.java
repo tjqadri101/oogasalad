@@ -34,6 +34,7 @@ public abstract class GameObject extends JGObject {
 	protected boolean myIsInAir;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
+	protected String myGfx;
 	protected List<String> myAttributes;
 	
 	protected boolean myIsPlayer;//need change
@@ -414,6 +415,14 @@ public abstract class GameObject extends JGObject {
 		return myAttributes;
 	}
 	
+	/**When ModifyActor/PlayerImage is called, the gfx info is passed along
+         */
+	public void updateImageURL(String gfx){
+	    this.myGfx = gfx;
+	}
+	
+	
+	
 /* @NOTE:
  * The following getter and setters used for GameFactoryTest
  * Will remove them once finished
@@ -438,5 +447,43 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
+
+    /**
+     * @return the Gfx info
+     */
+    public String getMyGfx(){
+        return myGfx;
+    }
+
+    /**
+     * @return set the initXSpeed and initYSpeed
+     */
+    public void updateInitSpeed (double xspeed, double yspeed) {
+        myInitX = xspeed;
+        myInitY = yspeed;
+    }
     
+//    //plz review
+//	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
+//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+//		if (dir == -1) return;
+//		SideDetecter sd = mySideDetecters[dir];
+//		if (sd == null){
+//			sd = new SideDetecter(this,dir);
+//			mySideDetecters[dir] = sd;
+//		}
+//		sd.setCollisionBehavior(type, otherColid, args);
+//	}
+//	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
+//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+//		if (dir == -1) return;
+//		SideDetecter sd = mySideDetecters[dir];
+//		if (sd == null){
+//			sd = new SideDetecter(this,dir);
+//			mySideDetecters[dir] = sd;
+//		}
+//		sd.setTileCollisionBehavior(type, tileColid, args);
+//	}
+	
+
 }

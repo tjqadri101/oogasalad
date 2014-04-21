@@ -231,6 +231,22 @@ public class GameFactoryActorTest extends TestCase{
         assertEquals("RegularRemove", myGame.getNonPlayer(1,0,0).getMyDieBehavior());
     }
     
+    @Test
+    public void testModifyActorImage() throws FactoryException{
+        String MODIFY_IMAGE = "ModifyActorImage,ID,0,Image,actor_default.png,10,10";
+//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(MODIFY_IMAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        assertEquals("actor_default.png", myGame.getNonPlayer(1,0,0).getMyGfx());
+    }
+    
 
 //
 ////    Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",3,3,

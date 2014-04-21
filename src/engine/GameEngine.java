@@ -418,7 +418,6 @@ public class GameEngine extends StdGame{
     }
     
     
-    
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
     	if(myCurrentScene != null){
     		setPFSize(myCurrentScene.getXSize(), myCurrentScene.getYSize());
@@ -475,6 +474,7 @@ public class GameEngine extends StdGame{
     	loadImage(imgfile);
     	object.setImage(imgfile);//animation
     	object.setSize(xsize, ysize);
+    	object.updateImageURL(imgfile);
     }
     
     public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize){
