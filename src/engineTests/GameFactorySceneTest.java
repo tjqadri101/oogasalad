@@ -116,7 +116,7 @@ public class GameFactorySceneTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(1, myGame.getMyLevelMap().get(1).getMySceneMap().size());
+        assertEquals("bg.png", myGame.getMyLevelMap().get(1).getMySceneMap().get(0).getBackgroundImage());
 // here the levelID=1, SceneID=0, objID=0
     }
 
