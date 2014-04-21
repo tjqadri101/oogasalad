@@ -53,7 +53,7 @@ public abstract class GameObject extends JGObject {
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager){
 		super(name, true, xpos, ypos, collisionId, gfxname);
-		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
+		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;

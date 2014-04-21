@@ -106,7 +106,9 @@ public final class SaladConstants {
 	
 	
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
-    public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
+    public static final String OBJECT_BEHAVIOR = "ObjectBehaviors";
+    public static final String DATA_FORMAT_REFLECTION = "DataFormatReflection";
+    public static final String TYPE_FORMAT = "TypeFormat";
 
     public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
 
