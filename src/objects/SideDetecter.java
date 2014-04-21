@@ -25,6 +25,10 @@ public class SideDetecter extends GameObject{
 		myParent.die();
 	}
 	
+	public void jump(){
+		myParent.jump();
+	}
+	
 	public void ground(){
 		myParent.ground();
 	}

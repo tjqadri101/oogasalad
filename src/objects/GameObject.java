@@ -281,9 +281,20 @@ public abstract class GameObject extends JGObject {
 		behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, "remove");	
 	}
 	
-	public void ground(){
+//	public void bounce(){
+//		xspeed *= -1;
+//		yspeed *= -1;
+//	}
+
+	public void stop(){
 		setSpeed(0);
 		setPos(getLastX(), getLastY());
+	}
+
+	public void ground(){
+		myIsInAir = false;
+		myJumpTimes = 0;
+		stop();
 	}
 	
 	/**
