@@ -14,6 +14,7 @@ import saladConstants.SaladConstants;
 /**
  * 
  * @author Justin (Zihao) Zhang, DavidChou
+ * @contribution Shenghan
  */
 
 public class Scene {
