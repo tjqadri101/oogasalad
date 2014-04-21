@@ -30,6 +30,8 @@ public class GameeditorPanel extends Panel {
 	private String GameName;
 	private Integer DisplayWidth;
 	private Integer DisplayHeight;
+	private DefaultTableModel myTableModel;
+	private JTable myTable;
 	
 	public GameeditorPanel(GAEController gController) {
 		super(PanelType.GAMEEDITOR);
@@ -44,7 +46,7 @@ public class GameeditorPanel extends Panel {
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
 		//this.add(makeTable(), BorderLayout.SOUTH);
-		this.add(createTable(), BorderLayout.CENTER);
+		//this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 	
 
 	}
@@ -76,8 +78,7 @@ public class GameeditorPanel extends Panel {
 	
 	private JTable createTable(){
 		ActorEditorTable table = new ActorEditorTable();
-		table.makeTable();
-		table.init();
+		
 		return table;
 	}
 	
