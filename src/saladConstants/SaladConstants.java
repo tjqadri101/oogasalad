@@ -19,7 +19,7 @@ public final class SaladConstants {
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
 	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
-	
+	public static final String MODIFY_BACKGROUND = "ModifyBackground";
 	
 	public static final String GAME_EDITOR_PANEL = "GameEditor";
 	public static final String ACTOR_EDITOR_PANEL = "ActorEditor";
@@ -98,13 +98,17 @@ public final class SaladConstants {
     public static final String WIN_BY_TIME = "WinByTime";
     public static final String WIN_BY_COLLISION = "WinByCollsion";
     public static final String WIN_BY_TILE_COLLISION = "WinByTileCollision";
+    public static final String MODIFY_COLLISION_BEHAVIOR = "ModifyCollisionBehavior";
+    public static final String MODIFY_TILE_COLLISION_BEHAVIOR = "ModifyTileCollisionBehavior";
     
 	public static final String NULL_TOKEN = "NullToken";
 	public static final String RESET_LEVEL_EXCEPTION = "Level can not be reset!";
 	
 	
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
-    public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
+    public static final String OBJECT_BEHAVIOR = "ObjectBehaviors";
+    public static final String DATA_FORMAT_REFLECTION = "DataFormatReflection";
+    public static final String TYPE_FORMAT = "TypeFormat";
 
     public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
 
