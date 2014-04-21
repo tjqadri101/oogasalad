@@ -55,11 +55,11 @@ public class EngineTest {
 		goomba.setDieBehavior("RegularRemove");
 		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 
-		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 1);
+		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 3, 1);
 		mushroom.setDieBehavior("RegularRemove");
 		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 1);
 //		player.setBBox(0, 0, 100, 1);
 		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
@@ -72,19 +72,13 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 //		player.suspend();
-//		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
-//		player.addSDCollisionBehavior("left", "PerishTogether", 2);
-//		player.addSDCollisionBehavior("right", "PerishTogether", 2);
-//		game.getCollisionPair().add(new int[]{1,2});
-//		
-//		game.addCollisionPair(2, "HitterEliminateVictim", 1);
-//		game.addCollisionPair(1, "HitterEliminateVictim", 2);
-//		game.addTileCollisionPair(2, "StayOnTile", 1);
-//		game.addTileCollisionPair(2, "StayOnTile", 2);
-//		game.addCollisionPair(3, "PerishTogether", 2);
-		 
-		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 1);
-		game.getCollisionManager().addCollisionPair(1, "HitterEliminateVictim", 2);
+		
+		game.getCollisionManager().setSideCollisionDetecter(player, "bottom", 5);
+		game.getCollisionManager().setSideCollisionDetecter(player, "right", 6);
+		game.getCollisionManager().setSideCollisionDetecter(player, "left", 6);
+//		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 1);
+		game.getCollisionManager().addCollisionPair(5, "HitterEliminateVictim", 2);
+		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 6);
 		game.getCollisionManager().addTileCollisionPair(1, "StayOnTile", 2);
 		game.getCollisionManager().addTileCollisionPair(2, "StayOnTile", 2);
 		

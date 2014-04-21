@@ -77,22 +77,11 @@ public class CollisionManager {
 		return answer;
 	}
 	
-	public void addSDCollisionBehavior(GameObject object, String direction, String type, int otherColid, Object ... args){
+	public void setSideCollisionDetecter(GameObject object, String direction, int cid){
 		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
 		if (dir == -1) return;
 		SideDetecter sd = object.getSideDetecters()[dir];
-		if (sd == null){
-			sd = new SideDetecter(object,dir);
-			object.getSideDetecters()[dir] = sd;
-		}
-	}
-	public void addSDTileCollisionBehavior(GameObject object, String direction, String type, int tileColid, Object ... args){
-		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-		if (dir == -1) return;
-		SideDetecter sd = object.getSideDetecters()[dir];
-		if (sd == null){
-			sd = new SideDetecter(object,dir);
-			object.getSideDetecters()[dir] = sd;
-		}
+		if (sd == null) object.getSideDetecters()[dir] = new SideDetecter(object,dir,cid);
+		else sd.colid = cid;
 	}
 }
