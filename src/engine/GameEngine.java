@@ -100,11 +100,11 @@ public class GameEngine extends StdGame{
     	if(drag()) myViewOffsetPlayer = false;
     	else{
     		moveObjects();
-    		Gravity g = myGame.getGravity();
-    		g.applyGravity(myPlayer);
-    		for(GameObject go: myCurrentScene.getGameObjects()){
-    			g.applyGravity(go);
-    		}
+//    		Gravity g = myGame.getGravity();
+//    		g.applyGravity(myPlayer);
+//    		for(GameObject go: myCurrentScene.getGameObjects()){
+//    			g.applyGravity(go);
+//    		}
     		for (int[] pair: myGame.getCollisionManager().getCollisionPair()){
     			checkCollision(pair[0], pair[1]);
     		}
@@ -303,7 +303,7 @@ public class GameEngine extends StdGame{
     	}
     	setTiles(left,top,array);
     	myCurrentScene.getTileImageMap().put(cid, imgfile);
-//    	myCurrentScene.updateTiles(cid, left, top, width, height);
+    	myCurrentScene.updateTiles(cid, left, top, width, height);
     }
     
     public int getClickedID(){
@@ -311,7 +311,7 @@ public class GameEngine extends StdGame{
     	if (getMouseButton(1)){
     		int MouseX = getMouseX()+viewXOfs();
         	int MouseY = getMouseY()+viewYOfs();
-    		if (myPlayer != null && myPlayer.x < MouseX && MouseX < myPlayer.x + myPlayer.getXSize() 
+    		if (myPlayer != null && !myPlayer.is_suspended && myPlayer.x < MouseX && MouseX < myPlayer.x + myPlayer.getXSize() 
     				&& myPlayer.y < MouseY && MouseY < myPlayer.y + myPlayer.getYSize()){
     			list.add(myPlayer);
     		}
@@ -496,8 +496,9 @@ public class GameEngine extends StdGame{
     public Player createPlayer(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	Player object = new Player(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives, myGame.getCollisionManager());
-        myGame.setPlayer(object);
+    	myGame.setPlayer(object);
         myPlayer = object;
+        object.resume_in_view = false;
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game
         }
@@ -510,6 +511,7 @@ public class GameEngine extends StdGame{
         if(unique_id != SaladConstants.NULL_UNIQUE_ID){
         	myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
         }
+        object.resume_in_view = false;
         if(!isEditingMode){
         	object.suspend();//not sure how things are created for playing the game
         }

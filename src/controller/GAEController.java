@@ -61,7 +61,7 @@ public class GAEController {
 		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
 		//test code below
-		//setDragTile(2,"brick.png");		
+		setDragTile(2,"brick.png");		
 		
 	}
 	
