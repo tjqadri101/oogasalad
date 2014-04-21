@@ -24,12 +24,51 @@ public class Scene {
 	protected Map<Integer, NonPlayer> myObjectMap;
 	protected double initPlayerX;
 	protected double initPlayerY;
+	protected int myXSize;
+	protected int myYSize;
+	protected Map<Integer, String> myTileImageMap;
+	protected String[] myTiles;
 	
 	public Scene(int id) {
 		myID = id;
 		initPlayerX = DEFAULT_PLAYER_X;
 		initPlayerY = DEFAULT_PLAYER_Y;
 		myObjectMap = new HashMap<Integer, NonPlayer>();
+		myTileImageMap = new HashMap<Integer, String>();
+	}
+	
+	public Map<Integer, String> getTileImageMap(){
+		return myTileImageMap;
+	}
+	
+	public String[] getTiles(){
+		return myTiles;
+	}
+	
+	/**
+	 * Set the dimension of this scene
+	 * @param xsize
+	 * @param ysize
+	 */
+	public void setSize(int xsize, int ysize){
+		myXSize = xsize;
+		myYSize = ysize;
+	}
+	
+	/**
+	 * Get the x size of the object image
+	 * @return int
+	 */
+	public int getXSize(){
+		return myXSize;
+	}
+	
+	/**
+	 * Get the y size of the object image
+	 * @return int
+	 */
+	public int getYSize(){
+		return myYSize;
 	}
 		
 	public int getID(){

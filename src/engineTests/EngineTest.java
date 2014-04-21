@@ -62,7 +62,7 @@ public class EngineTest {
 		
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
 //		player.setBBox(0, 0, 100, 1);
-		player.setDieBehavior("RegularDie");
+		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
 		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, 3, 5.0, 5);
 		player.setKey('L', "die");

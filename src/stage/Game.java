@@ -164,7 +164,7 @@ public class Game {
 			Level level = myLevelMap.get(levelID);
 			objects.addAll(level.getObjectsByColid(colid));
 		}
-		if(getPlayer(NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID));
+		if(getPlayer(NONUSE_ID) != null && getPlayer(NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID));
 		return objects;
 	}
 	
