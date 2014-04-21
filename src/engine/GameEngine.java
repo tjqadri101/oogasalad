@@ -104,10 +104,10 @@ public class GameEngine extends StdGame{
     		for(GameObject go: myCurrentScene.getGameObjects()){
     			g.applyGravity(go);
     		}
-    		for (int[] pair: myGame.getCollisionPair()){
+    		for (int[] pair: myGame.getCollisionManager().getCollisionPair()){
     			checkCollision(pair[0], pair[1]);
     		}
-    		for (int[] pair: myGame.getTileCollisionPair()){
+    		for (int[] pair: myGame.getCollisionManager().getTileCollisionPair()){
     			checkBGCollision(pair[0], pair[1]);
     		}
     		viewOffset = setViewOffsetEdit();
