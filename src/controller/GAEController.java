@@ -43,7 +43,7 @@ public class GAEController {
 	private int selectedActorID;
 	private int playerID;
 	
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	
 	public GAEController(){
 		playerID = SaladConstants.PLAYER_ID;
@@ -61,7 +61,7 @@ public class GAEController {
 		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
 		//test code below
-		//setDragTile(2,"brick.png");		
+		setDragTile(2,"brick.png");		
 		
 	}
 	
@@ -415,6 +415,7 @@ public class GAEController {
 						SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER+name + ",CollisionID,"+ colID +  SaladConstants.SEPERATER + 
 						SaladConstants.LIVES + SaladConstants.SEPERATER + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
+		this.modifyActorStayOnTile(colID, 2);
 		System.out.println(order);
 	}
 	

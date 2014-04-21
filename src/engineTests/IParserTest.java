@@ -56,10 +56,10 @@ public class IParserTest extends TestCase{
     public void testParseParameter() throws IndexOutOfBoundsException{
 
         String UNPARSED_STRING = "CreatePlayer,ID,0,Image,actor_default.png,3,3," +
-                        "Position,20.0,30.0,Name,myActor,CollisionID,0,Lives,1";
+                        "Position,20.0,30.0,Name,myPlayer,CollisionID,0,Lives,1";
         
         Object[] UNPARSED_OBJECT_ARRAY = new Object[] {0,"actor_default.png",3,3,
-                                                       20.0,30.0,"myActor",0,1};
+                                                       20.0,30.0,"myPlayer",0,1};
 
         List<Object> PARAMETER_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
 
