@@ -14,6 +14,7 @@ import saladConstants.SaladConstants;
 /**
  * 
  * @author Justin (Zihao) Zhang, DavidChou
+ * @contribution Shenghan
  */
 
 public class Scene {
@@ -187,5 +188,13 @@ public class Scene {
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
 		return answer;
+	}
+	
+	/**@Siyang 
+	 * Public method added for testing only. 
+	 * Should not call this method inside the program
+	 */
+	public String getBackground(){       
+	    return myBackground;
 	}
 }

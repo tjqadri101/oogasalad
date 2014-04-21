@@ -508,7 +508,7 @@ public class GAEController {
 	
 	
 	public void modifyActorStayOnTile(int colID, int tileColID){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
+		String order = "ModifyTileCollisionBehavior" + SaladConstants.SEPERATER + SaladConstants.COLLISION_ID + SaladConstants.SEPERATER+colID+
 						SaladConstants.SEPERATER + SaladConstants.STAY_ON_TILE + SaladConstants.SEPERATER + SaladConstants.STAY_ON_TILE+ SaladConstants.SEPERATER + 
 						tileColID;
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -690,7 +690,7 @@ public class GAEController {
 	}
 	
 	public void modifySceneBackground(String path){
-		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPERATER + SaladConstants.BACKGROUND + SaladConstants.SEPERATER + path;
+		String order = SaladConstants.MODIFY_BACKGROUND + SaladConstants.SEPERATER + SaladConstants.BACKGROUND + SaladConstants.SEPERATER + path;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

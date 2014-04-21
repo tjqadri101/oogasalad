@@ -81,7 +81,7 @@ public class GameEngine extends StdGame{
     	String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
     	if(winBehavior == null) return false;
     	List<Object> winParameters = myGame.getLevel(myCurrentLevelID).getWinParameters();
-    	ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
+    	ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
     	Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior, winParameters, "checkGoal", this);
     	return (Boolean) answer;
     }
@@ -95,16 +95,15 @@ public class GameEngine extends StdGame{
     public void doFrameEdit(){
     	timer++;//
     	if (myCurrentScene == null) return;
-    	
     	boolean viewOffset = false;
     	if(drag()) myViewOffsetPlayer = false;
     	else{
     		moveObjects();
-//    		Gravity g = myGame.getGravity();
-//    		g.applyGravity(myPlayer);
-//    		for(GameObject go: myCurrentScene.getGameObjects()){
-//    			g.applyGravity(go);
-//    		}
+    		Gravity g = myGame.getGravity();
+    		g.applyGravity(myPlayer);
+    		for(GameObject go: myCurrentScene.getGameObjects()){
+    			g.applyGravity(go);
+    		}
     		for (int[] pair: myGame.getCollisionManager().getCollisionPair()){
     			checkCollision(pair[0], pair[1]);
     		}
@@ -157,7 +156,7 @@ public class GameEngine extends StdGame{
 		drawString("You are in Editing Mode right now. This is a test message.",viewWidth()/2,viewHeight()/2,0,false);
 		if (myPlayer != null){
 			drawRect(myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,myPlayer.getXSize()/2,10,false,true);
-			drawRect(myPlayer.x+(0.5+myPlayer.getLives()/10.0)*myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,(myPlayer.getLives()/5.0)*myPlayer.getXSize()/2,10,true,true);
+			drawRect(myPlayer.x+(0.5+0.5*myPlayer.getLives()/myPlayer.getInitLives())*myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,(1.0*myPlayer.getLives()/myPlayer.getInitLives())*myPlayer.getXSize()/2,10,true,true);
 			drawString("lol help!",myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/3,0,true);
 		}
 		
@@ -335,8 +334,8 @@ public class GameEngine extends StdGame{
     	boolean currentMouse3 = getMouseButton(3);
     	int MouseX = getMouseX()+viewXOfs();
     	int MouseY = getMouseY()+viewYOfs();
-    	int tileX = MouseX/20;
-		int tileY = MouseY/20;
+    	int tileX = Math.max(MouseX/20,0);
+		int tileY = Math.max(MouseY/20,0);
     	
     	if (myMouseButton!=1 && currentMouse1){
     		myClickedID = getClickedID();
@@ -369,7 +368,6 @@ public class GameEngine extends StdGame{
     	if (myMouseButton==3 && !currentMouse3){
     		createTiles(0, "null", Math.min(myTileX,tileX), Math.min(myTileY,tileY), Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1);
     	}
-    	
     	myMouseButton = 0;
     	if(currentMouse1) myMouseButton = 1;
     	if(currentMouse3) myMouseButton = 3;
@@ -420,9 +418,9 @@ public class GameEngine extends StdGame{
     }
     
     
-    
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
     	if(myCurrentScene != null){
+    		setPFSize(myCurrentScene.getXSize(), myCurrentScene.getYSize());
     		for(GameObject go: myCurrentScene.getGameObjects()){
         		go.suspend();
         	}
@@ -430,11 +428,6 @@ public class GameEngine extends StdGame{
     	myCurrentLevelID = currentLevelID;
     	myCurrentSceneID = currentSceneID;
     	myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
-    	int xsize = myCurrentScene.getXSize();
-    	int ysize = myCurrentScene.getYSize();
-    	if (myCurrentScene.getXSize() != 0 && myCurrentScene.getXSize() != 0){
-    		setPFSize(xsize, ysize);
-    	}
     	for (Entry<Integer, String> entry: myCurrentScene.getTileImageMap().entrySet()){
     		Integer cid = entry.getKey();
     		String imgfile = entry.getValue();
@@ -481,6 +474,7 @@ public class GameEngine extends StdGame{
     	loadImage(imgfile);
     	object.setImage(imgfile);//animation
     	object.setSize(xsize, ysize);
+    	object.updateImageURL(imgfile);
     }
     
     public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize){

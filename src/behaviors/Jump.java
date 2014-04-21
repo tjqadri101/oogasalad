@@ -22,9 +22,9 @@ public class Jump extends Jumpable{
 	 */
 	@Override
 	public void jump(List<Object> params){
-//		if(myObject.getIsInAir() == true) return;
 		double magnitude = (Double) params.get(0);
 		int times = (Integer) params.get(1);
+		if(myObject.getJumpTimes() > times) return;
 		myObject.ydir = 1;
 		myObject.yspeed -= magnitude;
 	}

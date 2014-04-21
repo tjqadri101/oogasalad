@@ -1,7 +1,9 @@
 package gameFactory;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import engine.GameEngine;
 import objects.GameObject;
@@ -21,6 +23,7 @@ public class GameFactory {
     private Game myGame;
     private IParser p;
     private static final String NO_PARAMETER = "\"\"";
+    private static final String REGEX = "\\,";
     private static final String RESOURCE_PACKAGE = "engineResources/";
     private static final String DEFAULT_FORMAT= "DataFormat";
     private static final String DEFAULT_PATH= "OrderPath"; 
@@ -52,10 +55,10 @@ public class GameFactory {
         instruction = p.getOrderKey(order);
 
         //      TODO: Simplify code below:       
-        String reflectionChoice = Arrays.asList(myPath.getString(instruction).split("\\,")).get(0);
-        String RFIndicator = Arrays.asList(myPath.getString(instruction).split("\\,")).get(1);   
-        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split("\\,")).get(2);
-        String GameRefPara= Arrays.asList(myPath.getString(instruction).split("\\,")).get(3);
+        String reflectionChoice = Arrays.asList(myPath.getString(instruction).split(REGEX)).get(0);
+        String RFIndicator = Arrays.asList(myPath.getString(instruction).split(REGEX)).get(1);   
+        String GameRefMethod = Arrays.asList(myPath.getString(instruction).split(REGEX)).get(2);
+        String GameRefPara= Arrays.asList(myPath.getString(instruction).split(REGEX)).get(3);
 
         Object refObj = Reflection.callMethod(this, "get"+RFIndicator); 
         return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", 
@@ -73,11 +76,10 @@ public class GameFactory {
         String methodToInvoke = myMethod.getString(instruction);
         Object[] objArgArray;
         
-        if(!(GameReflectPara.equals(NO_PARAMETER))){
-            int numArg = Integer.parseInt(GameReflectPara);
-            objArgArray = idSelector(numArg); 
+        if (!(GameReflectPara.equals(NO_PARAMETER))) {
+            objArgArray = idSelector(GameReflectPara); 
         }
-        else{
+        else {
             objArgArray = objArgList.toArray(new Object[objArgList.size()]);
         }
         return (GameObject) Reflection.callMethod(refObj, methodToInvoke, objArgArray);
@@ -95,8 +97,7 @@ public class GameFactory {
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
 
         if (!GameReflectPara.equals(NO_PARAMETER)){
-            int numArg = Integer.parseInt(GameReflectPara);
-            obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(numArg));
+            obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(GameReflectPara));
         }
         else{
             obj = Reflection.callMethod(refObj, GameRefMethod);
@@ -111,12 +112,14 @@ public class GameFactory {
      * @param sceneID
      * @return the desired array parameter
      */
-    private Object[] idSelector (int numArg) {
+    private Object[] idSelector (String numArg) {
         int objectID = (Integer) objArgList.remove(0);
-        Object[][] IDAugmentor = new Object[][]{new Object[]{myLevelID},
-                                                new Object[]{myLevelID, mySceneID},
-                                                new Object[]{myLevelID, mySceneID, objectID}};
-        return (Object[]) IDAugmentor[numArg];
+        Map<String,Object[]> am = new HashMap<String,Object[]>();
+        am.put("level", new Object[]{myLevelID});
+        am.put("objectID", new Object[]{objectID});
+        am.put("LevelScene", new Object[]{myLevelID, mySceneID});
+        am.put("LevelSceneObject",new Object[]{myLevelID, mySceneID, objectID});
+        return am.get(numArg);
     }
 
 

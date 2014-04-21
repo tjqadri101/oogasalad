@@ -16,7 +16,7 @@ import objects.Player;
 import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
- * @author Main David Chou, Justin (Zihao) Zhang
+ * @author Main Justin (Zihao) Zhang, David Chou
  * @help Isaac (Shenghan) Chen
  */
 public class Game {
@@ -238,10 +238,13 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
-//		answer.addAll(getPlayer(NONUSE_ID).getAttributes());
+		if(getPlayer(NONUSE_ID) != null){
+			answer.addAll(getPlayer(NONUSE_ID).getAttributes());	
+		}
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
+		answer.addAll(myCollisionManager.getAttributes());
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after

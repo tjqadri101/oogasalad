@@ -13,6 +13,12 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
+	public static final int ENEMY_COLID = 2;
+	public static final int MUSHROOM_COLID = 3;
+	public static final int PLAYER_COLID = 1;
+	public static final int BULLET_COLID = 5;
+	public static final int TILE_COLID = 2;
+	
 		
 	public static void main(String[] arg){
 		
@@ -42,29 +48,28 @@ public class EngineTest {
 		engine.createTiles(2,"brick.png",0,30,1180,1);
 		engine.createTiles(2,"brick.png",20,15,10,1);
 		engine.createTiles(0,"null",30,30,5,1);
-//		engine.setDefaultTiles(0, "null");
 		engine.setDefaultTiles(2, "brick.png");
 //		engine.createTiles(0,0,40,1,1,"brick.png");
 		engine.setBackground("bg.png");
 		
-		NonPlayer actor = engine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
+		NonPlayer actor = engine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, ENEMY_COLID, 1);
 		actor.setDieBehavior("RegularRemove");
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
 		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		
-		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, 2, 5);
+		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, ENEMY_COLID, 1);
 		goomba.setDieBehavior("RegularRemove");
 		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 
-		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, 2, 5);
+		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, MUSHROOM_COLID, 1);
 		mushroom.setDieBehavior("RegularRemove");
 		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, 1, 5);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, PLAYER_COLID, 6);
 //		player.setBBox(0, 0, 100, 1);
 		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
-		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, 3, 5.0, 5);
+		player.setShootBehavior("SlowShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
@@ -72,24 +77,21 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
-		player.suspend();
-//		player.addSDCollisionBehavior("bottom", "HitterEliminateVictim", 2);
-//		player.addSDCollisionBehavior("left", "PerishTogether", 2);
-//		player.addSDCollisionBehavior("right", "PerishTogether", 2);
-//		game.getCollisionPair().add(new int[]{1,2});
-//		
-//		game.addCollisionPair(2, "HitterEliminateVictim", 1);
-//		game.addCollisionPair(1, "HitterEliminateVictim", 2);
-//		game.addTileCollisionPair(2, "StayOnTile", 1);
-//		game.addTileCollisionPair(2, "StayOnTile", 2);
-//		game.addCollisionPair(3, "PerishTogether", 2);
-		game.getCollisionManager().addCollisionPair(2, "HitterEliminateVictim", 1);
-		game.getCollisionManager().addTileCollisionPair(1, "StayOnTile", 2);
-		game.getCollisionManager().addTileCollisionPair(2, "StayOnTile", 2);
+//		player.suspend();
+		
+		game.getCollisionManager().setSideCollisionDetecter(player, "bottom", 5);
+		game.getCollisionManager().setSideCollisionDetecter(player, "right", 6);
+		game.getCollisionManager().setSideCollisionDetecter(player, "left", 6);
+		game.getCollisionManager().addCollisionPair(BULLET_COLID, "PerishTogether", ENEMY_COLID);
+		game.getCollisionManager().addCollisionPair(BULLET_COLID, "PerishTogether", MUSHROOM_COLID);
+		game.getCollisionManager().addCollisionPair(PLAYER_COLID, "HitterEliminateVictim", ENEMY_COLID);
+		game.getCollisionManager().addCollisionPair(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID);
+		game.getCollisionManager().addTileCollisionPair(ENEMY_COLID, "StayOnTile", TILE_COLID);
+		game.getCollisionManager().addTileCollisionPair(PLAYER_COLID, "StayOnTile", TILE_COLID);
+		game.getCollisionManager().addTileCollisionPair(MUSHROOM_COLID, "StayOnTile", TILE_COLID);
 		
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
 //        game.getLevel(1).setWinBehavior("WinByCollision", 123);
         game.getLevel(1).setWinBehavior("WinByTileCollision", 0, 700, 450, 50, 50);
-
 	}
 }
