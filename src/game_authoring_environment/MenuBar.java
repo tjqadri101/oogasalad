@@ -62,8 +62,8 @@ public class MenuBar extends JMenuBar{
 	
 	private JMenu createHelpMenu(){
 		JMenu helpMenu = new JMenu("Help");
-		helpMenu.add(makeMenuItem("About", "doNothing"));
-		helpMenu.add(makeMenuItem("Help page", "doNothing"));
+		helpMenu.add(makeMenuItem("About", "createAndShowHelpPanel()"));
+		helpMenu.add(makeMenuItem("Help page", "createAndShowAboutPanel()"));
 		return helpMenu;
 	}
 	
