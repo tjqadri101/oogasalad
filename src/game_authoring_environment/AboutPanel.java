@@ -49,7 +49,7 @@ public class AboutPanel extends JPanel {
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createTitledBorder("Help"),
+				BorderFactory.createTitledBorder("About"),
 				BorderFactory.createEmptyBorder(10,10,10,10)));
 		panel.add(scrollPane);
 		
@@ -73,9 +73,9 @@ public class AboutPanel extends JPanel {
 		}
 	}
 
-	public void createAndShowHelpPanel() {
+	public void createAndShowAboutPanel() {
 		//Create and set up the window.
-		JFrame frame = new JFrame("Help");
+		JFrame frame = new JFrame("About");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		//Add content to the window.
