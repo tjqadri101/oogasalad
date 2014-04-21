@@ -415,6 +415,7 @@ public class GAEController {
 						SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER+name + ",CollisionID,"+ colID +  SaladConstants.SEPERATER + 
 						SaladConstants.LIVES + SaladConstants.SEPERATER + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
+		this.modifyActorStayOnTile(colID, 2);
 		System.out.println(order);
 	}
 	
