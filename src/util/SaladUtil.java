@@ -81,5 +81,18 @@ public class SaladUtil {
             return null;
         }
     }
+    
+    /**
+     * Convert Object ... args to List of Objects
+     * @param args with variable length
+     * @return List of Objects
+     */
+    public static List<Object> convertArgsToObjectList(Object ... args){
+		List<Object> objects = new ArrayList<Object>();
+		for(int i = 0; i < args.length; i ++){
+			objects.add(args[i]);
+		}
+		return objects;
+    }
 
 }

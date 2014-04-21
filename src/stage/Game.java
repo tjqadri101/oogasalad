@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.CollisionManager;
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
@@ -29,9 +30,8 @@ public class Game {
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
 	protected Player myPlayer;
-    protected List<int[]> myCollisionPair;
-    protected List<int[]> myTileCollisionPair;
     protected Gravity myGravity;
+    protected CollisionManager myCollisionManager;
 
 
 	public Game(){
@@ -40,9 +40,8 @@ public class Game {
 //		myScoreManager = new ScoreManager(DEFAULT_SCORE);
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
-		myCollisionPair = new ArrayList<int[]>();
-    	myTileCollisionPair = new ArrayList<int[]>();
     	myGravity = new Gravity();
+    	myCollisionManager = new CollisionManager();
 	}
 
 	/**
@@ -211,19 +210,13 @@ public class Game {
     public Gravity getGravity(Object ... args){
     	return myGravity;
     }
-	
-	/**
-	 * Add collision pairs
-	 * @param srccid
-	 * @param type
-	 * @param dstcid
-	 */
-    public void addCollisionPair(int srccid, String type, int dstcid){
-    	myCollisionPair.add(new int[]{srccid,dstcid});
-    	List<GameObject> objects = getObjectsByColid(dstcid);
-    	for(GameObject o: objects){
-    		o.setCollisionBehavior(type, srccid);
-    	}
+    
+    /**
+     * Get the collision manager for the Game
+     * @return CollisionManager
+     */
+    public CollisionManager getCollisionManager(){
+    	return myCollisionManager;
     }
     
     /**
@@ -234,36 +227,6 @@ public class Game {
 	 */
     public void deleteNonPlayer(int levelID, int sceneID, int objectID){
     	getScene(levelID, sceneID).deleteNonPlayer(objectID);
-    }
-    
-    /**
-     * Get the collision pair
-     * @return
-     */
-    public List<int[]> getCollisionPair(){
-    	return myCollisionPair;
-    }
-    
-    /**
-     * Get the tile collision pair
-     * @return
-     */
-    public List<int[]> getTileCollisionPair(){
-    	return myTileCollisionPair;
-    }
-    
-    /**
-     * Add tile collision pairs
-     * @param tilecid
-     * @param type
-     * @param objectcid
-     */
-    public void addTileCollisionPair(int tilecid, String type, int objectcid){
-    	myTileCollisionPair.add(new int[]{tilecid, objectcid});
-    	List<GameObject> objects = getObjectsByColid(objectcid);
-    	for(GameObject o: objects){
-    		o.setTileCollisionBehavior(type, tilecid);
-    	}
     }
 	
 	/**
