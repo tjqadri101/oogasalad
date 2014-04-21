@@ -68,6 +68,15 @@ public class ImageBuffer {
 			resizeImage(x, y);
 		}
 	}
+	
+	public void resizedUpload(int x, int y, String source, String destination) throws IOException {
+		makeFile(source);
+		setPath(destination);
+		if (chosenFile != null) {
+			copyFile();
+			resizeImage(x, y);
+		}
+	}
 
 	/*
 	 * Create the file from the String URL given from the user
@@ -133,23 +142,4 @@ public class ImageBuffer {
 	    //write image to file
 	    ImageIO.write(resized, "jpg", output);
 	}
-	
-//	TESTING FOR URL GRABBING
-	
-	/*
-	 * Create a dialog box to ask the user for a file URL
-	 */
-//	private void chooseFile() {
-//		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg",
-//				"png", "gif", "jpeg");
-//		JFileChooser chooser = ViewFactory.createJFileChooser();
-//		chooser.setApproveButtonText("Open");
-//		chooser.setFileFilter(filter);
-//		int actionDialog = chooser.showOpenDialog(container);
-//		if (actionDialog != JFileChooser.APPROVE_OPTION) {
-//			return;
-//		}
-//		chosenFile = chooser.getSelectedFile();
-//		fileName = chosenFile.getName();
-//	}
 }
