@@ -22,6 +22,7 @@ public class AttributesPanel extends JTabbedPane {
 	private JPanel mySceneEditorPanel;
 	private JPanel myGameEditorPanel;
 	private JPanel myPlayerEditorPanel;
+	private JPanel myCollisionEditorPanel;
 	
 	public AttributesPanel(GAEController gController){
 
@@ -39,7 +40,7 @@ public class AttributesPanel extends JTabbedPane {
 		this.addTab("Scene", sceneEditorTabIcon, mySceneEditorPanel);		
 		this.addTab("Actor", actorEditorTabIcon, myActorEditorPanel);	
 		this.addTab("Player", null, myPlayerEditorPanel);
-
+		this.addTab("Collisions", null, myCollisionEditorPanel);
 	}
 
 	private void makePanels(GAEController gController) {
@@ -47,6 +48,7 @@ public class AttributesPanel extends JTabbedPane {
 		mySceneEditorPanel = ViewFactory.buildPanel(PanelType.SCENEEDITOR,gController);
 		myGameEditorPanel = ViewFactory.buildPanel(PanelType.GAMEEDITOR,gController);
 		myPlayerEditorPanel = ViewFactory.buildPanel(PanelType.PLAYEREDITOR, gController);
+		myCollisionEditorPanel = ViewFactory.buildPanel(PanelType.COLLISIONEDITOR, gController);
 	}
 	
 	public void setTab(int index){

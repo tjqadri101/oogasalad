@@ -101,6 +101,7 @@ public class PlayereditorPanel extends Panel {
 				String name = chooser.getSelectedFile().getName();
 
 				gController.modifyPlayerImageNoID(path, 100, 100);
+				
 			}			
 		}catch(Exception e){
 		}
