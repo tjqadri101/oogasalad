@@ -80,7 +80,10 @@ public class SceneeditorPanel extends Panel {
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
 				String path = chooser.getSelectedFile().getPath();
 				String name = chooser.getSelectedFile().getName();
-				gController.modifySceneBackground(path);
+
+				gController.uploadImage(800, 600, path);
+				gController.modifySceneBackground(name);
+
 			}			
 		}catch(Exception e){
 

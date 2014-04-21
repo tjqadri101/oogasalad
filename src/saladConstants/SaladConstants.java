@@ -98,6 +98,8 @@ public final class SaladConstants {
     public static final String WIN_BY_TIME = "WinByTime";
     public static final String WIN_BY_COLLISION = "WinByCollsion";
     public static final String WIN_BY_TILE_COLLISION = "WinByTileCollision";
+    public static final String MODIFY_COLLISION_BEHAVIOR = "ModifyCollisionBehavior";
+    public static final String MODIFY_TILE_COLLISION_BEHAVIOR = "ModifyTileCollisionBehavior";
     
 	public static final String NULL_TOKEN = "NullToken";
 	public static final String RESET_LEVEL_EXCEPTION = "Level can not be reset!";
