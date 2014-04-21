@@ -34,6 +34,7 @@ public abstract class GameObject extends JGObject {
 	protected boolean myIsInAir;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
+	protected String myGfx;
 	protected List<String> myAttributes;
 	
 	protected boolean myIsPlayer;//need change
@@ -393,6 +394,14 @@ public abstract class GameObject extends JGObject {
 		return myAttributes;
 	}
 	
+	/**When ModifyActor/PlayerImage is called, the gfx info is passed along
+         */
+	public void updateImageURL(String gfx){
+	    this.myGfx = gfx;
+	}
+	
+	
+	
 /* @NOTE:
  * The following getter and setters used for GameFactoryTest
  * Will remove them once finished
@@ -416,6 +425,21 @@ public abstract class GameObject extends JGObject {
      */
     public double getMyInitX() {
         return myInitX;
+    }
+    
+    /**
+     * @return the Gfx info
+     */
+    public String getMyGfx(){
+        return myGfx;
+    }
+
+    /**
+     * @return set the initXSpeed and initYSpeed
+     */
+    public void updateInitSpeed (double xspeed, double yspeed) {
+        myInitX = xspeed;
+        myInitY = yspeed;
     }
     
 //    //plz review
