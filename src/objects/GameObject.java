@@ -60,10 +60,19 @@ public abstract class GameObject extends JGObject {
 		setInitPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
-		myXSize = xsize;
-		myYSize = ysize;
+		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
 		mySideDetecters = new SideDetecter[4];//plz review
+	}
+	
+	/**
+	 * Set the dimension of the object image
+	 * @param xsize
+	 * @param ysize
+	 */
+	public void setSize(int xsize, int ysize){
+		myXSize = xsize;
+		myYSize = ysize;
 	}
 	
 	/**
