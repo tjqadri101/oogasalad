@@ -1,10 +1,14 @@
 package engineManagers;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import objects.GameObject;
+import objects.SideDetecter;
 
 import saladConstants.SaladConstants;
 import util.SaladUtil;
@@ -72,5 +76,23 @@ public class CollisionManager {
 		}
 		return answer;
 	}
-
+	
+	public void addSDCollisionBehavior(GameObject object, String direction, String type, int otherColid, Object ... args){
+		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+		if (dir == -1) return;
+		SideDetecter sd = object.getSideDetecters()[dir];
+		if (sd == null){
+			sd = new SideDetecter(object,dir);
+			object.getSideDetecters()[dir] = sd;
+		}
+	}
+	public void addSDTileCollisionBehavior(GameObject object, String direction, String type, int tileColid, Object ... args){
+		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+		if (dir == -1) return;
+		SideDetecter sd = object.getSideDetecters()[dir];
+		if (sd == null){
+			sd = new SideDetecter(object,dir);
+			object.getSideDetecters()[dir] = sd;
+		}
+	}
 }

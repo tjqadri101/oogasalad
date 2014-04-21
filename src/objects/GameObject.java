@@ -75,6 +75,14 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	/**
+	 * Get the side collision detecters associated with this object
+	 * @return mySideDetecters
+	 */
+	public SideDetecter[] getSideDetecters(){
+		return mySideDetecters;
+	}
+	
+	/**
 	 * Set the dimension of the object image
 	 * @param xsize
 	 * @param ysize
@@ -217,6 +225,14 @@ public abstract class GameObject extends JGObject {
 	 */
 	public int getLives(){
 		return myLives;
+	}
+	
+	/**
+	 * Get number of initial lives
+	 * @return
+	 */
+	public int getInitLives(){
+		return myInitLives;
 	}
 	
 	/**
@@ -418,26 +434,4 @@ public abstract class GameObject extends JGObject {
         return myInitX;
     }
     
-//    //plz review
-//	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
-//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-//		if (dir == -1) return;
-//		SideDetecter sd = mySideDetecters[dir];
-//		if (sd == null){
-//			sd = new SideDetecter(this,dir);
-//			mySideDetecters[dir] = sd;
-//		}
-//		sd.setCollisionBehavior(type, otherColid, args);
-//	}
-//	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
-//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-//		if (dir == -1) return;
-//		SideDetecter sd = mySideDetecters[dir];
-//		if (sd == null){
-//			sd = new SideDetecter(this,dir);
-//			mySideDetecters[dir] = sd;
-//		}
-//		sd.setTileCollisionBehavior(type, tileColid, args);
-//	}
-	
 }
