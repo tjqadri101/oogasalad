@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import objects.GameObject;
-import objects.SideDetecter;
+import objects.SideDetector;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
@@ -132,8 +132,8 @@ public class CollisionManager {
 	public void setSideCollisionDetecter(GameObject object, String direction, int cid){
 		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
 		if (dir == -1) return;
-		SideDetecter sd = object.getSideDetecters()[dir];
-		if (sd == null) object.getSideDetecters()[dir] = new SideDetecter(object,dir,cid);
+		SideDetector sd = object.getSideDetector(dir);
+		if (sd == null) object.setSideDetector(new SideDetector(object,dir,cid));
 		else sd.colid = cid;
 	}
 	
