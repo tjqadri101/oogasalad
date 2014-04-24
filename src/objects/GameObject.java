@@ -33,6 +33,7 @@ public abstract class GameObject extends JGObject {
 	protected double myInitYSpeed;
 	protected String myGfxName;
 	protected List<String> myAttributes;
+	protected String myName;
 	protected boolean myIsPlayer; //need change
     
 	protected ResourceBundle myBehaviors;
@@ -49,7 +50,7 @@ public abstract class GameObject extends JGObject {
 	protected SideDetecter[] mySideDetecters;//plz review
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager){
-		super(name, true, xpos, ypos, collisionId, gfxname);
+		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
 		setLives(lives); // change later
@@ -59,6 +60,15 @@ public abstract class GameObject extends JGObject {
 		mySideDetecters = new SideDetecter[4]; //plz review
 		myCollisionManager = collisionManager;
 		myGfxName = gfxname;
+		myName = name;
+	}
+	
+	/**
+	 * Reset the name
+	 * @param name
+	 */
+	public void resetName(String name){
+		myName = name;
 	}
 	
 	/**
@@ -365,7 +375,7 @@ public abstract class GameObject extends JGObject {
 	
 	
 	
-/* @NOTE:
+/* @Steve:
  * The following getter and setters used for GameFactoryTest
  * Will remove them once finished
  */
@@ -396,28 +406,5 @@ public abstract class GameObject extends JGObject {
     public String getMyGfx(){
         return myGfxName;
     }
-    
-//    //plz review
-//	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
-//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-//		if (dir == -1) return;
-//		SideDetecter sd = mySideDetecters[dir];
-//		if (sd == null){
-//			sd = new SideDetecter(this,dir);
-//			mySideDetecters[dir] = sd;
-//		}
-//		sd.setCollisionBehavior(type, otherColid, args);
-//	}
-//	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
-//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-//		if (dir == -1) return;
-//		SideDetecter sd = mySideDetecters[dir];
-//		if (sd == null){
-//			sd = new SideDetecter(this,dir);
-//			mySideDetecters[dir] = sd;
-//		}
-//		sd.setTileCollisionBehavior(type, tileColid, args);
-//	}
-	
 
 }
