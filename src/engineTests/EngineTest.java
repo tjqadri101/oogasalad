@@ -34,6 +34,7 @@ public class EngineTest {
 	public GameEngine testEngine(){
 		
 		GameEngine engine = new GameEngine(false);
+		engine.setGameSpeed(20);
 		Game game = new Game();
 		engine.setGame(game);
 		game.addLevel(1);

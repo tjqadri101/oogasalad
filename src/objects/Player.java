@@ -57,28 +57,28 @@ public class Player extends GameObject {
 	
 	public void moveUp(){
 		if (y > 0) {
-			y -= myInitYSpeed;
+			y -= myInitYSpeed*eng.getGameSpeed();
 			ydir = SaladConstants.NEGATIVE_DIRECTION;
 		}
 	}
 	
 	public void moveDown(){
 		if (y + getYSize() < eng.pfHeight()) {
-			y += myInitYSpeed;
+			y += myInitYSpeed*eng.getGameSpeed();
 			ydir = SaladConstants.POSITIVE_DIRECTION;
 		}
 	}
 	
 	public void moveLeft(){
 		if (x > 0) {
-			x -= myInitXSpeed;
+			x -= myInitXSpeed*eng.getGameSpeed();
 			xdir = SaladConstants.NEGATIVE_DIRECTION;
 		}
 	}
 	
 	public void moveRight(){
 		if (x + getXSize() < eng.pfWidth()) {
-			x += myInitXSpeed;
+			x += myInitXSpeed*eng.getGameSpeed();
 			xdir = SaladConstants.POSITIVE_DIRECTION;
 		}
 	}
