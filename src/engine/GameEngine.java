@@ -91,7 +91,7 @@ public class GameEngine extends StdGame{
     
     public boolean checkTrigger(){
 //      consider combineing the checkTrigger to checkGoal()
-        return foo;
+        return true;
     }   
     
     
