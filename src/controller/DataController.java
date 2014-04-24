@@ -106,6 +106,14 @@ public class DataController {
 		return myGameEngine.getCurrentSceneID();
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current clicked ID
+	 * @return selected ID
+	 */
+	public int getSelectedID(){
+		return myGameEngine.getClickedID();
+	}
+	
 	
 	/**
 	 * Do not call this method directly; called within DataController

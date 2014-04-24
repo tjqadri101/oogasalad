@@ -10,6 +10,7 @@ import saladConstants.SaladConstants;
  * @Author: Justin (Zihao) Zhang
  */
 public class ScoreManager {
+	
 	public static final int DEFAULT_SCORE = 0;
 	
 	protected int myScore;
@@ -32,6 +33,10 @@ public class ScoreManager {
 	
 	public void setScore(String condition, int score){
 		myScoreMap.put(condition, score);
+	}
+	
+	public void updateScore(String condition, int vitimColid, int hitterColid){
+		myScore += myScoreMap.get(condition);
 	}
 	
 	public List<String> getAttributes(){

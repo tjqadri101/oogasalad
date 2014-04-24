@@ -267,7 +267,6 @@ public abstract class GameObject extends JGObject {
 				myMoveBehavior, true, myMoveParameters));
 	}
 	
-	
 	public void die(){
 		if(myDieBehavior == null) return;
 		SaladUtil.behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, SaladConstants.REMOVE, this);	
@@ -378,7 +377,13 @@ public abstract class GameObject extends JGObject {
 	    myGfxName = gfxname;
 	}
 	
-	
+	/**
+	 * Used for behaviors to get the ScoreManager to update scores
+	 * @return ScoreManager
+	 */
+	public ScoreManager getScoreManager(){
+		return myScoreManager;
+	}
 	
 /* @Steve:
  * The following getter and setters used for GameFactoryTest
