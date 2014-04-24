@@ -19,24 +19,21 @@ public class EngineTest {
 	public static final int BULLET_COLID = 5;
 	public static final int TILE_COLID = 2;
 	
-		
 	public static void main(String[] arg){
 		
-		GameEngine engine = new GameEngine(true);
 		EngineTest et = new EngineTest();
-		et.test(engine);
-		
 		JFrame mainFrame = new JFrame("EngineTest");
 		JPanel panel = new JPanel();
-		panel.add(engine);
+		panel.add(et.testEngine());
 		mainFrame.add(panel, BorderLayout.CENTER);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
     }
 	
-	public void test(GameEngine engine){
+	public GameEngine testEngine(){
 		
+		GameEngine engine = new GameEngine(false);
 		Game game = new Game();
 		engine.setGame(game);
 		game.addLevel(1);
@@ -77,7 +74,6 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
-//		player.suspend();
 		
 		game.getCollisionManager().setSideCollisionDetecter(player, "bottom", 5);
 		game.getCollisionManager().setSideCollisionDetecter(player, "right", 6);
@@ -93,5 +89,8 @@ public class EngineTest {
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
 //        game.getLevel(1).setWinBehavior("WinByCollision", 123);
         game.getLevel(1).setWinBehavior("WinByTileCollision", 0, 700, 450, 50, 50);
+        game.addScene(1, 1);
+        engine.setCurrentScene(1, 1);
+        return engine;
 	}
 }
