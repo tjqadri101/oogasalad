@@ -6,27 +6,26 @@ import java.util.List;
 import java.util.Map;
 
 import engine.GameEngine;
-
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 
 /**
  * 
- * @author Justin (Zihao) Zhang, DavidChou
- * @contribution Shenghan
+ * @author Justin (Zihao) Zhang
+ * @CoAuthor David Chou
+ * @contribution (for tiles) Shenghan Chen
  */
 
 public class Scene {
-	
-	public static final double DEFAULT_PLAYER_X = 0;
-	public static final double DEFAULT_PLAYER_Y = 0;
+	public static final String DEFAULT_TILE_INFO = "null";
 	
 	protected int myID;
 	protected String myBackground;
 	protected Map<Integer, NonPlayer> myObjectMap;
 	protected double initPlayerX;
-	protected double initPlayerY;
+	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
 	protected int myXSize;
 	protected int myYSize;
 	protected Map<Integer, String> myTileImageMap;
@@ -34,8 +33,6 @@ public class Scene {
 	
 	public Scene(int id) {
 		myID = id;
-		initPlayerX = DEFAULT_PLAYER_X;
-		initPlayerY = DEFAULT_PLAYER_Y;
 		myObjectMap = new HashMap<Integer, NonPlayer>();
 		setSize(GameEngine.CANVAS_WIDTH,GameEngine.CANVAS_HEIGHT);
 		initTiles();
@@ -51,16 +48,12 @@ public class Scene {
 	
 	protected void initTiles(){
 		String temp = "";
-    	for(int i=0;i<getXSize();i++){
-    		temp += 0;
-    	}
+    	for(int i = 0; i < getXSize(); i ++){ temp += 0; }
     	String[] array = new String[getYSize()];
-    	for(int j=0;j<getYSize();j++){
-    		array[j] = temp;
-    	}
+    	for(int j = 0; j < getYSize(); j ++){ array[j] = temp; }
 		myTiles = array;
 		myTileImageMap = new HashMap<Integer, String>();
-		myTileImageMap.put(0, "null");
+		myTileImageMap.put(0, DEFAULT_TILE_INFO);
 	}
 	
 	public void resizeTiles(int xsize, int ysize){
@@ -181,16 +174,16 @@ public class Scene {
 	
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_SCENE + "," + SaladConstants.ID + "," + myID);
-		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.BACKGROUND + "," + myBackground);
-		answer.add(SaladConstants.MODIFY_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.PLAYER_INITIAL_POSITION + "," + initPlayerX + "," + initPlayerY);
+		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, SaladConstants.ID, myID));
+//		answer.add(AttributeAdder.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.BACKGROUND, false, myBackground));
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.PLAYER_INITIAL_POSITION, false, initPlayerX, initPlayerY));
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
 		return answer;
 	}
 	
-	/**@Siyang 
+	/*@Siyang 
 	 * Public method added for testing only. 
 	 * Should not call this method inside the program
 	 */

@@ -8,7 +8,7 @@ import reflection.Reflection;
 /**
  * 
  * @author Main Justin (Zihao) Zhang
- * Intended for use of some general methods involving String or Object lists
+ * Intended for use of some general methods involving String or Object lists, and Behavior Reflection
  *
  */
 public class SaladUtil {

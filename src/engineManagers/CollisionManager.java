@@ -11,7 +11,7 @@ import java.util.Set;
 import objects.GameObject;
 import objects.SideDetecter;
 import saladConstants.SaladConstants;
-import util.AttributeAdder;
+import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * Intended to manage all collision behaviors between objects and objects, objects and tiles
@@ -42,7 +42,7 @@ public class CollisionManager {
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
 		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
 		attributeParams.add(0, victimColid);
-		String attribute = AttributeAdder.addAttribute(SaladConstants.MODIFY_COLLISION_BEHAVIOR, 
+		String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_COLLISION_BEHAVIOR, 
 				SaladConstants.COLLISION_ID, hitterColid, type, true, attributeParams);
 		myAttributes.add(attribute);
 		objects.add(0, type);
@@ -61,7 +61,7 @@ public class CollisionManager {
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
 		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
 		attributeParams.add(0, tileColid);
-		String attribute = AttributeAdder.addAttribute(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR, 
+		String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR, 
 				SaladConstants.COLLISION_ID, victimColid, type, true, attributeParams);
 		myAttributes.add(attribute);
 		objects.add(0, type);

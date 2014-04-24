@@ -1,17 +1,13 @@
 package objects;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import engineManagers.CollisionManager;
 //import engineManagers.ScoreManager;
-import reflection.Reflection;
 import saladConstants.SaladConstants;
-import util.AttributeAdder;
+import util.AttributeMaker;
 import util.SaladUtil;
 import jgame.JGObject;
 /**
@@ -133,7 +129,7 @@ public abstract class GameObject extends JGObject {
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
 		myInitYSpeed = yspeed;
-		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.SPEED, false, myInitXSpeed, myInitYSpeed));
 	}
 	
@@ -173,7 +169,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myDieParameters.add(args[i]);
 		}
-		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
 				myDieBehavior, true, myDieParameters));
 	}
 	
@@ -220,7 +216,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myJumpParameters.add(args[i]);
 		}
-		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
 				myJumpBehavior, true, myJumpParameters));
 	}
 	
@@ -235,7 +231,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myShootParameters.add(args[i]);
 		}
-		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
 				myShootBehavior, true, myShootParameters));
 	}
 	
@@ -251,7 +247,7 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myMoveParameters.add(args[i]);
 		}
-		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
 				myMoveBehavior, true, myMoveParameters));
 	}
 	
