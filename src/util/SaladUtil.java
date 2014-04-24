@@ -71,6 +71,7 @@ public class SaladUtil {
      * @param ResourceBundle
      * @param myString
      * @param methodName
+     * @param parameters for constructor
      */
     public static Object behaviorReflection(ResourceBundle myBundle, String myString, List<Object> objects, String methodName, Object constructorParam){
         if(myString == null) return null;

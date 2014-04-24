@@ -11,6 +11,7 @@ import engineManagers.CollisionManager;
 //import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
+import util.AttributeAdder;
 import util.SaladUtil;
 import jgame.JGObject;
 /**
@@ -128,14 +129,14 @@ public abstract class GameObject extends JGObject {
 		return SaladConstants.MODIFY_ACTOR;
 	}
 	
-	@Override
-	public void setSpeed(double xspeed, double yspeed){
+	public void setInitSpeed(double xspeed, double yspeed){
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
 		myInitYSpeed = yspeed;
-		myAttributes.add(ModificationString() + "," + SaladConstants.ID + "," + myUniqueID + "," + 
-				SaladConstants.SPEED + "," + myInitXSpeed + "," + myInitYSpeed);
+		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				SaladConstants.SPEED, false, myInitXSpeed, myInitYSpeed));
 	}
+	
 	
 	/**
 	 * Restore to original state within a scene
@@ -172,32 +173,8 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myDieParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myDieBehavior, myDieBehavior, myDieParameters);
-	}
-	
-	/**
-	 * Add attribute for behaviors already set
-	 * @param s
-	 * @param params
-	 */
-	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken);
-		for(Object o: params){
-			String att = o.toString();
-			attribute.append("," + att);
-		}
-		myAttributes.add(attribute.toString());
-	}
-	
-	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, int integerToken, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken + "," + integerToken);
-		for(Object o: params){
-			String att = o.toString();
-			attribute.append("," + att);
-		}
-		myAttributes.add(attribute.toString());
+		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				myDieBehavior, true, myDieParameters));
 	}
 	
 	/**
@@ -243,7 +220,8 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myJumpParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myJumpBehavior, myJumpBehavior, myJumpParameters);
+		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				myJumpBehavior, true, myJumpParameters));
 	}
 	
     /**
@@ -257,7 +235,8 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myShootParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myShootBehavior, myShootBehavior, myShootParameters);
+		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				myShootBehavior, true, myShootParameters));
 	}
 	
 	/**
@@ -272,13 +251,14 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myMoveParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myMoveBehavior, myMoveBehavior, myMoveParameters);
+		myAttributes.add(AttributeAdder.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				myMoveBehavior, true, myMoveParameters));
 	}
 	
 	
 	public void die(){
 		if(myDieBehavior == null) return;
-		behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, "remove");	
+		SaladUtil.behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, "remove", this);	
 	}
 	
 //	public void bounce(){
@@ -309,7 +289,7 @@ public abstract class GameObject extends JGObject {
 		myJumpTimes ++;
 		myIsInAir = true;
 		if(myJumpBehavior == null) return;
-		behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, "jump");
+		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, "jump", this);
 	}
 	
 	/**
@@ -328,22 +308,6 @@ public abstract class GameObject extends JGObject {
 		return myIsInAir;
 	}
 	
-	/**
-	 * Do not call this method directly
-	 * @param ResourceBundle
-	 * @param myString
-	 * @param methodName
-	 */
-	protected void behaviorReflection(ResourceBundle myBundle, String myString, List<Object> objects, String methodName){
-		if(myString == null) return;
-		try{
-			Object behavior = Reflection.createInstance(myBundle.getString(myString), this);
-			Reflection.callMethod(behavior, methodName, objects);	
-		} catch (Exception e){
-			e.printStackTrace(); // should never reach here
-		}
-	}
-	
 	@Override
 	public void move(){
 		if(myLives <= 0) die();
@@ -357,7 +321,7 @@ public abstract class GameObject extends JGObject {
 		String collisionBehavior = (String) parameters.get(0);
 		parameters.remove(0);
 		parameters.add(0, other);
-		behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide");
+		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide", this);
     }
 	
 	@Override
@@ -372,17 +336,17 @@ public abstract class GameObject extends JGObject {
 		parameters.add(ty);
 		parameters.add(txsize);
 		parameters.add(tysize);
-		behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide");
+		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide", this);
 	}
 	
 	public void autoMove(){
 		if(myMoveBehavior == null) return;
-		behaviorReflection(myBehaviors, myMoveBehavior, myMoveParameters, "move");
+		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior, myMoveParameters, "move", this);
 	}
 	
 	public void shoot(){
 		if(myShootBehavior == null) return;
-		behaviorReflection(myBehaviors, myShootBehavior, myShootParameters, "shoot");
+		SaladUtil.behaviorReflection(myBehaviors, myShootBehavior, myShootParameters, "shoot", this);
 	}
 	
 	/**
@@ -432,14 +396,6 @@ public abstract class GameObject extends JGObject {
      */
     public String getMyGfx(){
         return myGfx;
-    }
-
-    /**
-     * @return set the initXSpeed and initYSpeed
-     */
-    public void updateInitSpeed (double xspeed, double yspeed) {
-        myInitX = xspeed;
-        myInitY = yspeed;
     }
     
 //    //plz review
