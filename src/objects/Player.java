@@ -1,6 +1,5 @@
 package objects;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,31 +7,29 @@ import java.util.Map;
 import engineManagers.CollisionManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * @Author: Justin (Zihao) Zhang
  */
 public class Player extends GameObject {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-    public static final String DEFAULT_NONCLEAR_KEYS = "PlayerKeys";
-    public static final double DEFAULT_SPEED = 5;
 	
 	protected Map<Integer, String> myKeyMap;
 	protected List<String> myNonClearKeys;
-	protected List<String> mySuperMethods;
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager);
 		myIsPlayer = true;
-		
-		myAttributes.add(SaladConstants.CREATE_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + 
-				SaladConstants.IMAGE + "," + getGraphic() + "," + myXSize + "," + myYSize + "," +
-				SaladConstants.POSITION + "," + myInitX + "," + myInitY + "," + SaladConstants.NAME + "," + getName() + "," + 
-				SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.LIVES + "," + myInitLives);
-		
 		myKeyMap = new HashMap<Integer, String>();
-		myNonClearKeys = SaladUtil.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "NonClearKeys", ",");
-		mySuperMethods = SaladUtil.getListFromPropertiesFile(DEFAULT_RESOURCE_PACKAGE + DEFAULT_NONCLEAR_KEYS, "SuperClassMethods", ",");
+		myInitXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
+		myInitYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
+		
+		myAttributes.add(SaladConstants.CREATE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + myUniqueID + SaladConstants.SEPERATER + 
+				SaladConstants.IMAGE + SaladConstants.SEPERATER + getGraphic() + SaladConstants.SEPERATER + myXSize + SaladConstants.SEPERATER + myYSize + SaladConstants.SEPERATER +
+				SaladConstants.POSITION + SaladConstants.SEPERATER + myInitX + SaladConstants.SEPERATER + myInitY + SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER + getName() + SaladConstants.SEPERATER + 
+				SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colid + SaladConstants.SEPERATER + SaladConstants.LIVES + SaladConstants.SEPERATER + myInitLives);
+
+		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPERATER);
 	}
 	
 	public void setKey(int key, String type){
@@ -45,7 +42,7 @@ public class Player extends GameObject {
 		checkKeys();
 	}
 	
-	public void checkKeys(){
+	protected void checkKeys(){
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				String methodName = myKeyMap.get(key);
@@ -57,44 +54,39 @@ public class Player extends GameObject {
 	
 	public void moveUp(){
 		if (y > 0) {
-			y -= DEFAULT_SPEED;
-			ydir = -1;
+			y -= myInitYSpeed;
+			ydir = SaladConstants.NEGATIVE_DIRECTION;
 		}
 	}
 	
 	public void moveDown(){
-		if (y+getYSize() < eng.pfHeight()) {
-			y += DEFAULT_SPEED;
-			ydir = 1;
+		if (y + getYSize() < eng.pfHeight()) {
+			y += myInitYSpeed;
+			ydir = SaladConstants.POSITIVE_DIRECTION;
 		}
 	}
 	
 	public void moveLeft(){
 		if (x > 0) {
-			x -= DEFAULT_SPEED;
-			xdir = -1;
+			x -= myInitXSpeed;
+			xdir = SaladConstants.NEGATIVE_DIRECTION;
 		}
 	}
 	
 	public void moveRight(){
-		if (x+getXSize() < eng.pfWidth()) {
-			x += DEFAULT_SPEED;
-			xdir = 1;
+		if (x + getXSize() < eng.pfWidth()) {
+			x += myInitXSpeed;
+			xdir = SaladConstants.POSITIVE_DIRECTION;
 		}
 	}
 	
 	@Override
 	public List<String> getAttributes(){
-		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.IMAGE + "," + getGraphic() + "," + SaladConstants.POSITION + "," + x + "," + y + "," + SaladConstants.NAME + "," + getName() + "," + SaladConstants.COLLISION_ID + "," + colid);
-//		answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.MOVE + "," + getMyMoveBehavior() + "," + getMySetXSpeed() + "," + mySetYSpeed);
-//		answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.ID + "," + myUniqueID + "," + SaladConstants.DIE + "," + getMyDieBehavior());
-//		for(int otherID: myCollisionMap.keySet()){
-//			answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.COLLISION_ID + "," + colid + "," + SaladConstants.COLLISION + "," + myCollisionMap.get(otherID) + "," + otherID);
-//		}
-//		for(int key: myKeyMap.keySet()){
-//			answer.add(SaladConstants.MODIFY_PLAYER + "," + SaladConstants.SET_KEY + "," + key + "," + myKeyMap.get(key));
-//		}
+		List<String> answer = super.getAttributes();
+		for(int key: myKeyMap.keySet()){
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
+					SaladConstants.SET_KEY, false, key, myKeyMap.get(key)));
+		}
 		return answer;
 	}
 

@@ -109,8 +109,16 @@ public final class SaladConstants {
     public static final String OBJECT_BEHAVIOR = "ObjectBehaviors";
     public static final String DATA_FORMAT_REFLECTION = "DataFormatReflection";
     public static final String TYPE_FORMAT = "TypeFormat";
+    public static final String NONCLEAR_KEYS_FILE = "PlayerKeys";
+    
+    public static final String NON_CLEAR_KEYS = "NonClearKeys";
 
     public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
+    public static final double DEFAULT_ACTOR_SPEED = 5;
+    
+    public static final int POSITIVE_DIRECTION = 1;
+    public static final int NEGATIVE_DIRECTION = -1;
+    public static final int NO_DIRECTION = 0;
 
     public static final int PLAYER_ID = 0;
     
