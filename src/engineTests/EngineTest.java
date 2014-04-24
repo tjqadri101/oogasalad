@@ -49,12 +49,12 @@ public class EngineTest {
 //		engine.createTiles(0,0,40,1,1,"brick.png");
 		engine.setBackground("bg.png");
 		
-		NonPlayer actor = engine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, ENEMY_COLID, 1);
+		NonPlayer actor = engine.createActor(123, "poke-mon/024.gif", 200, 200, 800.0, 450.0, null, ENEMY_COLID, 1);
 		actor.setDieBehavior("RegularRemove");
 //		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
 		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		
-		NonPlayer goomba = engine.createActor(300, "goomba.png", 100, 100, 500.0, 100.0, null, ENEMY_COLID, 1);
+		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100.0, null, ENEMY_COLID, 1);
 		goomba.setDieBehavior("RegularRemove");
 		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 
