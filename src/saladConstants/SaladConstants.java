@@ -4,7 +4,6 @@ public final class SaladConstants {
 	
 	public static final String SEPERATER = ",";
 	
-	
 	public static final String CREATE_LEVEL = "CreateLevel";
 	public static final String SWITCH_LEVEL = "SwitchLevel";
 	public static final String MODIFY_LEVEL = "ModifyLevel";
@@ -14,7 +13,6 @@ public final class SaladConstants {
 	public static final String DELETE_LEVEL = "DeleteLevel";
 	public static final String DELETE_SCENE = "DeleteScene";
 	public static final String RESET_LEVEL_ID = "ResetLevelID";
-	
 	
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
@@ -50,18 +48,23 @@ public final class SaladConstants {
 	
 	public static final String TEST_XMLFILE_URL = "test.xml";
 	
-	
 	public static final String BACKGROUND = "Background";
 	public static final String ID = "ID";
 	public static final String IMAGE = "Image";
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
 	public static final String COLLISION_ID = "Colid";
 	public static final String COLLISION = "Collision";
-	public static final String DIE = "Die";
-	public static final String MOVE = "Move";
+	
+	//General Behaviors
+	public static final String DIE = "die";
+	public static final String MOVE = "move";
+	public static final String SHOOT = "shoot";
+	public static final String JUMP = "jump";
+	public static final String COLLIDE = "collide";
+	public static final String REMOVE = "remove";
+	
+	//Specific Behaviors
 	public static final String EXPLODE = "Explode";
-	public static final String SHOOT = "Shoot";
-	public static final String JUMP = "Jump";
 	public static final String PERISH_TOGETHER = "PerishTogether";
     public static final String HITTER_ELIMINATE_VICTIM  = "HitterEliminateVictim";
     public static final String STAY_ON_TILE = "StayOnTile";
