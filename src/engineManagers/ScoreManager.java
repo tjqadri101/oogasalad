@@ -6,14 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import saladConstants.SaladConstants;
+import util.SaladUtil;
 /**
  * @Author: Justin (Zihao) Zhang
  */
 public class ScoreManager {
 	
-	public static final int DEFAULT_SCORE = 0;
+	public static final int DEFAULT_INITIAL_SCORE = 0;
 	
 	protected int myScore;
+	protected int myInitialScore;
 	protected int initialScore;
 	protected Map<String, Integer> myScoreMap;
 	
@@ -24,18 +26,29 @@ public class ScoreManager {
 	}
 	
 	public ScoreManager(){
-		this(DEFAULT_SCORE);
+		this(DEFAULT_INITIAL_SCORE);
+	}
+	
+	public void setInitialScore(int startScore){
+		myInitialScore = startScore;
+	}
+	
+	public void restore(){
+		myScore = myInitialScore;
 	}
 	
 	public int getCurrentScore(){
 		return myScore;
 	}
 	
-	public void setScore(String condition, int score){
+	public void setScore(int score, Object ... args){
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPERATER, args);
 		myScoreMap.put(condition, score);
 	}
 	
-	public void updateScore(String condition, int vitimColid, int hitterColid){
+	public void updateScore(String info, int victimColid, int hitterColid){
+		String condition = info + SaladConstants.SEPERATER + victimColid + 
+				SaladConstants.SEPERATER + hitterColid;
 		myScore += myScoreMap.get(condition);
 	}
 	

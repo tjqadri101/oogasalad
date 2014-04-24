@@ -10,7 +10,7 @@ public class SideDetecter extends GameObject{
 	protected int myDirection;
 
 	public SideDetecter(GameObject parent, int direction, int cid) {
-		super(SaladConstants.NULL_UNIQUE_ID, null, 0, 0, 0, 0, null, cid, 1, parent.getCollisionManager());
+		super(SaladConstants.NULL_UNIQUE_ID, null, 0, 0, 0, 0, null, cid, 1, parent.getCollisionManager(), parent.getScoreManager());
 		myParent = parent;
 		myDirection = direction;
 		move();
