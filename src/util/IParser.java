@@ -30,7 +30,7 @@ public class IParser {
     }
 
     /**
-     * Called to parse a String order into a Map of String to Parsed Result (i.e. "ParameterList" to List<Obejct>") 
+     * Called to parse a String order into a Map of String to Parsed Result (i.e. "ParameterList" to List<Object>") 
      * Key String "All" to List<Object> order 
      * Key String "Type" to List<String> TypeTokens
      * Key String "Parameter" to List<Object> Parameters

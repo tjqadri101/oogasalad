@@ -56,7 +56,12 @@ public class ScoreManager {
 	
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, SaladConstants.INITIAL_SCORE, initialScore));
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, 
+				SaladConstants.INITIAL_SCORE, initialScore));
+//		for (String condition: myScoreMap){
+//			
+//			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, SaladConstants.SET_SCORE, condition))
+//		}
 		return answer;
 	}
 

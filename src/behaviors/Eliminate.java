@@ -18,7 +18,7 @@ public class Eliminate extends Collision{
 	@Override
 	public void collide(List<Object> objects) {
 		GameObject hitter = (GameObject) objects.get(0);
-		myObject.getScoreManager().updateScore(SaladConstants.HITTER_ELIMINATE_VICTIM, 
+		myObject.getScoreManager().updateScore(SaladConstants.COLLISION, 
 				myObject.colid, hitter.colid);
 		myObject.die(); 
 	}

@@ -126,5 +126,10 @@ public class SaladUtil {
     	}
     	return answer.toString();
     }
+    
+    public static List<Object> convertStringToObjects(String s, String seperater){
+    	List<Object> answer = new ArrayList<Object>();
+    	for()
+    }
 
 }
