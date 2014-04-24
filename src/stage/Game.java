@@ -22,12 +22,11 @@ import stage.Transition.StateType;
  */
 public class Game {
 
-	public static final int DEFAULT_SCORE = 0;
 	public static final int NONUSE_ID = 0;
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<StateType, Transition> myNonLevelSceneMap;
-//	protected ScoreManager myScoreManager;
+	protected ScoreManager myScoreManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
 	protected Player myPlayer;
@@ -38,7 +37,7 @@ public class Game {
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
-//		myScoreManager = new ScoreManager(DEFAULT_SCORE);
+		myScoreManager = new ScoreManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
@@ -218,6 +217,14 @@ public class Game {
      */
     public CollisionManager getCollisionManager(){
     	return myCollisionManager;
+    }
+    
+    /**
+     * Get the score manager of the Game
+     * @return ScoreManager
+     */
+    public ScoreManager getScoreManager(){
+    	return myScoreManager;
     }
     
     /**

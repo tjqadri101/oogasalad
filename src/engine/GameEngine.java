@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
+import engineManagers.ScoreManager;
+
 /**
  * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
  */

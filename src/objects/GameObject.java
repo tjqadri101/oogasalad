@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import engineManagers.CollisionManager;
+import engineManagers.ScoreManager;
 //import engineManagers.ScoreManager;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
@@ -17,7 +18,7 @@ import jgame.JGObject;
  */
 public abstract class GameObject extends JGObject {
     
-//	protected ScoreManager myScoreManager;
+	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	
 	protected int myXSize;
@@ -49,7 +50,10 @@ public abstract class GameObject extends JGObject {
 	protected List<Object> myJumpParameters;
 	protected SideDetecter[] mySideDetecters;//plz review
 	
-	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager){
+	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
+			String name, int collisionId, int lives, 
+			CollisionManager collisionManager, ScoreManager scoreManager){
+		
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
@@ -59,6 +63,7 @@ public abstract class GameObject extends JGObject {
 		myAttributes = new ArrayList<String>();
 		mySideDetecters = new SideDetecter[4]; //plz review
 		myCollisionManager = collisionManager;
+		myScoreManager = scoreManager;
 		myGfxName = gfxname;
 		myName = name;
 	}
