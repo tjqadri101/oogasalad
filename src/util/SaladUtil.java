@@ -8,7 +8,7 @@ import reflection.Reflection;
 /**
  * 
  * @author Main Justin (Zihao) Zhang
- * Intended for use of some general methods
+ * Intended for use of some general methods involving String or Object lists
  *
  */
 public class SaladUtil {
@@ -97,9 +97,9 @@ public class SaladUtil {
     }
     
     /**
-     * 
-     * @param objects
-     * @return
+     * Get a copy of a list of objects
+     * @param List of objects
+     * @return a copy list of objects
      */
     public static List<Object> copyObjectList(List<Object> objects){
     	List<Object> answer = new ArrayList<Object>();
