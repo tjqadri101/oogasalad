@@ -17,12 +17,11 @@ public class ScoreManager {
 	
 	protected int myScore;
 	protected int myInitialScore;
-	protected int initialScore;
 	protected Map<String, Integer> myScoreMap;
 	
 	public ScoreManager(int startScore){
 		myScore = startScore;
-		initialScore = startScore;
+		myInitialScore = startScore;
 		myScoreMap = new HashMap<String, Integer>();
 	}
 	
@@ -30,34 +29,72 @@ public class ScoreManager {
 		this(DEFAULT_INITIAL_SCORE);
 	}
 	
+	/**
+	 * Set the initial score
+	 * @param startScore
+	 */
 	public void setInitialScore(int startScore){
 		myInitialScore = startScore;
 	}
 	
+	/**
+	 * Restore to initial score
+	 */
 	public void restore(){
 		myScore = myInitialScore;
 	}
 	
+	/**
+	 * Get the current updated score
+	 * @return score
+	 */
 	public int getCurrentScore(){
 		return myScore;
 	}
 	
+	/**
+	 * Called to set the change of score to a condition
+	 * @param score
+	 * @param args: condition
+	 */
 	public void setScore(int score, Object ... args){
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPERATER, args);
 		myScoreMap.put(condition, score);
 	}
 	
+	/**
+	 * Called to update the current score
+	 * @param info
+	 * @param victimColid
+	 * @param hitterColid
+	 */
 	public void updateScore(String info, int victimColid, int hitterColid){
 		String condition = info + SaladConstants.SEPERATER + victimColid + 
 				SaladConstants.SEPERATER + hitterColid;
 		if(myScoreMap.get(condition) == null) return;
 		myScore += myScoreMap.get(condition);
+		System.out.println("current score: " + myScore);
 	}
 	
+	/**
+	 * Called to update the current score
+	 * @param oldLevelOrSceneID
+	 * @param newLevelOrSceneID
+	 */
+	public void updateScore(String oldLevelOrSceneID, String newLevelOrSceneID){
+		String condition = oldLevelOrSceneID + SaladConstants.SEPERATER + newLevelOrSceneID;
+		if(myScoreMap.get(condition) == null) return;
+		myScore += myScoreMap.get(condition);
+	}
+	
+	/**
+	 * Get attribute
+	 * @return List of Strings
+	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, 
-				SaladConstants.INITIAL_SCORE, initialScore));
+				SaladConstants.INITIAL_SCORE, myInitialScore));
 //		for (String condition: myScoreMap){
 //			
 //			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, SaladConstants.SET_SCORE, condition))

@@ -27,7 +27,7 @@ public class SaladUtil {
     }
 
     /**
-     * Print a list of Strings separated by '/'
+     * Print a list of Strings separated by '/' for debugging purpose
      * @param list
      */
     public static void printStringList(List<String> list){
@@ -129,7 +129,7 @@ public class SaladUtil {
     
 //    public static List<Object> convertStringToObjects(String s, String seperater){
 //    	List<Object> answer = new ArrayList<Object>();
-//    	for()
+//    	for()dd
 //    }
 
 }

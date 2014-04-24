@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 import objects.NonPlayer;
 import objects.Player;
-
+import saladConstants.SaladConstants;
 import stage.Game;
 import engine.GameEngine;
 
@@ -34,7 +34,7 @@ public class EngineTest {
 	public GameEngine testEngine(){
 		
 		GameEngine engine = new GameEngine(false);
-		engine.setGameSpeed(20);
+		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
 		game.addLevel(1);
@@ -86,6 +86,8 @@ public class EngineTest {
 		game.getCollisionManager().addTileCollisionPair(ENEMY_COLID, "StayOnTile", TILE_COLID);
 		game.getCollisionManager().addTileCollisionPair(PLAYER_COLID, "StayOnTile", TILE_COLID);
 		game.getCollisionManager().addTileCollisionPair(MUSHROOM_COLID, "StayOnTile", TILE_COLID);
+		game.getScoreManager().setScore(5, SaladConstants.COLLISION, ENEMY_COLID, PLAYER_COLID);
+		game.getScoreManager().setScore(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
 		
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
 //        game.getLevel(1).setWinBehavior("WinByCollision", 123);
