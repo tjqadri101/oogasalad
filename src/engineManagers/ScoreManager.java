@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * @Author: Justin (Zihao) Zhang
@@ -49,12 +50,13 @@ public class ScoreManager {
 	public void updateScore(String info, int victimColid, int hitterColid){
 		String condition = info + SaladConstants.SEPERATER + victimColid + 
 				SaladConstants.SEPERATER + hitterColid;
+		if(myScoreMap.get(condition) == null) return;
 		myScore += myScoreMap.get(condition);
 	}
 	
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.MODIFY_SCOREMANAGER + "," + SaladConstants.INITIAL_SCORE + "," + initialScore);
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, SaladConstants.INITIAL_SCORE, initialScore));
 		return answer;
 	}
 
