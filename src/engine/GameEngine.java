@@ -86,6 +86,11 @@ public class GameEngine extends StdGame{
     	return (Boolean) answer;
     }
     
+    public boolean checkTrigger(){
+//      consider combineing the checkTrigger to checkGoal()
+        return foo;
+    }   
+    
     
     public void startEdit(){
     	removeObjects(null,0);//remove?
@@ -164,6 +169,9 @@ public class GameEngine extends StdGame{
 		
     	if(checkGoal()){
     		drawString("Win!!!!!!!!!!!!!!!!",viewWidth()/2,viewHeight()/2+100,0,false);
+    	}
+    	if(checkGoal()){
+    	        // call the event module 
     	}
     	if(myMouseButton!=0 && myClickedID == -1){
 			int tileX = myMouseX/20;
