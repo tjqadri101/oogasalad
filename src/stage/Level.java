@@ -13,7 +13,7 @@ import util.AttributeMaker;
 /**
  * 
  * @author Justin (Zihao) Zhang
- * @CoAuthor David Chou
+ * @Contribution David Chou
  */
 public class Level {
 

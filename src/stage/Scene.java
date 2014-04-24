@@ -14,7 +14,7 @@ import util.AttributeMaker;
 /**
  * 
  * @author Justin (Zihao) Zhang
- * @CoAuthor David Chou
+ * @Contribution David Chou
  * @contribution (for tiles) Shenghan Chen
  */
 
