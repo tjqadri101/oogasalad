@@ -36,7 +36,7 @@ public class GameObjectTests extends TestCase {
 		@Test
 		public void testGetAttributes(){
 			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
-			object.setCollisionBehavior("HitterEliminateVictim", 2);
+//			object.setCollisionBehavior("HitterEliminateVictim", 2);
 			object.setMoveBehavior("RegularMove", 1.0, 1.0);
 			object.setDieBehavior("RegularRemove");
 			System.out.println(object.getAttributes());
@@ -45,7 +45,7 @@ public class GameObjectTests extends TestCase {
 		@Test
 		public void testModifyCollision(){
 			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
-			object.setCollisionBehavior("HitterEliminateVictim", 2);
+//			object.setCollisionBehavior("HitterEliminateVictim", 2);
 //			assertEquals("HitterEliminateVictim", object.myCollisionMap.get(2));
 		}
 		

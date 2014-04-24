@@ -4,7 +4,6 @@ public final class SaladConstants {
 	
 	public static final String SEPERATER = ",";
 	
-	
 	public static final String CREATE_LEVEL = "CreateLevel";
 	public static final String SWITCH_LEVEL = "SwitchLevel";
 	public static final String MODIFY_LEVEL = "ModifyLevel";
@@ -15,11 +14,10 @@ public final class SaladConstants {
 	public static final String DELETE_SCENE = "DeleteScene";
 	public static final String RESET_LEVEL_ID = "ResetLevelID";
 	
-	
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
 	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
-	
+	public static final String MODIFY_BACKGROUND = "ModifyBackground";
 	
 	public static final String GAME_EDITOR_PANEL = "GameEditor";
 	public static final String ACTOR_EDITOR_PANEL = "ActorEditor";
@@ -50,18 +48,23 @@ public final class SaladConstants {
 	
 	public static final String TEST_XMLFILE_URL = "test.xml";
 	
-	
 	public static final String BACKGROUND = "Background";
 	public static final String ID = "ID";
 	public static final String IMAGE = "Image";
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
 	public static final String COLLISION_ID = "Colid";
 	public static final String COLLISION = "Collision";
-	public static final String DIE = "Die";
-	public static final String MOVE = "Move";
+	
+	//General Behaviors
+	public static final String DIE = "die";
+	public static final String MOVE = "move";
+	public static final String SHOOT = "shoot";
+	public static final String JUMP = "jump";
+	public static final String COLLIDE = "collide";
+	public static final String REMOVE = "remove";
+	
+	//Specific Behaviors
 	public static final String EXPLODE = "Explode";
-	public static final String SHOOT = "Shoot";
-	public static final String JUMP = "Jump";
 	public static final String PERISH_TOGETHER = "PerishTogether";
     public static final String HITTER_ELIMINATE_VICTIM  = "HitterEliminateVictim";
     public static final String STAY_ON_TILE = "StayOnTile";
@@ -97,6 +100,7 @@ public final class SaladConstants {
     public static final String MODIFY_PLAYER_IMAGE = "ModifyPlayerImage";
     public static final String WIN_BY_TIME = "WinByTime";
     public static final String WIN_BY_COLLISION = "WinByCollsion";
+    public static final String SET_SCORE = "SetScore";
     public static final String WIN_BY_TILE_COLLISION = "WinByTileCollision";
     public static final String MODIFY_COLLISION_BEHAVIOR = "ModifyCollisionBehavior";
     public static final String MODIFY_TILE_COLLISION_BEHAVIOR = "ModifyTileCollisionBehavior";
@@ -106,9 +110,19 @@ public final class SaladConstants {
 	
 	
     public static final String DEFAULT_ENGINE_RESOURCE_PACKAGE = "engineResources/";
-    public static final String DEFAULT_BEHAVIOR = "ObjectBehaviors";
+    public static final String OBJECT_BEHAVIOR = "ObjectBehaviors";
+    public static final String DATA_FORMAT_REFLECTION = "DataFormatReflection";
+    public static final String TYPE_FORMAT = "TypeFormat";
+    public static final String NONCLEAR_KEYS_FILE = "PlayerKeys";
+    
+    public static final String NON_CLEAR_KEYS = "NonClearKeys";
 
     public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
+    public static final double DEFAULT_ACTOR_SPEED = 5;
+    
+    public static final int POSITIVE_DIRECTION = 1;
+    public static final int NEGATIVE_DIRECTION = -1;
+    public static final int NO_DIRECTION = 0;
 
     public static final int PLAYER_ID = 0;
     

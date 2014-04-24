@@ -17,9 +17,6 @@ import engine.GameEngine;
 
 public class IParser {
     
-    private static final String DEFAULT_RESOURCE_PACKAGE = "engineResources/";
-    private static final String DEFAULT_DATA_FORMAT = "TypeFormat";
-    private static final String DEFAULT_REFLECTION_METHODS = "DataFormatReflection";
     private static Map<String,List<?>> parsedResults = new HashMap<String, List<?>>();
     public static ResourceBundle myDataFormat;
     public static ResourceBundle myReflectionMethods;
@@ -33,14 +30,14 @@ public class IParser {
     }
 
     /**
-     * Called to parse a String order into a Map of String to Parsed Result (i.e. "ParameterList" to List<Obejct>") 
+     * Called to parse a String order into a Map of String to Parsed Result (i.e. "ParameterList" to List<Object>") 
      * Key String "All" to List<Object> order 
      * Key String "Type" to List<String> TypeTokens
      * Key String "Parameter" to List<Object> Parameters
      */
     public Map<String, List<?>> parseToMap (String order){
-        myDataFormat = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_DATA_FORMAT);
-        myReflectionMethods = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + DEFAULT_REFLECTION_METHODS);
+        myDataFormat = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.TYPE_FORMAT);
+        myReflectionMethods = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DATA_FORMAT_REFLECTION);
         
             List<Object> allAnswer = new ArrayList<Object>();
             List<String> typeAnswer = new ArrayList<String>();

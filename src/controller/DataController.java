@@ -1,19 +1,13 @@
 package controller;
 
 import imagebuffer.ImageBuffer;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
-import reflection.Reflection;
-import saladConstants.SaladConstants;
 import stage.Game;
 import util.SaladUtil;
 /**
@@ -51,7 +45,7 @@ public class DataController {
          * @return nothing
 	 */
 	public void receiveOrder(String order){
-		System.out.println("DataController: " + "received order " + order);
+		System.out.println("**DataController received order: " + order);
 		callFactoryToProcess(order);
 	}
 	
@@ -73,10 +67,9 @@ public class DataController {
 	 */
 	public void readXML(String url) throws Exception {
 		List<String> orders = myGameSaverAndLoader.load(url);
-		SaladUtil.printStringList(orders);
-		for(String order: orders){
-			callFactoryToProcess(order);
-		}
+		System.out.println("****DataController readXML****"); // delete
+		SaladUtil.printStringList(orders); // delete
+		for(String order: orders){ callFactoryToProcess(order); }
 	}
 	
 	
@@ -113,6 +106,14 @@ public class DataController {
 		return myGameEngine.getCurrentSceneID();
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current clicked ID
+	 * @return selected ID
+	 */
+	public int getSelectedID(){
+		return myGameEngine.getClickedID();
+	}
+	
 	
 	/**
 	 * Do not call this method directly; called within DataController
@@ -127,7 +128,7 @@ public class DataController {
 	}
 	
 	/**
-	 * Called by GAE to save and resize the image
+	 * Called by Game Authorizing Environment to save and resize the image
 	 * @param x
 	 * @param y
 	 * @param source
@@ -137,10 +138,4 @@ public class DataController {
 		myImageBuffer.resizedUpload(x, y, source);
 	}
 	
-	/**
-	 * Called by the Player to reset the Game
-	 */
-	public void resetGame() {
-		myGameEngine.StartStartGame();
-	}
 }

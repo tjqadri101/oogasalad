@@ -8,12 +8,12 @@ import java.util.Map;
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
-import util.SaladUtil;
+import util.AttributeMaker;
 
 /**
  * 
- * @author Justin (Zihao) Zhang, DavidChou
- *
+ * @author Justin (Zihao) Zhang
+ * @Contribution David Chou
  */
 public class Level {
 
@@ -87,32 +87,15 @@ public class Level {
 
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.CREATE_LEVEL + "," + SaladConstants.ID + "," + myID);
-		answer.add(addAttributes(myWinBehavior, myWinBehavior, myWinParameters));
+		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_LEVEL, SaladConstants.ID, myID));
 		for(int a: mySceneMap.keySet()){
 			List<String> sceneAttribute = mySceneMap.get(a).getAttributes();
-			String switchScene = SaladConstants.SWITCH_SCENE + "," + SaladConstants.ID + "," + myID + "," + SaladConstants.ID + "," + mySceneMap.get(a).getID(); 
-			sceneAttribute.add(1, switchScene);
+			String attribute = AttributeMaker.addAttribute(SaladConstants.SWITCH_SCENE, SaladConstants.ID, myID, SaladConstants.ID, false, mySceneMap.get(a).getID()); 
+			sceneAttribute.add(1, attribute); 
 			answer.addAll(sceneAttribute);
 		}
+		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_GOAL, myWinBehavior, true, myWinParameters));
 		return answer;
-	}
-	
-	/**
-	 * Add attribute for behaviors already set
-	 * @param type
-	 * @param typeToken: same as type
-	 * @param params
-	 * @return String attribute
-	 */
-	protected String addAttributes(String type, String typeToken, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(SaladConstants.CREATE_GOAL + "," + type + "," + typeToken);
-		for(Object o: params){
-			String att = o.toString();
-			attribute.append("," + att);
-		}
-		return attribute.toString();
 	}
 	
 	/* @Siyang: 

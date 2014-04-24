@@ -1,16 +1,14 @@
 package objects;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import engineManagers.CollisionManager;
+import engineManagers.ScoreManager;
 //import engineManagers.ScoreManager;
-import reflection.Reflection;
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 import util.SaladUtil;
 import jgame.JGObject;
 /**
@@ -20,7 +18,7 @@ import jgame.JGObject;
  */
 public abstract class GameObject extends JGObject {
     
-//	protected ScoreManager myScoreManager;
+	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	
 	protected int myXSize;
@@ -34,12 +32,13 @@ public abstract class GameObject extends JGObject {
 	protected boolean myIsInAir;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
-	protected String myGfx;
+	protected String myGfxName;
 	protected List<String> myAttributes;
-	
-	protected boolean myIsPlayer;//need change
+	protected String myName;
+	protected boolean myIsPlayer; //need change
     
 	protected ResourceBundle myBehaviors;
+	
 	protected String myDieBehavior;
 	protected String myMoveBehavior;
 	protected String myJumpBehavior;
@@ -49,18 +48,32 @@ public abstract class GameObject extends JGObject {
 	protected List<Object> myDieParameters;
 	protected List<Object> myMoveParameters;
 	protected List<Object> myJumpParameters;
-	protected SideDetecter[] mySideDetecters;//plz review
+	protected SideDetector[] mySideDetectors;//plz review
 	
-	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives, CollisionManager collisionManager){
-		super(name, true, xpos, ypos, collisionId, gfxname);
-		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
+	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
+			String name, int collisionId, int lives, 
+			CollisionManager collisionManager, ScoreManager scoreManager){
+		
+		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, gfxname);
+		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
 		setLives(lives); // change later
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
-		mySideDetecters = new SideDetecter[4];//plz review
+		mySideDetectors = new SideDetector[4]; //plz review
 		myCollisionManager = collisionManager;
+		myScoreManager = scoreManager;
+		myGfxName = gfxname;
+		myName = name;
+	}
+	
+	/**
+	 * Reset the name
+	 * @param name
+	 */
+	public void resetName(String name){
+		myName = name;
 	}
 	
 	/**
@@ -72,11 +85,21 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	/**
-	 * Get the side collision detecters associated with this object
-	 * @return mySideDetecters
+	 * Get the side collision detector associated with this object in direction of dir
+	 * @param dir
+	 * @return mySideDetectors
 	 */
-	public SideDetecter[] getSideDetecters(){
-		return mySideDetecters;
+	public SideDetector getSideDetector(int dir){
+		return mySideDetectors[dir];
+	}
+	
+	/**
+	 * Set the side collision detector associated with this object in direction of dir
+	 * @param detector
+	 * @return mySideDetectors
+	 */
+	public void setSideDetector(SideDetector detector){
+		mySideDetectors[detector.myDirection] = detector;
 	}
 	
 	/**
@@ -128,22 +151,27 @@ public abstract class GameObject extends JGObject {
 		return SaladConstants.MODIFY_ACTOR;
 	}
 	
-	@Override
-	public void setSpeed(double xspeed, double yspeed){
+	public void setInitSpeed(double xspeed, double yspeed){
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
 		myInitYSpeed = yspeed;
-		myAttributes.add(ModificationString() + "," + SaladConstants.ID + "," + myUniqueID + "," + 
-				SaladConstants.SPEED + "," + myInitXSpeed + "," + myInitYSpeed);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				SaladConstants.SPEED, false, myInitXSpeed, myInitYSpeed));
 	}
+	
 	
 	/**
 	 * Restore to original state within a scene
 	 * Used for live-editing
 	 */
-	public void restore(){
+	public void restore(boolean lifeLost){
 		setInitPos(myInitX, myInitY);
-		setLives(myInitLives);
+		setInitSpeed(myInitXSpeed, myInitYSpeed);
+		if (!lifeLost) setLives(myInitLives);
+		if (!is_alive){
+			eng.markAddObject(this);
+    		is_alive = true;
+		}
 	}
 	
 	/**
@@ -172,32 +200,8 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myDieParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myDieBehavior, myDieBehavior, myDieParameters);
-	}
-	
-	/**
-	 * Add attribute for behaviors already set
-	 * @param s
-	 * @param params
-	 */
-	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken);
-		for(Object o: params){
-			String att = o.toString();
-			attribute.append("," + att);
-		}
-		myAttributes.add(attribute.toString());
-	}
-	
-	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, int integerToken, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken + "," + integerToken);
-		for(Object o: params){
-			String att = o.toString();
-			attribute.append("," + att);
-		}
-		myAttributes.add(attribute.toString());
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				myDieBehavior, true, myDieParameters));
 	}
 	
 	/**
@@ -243,7 +247,8 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myJumpParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myJumpBehavior, myJumpBehavior, myJumpParameters);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				myJumpBehavior, true, myJumpParameters));
 	}
 	
     /**
@@ -257,7 +262,8 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myShootParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myShootBehavior, myShootBehavior, myShootParameters);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				myShootBehavior, true, myShootParameters));
 	}
 	
 	/**
@@ -272,13 +278,13 @@ public abstract class GameObject extends JGObject {
 		for(int i = 0; i < args.length; i ++){
 			myMoveParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myMoveBehavior, myMoveBehavior, myMoveParameters);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(), SaladConstants.ID, myUniqueID, 
+				myMoveBehavior, true, myMoveParameters));
 	}
-	
 	
 	public void die(){
 		if(myDieBehavior == null) return;
-		behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, "remove");	
+		SaladUtil.behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, SaladConstants.REMOVE, this);	
 	}
 	
 //	public void bounce(){
@@ -309,7 +315,7 @@ public abstract class GameObject extends JGObject {
 		myJumpTimes ++;
 		myIsInAir = true;
 		if(myJumpBehavior == null) return;
-		behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, "jump");
+		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, SaladConstants.JUMP, this);
 	}
 	
 	/**
@@ -328,22 +334,6 @@ public abstract class GameObject extends JGObject {
 		return myIsInAir;
 	}
 	
-	/**
-	 * Do not call this method directly
-	 * @param ResourceBundle
-	 * @param myString
-	 * @param methodName
-	 */
-	protected void behaviorReflection(ResourceBundle myBundle, String myString, List<Object> objects, String methodName){
-		if(myString == null) return;
-		try{
-			Object behavior = Reflection.createInstance(myBundle.getString(myString), this);
-			Reflection.callMethod(behavior, methodName, objects);	
-		} catch (Exception e){
-			e.printStackTrace(); // should never reach here
-		}
-	}
-	
 	@Override
 	public void move(){
 		if(myLives <= 0) die();
@@ -357,7 +347,7 @@ public abstract class GameObject extends JGObject {
 		String collisionBehavior = (String) parameters.get(0);
 		parameters.remove(0);
 		parameters.add(0, other);
-		behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide");
+		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior, parameters, SaladConstants.COLLIDE, this);
     }
 	
 	@Override
@@ -372,17 +362,17 @@ public abstract class GameObject extends JGObject {
 		parameters.add(ty);
 		parameters.add(txsize);
 		parameters.add(tysize);
-		behaviorReflection(myBehaviors, collisionBehavior, parameters, "collide");
+		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior, parameters, SaladConstants.COLLIDE, this);
 	}
 	
 	public void autoMove(){
 		if(myMoveBehavior == null) return;
-		behaviorReflection(myBehaviors, myMoveBehavior, myMoveParameters, "move");
+		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior, myMoveParameters, SaladConstants.MOVE, this);
 	}
 	
 	public void shoot(){
 		if(myShootBehavior == null) return;
-		behaviorReflection(myBehaviors, myShootBehavior, myShootParameters, "shoot");
+		SaladUtil.behaviorReflection(myBehaviors, myShootBehavior, myShootParameters, SaladConstants.SHOOT, this);
 	}
 	
 	/**
@@ -394,15 +384,23 @@ public abstract class GameObject extends JGObject {
 		return myAttributes;
 	}
 	
-	/**When ModifyActor/PlayerImage is called, the gfx info is passed along
-         */
-	public void updateImageURL(String gfx){
-	    this.myGfx = gfx;
+	/**
+	 * When ModifyActor/PlayerImage is called, the gfx info is passed along
+	 * @param gfxname
+	 */
+	public void updateImageURL(String gfxname){
+	    myGfxName = gfxname;
 	}
 	
+	/**
+	 * Used for behaviors to get the ScoreManager to update scores
+	 * @return ScoreManager
+	 */
+	public ScoreManager getScoreManager(){
+		return myScoreManager;
+	}
 	
-	
-/* @NOTE:
+/* @Steve:
  * The following getter and setters used for GameFactoryTest
  * Will remove them once finished
  */
@@ -431,38 +429,7 @@ public abstract class GameObject extends JGObject {
      * @return the Gfx info
      */
     public String getMyGfx(){
-        return myGfx;
+        return myGfxName;
     }
-
-    /**
-     * @return set the initXSpeed and initYSpeed
-     */
-    public void updateInitSpeed (double xspeed, double yspeed) {
-        myInitX = xspeed;
-        myInitY = yspeed;
-    }
-    
-//    //plz review
-//	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
-//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-//		if (dir == -1) return;
-//		SideDetecter sd = mySideDetecters[dir];
-//		if (sd == null){
-//			sd = new SideDetecter(this,dir);
-//			mySideDetecters[dir] = sd;
-//		}
-//		sd.setCollisionBehavior(type, otherColid, args);
-//	}
-//	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
-//		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-//		if (dir == -1) return;
-//		SideDetecter sd = mySideDetecters[dir];
-//		if (sd == null){
-//			sd = new SideDetecter(this,dir);
-//			mySideDetecters[dir] = sd;
-//		}
-//		sd.setTileCollisionBehavior(type, tileColid, args);
-//	}
-	
 
 }

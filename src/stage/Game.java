@@ -16,17 +16,17 @@ import objects.Player;
 import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
- * @author Main Justin (Zihao) Zhang, David Chou
+ * @author Main Justin (Zihao) Zhang
+ * @Contribution David Chou
  * @help Isaac (Shenghan) Chen
  */
 public class Game {
 
-	public static final int DEFAULT_SCORE = 0;
 	public static final int NONUSE_ID = 0;
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<StateType, Transition> myNonLevelSceneMap;
-//	protected ScoreManager myScoreManager;
+	protected ScoreManager myScoreManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
 	protected Player myPlayer;
@@ -37,7 +37,7 @@ public class Game {
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
-//		myScoreManager = new ScoreManager(DEFAULT_SCORE);
+		myScoreManager = new ScoreManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
@@ -220,6 +220,14 @@ public class Game {
     }
     
     /**
+     * Get the score manager of the Game
+     * @return ScoreManager
+     */
+    public ScoreManager getScoreManager(){
+    	return myScoreManager;
+    }
+    
+    /**
 	 * Called to delete an existing Game Object from a particular scene of a particular level
 	 * @param the level ID that the Game Object belongs to 
 	 * @param the scene ID that the Game Object belongs to
@@ -238,6 +246,7 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
+		answer.add(myGravity.getAttributes());
 		if(getPlayer(NONUSE_ID) != null){
 			answer.addAll(getPlayer(NONUSE_ID).getAttributes());	
 		}
@@ -248,8 +257,6 @@ public class Game {
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
-		answer.add(myGravity.getAttributes());
-		
 		return answer;
 	}
 	

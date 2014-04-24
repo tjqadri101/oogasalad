@@ -34,7 +34,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ImageBuffer {
 
-	private static final String DEFAULT_FOLDER_PATH = "src/engine/";
+	private static final String DEFAULT_FOLDER_PATH = "src/engineImages/";
 	private String finalPath;
 	private File chosenFile;
 	private String fileName;

@@ -1,6 +1,7 @@
 package objects;
 
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 
 public class Gravity {
 	
@@ -19,7 +20,7 @@ public class Gravity {
 	 * @return String Attribute
 	 */
 	public String getAttributes(){
-		return SaladConstants.MODIFY_GRAVITY + "," + SaladConstants.GRAVITY_MAGNITUDE + "," + myMagnitude;
+		return AttributeMaker.addAttribute(SaladConstants.MODIFY_GRAVITY, SaladConstants.GRAVITY_MAGNITUDE, myMagnitude);
 	}
 	
 	/**
