@@ -48,7 +48,7 @@ public abstract class GameObject extends JGObject {
 	protected List<Object> myDieParameters;
 	protected List<Object> myMoveParameters;
 	protected List<Object> myJumpParameters;
-	protected SideDetecter[] mySideDetecters;//plz review
+	protected SideDetector[] mySideDetectors;//plz review
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
@@ -61,7 +61,7 @@ public abstract class GameObject extends JGObject {
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
-		mySideDetecters = new SideDetecter[4]; //plz review
+		mySideDetectors = new SideDetector[4]; //plz review
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
 		myGfxName = gfxname;
@@ -85,11 +85,21 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	/**
-	 * Get the side collision detecters associated with this object
-	 * @return mySideDetecters
+	 * Get the side collision detector associated with this object in direction of dir
+	 * @param dir
+	 * @return mySideDetectors
 	 */
-	public SideDetecter[] getSideDetecters(){
-		return mySideDetecters;
+	public SideDetector getSideDetector(int dir){
+		return mySideDetectors[dir];
+	}
+	
+	/**
+	 * Set the side collision detector associated with this object in direction of dir
+	 * @param detector
+	 * @return mySideDetectors
+	 */
+	public void setSideDetector(SideDetector detector){
+		mySideDetectors[detector.myDirection] = detector;
 	}
 	
 	/**
@@ -154,9 +164,14 @@ public abstract class GameObject extends JGObject {
 	 * Restore to original state within a scene
 	 * Used for live-editing
 	 */
-	public void restore(){
+	public void restore(boolean lifeLost){
 		setInitPos(myInitX, myInitY);
-		setLives(myInitLives);
+		setInitSpeed(myInitXSpeed, myInitYSpeed);
+		if (!lifeLost) setLives(myInitLives);
+		if (!is_alive){
+			eng.markAddObject(this);
+    		is_alive = true;
+		}
 	}
 	
 	/**
