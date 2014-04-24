@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import engine.GameEngine;
 import objects.GameObject;
@@ -38,8 +40,12 @@ public class Scene {
 		initTiles();
 	}
 	
-	public Map<Integer, String> getTileImageMap(){
-		return myTileImageMap;
+	public void defineTileImage(int cid, String imgfile){
+		myTileImageMap.put(cid, imgfile);
+	}
+	
+	public Set<Entry<Integer, String>> getTileImageMap(){
+		return myTileImageMap.entrySet();
 	}
 	
 	public String[] getTiles(){
@@ -53,7 +59,7 @@ public class Scene {
     	for(int j = 0; j < getYSize(); j ++){ array[j] = temp; }
 		myTiles = array;
 		myTileImageMap = new HashMap<Integer, String>();
-		myTileImageMap.put(0, DEFAULT_TILE_INFO);
+		defineTileImage(0, DEFAULT_TILE_INFO);
 	}
 	
 	public void resizeTiles(int xsize, int ysize){

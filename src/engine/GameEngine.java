@@ -37,6 +37,7 @@ public class GameEngine extends StdGame{
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
     protected Scene myCurrentScene;
+    protected Scene myEmptyScene = new Scene(0);
     protected Player myPlayer;
     
     protected int myMouseX;
@@ -71,7 +72,7 @@ public class GameEngine extends StdGame{
 		//setPFWrap(false,true,0,0);
         
         if(isEditingMode){
-        	setGameState("Edit");
+        	setGameState("InGame");
         }
     }
     
@@ -92,7 +93,7 @@ public class GameEngine extends StdGame{
     }
     
     //drag;move->gravity->collision->setViewOffset
-    public void doFrameEdit(){
+    public void doFrameInGame(){
     	timer++;//
     	if (myCurrentScene == null) return;
     	boolean viewOffset = false;
@@ -115,6 +116,14 @@ public class GameEngine extends StdGame{
     		else myViewOffsetPlayer = false;
     	}
     	if(!viewOffset) setViewOffsetEdit();
+    	if(checkGoal()){
+    		if(level>=3){
+    			gameOver();
+    			System.out.println("lol");
+    		}
+    		else
+    			levelDone();
+    	}
     }
 
 	private void setViewOffsetPlayer() {
@@ -152,7 +161,7 @@ public class GameEngine extends StdGame{
     	return XOfs != 0 || YOfs != 0;
     }
     
-    public void paintFrameEdit(){
+    public void paintFrameInGame(){
 		drawString("You are in Editing Mode right now. This is a test message.",viewWidth()/2,viewHeight()/2,0,false);
 		if (myPlayer != null){
 			drawRect(myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,myPlayer.getXSize()/2,10,false,true);
@@ -176,8 +185,8 @@ public class GameEngine extends StdGame{
     
     
     public void defineLevel(){
-    	level += 1;//shouldn't be here
-    	setCurrentScene(level, 0);
+    	setCurrentScene(1, 0);
+    	myPlayer.resume();
     	//restore the player ? depending on playing mode
     }
     
@@ -301,7 +310,7 @@ public class GameEngine extends StdGame{
     		array[j] = temp;
     	}
     	setTiles(left,top,array);
-    	myCurrentScene.getTileImageMap().put(cid, imgfile);
+    	myCurrentScene.defineTileImage(cid, imgfile);
     	myCurrentScene.updateTiles(cid, left, top, width, height);
     }
     
@@ -420,15 +429,23 @@ public class GameEngine extends StdGame{
     
     public void setCurrentScene (int currentLevelID, int currentSceneID) {
     	if(myCurrentScene != null){
-    		setPFSize(myCurrentScene.getXSize(), myCurrentScene.getYSize());
     		for(GameObject go: myCurrentScene.getGameObjects()){
-        		go.suspend();
+//        		go.remove();
+    			go.suspend();
         	}
     	}
     	myCurrentLevelID = currentLevelID;
     	myCurrentSceneID = currentSceneID;
     	myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
-    	for (Entry<Integer, String> entry: myCurrentScene.getTileImageMap().entrySet()){
+    	updateCurrentScene();
+    }
+
+	/**
+	 * 
+	 */
+	private void updateCurrentScene() {
+		setPFSize(myCurrentScene.getXSize(), myCurrentScene.getYSize());
+    	for (Entry<Integer, String> entry: myCurrentScene.getTileImageMap()){
     		Integer cid = entry.getKey();
     		String imgfile = entry.getValue();
     		defineImage(cid.toString(),cid.toString(),cid,imgfile,"-");
@@ -438,9 +455,11 @@ public class GameEngine extends StdGame{
     	loadImage(url);
     	setBGImage(url);
     	for(GameObject go: myCurrentScene.getGameObjects()){
+//    		this.markAddObject(go);
+//    		go.is_alive = true;
     		go.resume();
     	}
-    }
+	}
     
     public void setBackground(String url){
     	myCurrentScene.setBackgroundImage(url);
