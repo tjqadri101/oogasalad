@@ -17,7 +17,7 @@ public class EngineTest {
 	public static final int MUSHROOM_COLID = 5;
 	public static final int PLAYER_COLID = 3;
 	public static final int BULLET_COLID = 5;
-	public static final int TILE_COLID = 2;
+	public static final int TILE_COLID = 6;
 	
 	public static void main(String[] arg){
 		
@@ -43,10 +43,10 @@ public class EngineTest {
 		game.getGravity().setMagnitude(0.1);
 		
 		engine.setSceneSize(1200,40);
-		engine.createTiles(2,"brick.png",0,30,1180,1);
-		engine.createTiles(2,"brick.png",20,15,10,1);
+		engine.createTiles(6,"brick.png",0,30,1180,1);
+		engine.createTiles(6,"brick.png",20,15,10,1);
 		engine.createTiles(0,"null",30,30,5,1);
-		engine.setDefaultTiles(2, "brick.png");
+		engine.setDefaultTiles(5, "brick.png");
 //		engine.createTiles(0,0,40,1,1,"brick.png");
 //		engine.setBackground("marble16.gif");
 		
