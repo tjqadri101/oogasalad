@@ -693,8 +693,11 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void modifySceneBackground(String path){
-		String order = SaladConstants.MODIFY_BACKGROUND + SaladConstants.SEPERATER + SaladConstants.BACKGROUND + SaladConstants.SEPERATER + path;
+	public void modifySceneBackground(String path, boolean wrapHorizontal, boolean wrapVertical, int playFieldXSize, int playFieldYSize){
+		String order = SaladConstants.MODIFY_SCENE_VIEW + SaladConstants.SEPERATER + SaladConstants.BACKGROUND + 
+						SaladConstants.SEPERATER + path + SaladConstants.SEPERATER + String.valueOf(wrapHorizontal) + 
+						SaladConstants.SEPERATER + String.valueOf(wrapVertical) + SaladConstants.SEPERATER + playFieldXSize + 
+						SaladConstants.SEPERATER + playFieldYSize;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
