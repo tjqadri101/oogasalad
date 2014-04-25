@@ -746,6 +746,52 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	public void modifyScoreManagerInitScore(int score){
+		String order = SaladConstants.MODIFY_SCORE_MANAGER + SaladConstants.SEPERATER +  SaladConstants.INITIAL_SCORE+ 
+				SaladConstants.SEPERATER + score;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyScoreManagerCollisionScore(int score, int victimColID, int hitterColID){
+		String order = SaladConstants.MODIFY_SCORE_MANAGER + SaladConstants.SEPERATER +  SaladConstants.SET_COLLISION_SCORE + 
+				SaladConstants.SEPERATER + score + SaladConstants.SEPERATER + SaladConstants.COLLISION + SaladConstants.SEPERATER 
+				+ victimColID + SaladConstants.SEPERATER + hitterColID;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	// prevStage e.g. Level1, Scene1.
+	// newStage e.g. Level2, Scene2
+	public void modifyScoreManagerTransitionScore(int score, String prevStage, String newStage){
+		String order = SaladConstants.MODIFY_SCORE_MANAGER + SaladConstants.SEPERATER +  SaladConstants.SET_TRANSITION_SCORE + 
+				SaladConstants.SEPERATER + score + SaladConstants.SEPERATER + prevStage + SaladConstants.SEPERATER 
+				+ newStage;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyBloodManager(int score, int changeBlood, int victimColID, int hitterColID){
+		String order = SaladConstants.MODIFY_BLOOD_MANAGER + SaladConstants.SEPERATER +  SaladConstants.SET_COLLISION_BLOOD + 
+				SaladConstants.SEPERATER + changeBlood + SaladConstants.SEPERATER + SaladConstants.COLLISION  + SaladConstants.SEPERATER 
+				+ victimColID + SaladConstants.SEPERATER + hitterColID;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTriggerManager(int ID){
+		String order = SaladConstants.MODIFY_TRIGGER_MANAGER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER 
+				+ ID + SaladConstants.SEPERATER + SaladConstants.SET_TRIGGER + SaladConstants.SEPERATER + SaladConstants.TRIGGER_TYPE;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyEventManager(int ID){
+		String order = SaladConstants.MODIFY_EVENT_MANAGER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER 
+				+ ID + SaladConstants.SEPERATER + SaladConstants.SET_EVENT + SaladConstants.SEPERATER + SaladConstants.EVENT_TYPE;;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	
 	// GAE funtions below. NOT orders sending to DataController
 		

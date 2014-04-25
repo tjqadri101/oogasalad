@@ -143,6 +143,19 @@ public final class SaladConstants {
 
 	public static final String PLAYER_INIT_POS = "PlayerInitialPosition";
 
+	public static final String MODIFY_SCORE_MANAGER = "ModifyScoreManager";
+	public static final String SET_COLLISION_SCORE = "SetCollisionScore";
+	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
+	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
+	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
+	public static final String MODIFY_TRIGGER_MANAGER = "ModifyTriggerManager";
+	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
+	public static final String SET_TRIGGER = "SetTrigger";
+	public static final String SET_EVENT = "SetEvent";
+	public static final String TRIGGER_TYPE = "TriggerType";
+	public static final String EVENT_TYPE = "EventType";
+
+
 
 	
 
