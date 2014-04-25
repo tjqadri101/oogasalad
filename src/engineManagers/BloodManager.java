@@ -5,7 +5,11 @@ import java.util.Map;
 
 import saladConstants.SaladConstants;
 import util.SaladUtil;
-
+/**
+ * 
+ * @author Main Justin (Zihao) Zhang
+ *
+ */
 public class BloodManager {
 	public static final int NOT_USED_BLOOD = 0;
 	
