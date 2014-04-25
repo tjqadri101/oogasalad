@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
@@ -13,7 +12,7 @@ import util.AttributeMaker;
 /**
  * 
  * @author Justin (Zihao) Zhang
- * @Contribution David Chou
+ * @Contribution David Chou, Steve (Siyang) Wang
  */
 public class Level {
 
@@ -21,6 +20,8 @@ public class Level {
 	protected int myID;
 	protected String myWinBehavior;
 	protected List<Object> myWinParameters;
+    protected String myEventBehavior;
+    private ArrayList<Object> myEventParameters;
 
 	public Level(int id) {
 		myID = id;
@@ -75,6 +76,22 @@ public class Level {
 	public List<Object> getWinParameters(){
 		return myWinParameters;
 	}
+	// following similar to teh winBehavior consider refactoring 
+	public void setEventBehavior(String type, Object ... args){
+	    myEventBehavior = type;
+	    myEventParameters = new ArrayList<Object>();
+	    for(int i = 0; i < args.length; i ++){
+	        myEventParameters.add(args[i]);
+	    }
+	}
+
+        public String getEventBehavior () {
+                return myEventBehavior;
+        }       
+        
+        public List<Object> getEventParameters(){
+            return myEventParameters;
+    }
 
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
@@ -103,6 +120,7 @@ public class Level {
          */
         public Map<Integer, Scene> getMySceneMap(){
             return mySceneMap;
-        }       
+        }
+
 
 }

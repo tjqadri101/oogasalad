@@ -12,6 +12,6 @@ public abstract class Triggerable {
                 myEngine = engine;
         }
         
-        public abstract boolean checkGoal(List<Object> params);
+        public abstract boolean checkTrigger (List<Object> params);
 
 }

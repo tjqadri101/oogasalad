@@ -73,7 +73,8 @@ public class SaladUtil {
      * @param methodName
      * @param parameters for constructor
      */
-    public static Object behaviorReflection(ResourceBundle myBundle, String myString, List<Object> objects, String methodName, Object constructorParam){
+    public static Object behaviorReflection(ResourceBundle myBundle, String myString, 
+                                            List<Object> objects, String methodName, Object constructorParam){
         if(myString == null) return null;
         try{
             Object behavior = Reflection.createInstance(myBundle.getString(myString), constructorParam);

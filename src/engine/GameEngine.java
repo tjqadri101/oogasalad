@@ -41,6 +41,7 @@ public class GameEngine extends StdGame{
     protected Scene myCurrentScene;
     protected Scene myEmptyScene = new Scene(0);
     protected Player myPlayer;
+    protected boolean triggerFlag = false;
     
     protected int myMouseX;
     protected int myMouseY;
@@ -86,14 +87,30 @@ public class GameEngine extends StdGame{
     	List<Object> winParameters = myGame.getLevel(myCurrentLevelID).getWinParameters();
     	ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
     	Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior, winParameters, "checkGoal", this);
+    	triggerFlag = (boolean) answer;
     	return (Boolean) answer;
     }
     
     public boolean checkTrigger(){
+        if(myCurrentScene == null) return false;
+        String eventBehavior = myGame.getLevel(myCurrentLevelID).getEventBehavior();
+        if(eventBehavior == null) return false;
+        
 //      consider combineing the checkTrigger to checkGoal()
         return true;
     }   
     
+    
+    
+    
+/*    if(checkGoal()){
+        if(level>=3){
+                gameOver();
+                System.out.println("printedFrom Engine, gameOver");
+        }
+        else
+                levelDone();
+}*/
     
     public void startEdit(){
     	removeObjects(null,0);//remove?
@@ -123,10 +140,11 @@ public class GameEngine extends StdGame{
     		else myViewOffsetPlayer = false;
     	}
     	if(!viewOffset) setViewOffsetEdit();
-    	if(checkGoal()){
+    	
+    	if(triggerFlag){
     		if(level>=3){
     			gameOver();
-    			System.out.println("lol");
+    			System.out.println("printedFrom Engine, gameOver");
     		}
     		else
     			levelDone();
@@ -178,11 +196,14 @@ public class GameEngine extends StdGame{
 		
 //		drawRect(getMouseX()+viewXOfs(),getMouseY()+viewYOfs(),20,20,false,true,true);
 		
-    	if(checkGoal()){
-    		drawString("Win!!!!!!!!!!!!!!!!",viewWidth()/2,viewHeight()/2+100,0,false);
+    	if(triggerFlag){
+    		drawString("You have win the game",viewWidth()/2,viewHeight()/2+100,0,false);
+    		triggerFlag = false;
     	}
-    	if(checkGoal()){
-    	        // call the event module 
+    	if(triggerFlag){
+    	        // call the event module
+    	        drawString("You have triggered the event",viewWidth()/2,viewHeight()/2+100,0,false);
+    	        triggerFlag = false;
     	}
     	if(myMouseButton!=0 && myClickedID == -1){
 			int tileX = myMouseX/20;
@@ -422,6 +443,7 @@ public class GameEngine extends StdGame{
     private void loadImage(String path){
     	if (path == null) return;
     	defineImage(path, "-", 0, path, "-");
+    	System.out.println("printedFrom loadImage: ");
     }
     
     //unfinished
