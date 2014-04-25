@@ -10,7 +10,7 @@ import java.util.Set;
 import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
-import objects.Trigger;
+import engineManagers.Triggerable;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
@@ -262,7 +262,7 @@ public class Scene {
          */
         public void setTriggerAndEvent(Object ... args){
             //unimplemented
-                myTrigger
+//                myTrigger
         }
 	
 	/*@Siyang 
