@@ -4,10 +4,12 @@
 package game_authoring_environment;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +24,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.LayerUI;
 
 import reflection.ReflectionException;
 
@@ -30,6 +33,7 @@ import java.lang.reflect.Field;
 import jgame.platform.JGEngine;
 
 import controller.GAEController;
+import engine.GameEngine;
 import engineTests.EngineTest;
 
 public class RightPanel extends JSplitPane {
@@ -44,34 +48,8 @@ public class RightPanel extends JSplitPane {
 		myGAEController = gController;
 		setOrientation(VERTICAL_SPLIT);
 		setTopComponent(createSpinnerPanel(gController));
-		setBottomComponent(myGAEController.getEngine());
+		setBottomComponent(new JScrollPane(new EnginePanel(myGAEController.getEngine(),myGAEController)));
 		fieldName = "";
-	}
-	
-	private JLayeredPane createEnginePanel(){
-		JLayeredPane lp  = new JLayeredPane();
-		JGEngine engine = myGAEController.getEngine();
-		
-		JPanel glass = new JPanel();
-		glass.add(engine);
-	    glass.setOpaque(false);
-		MouseListener mouseListener = new MouseAdapter() {
-		     public void mouseClicked(MouseEvent e) {
-		         if (e.getClickCount() == 1) {
-		        	 System.out.println("mouse clicked");
-		        	 int selectedID = myGAEController.getSelectedIDFromDataController();
-		        	 myGAEController.updateSelectedActorID(selectedID);
-		          }
-		     }
-		 };		 
-		 
-		 glass.addMouseListener(mouseListener);
-		
-		
-		//lp.add(engine, Integer.valueOf(1));
-		lp.add(glass);
-		
-		return lp;
 	}
 	
 	private JComponent createSpinnerPanel(GAEController gController){
@@ -116,4 +94,5 @@ public class RightPanel extends JSplitPane {
 	private RightPanel getCurInstance(){
 		return this;
 	}
+	
 }

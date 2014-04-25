@@ -74,10 +74,9 @@ public class ActorsPanel extends Panel {
 			public void valueChanged(ListSelectionEvent e) {
 				if(!e.getValueIsAdjusting()){
 					if(myActorsTable.isFocusOwner()){
-						mySelectedRow = myActorsTable.getSelectedRow();	
-						gController.updateSelectedActorID(getSelectedActorID());
-						gController.switchActiveAttributesTab(2); //actor tab is at index 2
-						gController.updateAttributesActorInfo();
+						System.out.println("valueChange");
+						mySelectedRow = myActorsTable.getSelectedRow();							
+						update();
 					}
 				}
 			}
@@ -118,6 +117,20 @@ public class ActorsPanel extends Panel {
 		outPanel.add(deleteButton,BorderLayout.EAST);
 
 		return outPanel;
+	}
+	
+	private void update(){
+		gController.updateSelectedActorID(getSelectedActorID());
+		gController.switchActiveAttributesTab(2); //actor tab is at index 2
+		gController.updateAttributesActorInfo();
+	}
+	
+	public void update(int selectedID){
+		int actorIndex = actorIDtoRow(selectedID);
+		int indexInTable = myActorsTable.convertRowIndexToView(actorIndex);
+		myActorsTable.getSelectionModel().setSelectionInterval(indexInTable, indexInTable);
+		mySelectedRow = indexInTable;							
+		update();
 	}
 
 	private void addActors(){		
@@ -171,5 +184,7 @@ public class ActorsPanel extends Panel {
 		}
 		return (Integer) null;
 	}
+
+	
 
 }

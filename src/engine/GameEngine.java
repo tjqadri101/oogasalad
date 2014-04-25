@@ -13,6 +13,9 @@ import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +81,7 @@ public class GameEngine extends StdGame{
         }
     }
     
-    
+      
     public boolean checkGoal(){
     	if(myCurrentScene == null) return false;
     	String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
@@ -336,6 +339,8 @@ public class GameEngine extends StdGame{
     	if (list.isEmpty()){
     		return -1;
     	}
+    	this.getParent().firePropertyChange("clickedID", 0, list.get(0).getID());  
+    	
     	return list.get(0).getID();
     }
     
