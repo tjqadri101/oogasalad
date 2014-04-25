@@ -65,7 +65,7 @@ public class CollisionManager {
 				SaladConstants.COLLISION_ID, victimColid, type, true, attributeParams);
 		myAttributes.add(attribute);
 		objects.add(0, type);
-		String pair = tileColid + SaladConstants.SEPERATER + victimColid;
+		String pair = victimColid + SaladConstants.SEPERATER + tileColid;
 		myTileCollisionMap.put(pair, objects);
 	}
 	
@@ -87,7 +87,7 @@ public class CollisionManager {
 	 * @return Object list
 	 */
 	public List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
-		String pair = tileColid + SaladConstants.SEPERATER + victimColid;
+		String pair = victimColid + SaladConstants.SEPERATER + tileColid;
 		return myTileCollisionMap.get(pair);
 	}
 	
