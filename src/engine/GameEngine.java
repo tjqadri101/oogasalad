@@ -22,7 +22,8 @@ import java.util.ResourceBundle;
 import engineManagers.ScoreManager;
 
 /**
- * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
+ * @Author: Isaac (Shenghan) Chen
+ * @Contribution: Justin (Zihao) Zhang
  */
 public class GameEngine extends StdGame{
 
