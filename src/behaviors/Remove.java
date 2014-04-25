@@ -16,9 +16,6 @@ public class Remove extends Removable{
 
 	@Override
 	public void remove(List<Object> params) {
-		myObject.loseLife();
-		if(myObject.getLives() <= 0){
-			myObject.remove();	
-		}
+		myObject.remove();
 	}
 }

@@ -5,18 +5,24 @@ import saladConstants.SaladConstants;
 public class SideDetector extends GameObject{
 
 	public static final double DETECTOR_FACTOR = 0.25;
+	public static final int GENERATOR_FACTOR = 10000;
 
 	protected GameObject myParent;
 	protected int myDirection;
 
 	public SideDetector(GameObject parent, int direction, int cid) {
-		super(SaladConstants.NULL_UNIQUE_ID, null, 0, 0, 0, 0, null, cid, 1, parent.getCollisionManager(), parent.getScoreManager());
+		super(SaladConstants.NULL_UNIQUE_ID, null, 0, 0, 0, 0, null, cid, 1, 
+				parent.getCollisionManager(), parent.getScoreManager(), parent.getBloodManager());
 		myParent = parent;
 		myDirection = direction;
 		move();
 		setSDBBox(direction);
 	}
 
+	public static int SDcid(int parent_cid, int dir){
+		return parent_cid*GENERATOR_FACTOR+dir;
+	}
+	
 	public void move(){
 		setPos(myParent.x, myParent.y);
 	}

@@ -9,6 +9,7 @@ import game_authoring_environment.AttributesPanel;
 import game_authoring_environment.FullView;
 import game_authoring_environment.GAE;
 import game_authoring_environment.LeftPanel;
+import game_authoring_environment.Library;
 import game_authoring_environment.MenuBar;
 
 import java.awt.BorderLayout;
@@ -17,8 +18,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.plaf.LayerUI;
 
 
 
@@ -38,7 +41,7 @@ public class GAEController {
 	private GameEngine myGameEngine;
 	private HashMap<String, JPanel> panelMap;
 	private AttributesPanel attributesPanel;
-	private ActorsPanel actorsPanel;
+	private Library libraryPanel;
 	private int selectedSceneID;
 	private int selectedActorID;
 	private int playerID;
@@ -60,6 +63,7 @@ public class GAEController {
 		mb = g.getMenuBar();
 		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
+		libraryPanel = fv.getLibrary();
 		//test code below
 		setDragTile(2,"brick.png");		
 		
@@ -738,7 +742,10 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
-
+	
+	
+	// GAE funtions below. NOT orders sending to DataController
+		
 	public List<String> getAttributes(){
 		List<String> s = myDataController.getActorInfo(selectedActorID);
 		return s;
@@ -750,6 +757,10 @@ public class GAEController {
 	
 	public void switchActiveAttributesTab(int index){
 		attributesPanel.setTab(index);
+	}
+	
+	public void switchLibraryTab(int index){
+		libraryPanel.setTab(index);
 	}
 		
 	
@@ -769,7 +780,13 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
-	//Kat's method for testing
+	public void setActorPanelSelection(int actorID){
+		switchLibraryTab(1);
+		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
+		ap.update(actorID);
+	}
+	
+
 	/**Modify the thumbnail in Actor panel*/
 	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
@@ -791,6 +808,10 @@ public class GAEController {
 		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
+	}
+	
+	public int getSelectedIDFromDataController(){
+		return myDataController.getSelectedID();
 	}
 	
 	/*public void createPlayer(int ID,String url,String name){

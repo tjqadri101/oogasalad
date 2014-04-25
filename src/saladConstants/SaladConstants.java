@@ -17,7 +17,8 @@ public final class SaladConstants {
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
 	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
-	public static final String MODIFY_BACKGROUND = "ModifyBackground";
+//	public static final String MODIFY_BACKGROUND = "ModifyBackground";
+	public static final String MODIFY_SCENE_VIEW = "ModifySceneView";
 	
 	public static final String GAME_EDITOR_PANEL = "GameEditor";
 	public static final String ACTOR_EDITOR_PANEL = "ActorEditor";
@@ -132,6 +133,12 @@ public final class SaladConstants {
 	public static final String MOVE_RIGHT = "moveRight";
 	public static final String SHOOT_KEY = "shoot";
 	public static final String JUMP_KEY = "jump";
+	
+	public static final String UP = "Up";
+	public static final String BOTTOM = "Bottom";
+	public static final String LEFT = "Left";
+	public static final String RIGHT = "Right";
+	public static final String ALL = "All";
 
 
 	public static final String PLAYER_INIT_POS = "PlayerInitialPosition";

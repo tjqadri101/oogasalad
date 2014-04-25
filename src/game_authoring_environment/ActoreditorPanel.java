@@ -54,8 +54,10 @@ public class ActoreditorPanel extends Panel {
 		JButton jb  = makeChooseButton();
 		return jb;
 	}
-	public void update(){
+	
+	public void update(int currentSelectedActorID){
 		updateTable();
+		System.out.println("ActoreditorPanel switched to actorID:"+currentSelectedActorID);
 	}
 
 	private JTable createTable(){
@@ -70,7 +72,7 @@ public class ActoreditorPanel extends Panel {
 		String firstrow = s.get(0);
 		String[] strings = firstrow.split(",");
 		for(String k : strings){
-			System.out.println(k);
+			//System.out.println(k);
 		}
 	}
 
@@ -111,8 +113,5 @@ public class ActoreditorPanel extends Panel {
 		}
 	}
 	
-	public void updateInfo(int actorID){
-		System.out.println("updating actorID:"+actorID);	
-	}
 
 }

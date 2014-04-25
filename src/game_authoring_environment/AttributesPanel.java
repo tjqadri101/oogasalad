@@ -66,7 +66,7 @@ public class AttributesPanel extends JTabbedPane {
 	}
 
 	public void updateActorInfo(int actorID) {
-		((ActoreditorPanel) myActorEditorPanel).updateInfo(actorID);
+		((ActoreditorPanel) myActorEditorPanel).update(actorID);
 		
 	}
 	

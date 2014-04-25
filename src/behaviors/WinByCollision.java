@@ -16,7 +16,6 @@ public class WinByCollision extends Winnable{
 	public WinByCollision(GameEngine engine) {
 		super(engine);
 	}
-	
 	   
     /**
      * @param objectID

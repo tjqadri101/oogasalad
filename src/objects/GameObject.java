@@ -3,11 +3,11 @@ package objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.ScoreManager;
-//import engineManagers.ScoreManager;
 import saladConstants.SaladConstants;
+import stage.Trigger;
 import util.AttributeMaker;
 import util.SaladUtil;
 import jgame.JGObject;
@@ -20,13 +20,16 @@ public abstract class GameObject extends JGObject {
     
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
+	protected BloodManager myBloodManager;
+	       protected Trigger myTrigger;
+	       protected boolean myTriggerFlag;
 	
 	protected int myXSize;
 	protected int myYSize;
 	protected double myInitX;
 	protected double myInitY;
-	protected int myInitLives;
-	protected int myLives;
+	protected int myInitBlood;
+	protected int myBlood;
 	protected int myUniqueID;
 	protected int myJumpTimes;
 	protected boolean myIsInAir;
@@ -51,21 +54,32 @@ public abstract class GameObject extends JGObject {
 	protected SideDetector[] mySideDetectors;//plz review
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
-			String name, int collisionId, int lives, 
-			CollisionManager collisionManager, ScoreManager scoreManager){
-		
+			String name, int collisionId, int blood, 
+			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager){
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, gfxname);
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
-		setLives(lives); // change later
+		setBlood(blood); // change later
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
-		mySideDetectors = new SideDetector[4]; //plz review
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
+		myBloodManager = bloodManager;
 		myGfxName = gfxname;
 		myName = name;
+		initSideDetectors();
+	}
+
+	/**
+	 * 
+	 */
+	private void initSideDetectors() {
+		if(myUniqueID == SaladConstants.NULL_UNIQUE_ID) return;
+		mySideDetectors = new SideDetector[4];
+		for (int i=0;i<4;i++){
+			setSideDetector(new SideDetector(this,i,SideDetector.SDcid(colid,i)));
+		}
 	}
 	
 	/**
@@ -167,7 +181,7 @@ public abstract class GameObject extends JGObject {
 	public void restore(boolean lifeLost){
 		setInitPos(myInitX, myInitY);
 		setInitSpeed(myInitXSpeed, myInitYSpeed);
-		if (!lifeLost) setLives(myInitLives);
+		if (!lifeLost) setBlood(myInitBlood);
 		if (!is_alive){
 			eng.markAddObject(this);
     		is_alive = true;
@@ -207,33 +221,33 @@ public abstract class GameObject extends JGObject {
 	/**
 	 * Decrement the number of lives
 	 */
-	public void loseLife(){
-		myLives --;
+	public void changeBlood(int blood){
+		myBlood -= blood;
 	}
 	
 	/**
 	 * Initialize the number of lives
 	 * @param lives
 	 */
-	public void setLives(int lives){
-		myInitLives = lives;
-		myLives = lives;
+	public void setBlood(int blood){
+		myInitBlood = blood;
+		myBlood = blood;
 	}
 	
 	/**
 	 * Get current number of lives
 	 * @return
 	 */
-	public int getLives(){
-		return myLives;
+	public int getBlood(){
+		return myBlood;
 	}
 	
 	/**
 	 * Get number of initial lives
 	 * @return
 	 */
-	public int getInitLives(){
-		return myInitLives;
+	public int getInitBlood(){
+		return myInitBlood;
 	}
 	
 	/**
@@ -313,7 +327,6 @@ public abstract class GameObject extends JGObject {
 	
 	public void jump(){
 		myJumpTimes ++;
-		myIsInAir = true;
 		if(myJumpBehavior == null) return;
 		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, SaladConstants.JUMP, this);
 	}
@@ -336,7 +349,8 @@ public abstract class GameObject extends JGObject {
 	
 	@Override
 	public void move(){
-		if(myLives <= 0) die();
+		if(myBlood <= 0) die();
+		myIsInAir = true;
 	}
 	
 	@Override
@@ -399,6 +413,32 @@ public abstract class GameObject extends JGObject {
 	public ScoreManager getScoreManager(){
 		return myScoreManager;
 	}
+	
+	/**
+	 * Used for behaviors to get the BloodManager to update blood
+	 * @return BloodManager
+	 */
+	public BloodManager getBloodManager(){
+		return myBloodManager;
+	}
+	
+	/**
+         * Used for triggerManager to inspect the trigger
+         * @return Trigger
+         */
+        public Trigger getTrigger(){
+                return myTrigger;
+        }
+        
+        /**
+         * Used for triggerManager to checkTrigger at each doFrame in engine
+         * @return Trigger
+         */
+        public boolean checkTrigger(){
+                return myTriggerFlag;
+        }
+	
+	
 	
 /* @Steve:
  * The following getter and setters used for GameFactoryTest

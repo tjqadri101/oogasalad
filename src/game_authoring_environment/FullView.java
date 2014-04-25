@@ -3,9 +3,12 @@ package game_authoring_environment;
 import java.awt.Dimension;
 import java.util.HashMap;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLayer;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.plaf.LayerUI;
 
 import controller.GAEController;
 
@@ -30,5 +33,9 @@ import controller.GAEController;
 			return lp.getAttributes();
 		}
 		
+		public Library getLibrary(){
+			return lp.getLibrary();
+		}
 		
+				
 	}

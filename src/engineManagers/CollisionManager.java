@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import objects.GameObject;
 import objects.SideDetector;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
@@ -38,15 +37,15 @@ public class CollisionManager {
 	 * @param victimColid
 	 * @param args parameters
 	 */
-	public void addCollisionPair(int hitterColid, String type, int victimColid, Object ... args){
+	public void addCollisionPair(int victimColid, String type, int hitterColid, Object ... args){
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
 		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
-		attributeParams.add(0, victimColid);
+		attributeParams.add(0, hitterColid);
 		String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_COLLISION_BEHAVIOR, 
-				SaladConstants.COLLISION_ID, hitterColid, type, true, attributeParams);
+				SaladConstants.COLLISION_ID, victimColid, type, true, attributeParams);
 		myAttributes.add(attribute);
 		objects.add(0, type);
-		String pair = hitterColid + SaladConstants.SEPERATER + victimColid;
+		String pair = victimColid + SaladConstants.SEPERATER + hitterColid;
 		myCollisionMap.put(pair, objects);
 	}
 	
@@ -65,7 +64,7 @@ public class CollisionManager {
 				SaladConstants.COLLISION_ID, victimColid, type, true, attributeParams);
 		myAttributes.add(attribute);
 		objects.add(0, type);
-		String pair = tileColid + SaladConstants.SEPERATER + victimColid;
+		String pair = victimColid + SaladConstants.SEPERATER + tileColid;
 		myTileCollisionMap.put(pair, objects);
 	}
 	
@@ -76,7 +75,7 @@ public class CollisionManager {
 	 * @return Object list
 	 */
 	public List<Object> getCollisionBehavior(int victimColid, int hitterColid){
-		String pair = hitterColid + SaladConstants.SEPERATER + victimColid;
+		String pair = victimColid + SaladConstants.SEPERATER + hitterColid;
 		return myCollisionMap.get(pair);
 	}
 	
@@ -87,7 +86,7 @@ public class CollisionManager {
 	 * @return Object list
 	 */
 	public List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
-		String pair = tileColid + SaladConstants.SEPERATER + victimColid;
+		String pair = victimColid + SaladConstants.SEPERATER + tileColid;
 		return myTileCollisionMap.get(pair);
 	}
 	
@@ -123,18 +122,21 @@ public class CollisionManager {
 		return answer;
 	}
 	
-	/**
-	 * Set side collision detector bars for every Game Object
-	 * @param object
-	 * @param direction
-	 * @param cid
-	 */
-	public void setSideCollisionDetecter(GameObject object, String direction, int cid){
-		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+	//Better use reflection or whatever means to combine pair/tile collision in one method
+	
+	public void setDirectionalCollisionBehavior(int victimColid, String type, int hitterColid, String direction, Object ... args){
+		int dir = Arrays.asList(new String[]{SaladConstants.UP,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
-		SideDetector sd = object.getSideDetector(dir);
-		if (sd == null) object.setSideDetector(new SideDetector(object,dir,cid));
-		else sd.colid = cid;
+		if(dir == 4) addCollisionPair(victimColid, type, hitterColid, args);
+
+		else addCollisionPair(SideDetector.SDcid(victimColid, dir), type, hitterColid,args);
+	}
+	
+	public void setDirectionalTileCollisionBehavior(int victimColid, String type, int tileColid, String direction, Object ... args){
+		int dir = Arrays.asList(new String[]{SaladConstants.UP,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
+		if (dir == -1) return;
+		if(dir == 4) addTileCollisionPair(victimColid, type, tileColid, args);
+		else addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, args);
 	}
 	
 	/**

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
@@ -27,6 +28,8 @@ public class Game {
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<StateType, Transition> myNonLevelSceneMap;
 	protected ScoreManager myScoreManager;
+	protected BloodManager myBloodManager;
+	protected TriggerManager myTriggerManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
 	protected Player myPlayer;
@@ -38,6 +41,7 @@ public class Game {
 		myLevelMap = new HashMap<Integer, Level>();
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
 		myScoreManager = new ScoreManager();
+		myBloodManager = new BloodManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
@@ -225,6 +229,14 @@ public class Game {
      */
     public ScoreManager getScoreManager(){
     	return myScoreManager;
+    }
+    
+    /**
+     * Get the blood manager of the Game
+     * @return BloodManager
+     */
+    public BloodManager getBloodManager(){
+    	return myBloodManager;
     }
     
     /**

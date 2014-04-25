@@ -20,6 +20,9 @@ public class Eliminate extends Collision{
 		GameObject hitter = (GameObject) objects.get(0);
 		myObject.getScoreManager().updateScore(SaladConstants.COLLISION, 
 				myObject.colid, hitter.colid);
+		int blood = myObject.getBloodManager().getChangeOfBlood(SaladConstants.COLLISION, 
+				myObject.colid, hitter.colid);
+		hitter.changeBlood(blood);
 		myObject.die(); 
 	}
 }
