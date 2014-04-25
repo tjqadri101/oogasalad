@@ -218,15 +218,8 @@ public abstract class GameObject extends JGObject {
 	/**
 	 * Decrement the number of lives
 	 */
-	public void loseBlood(int blood){
+	public void changeBlood(int blood){
 		myBlood -= blood;
-	}
-	
-	/**
-	 * Increase the number of lives
-	 */
-	public void incrementBlood(int blood){
-		myBlood += blood;
 	}
 	
 	/**

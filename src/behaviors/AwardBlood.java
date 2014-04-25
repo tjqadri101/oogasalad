@@ -19,7 +19,7 @@ public class AwardBlood extends Collision{
 		GameObject hitter = (GameObject) objects.get(0);
 		int value = (Integer) objects.get(1);
 		hitter.die();
-		myObject.incrementBlood(value);
+//		myObject.incrementBlood(value);
 	}
 
 }

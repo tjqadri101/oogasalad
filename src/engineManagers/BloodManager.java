@@ -7,22 +7,23 @@ import saladConstants.SaladConstants;
 import util.SaladUtil;
 
 public class BloodManager {
+	public static final int NOT_USED_BLOOD = 0;
 	
-	protected Map<String, int[]> myBloodMap;
+	protected Map<String, Integer> myBloodMap;
 	
 	public BloodManager(){
-		myBloodMap = new HashMap<String, int[]>();
+		myBloodMap = new HashMap<String, Integer>();
 	}
 	
-	public void setBlood(int victimBlood, int hitterBlood, Object ... args){
+	public void setBlood(int blood, Object ... args){
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPERATER, args);
-		int[] param = {victimBlood, hitterBlood};
-		myBloodMap.put(condition, param);
+		myBloodMap.put(condition, blood);
 	}
 	
-	public int[] getChangeOfBlood(String info, int victimColid, int hitterColid){
+	public int getChangeOfBlood(String info, int victimColid, int hitterColid){
 		String condition = info + SaladConstants.SEPERATER + victimColid + 
 				SaladConstants.SEPERATER + hitterColid;
+		if(!myBloodMap.containsKey(condition)) return NOT_USED_BLOOD;
 		return myBloodMap.get(condition);
 	}
 
