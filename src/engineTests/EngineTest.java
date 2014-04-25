@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 import objects.NonPlayer;
 import objects.Player;
-
+import saladConstants.SaladConstants;
 import stage.Game;
 import engine.GameEngine;
 
@@ -34,6 +34,7 @@ public class EngineTest {
 	public GameEngine testEngine(){
 		
 		GameEngine engine = new GameEngine(false);
+		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
 		game.addLevel(1);
@@ -75,16 +76,18 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		
-		game.getCollisionManager().setSideCollisionDetecter(player, "bottom", 5);
-		game.getCollisionManager().setSideCollisionDetecter(player, "right", 6);
-		game.getCollisionManager().setSideCollisionDetecter(player, "left", 6);
-		game.getCollisionManager().addCollisionPair(BULLET_COLID, "PerishTogether", ENEMY_COLID);
-		game.getCollisionManager().addCollisionPair(BULLET_COLID, "PerishTogether", MUSHROOM_COLID);
-		game.getCollisionManager().addCollisionPair(PLAYER_COLID, "HitterEliminateVictim", ENEMY_COLID);
-		game.getCollisionManager().addCollisionPair(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID);
-		game.getCollisionManager().addTileCollisionPair(ENEMY_COLID, "StayOnTile", TILE_COLID);
-		game.getCollisionManager().addTileCollisionPair(PLAYER_COLID, "StayOnTile", TILE_COLID);
-		game.getCollisionManager().addTileCollisionPair(MUSHROOM_COLID, "StayOnTile", TILE_COLID);
+//		game.getCollisionManager().setSideCollisionDetecter(player, "bottom", 5);
+//		game.getCollisionManager().setSideCollisionDetecter(player, "right", 6);
+//		game.getCollisionManager().setSideCollisionDetecter(player, "left", 6);
+//		game.getCollisionManager().addCollisionPair(BULLET_COLID, "PerishTogether", ENEMY_COLID);
+		game.getCollisionManager().setDirectionalCollisionBehavior(BULLET_COLID, "PerishTogether", MUSHROOM_COLID,"all");
+		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "HitterEliminateVictim", ENEMY_COLID,"all");
+		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID,"all");
+		game.getCollisionManager().setDirectionalTileCollisionBehavior(ENEMY_COLID, "StayOnTile", TILE_COLID,"all");
+		game.getCollisionManager().setDirectionalTileCollisionBehavior(PLAYER_COLID, "StayOnTile", TILE_COLID,"all");
+		game.getCollisionManager().setDirectionalTileCollisionBehavior(MUSHROOM_COLID, "StayOnTile", TILE_COLID,"all");
+		game.getScoreManager().setScore(5, SaladConstants.COLLISION, ENEMY_COLID, PLAYER_COLID);
+		game.getScoreManager().setScore(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
 		
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
 //        game.getLevel(1).setWinBehavior("WinByCollision", 123);

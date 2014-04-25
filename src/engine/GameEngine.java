@@ -25,7 +25,8 @@ import java.util.ResourceBundle;
 import engineManagers.ScoreManager;
 
 /**
- * @Author: Isaac (Shenghan) Chen, Justin (Zihao) Zhang
+ * @Author: Isaac (Shenghan) Chen
+ * @Contribution: Justin (Zihao) Zhang
  */
 public class GameEngine extends StdGame{
 
@@ -42,7 +43,7 @@ public class GameEngine extends StdGame{
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
     protected Scene myCurrentScene;
-    protected Scene myEmptyScene = new Scene(0);
+//    protected Scene myEmptyScene = new Scene(0);
     protected Player myPlayer;
     
     protected int myMouseX;
@@ -91,6 +92,11 @@ public class GameEngine extends StdGame{
     	Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior, winParameters, "checkGoal", this);
     	return (Boolean) answer;
     }
+    
+    public boolean checkTrigger(){
+//      consider combineing the checkTrigger to checkGoal()
+        return true;
+    }   
     
     
     public void startEdit(){
@@ -178,6 +184,9 @@ public class GameEngine extends StdGame{
 		
     	if(checkGoal()){
     		drawString("Win!!!!!!!!!!!!!!!!",viewWidth()/2,viewHeight()/2+100,0,false);
+    	}
+    	if(checkGoal()){
+    	        // call the event module 
     	}
     	if(myMouseButton!=0 && myClickedID == -1){
 			int tileX = myMouseX/20;
@@ -472,6 +481,7 @@ public class GameEngine extends StdGame{
     	myCurrentScene.setBackgroundImage(url);
     	loadImage(url);
     	setBGImage(url);
+    	System.out.println("setBackground");
     }
     
     public void setGame (Game mygame) {

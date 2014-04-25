@@ -6,42 +6,99 @@ import java.util.List;
 import java.util.Map;
 
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
+import util.SaladUtil;
 /**
  * @Author: Justin (Zihao) Zhang
  */
 public class ScoreManager {
 	
-	public static final int DEFAULT_SCORE = 0;
+	public static final int DEFAULT_INITIAL_SCORE = 0;
 	
 	protected int myScore;
-	protected int initialScore;
+	protected int myInitialScore;
 	protected Map<String, Integer> myScoreMap;
 	
 	public ScoreManager(int startScore){
 		myScore = startScore;
-		initialScore = startScore;
+		myInitialScore = startScore;
 		myScoreMap = new HashMap<String, Integer>();
 	}
 	
 	public ScoreManager(){
-		this(DEFAULT_SCORE);
+		this(DEFAULT_INITIAL_SCORE);
 	}
 	
+	/**
+	 * Set the initial score
+	 * @param startScore
+	 */
+	public void setInitialScore(int startScore){
+		myInitialScore = startScore;
+	}
+	
+	/**
+	 * Restore to initial score
+	 */
+	public void restore(){
+		myScore = myInitialScore;
+	}
+	
+	/**
+	 * Get the current updated score
+	 * @return score
+	 */
 	public int getCurrentScore(){
 		return myScore;
 	}
 	
-	public void setScore(String condition, int score){
+	/**
+	 * Called to set the change of score to a condition
+	 * @param score
+	 * @param args: condition
+	 */
+	public void setScore(int score, Object ... args){
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPERATER, args);
 		myScoreMap.put(condition, score);
 	}
 	
-	public void updateScore(String condition, int vitimColid, int hitterColid){
+	/**
+	 * Called to update the current score
+	 * @param info
+	 * @param victimColid
+	 * @param hitterColid
+	 */
+	public void updateScore(String info, int victimColid, int hitterColid){
+		String condition = info + SaladConstants.SEPERATER + victimColid + 
+				SaladConstants.SEPERATER + hitterColid;
+		if(myScoreMap.get(condition) == null) return;
+		myScore += myScoreMap.get(condition);
+		System.out.println("current score: " + myScore);
+	}
+	
+	/**
+	 * Called to update the current score
+	 * @param oldLevelOrSceneID
+	 * @param newLevelOrSceneID
+	 */
+	public void updateScore(String oldLevelOrSceneID, String newLevelOrSceneID){
+		String condition = oldLevelOrSceneID + SaladConstants.SEPERATER + newLevelOrSceneID;
+		if(myScoreMap.get(condition) == null) return;
 		myScore += myScoreMap.get(condition);
 	}
 	
+	/**
+	 * Get attribute
+	 * @return List of Strings
+	 */
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
-		answer.add(SaladConstants.MODIFY_SCOREMANAGER + "," + SaladConstants.INITIAL_SCORE + "," + initialScore);
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, 
+				SaladConstants.INITIAL_SCORE, myInitialScore));
+//		for (String condition: myScoreMap){
+//			
+//			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, SaladConstants.SET_SCORE, condition))
+//		}
 		return answer;
 	}
 

@@ -142,7 +142,7 @@ public class JGObject {
 	 * view.  Default is true. */
 	public boolean resume_in_view=true;
 
-	private boolean is_alive=true;
+	public boolean is_alive=true;
 	/** Indicates if object is suspended. */
 	public boolean is_suspended=false;
 

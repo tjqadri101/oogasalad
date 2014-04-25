@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.ScoreManager;
 import reflection.Reflection;
@@ -20,8 +21,8 @@ public class Player extends GameObject {
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
-			CollisionManager collisionManager, ScoreManager scoreManager) {
-		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, scoreManager);
+			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager) {
+		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, scoreManager, bloodManager);
 		myIsPlayer = true;
 		myKeyMap = new HashMap<Integer, String>();
 		myInitXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
@@ -30,7 +31,7 @@ public class Player extends GameObject {
 		myAttributes.add(SaladConstants.CREATE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + myUniqueID + SaladConstants.SEPERATER + 
 				SaladConstants.IMAGE + SaladConstants.SEPERATER + getGraphic() + SaladConstants.SEPERATER + myXSize + SaladConstants.SEPERATER + myYSize + SaladConstants.SEPERATER +
 				SaladConstants.POSITION + SaladConstants.SEPERATER + myInitX + SaladConstants.SEPERATER + myInitY + SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER + getName() + SaladConstants.SEPERATER + 
-				SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colid + SaladConstants.SEPERATER + SaladConstants.LIVES + SaladConstants.SEPERATER + myInitLives);
+				SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colid + SaladConstants.SEPERATER + SaladConstants.LIVES + SaladConstants.SEPERATER + myInitBlood);
 
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPERATER);
 	}
@@ -57,28 +58,28 @@ public class Player extends GameObject {
 	
 	public void moveUp(){
 		if (y > 0) {
-			y -= myInitYSpeed;
+			y -= myInitYSpeed*eng.getGameSpeed();
 			ydir = SaladConstants.NEGATIVE_DIRECTION;
 		}
 	}
 	
 	public void moveDown(){
 		if (y + getYSize() < eng.pfHeight()) {
-			y += myInitYSpeed;
+			y += myInitYSpeed*eng.getGameSpeed();
 			ydir = SaladConstants.POSITIVE_DIRECTION;
 		}
 	}
 	
 	public void moveLeft(){
 		if (x > 0) {
-			x -= myInitXSpeed;
+			x -= myInitXSpeed*eng.getGameSpeed();
 			xdir = SaladConstants.NEGATIVE_DIRECTION;
 		}
 	}
 	
 	public void moveRight(){
 		if (x + getXSize() < eng.pfWidth()) {
-			x += myInitXSpeed;
+			x += myInitXSpeed*eng.getGameSpeed();
 			xdir = SaladConstants.POSITIVE_DIRECTION;
 		}
 	}
