@@ -71,6 +71,7 @@ public final class SaladConstants {
     public static final String STAY_ON_TILE = "StayOnTile";
 	public static final String REGULAR_MOVE = "RegularMove";
 	public static final String REGULAR_REMOVE = "RegularRemove";
+	public static final String BACK_FORTH_MOVE = "BackForthMove";
 	public static final String IMMOBILE = "Immobile";
 	public static final String SLOW_SHOOT = "SlowShoot";
 	public static final String QUICK_SHOOT = "QuickShoot";
@@ -154,7 +155,6 @@ public final class SaladConstants {
 	public static final String SET_EVENT = "SetEvent";
 	public static final String TRIGGER_TYPE = "TriggerType";
 	public static final String EVENT_TYPE = "EventType";
-
 
 
 	
