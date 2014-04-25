@@ -111,8 +111,7 @@ public class ActoreditorPanel extends Panel {
 		}
 	}
 	
-	public void updateInfo(int actorID){
-		System.out.println("updating actorID:"+actorID);	
+	public void updateInfo(int actorID){	
 	}
 
 }

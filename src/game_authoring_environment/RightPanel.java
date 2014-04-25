@@ -4,10 +4,14 @@
 package game_authoring_environment;
 
 import java.awt.Container;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -22,6 +26,8 @@ import javax.swing.event.ChangeListener;
 import reflection.ReflectionException;
 
 import java.lang.reflect.Field;
+
+import jgame.platform.JGEngine;
 
 import controller.GAEController;
 import engineTests.EngineTest;
@@ -38,9 +44,35 @@ public class RightPanel extends JSplitPane {
 		myGAEController = gController;
 		setOrientation(VERTICAL_SPLIT);
 		setTopComponent(createSpinnerPanel(gController));
-		setBottomComponent(new JScrollPane(myGAEController.getEngine()));
+		setBottomComponent(myGAEController.getEngine());
 		fieldName = "";
-	}	
+	}
+	
+	private JLayeredPane createEnginePanel(){
+		JLayeredPane lp  = new JLayeredPane();
+		JGEngine engine = myGAEController.getEngine();
+		
+		JPanel glass = new JPanel();
+		glass.add(engine);
+	    glass.setOpaque(false);
+		MouseListener mouseListener = new MouseAdapter() {
+		     public void mouseClicked(MouseEvent e) {
+		         if (e.getClickCount() == 1) {
+		        	 System.out.println("mouse clicked");
+		        	 int selectedID = myGAEController.getSelectedIDFromDataController();
+		        	 myGAEController.updateSelectedActorID(selectedID);
+		          }
+		     }
+		 };		 
+		 
+		 glass.addMouseListener(mouseListener);
+		
+		
+		//lp.add(engine, Integer.valueOf(1));
+		lp.add(glass);
+		
+		return lp;
+	}
 	
 	private JComponent createSpinnerPanel(GAEController gController){
 		JPanel spinnerPanel = new JPanel();
@@ -84,29 +116,4 @@ public class RightPanel extends JSplitPane {
 	private RightPanel getCurInstance(){
 		return this;
 	}
-	//for tesing purposes
-	/* private static void createAndShowGUI() {
-	        //Create and set up the window.
-	        JFrame frame = new JFrame("SpinnerDemo");
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	        //Add content to the window.
-	        frame.add(new RightPanel());
-
-	        //Display the window.
-	        frame.pack();
-	        frame.setVisible(true);
-	    }
-
-	    public static void main(String[] args) {
-	        //Schedule a job for the event dispatch thread:
-	        //creating and showing this application's GUI.
-	        SwingUtilities.invokeLater(new Runnable() {
-	            public void run() {
-	                //Turn off metal's use of bold fonts
-		        UIManager.put("swing.boldMetal", Boolean.FALSE);
-			createAndShowGUI();
-	            }
-	        });
-	    }*/
 }

@@ -738,7 +738,11 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
-
+	
+	
+	// GAE funtions below. NOT orders sending to DataController
+	
+	
 	public List<String> getAttributes(){
 		List<String> s = myDataController.getActorInfo(selectedActorID);
 		return s;
@@ -767,9 +771,9 @@ public class GAEController {
 	
 	public void updateSelectedActorID(int newID){
 		selectedActorID = newID;
+		System.out.println("new selected ID:" + selectedActorID);
 	}
-	
-	//Kat's method for testing
+
 	/**Modify the thumbnail in Actor panel*/
 	public void updateActorImage(String imageURL, String name){
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
@@ -791,6 +795,10 @@ public class GAEController {
 		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + selectedActorID + SaladConstants.SEPERATER + SaladConstants.IMAGE + SaladConstants.SEPERATER + URL + SaladConstants.SEPERATER + xval + SaladConstants.SEPERATER + yval;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
+	}
+	
+	public int getSelectedIDFromDataController(){
+		return myDataController.getSelectedID();
 	}
 	
 	/*public void createPlayer(int ID,String url,String name){
