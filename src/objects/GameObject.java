@@ -7,7 +7,7 @@ import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.ScoreManager;
 import saladConstants.SaladConstants;
-//import stage.Trigger;
+import engineManagers.*;
 import util.AttributeMaker;
 import util.SaladUtil;
 import jgame.JGObject;
@@ -21,7 +21,7 @@ public abstract class GameObject extends JGObject {
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
-//	       protected Trigger myTrigger;
+	       protected Triggerable myTrigger;
 	       protected boolean myTriggerFlag;
 	
 	protected int myXSize;
@@ -426,9 +426,9 @@ public abstract class GameObject extends JGObject {
          * Used for triggerManager to inspect the trigger
          * @return Trigger
          */
-//        public Trigger getTrigger(){
-//                return myTrigger;
-//        }
+        public Triggerable getTrigger(){
+                return myTrigger;
+        }
         
         /**
          * Used for triggerManager to checkTrigger at each doFrame in engine
