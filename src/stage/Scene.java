@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
+import util.SaladUtil;
 
 /**
  * 
@@ -23,14 +25,14 @@ public class Scene {
 	public static final String DEFAULT_TILE_INFO = "null";
 	
 	protected String myBackground;
-	protected int myXSize;
-	protected int myYSize;
 	protected boolean myIfWrapHorizontal;
 	protected boolean myIfWrapVertical;
 	
 	protected int myID;
 	protected double initPlayerX;
 	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
+	protected int myFieldXSize;
+	protected int myFieldYSize;
 	
 	protected Map<Integer, NonPlayer> myObjectMap;
 	protected Map<Integer, String> myTileImageMap;
@@ -39,7 +41,7 @@ public class Scene {
 	public Scene(int id) {
 		myID = id;
 		myObjectMap = new HashMap<Integer, NonPlayer>();
-//		setSize(GameEngine.CANVAS_WIDTH,GameEngine.CANVAS_HEIGHT);
+		setSize(GameEngine.CANVAS_WIDTH,GameEngine.CANVAS_HEIGHT);
 		initTiles();
 	}
 	
@@ -94,22 +96,22 @@ public class Scene {
 		}
 	}
 	
-//	/**
-//	 * Set the dimension of this scene
-//	 * @param xsize
-//	 * @param ysize
-//	 */
-//	public void setSize(int xsize, int ysize){
-//		myXSize = xsize;
-//		myYSize = ysize;
-//	}
+	/**
+	 * Set the dimension of this scene
+	 * @param xsize
+	 * @param ysize
+	 */
+	public void setSize(int xsize, int ysize){
+		myFieldXSize = xsize;
+		myFieldYSize = ysize;
+	}
 	
 	/**
 	 * Get the x size of the object image
 	 * @return int
 	 */
 	public int getXSize(){
-		return myXSize;
+		return myFieldXSize;
 	}
 	
 	/**
@@ -117,7 +119,7 @@ public class Scene {
 	 * @return int
 	 */
 	public int getYSize(){
-		return myYSize;
+		return myFieldYSize;
 	}
 		
 	public int getID(){
@@ -159,8 +161,8 @@ public class Scene {
 		myBackground = fileName;
 		myIfWrapHorizontal = ifWrapHorizontal;
 		myIfWrapVertical = ifWrapVertical;
-		myXSize = xsize;
-		myYSize = ysize;
+		myFieldXSize = xsize;
+		myFieldYSize = ysize;
 	}
 	
 	public String getBackgroundImage() {
@@ -196,7 +198,9 @@ public class Scene {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, SaladConstants.ID, myID));
-//		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BACKGROUND, SaladConstants.BACKGROUND, myBackground));
+		List<Object> backgroundParams = SaladUtil.convertArgsToObjectList(myBackground, myIfWrapHorizontal, 
+				myIfWrapVertical, myFieldXSize, myFieldYSize);
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE_VIEW, SaladConstants.BACKGROUND, false, backgroundParams));
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.PLAYER_INITIAL_POSITION, false, initPlayerX, initPlayerY));
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
