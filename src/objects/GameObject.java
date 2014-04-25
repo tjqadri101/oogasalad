@@ -61,11 +61,21 @@ public abstract class GameObject extends JGObject {
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
-		mySideDetectors = new SideDetector[4]; //plz review
+		initSideDetectors();
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
 		myGfxName = gfxname;
 		myName = name;
+	}
+
+	/**
+	 * 
+	 */
+	private void initSideDetectors() {
+		mySideDetectors = new SideDetector[4];
+		for (int i=0;i<4;i++){
+//			setSideDetector(new SideDetector(this,i,SideDetector.SDcid(colid,i)));
+		}
 	}
 	
 	/**
@@ -313,7 +323,6 @@ public abstract class GameObject extends JGObject {
 	
 	public void jump(){
 		myJumpTimes ++;
-		myIsInAir = true;
 		if(myJumpBehavior == null) return;
 		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, SaladConstants.JUMP, this);
 	}
@@ -337,6 +346,7 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void move(){
 		if(myLives <= 0) die();
+		myIsInAir = true;
 	}
 	
 	@Override

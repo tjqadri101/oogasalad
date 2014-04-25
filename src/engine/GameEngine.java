@@ -39,7 +39,7 @@ public class GameEngine extends StdGame{
     protected int myCurrentLevelID;
     protected int myCurrentSceneID;
     protected Scene myCurrentScene;
-    protected Scene myEmptyScene = new Scene(0);
+//    protected Scene myEmptyScene = new Scene(0);
     protected Player myPlayer;
     
     protected int myMouseX;
@@ -475,6 +475,7 @@ public class GameEngine extends StdGame{
     	myCurrentScene.setBackgroundImage(url);
     	loadImage(url);
     	setBGImage(url);
+    	System.out.println("setBackground");
     }
     
     public void setGame (Game mygame) {

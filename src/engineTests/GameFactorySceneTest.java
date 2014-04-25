@@ -107,7 +107,7 @@ public class GameFactorySceneTest extends TestCase{
      */
     @Test
     public void testModifySceneBackground() throws FactoryException{
-        String MODIFY_BKGD = "ModifyBackground,Background,bg.png";
+        String MODIFY_BKGD = "ModifyBackground,Background,devil.png";
 //        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"ModifyScene","ID",0,"Background","bg.png"};
 //        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         try {

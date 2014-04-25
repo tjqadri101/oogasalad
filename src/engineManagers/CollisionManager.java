@@ -123,18 +123,20 @@ public class CollisionManager {
 		return answer;
 	}
 	
-	/**
-	 * Set side collision detector bars for every Game Object
-	 * @param object
-	 * @param direction
-	 * @param cid
-	 */
-	public void setSideCollisionDetecter(GameObject object, String direction, int cid){
-		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
+	//Better use reflection or whatever means to combine pair/tile collision in one method
+	
+	public void setDirectionalCollisionBehavior(int hitterColid, String type, int victimColid, String direction, Object ... args){
+		int dir = Arrays.asList(new String[]{"all","up","bottom","left","right"}).indexOf(direction);
 		if (dir == -1) return;
-		SideDetector sd = object.getSideDetector(dir);
-		if (sd == null) object.setSideDetector(new SideDetector(object,dir,cid));
-		else sd.colid = cid;
+		if(dir == 0) addCollisionPair(hitterColid, type, victimColid, args);
+		addCollisionPair(hitterColid, type, SideDetector.SDcid(victimColid, dir),args);
+	}
+	
+	public void setDirectionalTileCollisionBehavior(int victimColid, String type, int tileColid, String direction, Object ... args){
+		int dir = Arrays.asList(new String[]{"all","up","bottom","left","right"}).indexOf(direction);
+		if (dir == -1) return;
+		if(dir == 0) addTileCollisionPair(victimColid, type, tileColid, args);
+		addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, args);
 	}
 	
 	/**
