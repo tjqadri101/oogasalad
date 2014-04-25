@@ -35,75 +35,6 @@ public class GameEngine extends StdGame {
 	public static final int TILE_WIDTH = 20;
 	public static final int TILE_HEIGHT = 20;
 
-<<<<<<< HEAD
-    @Override
-    public void initGame () {
-        setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-        
-        //setTileSettings("#",2,0);
-                //setPFWrap(false,true,0,0);
-        
-        if(isEditingMode){
-                setGameState("InGame");
-        }
-    }
-    
-      
-    public boolean checkGoal(){
-        if(myCurrentScene == null) return false;
-        String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
-        if(winBehavior == null) return false;
-        List<Object> winParameters = myGame.getLevel(myCurrentLevelID).getWinParameters();
-        ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
-        Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior, winParameters, "checkGoal", this);
-        return (Boolean) answer;
-    }
-    
-    public boolean checkTrigger(){
-//      consider combineing the checkTrigger to checkGoal()
-        return true;
-    }   
-    
-    
-    public void startEdit(){
-        removeObjects(null,0);//remove?
-    }
-    
-    //drag;move->gravity->collision->setViewOffset
-    public void doFrameInGame(){
-        timer++;//
-        if (myCurrentScene == null) return;
-        boolean viewOffset = false;
-        if(drag()) myViewOffsetPlayer = false;
-        else{
-                moveObjects();
-                Gravity g = myGame.getGravity();
-                g.applyGravity(myPlayer);
-                for(GameObject go: myCurrentScene.getGameObjects()){
-                        g.applyGravity(go);
-                }
-                for (int[] pair: myGame.getCollisionManager().getCollisionPair()){
-                        checkCollision(pair[0], pair[1]);
-                }
-                for (int[] pair: myGame.getCollisionManager().getTileCollisionPair()){
-                        checkBGCollision(pair[0], pair[1]);
-                }
-                viewOffset = setViewOffsetEdit();
-                if(!viewOffset) setViewOffsetPlayer();
-                else myViewOffsetPlayer = false;
-        }
-        if(!viewOffset) setViewOffsetEdit();
-//        myTriggerManager.checkTrigger();
-        if(checkGoal()){
-                if(level>=3){
-                        gameOver();
-                        System.out.println("lol");
-                }
-                else
-                        levelDone();
-        }
-    }
-=======
 	protected Game myGame;
 	protected int myCurrentLevelID;
 	protected int myCurrentSceneID;
@@ -111,7 +42,6 @@ public class GameEngine extends StdGame {
 	// protected Scene myEmptyScene = new Scene(0);
 	protected Player myPlayer;
 	protected TriggerEventManager myTriggerManager;
->>>>>>> branch 'master' of https://github.com/duke-compsci308-spring2014/oogasalad_iTeam.git
 
 	protected int myMouseX;
 	protected int myMouseY;
