@@ -76,10 +76,10 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		
-		game.getCollisionManager().setSideCollisionDetecter(player, "bottom", 5);
-		game.getCollisionManager().setSideCollisionDetecter(player, "right", 6);
-		game.getCollisionManager().setSideCollisionDetecter(player, "left", 6);
-		game.getCollisionManager().addCollisionPair(BULLET_COLID, "PerishTogether", ENEMY_COLID);
+//		game.getCollisionManager().setSideCollisionDetecter(player, "bottom", 5);
+//		game.getCollisionManager().setSideCollisionDetecter(player, "right", 6);
+//		game.getCollisionManager().setSideCollisionDetecter(player, "left", 6);
+//		game.getCollisionManager().addCollisionPair(BULLET_COLID, "PerishTogether", ENEMY_COLID);
 		game.getCollisionManager().addCollisionPair(BULLET_COLID, "PerishTogether", MUSHROOM_COLID);
 		game.getCollisionManager().addCollisionPair(PLAYER_COLID, "HitterEliminateVictim", ENEMY_COLID);
 		game.getCollisionManager().addCollisionPair(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID);
