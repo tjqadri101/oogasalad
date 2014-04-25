@@ -41,7 +41,7 @@ public class Scene {
 	protected String myEvent;
 	
 	protected Map<Integer, NonPlayer> myObjectMap;
-	protected Map<Integer, String> myTileImageMap;
+	protected Map<Character, String> myTileImageMap;
 	protected String[] myTiles;
 	
 	public Scene(int id) {
@@ -51,16 +51,20 @@ public class Scene {
 		initTiles();
 	}
 	
-	public void defineTileImage(int cid, String imgfile){
+	public void defineTileImage(char cid, String imgfile){
 		myTileImageMap.put(cid, imgfile);
 	}
 	
-	public Set<Entry<Integer, String>> getTileImageMap(){
+	public Set<Entry<Character, String>> getTileImageMap(){
 		return myTileImageMap.entrySet();
 	}
 	
 	public String[] getTiles(){
 		return myTiles;
+	}
+	
+	public void setTiles(String[] tiles){
+		myTiles = tiles;
 	}
 	
 	protected void initTiles(){
@@ -69,8 +73,8 @@ public class Scene {
     	String[] array = new String[getYSize()];
     	for(int j = 0; j < getYSize(); j ++){ array[j] = temp; }
 		myTiles = array;
-		myTileImageMap = new HashMap<Integer, String>();
-		defineTileImage(0, DEFAULT_TILE_INFO);
+		myTileImageMap = new HashMap<Character, String>();
+		defineTileImage('0', DEFAULT_TILE_INFO);
 	}
 	
 	public void resizeTiles(int xsize, int ysize){
@@ -91,7 +95,7 @@ public class Scene {
 		myTiles = array;
 	}
 	
-	public void updateTiles(int cid, int left, int top, int width, int height){
+	public void updateTiles(char cid, int left, int top, int width, int height){
 		String temp = "";
     	for(int i=0;i<Math.min(width,getXSize()-left);i++){
     		temp += cid;
@@ -211,6 +215,16 @@ public class Scene {
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
+		for (Entry<Character, String> entry : getTileImageMap()) {
+			Character cid = entry.getKey();
+			String imgfile = entry.getValue();
+			answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
+		}
+		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.TILE_IMAGE;
+		for (String line: getTiles()) {
+			tiles += SaladConstants.SEPERATER + line;//different separator?
+		}
+		answer.add(tiles);
 		return answer;
 	}
 	

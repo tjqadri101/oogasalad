@@ -52,8 +52,7 @@ public class GameEngine extends StdGame {
 
 	protected int myTileX;
 	protected int myTileY;
-	protected int myTileCid;
-	protected String myTileImgFile;
+	protected char myTileCid;
 
 	protected boolean isEditingMode;
 
@@ -135,7 +134,7 @@ public class GameEngine extends StdGame {
 		}
 		if (!viewOffset)
 			setViewOffsetEdit();
-		myTriggerManager.checkTrigger();
+//		myTriggerManager.checkTrigger();
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();
@@ -334,12 +333,8 @@ public class GameEngine extends StdGame {
 	// }
 
 	// unfinished
-	public void createTiles(int cid, String imgfile, int left, int top,
+	public void createTiles(char cid, int left, int top,
 			int width, int height) {
-		if (cid > 9)
-			return;
-		defineImage(((Integer) cid).toString(), ((Integer) cid).toString(),
-				cid, imgfile, "-");
 		String temp = "";
 		for (int i = 0; i < width; i++) {
 			temp += cid;
@@ -349,7 +344,6 @@ public class GameEngine extends StdGame {
 			array[j] = temp;
 		}
 		setTiles(left, top, array);
-		myCurrentScene.defineTileImage(cid, imgfile);
 		myCurrentScene.updateTiles(cid, left, top, width, height);
 	}
 
@@ -398,7 +392,7 @@ public class GameEngine extends StdGame {
 		}
 		if (myMouseButton == 1 && !currentMouse1) {
 			if (myClickedID == -1) {
-				createTiles(myTileCid, myTileImgFile, Math.min(myTileX, tileX),
+				createTiles(myTileCid, Math.min(myTileX, tileX),
 						Math.min(myTileY, tileY),
 						Math.abs(myTileX - tileX) + 1,
 						Math.abs(myTileY - tileY) + 1);
@@ -423,7 +417,7 @@ public class GameEngine extends StdGame {
 			myTileY = tileY;
 		}
 		if (myMouseButton == 3 && !currentMouse3) {
-			createTiles(0, "null", Math.min(myTileX, tileX),
+			createTiles('0', Math.min(myTileX, tileX),
 					Math.min(myTileY, tileY), Math.abs(myTileX - tileX) + 1,
 					Math.abs(myTileY - tileY) + 1);
 		}
@@ -437,30 +431,22 @@ public class GameEngine extends StdGame {
 		return drag;
 	}
 
-	public void setDefaultTiles(int cid, String imgfile) {
+	public void setDefaultTiles(char cid, String imgfile) {
 		myTileCid = cid;
-		myTileImgFile = imgfile;
+		loadTileImage(cid,imgfile);
 	}
-
-	// public void createTiles(){
-	// boolean currentMouseClicked = getMouseButton(1);
-	//
-	// if (!myMouseClicked && currentMouseClicked){
-	// myTileX = getMouseX()/20;
-	// myTileY = getMouseY()/20;
-	// }
-	// if (myMouseClicked && !currentMouseClicked){
-	// int tileX = getMouseX()/20;
-	// int tileY = getMouseY()/20;
-	// createTiles(Math.min(myTileX,tileX), Math.min(myTileY,tileY),
-	// Math.abs(myTileX-tileX)+1, Math.abs(myTileY-tileY)+1, myTileCid,
-	// myTileImgFile);
-	// }
-	// if (myMouseClicked && currentMouseClicked){
-	//
-	// }
-	// myMouseClicked = currentMouseClicked;
-	// }
+	
+	public void createTilesFromString(String tiles){
+    	String[] array = tiles.split(SaladConstants.SEPERATER);
+    	setTiles(0, 0, array);
+    	myCurrentScene.setTiles(array);
+    }
+    
+    public void loadTileImage(char cid, String imgfile){
+    	defineImage(cid+"",cid+"",cid,imgfile,"-");
+    	System.out.println(cid);
+    	myCurrentScene.defineTileImage(cid, imgfile);
+    }
 
 	// unfinished
 	private void loadImage(String path) {
@@ -500,10 +486,10 @@ public class GameEngine extends StdGame {
          */
 	private void updateCurrentScene() {
 		setPFSize(myCurrentScene.getXSize(), myCurrentScene.getYSize());
-		for (Entry<Integer, String> entry : myCurrentScene.getTileImageMap()) {
-			Integer cid = entry.getKey();
+		for (Entry<Character, String> entry : myCurrentScene.getTileImageMap()) {
+			Character cid = entry.getKey();
 			String imgfile = entry.getValue();
-			defineImage(cid.toString(), cid.toString(), cid, imgfile, "-");
+			defineImage(cid+"",cid+"",cid,imgfile,"-");
 		}
 		setTiles(0, 0, myCurrentScene.getTiles());
 		String url = myCurrentScene.getBackgroundImage();
