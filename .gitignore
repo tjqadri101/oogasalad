@@ -11,3 +11,5 @@
 /.project_settings
 .DS_Store
 .settings
+/nbproject/private/
+/build/
