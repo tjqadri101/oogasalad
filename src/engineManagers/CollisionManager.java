@@ -38,15 +38,15 @@ public class CollisionManager {
 	 * @param victimColid
 	 * @param args parameters
 	 */
-	public void addCollisionPair(int hitterColid, String type, int victimColid, Object ... args){
+	public void addCollisionPair(int victimColid, String type, int hitterColid, Object ... args){
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
 		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
-		attributeParams.add(0, victimColid);
+		attributeParams.add(0, hitterColid);
 		String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_COLLISION_BEHAVIOR, 
-				SaladConstants.COLLISION_ID, hitterColid, type, true, attributeParams);
+				SaladConstants.COLLISION_ID, victimColid, type, true, attributeParams);
 		myAttributes.add(attribute);
 		objects.add(0, type);
-		String pair = hitterColid + SaladConstants.SEPERATER + victimColid;
+		String pair = victimColid + SaladConstants.SEPERATER + hitterColid;
 		myCollisionMap.put(pair, objects);
 	}
 	
@@ -76,7 +76,7 @@ public class CollisionManager {
 	 * @return Object list
 	 */
 	public List<Object> getCollisionBehavior(int victimColid, int hitterColid){
-		String pair = hitterColid + SaladConstants.SEPERATER + victimColid;
+		String pair = victimColid + SaladConstants.SEPERATER + hitterColid;
 		return myCollisionMap.get(pair);
 	}
 	

@@ -181,7 +181,7 @@ public class Scene {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, SaladConstants.ID, myID));
-//		answer.add(AttributeAdder.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.BACKGROUND, false, myBackground));
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BACKGROUND, SaladConstants.BACKGROUND, myBackground));
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.PLAYER_INITIAL_POSITION, false, initPlayerX, initPlayerY));
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
