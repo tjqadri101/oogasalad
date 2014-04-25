@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
@@ -23,20 +22,24 @@ import util.AttributeMaker;
 public class Scene {
 	public static final String DEFAULT_TILE_INFO = "null";
 	
-	protected int myID;
 	protected String myBackground;
-	protected Map<Integer, NonPlayer> myObjectMap;
-	protected double initPlayerX;
-	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
 	protected int myXSize;
 	protected int myYSize;
+	protected boolean myIfWrapHorizontal;
+	protected boolean myIfWrapVertical;
+	
+	protected int myID;
+	protected double initPlayerX;
+	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
+	
+	protected Map<Integer, NonPlayer> myObjectMap;
 	protected Map<Integer, String> myTileImageMap;
 	protected String[] myTiles;
 	
 	public Scene(int id) {
 		myID = id;
 		myObjectMap = new HashMap<Integer, NonPlayer>();
-		setSize(GameEngine.CANVAS_WIDTH,GameEngine.CANVAS_HEIGHT);
+//		setSize(GameEngine.CANVAS_WIDTH,GameEngine.CANVAS_HEIGHT);
 		initTiles();
 	}
 	
@@ -91,15 +94,15 @@ public class Scene {
 		}
 	}
 	
-	/**
-	 * Set the dimension of this scene
-	 * @param xsize
-	 * @param ysize
-	 */
-	public void setSize(int xsize, int ysize){
-		myXSize = xsize;
-		myYSize = ysize;
-	}
+//	/**
+//	 * Set the dimension of this scene
+//	 * @param xsize
+//	 * @param ysize
+//	 */
+//	public void setSize(int xsize, int ysize){
+//		myXSize = xsize;
+//		myYSize = ysize;
+//	}
 	
 	/**
 	 * Get the x size of the object image
@@ -152,12 +155,24 @@ public class Scene {
 		return answer;
 	}
 	
-	public void setBackgroundImage(String fileName) {
+	public void setBackgroundImage(String fileName, boolean ifWrapHorizontal, boolean ifWrapVertical, int xsize, int ysize) {
 		myBackground = fileName;
+		myIfWrapHorizontal = ifWrapHorizontal;
+		myIfWrapVertical = ifWrapVertical;
+		myXSize = xsize;
+		myYSize = ysize;
 	}
 	
 	public String getBackgroundImage() {
 		return myBackground;
+	}
+	
+	public boolean ifWrapHorizontal(){
+		return myIfWrapHorizontal;
+	}
+	
+	public boolean ifWrapVertical(){
+		return myIfWrapVertical;	
 	}
 	
 	public NonPlayer getNonPlayer(int objectID) {
@@ -181,7 +196,7 @@ public class Scene {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, SaladConstants.ID, myID));
-		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BACKGROUND, SaladConstants.BACKGROUND, myBackground));
+//		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BACKGROUND, SaladConstants.BACKGROUND, myBackground));
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.PLAYER_INITIAL_POSITION, false, initPlayerX, initPlayerY));
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
