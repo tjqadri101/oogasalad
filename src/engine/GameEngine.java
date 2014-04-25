@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
+import engineManagers.TriggerEventManager;
+
 
 /**
  * @Author: Isaac (Shenghan) Chen
@@ -41,7 +43,7 @@ public class GameEngine extends StdGame{
     protected Scene myCurrentScene;
 //    protected Scene myEmptyScene = new Scene(0);
     protected Player myPlayer;
-    protected TriggerManager myTriggerManager;
+    protected TriggerEventManager myTriggerManager;
     
     protected int myMouseX;
     protected int myMouseY;
