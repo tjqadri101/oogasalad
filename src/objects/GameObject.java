@@ -7,7 +7,7 @@ import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.ScoreManager;
 import saladConstants.SaladConstants;
-import stage.Trigger;
+//import stage.Trigger;
 import util.AttributeMaker;
 import util.SaladUtil;
 import jgame.JGObject;
@@ -21,7 +21,7 @@ public abstract class GameObject extends JGObject {
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
-	       protected Trigger myTrigger;
+//	       protected Trigger myTrigger;
 	       protected boolean myTriggerFlag;
 	
 	protected int myXSize;
@@ -32,7 +32,7 @@ public abstract class GameObject extends JGObject {
 	protected int myBlood;
 	protected int myUniqueID;
 	protected int myJumpTimes;
-	protected boolean myIsInAir;
+	protected int myIsInAir;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
 	protected String myGfxName;
@@ -312,7 +312,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void ground(){
-		myIsInAir = false;
+		myIsInAir = 1;
 		myJumpTimes = 0;
 		stop();
 	}
@@ -343,14 +343,14 @@ public abstract class GameObject extends JGObject {
 	 * 
 	 * @return boolean if is in air
 	 */
-	public boolean getIsInAir(){
+	public int getIsInAir(){
 		return myIsInAir;
 	}
 	
 	@Override
 	public void move(){
 		if(myBlood <= 0) die();
-		myIsInAir = true;
+		myIsInAir = 2*(myIsInAir%2);
 	}
 	
 	@Override
@@ -426,9 +426,9 @@ public abstract class GameObject extends JGObject {
          * Used for triggerManager to inspect the trigger
          * @return Trigger
          */
-        public Trigger getTrigger(){
-                return myTrigger;
-        }
+//        public Trigger getTrigger(){
+//                return myTrigger;
+//        }
         
         /**
          * Used for triggerManager to checkTrigger at each doFrame in engine

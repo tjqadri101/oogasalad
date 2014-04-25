@@ -42,8 +42,8 @@ public class Player extends GameObject {
 	
 	@Override
 	public void move(){
-		super.move();
 		checkKeys();
+		super.move();
 	}
 	
 	protected void checkKeys(){
