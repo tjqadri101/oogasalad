@@ -54,6 +54,7 @@ import reflection.Reflection;
 public class PlayMenuBar extends JMenuBar {
 
 	private static DataController myController;
+	private File currentGame;
 
 	public PlayMenuBar(DataController myController) {
 		super();
@@ -63,8 +64,8 @@ public class PlayMenuBar extends JMenuBar {
 
 	public JMenu createFileMenu() {
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(makeMenuItem("Open", "openGameFile"));
-		fileMenu.add(makeMenuItem("New Game", "newGame"));
+		fileMenu.add(makeMenuItem("Open New Game", "openGameFile"));
+		fileMenu.add(makeMenuItem("Restart Game", "restart"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
 	}
@@ -80,7 +81,7 @@ public class PlayMenuBar extends JMenuBar {
 	}
 
 	public void openGameFile() throws Exception {
-		File loadedFile = chooseGameFile("Load");
+		File loadedFile = currentGame;
 		if (loadedFile == null) {
 			return;
 		}
@@ -92,11 +93,11 @@ public class PlayMenuBar extends JMenuBar {
 		}
 	}
 	
-	public void newGame() throws Exception {
-		
+	public void restart() throws Exception {
+		openGameFile();
 	}
 
-	public File chooseGameFile(String command) {
+	public void chooseGameFile(String command) {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"XML file", "xml");
 		final JFileChooser chooser = ViewFactory.createJFileChooser();
@@ -104,10 +105,10 @@ public class PlayMenuBar extends JMenuBar {
 		chooser.setFileFilter(filter);
 		int actionDialog = chooser.showOpenDialog(this);
 		if (actionDialog != JFileChooser.APPROVE_OPTION) {
-			return null;
+			return;
 		}
 		File curFile = chooser.getSelectedFile();
-		return curFile;
+		currentGame = curFile;
 	}
 
 	public JComponent makeMenuItem(String label, String method) {
