@@ -29,7 +29,7 @@ public class Game {
 	protected Map<StateType, Transition> myNonLevelSceneMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
-	protected TriggerManager myTriggerManager;
+	//protected TriggerManager myTriggerManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
 	protected Player myPlayer;
