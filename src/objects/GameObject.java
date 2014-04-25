@@ -61,12 +61,12 @@ public abstract class GameObject extends JGObject {
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
-		initSideDetectors();
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
 		myBloodManager = bloodManager;
 		myGfxName = gfxname;
 		myName = name;
+		initSideDetectors();
 	}
 
 	/**

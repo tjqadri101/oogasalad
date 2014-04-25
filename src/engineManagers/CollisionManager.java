@@ -128,14 +128,15 @@ public class CollisionManager {
 		int dir = Arrays.asList(new String[]{SaladConstants.UP,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
 		if(dir == 4) addCollisionPair(victimColid, type, hitterColid, args);
-		addCollisionPair(SideDetector.SDcid(victimColid, dir), type, hitterColid,args);
+
+		else addCollisionPair(SideDetector.SDcid(victimColid, dir), type, hitterColid,args);
 	}
 	
 	public void setDirectionalTileCollisionBehavior(int victimColid, String type, int tileColid, String direction, Object ... args){
 		int dir = Arrays.asList(new String[]{SaladConstants.UP,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
 		if(dir == 4) addTileCollisionPair(victimColid, type, tileColid, args);
-		addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, args);
+		else addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, args);
 	}
 	
 	/**
