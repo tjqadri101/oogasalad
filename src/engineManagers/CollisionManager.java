@@ -125,11 +125,11 @@ public class CollisionManager {
 	
 	//Better use reflection or whatever means to combine pair/tile collision in one method
 	
-	public void setDirectionalCollisionBehavior(int hitterColid, String type, int victimColid, String direction, Object ... args){
+	public void setDirectionalCollisionBehavior(int victimColid, String type, int hitterColid, String direction, Object ... args){
 		int dir = Arrays.asList(new String[]{"all","up","bottom","left","right"}).indexOf(direction);
 		if (dir == -1) return;
-		if(dir == 0) addCollisionPair(hitterColid, type, victimColid, args);
-		addCollisionPair(hitterColid, type, SideDetector.SDcid(victimColid, dir),args);
+		if(dir == 0) addCollisionPair(victimColid, type, hitterColid, args);
+		addCollisionPair(SideDetector.SDcid(victimColid, dir), type, hitterColid,args);
 	}
 	
 	public void setDirectionalTileCollisionBehavior(int victimColid, String type, int tileColid, String direction, Object ... args){
