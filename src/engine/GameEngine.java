@@ -126,7 +126,7 @@ public class GameEngine extends StdGame{
                 else myViewOffsetPlayer = false;
         }
         if(!viewOffset) setViewOffsetEdit();
-        myTriggerManager.checkTrigger();
+//        myTriggerManager.checkTrigger();
         if(checkGoal()){
                 if(level>=3){
                         gameOver();

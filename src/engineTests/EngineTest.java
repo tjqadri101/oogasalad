@@ -43,30 +43,30 @@ public class EngineTest {
 		game.getGravity().setMagnitude(0.1);
 		
 		engine.setSceneSize(1200,40);
-		engine.createTiles(6,"brick.png",0,30,1180,1);
-		engine.createTiles(6,"brick.png",20,15,10,1);
+		engine.createTiles(TILE_COLID,"brick.png",0,30,1180,1);
+		engine.createTiles(TILE_COLID,"brick.png",20,15,10,1);
 		engine.createTiles(0,"null",30,30,5,1);
-		engine.setDefaultTiles(5, "brick.png");
+		engine.setDefaultTiles(TILE_COLID, "brick.png");
 //		engine.createTiles(0,0,40,1,1,"brick.png");
 //		engine.setBackground("marble16.gif");
 		
-		NonPlayer actor = engine.createActor(123, "poke-mon/024.gif", 200, 200, 800.0, 450.0, null, ENEMY_COLID, 1);
-		actor.setDieBehavior("RegularRemove");
-//		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
-		actor.setMoveBehavior("BackForthMove", 8.0, 5);
+//		NonPlayer actor = engine.createActor(123, "poke-mon/024.gif", 200, 200, 800.0, 450.0, null, ENEMY_COLID, 1);
+//		actor.setDieBehavior("RegularRemove");
+////		actor.setMoveBehavior("RegularMove", -2.0, 0.0);
+//		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		
-		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100.0, null, ENEMY_COLID, 1);
-		goomba.setDieBehavior("RegularRemove");
-		goomba.setMoveBehavior("BackForthMove",5.0, 10);
+//		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100.0, null, ENEMY_COLID, 1);
+//		goomba.setDieBehavior("RegularRemove");
+//		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 
-		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 300.0, 100.0, null, MUSHROOM_COLID, 1);
-		mushroom.setDieBehavior("RegularRemove");
-		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
+//		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 400.0, 100.0, null, MUSHROOM_COLID, 1);
+//		mushroom.setDieBehavior("RegularRemove");
+//		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 		
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100.0, 200.0, null, PLAYER_COLID, 6);
 //		player.setBBox(0, 0, 100, 1);
 		player.setDieBehavior("RegularRemove");
-		player.setJumpBehavior("Jump", 5.0, 1);
+		player.setJumpBehavior("Jump", 5.0, 2);
 		player.setShootBehavior("SlowShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
