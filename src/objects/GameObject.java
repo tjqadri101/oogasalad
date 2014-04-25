@@ -73,9 +73,10 @@ public abstract class GameObject extends JGObject {
 	 * 
 	 */
 	private void initSideDetectors() {
+		if(myUniqueID == SaladConstants.NULL_UNIQUE_ID) return;
 		mySideDetectors = new SideDetector[4];
 		for (int i=0;i<4;i++){
-//			setSideDetector(new SideDetector(this,i,SideDetector.SDcid(colid,i)));
+			setSideDetector(new SideDetector(this,i,SideDetector.SDcid(colid,i)));
 		}
 	}
 	

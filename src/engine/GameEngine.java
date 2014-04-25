@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
+import engineManagers.BloodManager;
 import engineManagers.ScoreManager;
 
 /**
@@ -176,7 +177,7 @@ public class GameEngine extends StdGame{
 		drawString("You are in Editing Mode right now. This is a test message.",viewWidth()/2,viewHeight()/2,0,false);
 		if (myPlayer != null){
 			drawRect(myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,myPlayer.getXSize()/2,10,false,true);
-			drawRect(myPlayer.x+(0.5+0.5*myPlayer.getLives()/myPlayer.getInitLives())*myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,(1.0*myPlayer.getLives()/myPlayer.getInitLives())*myPlayer.getXSize()/2,10,true,true);
+			drawRect(myPlayer.x+(0.5+0.5*myPlayer.getBlood()/myPlayer.getInitBlood())*myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/13.5,(1.0*myPlayer.getBlood()/myPlayer.getInitBlood())*myPlayer.getXSize()/2,10,true,true);
 			drawString("lol help!",myPlayer.x+myPlayer.getXSize()/2,myPlayer.y-myPlayer.getYSize()/3,0,true);
 		}
 		
@@ -477,11 +478,10 @@ public class GameEngine extends StdGame{
     	}
 	}
     
-    public void setBackground(String url){
-    	myCurrentScene.setBackgroundImage(url);
-    	loadImage(url);
-    	setBGImage(url);
-    	System.out.println("setBackground");
+    public void setBackground(String fileName){
+    	myCurrentScene.setBackgroundImage(fileName, false, false, myCurrentScene.getXSize(), myCurrentScene.getYSize());
+    	loadImage(fileName);
+    	setBGImage(fileName);
     }
     
     public void setGame (Game mygame) {
@@ -526,7 +526,7 @@ public class GameEngine extends StdGame{
     public Player createPlayer(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	Player object = new Player(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives, 
-    			myGame.getCollisionManager(), myGame.getScoreManager());
+    			myGame.getCollisionManager(), myGame.getScoreManager(), new BloodManager());
     	myGame.setPlayer(object);
         myPlayer = object;
         object.resume_in_view = false;
@@ -539,7 +539,7 @@ public class GameEngine extends StdGame{
     public NonPlayer createActor(int unique_id, String url, int xsize, int ysize, double xpos, double ypos, String name, int colid, int lives){
     	loadImage(url);
     	NonPlayer object = new NonPlayer(unique_id, url, xsize, ysize, xpos, ypos, name, colid, lives, 
-    			myGame.getCollisionManager(), myGame.getScoreManager());
+    			myGame.getCollisionManager(), myGame.getScoreManager(), new BloodManager());
         if(unique_id != SaladConstants.NULL_UNIQUE_ID){
         	myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
         }
