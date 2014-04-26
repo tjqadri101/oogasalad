@@ -428,7 +428,7 @@ public class GameEngine extends StdGame {
 	}
 	
 	public void createTilesFromString(String tiles){
-    	String[] array = tiles.split(SaladConstants.SEPERATER);
+    	String[] array = tiles.split(SaladConstants.SEPARATOR);
     	setTiles(0, 0, array);
     	myCurrentScene.setTiles(array);
     }

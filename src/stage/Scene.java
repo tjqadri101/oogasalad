@@ -228,9 +228,9 @@ public class Scene implements Subject {
 			String imgfile = entry.getValue();
 			answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
 		}
-		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPERATER + SaladConstants.TILE_IMAGE;
+		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_IMAGE;
 		for (String line: getTiles()) {
-			tiles += SaladConstants.SEPERATER + line;//different separator?
+			tiles += SaladConstants.SEPARATOR + line;//different separator?
 		}
 		answer.add(tiles);
 		return answer;

@@ -2,7 +2,7 @@ package saladConstants;
 
 public final class SaladConstants {
 	
-	public static final String SEPERATER = ",";
+	public static final String SEPARATOR = ",";
 	
 	public static final String CREATE_LEVEL = "CreateLevel";
 	public static final String SWITCH_LEVEL = "SwitchLevel";
@@ -137,7 +137,7 @@ public final class SaladConstants {
 	public static final String SHOOT_KEY = "shoot";
 	public static final String JUMP_KEY = "jump";
 	
-	public static final String UP = "Up";
+	public static final String Top = "Top";
 	public static final String BOTTOM = "Bottom";
 	public static final String LEFT = "Left";
 	public static final String RIGHT = "Right";
