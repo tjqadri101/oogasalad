@@ -506,6 +506,7 @@ public class GameEngine extends StdGame {
 			myCurrentScene.setSize(xsize, ysize);
 		}
 		setPFSize(xsize, ysize);
+		System.out.println(xsize+" "+ysize);
 	}
 	
 	private void setSceneWrap(boolean wrapx, boolean wrapy) {
