@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import jgame.JGObject;
 import saladConstants.SaladConstants;
-<<<<<<< HEAD
-=======
 import engineManagers.*;
->>>>>>> a24bc3e21b6a38c351a60425dba86604c7db9f2c
 import util.AttributeMaker;
 import util.SaladUtil;
 import engineManagers.CollisionManager;
@@ -48,7 +45,6 @@ public abstract class GameObject extends JGObject implements Subject {
 	protected boolean myIsPlayer; //need change
     
 	protected ResourceBundle myBehaviors;
-	
 	protected String myDieBehavior;
 	protected String myMoveBehavior;
 	protected String myJumpBehavior;
