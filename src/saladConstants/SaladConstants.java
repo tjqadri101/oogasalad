@@ -50,6 +50,8 @@ public final class SaladConstants {
 	public static final String TEST_XMLFILE_URL = "test.xml";
 	
 	public static final String BACKGROUND = "Background";
+	public static final String LEVEL = "level";
+	public static final String SCENE = "scene";
 	public static final String ID = "ID";
 	public static final String IMAGE = "Image";
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";

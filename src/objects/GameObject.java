@@ -228,10 +228,10 @@ public abstract class GameObject extends JGObject implements Subject {
 	}
 	
 	/**
-	 * Decrement the number of lives
+	 * Change the number of lives
 	 */
 	public void changeBlood(int blood){
-		myBlood -= blood;
+		myBlood += blood;
 	}
 	
 	/**

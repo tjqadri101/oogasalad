@@ -73,7 +73,7 @@ public class ScoreManager {
 				SaladConstants.SEPERATER + hitterColid;
 		if(myScoreMap.get(condition) == null) return;
 		myScore += myScoreMap.get(condition);
-		System.out.println("current score: " + myScore);
+		System.out.println("ScoreManager current score: " + myScore);
 	}
 	
 	/**
@@ -95,10 +95,17 @@ public class ScoreManager {
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, 
 				SaladConstants.INITIAL_SCORE, myInitialScore));
-//		for (String condition: myScoreMap){
-//			
-//			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, SaladConstants.SET_SCORE, condition))
-//		}
+		for (String condition: myScoreMap.keySet()){
+			String type = null;
+			StringBuilder param = new StringBuilder();
+			param.append(myScoreMap.get(condition) + SaladConstants.SEPERATER);
+			param.append(condition);
+			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
+					param.toString().split(SaladConstants.SEPERATER)));
+			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.SET_COLLISION_SCORE;
+			if(condition.startsWith(SaladConstants.LEVEL) || condition.startsWith(SaladConstants.SCENE)) type = SaladConstants.SET_TRANSITION_SCORE;
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, type, false, params));
+		}
 		return answer;
 	}
 
