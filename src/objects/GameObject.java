@@ -16,7 +16,7 @@ import engineManagers.ScoreManager;
  * GameObject is the superclass of Player and NonPlayer
  * GameObject is a game unit that can execute certain actions and interactions 
  * @author: Justin (Zihao) Zhang, 
- * @contribution: Steve (Siyang) Wang
+ * @contribution: Steve (Siyang) Wang, David (Ping) Chou
  */
 public abstract class GameObject extends JGObject {
     
@@ -44,7 +44,9 @@ public abstract class GameObject extends JGObject {
 	protected int myIsInAir;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
-	protected String myGfxName;
+	protected String myStaticGfxName;
+	protected String myJumpingGfxName;
+	protected String myMovingGfxName;
 	protected List<String> myAttributes;
 	protected String myName;
 	protected boolean myIsPlayer; //need change
@@ -62,10 +64,10 @@ public abstract class GameObject extends JGObject {
 	protected List<Object> myJumpParameters;
 	protected SideDetector[] mySideDetectors;
 	
-	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
+	protected GameObject(int uniqueID, String staticGfxName, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int blood, 
 			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager){
-		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, gfxname);
+		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
 		setBlood(blood); // change later
@@ -75,7 +77,7 @@ public abstract class GameObject extends JGObject {
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
 		myBloodManager = bloodManager;
-		myGfxName = gfxname;
+		myStaticGfxName = staticGfxName;
 		myName = name;
 		initSideDetectors();
 		myObservers = new ArrayList<>();
@@ -343,6 +345,14 @@ public abstract class GameObject extends JGObject {
 		colid = collisionID;
 	}
 	
+	public void setJumpingImage(String jumpGfx) {
+		myJumpingGfxName = jumpGfx;
+	}
+	
+	public void setMovingImage(String moveGfx) {
+		myMovingGfxName = moveGfx;
+	}
+	
 	public void jump(){
 		if(myIsInAir==0){myJumpTimes ++;}
 		if(myJumpBehavior == null) return;
@@ -413,7 +423,7 @@ public abstract class GameObject extends JGObject {
 	 * @param gfxname
 	 */
 	public void updateImageURL(String gfxname){
-	    myGfxName = gfxname;
+	    myStaticGfxName = gfxname;
 	}
 	
 	/**
@@ -521,7 +531,7 @@ public abstract class GameObject extends JGObject {
      * @return the Gfx info
      */
     public String getMyGfx(){
-        return myGfxName;
+        return myStaticGfxName;
     }
 
 }
