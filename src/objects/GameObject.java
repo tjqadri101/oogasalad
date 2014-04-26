@@ -5,20 +5,18 @@ import java.util.List;
 import java.util.ResourceBundle;
 import jgame.JGObject;
 import saladConstants.SaladConstants;
-<<<<<<< HEAD
-=======
+import engine.GameEngine;
 import engineManagers.*;
->>>>>>> a24bc3e21b6a38c351a60425dba86604c7db9f2c
 import util.AttributeMaker;
 import util.SaladUtil;
 import engineManagers.CollisionManager;
 import engineManagers.ScoreManager;
-import objects.Observer;
 
 /**
  * GameObject is the superclass of Player and NonPlayer
  * GameObject is a game unit that can execute certain actions and interactions 
- * @Author: Justin (Zihao) Zhang
+ * @Author: Justin (Zihao) Zhang, 
+ * @Contribution: Steve (Siyang) Wang
  */
 public abstract class GameObject extends JGObject implements Subject {
     
@@ -27,9 +25,13 @@ public abstract class GameObject extends JGObject implements Subject {
 	protected BloodManager myBloodManager;
 	       protected String myTrigger;
 	       protected boolean myTriggerFlag;
+//Not 100% ready to implement observer pattern	       
 	       protected List<Observer> myObservers;
 	       protected boolean isUpdated;
 	       private final Object MUTEX= new Object();
+               protected List<Object> myTriggerParameter;
+               protected List<Object> myEventParameter;
+               protected String myEvent;
 	
 	protected int myXSize;
 	protected int myYSize;
@@ -444,10 +446,14 @@ public abstract class GameObject extends JGObject implements Subject {
          * @return Trigger
          */
         
-        public boolean checkTrigger(){
-                return myTriggerFlag;
+        public boolean checkTrigger(GameEngine myEngine){
+            if (myTrigger == null) return false;
+            ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
+            Object answer = SaladUtil.behaviorReflection(behaviors, myTrigger, myTriggerParameter, "checkTrigger", myEngine);
+            myTriggerFlag = (boolean) answer;
+            return myTriggerFlag;
         }
-        
+//Not 100% ready for observer pattern yet        
         /**
          * Below four methods overriding the interface Subject in the observer pattern
          */
@@ -480,8 +486,8 @@ public abstract class GameObject extends JGObject implements Subject {
      
         }
         @Override
-        public Object getUpdate(Observer obj) {
-            return this.message;
+        public String getUpdate(Observer obj) {
+            return myTrigger;
         }
 	
 	

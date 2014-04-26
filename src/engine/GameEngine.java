@@ -23,6 +23,7 @@ import engineManagers.TriggerEventManager;
 /**
  * @Author: Isaac (Shenghan) Chen
  * @Contribution: Justin (Zihao) Zhang
+ * @Contribution Steve (Siyang) Wang
  */
 public class GameEngine extends StdGame {
 
@@ -55,7 +56,9 @@ public class GameEngine extends StdGame {
 	protected char myTileCid;
 
 	protected boolean isEditingMode;
-
+//?? discuss if needed to put it here
+	protected TriggerEventManager etm = new TriggerEventManager(this);
+	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
 		isEditingMode = editing;
@@ -565,6 +568,9 @@ public class GameEngine extends StdGame {
 			object.suspend();// not sure how things are created for playing the
 								// game
 		}
+/*Commented out, not fully ready to switch to observer pattern*/
+//              object.register(etm);
+//              etm.setSubject(object);
 		return object;
 	}
 
@@ -583,6 +589,9 @@ public class GameEngine extends StdGame {
 			object.suspend();// not sure how things are created for playing the
 								// game
 		}
+/*Commented out, not fully ready to switch to observer pattern*/
+//		object.register(etm);
+//		etm.setSubject(object);
 		return object;
 	}
 

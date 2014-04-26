@@ -38,6 +38,9 @@ public class Level {
 
 	public void addScene(int sceneID) {
 		Scene scene = new Scene(sceneID);
+/*Commented out, not fully ready to switch to observer pattern*/
+//	              scene.register(etm);
+//	              etm.setSubject(scene);
 		mySceneMap.put(sceneID, scene);
 	}
 	

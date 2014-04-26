@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import objects.Observer;
 import objects.Subject;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
@@ -19,7 +18,9 @@ public class TriggerEventManager implements Observer{
 
     protected Map<Integer, List<Object>> myTriggerMap;
     protected Map<Integer, List<Object>> myEventMap;
+    protected List<Object> mySubjectMap;
     protected GameEngine myEngine;
+//    private TriggerEventManager _instance = null;
     
     public TriggerEventManager(GameEngine engine){
             myEngine = engine;
@@ -68,11 +69,13 @@ public class TriggerEventManager implements Observer{
         // TODO Auto-generated method stub
         
     }
-
+    
+    /**
+     * Called initially to store subject as a watching subject
+     */
     @Override
-    public void setSubject (Subject sub) {
-        // TODO Auto-generated method stub
-        
+    public void setSubject (Object sub) {
+        mySubjectMap.add(sub);
     }
 	
 }
