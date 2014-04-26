@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.ScoreManager;
