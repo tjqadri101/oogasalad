@@ -56,6 +56,7 @@ public class GameEngine extends StdGame {
 
 	protected boolean isEditingMode;
 //?? discuss if needed to put it here
+	protected TriggerEventManager myTEM = new TriggerEventManager(this);
 	
 	
 	public GameEngine(boolean editing) {
