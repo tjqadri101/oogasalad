@@ -6,7 +6,6 @@ import saladConstants.SaladConstants;
 /**
  * Called to make an attribute for saving the Game
  * @author Main Justin (Zihao) Zhang
- *
  */
 public class AttributeMaker {
 	

@@ -15,8 +15,8 @@ import engineManagers.ScoreManager;
 /**
  * GameObject is the superclass of Player and NonPlayer
  * GameObject is a game unit that can execute certain actions and interactions 
- * @Author: Justin (Zihao) Zhang, 
- * @Contribution: Steve (Siyang) Wang
+ * @author: Justin (Zihao) Zhang, 
+ * @contribution: Steve (Siyang) Wang
  */
 public abstract class GameObject extends JGObject implements Subject {
     
