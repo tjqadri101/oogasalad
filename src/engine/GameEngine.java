@@ -39,7 +39,7 @@ public class GameEngine extends StdGame {
 	protected int myCurrentLevelID;
 	protected int myCurrentSceneID;
 	protected Scene myCurrentScene;
-	// protected Scene myEmptyScene = new Scene(0);
+//	protected Scene myEmptyScene = new Scene(0);
 	protected Player myPlayer;
 	protected TriggerEventManager myTriggerManager;
 
@@ -63,20 +63,13 @@ public class GameEngine extends StdGame {
 
 	@Override
 	public void initCanvas() {
-		setCanvasSettings(CANVAS_WIDTH, CANVAS_HEIGHT, TILE_WIDTH, TILE_HEIGHT,
-				null, null, null);
+		setCanvasSettings(CANVAS_WIDTH, CANVAS_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null, null, null);
 	}
 
 	@Override
 	public void initGame() {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-
 		// setTileSettings("#",2,0);
-		// setPFWrap(false,true,0,0);
-
-		if (isEditingMode) {
-			setGameState("InGame");
-		}
 	}
 
 	public boolean checkGoal() {
@@ -101,69 +94,70 @@ public class GameEngine extends StdGame {
 	}
 
 	public void startEdit() {
-		removeObjects(null, 0);// remove?
+		removeObjects(null, 0);// ???
 	}
 
 	// drag;move->gravity->collision->setViewOffset
-	public void doFrameInGame() {
-		timer++;//
-		if (myCurrentScene == null)
-			return;
+	public void doFrameEdit() {
+		timer++;//change later
+		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
-		if (drag())
-			myViewOffsetPlayer = false;
+		if (drag()) {myViewOffsetPlayer = false;}
 		else {
 			moveObjects();
-			Gravity g = myGame.getGravity();
-			g.applyGravity(myPlayer);
-			for (GameObject go : myCurrentScene.getGameObjects()) {
-				g.applyGravity(go);
-			}
-			for (int[] pair : myGame.getCollisionManager().getCollisionPair()) {
-				checkCollision(pair[0], pair[1]);
-			}
-			for (int[] pair : myGame.getCollisionManager()
-					.getTileCollisionPair()) {
-				checkBGCollision(pair[0], pair[1]);
-			}
+			applyG();
+			checkAllCollision();
 			viewOffset = setViewOffsetEdit();
-			if (!viewOffset)
-				setViewOffsetPlayer();
-			else
-				myViewOffsetPlayer = false;
+			if (!viewOffset) {setViewOffsetPlayer();}
+			else {myViewOffsetPlayer = false;}
 		}
-		if (!viewOffset)
-			setViewOffsetEdit();
+		if (!viewOffset) {setViewOffsetEdit();}
+		
 //		myTriggerManager.checkTrigger();
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();
-				System.out.println("lol");
 			} else
 				levelDone();
 		}
 	}
 
+	private void checkAllCollision() {
+		for (int[] pair : myGame.getCollisionManager().getCollisionPair()) {
+			checkCollision(pair[0], pair[1]);
+		}
+		for (int[] pair : myGame.getCollisionManager().getTileCollisionPair()) {
+			checkBGCollision(pair[1], pair[0]); //need changes in collision manager
+		}
+	}
+
+	private void applyG() {
+		Gravity g = myGame.getGravity();
+		g.applyGravity(myPlayer);
+		for (GameObject go : myCurrentScene.getGameObjects()) {
+			g.applyGravity(go);
+		}
+	}
+
 	private void setViewOffsetPlayer() {
-		if (myPlayer != null) {
-			if (myViewOffsetRate > 1)
+		if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
+			if (myViewOffsetRate > 1) {
 				myViewOffsetRate -= 1;
-			if (isEditingMode && !myViewOffsetPlayer)
-				myViewOffsetRate = 35;
+			}
+			if (isEditingMode && !myViewOffsetPlayer) {
+				myViewOffsetRate = 35; //make it constant later
+			}
 			myViewOffsetPlayer = true;
-			int desired_viewXOfs = (int) myPlayer.x + myPlayer.getXSize() / 2
-					- viewWidth() / 2;
-			int desired_viewYOfs = (int) myPlayer.y + myPlayer.getYSize() / 2
-					- viewHeight() / 2;
-			setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate
-					+ viewXOfs(), (desired_viewYOfs - viewYOfs())
-					/ myViewOffsetRate + viewYOfs(), false);
+			int desired_viewXOfs = (int) myPlayer.x + myPlayer.getXSize() / 2 - viewWidth() / 2;
+			int desired_viewYOfs = (int) myPlayer.y + myPlayer.getYSize() / 2 - viewHeight() / 2;
+			setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate + viewXOfs(),
+					(desired_viewYOfs - viewYOfs()) / myViewOffsetRate + viewYOfs(), false);
 		}
 	}
 
 	private boolean setViewOffsetEdit() {
-		int speed = 10;
-		double margin = 0.1;
+		int speed = 10; //make it constant later
+		double margin = 0.1; //make it constant later
 		if (!isEditingMode)
 			return false;
 		int XOfs = 0;
@@ -186,22 +180,10 @@ public class GameEngine extends StdGame {
 		return XOfs != 0 || YOfs != 0;
 	}
 
-	public void paintFrameInGame() {
-		if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
-			drawRect(myPlayer.x + myPlayer.getXSize() / 2, myPlayer.y - myPlayer.getYSize() / 13.5,
-					myPlayer.getXSize() / 2, 10, false, true);
-			drawRect(
-					myPlayer.x
-							+ (0.5 + 0.5 * myPlayer.getBlood()
-									/ myPlayer.getInitBlood())
-							* myPlayer.getXSize() / 2,
-					myPlayer.y - myPlayer.getYSize() / 13.5,
-					(1.0 * myPlayer.getBlood() / myPlayer.getInitBlood())
-							* myPlayer.getXSize() / 2, 10, true, true);
-			drawString("lol help!", myPlayer.x + myPlayer.getXSize() / 2,
-					myPlayer.y - myPlayer.getYSize() / 3, 0, true);
-		}
-
+	public void paintFrameEdit() {
+		displayPlayerInfo();
+		disPlayDragTile();
+		
 		if (checkGoal()) {
 			drawString("Win!!!!!!!!!!!!!!!!", viewWidth() / 2,
 					viewHeight() / 2 + 100, 0, false);
@@ -209,6 +191,9 @@ public class GameEngine extends StdGame {
 		if (checkGoal()) {
 			// call the event module
 		}
+	}
+
+	private void disPlayDragTile() {
 		if (myMouseButton != 0 && myClickedID == -1) {
 			int tileX = myMouseX / 20;
 			int tileY = myMouseY / 20;
@@ -222,6 +207,24 @@ public class GameEngine extends StdGame {
 		}
 	}
 
+	private void displayPlayerInfo() {
+		if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
+			drawRect(myPlayer.x + myPlayer.getXSize() / 2,
+					myPlayer.y - myPlayer.getYSize() / 13.5,
+					myPlayer.getXSize() / 2, 10, false, true);
+			drawRect(myPlayer.x + 0.5 * (1 + myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
+					myPlayer.y - myPlayer.getYSize() / 13.5,
+					(1.0 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
+					10, true, true);
+			drawString("lol help!", myPlayer.x + myPlayer.getXSize() / 2,
+					myPlayer.y - myPlayer.getYSize() / 3, 0, true);
+		}
+	}
+	
+	
+	
+	
+	
 	public void defineLevel() {
 		setCurrentScene(1, 0);
 		myPlayer.resume();
@@ -241,7 +244,7 @@ public class GameEngine extends StdGame {
 		if (!isEditingMode) {
 			super.doFrame();
 		}
-		// else
+		doFrameEdit();
 	}
 
 	/**
@@ -254,7 +257,7 @@ public class GameEngine extends StdGame {
 		if (!isEditingMode) {
 			super.paintFrame();
 		}
-		// else
+		paintFrameEdit();
 	}
 
 	public void StartTitle() {
@@ -506,7 +509,6 @@ public class GameEngine extends StdGame {
 			myCurrentScene.setSize(xsize, ysize);
 		}
 		setPFSize(xsize, ysize);
-		System.out.println(xsize+" "+ysize);
 	}
 	
 	private void setSceneWrap(boolean wrapx, boolean wrapy) {

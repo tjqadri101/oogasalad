@@ -13,10 +13,10 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
-	public static final int ENEMY_COLID = 2;
+	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
-	public static final int PLAYER_COLID = 3;
-	public static final int BULLET_COLID = 5;
+	public static final int PLAYER_COLID = 4;
+	public static final int BULLET_COLID = 2;
 	public static final char TILE_COLID = '3';
 	
 	public static void main(String[] arg){
