@@ -101,6 +101,7 @@ public class GameEngine extends StdGame {
 
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
+	        TriggerEventManager etm = getGame().getTEM();
 		timer++;//change later
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -562,6 +563,7 @@ public class GameEngine extends StdGame {
 
 	public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			double xpos, double ypos, String name, int colid, int lives) {
+	        TriggerEventManager etm = getGame().getTEM();
 		loadImage(imgfile);
 		Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				name, colid, lives, myGame.getCollisionManager(),
@@ -575,13 +577,14 @@ public class GameEngine extends StdGame {
 								// game
 		}
 /*Commented out, not fully ready to switch to observer pattern*/
-//              object.register(etm);
-//              etm.setSubject(object);
+//                  object.register(etm);
+//                  etm.setSubject(object);
 		return object;
 	}
 
 	public NonPlayer createActor(int unique_id, String imgfile, int xsize,
 			int ysize, double xpos, double ypos, String name, int colid, int lives) {
+	        TriggerEventManager etm = getGame().getTEM();
 		loadImage(imgfile);
 		NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				ypos, name, colid, lives, myGame.getCollisionManager(),

@@ -48,7 +48,7 @@ public class Game {
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
-    	etm = new TriggerEventManager();
+    	etm = new TriggerEventManager(null);
 	}
 
 	/**
@@ -57,6 +57,8 @@ public class Game {
 	 */
 	public void addLevel(int levelID) {
 		Level level = new Level(levelID);
+//                level.register(etm);
+//                etm.setSubject(level);
 		myLevelMap.put(levelID, level);
 	}
 
@@ -273,6 +275,13 @@ public class Game {
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
 		return answer;
+	}
+	
+	/** Should only be called from Engine
+	 * @return the only instance of TriggerEventManager
+	 */
+	public TriggerEventManager getTEM(){
+	    return etm;
 	}
 	
 	/* @Siyang: 

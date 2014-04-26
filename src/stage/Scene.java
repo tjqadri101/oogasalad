@@ -36,18 +36,20 @@ public class Scene implements Subject {
 	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
 	protected int myFieldXSize;
 	protected int myFieldYSize;
-	protected String myTrigger;
-	protected boolean myTriggerFlag;
-	protected List<Object> myTriggerParameter;
-	protected List<Object> myEventParameter;
-	protected String myEvent;
 	
 	protected Map<Integer, NonPlayer> myObjectMap;
 	protected Map<Character, String> myTileImageMap;
 	protected String[] myTiles;
+	
+	   protected String myTrigger;
+	        protected boolean myTriggerFlag;
+	        protected List<Object> myTriggerParameter;
+	        protected List<Object> myEventParameter;
+	        protected String myEvent;
             protected List<Observer> myObservers;
             protected boolean isUpdated;
             private final Object MUTEX= new Object();
+            
 	
 	public Scene(int id) {
 		myID = id;

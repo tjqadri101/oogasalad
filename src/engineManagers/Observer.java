@@ -6,5 +6,5 @@ public interface Observer {
     public void update();
      
     //attach with subject to observe
-    public void setSubject(Object sub);
+    public void setSubject(@SuppressWarnings("rawtypes") Class sub);
 }

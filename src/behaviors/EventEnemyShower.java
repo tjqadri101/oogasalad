@@ -23,10 +23,10 @@ public class EventEnemyShower extends Eventable{
         while(true){
             int size = rg.nextInt(10)+40;
             myEngine.createActor(rg.nextInt(50), gfx, size, size, rg.nextInt(600), rg.nextInt(600), "enemyShower", 1, rg.nextInt(5));
-            enemyCounter++;
-            if(enemyCounter > maxEnemy){
+            if(enemyCounter == maxEnemy){
                 break;
             }
+            enemyCounter++;
         }
     }
 }
