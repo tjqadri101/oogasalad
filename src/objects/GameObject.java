@@ -23,15 +23,16 @@ public abstract class GameObject extends JGObject {
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
-	       protected String myTrigger;
-	       protected boolean myTriggerFlag;
-//Not 100% ready to implement observer pattern	       
-	       protected List<Observer> myObservers;
-	       protected boolean isUpdated;
-	       private final Object MUTEX= new Object();
-               protected List<Object> myTriggerParameter;
-               protected List<Object> myEventParameter;
-               protected String myEvent;
+	
+//	       protected String myTrigger;
+//	       protected boolean myTriggerFlag;
+////Not 100% ready to implement observer pattern	       
+//	       protected List<Observer> myObservers;
+//	       protected boolean isUpdated;
+//	       private final Object MUTEX= new Object();
+//               protected List<Object> myTriggerParameter;
+//               protected List<Object> myEventParameter;
+//               protected String myEvent;
 	
 	protected int myXSize;
 	protected int myYSize;
@@ -80,7 +81,7 @@ public abstract class GameObject extends JGObject {
 		myStaticGfxName = staticGfxName;
 		myName = name;
 		initSideDetectors();
-		myObservers = new ArrayList<>();
+//		myObservers = new ArrayList<>();
 	}
 
 	public boolean getIsActive(){
@@ -442,64 +443,64 @@ public abstract class GameObject extends JGObject {
 		return myBloodManager;
 	}
 	
-	/**
-         * Used for triggerManager to inspect the trigger
-         * @return Trigger
-         */
-
-        public String getTrigger(){
-                return myTrigger;
-        }
-        
-        /**
-         * Used for triggerManager to checkTrigger at each doFrame in engine
-         * @return Trigger
-         */
-        
-        public boolean checkTrigger(GameEngine myEngine){
-            if (myTrigger == null) return false;
-            ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
-            Object answer = SaladUtil.behaviorReflection(behaviors, myTrigger, myTriggerParameter, "checkTrigger", myEngine);
-            myTriggerFlag = (boolean) answer;
-            return myTriggerFlag;
-        }
-//Not 100% ready for observer pattern yet        
-        /**
-         * Below four methods overriding the interface Subject in the observer pattern
-         */
-        @Override
-        public void register(Observer obj) {
-            if(obj == null) throw new NullPointerException("Null Observer");
-            synchronized (MUTEX) {
-            if(!myObservers.contains(obj)) myObservers.add(obj);
-            }
-        }
-        @Override 
-        public void unregister(Observer obj) {
-            synchronized (MUTEX) {
-            myObservers.remove(obj);
-            }
-        }
-        @Override
-        public void notifyObservers() {
-            List<Observer> observersLocal = null;
-            //synchronization is used to make sure any observer registered after message is received is not notified
-            synchronized (MUTEX) {
-                if (!isUpdated)
-                    return;
-                observersLocal = new ArrayList<>(this.myObservers);
-                this.isUpdated=false;
-            }
-            for (Observer obj : observersLocal) {
-                obj.update();
-            }
-     
-        }
-        @Override
-        public String getUpdate(Observer obj) {
-            return myTrigger;
-        }
-	
+//	/**
+//         * Used for triggerManager to inspect the trigger
+//         * @return Trigger
+//         */
+//
+//        public String getTrigger(){
+//                return myTrigger;
+//        }
+//        
+//        /**
+//         * Used for triggerManager to checkTrigger at each doFrame in engine
+//         * @return Trigger
+//         */
+//        
+//        public boolean checkTrigger(GameEngine myEngine){
+//            if (myTrigger == null) return false;
+//            ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
+//            Object answer = SaladUtil.behaviorReflection(behaviors, myTrigger, myTriggerParameter, "checkTrigger", myEngine);
+//            myTriggerFlag = (boolean) answer;
+//            return myTriggerFlag;
+//        }
+////Not 100% ready for observer pattern yet        
+//        /**
+//         * Below four methods overriding the interface Subject in the observer pattern
+//         */
+//        @Override
+//        public void register(Observer obj) {
+//            if(obj == null) throw new NullPointerException("Null Observer");
+//            synchronized (MUTEX) {
+//            if(!myObservers.contains(obj)) myObservers.add(obj);
+//            }
+//        }
+//        @Override 
+//        public void unregister(Observer obj) {
+//            synchronized (MUTEX) {
+//            myObservers.remove(obj);
+//            }
+//        }
+//        @Override
+//        public void notifyObservers() {
+//            List<Observer> observersLocal = null;
+//            //synchronization is used to make sure any observer registered after message is received is not notified
+//            synchronized (MUTEX) {
+//                if (!isUpdated)
+//                    return;
+//                observersLocal = new ArrayList<>(this.myObservers);
+//                this.isUpdated=false;
+//            }
+//            for (Observer obj : observersLocal) {
+//                obj.update();
+//            }
+//     
+//        }
+//        @Override
+//        public String getUpdate(Observer obj) {
+//            return myTrigger;
+//        }
+//	
 	
 	
 /* @Steve:
