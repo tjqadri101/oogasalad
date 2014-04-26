@@ -6,7 +6,8 @@ import java.util.Map;
 import saladConstants.SaladConstants;
 import util.SaladUtil;
 /**
- * 
+ * Manage the blood of a Game Object
+ * For Player, manage the blood for its each life
  * @author Main Justin (Zihao) Zhang
  *
  */
