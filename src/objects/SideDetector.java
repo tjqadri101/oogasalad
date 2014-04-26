@@ -1,5 +1,6 @@
 package objects;
 
+import engine.GameEngine;
 import saladConstants.SaladConstants;
 
 public class SideDetector extends GameObject{
@@ -24,7 +25,8 @@ public class SideDetector extends GameObject{
 	}
 	
 	public void move(){
-		setPos(myParent.x, myParent.y);
+		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).timer);
+		setPos(myParent.getLastX(), myParent.getLastY());
 	}
 	
 	public void die(){
@@ -40,6 +42,7 @@ public class SideDetector extends GameObject{
 	}
 	
 	public void ground(){
+		if (myDirection == 1) System.out.println("ground() "+((GameEngine)eng).timer);
 		myParent.ground();
 	}
 	
