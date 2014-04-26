@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import objects.Observer;
+import objects.Subject;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 
@@ -11,7 +13,7 @@ import saladConstants.SaladConstants;
  * TriggerManager keeps track of all the triggers and their corresponding events
  * @Author: Steve (Siyang) Wang
  */
-public class TriggerEventManager {
+public class TriggerEventManager implements Observer{
     //Re-think: maybe better relocate the checkTrigger and doEvent main body to here, 
     //instead of puttig into the object
 
@@ -59,6 +61,18 @@ public class TriggerEventManager {
     
     public Object getEvent(Object obj){
             return myTriggerMap.get(obj);   
+    }
+
+    @Override
+    public void update () {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void setSubject (Subject sub) {
+        // TODO Auto-generated method stub
+        
     }
 	
 }

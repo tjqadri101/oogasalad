@@ -3,26 +3,33 @@ package objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import engineManagers.BloodManager;
-import engineManagers.CollisionManager;
-import engineManagers.ScoreManager;
+import jgame.JGObject;
 import saladConstants.SaladConstants;
+<<<<<<< HEAD
+=======
 import engineManagers.*;
+>>>>>>> a24bc3e21b6a38c351a60425dba86604c7db9f2c
 import util.AttributeMaker;
 import util.SaladUtil;
-import jgame.JGObject;
+import engineManagers.CollisionManager;
+import engineManagers.ScoreManager;
+import objects.Observer;
+
 /**
  * GameObject is the superclass of Player and NonPlayer
  * GameObject is a game unit that can execute certain actions and interactions 
  * @Author: Justin (Zihao) Zhang
  */
-public abstract class GameObject extends JGObject {
+public abstract class GameObject extends JGObject implements Subject {
     
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
-	       protected Triggerable myTrigger;
+	       protected String myTrigger;
 	       protected boolean myTriggerFlag;
+	       protected List<Observer> myObservers;
+	       protected boolean isUpdated;
+	       private final Object MUTEX= new Object();
 	
 	protected int myXSize;
 	protected int myYSize;
@@ -69,6 +76,7 @@ public abstract class GameObject extends JGObject {
 		myGfxName = gfxname;
 		myName = name;
 		initSideDetectors();
+		myObservers = new ArrayList<>();
 	}
 
 	/**
@@ -426,7 +434,8 @@ public abstract class GameObject extends JGObject {
          * Used for triggerManager to inspect the trigger
          * @return Trigger
          */
-        public Triggerable getTrigger(){
+
+        public String getTrigger(){
                 return myTrigger;
         }
         
@@ -434,8 +443,45 @@ public abstract class GameObject extends JGObject {
          * Used for triggerManager to checkTrigger at each doFrame in engine
          * @return Trigger
          */
+        
         public boolean checkTrigger(){
                 return myTriggerFlag;
+        }
+        
+        /**
+         * Below four methods overriding the interface Subject in the observer pattern
+         */
+        @Override
+        public void register(Observer obj) {
+            if(obj == null) throw new NullPointerException("Null Observer");
+            synchronized (MUTEX) {
+            if(!myObservers.contains(obj)) myObservers.add(obj);
+            }
+        }
+        @Override 
+        public void unregister(Observer obj) {
+            synchronized (MUTEX) {
+            myObservers.remove(obj);
+            }
+        }
+        @Override
+        public void notifyObservers() {
+            List<Observer> observersLocal = null;
+            //synchronization is used to make sure any observer registered after message is received is not notified
+            synchronized (MUTEX) {
+                if (!isUpdated)
+                    return;
+                observersLocal = new ArrayList<>(this.myObservers);
+                this.isUpdated=false;
+            }
+            for (Observer obj : observersLocal) {
+                obj.update();
+            }
+     
+        }
+        @Override
+        public Object getUpdate(Observer obj) {
+            return this.message;
         }
 	
 	
