@@ -38,15 +38,8 @@ public class CollisionManager {
 	 * @param args parameters
 	 */
 	public void addCollisionPair(int victimColid, String type, int hitterColid, Object ... args){
-		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
-		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
-		attributeParams.add(0, hitterColid);
-		String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_COLLISION_BEHAVIOR, 
-				SaladConstants.COLLISION_ID, victimColid, type, true, attributeParams);
-		myAttributes.add(attribute);
-		objects.add(0, type);
-		String pair = victimColid + SaladConstants.SEPERATER + hitterColid;
-		myCollisionMap.put(pair, objects);
+		addPairs(SaladConstants.MODIFY_COLLISION_BEHAVIOR, myCollisionMap, 
+				victimColid, type, hitterColid, args);
 	}
 	
 	/**
@@ -57,15 +50,8 @@ public class CollisionManager {
 	 * @param args parameters
 	 */
 	public void addTileCollisionPair(int victimColid, String type, int tileColid, Object ... args){
-		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
-		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
-		attributeParams.add(0, tileColid);
-		String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR, 
-				SaladConstants.COLLISION_ID, victimColid, type, true, attributeParams);
-		myAttributes.add(attribute);
-		objects.add(0, type);
-		String pair = victimColid + SaladConstants.SEPERATER + tileColid;
-		myTileCollisionMap.put(pair, objects);
+		addPairs(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR, myTileCollisionMap, 
+				victimColid, type, tileColid, args);
 	}
 	
 	/**
@@ -95,8 +81,25 @@ public class CollisionManager {
 	 * @return a set of int array (array[0] hitter, array[1] victim)
 	 */
 	public Set<int[]> getCollisionPair(){
+		return getPairs(myCollisionMap);
+	}
+	
+	/**
+	 * Get all the current available tile collision pairs
+	 * @return a set of int array (array[0] tile, array[1] victim)
+	 */
+	public Set<int[]> getTileCollisionPair(){
+		return getPairs(myTileCollisionMap);
+	}
+	
+	/**
+	 * Do not call this method directly
+	 * @param map
+	 * @return a set of Colid pairs
+	 */
+	protected Set<int[]> getPairs(Map<String, List<Object>> map){
 		Set<int[]> answer = new HashSet<int[]>();
-		for(String s: myCollisionMap.keySet()){
+		for(String s: map.keySet()){
 			String[] pair = s.split(SaladConstants.SEPERATER);
 			int pair1 = Integer.parseInt(pair[0]);
 			int pair2 = Integer.parseInt(pair[1]);
@@ -107,19 +110,24 @@ public class CollisionManager {
 	}
 	
 	/**
-	 * Get all the current available tile collision pairs
-	 * @return a set of int array (array[0] tile, array[1] victim)
+	 * Do not call this method directly
+	 * @param key
+	 * @param map
+	 * @param colid1
+	 * @param type
+	 * @param colid2
+	 * @param args
 	 */
-	public Set<int[]> getTileCollisionPair(){
-		Set<int[]> answer = new HashSet<int[]>();
-		for(String s: myTileCollisionMap.keySet()){
-			String[] pair = s.split(SaladConstants.SEPERATER);
-			int pair1 = Integer.parseInt(pair[0]);
-			int pair2 = Integer.parseInt(pair[1]);
-			int[] adder = new int[]{pair1, pair2};
-			answer.add(adder);
-		}
-		return answer;
+	protected void addPairs(String key, Map<String, List<Object>> map, int colid1, String type, int colid2, Object ... args){
+		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
+		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
+		attributeParams.add(0, colid2);
+		String attribute = AttributeMaker.addAttribute(key, 
+				SaladConstants.COLLISION_ID, colid1, type, true, attributeParams);
+		myAttributes.add(attribute);
+		objects.add(0, type);
+		String pair = colid1 + SaladConstants.SEPERATER + colid2;
+		map.put(pair, objects);
 	}
 	
 	//Better use reflection or whatever means to combine pair/tile collision in one method

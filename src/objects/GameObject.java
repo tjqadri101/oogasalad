@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import jgame.JGObject;
 import saladConstants.SaladConstants;
+<<<<<<< HEAD
+=======
+import engineManagers.*;
+>>>>>>> a24bc3e21b6a38c351a60425dba86604c7db9f2c
 import util.AttributeMaker;
 import util.SaladUtil;
 import engineManagers.CollisionManager;
@@ -35,7 +39,7 @@ public abstract class GameObject extends JGObject implements Subject {
 	protected int myBlood;
 	protected int myUniqueID;
 	protected int myJumpTimes;
-	protected boolean myIsInAir;
+	protected int myIsInAir;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
 	protected String myGfxName;
@@ -316,7 +320,7 @@ public abstract class GameObject extends JGObject implements Subject {
 	}
 
 	public void ground(){
-		myIsInAir = false;
+		myIsInAir = 1;
 		myJumpTimes = 0;
 		stop();
 	}
@@ -347,14 +351,14 @@ public abstract class GameObject extends JGObject implements Subject {
 	 * 
 	 * @return boolean if is in air
 	 */
-	public boolean getIsInAir(){
+	public int getIsInAir(){
 		return myIsInAir;
 	}
 	
 	@Override
 	public void move(){
 		if(myBlood <= 0) die();
-		myIsInAir = true;
+		myIsInAir = 2*(myIsInAir%2);
 	}
 	
 	@Override
@@ -430,6 +434,7 @@ public abstract class GameObject extends JGObject implements Subject {
          * Used for triggerManager to inspect the trigger
          * @return Trigger
          */
+
         public String getTrigger(){
                 return myTrigger;
         }
@@ -444,7 +449,7 @@ public abstract class GameObject extends JGObject implements Subject {
         }
         
         /**
-         * Below method overriding the interface Subject in the observer pattern
+         * Below four methods overriding the interface Subject in the observer pattern
          */
         @Override
         public void register(Observer obj) {

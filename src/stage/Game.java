@@ -10,6 +10,7 @@ import engineManagers.CollisionManager;
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
+import engineManagers.TriggerEventManager;
 import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
@@ -29,7 +30,7 @@ public class Game {
 	protected Map<StateType, Transition> myNonLevelSceneMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
-	protected TriggerManager myTriggerManager;
+	protected TriggerEventManager myTriggerManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
 	protected Player myPlayer;
