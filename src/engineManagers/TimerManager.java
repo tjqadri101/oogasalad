@@ -10,6 +10,7 @@ import java.util.Map;
  */
 import saladConstants.SaladConstants;
 /**
+ * May not be needed
  * @Author: Justin (Zihao) Zhang
  */
 public class TimerManager {

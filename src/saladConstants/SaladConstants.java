@@ -123,6 +123,7 @@ public final class SaladConstants {
 
     public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
     public static final double DEFAULT_ACTOR_SPEED = 5;
+    public static final int DEFAULT_INIT_LIVES = 3;
     
     public static final int POSITIVE_DIRECTION = 1;
     public static final int NEGATIVE_DIRECTION = -1;
