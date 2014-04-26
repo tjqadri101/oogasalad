@@ -50,7 +50,6 @@ public abstract class GameObject extends JGObject implements Subject {
 	protected boolean myIsPlayer; //need change
     
 	protected ResourceBundle myBehaviors;
-	
 	protected String myDieBehavior;
 	protected String myMoveBehavior;
 	protected String myJumpBehavior;
