@@ -102,7 +102,7 @@ public class GameEngine extends StdGame {
 
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager etm = getGame().getTEM();
 		timer++;//change later
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -116,7 +116,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-		etm.checkTrigger();
+//		etm.checkTrigger();
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();
