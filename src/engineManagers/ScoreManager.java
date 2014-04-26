@@ -9,6 +9,7 @@ import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
+ * Manage the changes of score throughout a Game
  * @Author: Justin (Zihao) Zhang
  */
 public class ScoreManager {
@@ -85,6 +86,16 @@ public class ScoreManager {
 		String condition = oldLevelOrSceneID + SaladConstants.SEPARATOR + newLevelOrSceneID;
 		if(myScoreMap.get(condition) == null) return;
 		myScore += myScoreMap.get(condition);
+	}
+	
+	/**
+	 * Called check if score is incremented by a condition (i.e. time)
+	 * @param condition
+	 */
+	public void updateScore(String condition){
+		if(myScoreMap.containsKey(condition)){
+			myScore += myScoreMap.get(condition);
+		}
 	}
 	
 	/**
