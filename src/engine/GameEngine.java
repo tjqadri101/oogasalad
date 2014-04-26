@@ -187,13 +187,9 @@ public class GameEngine extends StdGame {
 	}
 
 	public void paintFrameInGame() {
-		drawString(
-				"You are in Editing Mode right now. This is a test message.",
-				viewWidth() / 2, viewHeight() / 2, 0, false);
-		if (myPlayer != null) {
-			drawRect(myPlayer.x + myPlayer.getXSize() / 2, myPlayer.y
-					- myPlayer.getYSize() / 13.5, myPlayer.getXSize() / 2, 10,
-					false, true);
+		if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
+			drawRect(myPlayer.x + myPlayer.getXSize() / 2, myPlayer.y - myPlayer.getYSize() / 13.5,
+					myPlayer.getXSize() / 2, 10, false, true);
 			drawRect(
 					myPlayer.x
 							+ (0.5 + 0.5 * myPlayer.getBlood()
@@ -206,8 +202,6 @@ public class GameEngine extends StdGame {
 					myPlayer.y - myPlayer.getYSize() / 3, 0, true);
 		}
 
-		// drawRect(getMouseX()+viewXOfs(),getMouseY()+viewYOfs(),20,20,false,true,true);
-
 		if (checkGoal()) {
 			drawString("Win!!!!!!!!!!!!!!!!", viewWidth() / 2,
 					viewHeight() / 2 + 100, 0, false);
@@ -218,23 +212,23 @@ public class GameEngine extends StdGame {
 		if (myMouseButton != 0 && myClickedID == -1) {
 			int tileX = myMouseX / 20;
 			int tileY = myMouseY / 20;
-			if (myMouseButton == 3)
+			if (myMouseButton == 3) {
 				setColor(JGColor.red);// should only be applied to the last line
-			drawRect((double) Math.min(myTileX, tileX) * 20,
-					(double) Math.min(myTileY, tileY) * 20,
-					(double) (Math.abs(myTileX - tileX) + 1) * 20,
-					(double) (Math.abs(myTileY - tileY) + 1) * 20, false, false);
+			}
+			drawRect((double) Math.min(myTileX, tileX) * tileWidth(),
+					(double) Math.min(myTileY, tileY) * tileHeight(),
+					(double) (Math.abs(myTileX - tileX) + 1) * tileWidth(),
+					(double) (Math.abs(myTileY - tileY) + 1) * tileHeight(), false, false);
 		}
 	}
 
 	public void defineLevel() {
 		setCurrentScene(1, 0);
 		myPlayer.resume();
-		// restore the player ? depending on playing mode
 	}
 
 	public void initNewLife() {
-		// restore the player
+		
 	}
 
 	/**
@@ -331,8 +325,9 @@ public class GameEngine extends StdGame {
 	// public void paintFramePaused(){
 	//
 	// }
-
-	// unfinished
+	
+	
+	
 	public void createTiles(char cid, int left, int top,
 			int width, int height) {
 		String temp = "";
@@ -352,16 +347,14 @@ public class GameEngine extends StdGame {
 		if (getMouseButton(1)) {
 			int MouseX = getMouseX() + viewXOfs();
 			int MouseY = getMouseY() + viewYOfs();
-			if (myPlayer != null && !myPlayer.is_suspended
-					&& myPlayer.x < MouseX
-					&& MouseX < myPlayer.x + myPlayer.getXSize()
+			if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended
+					&& myPlayer.x < MouseX && MouseX < myPlayer.x + myPlayer.getXSize()
 					&& myPlayer.y < MouseY
 					&& MouseY < myPlayer.y + myPlayer.getYSize()) {
 				list.add(myPlayer);
 			}
 			for (GameObject go : myCurrentScene.getGameObjects()) {
-				// suspended?
-				if (!go.is_suspended && go.isAlive() && go.x < MouseX
+				if (go.isAlive() && !go.is_suspended && go.x < MouseX
 						&& MouseX < go.x + go.getXSize() && go.y < MouseY
 						&& MouseY < go.y + go.getYSize()) {
 					list.add(go);
@@ -400,16 +393,15 @@ public class GameEngine extends StdGame {
 			myClickedID = -1;
 		}
 		if (myMouseButton == 1 && currentMouse1) {
-			if (myClickedID > 0) {
-				NonPlayer actor = myCurrentScene.getNonPlayer(myClickedID);
-				actor.x += MouseX - myMouseX;
-				actor.y += MouseY - myMouseY;
+			GameObject object = myCurrentScene.getNonPlayer(myClickedID);
+			if (myPlayer != null && myClickedID == myPlayer.getID()) {
+				object = myPlayer;
 			}
-			if (myClickedID == 0) {
-				myPlayer.x += MouseX - myMouseX;
-				myPlayer.y += MouseY - myMouseY;
+			if (object != null) {
+				object.x += MouseX - myMouseX;
+				object.y += MouseY - myMouseY;
+				drag = true;
 			}
-			drag = myClickedID > -1;
 		}
 
 		if (myMouseButton != 3 && currentMouse3) {
@@ -422,18 +414,11 @@ public class GameEngine extends StdGame {
 					Math.abs(myTileY - tileY) + 1);
 		}
 		myMouseButton = 0;
-		if (currentMouse1)
-			myMouseButton = 1;
-		if (currentMouse3)
-			myMouseButton = 3;
+		if (currentMouse1) {myMouseButton = 1;}
+		if (currentMouse3) {myMouseButton = 3;}
 		myMouseX = MouseX;
 		myMouseY = MouseY;
 		return drag;
-	}
-
-	public void setDefaultTiles(char cid, String imgfile) {
-		myTileCid = cid;
-		loadTileImage(cid,imgfile);
 	}
 	
 	public void createTilesFromString(String tiles){
@@ -444,17 +429,19 @@ public class GameEngine extends StdGame {
     
     public void loadTileImage(char cid, String imgfile){
     	defineImage(cid+"",cid+"",cid,imgfile,"-");
-    	System.out.println(cid);
-    	myCurrentScene.defineTileImage(cid, imgfile);
+    	if(isEditingMode) {
+    		myCurrentScene.defineTileImage(cid, imgfile);
+    		myTileCid = cid;
+    	}
     }
 
-	// unfinished
-	private void loadImage(String path) {
-		if (path == null)
-			return;
-		defineImage(path, "-", 0, path, "-");
+	private void loadImage(String imgfile) {
+		if (imgfile == null) {return;}
+		defineImage(imgfile, "-", 0, imgfile, "-");
 	}
 
+	
+	
 	// unfinished
 	private void setTransition(StateType type) {
 		// setSequences(startgame_ingame, 0, leveldone_ingame, 0,
@@ -468,10 +455,11 @@ public class GameEngine extends StdGame {
 		// something else to do ?
 	}
 
+	
+	
 	public void setCurrentScene(int currentLevelID, int currentSceneID) {
 		if (myCurrentScene != null) {
 			for (GameObject go : myCurrentScene.getGameObjects()) {
-				// go.remove();
 				go.suspend();
 			}
 		}
@@ -480,34 +468,54 @@ public class GameEngine extends StdGame {
 		myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
 		updateCurrentScene();
 	}
-
-	/**
-         * 
-         */
+	
 	private void updateCurrentScene() {
-		setPFSize(myCurrentScene.getXSize(), myCurrentScene.getYSize());
+		setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
+				myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
 		for (Entry<Character, String> entry : myCurrentScene.getTileImageMap()) {
 			Character cid = entry.getKey();
 			String imgfile = entry.getValue();
-			defineImage(cid+"",cid+"",cid,imgfile,"-");
+			loadTileImage(cid, imgfile);
 		}
 		setTiles(0, 0, myCurrentScene.getTiles());
-		String url = myCurrentScene.getBackgroundImage();
-		loadImage(url);
-		setBGImage(url);
 		for (GameObject go : myCurrentScene.getGameObjects()) {
-			// this.markAddObject(go);
-			// go.is_alive = true;
 			go.resume();
 		}
 	}
 
-	public void setBackground(String fileName) {
-		myCurrentScene.setBackgroundImage(fileName, false, false,
-				myCurrentScene.getXSize(), myCurrentScene.getYSize());
+	
+	
+	public void setSceneView(String fileName,
+			boolean wrapx, boolean wrapy, int xsize, int ysize) {
+		setBackground(fileName);
+		setSceneSize(xsize, ysize);
+		setSceneWrap(wrapx, wrapy);
+	}
+	
+	private void setBackground(String fileName) {
+		if(isEditingMode) {
+			myCurrentScene.setBackgroundImage(fileName);
+		}
 		loadImage(fileName);
 		setBGImage(fileName);
 	}
+	
+	private void setSceneSize(int xsize, int ysize) {
+		if(isEditingMode) {
+			myCurrentScene.resizeTiles(xsize, ysize);
+			myCurrentScene.setSize(xsize, ysize);
+		}
+		setPFSize(xsize, ysize);
+	}
+	
+	private void setSceneWrap(boolean wrapx, boolean wrapy) {
+		if(isEditingMode) {
+			myCurrentScene.setWrap(wrapx, wrapy);
+		}
+		setPFWrap(wrapx, wrapy,0,0);
+	}
+	
+	
 
 	public void setGame(Game mygame) {
 		myGame = mygame;
@@ -524,17 +532,13 @@ public class GameEngine extends StdGame {
 	public int getCurrentSceneID() {
 		return myCurrentSceneID;
 	}
-
-	public void setSceneSize(int xsize, int ysize) {
-		myCurrentScene.resizeTiles(xsize, ysize);
-		myCurrentScene.setSize(xsize, ysize);
-		setPFSize(xsize, ysize);
-	}
+	
+	
 
 	private void modifyImage(GameObject object, String imgfile, int xsize,
 			int ysize) {
 		loadImage(imgfile);
-		object.setImage(imgfile);// animation
+		object.setImage(imgfile);// animation?
 		object.setSize(xsize, ysize);
 		object.updateImageURL(imgfile);
 	}
@@ -552,38 +556,29 @@ public class GameEngine extends StdGame {
 		modifyImage(object, imgfile, xsize, ysize);
 	}
 
-	public Player createPlayer(int unique_id, String url, int xsize, int ysize,
+	public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			double xpos, double ypos, String name, int colid, int lives) {
-		loadImage(url);
-		Player object = new Player(unique_id, url, xsize, ysize, xpos, ypos,
+		loadImage(imgfile);
+		Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				name, colid, lives, myGame.getCollisionManager(),
 				myGame.getScoreManager(), myGame.getBloodManager());
 		myGame.setPlayer(object);
 		myPlayer = object;
 		object.resume_in_view = false;
-		if (!isEditingMode) {
-			object.suspend();// not sure how things are created for playing the
-								// game
-		}
 		return object;
 	}
 
-	public NonPlayer createActor(int unique_id, String url, int xsize,
-			int ysize, double xpos, double ypos, String name, int colid,
-			int lives) {
-		loadImage(url);
-		NonPlayer object = new NonPlayer(unique_id, url, xsize, ysize, xpos,
+	public NonPlayer createActor(int unique_id, String imgfile, int xsize,
+			int ysize, double xpos, double ypos, String name, int colid, int lives) {
+		loadImage(imgfile);
+		NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				ypos, name, colid, lives, myGame.getCollisionManager(),
 				myGame.getScoreManager(), myGame.getBloodManager());
 		if (unique_id != SaladConstants.NULL_UNIQUE_ID) {
 			myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
 		}
 		object.resume_in_view = false;
-		if (!isEditingMode) {
-			object.suspend();// not sure how things are created for playing the
-								// game
-		}
 		return object;
 	}
-
+	
 }
