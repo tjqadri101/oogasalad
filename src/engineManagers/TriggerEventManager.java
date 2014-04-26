@@ -16,16 +16,16 @@ public class TriggerEventManager implements Observer{
     //Re-think: maybe better relocate the checkTrigger and doEvent main body to here, 
     //instead of puttig into the object
 
-    protected Map<Integer, List<Object>> myTriggerMap;
-    protected Map<Integer, List<Object>> myEventMap;
-    protected List<Object> mySubjectMap;
+    protected Map<Object, List<?>> myTriggerMap;
+    protected Map<Object, List<?>> myEventMap;
+    protected List<?> mySubjectMap;
     protected GameEngine myEngine;
 //    private TriggerEventManager _instance = null;
     
     public TriggerEventManager(GameEngine engine){
             myEngine = engine;
-            myTriggerMap = new HashMap<Integer, List<Object>>();
-            myEventMap = new HashMap<Integer, List<Object>>();
+            myTriggerMap = new HashMap<Object, List<?>>();
+            myEventMap = new HashMap<Object, List<?>>();
     }
     
     /**
@@ -33,6 +33,7 @@ public class TriggerEventManager implements Observer{
      */
     public void setEventToObject(int ID, Object ... args){
             //need to implement the change on resourcebundle
+            Object obj = myEngine.getCurrent
             myEventMap.put(ID, );
     }
     
@@ -45,9 +46,9 @@ public class TriggerEventManager implements Observer{
     }
     
     public void checkTrigger(){
-        for (Object obj: myTriggerMap.keySet()){
-            if(obj.checkTrigger(myEngine)){
-                obj.doEvent(myEngine);
+        for (int i = 0; i<mySubjectMap.size(); i++){
+            if(mySubjectMap.get(i)).checkTrigger(myEngine)){
+                mySubjectMap.get(i).doEvent(myEngine);
             }
         }
     }
@@ -63,14 +64,18 @@ public class TriggerEventManager implements Observer{
     public Object getEvent(Object obj){
             return myTriggerMap.get(obj);   
     }
-
+    
+//Not implemented. Not sure if we use 100% observer pattern    
+    /**implemented observer pattern
+     * Called to see if any update is available on Observerside
+     */
     @Override
     public void update () {
         // TODO Auto-generated method stub
         
     }
     
-    /**
+    /**implemented observer pattern
      * Called initially to store subject as a watching subject
      */
     @Override

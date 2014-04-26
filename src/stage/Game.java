@@ -36,6 +36,7 @@ public class Game {
 	protected Player myPlayer;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
+    protected TriggerEventManager etm;
 
 
 	public Game(){
@@ -47,6 +48,7 @@ public class Game {
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
+    	etm = new TriggerEventManager();
 	}
 
 	/**

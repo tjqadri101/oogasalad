@@ -172,12 +172,13 @@ public class Scene implements Subject {
 		return answer;
 	}
 	
-	public void setBackgroundImage(String fileName, boolean ifWrapHorizontal, boolean ifWrapVertical, int xsize, int ysize) {
+	public void setBackgroundImage(String fileName) {
 		myBackground = fileName;
+	}
+	
+	public void setWrap(boolean ifWrapHorizontal, boolean ifWrapVertical) {
 		myIfWrapHorizontal = ifWrapHorizontal;
 		myIfWrapVertical = ifWrapVertical;
-		myFieldXSize = xsize;
-		myFieldYSize = ysize;
 	}
 	
 	public String getBackgroundImage() {
