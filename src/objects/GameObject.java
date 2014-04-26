@@ -605,8 +605,4 @@ public abstract class GameObject extends JGObject {
 		return myStaticGfxName;
 	}
 
-	public AnimationManager getAnimationManager() {
-		return myAnimationManager;
-	}
-
 }
