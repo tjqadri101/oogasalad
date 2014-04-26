@@ -55,9 +55,6 @@ public class GameEngine extends StdGame {
 	protected char myTileCid;
 
 	protected boolean isEditingMode;
-//?? discuss if needed to put it here
-	protected TriggerEventManager myTEM = new TriggerEventManager(this);
-	
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -116,7 +113,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-		etm.checkTrigger();
+		etm.checkTrigger(this);
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();

@@ -3,7 +3,10 @@ package behaviors;
 import java.util.List;
 import java.util.Random;
 import engine.GameEngine;
-
+/**
+ * Showers the enemy of amount specified by user when trigger is triggered 
+ * @author Steve (siyang) Wang
+ */
 public class EventEnemyShower extends Eventable{
     protected GameEngine myEngine;
     protected Random rg;
@@ -22,7 +25,7 @@ public class EventEnemyShower extends Eventable{
         int enemyCounter = 0;
         while(true){
             int size = rg.nextInt(10)+40;
-            myEngine.createActor(rg.nextInt(50), gfx, size, size, rg.nextInt(600), rg.nextInt(600), "enemyShower", 1, rg.nextInt(5));
+            myEngine.createActor(rg.nextInt(50), gfx, size, size, rg.nextInt(800), rg.nextInt(600), "enemyShower", 1, rg.nextInt(5));
             if(enemyCounter == maxEnemy){
                 break;
             }

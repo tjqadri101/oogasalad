@@ -5,10 +5,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.ResourceBundle;
 import objects.GameObject;
 import objects.Subject;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
+import stage.Game;
+import util.SaladUtil;
 import engineManagers.*;
 
 /**
@@ -17,35 +21,64 @@ import engineManagers.*;
  */
 public class TriggerEventManager implements Observer{
 
-    protected Map<Object, List<?>> myTriggerMap;
-    protected Map<Object, List<?>> myEventMap;
+    protected Map<Integer, List<Object>> myTriggerMap;
+    protected Map<Integer, List<Object>> myEventMap;
+    protected Game myGame;
     protected List<Class> mySubjectList;
     protected GameEngine myEngine;
+    protected Integer myCurrentLevel;
+    protected Integer myCurrentScene;
 
-    public TriggerEventManager(GameEngine engine){
-
-        myEngine = engine;
-        myTriggerMap = new HashMap<Object, List<?>>();
-        myEventMap = new HashMap<Object, List<?>>();
-        mySubjectList = new ArrayList<>();
+    private TriggerEventManager(){
+        myGame = myEngine.getGame();
+        myTriggerMap = new HashMap<Integer, List<Object>>();
+        myEventMap = new HashMap<Integer, List<Object>>();
+        mySubjectList = new ArrayList<>(); 
     }
 
-    //Not implemented. Not sure if we use 100% observer pattern    
-    /**implemented observer pattern
-     * Called from the subject to show information 
-     */
-    @Override
-    public void update () {
-
+    public void checkTrigger(GameEngine myEngine){
+        for (Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
+            int etPairID = entry.getKey();
+            List<Object> triggerList = entry.getValue(); 
+            String triggerBehavior = (String) triggerList.remove(0);
+            if (triggerBehavior == null)
+                break;
+            //            List<Object> triggerParameters = myGame.getLevel(myCurrentLevelID)
+            //                    .getWinParameters();
+            ResourceBundle behaviors = ResourceBundle
+                    .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+                               + SaladConstants.OBJECT_BEHAVIOR);
+            Object answer = SaladUtil.behaviorReflection(behaviors, triggerBehavior,
+                                                         triggerList, "checkTrigger", myEngine);
+            if ((boolean) answer)
+                doEvent(myEngine, etPairID);
+        }
     }
 
-    public void checkTrigger(){
-        for (int i = 0; i<mySubjectList.size(); i++){
-            Object cast = mySubjectList.get(i).getClass();
-            if ((cast) mySubjectList.get(i).checkTrigger(myEngine)){
-                //use reflection to reflect on the particular event, doEvent
-                mySubjectList.get(i).doEvent(myEngine);
-            }
+    private void doEvent(GameEngine myEngine, int etPairID){
+        List<Object> eventParameter = myEventMap.get(etPairID);
+        String eventBehavior = (String) eventParameter.remove(0);
+        ResourceBundle behaviors = ResourceBundle
+                .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+                           + SaladConstants.OBJECT_BEHAVIOR);
+        SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, "doEvent", myEngine);
+    }
+
+    
+    // to work on later when setting the winning behavior
+    public void setTriggerBehavior(String type, Object ... args){
+        myWinBehavior = type;
+        myWinParameters = new ArrayList<Object>();
+        for(int i = 0; i < args.length; i ++){
+            myWinParameters.add(args[i]);
+        }
+    }
+    
+    public void setEventBehavior(String type, Object ... args){
+        myWinBehavior = type;
+        myWinParameters = new ArrayList<Object>();
+        for(int i = 0; i < args.length; i ++){
+            myWinParameters.add(args[i]);
         }
     }
 
@@ -74,6 +107,15 @@ public class TriggerEventManager implements Observer{
         myTriggerMap.put(ID, );
     }
 
+
+    //Not implemented. Not sure if we use 100% observer pattern    
+    /**implemented observer pattern
+     * Called from the subject to show information 
+     */
+    @Override
+    public void update () {
+
+    }
     /**implemented observer pattern
      * Called initially to store subject as a watching subject
      */
@@ -86,5 +128,5 @@ public class TriggerEventManager implements Observer{
     public Object getEvent(Object obj){
         return myTriggerMap.get(obj);   
     }
-    
+
 }

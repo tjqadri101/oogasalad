@@ -36,7 +36,7 @@ public class Game {
 	protected Player myPlayer;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-    protected TriggerEventManager etm;
+    protected TriggerEventManager myTEM;
 
 
 	public Game(){
@@ -48,7 +48,7 @@ public class Game {
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
-    	etm = new TriggerEventManager(null);
+    	myTEM = new TriggerEventManager();
 	}
 
 	/**
@@ -281,7 +281,7 @@ public class Game {
 	 * @return the only instance of TriggerEventManager
 	 */
 	public TriggerEventManager getTEM(){
-	    return etm;
+	    return myTEM;
 	}
 	
 	/* @Siyang: 
