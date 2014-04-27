@@ -13,13 +13,12 @@ import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
 import util.SaladUtil;
-import engineManagers.*;
 
 /**
  * TriggerManager keeps track of all the triggers and their corresponding events
  * @Author: Steve (Siyang) Wang
  */
-public class TriggerEventManager implements Observer{
+public class TriggerEventManager {
 
     protected Map<Integer, List<Object>> myTriggerMap;
     protected Map<Integer, List<Object>> myEventMap;
@@ -29,7 +28,7 @@ public class TriggerEventManager implements Observer{
     protected Integer myCurrentLevel;
     protected Integer myCurrentScene;
 
-    private TriggerEventManager(){
+    public TriggerEventManager(){
         myGame = myEngine.getGame();
         myTriggerMap = new HashMap<Integer, List<Object>>();
         myEventMap = new HashMap<Integer, List<Object>>();
@@ -63,70 +62,35 @@ public class TriggerEventManager implements Observer{
                            + SaladConstants.OBJECT_BEHAVIOR);
         SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, "doEvent", myEngine);
     }
-
     
-    // to work on later when setting the winning behavior
-    public void setTriggerBehavior(String type, Object ... args){
-        myWinBehavior = type;
-        myWinParameters = new ArrayList<Object>();
+    public void setTriggerBehavior(int etPairID, String triggerBehavior, Object ... args){
+        List<Object> triggerParameters = new ArrayList<Object>();
+        triggerParameters.add(triggerBehavior);
         for(int i = 0; i < args.length; i ++){
-            myWinParameters.add(args[i]);
+            triggerParameters.add(args[i]);
         }
+        myTriggerMap.put(etPairID, triggerParameters);
     }
     
-    public void setEventBehavior(String type, Object ... args){
-        myWinBehavior = type;
-        myWinParameters = new ArrayList<Object>();
+    public void setEventBehavior(int etPairID, String eventBehavior, Object ... args){
+        List<Object> eventParameters = new ArrayList<Object>();
+        eventParameters.add(eventBehavior);
         for(int i = 0; i < args.length; i ++){
-            myWinParameters.add(args[i]);
+            eventParameters.add(args[i]);
         }
+        myEventMap.put(etPairID, eventParameters);
+    }
+    
+    public void updateTEM(){
+        
     }
 
     public List<String> getAttributes(){
         List<String> answer = new ArrayList<String>();
         for(Object state: myTriggerMap.keySet()){
-            answer.add(SaladConstants.MODIFY_TIMERMANAGER + "," + state + "," + myTriggerMap.get(state));
+            answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + "," + state + "," + myTriggerMap.get(state));
         }
         return answer;
-    }
-
-    /**
-     * Object, Event
-     */
-    public void setEventToObject(int ID, Object ... args){
-        //need to implement the change on resourcebundle
-        Object obj = myEngine.getCurrent
-                myEventMap.put(ID, );
-    }
-
-    /**
-     * Object, Trigger
-     */
-    public void setTriggerToObject(int ID, Object ... args){
-        //need to implement the change on resourcebundle
-        myTriggerMap.put(ID, );
-    }
-
-
-    //Not implemented. Not sure if we use 100% observer pattern    
-    /**implemented observer pattern
-     * Called from the subject to show information 
-     */
-    @Override
-    public void update () {
-
-    }
-    /**implemented observer pattern
-     * Called initially to store subject as a watching subject
-     */
-    @Override
-    @SuppressWarnings("rawtypes")
-    public void setSubject (Class sub) {
-        mySubjectList.add(sub);
-    }
-
-    public Object getEvent(Object obj){
-        return myTriggerMap.get(obj);   
     }
 
 }

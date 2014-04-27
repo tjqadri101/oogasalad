@@ -3,7 +3,11 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
-
+/**
+ * May not be needed
+ * @author Main
+ *
+ */
 public class AwardBlood extends Collision{
 
 	protected AwardBlood(GameObject o) {

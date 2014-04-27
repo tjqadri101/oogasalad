@@ -99,7 +99,7 @@ public class GameEngine extends StdGame {
 
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager etm = getGame().getTEM();
 		timer++;//change later
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -113,7 +113,11 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
+<<<<<<< HEAD
 		etm.checkTrigger(this);
+=======
+//		etm.checkTrigger();
+>>>>>>> 87eabbfbde586d5ee74baf019131e74591b39513
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();
@@ -425,7 +429,7 @@ public class GameEngine extends StdGame {
 	}
 	
 	public void createTilesFromString(String tiles){
-    	String[] array = tiles.split(SaladConstants.SEPERATER);
+    	String[] array = tiles.split(SaladConstants.SEPARATOR);
     	setTiles(0, 0, array);
     	myCurrentScene.setTiles(array);
     }

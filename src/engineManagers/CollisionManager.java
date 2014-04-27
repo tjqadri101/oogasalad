@@ -61,7 +61,7 @@ public class CollisionManager {
 	 * @return Object list
 	 */
 	public List<Object> getCollisionBehavior(int victimColid, int hitterColid){
-		String pair = victimColid + SaladConstants.SEPERATER + hitterColid;
+		String pair = victimColid + SaladConstants.SEPARATOR + hitterColid;
 		return myCollisionMap.get(pair);
 	}
 	
@@ -72,7 +72,7 @@ public class CollisionManager {
 	 * @return Object list
 	 */
 	public List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
-		String pair = victimColid + SaladConstants.SEPERATER + tileColid;
+		String pair = victimColid + SaladConstants.SEPARATOR + tileColid;
 		return myTileCollisionMap.get(pair);
 	}
 	
@@ -100,7 +100,7 @@ public class CollisionManager {
 	protected Set<int[]> getPairs(Map<String, List<Object>> map){
 		Set<int[]> answer = new HashSet<int[]>();
 		for(String s: map.keySet()){
-			String[] pair = s.split(SaladConstants.SEPERATER);
+			String[] pair = s.split(SaladConstants.SEPARATOR);
 			int pair1 = Integer.parseInt(pair[0]);
 			int pair2 = Integer.parseInt(pair[1]);
 			int[] adder = new int[]{pair1, pair2};
@@ -126,14 +126,14 @@ public class CollisionManager {
 				SaladConstants.COLLISION_ID, colid1, type, true, attributeParams);
 		myAttributes.add(attribute);
 		objects.add(0, type);
-		String pair = colid1 + SaladConstants.SEPERATER + colid2;
+		String pair = colid1 + SaladConstants.SEPARATOR + colid2;
 		map.put(pair, objects);
 	}
 	
 	//Better use reflection or whatever means to combine pair/tile collision in one method
 	
 	public void setDirectionalCollisionBehavior(int victimColid, String type, int hitterColid, String direction, Object ... args){
-		int dir = Arrays.asList(new String[]{SaladConstants.UP,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
+		int dir = Arrays.asList(new String[]{SaladConstants.Top,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
 		if(dir == 4) addCollisionPair(victimColid, type, hitterColid, args);
 
@@ -141,7 +141,7 @@ public class CollisionManager {
 	}
 	
 	public void setDirectionalTileCollisionBehavior(int victimColid, String type, int tileColid, String direction, Object ... args){
-		int dir = Arrays.asList(new String[]{SaladConstants.UP,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
+		int dir = Arrays.asList(new String[]{SaladConstants.Top,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
 		if(dir == 4) addTileCollisionPair(victimColid, type, tileColid, args);
 		else addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, args);

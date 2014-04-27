@@ -15,10 +15,10 @@ import engineManagers.ScoreManager;
 /**
  * GameObject is the superclass of Player and NonPlayer
  * GameObject is a game unit that can execute certain actions and interactions 
- * @Author: Justin (Zihao) Zhang, 
- * @Contribution: Steve (Siyang) Wang
+ * @author: Justin (Zihao) Zhang, 
+ * @contribution: Steve (Siyang) Wang
  */
-public abstract class GameObject extends JGObject implements Subject {
+public abstract class GameObject extends JGObject implements Observer {
     
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
@@ -48,6 +48,7 @@ public abstract class GameObject extends JGObject implements Subject {
 	protected List<String> myAttributes;
 	protected String myName;
 	protected boolean myIsPlayer; //need change
+	protected boolean myIsActive;
     
 	protected ResourceBundle myBehaviors;
 	protected String myDieBehavior;
@@ -59,7 +60,7 @@ public abstract class GameObject extends JGObject implements Subject {
 	protected List<Object> myDieParameters;
 	protected List<Object> myMoveParameters;
 	protected List<Object> myJumpParameters;
-	protected SideDetector[] mySideDetectors;//plz review
+	protected SideDetector[] mySideDetectors;
 	
 	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int blood, 
@@ -80,6 +81,14 @@ public abstract class GameObject extends JGObject implements Subject {
 		myObservers = new ArrayList<>();
 	}
 
+	public boolean getIsActive(){
+		return myIsActive;
+	}
+	
+	public void setIsActive(boolean active){
+		myIsActive = active;
+	}
+	
 	/**
 	 * 
 	 */
@@ -228,10 +237,10 @@ public abstract class GameObject extends JGObject implements Subject {
 	}
 	
 	/**
-	 * Decrement the number of lives
+	 * Change the number of lives
 	 */
 	public void changeBlood(int blood){
-		myBlood -= blood;
+		myBlood += blood;
 	}
 	
 	/**
@@ -335,7 +344,7 @@ public abstract class GameObject extends JGObject implements Subject {
 	}
 	
 	public void jump(){
-		myJumpTimes ++;
+		if(myIsInAir==0){myJumpTimes ++;}
 		if(myJumpBehavior == null) return;
 		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, SaladConstants.JUMP, this);
 	}
@@ -346,14 +355,6 @@ public abstract class GameObject extends JGObject implements Subject {
 	 */
 	public int getJumpTimes(){
 		return myJumpTimes;
-	}
-	
-	/**
-	 * 
-	 * @return boolean if is in air
-	 */
-	public int getIsInAir(){
-		return myIsInAir;
 	}
 	
 	@Override
@@ -452,10 +453,10 @@ public abstract class GameObject extends JGObject implements Subject {
             myTriggerFlag = (boolean) answer;
             return myTriggerFlag;
         }
-//Not 100% ready for observer pattern yet        
-        /**
+/*//Not 100% ready for observer pattern yet        
+        *//**
          * Below four methods overriding the interface Subject in the observer pattern
-         */
+         *//*
         @Override
         public void register(Observer obj) {
             if(obj == null) throw new NullPointerException("Null Observer");
@@ -488,7 +489,7 @@ public abstract class GameObject extends JGObject implements Subject {
         public String getUpdate(Observer obj) {
             return myTrigger;
         }
-	
+	*/
 	
 	
 /* @Steve:

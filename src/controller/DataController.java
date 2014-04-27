@@ -11,7 +11,9 @@ import parser.GameSaverAndLoader;
 import stage.Game;
 import util.SaladUtil;
 /**
- * @Author: Justin (Zihao) Zhang
+ * 
+ * @author Main Justin (Zihao) Zhang
+ *
  */
 public class DataController {
 	

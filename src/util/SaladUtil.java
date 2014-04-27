@@ -25,6 +25,20 @@ public class SaladUtil {
         }
         return answer;
     }
+    
+    /**
+     * Convert a list of Strings to a list of Objects
+     * @param string
+     * @return
+     */
+    public static List<Object> convertStringListToObjectList(List<String> string){
+    	List<Object> object = new ArrayList<Object>();
+    	for(String s: string){
+    		Object o = (Object) s;
+    		object.add(o);
+    	}
+    	return object;
+    }
 
     /**
      * Print a list of Strings separated by '/' for debugging purpose
@@ -127,10 +141,5 @@ public class SaladUtil {
     	}
     	return answer.toString();
     }
-    
-//    public static List<Object> convertStringToObjects(String s, String seperater){
-//    	List<Object> answer = new ArrayList<Object>();
-//    	for()dd
-//    }
 
 }

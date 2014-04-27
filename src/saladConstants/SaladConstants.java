@@ -2,7 +2,7 @@ package saladConstants;
 
 public final class SaladConstants {
 	
-	public static final String SEPERATER = ",";
+	public static final String SEPARATOR = ",";
 	
 	public static final String CREATE_LEVEL = "CreateLevel";
 	public static final String SWITCH_LEVEL = "SwitchLevel";
@@ -50,6 +50,8 @@ public final class SaladConstants {
 	public static final String TEST_XMLFILE_URL = "test.xml";
 	
 	public static final String BACKGROUND = "Background";
+	public static final String LEVEL = "level";
+	public static final String SCENE = "scene";
 	public static final String ID = "ID";
 	public static final String IMAGE = "Image";
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
@@ -135,7 +137,7 @@ public final class SaladConstants {
 	public static final String SHOOT_KEY = "shoot";
 	public static final String JUMP_KEY = "jump";
 	
-	public static final String UP = "Up";
+	public static final String Top = "Top";
 	public static final String BOTTOM = "Bottom";
 	public static final String LEFT = "Left";
 	public static final String RIGHT = "Right";
@@ -149,8 +151,7 @@ public final class SaladConstants {
 	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
 	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
 	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
-	public static final String MODIFY_TRIGGER_MANAGER = "ModifyTriggerManager";
-	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
+	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
 	public static final String SET_TRIGGER = "SetTrigger";
 	public static final String SET_EVENT = "SetEvent";
 	public static final String TRIGGER_TYPE = "TriggerType";
