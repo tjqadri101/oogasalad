@@ -26,4 +26,12 @@ public class RevivalManager {
 			return null;
 		}
 	}
+	
+	public void addRemovedObject(GameObject go) {
+		removedObjects.push(go);
+	}
+	
+	public Stack<GameObject> getRemovedObjects() {
+		return removedObjects;
+	}
 }
