@@ -30,7 +30,7 @@ public class AttributeMaker {
 	 * @param String firstType
 	 * @param Object firstParameter
 	 * @param String secondType
-	 * @param boolean duplicated (if type is duplicated in the data format)
+	 * @param boolean duplicated (if the second type is duplicated in the data format)
 	 * @param list of object parameters
 	 * @return String attribute
 	 */
@@ -48,7 +48,7 @@ public class AttributeMaker {
 	 * @param String firstType
 	 * @param Object firstParameter
 	 * @param String secondType
-	 * @param boolean duplicated (if type is duplicated in the data format)
+	 * @param boolean duplicated (if the second type is duplicated in the data format)
 	 * @param list of object parameters
 	 * @return String attribute
 	 */
@@ -61,12 +61,12 @@ public class AttributeMaker {
 	}
 	
 	/**
-	 * Add attribute of the format as: key, type, Double parameter, type, parameters
+	 * Add attribute of the format as: key, type, double parameter, type, parameters
 	 * @param String key
 	 * @param String firstType
 	 * @param Object firstParameter
 	 * @param String secondType
-	 * @param boolean duplicated (if type is duplicated in the data format)
+	 * @param boolean duplicated (if the second type is duplicated in the data format)
 	 * @param list of object parameters
 	 * @return String attribute
 	 */
@@ -84,7 +84,7 @@ public class AttributeMaker {
 	 * @param String firstType
 	 * @param Object firstParameter
 	 * @param String secondType
-	 * @param boolean duplicated (if type is duplicated in the data format)
+	 * @param boolean duplicated (if the second type is duplicated in the data format)
 	 * @param list of object parameters
 	 * @return String attribute
 	 */
@@ -97,7 +97,7 @@ public class AttributeMaker {
 	}
 	
 	/**
-	 * Add attribute of the format as: key, type, parameter
+	 * Add attribute of the format as: key, type, int parameter
 	 * @param key
 	 * @param type
 	 * @param parameter
@@ -110,7 +110,7 @@ public class AttributeMaker {
 	}
 	
 	/**
-	 * Add attribute of the format as: key, type, parameter
+	 * Add attribute of the format as: key, type, double parameter
 	 * @param key
 	 * @param type
 	 * @param parameter
@@ -123,7 +123,7 @@ public class AttributeMaker {
 	}
 	
 	/**
-	 * Add attribute of the format as: key, type, parameter
+	 * Add attribute of the format as: key, type, String parameter
 	 * @param key
 	 * @param type
 	 * @param parameter
