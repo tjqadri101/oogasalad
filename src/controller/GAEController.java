@@ -808,7 +808,7 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void modifyBloodManager(int score, int changeBlood, int victimColID, int hitterColID){
+	public void modifyBloodManagerHitter(int score, int changeBlood, int victimColID, int hitterColID){
 		String order = SaladConstants.MODIFY_BLOOD_MANAGER + SaladConstants.SEPARATOR +  SaladConstants.SET_COLLISION_BLOOD + 
 				SaladConstants.SEPARATOR + changeBlood + SaladConstants.SEPARATOR + SaladConstants.COLLISION  + SaladConstants.SEPARATOR 
 				+ victimColID + SaladConstants.SEPARATOR + hitterColID;
@@ -816,10 +816,18 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	public void modifyBloodManagerTile(int score, int changeBlood, int victimColID, int tileColID){
+		String order = SaladConstants.MODIFY_BLOOD_MANAGER + SaladConstants.SEPARATOR +  SaladConstants.SET_TILE_COLLISION_BLOOD + 
+				SaladConstants.SEPARATOR + changeBlood + SaladConstants.SEPARATOR + SaladConstants.TILE_COLLISION  + SaladConstants.SEPARATOR 
+				+ victimColID + SaladConstants.SEPARATOR + tileColID;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	//the following two methods are not ready yet
-	/*public void modifyTriggerManager(int ID){
-		String order = SaladConstants.MODIFY_TRIGGER_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ ID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_TYPE;
+	/*public void modifyTriggerEventManagerTime(int ID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ ID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TIME + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_TYPE;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -831,9 +839,9 @@ public class GAEController {
 		System.out.println(order);
 	}*/
 	
-	public void modifyLifeManagerInitLives(int lives){
+	public void modifyLifeManagerInitLives(int lives, int playerID){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + SaladConstants.SEPARATOR 
-				+ lives; 
+				+ lives + SaladConstants.SEPARATOR + playerID; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -845,6 +853,37 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	public void modifyTransitionStateBackground(String gameState, String url){
+		String order = SaladConstants.MODIFY_TRANSITION_STATE + SaladConstants.SEPARATOR + SaladConstants.GAME_STATE + 
+				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.BACKGROUND + 
+				SaladConstants.SEPARATOR + url;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTransitionStateFrame(String gameState, int timeLength){
+		String order = SaladConstants.MODIFY_TRANSITION_STATE + SaladConstants.SEPARATOR + SaladConstants.GAME_STATE + 
+				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.FRAME + 
+				SaladConstants.SEPARATOR + timeLength;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTransitionStateMessage(String gameState, String message, int xPos, int yPos){
+		String order = SaladConstants.MODIFY_TRANSITION_STATE + SaladConstants.SEPARATOR + SaladConstants.GAME_STATE + 
+				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.DISPLAY_MESSAGE + 
+				SaladConstants.SEPARATOR + message + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTransitionStateImage(String gameState, String url, int xPos, int yPos){
+		String order = SaladConstants.MODIFY_TRANSITION_STATE + SaladConstants.SEPARATOR + SaladConstants.GAME_STATE + 
+				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.DISPLAY_IMAGE + 
+				SaladConstants.SEPARATOR + url + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	// GAE funtions below. NOT orders sending to DataController
 		
 	public List<String> getAttributes(){
