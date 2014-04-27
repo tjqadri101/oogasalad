@@ -2,7 +2,6 @@ package behaviors;
 
 import java.util.List;
 
-import objects.GameObject;
 import objects.NonPlayer;
 import stage.Game;
 import engine.GameEngine;
