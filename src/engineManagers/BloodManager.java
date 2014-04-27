@@ -58,7 +58,7 @@ public class BloodManager extends StatisticsManager{
 			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
 					param.toString().split(SaladConstants.SEPARATOR)));
 			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.SET_COLLISION_BLOOD;
-			if(condition.startsWith(SaladConstants.TILE_COLLISION) || condition.startsWith(SaladConstants.SCENE)) type = SaladConstants.SET_TRANSITION_SCORE;
+			if(condition.startsWith(SaladConstants.TILE_COLLISION)) type = SaladConstants.SET_TRANSITION_SCORE;
 			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, type, false, params));
 		}
 		return answer;
