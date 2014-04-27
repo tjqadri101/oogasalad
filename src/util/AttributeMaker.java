@@ -138,4 +138,16 @@ public class AttributeMaker {
 		return attribute.toString();
 	}
 
+	/**
+	 * Add attribute of the format as: key, type, boolean parameter
+	 * @param key
+	 * @param type
+	 * @param parameter
+	 * @return String attribute
+	 */
+	public static String addAttribute(String key, String type, boolean parameter){
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(key + SaladConstants.SEPARATOR + type + SaladConstants.SEPARATOR + parameter);
+		return attribute.toString();
+	}
 }
