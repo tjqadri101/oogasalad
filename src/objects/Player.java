@@ -25,16 +25,9 @@ public class Player extends GameObject {
 			String name, int collisionId, int lives, 
 			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager, RevivalManager revivalManager) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, scoreManager, bloodManager, revivalManager);
-		myIsPlayer = true;
 		myKeyMap = new HashMap<Integer, String>();
 		myInitXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myInitYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
-		
-		myAttributes.add(SaladConstants.CREATE_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + myUniqueID + SaladConstants.SEPARATOR + 
-				SaladConstants.IMAGE + SaladConstants.SEPARATOR + getGraphic() + SaladConstants.SEPARATOR + myXSize + SaladConstants.SEPARATOR + myYSize + SaladConstants.SEPARATOR +
-				SaladConstants.POSITION + SaladConstants.SEPARATOR + myInitX + SaladConstants.SEPARATOR + myInitY + SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR + getName() + SaladConstants.SEPARATOR + 
-				SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + colid + SaladConstants.SEPARATOR + SaladConstants.LIVES + SaladConstants.SEPARATOR + myInitBlood);
-
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 	}
 	
