@@ -15,7 +15,7 @@ public class Transition {
 	public static String[] TRANSITION_STATE = new String[]{"StartGame", "LevelDone", "LifeLost", "GameOver",
 		"Title", "EnterHighscore", "Highscores", "Paused"};
 	
-	private static List<String> sequence =
+	public static List<String> SEQUENCE =
 			Arrays.asList(new String[]{"StartGame", "LevelDone", "LifeLost", "GameOver"});
 	
 	protected String myType;
@@ -32,12 +32,12 @@ public class Transition {
 	}
 	
 	public void setBackground(String url){
-		if (sequence.contains(myType)) {return;}
+		if (SEQUENCE.contains(myType)) {return;}
 		myBackground = url;
 	}
 	
 	public void setFrame(int frame){
-		if (!sequence.contains(myType)) {return;}
+		if (!SEQUENCE.contains(myType)) {return;}
 		frame_to_stay = frame;
 	}
 	
