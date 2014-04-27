@@ -19,6 +19,7 @@ import engineManagers.ScoreManager;
  * @author: Justin (Zihao) Zhang,
  * @contribution: Steve (Siyang) Wang, David Chou
  */
+
 public abstract class GameObject extends JGObject {
 
 	protected ScoreManager myScoreManager;
@@ -216,16 +217,41 @@ public abstract class GameObject extends JGObject {
 	/**
 	 * Restore to original state within a scene Used for live-editing
 	 */
-	public void restore(boolean lifeLost) {
+	public void restore(boolean resetLife) {
 		setInitPos(myInitX, myInitY);
 		setInitSpeed(myInitXSpeed, myInitYSpeed);
-		if (!lifeLost)
-			setBlood(myInitBlood);
+		setBlood(myInitBlood);
+		if (resetLife) {
+			// lifeManager ?
+		}
 		if (!is_alive) {
 			eng.markAddObject(this);
 			is_alive = true;
 		}
+		if (mySideDetectors!=null){
+			for (int i = 0; i < 4; i++) {
+				mySideDetectors[i].restore(false);
+			}
+		}
 	}
+	
+	public void resume(){
+		super.resume();
+		if (mySideDetectors!=null){
+			for (int i = 0; i < 4; i++) {
+				mySideDetectors[i].resume();
+			}
+		}
+	}
+	
+//	public void suspend(){
+//		super.resume();
+//		if (mySideDetectors!=null){
+//			for (int i = 0; i < 4; i++) {
+//				mySideDetectors[i].suspend();
+//			}
+//		}
+//	}
 
 	/**
 	 * Reset the unique ID
@@ -513,65 +539,6 @@ public abstract class GameObject extends JGObject {
 		return myBloodManager;
 	}
 	
-//	/**
-//         * Used for triggerManager to inspect the trigger
-//         * @return Trigger
-//         */
-//
-//        public String getTrigger(){
-//                return myTrigger;
-//        }
-//        
-//        /**
-//         * Used for triggerManager to checkTrigger at each doFrame in engine
-//         * @return Trigger
-//         */
-//        
-//        public boolean checkTrigger(GameEngine myEngine){
-//            if (myTrigger == null) return false;
-//            ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
-//            Object answer = SaladUtil.behaviorReflection(behaviors, myTrigger, myTriggerParameter, "checkTrigger", myEngine);
-//            myTriggerFlag = (boolean) answer;
-//            return myTriggerFlag;
-//        }
-////Not 100% ready for observer pattern yet        
-//        /**
-//         * Below four methods overriding the interface Subject in the observer pattern
-//         */
-//        @Override
-//        public void register(Observer obj) {
-//            if(obj == null) throw new NullPointerException("Null Observer");
-//            synchronized (MUTEX) {
-//            if(!myObservers.contains(obj)) myObservers.add(obj);
-//            }
-//        }
-//        @Override 
-//        public void unregister(Observer obj) {
-//            synchronized (MUTEX) {
-//            myObservers.remove(obj);
-//            }
-//        }
-//        @Override
-//        public void notifyObservers() {
-//            List<Observer> observersLocal = null;
-//            //synchronization is used to make sure any observer registered after message is received is not notified
-//            synchronized (MUTEX) {
-//                if (!isUpdated)
-//                    return;
-//                observersLocal = new ArrayList<>(this.myObservers);
-//                this.isUpdated=false;
-//            }
-//            for (Observer obj : observersLocal) {
-//                obj.update();
-//            }
-//     
-//        }
-//        @Override
-//        public String getUpdate(Observer obj) {
-//            return myTrigger;
-//        }
-//	
-	
 	
 /* @Steve:
  * The following getter and setters used for GameFactoryTest
@@ -604,9 +571,9 @@ public abstract class GameObject extends JGObject {
 	public String getMyGfx() {
 		return myStaticGfxName;
 	}
-
-	public AnimationManager getAnimationManager() {
-		return myAnimationManager;
+	
+	public void setStaticGfx(String image) {
+		myStaticGfxName = image;
 	}
 
 }

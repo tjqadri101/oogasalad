@@ -55,9 +55,6 @@ public class GameEngine extends StdGame {
 	protected char myTileCid;
 
 	protected boolean isEditingMode;
-//?? discuss if needed to put it here
-	protected TriggerEventManager myTEM = new TriggerEventManager(this);
-	
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -102,7 +99,7 @@ public class GameEngine extends StdGame {
 
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-//	        TriggerEventManager etm = getGame().getTEM();
+	        TriggerEventManager myTEM = getGame().getTEM();
 		timer++;//change later
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -116,7 +113,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-//		etm.checkTrigger();
+		myTEM.checkTrigger(this);
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();
@@ -127,10 +124,10 @@ public class GameEngine extends StdGame {
 
 	private void checkAllCollision() {
 		for (int[] pair : myGame.getCollisionManager().getCollisionPair()) {
-			checkCollision(pair[0], pair[1]);
+			checkCollision(pair[1], pair[0]);
 		}
 		for (int[] pair : myGame.getCollisionManager().getTileCollisionPair()) {
-			checkBGCollision(pair[1], pair[0]); //need changes in collision manager
+			checkBGCollision(pair[1], pair[0]);
 		}
 	}
 
@@ -376,6 +373,7 @@ public class GameEngine extends StdGame {
 	}
 
 	public boolean drag() {
+		if (!isEditingMode) {return false;}
 		boolean drag = false;
 		boolean currentMouse1 = getMouseButton(1);
 		boolean currentMouse3 = getMouseButton(3);
@@ -428,17 +426,15 @@ public class GameEngine extends StdGame {
 	}
 	
 	public void createTilesFromString(String tiles){
-    	String[] array = tiles.split(SaladConstants.SEPARATOR);
+    	String[] array = tiles.split(" ");
     	setTiles(0, 0, array);
     	myCurrentScene.setTiles(array);
     }
     
     public void loadTileImage(char cid, String imgfile){
     	defineImage(cid+"",cid+"",cid,imgfile,"-");
-    	if(isEditingMode) {
-    		myCurrentScene.defineTileImage(cid, imgfile);
-    		myTileCid = cid;
-    	}
+    	myCurrentScene.defineTileImage(cid, imgfile);
+    	if(isEditingMode) {myTileCid = cid;}
     }
 
 	private void loadImage(String imgfile) {
@@ -499,25 +495,19 @@ public class GameEngine extends StdGame {
 	}
 	
 	private void setBackground(String fileName) {
-		if(isEditingMode) {
-			myCurrentScene.setBackgroundImage(fileName);
-		}
+		myCurrentScene.setBackgroundImage(fileName);
 		loadImage(fileName);
 		setBGImage(fileName);
 	}
 	
 	private void setSceneSize(int xsize, int ysize) {
-		if(isEditingMode) {
-			myCurrentScene.resizeTiles(xsize, ysize);
-			myCurrentScene.setSize(xsize, ysize);
-		}
+		myCurrentScene.resizeTiles(xsize, ysize);
+		myCurrentScene.setSize(xsize, ysize);
 		setPFSize(xsize, ysize);
 	}
 	
 	private void setSceneWrap(boolean wrapx, boolean wrapy) {
-		if(isEditingMode) {
-			myCurrentScene.setWrap(wrapx, wrapy);
-		}
+		myCurrentScene.setWrap(wrapx, wrapy);
 		setPFWrap(wrapx, wrapy,0,0);
 	}
 	
@@ -545,8 +535,19 @@ public class GameEngine extends StdGame {
 			int ysize) {
 		loadImage(imgfile);
 		object.setImage(imgfile);// animation?
+		object.setStaticGfx(imgfile);
 		object.setSize(xsize, ysize);
 		object.updateImageURL(imgfile);
+	}
+	
+	public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
+		loadImage(imgfile);
+		object.setJumpingImage(imgfile);
+	}
+	
+	public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
+		loadImage(imgfile);
+		object.setMovingImage(imgfile);
 	}
 
 	public void modifyActorImage(int unique_id, String imgfile, int xsize,
@@ -577,9 +578,6 @@ public class GameEngine extends StdGame {
 			object.suspend();// not sure how things are created for playing the
 								// game
 		}
-/*Commented out, not fully ready to switch to observer pattern*/
-//                  object.register(etm);
-//                  etm.setSubject(object);
 		return object;
 	}
 
@@ -599,9 +597,6 @@ public class GameEngine extends StdGame {
 			object.suspend();// not sure how things are created for playing the
 								// game
 		}
-/*Commented out, not fully ready to switch to observer pattern*/
-//		object.register(etm);
-//		etm.setSubject(object);
 		return object;
 	}
 	

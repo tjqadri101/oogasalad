@@ -27,6 +27,7 @@ public class WinByTileCollision extends Winnable{
 	 * @param int tile x size
 	 * @param int tile y size
 	 */
+	
 	@Override
 	public boolean checkGoal(List<Object> params) {
 		//Wait until tile order and tile stored info are determined

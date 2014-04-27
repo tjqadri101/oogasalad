@@ -230,7 +230,7 @@ public class Scene implements Subject {
 		}
 		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_IMAGE;
 		for (String line: getTiles()) {
-			tiles += SaladConstants.SEPARATOR + line;//different separator?
+			tiles += " " + line;
 		}
 		answer.add(tiles);
 		return answer;

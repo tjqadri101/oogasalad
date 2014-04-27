@@ -1,10 +1,11 @@
 package objects;
 
+import engine.GameEngine;
 import saladConstants.SaladConstants;
 
 public class SideDetector extends GameObject{
 
-	public static final double DETECTOR_FACTOR = 0.25;
+	public static final double DETECTOR_FACTOR = 0.2;
 	public static final int GENERATOR_FACTOR = 10000;
 
 	protected GameObject myParent;
@@ -23,8 +24,15 @@ public class SideDetector extends GameObject{
 		return parent_cid*GENERATOR_FACTOR+dir;
 	}
 	
+	public void changeBlood(int blood){
+		myParent.changeBlood(blood);
+	}
+	
 	public void move(){
-		setPos(myParent.x, myParent.y);
+		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).timer);
+		setPos(myParent.getLastX(), myParent.getLastY());
+		if (myParent.is_suspended) {suspend();}
+		if (!myParent.isAlive()) {remove();}
 	}
 	
 	public void die(){
@@ -40,6 +48,7 @@ public class SideDetector extends GameObject{
 	}
 	
 	public void ground(){
+		if (myDirection == 1) System.out.println("ground() "+((GameEngine)eng).timer);
 		myParent.ground();
 	}
 	
