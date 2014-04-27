@@ -2,6 +2,8 @@ package util;
 
 /*
  * @author Anthony Olawo
+ * 
+ * This class avails methods to initialise InfoPanel, which extends it. 
  */
 
 import java.awt.Dimension;

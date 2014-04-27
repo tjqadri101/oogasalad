@@ -13,8 +13,8 @@ public class InfoPanelsUtilityTest {
 	}
 		
 	public void test() {
-		factory.constructAndDisplayInfoPanel("help","./src/game_authoring_environment/resources/help.html");
-		factory.constructAndDisplayInfoPanel("about","./src/game_authoring_environment/resources/about.html"); 
+		//factory.constructAndDisplayInfoPanel("help","./src/game_authoring_environment/resources/help.html");
+		//factory.constructAndDisplayInfoPanel("about","./src/game_authoring_environment/resources/about.html"); 
 	}
 	
 	public static void main(String [] args){

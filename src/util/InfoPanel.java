@@ -7,6 +7,8 @@ import saladConstants.SaladConstants;
 /*
  * @author Anthony Olawo 
  * 
+ * This class avails methods to create, modify and display an instance of InfoPanel 
+ * 
  */
 
 public class InfoPanel extends SuperInfoPanel {
