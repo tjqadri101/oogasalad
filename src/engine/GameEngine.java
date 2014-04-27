@@ -99,7 +99,7 @@ public class GameEngine extends StdGame {
 
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-	        TriggerEventManager myTEM = getGame().getTEM();
+//	        TriggerEventManager myTEM = getGame().getTEM();
 		timer++;//change later
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -113,7 +113,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-		myTEM.checkTrigger(this);
+//		myTEM.checkTrigger(this);
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();
@@ -569,7 +569,7 @@ public class GameEngine extends StdGame {
 		loadImage(imgfile);
 		Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				name, colid, lives, myGame.getCollisionManager(),
-				myGame.getScoreManager(), myGame.getBloodManager());
+				myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
 		myGame.setPlayer(object);
 		myPlayer = object;
 		object.resume_in_view = false;
@@ -587,7 +587,7 @@ public class GameEngine extends StdGame {
 		loadImage(imgfile);
 		NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				ypos, name, colid, lives, myGame.getCollisionManager(),
-				myGame.getScoreManager(), myGame.getBloodManager());
+				myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
 		if (unique_id != SaladConstants.NULL_UNIQUE_ID) {
 			myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
 		}
