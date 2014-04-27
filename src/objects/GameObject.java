@@ -16,8 +16,9 @@ import engineManagers.ScoreManager;
  * GameObject is the superclass of Player and NonPlayer GameObject is a game
  * unit that can execute certain actions and interactions
  * 
- * @author: Justin (Zihao) Zhang,
- * @contribution: David Chou
+ * @author: Main Justin (Zihao) Zhang,
+ * @contribution (images/animations): David Chou
+ * @contribution (side detectors): Shenghan Chen
  */
 
 public abstract class GameObject extends JGObject {
@@ -94,8 +95,8 @@ public abstract class GameObject extends JGObject {
 	 */
 	private void initSideDetectors() {
 		if (myUniqueID == SaladConstants.NULL_UNIQUE_ID) return;
-		mySideDetectors = new SideDetector[4];
-		for (int i = 0; i < 4; i++) {
+		mySideDetectors = new SideDetector[SaladConstants.NUM_SIDE_DETECTORS];
+		for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
 			setSideDetector(new SideDetector(this, i, SideDetector.SDcid(colid, i)));
 		}
 	}

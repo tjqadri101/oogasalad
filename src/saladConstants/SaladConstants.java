@@ -181,6 +181,7 @@ public final class SaladConstants {
 	public static final String ABOUT_HTML_URL = "./src/game_authoring_environment/resources/about.html";
 	
 	public static final String SPACE = " ";
+	public static final int NUM_SIDE_DETECTORS = 4;
 
 
 	
