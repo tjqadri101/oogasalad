@@ -17,7 +17,7 @@ public class Level {
 
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
-	protected Scene myInitialScene;
+	protected int myInitialSceneID;
     protected String myEventBehavior;
     private ArrayList<Object> myEventParameters;
 
@@ -34,13 +34,13 @@ public class Level {
 		myID = id;
 	}
 	
-	public void setInitialScene(int sceneID){
-		if(!mySceneMap.containsKey(sceneID)) return;
-		myInitialScene = mySceneMap.get(sceneID);
+	public void setInitialSceneID(int sceneID){
+		if(!mySceneMap.containsKey(sceneID))
+			myInitialSceneID = sceneID;
 	}
 	
-	public Scene getInitialScene(){
-		return myInitialScene;
+	public int getInitialSceneID(){
+		return myInitialSceneID;
 	}
 
 	public void addScene(int sceneID) {
