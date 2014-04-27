@@ -17,11 +17,13 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.plaf.LayerUI;
+
 
 
 
@@ -961,5 +963,27 @@ public class GAEController {
 		return myDataController.getSelectedID();
 	}
 	
+	public Map<String, Integer> getKeyMap(int playerId2){
+		System.out.println("map");
+		if(myDataController.getGame()!=null){
+			if(myDataController.getGame().getPlayer(playerId2)!=null){
+				if(myDataController.getGame().getPlayer(playerId2).getKeyMap()!=null){
+		Map<Integer, String> map = myDataController.getGame().getPlayer(playerId2).getKeyMap();
+		System.out.println("map");
+
+		Map<String, Integer> map2 = new HashMap<String, Integer>();
+		System.out.println("map");
+
+		for(Integer K : map.keySet()){
+			String str = map.get(K);
+			System.out.println(str);
+			map2.put(str, K);
+		}
+		System.out.println("map2");
+		
+		return map2;}}}
+		Map<String, Integer> k = new HashMap<String, Integer>();
+		return k;
+	}
 	
 }
