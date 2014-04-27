@@ -41,7 +41,7 @@ public class GameEngine extends StdGame{
     protected Scene myCurrentScene;
 //    protected Scene myEmptyScene = new Scene(0);
     protected Player myPlayer;
-    protected TriggerManager myTriggerManager;
+   // protected TriggerManager myTriggerManager;
     
     protected int myMouseX;
     protected int myMouseY;

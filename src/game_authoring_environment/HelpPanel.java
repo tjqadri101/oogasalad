@@ -1,92 +1,48 @@
 package game_authoring_environment;
 
+import java.io.IOException;
+
+import javax.swing.JFrame;
+
+import saladConstants.SaladConstants;
+
 /*
  * @author Anthony Olawo 
  * 
  */
 
-import javax.swing.*;
+public class HelpPanel extends InfoPanel {
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
-public class HelpPanel extends JPanel {
-	private JLabel label;
-	private String htmlString;
-	private JPanel help_Panel; 
-	private JScrollPane helpPageScrollPane; 
-	private JMenu help; 
-	private JMenuItem getHelpPage; 
-	
 	public HelpPanel() {	
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+	}
+
+	@Override
+	protected void setUpHTMLString(){ 
 		try {
-			htmlString = readFile("./src/game_authoring_environment/resources/help.html");
+			htmlString = readFile(selectHTMLFile());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-		helpPageScrollPane = new JScrollPane(setUpLabel(label));
-		help_Panel = setUpPanel(help_Panel, helpPageScrollPane);
-
-		setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		add(Box.createRigidArea(new Dimension(10,0)));
-		add(help_Panel);
-	}
-	
-	private JLabel setUpLabel(JLabel label){
-		label = new JLabel(htmlString);
-		label.setVerticalAlignment(SwingConstants.CENTER);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		return label; 
-	}
-	
-	private JPanel setUpPanel(JPanel panel, JScrollPane scrollPane){
-		panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		panel.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createTitledBorder("Help"),
-				BorderFactory.createEmptyBorder(10,10,10,10)));
-		panel.add(scrollPane);
-		
-		return panel; 
-	}
-
-	
-	private String readFile(String fileName) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		try {
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
-
-			while (line != null) {
-				sb.append(line);
-				line = br.readLine();
-			}
-			return sb.toString();
-		} finally {
-			br.close();
 		}
+		System.out.println(htmlString); 
+	}
+
+	@Override
+	protected String selectHTMLFile(){
+		return SaladConstants.HELP_HTML_URL; 
 	}
 
 	public void createAndShowHelpPanel() {
 		//Create and set up the window.
-		JFrame frame = new JFrame("Help");
+		JFrame frame = new JFrame("OOGASalad by iTeam");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		//Add content to the window.
-		frame.add(new HelpPanel());
+		frame.add(new InfoPanel());
 
 		//Display the window.
 		frame.pack();
 		frame.setVisible(true);
 	}
-
-	
-
 
 }

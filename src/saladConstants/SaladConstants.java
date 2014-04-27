@@ -143,7 +143,10 @@ public final class SaladConstants {
 
 	public static final String PLAYER_INIT_POS = "PlayerInitialPosition";
 
+	public static final String MODIFY_BACKGROUND = null;
 
+	public static final String HELP_HTML_URL = "./src/game_authoring_environment/resources/help.html";
+	public static final String ABOUT_HTML_URL = "./src/game_authoring_environment/resources/about.html";
 	
 
 
