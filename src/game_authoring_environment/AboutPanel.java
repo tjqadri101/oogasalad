@@ -7,14 +7,18 @@ package game_authoring_environment;
 
 
 public class AboutPanel extends InfoPanel {
-	
-	public AboutPanel() {	
-		super(); 
+
+	public AboutPanel() {
+		super();  
 	}
-	
+
+	@Override
+	protected String selectHTMLFile(){ 
+		return "./src/game_authoring_environment/resources/about.html"; 
+	}
 
 	public void createAndShowAboutPanel() {
-		createAndShowInfoPanel();
+		super.createAndShowInfoPanel(new AboutPanel()); 	
 	}
 
 }
