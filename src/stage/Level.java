@@ -60,23 +60,6 @@ public class Level {
 		mySceneMap.remove(sceneID);
 	}
 	
-	public void setWinBehavior(String type, Object ... args){
-		myWinBehavior = type;
-		myWinParameters = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
-			myWinParameters.add(args[i]);
-		}
-	}
-	
-	public String getWinBehavior(){
-		return myWinBehavior;
-	}
-	
-	public List<Object> getWinParameters(){
-		return myWinParameters;
-	}
-	
-	// following similar to the winBehavior consider refactoring 
 	public void setEventBehavior(String type, Object ... args){
 	    myEventBehavior = type;
 	    myEventParameters = new ArrayList<Object>();
@@ -85,12 +68,12 @@ public class Level {
 	    }
 	}
 
-        public String getEventBehavior () {
-                return myEventBehavior;
-        }       
+    public String getEventBehavior() {
+    	return myEventBehavior;
+    }       
         
-        public List<Object> getEventParameters(){
-            return myEventParameters;
+    public List<Object> getEventParameters(){
+    	return myEventParameters;
     }
 
 	public List<GameObject> getObjectsByColid(int colid){

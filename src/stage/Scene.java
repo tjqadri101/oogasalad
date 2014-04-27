@@ -19,7 +19,7 @@ import util.SaladUtil;
  * @author Main Justin (Zihao) Zhang
  * @contribution David Chou
  * @contribution (for tiles) Shenghan Chen
- * @contribution (for events) Steve (Siyang) Wang
+ * @contribution (for trigger) Steve (Siyang) Wang
  */
 
 public class Scene {
