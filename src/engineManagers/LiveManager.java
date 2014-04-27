@@ -26,6 +26,7 @@ public class LiveManager {
 	protected Map<Player, Integer> myCurrentLifeMap;
 	
 	public LiveManager(){
+		myPlayerMap = new HashMap<Integer, Player>();
 		myInitLifeMap = new HashMap<Player, Integer>();
 		myCurrentLifeMap = new HashMap<Player, Integer>();
 		myRestore = true;
