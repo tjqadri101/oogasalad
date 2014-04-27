@@ -165,6 +165,7 @@ public final class SaladConstants {
 	public static final String SET_EVENT_ENEMY_SHOWER = "SetEventEnemyShower";
 	public static final String SET_TRIGGER = "SetTrigger";
 	public static final String SET_EVENT = "SetEvent";
+
 	public static final String TRIGGER_TYPE = "TriggerType";
 	public static final String EVENT_TYPE = "EventType";
 	public static final String SET_INIT_LIVES = "SetInitLives";
