@@ -10,21 +10,19 @@ import java.util.Set;
 import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
-import objects.Subject;
-import engineManagers.Observer;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 
 /**
  * 
- * @author Justin (Zihao) Zhang
- * @Contribution David Chou
+ * @author Main Justin (Zihao) Zhang
+ * @contribution David Chou
  * @contribution (for tiles) Shenghan Chen
- * @contribution Steve (Siyang) Wang
+ * @contribution (for trigger) Steve (Siyang) Wang
  */
 
-public class Scene implements Subject {
+public class Scene {
 	public static final String DEFAULT_TILE_INFO = "null";
 	
 	protected String myBackground;
@@ -46,9 +44,6 @@ public class Scene implements Subject {
 	        protected List<Object> myTriggerParameter;
 	        protected List<Object> myEventParameter;
 	        protected String myEvent;
-            protected List<Observer> myObservers;
-            protected boolean isUpdated;
-            private final Object MUTEX= new Object();
             
 	
 	public Scene(int id) {
@@ -230,7 +225,7 @@ public class Scene implements Subject {
 		}
 		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_IMAGE;
 		for (String line: getTiles()) {
-			tiles += " " + line;
+			tiles += SaladConstants.SPACE + line;
 		}
 		answer.add(tiles);
 		return answer;
@@ -285,42 +280,6 @@ public class Scene implements Subject {
         public void setTriggerAndEvent(Object ... args){
             //unimplemented
 //                myTrigger
-        }
-//Not 100% ready for observer pattern yet        
-        /**
-         * Below four methods overriding the interface Subject in the observer pattern
-         */
-        @Override
-        public void register(Observer obj) {
-            if(obj == null) throw new NullPointerException("Null Observer");
-            synchronized (MUTEX) {
-            if(!myObservers.contains(obj)) myObservers.add(obj);
-            }
-        }
-        @Override 
-        public void unregister(Observer obj) {
-            synchronized (MUTEX) {
-            myObservers.remove(obj);
-            }
-        }
-        @Override
-        public void notifyObservers() {
-            List<Observer> observersLocal = null;
-            //synchronization is used to make sure any observer registered after message is received is not notified
-            synchronized (MUTEX) {
-                if (!isUpdated)
-                    return;
-                observersLocal = new ArrayList<>(this.myObservers);
-                this.isUpdated=false;
-            }
-            for (Observer obj : observersLocal) {
-                obj.update();
-            }
-     
-        }
-        @Override
-        public String getUpdate(Observer obj) {
-            return myTrigger;
         }
 	
 	/*@Siyang 
