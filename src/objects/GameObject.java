@@ -18,7 +18,7 @@ import engineManagers.ScoreManager;
  * 
  * @author: Main Justin (Zihao) Zhang,
  * @contribution (images/animations): David Chou
- * @contribution (side detectors): Shenghan Chen
+ * @contribution (side detectors/jump handling): Shenghan Chen
  */
 
 public abstract class GameObject extends JGObject {
@@ -61,7 +61,7 @@ public abstract class GameObject extends JGObject {
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
 						+ SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
-		setInitBlood(blood); // change later
+		setInitBlood(blood);
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
@@ -180,25 +180,19 @@ public abstract class GameObject extends JGObject {
 
 	/**
 	 * Used for ActionManager or GameObject itself to getAttributes
-	 * 
 	 * @return String
 	 */
 	public String modificationString() {
-		if (this instanceof Player) {
-			return SaladConstants.MODIFY_PLAYER;
-		}
+		if (this instanceof Player) { return SaladConstants.MODIFY_PLAYER; }
 		return SaladConstants.MODIFY_ACTOR;
 	}
 	
 	/**
 	 * Used for ActionManager or GameObject itself to getAttributes
-	 * 
 	 * @return String
 	 */
 	public String creationString(){
-		if(this instanceof Player){
-			return SaladConstants.CREATE_PLAYER;
-		}
+		if(this instanceof Player){ return SaladConstants.CREATE_PLAYER; }
 		return SaladConstants.CREATE_ACTOR;
 	}
 
