@@ -61,6 +61,13 @@ public class DataController {
 		myGameSaverAndLoader.save(myGame.getAttributes(), url);
 	}
 	
+	public int getNonPlayerColid(int levelID, int sceneID, int objectID){
+		return myGame.getNonPlayerColid(levelID, sceneID, objectID);
+	}
+	
+	public int getPlayerColid(int playerID){
+		return myGame.getPlayerColid(playerID);
+	}
 	
 	/**
 	 * Called by PlayView to import the game data
