@@ -23,7 +23,6 @@ import util.SaladUtil;
  */
 
 public class Scene {
-	public static final String DEFAULT_TILE_INFO = "null";
 	
 	protected String myBackground;
 	protected boolean myIfWrapHorizontal;
@@ -34,9 +33,7 @@ public class Scene {
 	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
 	protected int myFieldXSize;
 	protected int myFieldYSize;
-	
 	protected Map<Integer, NonPlayer> myObjectMap;
-	protected Map<Character, String> myTileImageMap;
 	protected String[] myTiles;
 	
 	   protected String myTrigger;
@@ -53,14 +50,6 @@ public class Scene {
 		initTiles();
 	}
 	
-	public void defineTileImage(char cid, String imgfile){
-		myTileImageMap.put(cid, imgfile);
-	}
-	
-	public Set<Entry<Character, String>> getTileImageMap(){
-		return myTileImageMap.entrySet();
-	}
-	
 	public String[] getTiles(){
 		return myTiles;
 	}
@@ -75,8 +64,6 @@ public class Scene {
     	String[] array = new String[getYSize()];
     	for(int j = 0; j < getYSize(); j ++){ array[j] = temp; }
 		myTiles = array;
-		myTileImageMap = new HashMap<Character, String>();
-		defineTileImage('0', DEFAULT_TILE_INFO);
 	}
 	
 	public void resizeTiles(int xsize, int ysize){
@@ -218,14 +205,9 @@ public class Scene {
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
-		for (Entry<Character, String> entry : getTileImageMap()) {
-			Character cid = entry.getKey();
-			String imgfile = entry.getValue();
-			answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
-		}
-		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_IMAGE;
+		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_IMAGE + SaladConstants.SEPARATOR;
 		for (String line: getTiles()) {
-			tiles += SaladConstants.SPACE + line;
+			tiles += line + SaladConstants.SPACE;
 		}
 		answer.add(tiles);
 		return answer;

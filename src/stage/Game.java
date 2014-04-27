@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
@@ -17,6 +19,8 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
+import saladConstants.SaladConstants;
+import util.AttributeMaker;
 /**
  * A data structure that holds all the information about a game
  * @author Main Justin (Zihao) Zhang
@@ -26,6 +30,7 @@ import objects.Player;
 public class Game {
 
 	public static final int NONUSE_ID = 0;
+	public static final String DEFAULT_TILE_INFO = "null";
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<String, Transition> myTransitionStateMap;
@@ -40,9 +45,11 @@ public class Game {
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
 //    protected TriggerEventManager myTEM;
+    protected Map<Character, String> myTileImageMap;
 
 
 	public Game(){
+		initTileImageMap();
 		initTransitionStateMap();
 		myLevelMap = new HashMap<Integer, Level>();
 		myPlayerMap = new HashMap<Integer, Player>();// ???
@@ -63,6 +70,20 @@ public class Game {
 			myTransitionStateMap.put(gameState, new Transition(gameState));
 		}
 	}
+	
+	private void initTileImageMap() {
+		myTileImageMap = new HashMap<Character, String>();
+		defineTileImage('0', DEFAULT_TILE_INFO);
+	}
+	
+	public void defineTileImage(char cid, String imgfile){
+		myTileImageMap.put(cid, imgfile);
+	}
+	
+	public Set<Entry<Character, String>> getTileImageMap(){
+		return myTileImageMap.entrySet();
+	}
+	
 
 	/**
 	 * @param the level ID that you want to add
@@ -289,6 +310,11 @@ public class Game {
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
 		answer.add(myGravity.getAttributes());
+		for (Entry<Character, String> entry : getTileImageMap()) {
+			Character cid = entry.getKey();
+			String imgfile = entry.getValue();
+			answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
+		}
 		if(getPlayer(NONUSE_ID) != null){
 			answer.addAll(getPlayer(NONUSE_ID).getAttributes());	
 		}
