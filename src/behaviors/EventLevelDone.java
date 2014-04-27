@@ -1,5 +1,8 @@
 package behaviors;
 
+/**
+ * @author Steve (Siyang) Wang
+ */
 import java.util.List;
 import engine.GameEngine;
 

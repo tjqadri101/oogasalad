@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.ScoreManager;
@@ -28,12 +29,12 @@ public class Player extends GameObject {
 		myInitXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myInitYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		
-		myAttributes.add(SaladConstants.CREATE_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER + myUniqueID + SaladConstants.SEPERATER + 
-				SaladConstants.IMAGE + SaladConstants.SEPERATER + getGraphic() + SaladConstants.SEPERATER + myXSize + SaladConstants.SEPERATER + myYSize + SaladConstants.SEPERATER +
-				SaladConstants.POSITION + SaladConstants.SEPERATER + myInitX + SaladConstants.SEPERATER + myInitY + SaladConstants.SEPERATER + SaladConstants.NAME + SaladConstants.SEPERATER + getName() + SaladConstants.SEPERATER + 
-				SaladConstants.COLLISION_ID + SaladConstants.SEPERATER + colid + SaladConstants.SEPERATER + SaladConstants.LIVES + SaladConstants.SEPERATER + myInitBlood);
+		myAttributes.add(SaladConstants.CREATE_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + myUniqueID + SaladConstants.SEPARATOR + 
+				SaladConstants.IMAGE + SaladConstants.SEPARATOR + getGraphic() + SaladConstants.SEPARATOR + myXSize + SaladConstants.SEPARATOR + myYSize + SaladConstants.SEPARATOR +
+				SaladConstants.POSITION + SaladConstants.SEPARATOR + myInitX + SaladConstants.SEPARATOR + myInitY + SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR + getName() + SaladConstants.SEPARATOR + 
+				SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + colid + SaladConstants.SEPARATOR + SaladConstants.LIVES + SaladConstants.SEPARATOR + myInitBlood);
 
-		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPERATER);
+		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 	}
 	
 	public void setKey(int key, String type){
@@ -42,8 +43,8 @@ public class Player extends GameObject {
 	
 	@Override
 	public void move(){
-		super.move();
 		checkKeys();
+		super.move();
 	}
 	
 	protected void checkKeys(){

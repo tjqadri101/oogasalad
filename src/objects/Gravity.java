@@ -2,7 +2,11 @@ package objects;
 
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
-
+/**
+ * Manage the Gravity of the Game
+ * @author Main Justin (Zihao) Zhang
+ *
+ */
 public class Gravity {
 	
 	protected double myMagnitude;

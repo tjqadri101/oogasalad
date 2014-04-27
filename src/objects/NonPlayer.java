@@ -1,10 +1,15 @@
 package objects;
 
+//import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.ScoreManager;
 import saladConstants.SaladConstants;
-
+/**
+ * 
+ * @author Main Justin (Zihao) Zhang
+ *
+ */
 public class NonPlayer extends GameObject {
 
 	public NonPlayer(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 

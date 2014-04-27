@@ -10,6 +10,7 @@ import engineManagers.CollisionManager;
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
+import engineManagers.TriggerEventManager;
 import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
@@ -18,7 +19,7 @@ import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
  * @author Main Justin (Zihao) Zhang
- * @Contribution David Chou
+ * @contribution David Chou
  * @help Isaac (Shenghan) Chen
  */
 public class Game {
@@ -29,12 +30,17 @@ public class Game {
 	protected Map<StateType, Transition> myNonLevelSceneMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
+<<<<<<< HEAD
 	//protected TriggerManager myTriggerManager;
+=======
+	protected TriggerEventManager myTriggerManager;
+>>>>>>> ab386ec3b72f7e7231d4f9b3ab23fc96ee9cd296
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
 	protected Player myPlayer;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
+    protected TriggerEventManager etm;
 
 
 	public Game(){
@@ -46,6 +52,7 @@ public class Game {
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
+    	etm = new TriggerEventManager(null);
 	}
 
 	/**
@@ -54,6 +61,8 @@ public class Game {
 	 */
 	public void addLevel(int levelID) {
 		Level level = new Level(levelID);
+//                level.register(etm);
+//                etm.setSubject(level);
 		myLevelMap.put(levelID, level);
 	}
 
@@ -270,6 +279,13 @@ public class Game {
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
 		return answer;
+	}
+	
+	/** Should only be called from Engine
+	 * @return the only instance of TriggerEventManager
+	 */
+	public TriggerEventManager getTEM(){
+	    return etm;
 	}
 	
 	/* @Siyang: 

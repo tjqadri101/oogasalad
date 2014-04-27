@@ -10,7 +10,8 @@ import java.util.Set;
 import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
-import objects.Trigger;
+import objects.Subject;
+import engineManagers.Observer;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
@@ -20,9 +21,10 @@ import util.SaladUtil;
  * @author Justin (Zihao) Zhang
  * @Contribution David Chou
  * @contribution (for tiles) Shenghan Chen
+ * @contribution Steve (Siyang) Wang
  */
 
-public class Scene {
+public class Scene implements Subject {
 	public static final String DEFAULT_TILE_INFO = "null";
 	
 	protected String myBackground;
@@ -34,15 +36,20 @@ public class Scene {
 	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
 	protected int myFieldXSize;
 	protected int myFieldYSize;
-	protected String myTrigger;
-	protected boolean myTriggerFlag;
-	protected List<Object> myTriggerParameter;
-	protected List<Object> myEventParameter;
-	protected String myEvent;
 	
 	protected Map<Integer, NonPlayer> myObjectMap;
-	protected Map<Integer, String> myTileImageMap;
+	protected Map<Character, String> myTileImageMap;
 	protected String[] myTiles;
+	
+	   protected String myTrigger;
+	        protected boolean myTriggerFlag;
+	        protected List<Object> myTriggerParameter;
+	        protected List<Object> myEventParameter;
+	        protected String myEvent;
+            protected List<Observer> myObservers;
+            protected boolean isUpdated;
+            private final Object MUTEX= new Object();
+            
 	
 	public Scene(int id) {
 		myID = id;
@@ -51,16 +58,20 @@ public class Scene {
 		initTiles();
 	}
 	
-	public void defineTileImage(int cid, String imgfile){
+	public void defineTileImage(char cid, String imgfile){
 		myTileImageMap.put(cid, imgfile);
 	}
 	
-	public Set<Entry<Integer, String>> getTileImageMap(){
+	public Set<Entry<Character, String>> getTileImageMap(){
 		return myTileImageMap.entrySet();
 	}
 	
 	public String[] getTiles(){
 		return myTiles;
+	}
+	
+	public void setTiles(String[] tiles){
+		myTiles = tiles;
 	}
 	
 	protected void initTiles(){
@@ -69,8 +80,8 @@ public class Scene {
     	String[] array = new String[getYSize()];
     	for(int j = 0; j < getYSize(); j ++){ array[j] = temp; }
 		myTiles = array;
-		myTileImageMap = new HashMap<Integer, String>();
-		defineTileImage(0, DEFAULT_TILE_INFO);
+		myTileImageMap = new HashMap<Character, String>();
+		defineTileImage('0', DEFAULT_TILE_INFO);
 	}
 	
 	public void resizeTiles(int xsize, int ysize){
@@ -91,7 +102,7 @@ public class Scene {
 		myTiles = array;
 	}
 	
-	public void updateTiles(int cid, int left, int top, int width, int height){
+	public void updateTiles(char cid, int left, int top, int width, int height){
 		String temp = "";
     	for(int i=0;i<Math.min(width,getXSize()-left);i++){
     		temp += cid;
@@ -163,12 +174,13 @@ public class Scene {
 		return answer;
 	}
 	
-	public void setBackgroundImage(String fileName, boolean ifWrapHorizontal, boolean ifWrapVertical, int xsize, int ysize) {
+	public void setBackgroundImage(String fileName) {
 		myBackground = fileName;
+	}
+	
+	public void setWrap(boolean ifWrapHorizontal, boolean ifWrapVertical) {
 		myIfWrapHorizontal = ifWrapHorizontal;
 		myIfWrapVertical = ifWrapVertical;
-		myFieldXSize = xsize;
-		myFieldYSize = ysize;
 	}
 	
 	public String getBackgroundImage() {
@@ -211,6 +223,16 @@ public class Scene {
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
+		for (Entry<Character, String> entry : getTileImageMap()) {
+			Character cid = entry.getKey();
+			String imgfile = entry.getValue();
+			answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
+		}
+		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_IMAGE;
+		for (String line: getTiles()) {
+			tiles += " " + line;
+		}
+		answer.add(tiles);
 		return answer;
 	}
 	
@@ -262,7 +284,43 @@ public class Scene {
          */
         public void setTriggerAndEvent(Object ... args){
             //unimplemented
-                myTrigger
+//                myTrigger
+        }
+//Not 100% ready for observer pattern yet        
+        /**
+         * Below four methods overriding the interface Subject in the observer pattern
+         */
+        @Override
+        public void register(Observer obj) {
+            if(obj == null) throw new NullPointerException("Null Observer");
+            synchronized (MUTEX) {
+            if(!myObservers.contains(obj)) myObservers.add(obj);
+            }
+        }
+        @Override 
+        public void unregister(Observer obj) {
+            synchronized (MUTEX) {
+            myObservers.remove(obj);
+            }
+        }
+        @Override
+        public void notifyObservers() {
+            List<Observer> observersLocal = null;
+            //synchronization is used to make sure any observer registered after message is received is not notified
+            synchronized (MUTEX) {
+                if (!isUpdated)
+                    return;
+                observersLocal = new ArrayList<>(this.myObservers);
+                this.isUpdated=false;
+            }
+            for (Observer obj : observersLocal) {
+                obj.update();
+            }
+     
+        }
+        @Override
+        public String getUpdate(Observer obj) {
+            return myTrigger;
         }
 	
 	/*@Siyang 
