@@ -178,6 +178,7 @@ public final class SaladConstants {
 	public static final String DISPLAY_IMAGE = "DisplayImage";
 
 	public static final String SPACE = " ";
+	public static final String NULL = "null";
 
 
 	

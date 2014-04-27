@@ -30,7 +30,6 @@ import util.AttributeMaker;
 public class Game {
 
 	public static final int NONUSE_ID = 0;
-	public static final String DEFAULT_TILE_INFO = "null";
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<String, Transition> myTransitionStateMap;
@@ -49,8 +48,8 @@ public class Game {
 
 
 	public Game(){
-		initTileImageMap();
 		initTransitionStateMap();
+		myTileImageMap = new HashMap<Character, String>();
 		myLevelMap = new HashMap<Integer, Level>();
 		myPlayerMap = new HashMap<Integer, Player>();// ???
 		myScoreManager = new ScoreManager();
@@ -69,11 +68,6 @@ public class Game {
 		for (String gameState: Transition.TRANSITION_STATE){
 			myTransitionStateMap.put(gameState, new Transition(gameState));
 		}
-	}
-	
-	private void initTileImageMap() {
-		myTileImageMap = new HashMap<Character, String>();
-		defineTileImage('0', DEFAULT_TILE_INFO);
 	}
 	
 	public void defineTileImage(char cid, String imgfile){

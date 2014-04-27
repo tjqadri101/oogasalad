@@ -40,10 +40,11 @@ public class EngineTest {
 		game.addLevel(1);
 		game.addScene(1, 0);
 		engine.setCurrentScene(1, 0);
+		game.getScene(1, 0).setPlayerInitPosition(100, 200);
 		game.getGravity().setMagnitude(0.1);
 		
-		game.getTransitionState("LevelDone").setBackground("floorImage.jpg");
-		game.getTransitionState("LevelDone").addImage(20, 30, "poke-mon/111.gif");
+		game.getTransitionState("Title").setBackground("floorImage.jpg");
+		game.getTransitionState("Title").addImage(20, 30, "poke-mon/111.gif");
 		
 		engine.setSceneView(null,false,false,1200,40);
 		engine.loadTileImage(TILE_COLID, "brick.png");
@@ -93,7 +94,7 @@ public class EngineTest {
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
 //        game.getLevel(1).setWinBehavior("WinByCollision", 123);
 //        game.getLevel(1).setWinBehavior("WinByTileCollision", 0, 700, 450, 50, 50);
-        
+		engine.loadingDone();//
         return engine;
 	}
 }

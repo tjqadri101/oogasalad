@@ -204,13 +204,10 @@ public abstract class GameObject extends JGObject {
 	/**
 	 * Restore to original state within a scene Used for live-editing
 	 */
-	public void restore(boolean resetLife) {
-		setInitPos(myInitX, myInitY);
+	public void restore(boolean resetPos) {
+		if (resetPos) {setInitPos(myInitX, myInitY);}
 		setInitSpeed(myInitXSpeed, myInitYSpeed);
 		setBlood(myInitBlood);
-		if (resetLife) {
-			//Live Manager
-		}
 		if (!is_alive) {
 			eng.markAddObject(this);
 			is_alive = true;
