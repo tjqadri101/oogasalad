@@ -6,6 +6,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -31,22 +33,75 @@ public class PlayerEditorTable extends PanelTable {
 		@Override
 		public void init() {
 
-			final JTextField t1 = new JTextField("test");
-			Object[] firstRow1 = {"Name", t1}; // each row should be in this format
-			t1.addActionListener(new ActionListener(){
+
+			final JTextField tf = new JTextField("test");
+			Object[] firstRow = {"Name", tf}; // each row should be in this format
+			tf.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					//logic needed
-					gController.createPlayer(0, "actorsIcon.png", 60, 60, 10, 60, t1.getText(), 1, 1);
+					System.out.println(tf.getText());
+					int id = gController.getActorID();
+					gController.modifyActorName(id, tf.getText());
 				}			
 			});
-			
-			myTableModel.addRow(firstRow1); // actually adding to the table
-			classMap.put(0,firstRow1[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)
-			
+
+			myTableModel.addRow(firstRow); // actually adding to the table
+			classMap.put(0,firstRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)		
+
+			JComboBox moveTypesBox = new JComboBox(moveTypes);
+			Object[] secondRow = {"Movement", moveTypesBox};
+			moveTypesBox.setSelectedIndex(0);
+			moveTypesBox.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent arg0) {
+					if(arg0.getStateChange() == ItemEvent.SELECTED){
+						String str = arg0.getItem().toString();
+						System.out.println("new selected item:"+arg0.getItem().toString());
+						switch(str){
+						case "Regular":
+						{	
+
+							JTextField xSpeed = new JTextField(10);
+							JTextField ySpeed = new JTextField(10);
+							JTextField[] texts = {xSpeed, ySpeed};
+							String[] strings = {"x speed:", "y speed:"};
+							JPanel myPanel = createOptionInputPanel(texts, strings);
+
+							int result = JOptionPane.showConfirmDialog(null, myPanel, 
+									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+							if (result == JOptionPane.OK_OPTION) {
+								gController.modifyActorRegMoveNoID(Integer.parseInt(xSpeed.getText()), Integer.parseInt(ySpeed.getText()));
+
+							}
+
+							break;
+						}
+						case "Immobile":
+							gController.modifyActorImmobileNoID();
+							break;
+						case "Cyclical":
+							JTextField amplitude = new JTextField(10);
+							JTextField Speed = new JTextField(10);
+							JTextField[] texts = {amplitude, Speed};
+							String[] strings = {"Amplitude:", "Speed:"};
+							JPanel myPanel = createOptionInputPanel(texts, strings);
+
+							int result = JOptionPane.showConfirmDialog(null, myPanel, 
+									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+							if (result == JOptionPane.OK_OPTION) {
+								gController.modifyActorBackForthMoveNoID(Double.parseDouble(amplitude.getText()), Integer.parseInt(Speed.getText()));
+							}
+								break;
+						}
+					}				
+				}
+			});
+			myTableModel.addRow(secondRow); // actually adding to the table
+			classMap.put(1,secondRow[1]);
+
 
 			JComboBox shootTypesBox = new JComboBox(shootTypes);
-			Object[] thirdRow = {"Shoot Behavior", shootTypesBox};
+			Object[] thirdRow = {"Shooting", shootTypesBox};
 			shootTypesBox.setSelectedIndex(0);
 			shootTypesBox.addItemListener(new ItemListener() {
 				@Override
@@ -54,12 +109,35 @@ public class PlayerEditorTable extends PanelTable {
 					if(arg0.getStateChange() == ItemEvent.SELECTED){
 						String str = arg0.getItem().toString();
 						System.out.println("new selected item:"+arg0.getItem().toString());
+						JTextField xSizeField = new JTextField(10);
+						JTextField ySizeField = new JTextField(10);
+						JTextField speedField = new JTextField(10);
 						switch(str){
-						case "Slow Shoot":
-							gController.modifyPlayerSlowShootNoID("bullet.png", 1, 1, 1, 1);
+
+						case "Slow Shoot":{
+							JTextField[] texts = {xSizeField, ySizeField, speedField};
+							String[] strings = {"x size:", "y size:", "Speed:"};
+							JPanel myPanel = createOptionInputPanel(texts, strings);
+
+							int result = JOptionPane.showConfirmDialog(null, myPanel, 
+									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+							if (result == JOptionPane.OK_OPTION) {
+								gController.modifyActorSlowShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()));
+							}
+
 							break;
+						}
 						case "Quick Shoot":
-							gController.modifyPlayerQuickShootNoID("bullet.png", 2, 2, 2, 2, 10);
+							JTextField bulletsField = new JTextField(10);
+							JTextField[] texts_ = {xSizeField, ySizeField, speedField, bulletsField};
+							String[] strings_ = {"x size:", "y size:", "Speed:", "Number of Bullets Per Shot"};
+							JPanel myPanel = createOptionInputPanel(texts_, strings_);
+
+							int result = JOptionPane.showConfirmDialog(null, myPanel, 
+									"Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+							if (result == JOptionPane.OK_OPTION) {
+								gController.modifyActorQuickShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()) );
+							}
 							break;
 						default:
 							break;
@@ -68,9 +146,9 @@ public class PlayerEditorTable extends PanelTable {
 				}
 			});		
 			myTableModel.addRow(thirdRow);
-			classMap.put(1,thirdRow[1]);
-			
-			
+			classMap.put(2,thirdRow[1]);
+
+
 			JComboBox dieTypesBox = new JComboBox(dieTypes);
 			Object[] fourthRow = {"Death Behavior", dieTypesBox};
 			dieTypesBox.setSelectedIndex(0);
@@ -85,7 +163,8 @@ public class PlayerEditorTable extends PanelTable {
 							gController.modifyPlayerImmortalNoID();
 							break;
 						case "Show Corpse":
-							gController.modifyPlayerShowCorpseNoID("bullet.png", 10, 10, 10);
+							
+							gController.modifyActorShowCorpseNoID("bullet.png", 10, 10, 10);
 							break;
 						default:
 							break;
@@ -94,28 +173,35 @@ public class PlayerEditorTable extends PanelTable {
 				}
 			});		
 			myTableModel.addRow(fourthRow);
-			classMap.put(2,fourthRow[1]);
-			
-			
-		/*	JCheckBox jb = new JCheckBox();
-			Object[] fifthRow = {"TestBoo", jb};
-			jb.addItemListener(new ItemListener() {
+			classMap.put(3,fourthRow[1]);
+
+			JComboBox dieTypesBox = new JComboBox(dieTypes);
+			Object[] fifthRow = {"Death Behavior", dieTypesBox};
+			dieTypesBox.setSelectedIndex(0);
+			dieTypesBox.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent arg0) {
 					if(arg0.getStateChange() == ItemEvent.SELECTED){
-						System.out.println("now checked:"+true);
-						// call the change method in GAEController here
-					}
-					else{
-						System.out.println("now checked:"+false);
-						// call the change method in GAEController here
+						String str = arg0.getItem().toString();
+						System.out.println("new selected item:"+arg0.getItem().toString());
+						switch(str){
+						case "Immortal":
+							gController.modifyPlayerImmortalNoID();
+							break;
+						case "Show Corpse":
+							
+							gController.modifyActorShowCorpseNoID("bullet.png", 10, 10, 10);
+							break;
+						default:
+							break;
+						}
 					}
 				}
-			});	
-			
+			});		
 			myTableModel.addRow(fifthRow);
 			classMap.put(4,fifthRow[1]);
-			*/
+
+		}
 		}
 
 		@Override

@@ -18,7 +18,7 @@ import engineManagers.ScoreManager;
  * 
  * @author: Main Justin (Zihao) Zhang,
  * @contribution (images/animations): David Chou
- * @contribution (side detectors): Shenghan Chen
+ * @contribution (side detectors/jump handling): Shenghan Chen
  */
 
 public abstract class GameObject extends JGObject {
@@ -61,7 +61,7 @@ public abstract class GameObject extends JGObject {
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
 						+ SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
-		setInitBlood(blood); // change later
+		setInitBlood(blood);
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
@@ -180,25 +180,19 @@ public abstract class GameObject extends JGObject {
 
 	/**
 	 * Used for ActionManager or GameObject itself to getAttributes
-	 * 
 	 * @return String
 	 */
 	public String modificationString() {
-		if (this instanceof Player) {
-			return SaladConstants.MODIFY_PLAYER;
-		}
+		if (this instanceof Player) { return SaladConstants.MODIFY_PLAYER; }
 		return SaladConstants.MODIFY_ACTOR;
 	}
 	
 	/**
 	 * Used for ActionManager or GameObject itself to getAttributes
-	 * 
 	 * @return String
 	 */
 	public String creationString(){
-		if(this instanceof Player){
-			return SaladConstants.CREATE_PLAYER;
-		}
+		if(this instanceof Player){ return SaladConstants.CREATE_PLAYER; }
 		return SaladConstants.CREATE_ACTOR;
 	}
 
@@ -391,8 +385,7 @@ public abstract class GameObject extends JGObject {
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
 		myActionManager.jump();
-		setImage(myJumpingGfxName);
-		System.out.println(myJumpingGfxName);
+		if (myJumpingGfxName != null) setImage(myJumpingGfxName); //hardcode to be modified later
 	}
 
 	/**
@@ -408,9 +401,9 @@ public abstract class GameObject extends JGObject {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
 		if (xspeed != 0) {
-//			setImage(myMovingGfxName);
+			setImage(myMovingGfxName); //hardcode to be modified later
 		} else {
-			setImage(myStaticGfxName);
+			setImage(myStaticGfxName); //hardcode to be modified later
 		}
 	}
 
@@ -442,7 +435,9 @@ public abstract class GameObject extends JGObject {
 		parameters.add(tysize);
 		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior,
 				parameters, SaladConstants.COLLIDE, this);
-		setImage(myStaticGfxName);
+		if (myStaticGfxName != null) { //hardcode to be modified later
+			setImage(myStaticGfxName);
+		}
 	}
 	
 	@Override
