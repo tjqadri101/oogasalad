@@ -6,10 +6,10 @@ import org.junit.Test;
 
 public class InfoPanelsUtilityTest {
 
-	HTMLFormattedInfoPanelsFactory factory ; 
+	InfoPanelsFactory factory ; 
 	
 	public InfoPanelsUtilityTest(){
-		factory = new HTMLFormattedInfoPanelsFactory(); 
+		factory = new InfoPanelsFactory(); 
 	}
 		
 	public void test() {

@@ -27,11 +27,12 @@ public class SuperInfoPanel extends JPanel{
 	protected JScrollPane myScrollPane; 
 	protected String htmlString; 
 	protected JFrame myFrame;
+	protected String title; 
 
-	public SuperInfoPanel(){
 
-	}
-
+	/**
+	 * 	Fully initialises the SuperInfoPanel.  
+	 */
 	protected void setUpInfoPanel(){ 
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));	 
 		myScrollPane = new JScrollPane(setUpLabel(myLabel));
@@ -41,6 +42,9 @@ public class SuperInfoPanel extends JPanel{
 		add(myPanel);
 	}
 
+	/**
+	 * Parses the HTML file to be displayed in the SuperInfoPanel. 
+	 */
 	protected void setUpHTMLString(){ 
 		try {
 			htmlString = readFile(getHTMLFileURL());
@@ -50,10 +54,20 @@ public class SuperInfoPanel extends JPanel{
 		}
 	}
 
+	/**
+	 * Gets the url of HTML file to be read 
+	 * @return String url of the HTML file whose contents are to be displayed in the SuperInfoPanel. 
+	 */
 	protected String getHTMLFileURL(){ 
 		return "";
 	}
 
+	/**
+	 * Sets up JLabel that will hold HTML formatted content
+	 * 
+	 * @param label JLabel that will hold the html formated information. 
+	 * @return
+	 */
 	protected JLabel setUpLabel(JLabel label){
 		label = new JLabel(htmlString);
 		label.setVerticalAlignment(SwingConstants.CENTER);
@@ -61,6 +75,13 @@ public class SuperInfoPanel extends JPanel{
 		return label; 
 	}
 
+	/**
+	 * Sets up SuperInfoPanel.
+	 * 
+	 * @param panel JPanel that will hold scrollPane
+	 * @param scrollPane 
+	 * @return  JPanel with a scroll pane, box layout and borders. 
+	 */
 	protected JPanel setUpPanel(JPanel panel, JScrollPane scrollPane){
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -72,7 +93,13 @@ public class SuperInfoPanel extends JPanel{
 		return panel; 
 	}
 
-
+	/**
+	 * A basic parser that reads a HTML file and returns a string with its contents
+	 * 
+	 * @param fileName URL of HTML file to be parsed.
+	 * @return String containing HTML file's parsed contents.
+	 * @throws IOException
+	 */
 	protected String readFile(String fileName) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		try {
@@ -89,11 +116,15 @@ public class SuperInfoPanel extends JPanel{
 		}
 	}
 
-	
-	
+	/**
+	 * Adds a ready SuperInfoPanel to a JFrame. 
+	 * 
+	 * @param panel A SuperInfoPanel ready to be added to a JFrame
+	 */
+
 	protected void createInfoPanel(SuperInfoPanel panel){
 		//Create and set up the window.
-		myFrame = new JFrame("OOGASalad by iTeam");
+		myFrame = new JFrame(title);
 		myFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		//Add content to the window.
@@ -103,6 +134,9 @@ public class SuperInfoPanel extends JPanel{
 		myFrame.pack();
 	}
 
+	/**
+	 * Makes JFrame containing ready SuperInfoPanel visible
+	 */
 	public void showInfoPanel(){
 		myFrame.setVisible(true);
 	}
