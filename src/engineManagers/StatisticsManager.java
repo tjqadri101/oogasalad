@@ -27,10 +27,6 @@ public abstract class StatisticsManager {
 	}
 	
 	public abstract void update(String info, GameObject victim, GameObject hitter);
-	
-	public abstract void update(String info, String oldLevelOrSceneID, String newLevelOrSceneID);
-	
-	public abstract void update(String condition);
 
 	public abstract List<String> getAttributes();
 

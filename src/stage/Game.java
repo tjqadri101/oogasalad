@@ -8,7 +8,7 @@ import java.util.Map;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.InputManager;
-import engineManagers.LifeManager;
+import engineManagers.LiveManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
@@ -32,7 +32,7 @@ public class Game {
 	protected Map<StateType, Transition> myNonLevelSceneMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
-	protected LifeManager myLifeManager;
+	protected LiveManager myLiveManager;
 	protected TriggerEventManager myTriggerManager;
 	protected RevivalManager myRevivalManager;
 //	protected InputManager myInputManager;
@@ -40,7 +40,7 @@ public class Game {
 	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-    protected TriggerEventManager myTEM;
+//    protected TriggerEventManager myTEM;
 
 
 	public Game(){
@@ -48,13 +48,13 @@ public class Game {
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
-		myLifeManager = new LifeManager();
+		myLiveManager = new LiveManager();
 		myRevivalManager = new RevivalManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
-    	myTEM = new TriggerEventManager();
+//    	myTEM = new TriggerEventManager();
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class Game {
 	 */
 	public void setPlayer(Player player){
 		myPlayerMap.put(player.getID(), player);
-		myLifeManager.addPlayer(player);
+		myLiveManager.addPlayer(player);
 	}
 	
 	/** 
@@ -294,10 +294,10 @@ public class Game {
 	/** Should only be called from Engine
 	 * @return the only instance of TriggerEventManager
 	 */
-	public TriggerEventManager getTEM(){
-	    return myTEM;
-	}
-	
+//	public TriggerEventManager getTEM(){
+//	    return myTEM;
+//	}
+//	
 	/* @Siyang: 
 	 * The following getter added to facilitate testing. 
 	 */
