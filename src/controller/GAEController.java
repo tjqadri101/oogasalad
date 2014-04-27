@@ -816,20 +816,48 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	//the following two methods are not ready yet
-	/*public void modifyTriggerEventManagerTime(int ID){
+	public void modifyTriggerEventManagerTime(int eventTriggerPairID, int time){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ ID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TIME + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_TYPE;
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TIME + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_TRIGGER_BY_TIME  + SaladConstants.SEPARATOR + time;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	public void modifyEventManager(int ID){
-		String order = SaladConstants.MODIFY_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ ID + SaladConstants.SEPARATOR + SaladConstants.SET_EVENT + SaladConstants.SEPARATOR + SaladConstants.EVENT_TYPE;;
+	public void modifyTriggerEventManagerRemove(int eventTriggerPairID, int ID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_REMOVE + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_TRIGGER_BY_REMOVE  + SaladConstants.SEPARATOR + ID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
-	}*/
+	}
+	
+	public void modifyTriggerEventManagerTileCollision(int eventTriggerPairID, int ID, int xPos, int yPos, int xSize, int ySize){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TILE_COLLISION + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_TRIGGER_BY_TILE_COLLISION  + SaladConstants.SEPARATOR + ID  + SaladConstants.SEPARATOR + xPos
+				 + SaladConstants.SEPARATOR + yPos  + SaladConstants.SEPARATOR + xSize +  SaladConstants.SEPARATOR + ySize;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTriggerEventManagerLevelDone(int eventTriggerPairID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_EVENT_LEVEL_DONE + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_EVENT_LEVEL_DONE;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	public void modifyTriggerEventManagerEnemyShower(int eventTriggerPairID, int maxEnemy, String gfx){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_EVENT_ENEMY_SHOWER + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_EVENT_ENEMY_SHOWER + SaladConstants.SEPARATOR + maxEnemy + SaladConstants.SEPARATOR + gfx;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	
 	public void modifyLifeManagerInitLives(int lives, int playerID){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + SaladConstants.SEPARATOR 
