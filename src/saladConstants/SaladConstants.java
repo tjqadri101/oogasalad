@@ -171,7 +171,7 @@ public final class SaladConstants {
 	public static final String SET_INIT_LIVES = "SetInitLives";
 	public static final String RESTORE_LIFE_BY_LEVEL ="RestoreLifeByLevel";
 	
-
+	public static final String TILE_COLLISION = "TileCollision";
 
 	
 

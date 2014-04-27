@@ -1,9 +1,11 @@
 package engineManagers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import objects.GameObject;
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * Manage the Change of the blood of all Game Objects
@@ -47,8 +49,19 @@ public class BloodManager extends StatisticsManager{
 
 	@Override
 	public List<String> getAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> answer = new ArrayList<String>();
+		for(String condition: myMap.keySet()){
+			String type = null;
+			StringBuilder param = new StringBuilder();
+			param.append(myMap.get(condition) + SaladConstants.SEPARATOR);
+			param.append(condition);
+			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
+					param.toString().split(SaladConstants.SEPARATOR)));
+			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.SET_COLLISION_BLOOD;
+			if(condition.startsWith(SaladConstants.TILE_COLLISION) || condition.startsWith(SaladConstants.SCENE)) type = SaladConstants.SET_TRANSITION_SCORE;
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, type, false, params));
+		}
+		return answer;
 	}
 
 }
