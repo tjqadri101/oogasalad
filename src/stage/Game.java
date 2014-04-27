@@ -38,12 +38,11 @@ public class Game {
 	protected LiveManager myLiveManager;
 	protected TriggerEventManager myTriggerManager;
 	protected RevivalManager myRevivalManager;
-//	protected InputManager myInputManager;
-//	protected TimerManager myTimerManager;
+	protected InputManager myInputManager;
 	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-//    protected TriggerEventManager myTEM;
+//    protected TriggerEventManager myEventManager;
     protected Map<Character, String> myTileImageMap;
 
 
@@ -51,16 +50,15 @@ public class Game {
 		initTransitionStateMap();
 		myTileImageMap = new HashMap<Character, String>();
 		myLevelMap = new HashMap<Integer, Level>();
-		myPlayerMap = new HashMap<Integer, Player>();// ???
+		myPlayerMap = new HashMap<Integer, Player>();
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
 		myLiveManager = new LiveManager();
 		myRevivalManager = new RevivalManager();
-//		myInputManager = new InputManager();
-//		myTimerManager = new TimerManager();
+		myInputManager = new InputManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
-//    	myTEM = new TriggerEventManager();
+//    	myEventManager = new TriggerEventManager();
 	}
 
 	private void initTransitionStateMap() {
@@ -85,8 +83,6 @@ public class Game {
 	 */
 	public void addLevel(int levelID) {
 		Level level = new Level(levelID);
-//                level.register(etm);
-//                etm.setSubject(level);
 		myLevelMap.put(levelID, level);
 	}
 
@@ -300,17 +296,16 @@ public class Game {
 	 */
 	public List<String> getAttributes() {
 		List <String> answer = new ArrayList<String>();
-//		answer.addAll(myScoreManager.getAttributes()); 
+		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
-//		answer.addAll(myTimerManager.getAttributes()); 
 		answer.add(myGravity.getAttributes());
 		for (Entry<Character, String> entry : getTileImageMap()) {
 			Character cid = entry.getKey();
 			String imgfile = entry.getValue();
 			answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
 		}
-		if(getPlayer(NONUSE_ID) != null){
-			answer.addAll(getPlayer(NONUSE_ID).getAttributes());	
+		for (int playerID: myPlayerMap.keySet()){
+			answer.addAll(myPlayerMap.get(playerID).getAttributes());	
 		}
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
@@ -325,8 +320,8 @@ public class Game {
 	/** Should only be called from Engine
 	 * @return the only instance of TriggerEventManager
 	 */
-//	public TriggerEventManager getTEM(){
-//	    return myTEM;
+//	public TriggerEventManager getEventManager(){
+//	    return myEventManager;
 //	}
 //	
 	/* @Siyang: 
