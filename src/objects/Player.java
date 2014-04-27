@@ -53,6 +53,14 @@ public class Player extends GameObject {
 		}
 	}
 	
+	/**
+	 * Called by the Game Authorizing Environment to display the current set keys
+	 * @return Map maps from int key to String function (i.e. jump)
+	 */
+	public Map<Integer, String> getKeyMap(){
+		return myKeyMap;
+	}
+	
 	public void moveUp(){
 		if (y > 0) {
 			y -= myMovingYSpeed*eng.getGameSpeed();
