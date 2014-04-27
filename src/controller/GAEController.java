@@ -739,36 +739,6 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	
-	public void createGoalCollision(int bossID){
-		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPARATOR +  SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPARATOR + 
-				SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPARATOR + bossID;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}	
-	
-	public void createGoalTime(int time){
-		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPARATOR +  SaladConstants.WIN_BY_TIME + SaladConstants.SEPARATOR + 
-				SaladConstants.WIN_BY_TIME + SaladConstants.SEPARATOR + time;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	public void createGoalTileCollision(int curPlayerID, int leftXPos, int topYPos, int width, int height){
-		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPARATOR +  SaladConstants.WIN_BY_TILE_COLLISION+ SaladConstants.SEPARATOR + 
-				curPlayerID + SaladConstants.SEPARATOR + leftXPos + SaladConstants.SEPARATOR + topYPos + SaladConstants.SEPARATOR + width + SaladConstants.SEPARATOR
-				+ height;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	/**
-     * Create tile collision winning goal without providing player id. The already specified playerID is used.
-     */
-	public void createGoalTileCollisionNoID(int leftXPos, int topYPos, int width, int height){
-		createGoalTileCollision(playerID,leftXPos, topYPos, width,height);
-	}
-	
 	public void modifyGravityMagnitude(double magnitude){
 		String order = SaladConstants.MODIFY_GRAVITY + SaladConstants.SEPARATOR +  SaladConstants.GRAVITY_MAGNITUDE+ SaladConstants.SEPARATOR + magnitude;
 		if (!DEBUG) myDataController.receiveOrder(order);
