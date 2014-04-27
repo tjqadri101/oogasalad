@@ -216,16 +216,41 @@ public abstract class GameObject extends JGObject {
 	/**
 	 * Restore to original state within a scene Used for live-editing
 	 */
-	public void restore(boolean lifeLost) {
+	public void restore(boolean resetLife) {
 		setInitPos(myInitX, myInitY);
 		setInitSpeed(myInitXSpeed, myInitYSpeed);
-		if (!lifeLost)
-			setBlood(myInitBlood);
+		setBlood(myInitBlood);
+		if (resetLife) {
+			// lifeManager ?
+		}
 		if (!is_alive) {
 			eng.markAddObject(this);
 			is_alive = true;
 		}
+		if (mySideDetectors!=null){
+			for (int i = 0; i < 4; i++) {
+				mySideDetectors[i].restore(false);
+			}
+		}
 	}
+	
+	public void resume(){
+		super.resume();
+		if (mySideDetectors!=null){
+			for (int i = 0; i < 4; i++) {
+				mySideDetectors[i].resume();
+			}
+		}
+	}
+	
+//	public void suspend(){
+//		super.resume();
+//		if (mySideDetectors!=null){
+//			for (int i = 0; i < 4; i++) {
+//				mySideDetectors[i].suspend();
+//			}
+//		}
+//	}
 
 	/**
 	 * Reset the unique ID
