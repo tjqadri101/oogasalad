@@ -1,20 +1,25 @@
 package game_authoring_environment;
 
 import java.awt.BorderLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
+import saladConstants.SaladConstants;
 import controller.GAEController;
 
 public class PlayereditorPanel extends Panel {
@@ -38,6 +43,7 @@ public class PlayereditorPanel extends Panel {
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
 		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
+		this.add(createKeySetButton(), BorderLayout.SOUTH);
 	}
 
 	@Override
@@ -50,7 +56,11 @@ public class PlayereditorPanel extends Panel {
 
 	@Override
 	protected JComponent makeSubPanelItems() {
+		JPanel panel = new JPanel();
 		JButton jb  = makeChooseButton();
+		JButton jb2 = createKeySetButton();
+		panel.add(jb);
+		panel.add(jb2);
 		return jb;
 	}
 	public void update(){
@@ -58,12 +68,78 @@ public class PlayereditorPanel extends Panel {
 	}
 
 	private JTable createTable(){
-		myTable = new PlayerEditorTable(gController);
+		myTable = new PlayerEditorTable(gController, this);
 		
 		return myTable;
 	}
 	
-	
+	public JButton createKeySetButton(){
+		JButton button = new JButton("Set Control Keys");
+		button.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				char[] characters = {'c'};
+				String moveUp_ = "i";
+				String moveDown_ = null;
+				String moveLeft_= null;
+				String jump_ = null;
+				String moveRight_ = null;
+				String shoot_ = null;
+
+				Map<String, Integer> map = gController.getKeyMap(SaladConstants.PLAYER_ID);
+				for(String s : map.keySet()){
+					System.out.println(s);
+				}
+				
+				JTextField moveUp = new JTextField(2);
+				moveUp.setText(moveUp_);
+				JTextField moveDown = new JTextField(2);
+				moveDown.setText(moveDown_);
+				JTextField moveLeft = new JTextField(2);
+				moveLeft.setText(moveLeft_);
+				JTextField jump = new JTextField(2);
+				jump.setText(jump_);
+				JTextField moveRight = new JTextField(2);
+				moveRight.setText(moveRight_);
+				JTextField shoot = new JTextField(2);
+				moveRight.setText(moveRight_);
+				JTextField[] texts = {moveUp, moveDown, moveLeft, moveRight, jump, shoot};
+				String[] strings = {"MoveUp Key:", "MoveDown Key:", "MoveLeft Key:", "MoveRight Key:", "Jump Key:","Shoot Key:",};
+				JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+				int result = JOptionPane.showConfirmDialog(null, myPanel, 
+						"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+					if(moveUp.getText()!=null){
+						int moveUp_char = moveUp.getText().toLowerCase().charAt(0);
+						gController.modifyPlayerKeyUpNoID(moveUp_char);
+					}
+					if(moveDown.getText()!=null){
+						int moveDown_char =(int) moveDown.getText().toLowerCase().charAt(0);
+						gController.modifyPlayerKeyDownNoID(moveDown_char);
+					}
+					if(moveLeft.getText()!=null){
+						int moveLeft_char =(int) moveLeft.getText().toLowerCase().charAt(0);
+						gController.modifyPlayerKeyLeftNoID(moveLeft_char);
+					}
+					if(moveRight.getText()!=null){
+						int moveRight_char =(int) moveRight.getText().toLowerCase().charAt(0);
+						gController.modifyPlayerKeyRighttNoID(moveRight_char);
+					}
+					if(jump.getText()!=null){
+						int jump_char = (int) jump.getText().toLowerCase().charAt(0);					
+						gController.modifyPlayerKeyJumpNoID(jump_char);
+					}
+					if(shoot.getText()!=null){
+						int shoot_char = (int) shoot.getText().toLowerCase().charAt(0);
+						gController.modifyPlayerKeyShoottNoID(shoot_char);
+					}
+
+				}
+
+			}			
+		});
+		return button;
+	}
 	public void updateTable(){
 		List<String> s = gController.getAttributes();
 		String firstrow = s.get(0);
@@ -78,7 +154,7 @@ public class PlayereditorPanel extends Panel {
 		b.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				chooseActor("Select Player ");
+				chooseActor("Select Player Image");
 			}			
 		});
 		return b;
@@ -87,7 +163,7 @@ public class PlayereditorPanel extends Panel {
 	
 	
 	
-	private void chooseActor(String displayText) {
+	public void chooseActor(String displayText) {
 		try{
 			JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
 			UIManager.put("FileChooser.openDialogTitleText", displayText);
