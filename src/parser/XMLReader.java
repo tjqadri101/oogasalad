@@ -43,7 +43,7 @@ public class XMLReader{
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 		return (List<String>) myXStream.fromXML(xml); 
 	}
 

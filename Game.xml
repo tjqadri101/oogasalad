@@ -1,3 +1,18 @@
 <list>
-  <string>ModifyGravity,Magnitude,0.1</string>
+	<String>CreateLevel,ID,1</String>
+	<String>CreateScene,ID,1,ID,0</String>
+	<String>SwitchScene,ID,1,ID,0</String>
+	<String>SetDragTile,Colid,2,DragImage,brick.png</String>
+	<String>CreateActor,ID,1,Image,actor_blank.png,100,100,Position,100.0,200.0,Name,Actor
+		1,CollisionID,1,Lives,1</String>
+	<String>ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,2
+	</String>
+	<String>CreateActor,ID,2,Image,actor_blank.png,100,100,Position,100.0,200.0,Name,Actor
+		2,CollisionID,1,Lives,1</String>
+	<String>ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,2
+	</String>
+	<String>ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,2
+	</String>
+	<String>CreateActor,ID,2,Image,actor_blank.png,100,100,Position,100.0,200.0,Name,Actor
+		2,CollisionID,1,Lives,1</String>
 </list>

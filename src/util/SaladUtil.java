@@ -25,6 +25,20 @@ public class SaladUtil {
         }
         return answer;
     }
+    
+    /**
+     * Convert a list of Strings to a list of Objects
+     * @param string
+     * @return
+     */
+    public static List<Object> convertStringListToObjectList(List<String> string){
+    	List<Object> object = new ArrayList<Object>();
+    	for(String s: string){
+    		Object o = (Object) s;
+    		object.add(o);
+    	}
+    	return object;
+    }
 
     /**
      * Print a list of Strings separated by '/' for debugging purpose
@@ -67,13 +81,14 @@ public class SaladUtil {
     }
 
     /**
-     * General Reflection Method 
+     * General Reflection Method for behaviors
      * @param ResourceBundle
      * @param myString
      * @param methodName
      * @param parameters for constructor
      */
-    public static Object behaviorReflection(ResourceBundle myBundle, String myString, List<Object> objects, String methodName, Object constructorParam){
+    public static Object behaviorReflection(ResourceBundle myBundle, String myString, 
+                                            List<Object> objects, String methodName, Object constructorParam){
         if(myString == null) return null;
         try{
             Object behavior = Reflection.createInstance(myBundle.getString(myString), constructorParam);
@@ -120,16 +135,11 @@ public class SaladUtil {
     public static String convertArgsToString(String seperater, Object ... args){
     	StringBuilder answer = new StringBuilder();
     	if(args.length == 0) return null;
-    	answer.append(args[0]);
+    	answer.append(args[0].toString());
     	for(int i = 1; i < args.length; i ++){
     		answer.append(seperater + args[i]);
     	}
     	return answer.toString();
     }
-    
-//    public static List<Object> convertStringToObjects(String s, String seperater){
-//    	List<Object> answer = new ArrayList<Object>();
-//    	for()dd
-//    }
 
 }

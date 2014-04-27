@@ -5,24 +5,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import objects.GameObject;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
+ * Manage the score throughout a Game
  * @Author: Justin (Zihao) Zhang
  */
-public class ScoreManager {
-	
+public class ScoreManager extends StatisticsManager{
+	protected int myInitScore;
+	protected int myScore;
 	public static final int DEFAULT_INITIAL_SCORE = 0;
 	
-	protected int myScore;
-	protected int myInitialScore;
-	protected Map<String, Integer> myScoreMap;
-	
 	public ScoreManager(int startScore){
-		myScore = startScore;
-		myInitialScore = startScore;
-		myScoreMap = new HashMap<String, Integer>();
+		super();
+		myInitScore = startScore;
+		restore();
 	}
 	
 	public ScoreManager(){
@@ -30,61 +29,53 @@ public class ScoreManager {
 	}
 	
 	/**
-	 * Set the initial score
-	 * @param startScore
+	 * Set the initial Value
+	 * @param startValue
 	 */
-	public void setInitialScore(int startScore){
-		myInitialScore = startScore;
+	public void setInitValue(int startValue){
+		myInitScore = startValue;
 	}
 	
 	/**
-	 * Restore to initial score
+	 * Restore to the initial value
 	 */
 	public void restore(){
-		myScore = myInitialScore;
+		myScore = myInitScore;
 	}
 	
 	/**
-	 * Get the current updated score
-	 * @return score
+	 * Get the current value
+	 * @return
 	 */
-	public int getCurrentScore(){
+	public int getCurrentValue(){
 		return myScore;
 	}
 	
 	/**
-	 * Called to set the change of score to a condition
-	 * @param score
-	 * @param args: condition
-	 */
-	public void setScore(int score, Object ... args){
-		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPERATER, args);
-		myScoreMap.put(condition, score);
-	}
-	
-	/**
-	 * Called to update the current score
+	 * 
 	 * @param info
-	 * @param victimColid
-	 * @param hitterColid
+	 * @param victim
+	 * @param hitter
 	 */
-	public void updateScore(String info, int victimColid, int hitterColid){
-		String condition = info + SaladConstants.SEPERATER + victimColid + 
-				SaladConstants.SEPERATER + hitterColid;
-		if(myScoreMap.get(condition) == null) return;
-		myScore += myScoreMap.get(condition);
-		System.out.println("current score: " + myScore);
+	@Override
+	public void update(String info, GameObject victim, GameObject hitter){
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
+				info, victim.colid, hitter.colid);
+		if(myMap.get(condition) == null) return;
+		myScore += myMap.get(condition);
 	}
 	
-	/**
-	 * Called to update the current score
-	 * @param oldLevelOrSceneID
-	 * @param newLevelOrSceneID
-	 */
-	public void updateScore(String oldLevelOrSceneID, String newLevelOrSceneID){
-		String condition = oldLevelOrSceneID + SaladConstants.SEPERATER + newLevelOrSceneID;
-		if(myScoreMap.get(condition) == null) return;
-		myScore += myScoreMap.get(condition);
+	public void update(String info, String oldLevelOrSceneID, String newLevelOrSceneID){
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
+				info, oldLevelOrSceneID, newLevelOrSceneID);
+		if(myMap.get(condition) == null) return;
+		myScore += myMap.get(condition);
+	}
+	
+	public void update(String condition){
+		if(myMap.containsKey(condition)){
+			myScore += myMap.get(condition);
+		}
 	}
 	
 	/**
@@ -94,11 +85,18 @@ public class ScoreManager {
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, 
-				SaladConstants.INITIAL_SCORE, myInitialScore));
-//		for (String condition: myScoreMap){
-//			
-//			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, SaladConstants.SET_SCORE, condition))
-//		}
+				SaladConstants.INITIAL_SCORE, myInitScore));
+		for (String condition: myMap.keySet()){
+			String type = null;
+			StringBuilder param = new StringBuilder();
+			param.append(myMap.get(condition) + SaladConstants.SEPARATOR);
+			param.append(condition);
+			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
+					param.toString().split(SaladConstants.SEPARATOR)));
+			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.SET_COLLISION_SCORE;
+			if(condition.startsWith(SaladConstants.LEVEL) || condition.startsWith(SaladConstants.SCENE)) type = SaladConstants.SET_TRANSITION_SCORE;
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, type, false, params));
+		}
 		return answer;
 	}
 

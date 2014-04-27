@@ -11,7 +11,9 @@ import parser.GameSaverAndLoader;
 import stage.Game;
 import util.SaladUtil;
 /**
- * @Author: Justin (Zihao) Zhang
+ * 
+ * @author Main Justin (Zihao) Zhang
+ *
  */
 public class DataController {
 	
@@ -59,6 +61,13 @@ public class DataController {
 		myGameSaverAndLoader.save(myGame.getAttributes(), url);
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to get the Game for various manipulations
+	 * @return Game
+	 */
+	public Game getGame(){
+		return myGame;
+	}
 	
 	/**
 	 * Called by PlayView to import the game data
@@ -136,6 +145,10 @@ public class DataController {
 	 */
 	public void uploadImage(int x, int y, String source) throws IOException {
 		myImageBuffer.resizedUpload(x, y, source);
+	}
+	
+	public void reviveObject() {
+		myGameEngine.reviveObject();
 	}
 	
 }

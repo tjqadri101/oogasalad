@@ -2,7 +2,7 @@ package saladConstants;
 
 public final class SaladConstants {
 	
-	public static final String SEPERATER = ",";
+	public static final String SEPARATOR = ",";
 	
 	public static final String CREATE_LEVEL = "CreateLevel";
 	public static final String SWITCH_LEVEL = "SwitchLevel";
@@ -50,6 +50,8 @@ public final class SaladConstants {
 	public static final String TEST_XMLFILE_URL = "test.xml";
 	
 	public static final String BACKGROUND = "Background";
+	public static final String LEVEL = "level";
+	public static final String SCENE = "scene";
 	public static final String ID = "ID";
 	public static final String IMAGE = "Image";
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
@@ -71,6 +73,7 @@ public final class SaladConstants {
     public static final String STAY_ON_TILE = "StayOnTile";
 	public static final String REGULAR_MOVE = "RegularMove";
 	public static final String REGULAR_REMOVE = "RegularRemove";
+	public static final String BACK_FORTH_MOVE = "BackForthMove";
 	public static final String IMMOBILE = "Immobile";
 	public static final String SLOW_SHOOT = "SlowShoot";
 	public static final String QUICK_SHOOT = "QuickShoot";
@@ -99,10 +102,7 @@ public final class SaladConstants {
     public static final String DRAG_IMAGE = "DragImage";
     public static final String MODIFY_ACTOR_IMAGE = "ModifyActorImage";
     public static final String MODIFY_PLAYER_IMAGE = "ModifyPlayerImage";
-    public static final String WIN_BY_TIME = "WinByTime";
-    public static final String WIN_BY_COLLISION = "WinByCollsion";
     public static final String SET_SCORE = "SetScore";
-    public static final String WIN_BY_TILE_COLLISION = "WinByTileCollision";
     public static final String MODIFY_COLLISION_BEHAVIOR = "ModifyCollisionBehavior";
     public static final String MODIFY_TILE_COLLISION_BEHAVIOR = "ModifyTileCollisionBehavior";
     
@@ -120,6 +120,7 @@ public final class SaladConstants {
 
     public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
     public static final double DEFAULT_ACTOR_SPEED = 5;
+    public static final int DEFAULT_INIT_LIVES = 3;
     
     public static final int POSITIVE_DIRECTION = 1;
     public static final int NEGATIVE_DIRECTION = -1;
@@ -134,7 +135,7 @@ public final class SaladConstants {
 	public static final String SHOOT_KEY = "shoot";
 	public static final String JUMP_KEY = "jump";
 	
-	public static final String UP = "Up";
+	public static final String Top = "Top";
 	public static final String BOTTOM = "Bottom";
 	public static final String LEFT = "Left";
 	public static final String RIGHT = "Right";
@@ -143,8 +144,40 @@ public final class SaladConstants {
 
 	public static final String PLAYER_INIT_POS = "PlayerInitialPosition";
 
+	public static final String MODIFY_SCORE_MANAGER = "ModifyScoreManager";
+	public static final String SET_COLLISION_SCORE = "SetCollisionScore";
+	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
+	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
+	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
 
+	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
+	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
+	public static final String MODIFY_LIFE_MANAGER = "ModifyLifeManager";
+
+	public static final String SET_TRIGGER_BY_TIME = "SetTriggerByTime";
+	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
+	public static final String SET_TRIGGER_BY_COLLISION = "SetTriggerByCollision";
+	public static final String SET_TRIGGER_BY_TILE_COLLISION = "SetTriggerByTileCollision";
+	public static final String SET_EVENT_LEVEL_DONE = "SetEventLevelDone";
+	public static final String SET_EVENT_ENEMY_SHOWER = "SetEventEnemyShower";
+	public static final String SET_TRIGGER = "SetTrigger";
+	public static final String SET_EVENT = "SetEvent";
+
+	public static final String TRIGGER_TYPE = "TriggerType";
+	public static final String EVENT_TYPE = "EventType";
+	public static final String SET_INIT_LIVES = "SetInitLives";
+	public static final String RESTORE_LIFE_BY_LEVEL ="RestoreLifeByLevel";
 	
+	public static final String TILE_COLLISION = "TileCollision";
+	public static final String SET_TILE_COLLISION_BLOOD = "SetTileCollisionBlood";
+
+	public static final String MODIFY_TRANSITION_STATE = "ModifyTransitionState";
+	public static final String GAME_STATE = "GameState";
+	public static final String FRAME = "Frame";
+	public static final String DISPLAY_MESSAGE = "DisplayMessage";
+	public static final String DISPLAY_IMAGE = "DisplayImage";
+
+	public static final String SPACE = " ";
 
 
 	

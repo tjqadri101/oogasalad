@@ -8,17 +8,19 @@ import java.util.Map;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.InputManager;
+import engineManagers.LiveManager;
+import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
+import engineManagers.TriggerEventManager;
 import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
-import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
  * @author Main Justin (Zihao) Zhang
- * @Contribution David Chou
+ * @contribution David Chou
  * @help Isaac (Shenghan) Chen
  */
 public class Game {
@@ -26,25 +28,40 @@ public class Game {
 	public static final int NONUSE_ID = 0;
 
 	protected Map<Integer, Level> myLevelMap;
-	protected Map<StateType, Transition> myNonLevelSceneMap;
+	protected Map<String, Transition> myTransitionStateMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
+	protected LiveManager myLiveManager;
+	protected TriggerEventManager myTriggerManager;
+	protected RevivalManager myRevivalManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
-	protected Player myPlayer;
+	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
+//    protected TriggerEventManager myTEM;
 
 
 	public Game(){
+		initTransitionStateMap();
 		myLevelMap = new HashMap<Integer, Level>();
-		myNonLevelSceneMap = new HashMap<StateType, Transition>();
+		myPlayerMap = new HashMap<Integer, Player>();// ???
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
+		myLiveManager = new LiveManager();
+		myRevivalManager = new RevivalManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
+//    	myTEM = new TriggerEventManager();
+	}
+
+	private void initTransitionStateMap() {
+		myTransitionStateMap = new HashMap<String, Transition>();
+		for (String gameState: Transition.TRANSITION_STATE){
+			myTransitionStateMap.put(gameState, new Transition(gameState));
+		}
 	}
 
 	/**
@@ -53,6 +70,8 @@ public class Game {
 	 */
 	public void addLevel(int levelID) {
 		Level level = new Level(levelID);
+//                level.register(etm);
+//                etm.setSubject(level);
 		myLevelMap.put(levelID, level);
 	}
 
@@ -105,6 +124,10 @@ public class Game {
 	 */
 	public Level getLevel(int levelID){
 		return myLevelMap.get(levelID);
+	}
+	
+	public int getNonPlayerColid(int levelID, int sceneID, int objectID){
+		return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID).colid;
 	}
 
 	/**
@@ -176,34 +199,38 @@ public class Game {
 	 * @return nothing
 	 */
 	public void setPlayer(Player player){
-		myPlayer = player;
+		myPlayerMap.put(player.getID(), player);
+		myLiveManager.addPlayer(player);
 	}
 	
 	/** 
      * Called to get the Player from the Game
-     * Parameters needed but not used to facilitate GameFactory for Reflection
-     * @param levelID, sceneID, objectID
+     * @param playerID
      * @return Player Object
      */
     public Player getPlayer(int playerID){
-    	return myPlayer;
+    	return myPlayerMap.get(playerID);
     }
-
-	/**
-	 * Called to add the non-level transition scenes to the Game
-	 * @param StateType
-	 * @return void
-	 */
-	public void addNonLevelScene(StateType type){
-		myNonLevelSceneMap.put(type, new Transition(type));
-	}
+    
+    public int getPlayerColid(int playerID){
+    	return myPlayerMap.get(playerID).colid;
+    }
+    
+    
+    /**
+     * Called to remove a Player matched to the playerID from the Game
+     * @param playerID
+     */
+    public void deletePlayer(int playerID){
+    	myPlayerMap.remove(playerID);
+    }
 	
 	/**
-	 * Called to get the non-level transition from the Game
+	 * Called to get the transition state from the Game
 	 * @return a Transition
 	 */
-	public Transition getNonLevelScene(StateType type){
-		return myNonLevelSceneMap.get(type);
+	public Transition getTransitionState(String gameState){
+		return myTransitionStateMap.get(gameState);
 	}
     
     /**
@@ -238,6 +265,10 @@ public class Game {
     	return myBloodManager;
     }
     
+    public LiveManager getLiveManager(){
+    	return myLiveManager;
+    }
+    
     /**
 	 * Called to delete an existing Game Object from a particular scene of a particular level
 	 * @param the level ID that the Game Object belongs to 
@@ -265,17 +296,28 @@ public class Game {
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
 		answer.addAll(myCollisionManager.getAttributes());
-		for(Transition value: myNonLevelSceneMap.values()){
+		for(Transition value: myTransitionStateMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
 		return answer;
 	}
 	
+	/** Should only be called from Engine
+	 * @return the only instance of TriggerEventManager
+	 */
+//	public TriggerEventManager getTEM(){
+//	    return myTEM;
+//	}
+//	
 	/* @Siyang: 
 	 * The following getter added to facilitate testing. 
 	 */
 	public Map<Integer, Level> getMyLevelMap(){
 	    return myLevelMap;
+	}
+
+	public RevivalManager getRevivalManager() {
+		return myRevivalManager;
 	}	
 
 }

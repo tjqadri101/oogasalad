@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Map.Entry;
 import java.util.Set;
-
 import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
@@ -16,9 +16,10 @@ import util.SaladUtil;
 
 /**
  * 
- * @author Justin (Zihao) Zhang
- * @Contribution David Chou
+ * @author Main Justin (Zihao) Zhang
+ * @contribution David Chou
  * @contribution (for tiles) Shenghan Chen
+ * @contribution (for trigger) Steve (Siyang) Wang
  */
 
 public class Scene {
@@ -35,8 +36,15 @@ public class Scene {
 	protected int myFieldYSize;
 	
 	protected Map<Integer, NonPlayer> myObjectMap;
-	protected Map<Integer, String> myTileImageMap;
+	protected Map<Character, String> myTileImageMap;
 	protected String[] myTiles;
+	
+	   protected String myTrigger;
+	        protected boolean myTriggerFlag;
+	        protected List<Object> myTriggerParameter;
+	        protected List<Object> myEventParameter;
+	        protected String myEvent;
+            
 	
 	public Scene(int id) {
 		myID = id;
@@ -45,16 +53,20 @@ public class Scene {
 		initTiles();
 	}
 	
-	public void defineTileImage(int cid, String imgfile){
+	public void defineTileImage(char cid, String imgfile){
 		myTileImageMap.put(cid, imgfile);
 	}
 	
-	public Set<Entry<Integer, String>> getTileImageMap(){
+	public Set<Entry<Character, String>> getTileImageMap(){
 		return myTileImageMap.entrySet();
 	}
 	
 	public String[] getTiles(){
 		return myTiles;
+	}
+	
+	public void setTiles(String[] tiles){
+		myTiles = tiles;
 	}
 	
 	protected void initTiles(){
@@ -63,8 +75,8 @@ public class Scene {
     	String[] array = new String[getYSize()];
     	for(int j = 0; j < getYSize(); j ++){ array[j] = temp; }
 		myTiles = array;
-		myTileImageMap = new HashMap<Integer, String>();
-		defineTileImage(0, DEFAULT_TILE_INFO);
+		myTileImageMap = new HashMap<Character, String>();
+		defineTileImage('0', DEFAULT_TILE_INFO);
 	}
 	
 	public void resizeTiles(int xsize, int ysize){
@@ -85,7 +97,7 @@ public class Scene {
 		myTiles = array;
 	}
 	
-	public void updateTiles(int cid, int left, int top, int width, int height){
+	public void updateTiles(char cid, int left, int top, int width, int height){
 		String temp = "";
     	for(int i=0;i<Math.min(width,getXSize()-left);i++){
     		temp += cid;
@@ -157,12 +169,13 @@ public class Scene {
 		return answer;
 	}
 	
-	public void setBackgroundImage(String fileName, boolean ifWrapHorizontal, boolean ifWrapVertical, int xsize, int ysize) {
+	public void setBackgroundImage(String fileName) {
 		myBackground = fileName;
+	}
+	
+	public void setWrap(boolean ifWrapHorizontal, boolean ifWrapVertical) {
 		myIfWrapHorizontal = ifWrapHorizontal;
 		myIfWrapVertical = ifWrapVertical;
-		myFieldXSize = xsize;
-		myFieldYSize = ysize;
 	}
 	
 	public String getBackgroundImage() {
@@ -205,8 +218,69 @@ public class Scene {
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
+		for (Entry<Character, String> entry : getTileImageMap()) {
+			Character cid = entry.getKey();
+			String imgfile = entry.getValue();
+			answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
+		}
+		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_IMAGE;
+		for (String line: getTiles()) {
+			tiles += SaladConstants.SPACE + line;
+		}
+		answer.add(tiles);
 		return answer;
 	}
+	
+	/**
+         * Used for triggerManager to inspect the trigger
+         * @return Trigger
+         */
+        public String getTrigger(){
+                return myTrigger;
+        }        
+
+        /**
+         * Used for triggerManager to checkTrigger at each doFrame in engine
+         * @return Trigger
+         */
+        public boolean checkTrigger(GameEngine myEngine){
+                if (myTrigger == null) return false;
+                ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
+                Object answer = SaladUtil.behaviorReflection(behaviors, myTrigger, myTriggerParameter, "checkTrigger", myEngine);
+                myTriggerFlag = (boolean) answer;
+                return myTriggerFlag;
+        }       
+        
+        /**
+         * Used for triggerManager to inspect the trigger
+         * @return Trigger
+         */
+        public String getEvent(){
+                return myEvent;
+        }  
+        
+        /**
+         * Used for triggerManager to checkTrigger at each doFrame in engine
+         * @return Trigger
+         */
+        public void doEvent(GameEngine myEngine){
+            try{
+                ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
+                SaladUtil.behaviorReflection(behaviors, myEvent, myEventParameter, "doEvent", myEngine);
+            }
+            catch(Exception e){
+                e.printStackTrace(); // shall not reach here
+            }
+        }
+        
+        /**
+         * Used for to set events for specific object
+         * @return Trigger
+         */
+        public void setTriggerAndEvent(Object ... args){
+            //unimplemented
+//                myTrigger
+        }
 	
 	/*@Siyang 
 	 * Public method added for testing only. 
@@ -215,4 +289,5 @@ public class Scene {
 	public String getBackground(){       
 	    return myBackground;
 	}
+	
 }

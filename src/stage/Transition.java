@@ -3,26 +3,28 @@ package stage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Transition {
 	
-	protected StateType myType;
+	public static String[] TRANSITION_STATE = new String[]{"Title", "InGame", "StartGame",
+		"StartLevel", "LevelDone", "LifeLost", "GameOver"};
+	
+	protected String myType;
 	protected String myBackground;
 	protected Map<double[], String> myInstructionMap;
+	protected Map<double[], String> myImageMap;
 	protected int frame_to_stay;
-	protected char continue_game_key;
 	
-	public Transition(StateType type){
+	public Transition(String type){
 		myType = type;
 		myInstructionMap = new HashMap<double[], String>();
+		myImageMap = new HashMap<double[], String>();
 	}
 	
 	public void setBackground(String url){
 		myBackground = url;
-	}
-	
-	public void setKey(char key){
-		continue_game_key = key;
 	}
 	
 	public void setFrame(int frame){
@@ -33,33 +35,29 @@ public class Transition {
 		myInstructionMap.put(new double[]{xpos, ypos}, instrution);
 	}
 	
-	public StateType getType(){
-		return myType;
+	public void addImage(double xpos, double ypos, String image){
+		myImageMap.put(new double[]{xpos, ypos}, image);
 	}
 
 	public String getBackground(){
 		return myBackground;
 	}
 	
-	public char getKey(){
-		return continue_game_key;
-	}
-	
 	public int getFrame(){
 		return frame_to_stay;
 	}
 	
-	public Map<double[], String> getInstructions(){
-		return myInstructionMap;
+	public Set<Entry<double[], String>> getInstructions(){
+		return myInstructionMap.entrySet();
+	}
+	
+	public Set<Entry<double[], String>> getImages(){
+		return myImageMap.entrySet();
 	}
 	
 	public List<String> getAttributes() {
 		//what's the convention ?
 		return null;
-	}
-	
-	public enum StateType {
-		Title, InGame, StartGame, StartLevel, LevelDone, LifeLost, GameOver;
 	}
 	
 }

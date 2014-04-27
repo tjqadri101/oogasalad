@@ -8,9 +8,9 @@ import engine.GameEngine;
  * 
  * @author Main Justin (Zihao) Zhang
  */
-public class WinByTime extends Winnable{
+public class TriggerByTime extends Triggerable{
 
-	public WinByTime(GameEngine engine) {
+	public TriggerByTime(GameEngine engine) {
 		super(engine);
 	}
     
@@ -18,7 +18,7 @@ public class WinByTime extends Winnable{
 	 * @param inttime limit
 	 */
 	@Override
-	public boolean checkGoal(List<Object> params) {
+	public boolean checkTrigger(List<Object> params) {
 		int timeLimit = (Integer) params.get(0);
 //    	System.out.println("checkGoal called " + myEngine.timer + " " + timeLimit);
 		if(myEngine.timer >= timeLimit) return true;
