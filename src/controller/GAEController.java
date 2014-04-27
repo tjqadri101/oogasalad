@@ -234,19 +234,19 @@ public class GAEController {
 		modifyPlayerImmortal(playerID);
 	}
 	
-/*	public void modifyPlayerImmobile(int ID){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
-						SaladConstants.IMMOBILE + SaladConstants.SEPERATER+SaladConstants.IMMOBILE;
+	public void modifyPlayerImmobile(int ID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
+						SaladConstants.IMMOBILE + SaladConstants.SEPARATOR+SaladConstants.IMMOBILE;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	*//**
+	/**
      * Modify player by making it immobile without providing player id. The already specified playerID is used.
-     *//*
+     */
 	public void modifyPlayerImmobileNoID(){
 		modifyPlayerImmobile(playerID);
-	}*/
+	}
 	
 	public void modifyPlayerSlowShoot(int ID, String url, int xSize, int ySize, int colID, double speed){
 		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
