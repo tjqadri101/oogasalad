@@ -16,6 +16,7 @@ public class Remove extends Removable{
 
 	@Override
 	public void remove(List<Object> params) {
+		//myObject.getTriggerEventManager().update(SaladConstants.COLLISION, myObject, hitter);
 		myObject.remove();
 	}
 }

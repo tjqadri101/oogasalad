@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
@@ -17,7 +19,8 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
-import stage.Transition.StateType;
+import saladConstants.SaladConstants;
+import util.AttributeMaker;
 /**
  * A data structure that holds all the information about a game
  * @author Main Justin (Zihao) Zhang
@@ -29,33 +32,50 @@ public class Game {
 	public static final int NONUSE_ID = 0;
 
 	protected Map<Integer, Level> myLevelMap;
-	protected Map<StateType, Transition> myNonLevelSceneMap;
+	protected Map<String, Transition> myTransitionStateMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
 	protected LiveManager myLiveManager;
 	protected TriggerEventManager myTriggerManager;
 	protected RevivalManager myRevivalManager;
-//	protected InputManager myInputManager;
-//	protected TimerManager myTimerManager;
+	protected InputManager myInputManager;
 	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-//    protected TriggerEventManager myTEM;
+//    protected TriggerEventManager myEventManager;
+    protected Map<Character, String> myTileImageMap;
 
 
 	public Game(){
+		initTransitionStateMap();
+		myTileImageMap = new HashMap<Character, String>();
 		myLevelMap = new HashMap<Integer, Level>();
-		myNonLevelSceneMap = new HashMap<StateType, Transition>();
+		myPlayerMap = new HashMap<Integer, Player>();
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
 		myLiveManager = new LiveManager();
 		myRevivalManager = new RevivalManager();
-//		myInputManager = new InputManager();
-//		myTimerManager = new TimerManager();
+		myInputManager = new InputManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
-//    	myTEM = new TriggerEventManager();
+//    	myEventManager = new TriggerEventManager();
 	}
+
+	private void initTransitionStateMap() {
+		myTransitionStateMap = new HashMap<String, Transition>();
+		for (String gameState: Transition.TRANSITION_STATE){
+			myTransitionStateMap.put(gameState, new Transition(gameState));
+		}
+	}
+	
+	public void defineTileImage(char cid, String imgfile){
+		myTileImageMap.put(cid, imgfile);
+	}
+	
+	public Set<Entry<Character, String>> getTileImageMap(){
+		return myTileImageMap.entrySet();
+	}
+	
 
 	/**
 	 * @param the level ID that you want to add
@@ -63,8 +83,6 @@ public class Game {
 	 */
 	public void addLevel(int levelID) {
 		Level level = new Level(levelID);
-//                level.register(etm);
-//                etm.setSubject(level);
 		myLevelMap.put(levelID, level);
 	}
 
@@ -117,6 +135,10 @@ public class Game {
 	 */
 	public Level getLevel(int levelID){
 		return myLevelMap.get(levelID);
+	}
+	
+	public int getNonPlayerColid(int levelID, int sceneID, int objectID){
+		return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID).colid;
 	}
 
 	/**
@@ -201,6 +223,11 @@ public class Game {
     	return myPlayerMap.get(playerID);
     }
     
+    public int getPlayerColid(int playerID){
+    	return myPlayerMap.get(playerID).colid;
+    }
+    
+    
     /**
      * Called to remove a Player matched to the playerID from the Game
      * @param playerID
@@ -208,22 +235,13 @@ public class Game {
     public void deletePlayer(int playerID){
     	myPlayerMap.remove(playerID);
     }
-
-	/**
-	 * Called to add the non-level transition scenes to the Game
-	 * @param StateType
-	 * @return void
-	 */
-	public void addNonLevelScene(StateType type){
-		myNonLevelSceneMap.put(type, new Transition(type));
-	}
 	
 	/**
-	 * Called to get the non-level transition from the Game
+	 * Called to get the transition state from the Game
 	 * @return a Transition
 	 */
-	public Transition getNonLevelScene(StateType type){
-		return myNonLevelSceneMap.get(type);
+	public Transition getTransitionState(String gameState){
+		return myTransitionStateMap.get(gameState);
 	}
     
     /**
@@ -258,6 +276,10 @@ public class Game {
     	return myBloodManager;
     }
     
+    public LiveManager getLiveManager(){
+    	return myLiveManager;
+    }
+    
     /**
 	 * Called to delete an existing Game Object from a particular scene of a particular level
 	 * @param the level ID that the Game Object belongs to 
@@ -274,18 +296,22 @@ public class Game {
 	 */
 	public List<String> getAttributes() {
 		List <String> answer = new ArrayList<String>();
-//		answer.addAll(myScoreManager.getAttributes()); 
+		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
-//		answer.addAll(myTimerManager.getAttributes()); 
 		answer.add(myGravity.getAttributes());
-		if(getPlayer(NONUSE_ID) != null){
-			answer.addAll(getPlayer(NONUSE_ID).getAttributes());	
+		for (Entry<Character, String> entry : getTileImageMap()) {
+			Character cid = entry.getKey();
+			String imgfile = entry.getValue();
+			answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
+		}
+		for (int playerID: myPlayerMap.keySet()){
+			answer.addAll(myPlayerMap.get(playerID).getAttributes());	
 		}
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
 		answer.addAll(myCollisionManager.getAttributes());
-		for(Transition value: myNonLevelSceneMap.values()){
+		for(Transition value: myTransitionStateMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
 		return answer;
@@ -294,8 +320,8 @@ public class Game {
 	/** Should only be called from Engine
 	 * @return the only instance of TriggerEventManager
 	 */
-//	public TriggerEventManager getTEM(){
-//	    return myTEM;
+//	public TriggerEventManager getEventManager(){
+//	    return myEventManager;
 //	}
 //	
 	/* @Siyang: 

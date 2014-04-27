@@ -22,7 +22,7 @@ public class Eliminate extends Collision{
 				myObject, hitter);
 		//object has an instance of TEM, so that they can call TEM if collide
 		//alternative: collision has engine
-		
+		//myObject.getTriggerEventManager().update(SaladConstants.COLLISION, myObject, hitter);
 		
 		myObject.getBloodManager().update(SaladConstants.COLLISION, 
 				myObject, hitter);

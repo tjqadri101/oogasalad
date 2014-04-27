@@ -12,12 +12,12 @@ import saladConstants.SaladConstants;
  * @param int y size of the image
  * @param int collision ID of the bullet
  * @param double absolute speed of the bullet
- * 
+ * @param int time latency
  * @author Main Justin (Zihao) Zhang
  */
-public class SlowShoot extends Shootable{
+public class SlowShootByTime extends Shootable{
 
-	public SlowShoot(GameObject o) {
+	public SlowShootByTime(GameObject o) {
 		super(o);
 	}
 
@@ -32,6 +32,7 @@ public class SlowShoot extends Shootable{
 		int ysize = (Integer) objects.get(2);
 		int colid = (Integer) objects.get(3);
 		double shootSpeed = (Double) objects.get(4);
+		int latency = (Integer) objects.get(5);
 		
 		double shootXSpeed, shootYSpeed, xpos, ypos;
 		if(xface < 0){
@@ -61,11 +62,12 @@ public class SlowShoot extends Shootable{
 		shootXSpeed = myObject.xdir*shootSpeed;
 //		shootYSpeed = myObject.ydir*shootSpeed;
 		shootYSpeed = 0;
-		System.out.println(shootXSpeed+" "+shootYSpeed);
 		
-		NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
-		object.setSpeed(shootXSpeed, shootYSpeed);
-		object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
+		if(engine.timer/latency == 0){
+			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
+			object.setSpeed(shootXSpeed, shootYSpeed);
+			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);	
+		}
 	}
 
 }

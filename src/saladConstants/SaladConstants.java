@@ -102,10 +102,7 @@ public final class SaladConstants {
     public static final String DRAG_IMAGE = "DragImage";
     public static final String MODIFY_ACTOR_IMAGE = "ModifyActorImage";
     public static final String MODIFY_PLAYER_IMAGE = "ModifyPlayerImage";
-    public static final String WIN_BY_TIME = "WinByTime";
-    public static final String WIN_BY_COLLISION = "WinByCollsion";
     public static final String SET_SCORE = "SetScore";
-    public static final String WIN_BY_TILE_COLLISION = "WinByTileCollision";
     public static final String MODIFY_COLLISION_BEHAVIOR = "ModifyCollisionBehavior";
     public static final String MODIFY_TILE_COLLISION_BEHAVIOR = "ModifyTileCollisionBehavior";
     
@@ -146,7 +143,6 @@ public final class SaladConstants {
 
 
 	public static final String PLAYER_INIT_POS = "PlayerInitialPosition";
-
 	public static final String MODIFY_SCORE_MANAGER = "ModifyScoreManager";
 	public static final String SET_COLLISION_SCORE = "SetCollisionScore";
 	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
@@ -181,7 +177,12 @@ public final class SaladConstants {
 	public static final String DISPLAY_IMAGE = "DisplayImage";
 
 	
-
+	public static final String HELP_HTML_URL = "./src/game_authoring_environment/resources/help.html";
+	public static final String ABOUT_HTML_URL = "./src/game_authoring_environment/resources/about.html";
+	
+	public static final String SPACE = " ";
+	public static final String NULL = "null";
+	public static final int NUM_SIDE_DETECTORS = 4;
 
 	
 

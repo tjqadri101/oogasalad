@@ -51,9 +51,17 @@ public class GAEController {
 	public GAEController(){
 		playerID = SaladConstants.PLAYER_ID;
 		myDataController = new DataController();
+
+
 		myGameEngine = myDataController.initGameEngine(true);
-		g = new GAE(this);	
+		//createGAE(this);
+		g = new GAE(this);
 		setUpVariables();
+		createLevel(1);
+		createScene(0,1);
+		switchScene(0,1);
+
+
 	}
 
 	
@@ -64,8 +72,7 @@ public class GAEController {
 		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
 		libraryPanel = fv.getLibrary();
-		//test code below
-		setDragTile(2,"brick.png");		
+		//test code below	
 		
 	}
 	
@@ -156,31 +163,7 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}*/
-	
-	public void modifyPlayerHitElimVic(int colID,int colIDTarget, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.HITTER_ELIMINATE_VICTIM + SaladConstants.SEPARATOR + SaladConstants.HITTER_ELIMINATE_VICTIM + 
-						SaladConstants.SEPARATOR + colIDTarget  + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	
-	public void modifyPlayerPerishTog(int colID, int colIDTarget, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.PERISH_TOGETHER + SaladConstants.SEPARATOR + SaladConstants.PERISH_TOGETHER
-						+ SaladConstants.SEPARATOR + colIDTarget  + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	public void modifyPlayerStayOnTile(int colID, int tileColID, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE+ SaladConstants.SEPARATOR + 
-						tileColID + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
+
 	
 /*	
 	public void modifyPlayerRegMove(int ID, double xSpeed, double ySpeed){
@@ -226,19 +209,19 @@ public class GAEController {
 		modifyPlayerImmortal(playerID);
 	}
 	
-/*	public void modifyPlayerImmobile(int ID){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
-						SaladConstants.IMMOBILE + SaladConstants.SEPERATER+SaladConstants.IMMOBILE;
+	public void modifyPlayerImmobile(int ID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
+						SaladConstants.IMMOBILE + SaladConstants.SEPARATOR+SaladConstants.IMMOBILE;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	*//**
+	/**
      * Modify player by making it immobile without providing player id. The already specified playerID is used.
-     *//*
+     */
 	public void modifyPlayerImmobileNoID(){
 		modifyPlayerImmobile(playerID);
-	}*/
+	}
 	
 	public void modifyPlayerSlowShoot(int ID, String url, int xSize, int ySize, int colID, double speed){
 		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
@@ -441,7 +424,7 @@ public class GAEController {
 	/**
      * Modify actor's image without providing actor id. The selectedActorID is used.
      */
-	public void modifyActorImageNoID( String url, int xSize, int ySize){
+	public void modifyActorImageNoID(String url, int xSize, int ySize){
 		modifyActorImage(selectedActorID, url, xSize, ySize);
 	}
 	
@@ -739,36 +722,6 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	
-	public void createGoalCollision(int bossID){
-		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPARATOR +  SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPARATOR + 
-				SaladConstants.WIN_BY_COLLISION + SaladConstants.SEPARATOR + bossID;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}	
-	
-	public void createGoalTime(int time){
-		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPARATOR +  SaladConstants.WIN_BY_TIME + SaladConstants.SEPARATOR + 
-				SaladConstants.WIN_BY_TIME + SaladConstants.SEPARATOR + time;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	public void createGoalTileCollision(int curPlayerID, int leftXPos, int topYPos, int width, int height){
-		String order = SaladConstants.CREATE_GOAL + SaladConstants.SEPARATOR +  SaladConstants.WIN_BY_TILE_COLLISION+ SaladConstants.SEPARATOR + 
-				curPlayerID + SaladConstants.SEPARATOR + leftXPos + SaladConstants.SEPARATOR + topYPos + SaladConstants.SEPARATOR + width + SaladConstants.SEPARATOR
-				+ height;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	/**
-     * Create tile collision winning goal without providing player id. The already specified playerID is used.
-     */
-	public void createGoalTileCollisionNoID(int leftXPos, int topYPos, int width, int height){
-		createGoalTileCollision(playerID,leftXPos, topYPos, width,height);
-	}
-	
 	public void modifyGravityMagnitude(double magnitude){
 		String order = SaladConstants.MODIFY_GRAVITY + SaladConstants.SEPARATOR +  SaladConstants.GRAVITY_MAGNITUDE+ SaladConstants.SEPARATOR + magnitude;
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -816,20 +769,48 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	//the following two methods are not ready yet
-	/*public void modifyTriggerEventManagerTime(int ID){
+	public void modifyTriggerEventManagerTime(int eventTriggerPairID, int time){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ ID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TIME + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_TYPE;
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TIME + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_TRIGGER_BY_TIME  + SaladConstants.SEPARATOR + time;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	public void modifyEventManager(int ID){
-		String order = SaladConstants.MODIFY_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ ID + SaladConstants.SEPARATOR + SaladConstants.SET_EVENT + SaladConstants.SEPARATOR + SaladConstants.EVENT_TYPE;;
+	public void modifyTriggerEventManagerRemove(int eventTriggerPairID, int ID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_REMOVE + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_TRIGGER_BY_REMOVE  + SaladConstants.SEPARATOR + ID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
-	}*/
+	}
+	
+	public void modifyTriggerEventManagerTileCollision(int eventTriggerPairID, int ID, int xPos, int yPos, int xSize, int ySize){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TILE_COLLISION + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_TRIGGER_BY_TILE_COLLISION  + SaladConstants.SEPARATOR + ID  + SaladConstants.SEPARATOR + xPos
+				 + SaladConstants.SEPARATOR + yPos  + SaladConstants.SEPARATOR + xSize +  SaladConstants.SEPARATOR + ySize;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTriggerEventManagerLevelDone(int eventTriggerPairID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_EVENT_LEVEL_DONE + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_EVENT_LEVEL_DONE;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	public void modifyTriggerEventManagerEnemyShower(int eventTriggerPairID, int maxEnemy, String gfx){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_EVENT_ENEMY_SHOWER + SaladConstants.SEPARATOR 
+				+ SaladConstants.SET_EVENT_ENEMY_SHOWER + SaladConstants.SEPARATOR + maxEnemy + SaladConstants.SEPARATOR + gfx;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	
 	public void modifyLifeManagerInitLives(int lives, int playerID){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + SaladConstants.SEPARATOR 
@@ -869,14 +850,30 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void modifyTransitionStateImage(String gameState, String message, int xPos, int yPos){
+	public void modifyTransitionStateImage(String gameState, String url, int xPos, int yPos){
 		String order = SaladConstants.MODIFY_TRANSITION_STATE + SaladConstants.SEPARATOR + SaladConstants.GAME_STATE + 
-				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.DISPLAY_MESSAGE + 
-				SaladConstants.SEPARATOR + message + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos;
+				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.DISPLAY_IMAGE + 
+				SaladConstants.SEPARATOR + url + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	// GAE funtions below. NOT orders sending to DataController
+	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current level ID
+	 * @return the current level ID
+	 */
+	public int getCurrentLevelID(){
+		return myDataController.getCurrentLevelID();
+	}
+	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current scene ID
+	 * @return the current scene ID
+	 */
+	public int getCurrentSceneID(){
+		return myDataController.getCurrentSceneID();
+	}
 		
 	public List<String> getAttributes(){
 		List<String> s = myDataController.getActorInfo(selectedActorID);
@@ -895,6 +892,9 @@ public class GAEController {
 		libraryPanel.setTab(index);
 	}
 		
+	public int getActorID(){
+		return selectedActorID;
+	}
 	
 	public DataController getDataController(){
 		return myDataController;
@@ -912,6 +912,7 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
+
 	public void setActorPanelSelection(int actorID){
 		switchLibraryTab(1);
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
@@ -932,6 +933,11 @@ public class GAEController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getActorCollisionID(){
+		//myDataController.getGame().getNonPlayerColid(int  int sceneidint id)
+		return 0;
 	}
 
 	public void setActorImageURL(String URL){

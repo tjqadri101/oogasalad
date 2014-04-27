@@ -5,7 +5,8 @@ import java.util.List;
 import objects.Player;
 import engine.GameEngine;
 /**
- * Check if the Player has moved to a tile
+ * Check if the Player has entered to the center of a tile
+ * This behavior class is different from tile collision 
  * @param int Player's ID
  * @param int tile x position
  * @param int tile y position
@@ -14,9 +15,9 @@ import engine.GameEngine;
  * 
  * @author Main Justin (Zihao) Zhang
  */
-public class WinByTileCollision extends Winnable{
+public class TriggerByEnterTile extends Triggerable{
 	
-	public WinByTileCollision(GameEngine engine){
+	public TriggerByEnterTile(GameEngine engine){
 		super(engine);
 	}
 	/**
@@ -29,7 +30,7 @@ public class WinByTileCollision extends Winnable{
 	 */
 	
 	@Override
-	public boolean checkGoal(List<Object> params) {
+	public boolean checkTrigger(List<Object> params) {
 		//Wait until tile order and tile stored info are determined
 		int playerID = (Integer) params.get(0);
 		int xpos = (Integer) params.get(1);

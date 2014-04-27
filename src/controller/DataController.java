@@ -61,6 +61,13 @@ public class DataController {
 		myGameSaverAndLoader.save(myGame.getAttributes(), url);
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to get the Game for various manipulations
+	 * @return Game
+	 */
+	public Game getGame(){
+		return myGame;
+	}
 	
 	/**
 	 * Called by PlayView to import the game data

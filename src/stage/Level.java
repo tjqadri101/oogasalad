@@ -4,32 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import engineManagers.Observer;
 import objects.GameObject;
 import objects.NonPlayer;
-import objects.Subject;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 
 /**
- * @author Justin (Zihao) Zhang
- * @Contribution David Chou, Steve (Siyang) Wang
+ * @author Main Justin (Zihao) Zhang
+ * @contribution David Chou
  */
-public class Level implements Subject {
+public class Level {
 
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
-	protected String myWinBehavior;
-	protected List<Object> myWinParameters;
+	protected int myInitialSceneID;
     protected String myEventBehavior;
     private ArrayList<Object> myEventParameters;
-            protected List<Observer> myObservers;
-            protected boolean isUpdated;
-            private final Object MUTEX= new Object();
-            protected List<Object> myTriggerParameter;
-            protected List<Object> myEventParameter;
-            protected String myTrigger;
-            protected String myEvent;
 
 	public Level(int id) {
 		myID = id;
@@ -43,12 +33,18 @@ public class Level implements Subject {
 	public void resetID(int id){
 		myID = id;
 	}
+	
+	public void setInitialSceneID(int sceneID){
+		if(!mySceneMap.containsKey(sceneID))
+			myInitialSceneID = sceneID;
+	}
+	
+	public int getInitialSceneID(){
+		return myInitialSceneID;
+	}
 
 	public void addScene(int sceneID) {
 		Scene scene = new Scene(sceneID);
-/*Commented out, not fully ready to switch to observer pattern*/
-//	              scene.register(etm);
-//	              etm.setSubject(scene);
 		mySceneMap.put(sceneID, scene);
 	}
 	
@@ -72,22 +68,6 @@ public class Level implements Subject {
 		mySceneMap.remove(sceneID);
 	}
 	
-	public void setWinBehavior(String type, Object ... args){
-		myWinBehavior = type;
-		myWinParameters = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
-			myWinParameters.add(args[i]);
-		}
-	}
-	
-	public String getWinBehavior(){
-		return myWinBehavior;
-	}
-	
-	public List<Object> getWinParameters(){
-		return myWinParameters;
-	}
-	// following similar to teh winBehavior consider refactoring 
 	public void setEventBehavior(String type, Object ... args){
 	    myEventBehavior = type;
 	    myEventParameters = new ArrayList<Object>();
@@ -96,12 +76,12 @@ public class Level implements Subject {
 	    }
 	}
 
-        public String getEventBehavior () {
-                return myEventBehavior;
-        }       
+    public String getEventBehavior() {
+    	return myEventBehavior;
+    }       
         
-        public List<Object> getEventParameters(){
-            return myEventParameters;
+    public List<Object> getEventParameters(){
+    	return myEventParameters;
     }
 
 	public List<GameObject> getObjectsByColid(int colid){
@@ -122,46 +102,8 @@ public class Level implements Subject {
 			sceneAttribute.add(1, attribute); 
 			answer.addAll(sceneAttribute);
 		}
-		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_GOAL, myWinBehavior, true, myWinParameters));
 		return answer;
 	}
-	
-	    
-        /**
-         * Below four methods overriding the interface Subject in the observer pattern
-         */
-        @Override
-        public void register(Observer obj) {
-            if(obj == null) throw new NullPointerException("Null Observer");
-            synchronized (MUTEX) {
-            if(!myObservers.contains(obj)) myObservers.add(obj);
-            }
-        }
-        @Override 
-        public void unregister(Observer obj) {
-            synchronized (MUTEX) {
-            myObservers.remove(obj);
-            }
-        }
-        @Override
-        public void notifyObservers() {
-            List<Observer> observersLocal = null;
-            //synchronization is used to make sure any observer registered after message is received is not notified
-            synchronized (MUTEX) {
-                if (!isUpdated)
-                    return;
-                observersLocal = new ArrayList<>(this.myObservers);
-                this.isUpdated=false;
-            }
-            for (Observer obj : observersLocal) {
-                obj.update();
-            }
-     
-        }
-        @Override
-        public String getUpdate(Observer obj) {
-            return myTrigger;
-        }
 	
 	/* @Siyang: 
          * The following getter added to facilitate testing. 

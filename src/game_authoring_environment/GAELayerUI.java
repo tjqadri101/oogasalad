@@ -22,6 +22,14 @@ import engine.GameEngine;
 
 import jgame.platform.JGEngine;
 
+/**
+ * The LayerUI in the GAE. Currently doing nothing yet, but exist
+ * for future declaration of swing.
+ * 
+ * @author Nick Pengyi Pan
+ * 
+ * */
+
 class GAELayerUI extends LayerUI<JComponent> {
 	private boolean mActive;
 	  private int mX, mY;

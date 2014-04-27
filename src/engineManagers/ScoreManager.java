@@ -10,7 +10,7 @@ import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
- * Manage the changes of score throughout a Game
+ * Manage the score throughout a Game
  * @Author: Justin (Zihao) Zhang
  */
 public class ScoreManager extends StatisticsManager{

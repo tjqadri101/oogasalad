@@ -95,7 +95,13 @@ public class AttributeMaker {
 		StringBuilder attribute = new StringBuilder();
 		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
 		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
-		for(Object o: args){ attribute.append(SaladConstants.SEPARATOR + o.toString()); }
+		for(Object o: args){ 
+			if(o == null) {
+				attribute.append("null");
+				continue;
+			}
+			attribute.append(SaladConstants.SEPARATOR + o.toString()); 
+		}
 		return attribute.toString();
 	}
 	
@@ -138,4 +144,16 @@ public class AttributeMaker {
 		return attribute.toString();
 	}
 
+	/**
+	 * Add attribute of the format as: key, type, boolean parameter
+	 * @param key
+	 * @param type
+	 * @param parameter
+	 * @return String attribute
+	 */
+	public static String addAttribute(String key, String type, boolean parameter){
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(key + SaladConstants.SEPARATOR + type + SaladConstants.SEPARATOR + parameter);
+		return attribute.toString();
+	}
 }
