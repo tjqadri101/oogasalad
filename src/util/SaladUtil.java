@@ -46,11 +46,11 @@ public class SaladUtil {
      */
     public static void printStringList(List<String> list){
         System.out.println();
-        System.out.print("StringList print starts: ");
+        System.out.print("*StringList print starts: ");
         for(String s: list){
             System.out.print("/" + s);
         }
-        System.out.println("/StringList print ends.");
+        System.out.println("*StringList print ends.");
         System.out.println();
     }
 

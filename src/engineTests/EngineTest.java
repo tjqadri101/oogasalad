@@ -52,22 +52,22 @@ public class EngineTest {
 		engine.createTiles(TILE_COLID,20,15,10,1);
 		engine.createTiles('0',30,30,5,1);
 		
-		NonPlayer actor = engine.createActor(123, "poke-mon/024.gif", 200, 200, 800, 450, "null", ENEMY_COLID, 1);
+		NonPlayer actor = engine.createActor(123, "poke-mon/024.gif", 200, 200, 800, 450, SaladConstants.NULL, ENEMY_COLID, 1);
 		actor.setDieBehavior("RegularRemove");
 		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		actor.suspend();
 		
-		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100, "null", ENEMY_COLID, 1);
+		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 1);
 		goomba.setDieBehavior("RegularRemove");
 		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 		goomba.suspend();
 
-		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 400, 100, "null", MUSHROOM_COLID, 1);
+		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 400, 100, SaladConstants.NULL, MUSHROOM_COLID, 1);
 		mushroom.setDieBehavior("RegularRemove");
 		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 		mushroom.suspend();
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100, 200, "null", PLAYER_COLID, 6);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100, 200, SaladConstants.NULL, PLAYER_COLID, 6);
 		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
 		player.setShootBehavior("SlowShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0);

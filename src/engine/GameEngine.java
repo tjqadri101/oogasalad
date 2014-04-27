@@ -394,7 +394,7 @@ public class GameEngine extends StdGame {
 		myCurrentScene.updateTiles(cid, left, top, width, height);
 	}
 
-	private int getClickedID() {
+	public int getClickedID() {
 		List<GameObject> list = new ArrayList<GameObject>();
 		if (getMouseButton(1)) {
 			int MouseX = getMouseX() + viewXOfs();
