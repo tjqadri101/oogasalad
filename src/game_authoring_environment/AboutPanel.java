@@ -1,5 +1,7 @@
 package game_authoring_environment;
 
+import saladConstants.SaladConstants;
+
 /*
  * @author Anthony Olawo 
  * 
@@ -14,7 +16,7 @@ public class AboutPanel extends InfoPanel {
 
 	@Override
 	protected String selectHTMLFile(){ 
-		return "./src/game_authoring_environment/resources/about.html"; 
+		return SaladConstants.ABOUT_HTML_URL; 
 	}
 
 	public void createAndShowAboutPanel() {

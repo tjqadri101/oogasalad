@@ -2,6 +2,8 @@ package game_authoring_environment;
 
 import java.io.IOException;
 
+import saladConstants.SaladConstants;
+
 /*
  * @author Anthony Olawo 
  * 
@@ -15,7 +17,7 @@ public class HelpPanel extends InfoPanel {
 	
 	@Override
 	protected String selectHTMLFile(){ 
-		return "./src/game_authoring_environment/resources/help.html"; 
+		return SaladConstants.HELP_HTML_URL; 
 	}
 
 	
