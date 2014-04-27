@@ -92,7 +92,7 @@ public class EngineTest {
 		
 //	      game.getLevel(1).setWinBehavior("WinByTime", 400);
 //        game.getLevel(1).setWinBehavior("WinByCollision", 123);
-        game.getLevel(1).setWinBehavior("WinByTileCollision", 0, 700, 450, 50, 50);
+//        game.getLevel(1).setWinBehavior("WinByTileCollision", 0, 700, 450, 50, 50);
         
         return engine;
 	}
