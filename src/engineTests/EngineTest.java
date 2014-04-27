@@ -33,7 +33,7 @@ public class EngineTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(true);
+		GameEngine engine = new GameEngine(false);
 		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
