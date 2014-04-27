@@ -174,6 +174,12 @@ public final class SaladConstants {
 	public static final String TILE_COLLISION = "TileCollision";
 	public static final String SET_TILE_COLLISION_BLOOD = "SetTileCollisionBlood";
 
+	public static final String MODIFY_TRANSITION_STATE = "ModifyTransitionState";
+	public static final String GAME_STATE = "GameState";
+	public static final String FRAME = "Frame";
+	public static final String DISPLAY_MESSAGE = "DisplayMessage";
+	public static final String DISPLAY_IMAGE = "DisplayImage";
+
 	
 
 
