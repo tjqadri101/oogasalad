@@ -210,14 +210,14 @@ public class GameEngine extends StdGame {
 	public void doFrame() {
 		if (getKey('L')) {levelDone();clearKey('L');} //cheat key for testing
 		if (getKey('K')) {lifeLost();clearKey('K');} //cheat key for testing
-		if (isPlaying) {
+		if (!isEditingMode && isPlaying) {
 			super.doFrame();
 		}
 	}
 
 	@Override
 	public void paintFrame() {
-		if (isPlaying) {
+		if (!isEditingMode && isPlaying) {
 			super.paintFrame();
 		}
 	}
