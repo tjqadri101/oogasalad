@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.AnimationManager;
 //import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
@@ -22,6 +23,7 @@ public class Player extends GameObject {
 	protected List<String> myNonClearKeys;
 	protected double myMovingXSpeed;
 	protected double myMovingYSpeed;
+	protected AnimationManager myAnimationManager;
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
@@ -31,6 +33,7 @@ public class Player extends GameObject {
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
+		myAnimationManager = new AnimationManager();
 	}
 	
 	public void setKey(int key, String type){
@@ -51,6 +54,14 @@ public class Player extends GameObject {
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
 			}
 		}
+	}
+	
+	/**
+	 * Called by the Game Authorizing Environment to display the current set keys
+	 * @return Map maps from int key to String function (i.e. jump)
+	 */
+	public Map<Integer, String> getKeyMap(){
+		return myKeyMap;
 	}
 	
 	public void moveUp(){
