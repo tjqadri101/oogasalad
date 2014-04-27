@@ -125,6 +125,10 @@ public class Game {
 	public Level getLevel(int levelID){
 		return myLevelMap.get(levelID);
 	}
+	
+	public int getNonPlayerColid(int levelID, int sceneID, int objectID){
+		return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID).colid;
+	}
 
 	/**
 	 * Called to remove an existing scene from a particular level
@@ -207,6 +211,11 @@ public class Game {
     public Player getPlayer(int playerID){
     	return myPlayerMap.get(playerID);
     }
+    
+    public int getPlayerColid(int playerID){
+    	return myPlayerMap.get(playerID).colid;
+    }
+    
     
     /**
      * Called to remove a Player matched to the playerID from the Game
