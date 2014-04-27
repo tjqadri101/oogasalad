@@ -40,7 +40,7 @@ public class Game {
 	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-    protected TriggerEventManager myTEM;
+//    protected TriggerEventManager myTEM;
 
 
 	public Game(){
@@ -54,7 +54,7 @@ public class Game {
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
-    	myTEM = new TriggerEventManager();
+//    	myTEM = new TriggerEventManager();
 	}
 
 	/**
@@ -294,10 +294,10 @@ public class Game {
 	/** Should only be called from Engine
 	 * @return the only instance of TriggerEventManager
 	 */
-	public TriggerEventManager getTEM(){
-	    return myTEM;
-	}
-	
+//	public TriggerEventManager getTEM(){
+//	    return myTEM;
+//	}
+//	
 	/* @Siyang: 
 	 * The following getter added to facilitate testing. 
 	 */

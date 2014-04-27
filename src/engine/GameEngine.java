@@ -99,7 +99,7 @@ public class GameEngine extends StdGame {
 
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-	        TriggerEventManager myTEM = getGame().getTEM();
+//	        TriggerEventManager myTEM = getGame().getTEM();
 		timer++;//change later
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -113,7 +113,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-		myTEM.checkTrigger(this);
+//		myTEM.checkTrigger(this);
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();
@@ -565,7 +565,7 @@ public class GameEngine extends StdGame {
 
 	public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			double xpos, double ypos, String name, int colid, int lives) {
-	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager etm = getGame().getTEM();
 		loadImage(imgfile);
 		Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				name, colid, lives, myGame.getCollisionManager(),
@@ -583,7 +583,7 @@ public class GameEngine extends StdGame {
 
 	public NonPlayer createActor(int unique_id, String imgfile, int xsize,
 			int ysize, double xpos, double ypos, String name, int colid, int lives) {
-	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager etm = getGame().getTEM();
 		loadImage(imgfile);
 		NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				ypos, name, colid, lives, myGame.getCollisionManager(),

@@ -153,15 +153,19 @@ public final class SaladConstants {
 	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
 	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
 
-	public static final String MODIFY_EVENT_TRIGGER_MANAGER = "ModifyEventTriggerManager";
-	//public static final String MODIFY_TRIGGER_MANAGER = "ModifyTriggerManager";
-	//public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
+	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
+	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
 	public static final String MODIFY_LIFE_MANAGER = "ModifyLifeManager";
+
 	public static final String SET_TRIGGER_BY_TIME = "SetTriggerByTime";
 	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
+	public static final String SET_TRIGGER_BY_COLLISION = "SetTriggerByCollision";
 	public static final String SET_TRIGGER_BY_TILE_COLLISION = "SetTriggerByTileCollision";
 	public static final String SET_EVENT_LEVEL_DONE = "SetEventLevelDone";
 	public static final String SET_EVENT_ENEMY_SHOWER = "SetEventEnemyShower";
+	public static final String SET_TRIGGER = "SetTrigger";
+	public static final String SET_EVENT = "SetEvent";
+
 	public static final String TRIGGER_TYPE = "TriggerType";
 	public static final String EVENT_TYPE = "EventType";
 	public static final String SET_INIT_LIVES = "SetInitLives";

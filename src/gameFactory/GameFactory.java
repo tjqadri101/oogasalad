@@ -14,7 +14,7 @@ import util.IParser;
 
 /**
  * @Author: Steve (Siyang) Wang, 
- * @VirtualCo-Author: Issac (Shenghan) Chen
+ * @Help: Issac (Shenghan) Chen
  */
 public class GameFactory {
 
@@ -121,7 +121,6 @@ public class GameFactory {
         am.put("LevelSceneObject",new Object[]{myLevelID, mySceneID, objectID});
         return am.get(numArg);
     }
-
 
     /**
      * Getting Game instance to reflect upon. To be called using the reflection to get refObj

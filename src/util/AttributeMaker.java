@@ -1,13 +1,16 @@
 package util;
 
 import java.util.List;
-
 import saladConstants.SaladConstants;
+
+
 /**
  * Called to make an attribute for saving the Game
+ * 
  * @author Main Justin (Zihao) Zhang
  */
 public class AttributeMaker {
+
 	
 	/**
 	 * Add attribute of the format as: key, type, parameters
@@ -134,5 +137,5 @@ public class AttributeMaker {
 		attribute.append(key + SaladConstants.SEPARATOR + type + SaladConstants.SEPARATOR + parameter);
 		return attribute.toString();
 	}
-	
+
 }

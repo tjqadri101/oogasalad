@@ -12,14 +12,20 @@ import objects.Subject;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
+import util.AttributeMaker;
 import util.SaladUtil;
+
 
 /**
  * TriggerManager keeps track of all the triggers and their corresponding events
+ * 
  * @Author: Steve (Siyang) Wang
  */
 public class TriggerEventManager {
 
+    private static final String DO_EVENT = "doEvent";
+    private static final String CHECK_TRIGGER = "checkTrigger";
+    private static final String TRIGGER_INDICATOR = "Trigger";
     protected Map<Integer, List<Object>> myTriggerMap;
     protected Map<Integer, List<Object>> myEventMap;
     protected Game myGame;
@@ -27,62 +33,57 @@ public class TriggerEventManager {
     protected GameEngine myEngine;
     protected Integer myCurrentLevel;
     protected Integer myCurrentScene;
+    protected List<String> myAttributes;
 
-    public TriggerEventManager(){
+    public TriggerEventManager () {
         myGame = myEngine.getGame();
         myTriggerMap = new HashMap<Integer, List<Object>>();
         myEventMap = new HashMap<Integer, List<Object>>();
-        mySubjectList = new ArrayList<>(); 
+        mySubjectList = new ArrayList<>();
+        myAttributes = new ArrayList<>();
     }
 
-    public void checkTrigger(GameEngine myEngine){
-        for (Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
+    public void checkTrigger (GameEngine myEngine) {
+        for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
             int etPairID = entry.getKey();
-            List<Object> triggerList = entry.getValue(); 
+            List<Object> triggerList = entry.getValue();
             String triggerBehavior = (String) triggerList.remove(0);
             if (triggerBehavior == null)
                 break;
-            //            List<Object> triggerParameters = myGame.getLevel(myCurrentLevelID)
-            //                    .getWinParameters();
             ResourceBundle behaviors = ResourceBundle
                     .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                                + SaladConstants.OBJECT_BEHAVIOR);
             Object answer = SaladUtil.behaviorReflection(behaviors, triggerBehavior,
-                                                         triggerList, "checkTrigger", myEngine);
+                                                         triggerList, CHECK_TRIGGER, myEngine);
             if ((boolean) answer)
                 doEvent(myEngine, etPairID);
         }
     }
 
-    private void doEvent(GameEngine myEngine, int etPairID){
+    private void doEvent (GameEngine myEngine, int etPairID) {
         List<Object> eventParameter = myEventMap.get(etPairID);
         String eventBehavior = (String) eventParameter.remove(0);
         ResourceBundle behaviors = ResourceBundle
                 .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                            + SaladConstants.OBJECT_BEHAVIOR);
-        SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, "doEvent", myEngine);
+        SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, DO_EVENT, myEngine);
     }
-    
-    public void setTriggerBehavior(int etPairID, String triggerBehavior, Object ... args){
-        List<Object> triggerParameters = new ArrayList<Object>();
-        triggerParameters.add(triggerBehavior);
-        for(int i = 0; i < args.length; i ++){
-            triggerParameters.add(args[i]);
+
+    public void setEventOrTriggerBehavior (int etPairID, String behaviorName, Object ... args) {
+        List<Object> behaviorParameters = new ArrayList<Object>();
+        behaviorParameters.add(behaviorName);
+        for (int i = 0; i < args.length; i++) {
+            behaviorParameters.add(args[i]);
         }
-        myTriggerMap.put(etPairID, triggerParameters);
-    }
-    
-    public void setEventBehavior(int etPairID, String eventBehavior, Object ... args){
-        List<Object> eventParameters = new ArrayList<Object>();
-        eventParameters.add(eventBehavior);
-        for(int i = 0; i < args.length; i ++){
-            eventParameters.add(args[i]);
+        if (behaviorName.contains(TRIGGER_INDICATOR)) {
+            String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER,
+                                                SaladConstants.COLLISION_ID, args[1], SaladConstants.SET_TRIGGER, args[2],
+                                                args[3]);
+            myTriggerMap.put(etPairID, behaviorParameters);
         }
-        myEventMap.put(etPairID, eventParameters);
-    }
-    
-    public void updateTEM(){
-        
+        else {
+            myEventMap.put(etPairID, behaviorParameters);
+        }
     }
 
     public List<String> getAttributes(){
@@ -92,5 +93,15 @@ public class TriggerEventManager {
         }
         return answer;
     }
+    /*
+     * public void setEventBehavior(int etPairID, String eventBehavior, Object ... args){
+     * List<Object> eventParameters = new ArrayList<Object>();
+     * eventParameters.add(eventBehavior);
+     * for(int i = 0; i < args.length; i ++){
+     * eventParameters.add(args[i]);
+     * }
+     * myEventMap.put(etPairID, eventParameters);
+     * }
+     */
 
 }
