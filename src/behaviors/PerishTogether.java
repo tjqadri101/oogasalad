@@ -22,8 +22,10 @@ public class PerishTogether extends Collision{
 	public void collide(List<Object> objects) {
 		myObject.die();
 		GameObject hitter = (GameObject) objects.get(0);
-		myObject.getScoreManager().updateScore(SaladConstants.COLLISION, 
-				myObject.colid, hitter.colid);
+		myObject.getScoreManager().update(SaladConstants.COLLISION, 
+				myObject, hitter);
+		myObject.getBloodManager().update(SaladConstants.COLLISION, 
+				myObject, hitter);
 		hitter.die();
 	}
 }
