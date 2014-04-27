@@ -45,6 +45,7 @@ public class Game {
 	public Game(){
 		initTransitionStateMap();
 		myLevelMap = new HashMap<Integer, Level>();
+		myPlayerMap = new HashMap<Integer, Player>();// ???
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
 		myLiveManager = new LiveManager();
