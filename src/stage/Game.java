@@ -9,6 +9,7 @@ import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.InputManager;
 import engineManagers.LifeManager;
+import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import engineManagers.TriggerEventManager;
@@ -33,6 +34,7 @@ public class Game {
 	protected BloodManager myBloodManager;
 	protected LifeManager myLifeManager;
 	protected TriggerEventManager myTriggerManager;
+	protected RevivalManager myRevivalManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
 	protected Map<Integer, Player> myPlayerMap;
@@ -47,6 +49,7 @@ public class Game {
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
 		myLifeManager = new LifeManager();
+		myRevivalManager = new RevivalManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
@@ -300,6 +303,10 @@ public class Game {
 	 */
 	public Map<Integer, Level> getMyLevelMap(){
 	    return myLevelMap;
+	}
+
+	public RevivalManager getRevivalManager() {
+		return myRevivalManager;
 	}	
 
 }
