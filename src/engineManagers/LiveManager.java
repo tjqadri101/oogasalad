@@ -13,7 +13,7 @@ import util.SaladUtil;
  * @author Main Justin (Zihao) Zhang
  *
  */
-public class LifeManager {
+public class LiveManager {
 	
 	public static final int DEFAULT_INITIAL_LIVES = 5;
 	public static final int DEFAULT_NULL_LIVES = 0;
@@ -23,8 +23,7 @@ public class LifeManager {
 	protected Map<Player, Integer> myInitLifeMap;
 	protected Map<Player, Integer> myCurrentLifeMap;
 	
-	public LifeManager(){
-		super();
+	public LiveManager(){
 		myInitLifeMap = new HashMap<Player, Integer>();
 		myCurrentLifeMap = new HashMap<Player, Integer>();
 	}
@@ -42,6 +41,7 @@ public class LifeManager {
 	public void addPlayer(Player player){
 		myPlayerMap.put(player.getID(), player);
 		myInitLifeMap.put(player, DEFAULT_INITIAL_LIVES);
+		restore();
 	}
 	
 	public void setRestore(boolean ifRestore){
@@ -49,14 +49,18 @@ public class LifeManager {
 	}
 
 	public void updateLevelDoneLives(){
-		if(myRestore){
-			for(Player o: myPlayerMap.values()){
-				myCurrentLifeMap.put(o, myInitLifeMap.get(o));
-			}
+		if(myRestore){ restore(); }
+	}
+	
+	/**
+	 * Do not call this method directly
+	 * Used to restore every player's current live to its initial live
+	 */
+	protected void restore(){
+		for(Player o: myPlayerMap.values()){
+			myCurrentLifeMap.put(o, myInitLifeMap.get(o));
 		}
 	}
-
-
 
 	public List<String> getAttributes() {
 		// TODO Auto-generated method stub
