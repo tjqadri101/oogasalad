@@ -164,31 +164,7 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}*/
-	
-	public void modifyPlayerHitElimVic(int colID,int colIDTarget, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.HITTER_ELIMINATE_VICTIM + SaladConstants.SEPARATOR + SaladConstants.HITTER_ELIMINATE_VICTIM + 
-						SaladConstants.SEPARATOR + colIDTarget  + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	
-	public void modifyPlayerPerishTog(int colID, int colIDTarget, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.PERISH_TOGETHER + SaladConstants.SEPARATOR + SaladConstants.PERISH_TOGETHER
-						+ SaladConstants.SEPARATOR + colIDTarget  + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	public void modifyPlayerStayOnTile(int colID, int tileColID, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE+ SaladConstants.SEPARATOR + 
-						tileColID + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
+
 	
 /*	
 	public void modifyPlayerRegMove(int ID, double xSpeed, double ySpeed){
