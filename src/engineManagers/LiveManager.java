@@ -1,5 +1,6 @@
 package engineManagers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import objects.GameObject;
 import objects.Player;
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * Manage the overall lives of the Player throughout the whole Game
@@ -26,6 +28,7 @@ public class LiveManager {
 	public LiveManager(){
 		myInitLifeMap = new HashMap<Player, Integer>();
 		myCurrentLifeMap = new HashMap<Player, Integer>();
+		myRestore = true;
 	}
 	
 	public void setInitLives(int lives, int playerID){
@@ -63,7 +66,17 @@ public class LiveManager {
 	}
 
 	public List<String> getAttributes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> answer = new ArrayList<String>();
+		for(Player player: myInitLifeMap.keySet()){
+			String type = null;
+			StringBuilder param = new StringBuilder();
+			param.append(myInitLifeMap.get(player) + SaladConstants.SEPARATOR);
+			param.append(player.getID());
+			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
+					param.toString().split(SaladConstants.SEPARATOR)));
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BLOOD_MANAGER, type, false, params));
+		}
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BLOOD_MANAGER, SaladConstants.RESTORE_LIFE_BY_LEVEL, myRestore));
+		return answer;
 	}
 }
