@@ -56,6 +56,7 @@ public class EngineTest {
 		actor.setDieBehavior("RegularRemove");
 		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		actor.suspend();
+		actor.setShootBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 100); //added by Justin
 		
 		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 1);
 		goomba.setDieBehavior("RegularRemove");
@@ -90,11 +91,7 @@ public class EngineTest {
 		
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, ENEMY_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
-		
-//	      game.getLevel(1).setWinBehavior("WinByTime", 400);
-//        game.getLevel(1).setWinBehavior("WinByCollision", 123);
-//        game.getLevel(1).setWinBehavior("WinByTileCollision", 0, 700, 450, 50, 50);
-		engine.loadingDone();//
+
         return engine;
 	}
 }
