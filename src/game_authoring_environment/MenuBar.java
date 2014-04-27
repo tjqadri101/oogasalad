@@ -61,7 +61,7 @@ public class MenuBar extends JMenuBar{
 	
 	private JMenu createEditMenu(){
 		JMenu editMenu = new JMenu("Edit");
-		editMenu.add(makeMenuItem(gController.getDataController(), "Undo", "doNothing"));
+		editMenu.add(makeMenuItem(gController.getDataController(), "Undo", "reviveObject"));
 		//editMenu.add(makeMenuItem(getCurrentInstance(), "Redo", "doNothing"));
 		//editMenu.add(makeMenuItem(getCurrentInstance(), "Cut", "doNothing"));
 		//editMenu.add(makeMenuItem(getCurrentInstance(), "Copy", "doNothing"));

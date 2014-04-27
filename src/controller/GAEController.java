@@ -869,10 +869,10 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void modifyTransitionStateImage(String gameState, String message, int xPos, int yPos){
+	public void modifyTransitionStateImage(String gameState, String url, int xPos, int yPos){
 		String order = SaladConstants.MODIFY_TRANSITION_STATE + SaladConstants.SEPARATOR + SaladConstants.GAME_STATE + 
-				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.DISPLAY_MESSAGE + 
-				SaladConstants.SEPARATOR + message + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos;
+				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.DISPLAY_IMAGE + 
+				SaladConstants.SEPARATOR + url + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
