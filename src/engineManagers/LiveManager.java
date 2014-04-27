@@ -10,7 +10,7 @@ import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
- * Manage the overall lives of the Player throughout the whole Game
+ * Manage the overall lives of the Players throughout the whole Game
  * @author Main Justin (Zihao) Zhang
  *
  */

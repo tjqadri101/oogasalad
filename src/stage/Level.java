@@ -17,8 +17,7 @@ public class Level {
 
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
-	protected String myWinBehavior;
-	protected List<Object> myWinParameters;
+	protected int myInitialSceneID;
     protected String myEventBehavior;
     private ArrayList<Object> myEventParameters;
 
@@ -33,6 +32,15 @@ public class Level {
 
 	public void resetID(int id){
 		myID = id;
+	}
+	
+	public void setInitialSceneID(int sceneID){
+		if(!mySceneMap.containsKey(sceneID))
+			myInitialSceneID = sceneID;
+	}
+	
+	public int getInitialSceneID(){
+		return myInitialSceneID;
 	}
 
 	public void addScene(int sceneID) {
@@ -94,7 +102,6 @@ public class Level {
 			sceneAttribute.add(1, attribute); 
 			answer.addAll(sceneAttribute);
 		}
-		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_GOAL, myWinBehavior, true, myWinParameters));
 		return answer;
 	}
 	

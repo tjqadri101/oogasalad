@@ -20,21 +20,16 @@ public class Player extends GameObject {
 	
 	protected Map<Integer, String> myKeyMap;
 	protected List<String> myNonClearKeys;
+	protected double myMovingXSpeed;
+	protected double myMovingYSpeed;
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
 			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager, RevivalManager revivalManager) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, scoreManager, bloodManager, revivalManager);
-		myIsPlayer = true;
 		myKeyMap = new HashMap<Integer, String>();
-		myInitXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
-		myInitYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
-		
-		myAttributes.add(SaladConstants.CREATE_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + myUniqueID + SaladConstants.SEPARATOR + 
-				SaladConstants.IMAGE + SaladConstants.SEPARATOR + getGraphic() + SaladConstants.SEPARATOR + myXSize + SaladConstants.SEPARATOR + myYSize + SaladConstants.SEPARATOR +
-				SaladConstants.POSITION + SaladConstants.SEPARATOR + myInitX + SaladConstants.SEPARATOR + myInitY + SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR + getName() + SaladConstants.SEPARATOR + 
-				SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + colid + SaladConstants.SEPARATOR + SaladConstants.LIVES + SaladConstants.SEPARATOR + myInitBlood);
-
+		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
+		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 	}
 	
@@ -60,28 +55,28 @@ public class Player extends GameObject {
 	
 	public void moveUp(){
 		if (y > 0) {
-			y -= myInitYSpeed*eng.getGameSpeed();
+			y -= myMovingYSpeed*eng.getGameSpeed();
 			ydir = SaladConstants.NEGATIVE_DIRECTION;
 		}
 	}
 	
 	public void moveDown(){
 		if (y + getYSize() < eng.pfHeight()) {
-			y += myInitYSpeed*eng.getGameSpeed();
+			y += myMovingYSpeed*eng.getGameSpeed();
 			ydir = SaladConstants.POSITIVE_DIRECTION;
 		}
 	}
 	
 	public void moveLeft(){
 		if (x > 0) {
-			x -= myInitXSpeed*eng.getGameSpeed();
+			x -= myMovingXSpeed*eng.getGameSpeed();
 			xdir = SaladConstants.NEGATIVE_DIRECTION;
 		}
 	}
 	
 	public void moveRight(){
 		if (x + getXSize() < eng.pfWidth()) {
-			x += myInitXSpeed*eng.getGameSpeed();
+			x += myMovingXSpeed*eng.getGameSpeed();
 			xdir = SaladConstants.POSITIVE_DIRECTION;
 		}
 	}
