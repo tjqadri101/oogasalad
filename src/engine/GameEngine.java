@@ -57,7 +57,8 @@ public class GameEngine extends StdGame {
 	protected boolean isEditingMode;
 	protected boolean isLoading;
 	protected boolean isPlaying;
-	protected boolean level_restart;//
+	protected boolean isTileEditing;
+	protected boolean scene_restart;//
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -74,12 +75,11 @@ public class GameEngine extends StdGame {
 	@Override
 	public void initGame() {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-//		setSequences(false, startgame_ticks, false, leveldone_ticks, false, lifelost_ticks, false, gameover_ticks);
 //		setTileSettings("#",2,0);
 		defineImage("null","0",0,"null","-");
-		if (isEditingMode) {setGameState("InGame");}
+		setGameState("Edit");
 	}
-
+	
 //	public boolean checkGoal() {
 //		if (myCurrentScene == null)
 //			return false;
@@ -100,11 +100,8 @@ public class GameEngine extends StdGame {
 		// consider combineing the checkTrigger to checkGoal()
 		return true;
 	}
-
-	//check
-	public void startEdit() {
-		removeObjects(null, 0);// ???
-	}
+	
+	
 	
 	public void loadingDone() {
 		if (isEditingMode) {return;}
@@ -112,7 +109,7 @@ public class GameEngine extends StdGame {
 		isPlaying = true;
 		finishLoading();
 	}
-
+	
 	private void finishLoading() {
 		int ticks1 = myGame.getTransitionState("StartGame").getFrame();
 		if (ticks1 > -1) {leveldone_ticks = ticks1;}
@@ -128,8 +125,49 @@ public class GameEngine extends StdGame {
 	
 	
 	
-	// drag;move->gravity->collision->setViewOffset
+	public void defineLevel() {
+		setCurrentScene(level+1, myGame.getLevel(level+1).getInitialSceneID());
+	}
+	
+	public void initNewLife() {
+		myPlayer.resume();
+		myPlayer.restore(scene_restart);
+		if (scene_restart){
+			for (GameObject object : myCurrentScene.getGameObjects()) {
+				object.restore(true);
+			}
+		}
+	}
+	
+	
+	
 	public void doFrameInGame() {
+		doFrameEdit();
+	}
+	
+	public void paintFrameInGame() {
+		paintFrameEdit();
+	}
+	
+	
+	
+	private void updateActive() {
+		if (!isLoading) {return;}
+		for (GameObject object : myCurrentScene.getGameObjects()) {
+			if (object.getIsActive()) {object.resume();}
+			else {
+				object.suspend();
+				System.out.println("updateActive "+object.is_suspended);
+				}
+		}
+		if (myPlayer != null) {
+			if (myPlayer.getIsActive()) {myPlayer.resume();}
+			else {myPlayer.suspend();}
+		}
+	}
+	
+	// drag;move->gravity->collision->setViewOffset
+	public void doFrameEdit() {
 //	        TriggerEventManager myTEM = getGame().getTEM();
 		if (myCurrentScene == null) {return;}
 		updateActive();
@@ -152,80 +190,11 @@ public class GameEngine extends StdGame {
 //				levelDone();
 //		}
 	}
-
-	private void updateActive() {
-		if (!isLoading) {return;}
-		for (GameObject object : myCurrentScene.getGameObjects()) {
-			if (object.getIsActive()) {object.resume();}
-			else {object.suspend();}
-		}
-		if (myPlayer != null) {
-			if (myPlayer.getIsActive()) {myPlayer.resume();}
-			else {myPlayer.suspend();}
-		}
-	}
-
-	private void checkAllCollision() {
-		for (int[] pair : myGame.getCollisionManager().getCollisionPair()) {
-			checkCollision(pair[1], pair[0]);
-		}
-		for (int[] pair : myGame.getCollisionManager().getTileCollisionPair()) {
-			checkBGCollision(pair[1], pair[0]);
-		}
-	}
-
-	private void applyG() {
-		Gravity g = myGame.getGravity();
-		g.applyGravity(myPlayer);
-		for (GameObject object : myCurrentScene.getGameObjects()) {
-			g.applyGravity(object);
-		}
-	}
-
-	private void setViewOffsetPlayer() {
-		if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
-			if (myViewOffsetRate > 1) {
-				myViewOffsetRate -= 1;
-			}
-			if (isEditingMode && !myViewOffsetPlayer) {
-				myViewOffsetRate = 35; //make it constant later
-			}
-			myViewOffsetPlayer = true;
-			int desired_viewXOfs = (int) myPlayer.x + myPlayer.getXSize() / 2 - viewWidth() / 2;
-			int desired_viewYOfs = (int) myPlayer.y + myPlayer.getYSize() / 2 - viewHeight() / 2;
-			setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate + viewXOfs(),
-					(desired_viewYOfs - viewYOfs()) / myViewOffsetRate + viewYOfs(), false);
-		}
-	}
-
-	private boolean setViewOffsetEdit() {
-		int speed = 10; //make it constant later
-		double margin = 0.1; //make it constant later
-		if (!isEditingMode) {return false;}
-		int XOfs = 0;
-		int YOfs = 0;
-		double x_ratio = 1.0 * getMouseX() / viewWidth();
-		double y_ratio = 1.0 * getMouseY() / viewHeight();
-		if (0 < x_ratio && x_ratio < margin) {
-			XOfs -= speed * (1 - x_ratio / margin);
-		}
-		if ((1 - margin) < x_ratio && x_ratio < 1) {
-			XOfs += speed * (1 - (1 - x_ratio) / margin);
-		}
-		if (0 < y_ratio && y_ratio < margin) {
-			YOfs -= speed * (1 - y_ratio / margin);
-		}
-		if ((1 - margin) < y_ratio && y_ratio < 1) {
-			YOfs += speed * (1 - (1 - y_ratio) / margin);
-		}
-		setViewOffset(viewXOfs() + XOfs, viewYOfs() + YOfs, false);
-		return XOfs != 0 || YOfs != 0;
-	}
-
-	public void paintFrameInGame() {
+	
+	public void paintFrameEdit() {
 		displayPlayerInfo();
 		disPlayDragTile();
-//		
+		
 //		if (checkGoal()) {
 //			drawString("Win!!!!!!!!!!!!!!!!", viewWidth() / 2,
 //					viewHeight() / 2 + 100, 0, false);
@@ -234,84 +203,37 @@ public class GameEngine extends StdGame {
 //			// call the event module
 //		}
 	}
-
-	private void disPlayDragTile() {
-		if (myMouseButton != 0 && myClickedID == -1) {
-			int tileX = myMouseX / 20;
-			int tileY = myMouseY / 20;
-			if (myMouseButton == 3) {
-				setColor(JGColor.red);// should only be applied to the last line
-			}
-			drawRect((double) Math.min(myTileX, tileX) * tileWidth(),
-					(double) Math.min(myTileY, tileY) * tileHeight(),
-					(double) (Math.abs(myTileX - tileX) + 1) * tileWidth(),
-					(double) (Math.abs(myTileY - tileY) + 1) * tileHeight(), false, false);
-		}
-	}
-
-	private void displayPlayerInfo() {
-		if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
-			drawRect(myPlayer.x + myPlayer.getXSize() / 2,
-					myPlayer.y - myPlayer.getYSize() / 13.5,
-					myPlayer.getXSize() / 2, 10, false, true);
-			drawRect(myPlayer.x + 0.5 * (1 + myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
-					myPlayer.y - myPlayer.getYSize() / 13.5,
-					(1.0 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
-					10, true, true);
-			drawString("lol help!", myPlayer.x + myPlayer.getXSize() / 2,
-					myPlayer.y - myPlayer.getYSize() / 3, 0, true);
-		}
-	}
 	
-	
-	
-	
-	
-	public void defineLevel() {
-		setCurrentScene(level+1, myGame.getLevel(level+1).getInitialSceneID());
-	}
-
-	public void initNewLife() {
-		myPlayer.resume();
-		myPlayer.restore(level_restart);
-		if (level_restart){
-			for (GameObject object : myCurrentScene.getGameObjects()) {
-				object.restore(true);
-			}
-		}
-	}
-
 	
 	
 	@Override
 	public void doFrame() {
 		if (getKey('L')) {levelDone();clearKey('L');} //cheat key for testing
 		if (getKey('K')) {lifeLost();clearKey('K');} //cheat key for testing
-		if (!isEditingMode) {
+		if (isPlaying) {
 			super.doFrame();
 		}
 	}
 
 	@Override
 	public void paintFrame() {
-		if (!isEditingMode) {
+		if (isPlaying) {
 			super.paintFrame();
 		}
 	}
 	
+	/* start<state> methods */
 	
-	
-	public void startTitle() {
-		setTransition("Title");
-	}
+//	public void startTitle() {
+//		setTransition("Title");
+//	}
 
 	public void startStartGame() {
 		setTransition("StartGame");
 	}
-
-	//
+	
 	public void startStartLevel() {
-		setTransition("StartLevel");
+		setTransition("StartLevel");//
 	}
 
 	public void startLevelDone() {
@@ -326,7 +248,7 @@ public class GameEngine extends StdGame {
 		setTransition("GameOver");
 	}
 	
-	
+	 /* paintFrame<state> methods */
 	
 	@Override
 	 public void paintFrameTitle(){
@@ -382,279 +304,382 @@ public class GameEngine extends StdGame {
 //		 super.paintFramePaused();//
 //		 paintTransition("Paused");
 //	 }
-	
-	
 	 
-	//private
-	public void createTiles(char cid, int left, int top,
-			int width, int height) {
-		String temp = "";
-		for (int i = 0; i < width; i++) {
-			temp += cid;
-		}
-		String[] array = new String[height];
-		for (int j = 0; j < height; j++) {
-			array[j] = temp;
-		}
-		setTiles(left, top, array);
-		myCurrentScene.updateTiles(cid, left, top, width, height);
-	}
+	 
+	 
+	 /* doFrame methods */
+	 
+	 private void checkAllCollision() {
+		 for (int[] pair : myGame.getCollisionManager().getCollisionPair()) {
+			 checkCollision(pair[1], pair[0]);
+		 }
+		 for (int[] pair : myGame.getCollisionManager().getTileCollisionPair()) {
+			 checkBGCollision(pair[1], pair[0]);
+		 }
+	 }
 
-	public int getClickedID() {
-		List<GameObject> list = new ArrayList<GameObject>();
-		if (getMouseButton(1)) {
-			int MouseX = getMouseX() + viewXOfs();
-			int MouseY = getMouseY() + viewYOfs();
-			if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended
-					&& myPlayer.x < MouseX && MouseX < myPlayer.x + myPlayer.getXSize()
-					&& myPlayer.y < MouseY
-					&& MouseY < myPlayer.y + myPlayer.getYSize()) {
-				list.add(myPlayer);
-			}
-			for (GameObject go : myCurrentScene.getGameObjects()) {
-				if (go.isAlive() && !go.is_suspended && go.x < MouseX
-						&& MouseX < go.x + go.getXSize() && go.y < MouseY
-						&& MouseY < go.y + go.getYSize()) {
-					list.add(go);
-				}
-			}
-		}
-		if (list.isEmpty()) {
-			return -1;
-		}
-		int id = list.get(0).getID();
-		getParent().firePropertyChange("clickedID", 0, id);
-		return id;
-	}
+	 private void applyG() {
+		 Gravity g = myGame.getGravity();
+		 g.applyGravity(myPlayer);
+		 for (GameObject object : myCurrentScene.getGameObjects()) {
+			 g.applyGravity(object);
+		 }
+	 }
 
-	private boolean drag() {
-		if (!isEditingMode) {return false;}
-		boolean drag = false;
-		boolean currentMouse1 = getMouseButton(1);
-		boolean currentMouse3 = getMouseButton(3);
-		int MouseX = getMouseX() + viewXOfs();
-		int MouseY = getMouseY() + viewYOfs();
-		int tileX = Math.max(MouseX / 20, 0);
-		int tileY = Math.max(MouseY / 20, 0);
+	 private void setViewOffsetPlayer() {
+		 if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
+			 if (myViewOffsetRate > 1) {
+				 myViewOffsetRate -= 1;
+			 }
+			 if (isEditingMode && !myViewOffsetPlayer) {
+				 myViewOffsetRate = 35; //make it constant later
+			 }
+			 myViewOffsetPlayer = true;
+			 int desired_viewXOfs = (int) myPlayer.x + myPlayer.getXSize() / 2 - viewWidth() / 2;
+			 int desired_viewYOfs = (int) myPlayer.y + myPlayer.getYSize() / 2 - viewHeight() / 2;
+			 setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate + viewXOfs(),
+					 (desired_viewYOfs - viewYOfs()) / myViewOffsetRate + viewYOfs(), false);
+		 }
+	 }
 
-		if (myMouseButton != 1 && currentMouse1) {
-			myClickedID = getClickedID();
-			myTileX = tileX;
-			myTileY = tileY;
-		}
-		if (myMouseButton == 1 && !currentMouse1) {
-			if (myClickedID == -1) {
-				createTiles(myTileCid, Math.min(myTileX, tileX),
-						Math.min(myTileY, tileY),
-						Math.abs(myTileX - tileX) + 1,
-						Math.abs(myTileY - tileY) + 1);
-			}
-			myClickedID = -1;
-		}
-		if (myMouseButton == 1 && currentMouse1) {
-			GameObject object = myCurrentScene.getNonPlayer(myClickedID);
-			if (myPlayer != null && myClickedID == myPlayer.getID()) {
-				object = myPlayer;
-			}
-			if (object != null) {
-				object.x += MouseX - myMouseX;
-				object.y += MouseY - myMouseY;
-				drag = true;
-			}
-		}
+	 private boolean setViewOffsetEdit() {
+		 int speed = 10; //make it constant later
+		 double margin = 0.1; //make it constant later
+		 if (!isEditingMode) {return false;}
+		 int XOfs = 0;
+		 int YOfs = 0;
+		 double x_ratio = 1.0 * getMouseX() / viewWidth();
+		 double y_ratio = 1.0 * getMouseY() / viewHeight();
+		 if (0 < x_ratio && x_ratio < margin) {
+			 XOfs -= speed * (1 - x_ratio / margin);
+		 }
+		 if ((1 - margin) < x_ratio && x_ratio < 1) {
+			 XOfs += speed * (1 - (1 - x_ratio) / margin);
+		 }
+		 if (0 < y_ratio && y_ratio < margin) {
+			 YOfs -= speed * (1 - y_ratio / margin);
+		 }
+		 if ((1 - margin) < y_ratio && y_ratio < 1) {
+			 YOfs += speed * (1 - (1 - y_ratio) / margin);
+		 }
+		 setViewOffset(viewXOfs() + XOfs, viewYOfs() + YOfs, false);
+		 return XOfs != 0 || YOfs != 0;
+	 }
 
-		if (myMouseButton != 3 && currentMouse3) {
-			myTileX = tileX;
-			myTileY = tileY;
-		}
-		if (myMouseButton == 3 && !currentMouse3) {
-			createTiles('0', Math.min(myTileX, tileX),
-					Math.min(myTileY, tileY), Math.abs(myTileX - tileX) + 1,
-					Math.abs(myTileY - tileY) + 1);
-		}
-		myMouseButton = 0;
-		if (currentMouse1) {myMouseButton = 1;}
-		if (currentMouse3) {myMouseButton = 3;}
-		myMouseX = MouseX;
-		myMouseY = MouseY;
-		return drag;
-	}
-	
-	public void createTilesFromString(String tiles){
-    	String[] array = tiles.split(SaladConstants.SPACE);
-    	myCurrentScene.setTiles(array);
-    }
-    
-    public void loadTileImage(char cid, String imgfile){
-    	defineImage(cid+"",cid+"",cid,imgfile,"-");
-    	myGame.defineTileImage(cid, imgfile);
-    	if(isEditingMode) {myTileCid = cid;}
-    }
+	 /* display methods */
 
-	private void loadImage(String imgfile) {
-		if (imgfile == null) {return;}
-		defineImage(imgfile, "-", 0, imgfile, "-");
-	}
-	
-	
-	
-	private void setTransition(String gameState) {
-		if (myGame == null) {return;}
-		Transition trans = myGame.getTransitionState(gameState);
-		if (trans == null) {return;}
-		loadImage(trans.getBackground());
-		setBGImage(trans.getBackground());
-	}
-	
-	private void paintTransition(String gameState) {
-		if (myGame == null) {return;}
-		Transition trans = myGame.getTransitionState(gameState);
-		if (trans == null) {return;}
-		for (Entry<double[], String> entry: trans.getInstructions()) {
-			double x = entry.getKey()[0];
-			double y = entry.getKey()[1];
-			String instruction = entry.getValue();
-			drawString(instruction, x, y, 0);
-		}
-		for (Entry<double[], String> entry: trans.getImages()) {
-			double x = entry.getKey()[0];
-			double y = entry.getKey()[1];
-			String imgfile = entry.getValue();
-			loadImage(imgfile);
-			drawImage(imgfile, x, y, false);
-		}
-	}
-	
-	//check
-	public void setCurrentScene(int currentLevelID, int currentSceneID) {
-		if (myCurrentScene != null) {
-			for (GameObject object : myCurrentScene.getGameObjects()) {
-				object.suspend();
-			}
-		}
-		myCurrentLevelID = currentLevelID;
-		myCurrentSceneID = currentSceneID;
-		myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
-		updateCurrentScene();
-	}
-	
-	private void updateCurrentScene() {
-		setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
-				myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
-		setTiles(0, 0, myCurrentScene.getTiles());
-		for (GameObject object : myCurrentScene.getGameObjects()) {
-			object.resume();
-		}
-		if (myPlayer != null) {myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
-				myCurrentScene.getPlayerInitPosition()[1]);}
-	}
+	 private void disPlayDragTile() {
+		 if (myMouseButton != 0 && myClickedID == -1 && isTileEditing) {
+			 int tileX = myMouseX / 20;
+			 int tileY = myMouseY / 20;
+			 if (myMouseButton == 3) {
+				 setColor(JGColor.red);// should only be applied to the last line
+			 }
+			 drawRect((double) Math.min(myTileX, tileX) * tileWidth(),
+					 (double) Math.min(myTileY, tileY) * tileHeight(),
+					 (double) (Math.abs(myTileX - tileX) + 1) * tileWidth(),
+					 (double) (Math.abs(myTileY - tileY) + 1) * tileHeight(), false, false);
+		 }
+	 }
+	 
+	 private void displayPlayerInfo() {
+		 if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
+			 drawRect(myPlayer.x + myPlayer.getXSize() / 2,
+					 myPlayer.y - myPlayer.getYSize() / 13.5,
+					 myPlayer.getXSize() / 2, 10, false, true);
+			 drawRect(myPlayer.x + 0.5 * (1 + myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
+					 myPlayer.y - myPlayer.getYSize() / 13.5,
+					 (1.0 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
+					 10, true, true);
+			 drawString("lol help!", myPlayer.x + myPlayer.getXSize() / 2,
+					 myPlayer.y - myPlayer.getYSize() / 3, 0, true);
+		 }
+	 }
 
-	
-	
-	public void setSceneView(String fileName,
-			boolean wrapx, boolean wrapy, int xsize, int ysize) {
-		setBackground(fileName);
-		setSceneSize(xsize, ysize);
-		setSceneWrap(wrapx, wrapy);
-	}
-	
-	private void setBackground(String fileName) {
-		if (isLoading) {
-			myCurrentScene.setBackgroundImage(fileName);
-			loadImage(fileName);
-		}
-		if (isPlaying) {setBGImage(fileName);}
-	}
-	
-	private void setSceneSize(int xsize, int ysize) {
-		if (isLoading) {
-			myCurrentScene.resizeTiles(xsize, ysize);
-			myCurrentScene.setSize(xsize, ysize);
-		}
-		if (isPlaying) {setPFSize(xsize, ysize);}
-	}
-	
-	private void setSceneWrap(boolean wrapx, boolean wrapy) {
-		if (isLoading) {myCurrentScene.setWrap(wrapx, wrapy);}
-		if (isPlaying) {setPFWrap(wrapx, wrapy,0,0);}
-	}
+	 /* dragging object & tile methods */
 
-	public void setGame(Game mygame) {
-		myGame = mygame;
-	}
+	 private boolean drag() {
+		 if (!isEditingMode) {return false;}
+		 boolean drag = false;
+		 boolean currentMouse1 = getMouseButton(1);
+		 boolean currentMouse3 = getMouseButton(3);
+		 int MouseX = getMouseX() + viewXOfs();
+		 int MouseY = getMouseY() + viewYOfs();
+		 int tileX = Math.max(MouseX / 20, 0);
+		 int tileY = Math.max(MouseY / 20, 0);
 
-	public Game getGame() {
-		return myGame;
-	}
+		 if (myMouseButton != 1 && currentMouse1) {
+			 myClickedID = getClickedID();
+			 myTileX = tileX;
+			 myTileY = tileY;
+		 }
+		 if (myMouseButton == 1 && !currentMouse1 && isTileEditing) {
+			 if (myClickedID == -1) {
+				 createTiles(myTileCid, Math.min(myTileX, tileX),
+						 Math.min(myTileY, tileY),
+						 Math.abs(myTileX - tileX) + 1,
+						 Math.abs(myTileY - tileY) + 1);
+			 }
+			 myClickedID = -1;
+		 }
+		 if (myMouseButton == 1 && currentMouse1) {
+			 GameObject object = myCurrentScene.getNonPlayer(myClickedID);
+			 if (myPlayer != null && myClickedID == myPlayer.getID()) {
+				 object = myPlayer;
+			 }
+			 if (object != null) {
+				 object.x += MouseX - myMouseX;
+				 object.y += MouseY - myMouseY;
+				 drag = true;
+			 }
+		 }
 
-	public int getCurrentLevelID() {
-		return myCurrentLevelID;
-	}
+		 if (myMouseButton != 3 && currentMouse3) {
+			 myTileX = tileX;
+			 myTileY = tileY;
+		 }
+		 if (myMouseButton == 3 && !currentMouse3 && isTileEditing) {
+			 createTiles('0', Math.min(myTileX, tileX),
+					 Math.min(myTileY, tileY), Math.abs(myTileX - tileX) + 1,
+					 Math.abs(myTileY - tileY) + 1);
+		 }
+		 myMouseButton = 0;
+		 if (currentMouse1) {myMouseButton = 1;}
+		 if (currentMouse3) {myMouseButton = 3;}
+		 myMouseX = MouseX;
+		 myMouseY = MouseY;
+		 return drag;
+	 }
 
-	public int getCurrentSceneID() {
-		return myCurrentSceneID;
-	}
+	 public int getClickedID() {
+		 List<GameObject> list = new ArrayList<GameObject>();
+		 if (getMouseButton(1)) {
+			 int MouseX = getMouseX() + viewXOfs();
+			 int MouseY = getMouseY() + viewYOfs();
+			 if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended
+					 && myPlayer.x < MouseX && MouseX < myPlayer.x + myPlayer.getXSize()
+					 && myPlayer.y < MouseY
+					 && MouseY < myPlayer.y + myPlayer.getYSize()) {
+				 list.add(myPlayer);
+			 }
+			 for (GameObject go : myCurrentScene.getGameObjects()) {
+				 if (go.isAlive() && !go.is_suspended && go.x < MouseX
+						 && MouseX < go.x + go.getXSize() && go.y < MouseY
+						 && MouseY < go.y + go.getYSize()) {
+					 list.add(go);
+				 }
+			 }
+		 }
+		 if (list.isEmpty()) {
+			 return -1;
+		 }
+		 int id = list.get(0).getID();
+		 getParent().firePropertyChange("clickedID", 0, id);
+		 return id;
+	 }
 	
+	 //private
+	 public void createTiles(char cid, int left, int top,
+			 int width, int height) {
+		 String temp = "";
+		 for (int i = 0; i < width; i++) {
+			 temp += cid;
+		 }
+		 String[] array = new String[height];
+		 for (int j = 0; j < height; j++) {
+			 array[j] = temp;
+		 }
+		 setTiles(left, top, array);
+		 myCurrentScene.updateTiles(cid, left, top, width, height);
+	 }
 	
+	 /* loading image & tile info methods */
 
-	private void modifyImage(GameObject object, String imgfile, int xsize, int ysize) {
-		loadImage(imgfile);
-		object.setImage(imgfile);
-		object.setStaticGfx(imgfile);
-		object.setSize(xsize, ysize);
-		object.updateImageURL(imgfile);
-	}
+	 public void createTilesFromString(String tiles){
+		 String[] array = tiles.split(SaladConstants.SPACE);
+		 myCurrentScene.setTiles(array);
+	 }
+
+	 public void loadTileImage(char cid, String imgfile){
+		 defineImage(cid+"",cid+"",cid,imgfile,"-");
+		 myGame.defineTileImage(cid, imgfile);
+		 if(isEditingMode) {myTileCid = cid;}
+	 }
+
+	 private void loadImage(String imgfile) {
+		 if (imgfile == null) {return;}
+		 defineImage(imgfile, "-", 0, imgfile, "-");
+	 }
+
+	 /* switching scene & transition state methods */
+
+	 private void setTransition(String gameState) {
+		 if (myGame == null) {return;}
+		 Transition trans = myGame.getTransitionState(gameState);
+		 if (trans == null) {return;}
+		 loadImage(trans.getBackground());
+		 setBGImage(trans.getBackground());
+	 }
+
+	 private void paintTransition(String gameState) {
+		 if (myGame == null) {return;}
+		 Transition trans = myGame.getTransitionState(gameState);
+		 if (trans == null) {return;}
+		 for (Entry<double[], String> entry: trans.getInstructions()) {
+			 double x = entry.getKey()[0];
+			 double y = entry.getKey()[1];
+			 String instruction = entry.getValue();
+			 drawString(instruction, x, y, 0);
+		 }
+		 for (Entry<double[], String> entry: trans.getImages()) {
+			 double x = entry.getKey()[0];
+			 double y = entry.getKey()[1];
+			 String imgfile = entry.getValue();
+			 loadImage(imgfile);
+			 drawImage(imgfile, x, y, false);
+		 }
+	 }
+
+	 public void setCurrentScene(int currentLevelID, int currentSceneID) {
+		 System.out.println(this.isEditingMode);
+		 System.out.println(this.isLoading);
+		 System.out.println(this.isPlaying);
+		 System.out.println();
+		 if (myCurrentScene != null) {
+			 for (GameObject object : myCurrentScene.getGameObjects()) {
+				 object.suspend();System.out.println("setCurrentScene "+object.is_suspended);
+			 }
+			 if (myPlayer != null) {myPlayer.suspend();}
+			 removeObjects(null, 0, false);
+		 }
+		 myCurrentLevelID = currentLevelID;
+		 myCurrentSceneID = currentSceneID;
+		 myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
+		 setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
+				 myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
+		 setTiles(0, 0, myCurrentScene.getTiles());
+		 if (myPlayer != null) {
+			 myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
+					 myCurrentScene.getPlayerInitPosition()[1]);
+			 myPlayer.resume();
+		 }
+		 for (GameObject object : myCurrentScene.getGameObjects()) {
+			 object.resume();
+		 }
+	 }
 	
-	public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
-		loadImage(imgfile);
-		object.setJumpingImage(imgfile);
-	}
-	
-	public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
-		loadImage(imgfile);
-		object.setMovingImage(imgfile);
-	}
+	 /* scene view modification methods */
 
-	public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
-		GameObject object = myGame.getNonPlayer(myCurrentLevelID,
-				myCurrentSceneID, unique_id);
-		modifyImage(object, imgfile, xsize, ysize);
-	}
+	 public void setSceneView(String fileName,
+			 boolean wrapx, boolean wrapy, int xsize, int ysize) {
+		 setBackground(fileName);
+		 setSceneSize(xsize, ysize);
+		 setSceneWrap(wrapx, wrapy);
+	 }
 
-	public void modifyPlayerImage(int unique_id, String imgfile, int xsize, int ysize) {
-		GameObject object = myGame.getPlayer(unique_id);
-		modifyImage(object, imgfile, xsize, ysize);
-	}
+	 private void setBackground(String fileName) {
+		 if (isLoading) {
+			 myCurrentScene.setBackgroundImage(fileName);
+			 loadImage(fileName);
+		 }
+		 if (isPlaying) {setBGImage(fileName);}
+	 }
 
-	public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
-			double xpos, double ypos, String name, int colid, int lives) {
-//	        TriggerEventManager etm = getGame().getTEM();
-		loadImage(imgfile);
-		Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
-				name, colid, lives, myGame.getCollisionManager(),
-				myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
-		myGame.setPlayer(object);
-		myPlayer = object;
-		object.resume_in_view = false;
-		if (isEditingMode) {object.setIsActive(true);}
-		return object;
-	}
+	 private void setSceneSize(int xsize, int ysize) {
+		 if (isLoading) {
+			 myCurrentScene.resizeTiles(xsize, ysize);
+			 myCurrentScene.setSize(xsize, ysize);
+		 }
+		 if (isPlaying) {setPFSize(xsize, ysize);}
+	 }
 
-	public NonPlayer createActor(int unique_id, String imgfile, int xsize,
-			int ysize, double xpos, double ypos, String name, int colid, int lives) {
-//	        TriggerEventManager etm = getGame().getTEM();
-		loadImage(imgfile);
-		NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
-				ypos, name, colid, lives, myGame.getCollisionManager(),
-				myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
-		if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
-		object.resume_in_view = false;
-		if (isEditingMode) {object.setIsActive(true);}
-		return object;
-	}
-	
-	public void reviveObject() {
-		myGame.getRevivalManager().undo();
-	}
-	
+	 private void setSceneWrap(boolean wrapx, boolean wrapy) {
+		 if (isLoading) {myCurrentScene.setWrap(wrapx, wrapy);}
+		 if (isPlaying) {setPFWrap(wrapx, wrapy,0,0);}
+	 }
+
+	 /* game, level, scene setter & getter methods */
+
+	 public void setGame(Game mygame) {
+		 myGame = mygame;
+	 }
+
+	 public Game getGame() {
+		 return myGame;
+	 }
+
+	 public int getCurrentLevelID() {
+		 return myCurrentLevelID;
+	 }
+
+	 public int getCurrentSceneID() {
+		 return myCurrentSceneID;
+	 }
+
+	 /* object creation & image modification methods */
+
+	 private void modifyImage(GameObject object, String imgfile, int xsize, int ysize) {
+		 loadImage(imgfile);
+		 object.setImage(imgfile);
+		 object.setStaticGfx(imgfile);//same thing
+		 object.setSize(xsize, ysize);
+		 object.updateImageURL(imgfile);
+	 }
+
+	 public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
+		 loadImage(imgfile);
+		 object.setJumpingImage(imgfile);
+	 }
+
+	 public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
+		 loadImage(imgfile);
+		 object.setMovingImage(imgfile);
+	 }
+
+	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
+		 GameObject object = myGame.getNonPlayer(myCurrentLevelID,
+				 myCurrentSceneID, unique_id);
+		 modifyImage(object, imgfile, xsize, ysize);
+	 }
+
+	 public void modifyPlayerImage(int unique_id, String imgfile, int xsize, int ysize) {
+		 GameObject object = myGame.getPlayer(unique_id);
+		 modifyImage(object, imgfile, xsize, ysize);
+	 }
+
+	 public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
+			 double xpos, double ypos, String name, int colid, int lives) {
+		 //	        TriggerEventManager etm = getGame().getTEM();
+		 loadImage(imgfile);
+		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
+				 name, colid, lives, myGame.getCollisionManager(),
+				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
+		 myGame.setPlayer(object);
+		 myPlayer = object;
+		 object.resume_in_view = false;
+		 if (isEditingMode) {object.setIsActive(true);}
+		 return object;
+	 }
+
+	 public NonPlayer createActor(int unique_id, String imgfile, int xsize,
+			 int ysize, double xpos, double ypos, String name, int colid, int lives) {
+		 //	        TriggerEventManager etm = getGame().getTEM();
+		 loadImage(imgfile);
+		 NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
+				 ypos, name, colid, lives, myGame.getCollisionManager(),
+				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
+		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
+		 object.resume_in_view = false;
+		 if (isEditingMode) {object.setIsActive(true);}
+		 return object;
+	 }
+
+	 public void reviveObject() {
+		 myGame.getRevivalManager().undo();
+	 }
+	 
+	 public void setTileEditing(boolean tile_editing) {
+		 isTileEditing = tile_editing;
+	 }
+
 }
