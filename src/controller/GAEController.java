@@ -74,8 +74,7 @@ public class GAEController {
 		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
 		libraryPanel = fv.getLibrary();
-		//test code below
-		setDragTile(2,"brick.png");		
+		//test code below	
 		
 	}
 	
@@ -166,31 +165,7 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}*/
-	
-	public void modifyPlayerHitElimVic(int colID,int colIDTarget, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.HITTER_ELIMINATE_VICTIM + SaladConstants.SEPARATOR + SaladConstants.HITTER_ELIMINATE_VICTIM + 
-						SaladConstants.SEPARATOR + colIDTarget  + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	
-	public void modifyPlayerPerishTog(int colID, int colIDTarget, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.PERISH_TOGETHER + SaladConstants.SEPARATOR + SaladConstants.PERISH_TOGETHER
-						+ SaladConstants.SEPARATOR + colIDTarget  + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	public void modifyPlayerStayOnTile(int colID, int tileColID, String moveDirection){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+colID+
-						SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE+ SaladConstants.SEPARATOR + 
-						tileColID + SaladConstants.SEPARATOR + moveDirection;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
+
 	
 /*	
 	public void modifyPlayerRegMove(int ID, double xSpeed, double ySpeed){
@@ -236,19 +211,19 @@ public class GAEController {
 		modifyPlayerImmortal(playerID);
 	}
 	
-/*	public void modifyPlayerImmobile(int ID){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
-						SaladConstants.IMMOBILE + SaladConstants.SEPERATER+SaladConstants.IMMOBILE;
+	public void modifyPlayerImmobile(int ID){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
+						SaladConstants.IMMOBILE + SaladConstants.SEPARATOR+SaladConstants.IMMOBILE;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	*//**
+	/**
      * Modify player by making it immobile without providing player id. The already specified playerID is used.
-     *//*
+     */
 	public void modifyPlayerImmobileNoID(){
 		modifyPlayerImmobile(playerID);
-	}*/
+	}
 	
 	public void modifyPlayerSlowShoot(int ID, String url, int xSize, int ySize, int colID, double speed){
 		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
@@ -885,6 +860,22 @@ public class GAEController {
 		System.out.println(order);
 	}
 	// GAE funtions below. NOT orders sending to DataController
+	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current level ID
+	 * @return the current level ID
+	 */
+	public int getCurrentLevelID(){
+		return myDataController.getCurrentLevelID();
+	}
+	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current scene ID
+	 * @return the current scene ID
+	 */
+	public int getCurrentSceneID(){
+		return myDataController.getCurrentSceneID();
+	}
 		
 	public List<String> getAttributes(){
 		List<String> s = myDataController.getActorInfo(selectedActorID);
