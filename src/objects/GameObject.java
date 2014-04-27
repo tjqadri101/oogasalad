@@ -27,6 +27,7 @@ public abstract class GameObject extends JGObject {
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
 	protected RevivalManager myRevivalManager;
+	
 	protected ActionManager myActionManager;
 
 	protected int myXSize;
@@ -88,7 +89,7 @@ public abstract class GameObject extends JGObject {
 	/**
 	 * 
 	 */
-	private void initSideDetectors() {
+	protected void initSideDetectors() {
 		if (myUniqueID == SaladConstants.NULL_UNIQUE_ID) return;
 		mySideDetectors = new SideDetector[SaladConstants.NUM_SIDE_DETECTORS];
 		for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
