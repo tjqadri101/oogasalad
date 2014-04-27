@@ -2,7 +2,6 @@
 import javax.swing.JFrame;
 
 import controller.GAEController;
-import game_authoring_environment.DialogDemo;
 import game_authoring_environment.GAE;
 import game_authoring_environment.customDialogs.PanelDialog;
 import game_authoring_environment.customDialogs.TableDialog;

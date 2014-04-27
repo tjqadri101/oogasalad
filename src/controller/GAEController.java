@@ -72,8 +72,7 @@ public class GAEController {
 		panelMap = fv.getMap();
 		attributesPanel = fv.getAttributes();
 		libraryPanel = fv.getLibrary();
-		//test code below
-		setDragTile(2,"brick.png");		
+		//test code below	
 		
 	}
 	
@@ -883,6 +882,22 @@ public class GAEController {
 		System.out.println(order);
 	}
 	// GAE funtions below. NOT orders sending to DataController
+	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current level ID
+	 * @return the current level ID
+	 */
+	public int getCurrentLevelID(){
+		return myDataController.getCurrentLevelID();
+	}
+	
+	/**
+	 * Called by Game Authorizing Environment to retrieve the current scene ID
+	 * @return the current scene ID
+	 */
+	public int getCurrentSceneID(){
+		return myDataController.getCurrentSceneID();
+	}
 		
 	public List<String> getAttributes(){
 		List<String> s = myDataController.getActorInfo(selectedActorID);

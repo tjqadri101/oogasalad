@@ -1,6 +1,7 @@
 package game_authoring_environment;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +21,7 @@ import controller.GAEController;
 
 public class BehaviorsPanel extends Panel {
 
+	private static final String BRICK_DEFAULT_IMAGE = "brick.png";
 	private SubPanel mySubPanel;
 	private GAEController gController;
 	private JTable myTable; 
@@ -35,7 +38,6 @@ public class BehaviorsPanel extends Panel {
 		this.setLayout(new BorderLayout());
 		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
 		this.add(new JTextField(),BorderLayout.SOUTH);
-		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 
 	}
 
@@ -56,7 +58,7 @@ public class BehaviorsPanel extends Panel {
 		enterTileMode.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				
+				enterTileEditingMode();
 			}
 		});
 
@@ -64,7 +66,7 @@ public class BehaviorsPanel extends Panel {
 		exitTileMode.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				
+				exitTileEditingMode();
 			}
 		});
 
@@ -72,6 +74,23 @@ public class BehaviorsPanel extends Panel {
 		outPanel.add(exitTileMode,BorderLayout.SOUTH);
 		
 		return outPanel;
+	}
+	
+	private void enterTileEditingMode(){
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+		JTextField tf = new JTextField();
+		panel.add(tf);
+		int result = JOptionPane.showConfirmDialog(null, panel, "Enter tile collision ID",
+	            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+	        if (result == JOptionPane.OK_OPTION) {
+	        	int colID = Integer.parseInt(tf.getText());
+	        	gController.setDragTile(colID, BRICK_DEFAULT_IMAGE);
+	            System.out.println(colID);
+	        }
+	}
+	
+	private void exitTileEditingMode(){
+		
 	}
 	
 	public JTable createTable(){
