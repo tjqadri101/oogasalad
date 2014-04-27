@@ -96,7 +96,10 @@ public class AttributeMaker {
 		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
 		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
 		for(Object o: args){ 
-			if(o == null) attribute.append("null");
+			if(o == null) {
+				attribute.append("null");
+				continue;
+			}
 			attribute.append(SaladConstants.SEPARATOR + o.toString()); 
 		}
 		return attribute.toString();
