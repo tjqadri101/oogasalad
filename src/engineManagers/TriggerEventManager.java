@@ -76,9 +76,8 @@ public class TriggerEventManager {
             behaviorParameters.add(args[i]);
         }
         if (behaviorName.contains(TRIGGER_INDICATOR)) {
-            String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER,
-                                                SaladConstants.COLLISION_ID, args[1], SaladConstants.SET_TRIGGER, args[2],
-                                                args[3]);
+//            String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER,
+//                                                SaladConstants.COLLISION_ID, args[1], args[2], true, args[2]);
             myTriggerMap.put(etPairID, behaviorParameters);
         }
         else {
@@ -87,12 +86,10 @@ public class TriggerEventManager {
     }
 
     public List<String> getAttributes(){
-        List<String> answer = new ArrayList<String>();
-        for(Object state: myTriggerMap.keySet()){
-            answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + "," + state + "," + myTriggerMap.get(state));
-        }
-        return answer;
+        return myAttributes;
     }
+    
+    // See if putting same methods together works
     /*
      * public void setEventBehavior(int etPairID, String eventBehavior, Object ... args){
      * List<Object> eventParameters = new ArrayList<Object>();
