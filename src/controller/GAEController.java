@@ -449,7 +449,7 @@ public class GAEController {
 	/**
      * Modify actor's image without providing actor id. The selectedActorID is used.
      */
-	public void modifyActorImageNoID( String url, int xSize, int ySize){
+	public void modifyActorImageNoID(String url, int xSize, int ySize){
 		modifyActorImage(selectedActorID, url, xSize, ySize);
 	}
 	
@@ -903,6 +903,9 @@ public class GAEController {
 		libraryPanel.setTab(index);
 	}
 		
+	public int getActorID(){
+		return selectedActorID;
+	}
 	
 	public DataController getDataController(){
 		return myDataController;
