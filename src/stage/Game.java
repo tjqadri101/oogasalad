@@ -8,6 +8,7 @@ import java.util.Map;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.InputManager;
+import engineManagers.LifeManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import engineManagers.TriggerEventManager;
@@ -30,6 +31,7 @@ public class Game {
 	protected Map<StateType, Transition> myNonLevelSceneMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
+	protected LifeManager myLifeManager;
 	protected TriggerEventManager myTriggerManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
@@ -44,6 +46,7 @@ public class Game {
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
+		myLifeManager = new LifeManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
@@ -183,6 +186,7 @@ public class Game {
 	 */
 	public void setPlayer(Player player){
 		myPlayerMap.put(player.getID(), player);
+		myLifeManager.addPlayer(player);
 	}
 	
 	/** 
