@@ -1,7 +1,11 @@
 package engineManagers;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import objects.GameObject;
+import objects.Player;
 import saladConstants.SaladConstants;
 import util.SaladUtil;
 /**
@@ -11,71 +15,51 @@ import util.SaladUtil;
  */
 public class LifeManager {
 	
-	protected int myInitLives;
-	protected int myLives;
-	protected Map<String, Integer> myLiveMap;
+	public static final int DEFAULT_INITIAL_LIVES = 5;
+	public static final int DEFAULT_NULL_LIVES = 0;
+	
+	protected boolean myRestore;
+	protected Map<Integer, Player> myPlayerMap;
+	protected Map<Player, Integer> myInitLifeMap;
+	protected Map<Player, Integer> myCurrentLifeMap;
 	
 	public LifeManager(){
-		myInitLives = SaladConstants.DEFAULT_INIT_LIVES;
-		myLives = myInitLives;
+		super();
+		myInitLifeMap = new HashMap<Player, Integer>();
+		myCurrentLifeMap = new HashMap<Player, Integer>();
 	}
 	
-	public void setInitLives(int lives){
-		myInitLives = lives;
+	public void setInitLives(int lives, int playerID){
+		if(!myPlayerMap.containsKey(playerID)) return;
+		myInitLifeMap.put(myPlayerMap.get(playerID), lives);
 	}
 	
-	/**
-	 * Called to set the change of score to a condition
-	 * @param score
-	 * @param args: condition
-	 */
-	public void setChangeOfLive(int lives, Object ... args){
-		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, args);
-		myLiveMap.put(condition, lives);
+	public int getCurrentLife(int playerID){
+		if(!myPlayerMap.containsKey(playerID)) return DEFAULT_NULL_LIVES;
+		return myCurrentLifeMap.get(myPlayerMap.get(playerID));
 	}
 	
-	/**
-	 * Called to update the current Live
-	 * @param info
-	 * @param victimColid
-	 * @param hitterColid
-	 */
-	public void updateLive(String info, int victimColid, int hitterColid){
-		String condition = info + SaladConstants.SEPARATOR + victimColid + 
-				SaladConstants.SEPARATOR + hitterColid;
-		if(myScoreMap.get(condition) == null) return;
-		myScore += myScoreMap.get(condition);
-		System.out.println("ScoreManager current score: " + myScore);
+	public void addPlayer(Player player){
+		myPlayerMap.put(player.getID(), player);
+		myInitLifeMap.put(player, DEFAULT_INITIAL_LIVES);
 	}
 	
-	/**
-	 * Called to update the current score
-	 * @param oldLevelOrSceneID
-	 * @param newLevelOrSceneID
-	 */
-	public void updateScore(String oldLevelOrSceneID, String newLevelOrSceneID){
-		String condition = oldLevelOrSceneID + SaladConstants.SEPARATOR + newLevelOrSceneID;
-		if(myScoreMap.get(condition) == null) return;
-		myScore += myScoreMap.get(condition);
-	}
-	
-	/**
-	 * Called check if score is incremented by a condition (i.e. time)
-	 * @param condition
-	 */
-	public void updateScore(String condition){
-		if(myScoreMap.containsKey(condition)){
-			myScore += myScoreMap.get(condition);
-		}
-	}
-	
-	public int getCurrentLives(){
-		return myLives;
+	public void setRestore(boolean ifRestore){
+		myRestore = ifRestore;
 	}
 
 	public void updateLevelDoneLives(){
-		if(myRestoreLevel){
-			myLives = myInitLives;
+		if(myRestore){
+			for(Player o: myPlayerMap.values()){
+				myCurrentLifeMap.put(o, myInitLifeMap.get(o));
+			}
 		}
+	}
+
+
+
+	public List<String> getAttributes() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

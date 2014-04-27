@@ -135,7 +135,7 @@ public class SaladUtil {
     public static String convertArgsToString(String seperater, Object ... args){
     	StringBuilder answer = new StringBuilder();
     	if(args.length == 0) return null;
-    	answer.append(args[0]);
+    	answer.append(args[0].toString());
     	for(int i = 1; i < args.length; i ++){
     		answer.append(seperater + args[i]);
     	}
