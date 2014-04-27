@@ -800,10 +800,18 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void modifyBloodManager(int score, int changeBlood, int victimColID, int hitterColID){
+	public void modifyBloodManagerHitter(int score, int changeBlood, int victimColID, int hitterColID){
 		String order = SaladConstants.MODIFY_BLOOD_MANAGER + SaladConstants.SEPARATOR +  SaladConstants.SET_COLLISION_BLOOD + 
 				SaladConstants.SEPARATOR + changeBlood + SaladConstants.SEPARATOR + SaladConstants.COLLISION  + SaladConstants.SEPARATOR 
 				+ victimColID + SaladConstants.SEPARATOR + hitterColID;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyBloodManagerTile(int score, int changeBlood, int victimColID, int tileColID){
+		String order = SaladConstants.MODIFY_BLOOD_MANAGER + SaladConstants.SEPARATOR +  SaladConstants.SET_COLLISION_BLOOD + 
+				SaladConstants.SEPARATOR + changeBlood + SaladConstants.SEPARATOR + SaladConstants.COLLISION  + SaladConstants.SEPARATOR 
+				+ victimColID + SaladConstants.SEPARATOR + tileColID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
