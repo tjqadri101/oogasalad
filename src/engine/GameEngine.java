@@ -114,8 +114,15 @@ public class GameEngine extends StdGame {
 	}
 
 	private void finishLoading() {
-		int ticks = myGame.getTransitionState("LevelDone").getFrame();
-		if (ticks > -1) {leveldone_ticks = ticks;}
+		int ticks1 = myGame.getTransitionState("StartGame").getFrame();
+		if (ticks1 > -1) {leveldone_ticks = ticks1;}
+		int ticks2 = myGame.getTransitionState("LevelDone").getFrame();
+		if (ticks2 > -1) {leveldone_ticks = ticks2;}
+		int ticks3 = myGame.getTransitionState("LifeLost").getFrame();
+		if (ticks3 > -1) {leveldone_ticks = ticks3;}
+		int ticks4 = myGame.getTransitionState("GameOver").getFrame();
+		if (ticks4 > -1) {leveldone_ticks = ticks4;}
+		//reflection
 		if (inGameState("Title")) {setTransition("Title");}
 	}
 	
@@ -261,7 +268,7 @@ public class GameEngine extends StdGame {
 	
 	
 	public void defineLevel() {
-		setCurrentScene(level+1, 0);//
+		setCurrentScene(level+1, myGame.getLevel(level+1).getInitialSceneID());
 	}
 
 	public void initNewLife() {

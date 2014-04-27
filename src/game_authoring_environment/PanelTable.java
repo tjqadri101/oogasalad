@@ -2,6 +2,7 @@ package game_authoring_environment;
 
 
 import java.awt.Component;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -9,12 +10,15 @@ import java.awt.event.ItemListener;
 import java.util.HashMap;
 
 import javax.swing.AbstractCellEditor;
+import javax.swing.Box;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -136,7 +140,19 @@ public abstract class PanelTable extends JTable{
 		  public Object getCellEditorValue() {
 		    return ((JTextField) component).getText();
 		  }
+	}
+	
+	public JPanel createOptionInputPanel(JTextField[] textAreas, String[] titles){
+		JPanel myPanel = new JPanel();
+		for(int i=0; i<textAreas.length; i++){
+			myPanel.add(new JLabel(titles[i]));
+			myPanel.add(textAreas[i]);
+			myPanel.add(Box.createHorizontalStrut(15));
+			
 		}
+		
+		return myPanel;
+	}
 
 	
 }

@@ -83,7 +83,6 @@ public class GameeditorPanel extends Panel {
 		construct();
 	}
 	
-			
-
+	
 }
 
