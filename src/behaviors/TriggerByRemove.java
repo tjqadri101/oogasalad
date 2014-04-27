@@ -2,7 +2,6 @@ package behaviors;
 
 import java.util.List;
 
-import objects.GameObject;
 import objects.NonPlayer;
 import stage.Game;
 import engine.GameEngine;
@@ -11,9 +10,9 @@ import engine.GameEngine;
  * 
  * @author Main Justin (Zihao) Zhang
  */
-public class WinByCollision extends Winnable{
+public class TriggerByRemove extends Triggerable{
 
-	public WinByCollision(GameEngine engine) {
+	public TriggerByRemove(GameEngine engine) {
 		super(engine);
 	}
 	   
@@ -21,7 +20,7 @@ public class WinByCollision extends Winnable{
      * @param objectID
      */
     @Override
-    public boolean checkGoal(List<Object> params) {
+    public boolean checkTrigger(List<Object> params) {
     	int id = (Integer) params.get(0);
     	NonPlayer object = myEngine.getGame().getNonPlayer(myEngine.getCurrentLevelID(), myEngine.getCurrentSceneID(), id);
     	return myEngine.getGame().getPlayer(Game.NONUSE_ID).isAlive() && !object.isAlive();

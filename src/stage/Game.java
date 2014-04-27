@@ -256,6 +256,10 @@ public class Game {
     	return myBloodManager;
     }
     
+    public LiveManager getLiveManager(){
+    	return myLiveManager;
+    }
+    
     /**
 	 * Called to delete an existing Game Object from a particular scene of a particular level
 	 * @param the level ID that the Game Object belongs to 

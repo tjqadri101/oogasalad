@@ -7,7 +7,11 @@ import java.util.Map;
 import objects.GameObject;
 import saladConstants.SaladConstants;
 import util.SaladUtil;
-
+/**
+ * 
+ * @author Main Justin (Zihao) Zhang
+ *
+ */
 public abstract class StatisticsManager { 
 	
 	protected Map<String, Integer> myMap;
