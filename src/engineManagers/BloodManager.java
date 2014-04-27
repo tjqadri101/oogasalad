@@ -6,7 +6,7 @@ import objects.GameObject;
 import saladConstants.SaladConstants;
 import util.SaladUtil;
 /**
- * Manage the blood of a Game Object
+ * Manage the Change of the blood of all Game Objects
  * For Player, manage the blood for its each life
  * @author Main Justin (Zihao) Zhang
  *
@@ -50,17 +50,5 @@ public class BloodManager extends StatisticsManager{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/**
-	 * Do not call this method
-	 */
-	@Override
-	public void update(String info, String oldLevelOrSceneID, String newLevelOrSceneID) {}
-
-	/**
-	 * Do not call this method
-	 */
-	@Override
-	public void update(String condition) {}
 
 }

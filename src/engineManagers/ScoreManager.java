@@ -65,7 +65,6 @@ public class ScoreManager extends StatisticsManager{
 		myScore += myMap.get(condition);
 	}
 	
-	@Override
 	public void update(String info, String oldLevelOrSceneID, String newLevelOrSceneID){
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, oldLevelOrSceneID, newLevelOrSceneID);
@@ -73,7 +72,6 @@ public class ScoreManager extends StatisticsManager{
 		myScore += myMap.get(condition);
 	}
 	
-	@Override
 	public void update(String condition){
 		if(myMap.containsKey(condition)){
 			myScore += myMap.get(condition);
