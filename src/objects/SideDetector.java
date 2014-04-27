@@ -13,11 +13,12 @@ public class SideDetector extends GameObject{
 
 	public SideDetector(GameObject parent, int direction, int cid) {
 		super(SaladConstants.NULL_UNIQUE_ID, null, 0, 0, 0, 0, null, cid, 1, 
-				parent.getCollisionManager(), parent.getScoreManager(), parent.getBloodManager());
+				parent.getCollisionManager(), parent.getScoreManager(), parent.getBloodManager(), parent.getRevivalManager());
 		myParent = parent;
 		myDirection = direction;
 		move();
 		setSDBBox(direction);
+		resume_in_view = false;
 	}
 
 	public static int SDcid(int parent_cid, int dir){
@@ -29,7 +30,7 @@ public class SideDetector extends GameObject{
 	}
 	
 	public void move(){
-		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).timer);
+		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).timer+" "+colid);
 		setPos(myParent.getLastX(), myParent.getLastY());
 		if (myParent.is_suspended) {suspend();}
 		if (!myParent.isAlive()) {remove();}
@@ -48,7 +49,7 @@ public class SideDetector extends GameObject{
 	}
 	
 	public void ground(){
-		if (myDirection == 1) System.out.println("ground() "+((GameEngine)eng).timer);
+		if (myDirection == 1) System.out.println("ground() "+((GameEngine)eng).timer+" "+colid);
 		myParent.ground();
 	}
 	

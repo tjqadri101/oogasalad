@@ -4,7 +4,6 @@ import saladConstants.SaladConstants;
 import stage.Game;
 import stage.Scene;
 import stage.Transition;
-import stage.Transition.StateType;
 import util.SaladUtil;
 import jgame.JGColor;
 import jgame.platform.StdGame;
@@ -56,9 +55,6 @@ public class GameEngine extends StdGame {
 	protected char myTileCid;
 
 	protected boolean isEditingMode;
-//?? discuss if needed to put it here
-	protected TriggerEventManager myTEM = new TriggerEventManager(this);
-	
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -73,24 +69,25 @@ public class GameEngine extends StdGame {
 	@Override
 	public void initGame() {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
-		// setTileSettings("#",2,0);
+//		setSequences(false, startgame_ticks, false, leveldone_ticks, false, lifelost_ticks, false, gameover_ticks);
+//		setTileSettings("#",2,0);
 	}
 
-	public boolean checkGoal() {
-		if (myCurrentScene == null)
-			return false;
-		String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
-		if (winBehavior == null)
-			return false;
-		List<Object> winParameters = myGame.getLevel(myCurrentLevelID)
-				.getWinParameters();
-		ResourceBundle behaviors = ResourceBundle
-				.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
-						+ SaladConstants.OBJECT_BEHAVIOR);
-		Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior,
-				winParameters, "checkGoal", this);
-		return (Boolean) answer;
-	}
+//	public boolean checkGoal() {
+//		if (myCurrentScene == null)
+//			return false;
+//		String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
+//		if (winBehavior == null)
+//			return false;
+//		List<Object> winParameters = myGame.getLevel(myCurrentLevelID)
+//				.getWinParameters();
+//		ResourceBundle behaviors = ResourceBundle
+//				.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+//						+ SaladConstants.OBJECT_BEHAVIOR);
+//		Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior,
+//				winParameters, "checkGoal", this);
+//		return (Boolean) answer;
+//	}
 
 	public boolean checkTrigger() {
 		// consider combineing the checkTrigger to checkGoal()
@@ -102,8 +99,8 @@ public class GameEngine extends StdGame {
 	}
 
 	// drag;move->gravity->collision->setViewOffset
-	public void doFrameEdit() {
-//	        TriggerEventManager etm = getGame().getTEM();
+	public void doFrameInGame() {
+//	        TriggerEventManager myTEM = getGame().getTEM();
 		timer++;//change later
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -117,13 +114,13 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-//		etm.checkTrigger();
-		if (checkGoal()) {
-			if (level >= 3) {
-				gameOver();
-			} else
-				levelDone();
-		}
+//		myTEM.checkTrigger(this);
+//		if (checkGoal()) {
+//			if (level >= 3) {
+//				gameOver();
+//			} else
+//				levelDone();
+//		}
 	}
 
 	private void checkAllCollision() {
@@ -184,17 +181,17 @@ public class GameEngine extends StdGame {
 		return XOfs != 0 || YOfs != 0;
 	}
 
-	public void paintFrameEdit() {
+	public void paintFrameInGame() {
 		displayPlayerInfo();
 		disPlayDragTile();
-		
-		if (checkGoal()) {
-			drawString("Win!!!!!!!!!!!!!!!!", viewWidth() / 2,
-					viewHeight() / 2 + 100, 0, false);
-		}
-		if (checkGoal()) {
-			// call the event module
-		}
+//		
+//		if (checkGoal()) {
+//			drawString("Win!!!!!!!!!!!!!!!!", viewWidth() / 2,
+//					viewHeight() / 2 + 100, 0, false);
+//		}
+//		if (checkGoal()) {
+//			// call the event module
+//		}
 	}
 
 	private void disPlayDragTile() {
@@ -238,100 +235,103 @@ public class GameEngine extends StdGame {
 		
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see jgame.platform.StdGame#doFrame() For inGame States
-	 */
+	
+	
 	@Override
 	public void doFrame() {
 		if (!isEditingMode) {
 			super.doFrame();
 		}
-		doFrameEdit();
 	}
 
-	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see jgame.platform.StdGame#paintFrame() For inGame states
-	 */
 	@Override
 	public void paintFrame() {
 		if (!isEditingMode) {
 			super.paintFrame();
 		}
-		paintFrameEdit();
+	}
+	
+	
+	
+	public void startTitle() {
+		setTransition("Title");
 	}
 
-	public void StartTitle() {
-		setTransition(StateType.Title);
+	public void startStartGame() {
+		setTransition("StartGame");
 	}
 
-	public void StartStartGame() {
-		setTransition(StateType.StartGame);
+	public void startStartLevel() {
+		setTransition("StartLevel");
 	}
 
-	public void StartStartLevel() {
-		setTransition(StateType.StartLevel);
+	public void startLevelDone() {
+		setTransition("LevelDone");
 	}
 
-	public void StartLevelDone() {
-		setTransition(StateType.LevelDone);
+	public void startLifeLost() {
+		setTransition("LifeLost");
 	}
 
-	public void StartLifeLost() {
-		setTransition(StateType.LifeLost);
+	public void startGameOver() {
+		setTransition("GameOver");
 	}
-
-	public void StartGameOver() {
-		setTransition(StateType.GameOver);
-	}
-
-	// @Override
-	// public void paintFrameTitle(){
-	//
-	// }
-	//
-	// @Override
-	// public void paintFrameStartGame(){
-	//
-	// }
-	//
-	// @Override
-	// public void paintFrameStartLevel(){
-	//
-	// }
-	//
-	// @Override
-	// public void paintFrameLevelDone(){
-	//
-	// }
-	//
-	// @Override
-	// public void paintFrameLifeLost(){
-	//
-	// }
-	//
-	// @Override
-	// public void paintFrameGameOver(){
-	//
-	// }
-	//
-	// @Override
-	// public void paintFrameEnterHighscore(){
-	//
-	// }
-	//
-	// @Override
-	// public void paintFrameHighscores(){
-	//
-	// }
-	//
-	// @Override
-	// public void paintFramePaused(){
-	//
-	// }
+	
+	
+	
+	@Override
+	 public void paintFrameTitle(){
+		 super.paintFrameTitle();//
+		 paintTransition("Title");
+	 }
+	
+	 @Override
+	 public void paintFrameLevelDone(){
+		 super.paintFrameLevelDone();//
+		 paintTransition("LevelDone");
+	 }
+	
+	 @Override
+	 public void paintFrameLifeLost(){
+		 super.paintFrameLifeLost();//
+		 paintTransition("LifeLost");
+	 }
+	
+	 @Override
+	 public void paintFrameGameOver(){
+		 super.paintFrameGameOver();//
+		 paintTransition("GameOver");
+	 }
+	 
+	 @Override
+	 public void paintFrameStartGame(){
+		 super.paintFrameStartGame();//
+		 paintTransition("StartGame");
+	 }
+	 
+	 @Override
+	 public void paintFrameStartLevel(){
+		 super.paintFrameStartLevel();//
+		 paintTransition("StartLevel");
+	 }
+	
+//	 @Override
+//	 public void paintFrameEnterHighscore(){
+//		 super.paintFrameEnterHighscore();//
+//		 paintTransition("EnterHighscore");
+//	 }
+//	
+//	 @Override
+//	 public void paintFrameHighscores(){
+//		 super.paintFrameHighscores();//
+//		 paintTransition("Highscores");
+//	 }
+//	
+//	 @Override
+//	 public void paintFramePaused(){
+//		 super.paintFramePaused();//
+//		 paintTransition("Paused");
+//	 }
 	
 	
 	
@@ -449,20 +449,29 @@ public class GameEngine extends StdGame {
 	
 	
 	// unfinished
-	private void setTransition(StateType type) {
-		// setSequences(startgame_ingame, 0, leveldone_ingame, 0,
-		// lifelost_ingame, 0, gameover_ingame, 0);
-		Transition trans = myGame.getNonLevelScene(type);
-		String url = trans.getBackground();
-		if (url != null) {
-			loadImage(url);
-			setBGImage(url);
-		}
-		// something else to do ?
+	private void setTransition(String gameState) {
+		Transition trans = myGame.getTransitionState(gameState);
+		setBackground(trans.getBackground());
 	}
-
 	
+	private void paintTransition(String gameState) {
+		Transition trans = myGame.getTransitionState(gameState);
+		for (Entry<double[], String> entry: trans.getInstructions()) {
+			double x = entry.getKey()[0];
+			double y = entry.getKey()[1];
+			String instruction = entry.getValue();
+			drawString(instruction, x, y, 0);
+		}
+		for (Entry<double[], String> entry: trans.getImages()) {
+			double x = entry.getKey()[0];
+			double y = entry.getKey()[1];
+			String imgfile = entry.getValue();
+			loadImage(imgfile);
+			drawImage(imgfile, x, y, false);
+		}
+	}
 	
+	//check
 	public void setCurrentScene(int currentLevelID, int currentSceneID) {
 		if (myCurrentScene != null) {
 			for (GameObject go : myCurrentScene.getGameObjects()) {
@@ -535,62 +544,69 @@ public class GameEngine extends StdGame {
 	
 	
 
-	private void modifyImage(GameObject object, String imgfile, int xsize,
-			int ysize) {
+	private void modifyImage(GameObject object, String imgfile, int xsize, int ysize) {
 		loadImage(imgfile);
-		object.setImage(imgfile);// animation?
+		object.setImage(imgfile);
+		object.setStaticGfx(imgfile);
 		object.setSize(xsize, ysize);
 		object.updateImageURL(imgfile);
 	}
+	
+	public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
+		loadImage(imgfile);
+		object.setJumpingImage(imgfile);
+	}
+	
+	public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
+		loadImage(imgfile);
+		object.setMovingImage(imgfile);
+	}
 
-	public void modifyActorImage(int unique_id, String imgfile, int xsize,
-			int ysize) {
+	public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
 		GameObject object = myGame.getNonPlayer(myCurrentLevelID,
 				myCurrentSceneID, unique_id);
 		modifyImage(object, imgfile, xsize, ysize);
 	}
 
-	public void modifyPlayerImage(int unique_id, String imgfile, int xsize,
-			int ysize) {
+	public void modifyPlayerImage(int unique_id, String imgfile, int xsize, int ysize) {
 		GameObject object = myGame.getPlayer(unique_id);
 		modifyImage(object, imgfile, xsize, ysize);
 	}
 
 	public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			double xpos, double ypos, String name, int colid, int lives) {
-	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager etm = getGame().getTEM();
 		loadImage(imgfile);
 		Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				name, colid, lives, myGame.getCollisionManager(),
-				myGame.getScoreManager(), myGame.getBloodManager());
+				myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
 		myGame.setPlayer(object);
 		myPlayer = object;
 		object.resume_in_view = false;
 
 		if (!isEditingMode) {
-			object.suspend();// not sure how things are created for playing the
-								// game
+			object.suspend();
 		}
 		return object;
 	}
 
 	public NonPlayer createActor(int unique_id, String imgfile, int xsize,
 			int ysize, double xpos, double ypos, String name, int colid, int lives) {
-	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager etm = getGame().getTEM();
 		loadImage(imgfile);
 		NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				ypos, name, colid, lives, myGame.getCollisionManager(),
-				myGame.getScoreManager(), myGame.getBloodManager());
+				myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
 		if (unique_id != SaladConstants.NULL_UNIQUE_ID) {
 			myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
 		}
 		object.resume_in_view = false;
-
-		if (!isEditingMode) {
-			object.suspend();// not sure how things are created for playing the
-								// game
-		}
+//		object.setIsActive(true);
 		return object;
+	}
+	
+	public void reviveObject() {
+		myGame.getRevivalManager().undo();
 	}
 	
 }

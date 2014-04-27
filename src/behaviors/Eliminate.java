@@ -18,11 +18,14 @@ public class Eliminate extends Collision{
 	@Override
 	public void collide(List<Object> objects) {
 		GameObject hitter = (GameObject) objects.get(0);
-		myObject.getScoreManager().updateScore(SaladConstants.COLLISION, 
-				myObject.colid, hitter.colid);
-		int blood = myObject.getBloodManager().getChangeOfBlood(SaladConstants.COLLISION, 
-				myObject.colid, hitter.colid);
-		hitter.changeBlood(blood);
+		myObject.getScoreManager().update(SaladConstants.COLLISION, 
+				myObject, hitter);
+		//object has an instance of TEM, so that they can call TEM if collide
+		//alternative: collision has engine
+		//myObject.getTriggerEventManager().update(SaladConstants.COLLISION, myObject, hitter);
+		
+		myObject.getBloodManager().update(SaladConstants.COLLISION, 
+				myObject, hitter);
 		myObject.die(); 
 	}
 }

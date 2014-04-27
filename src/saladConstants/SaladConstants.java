@@ -102,10 +102,7 @@ public final class SaladConstants {
     public static final String DRAG_IMAGE = "DragImage";
     public static final String MODIFY_ACTOR_IMAGE = "ModifyActorImage";
     public static final String MODIFY_PLAYER_IMAGE = "ModifyPlayerImage";
-    public static final String WIN_BY_TIME = "WinByTime";
-    public static final String WIN_BY_COLLISION = "WinByCollsion";
     public static final String SET_SCORE = "SetScore";
-    public static final String WIN_BY_TILE_COLLISION = "WinByTileCollision";
     public static final String MODIFY_COLLISION_BEHAVIOR = "ModifyCollisionBehavior";
     public static final String MODIFY_TILE_COLLISION_BEHAVIOR = "ModifyTileCollisionBehavior";
     
@@ -151,22 +148,39 @@ public final class SaladConstants {
 	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
 	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
 	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
-	public static final String MODIFY_TRIGGER_MANAGER = "ModifyTriggerManager";
+
+	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
 	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
 	public static final String MODIFY_LIFE_MANAGER = "ModifyLifeManager";
+
+	public static final String SET_TRIGGER_BY_TIME = "SetTriggerByTime";
+	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
+	public static final String SET_TRIGGER_BY_COLLISION = "SetTriggerByCollision";
+	public static final String SET_TRIGGER_BY_TILE_COLLISION = "SetTriggerByTileCollision";
+	public static final String SET_EVENT_LEVEL_DONE = "SetEventLevelDone";
+	public static final String SET_EVENT_ENEMY_SHOWER = "SetEventEnemyShower";
 	public static final String SET_TRIGGER = "SetTrigger";
 	public static final String SET_EVENT = "SetEvent";
+
 	public static final String TRIGGER_TYPE = "TriggerType";
 	public static final String EVENT_TYPE = "EventType";
 	public static final String SET_INIT_LIVES = "SetInitLives";
 	public static final String RESTORE_LIFE_BY_LEVEL ="RestoreLifeByLevel";
 	
+	public static final String TILE_COLLISION = "TileCollision";
+	public static final String SET_TILE_COLLISION_BLOOD = "SetTileCollisionBlood";
 
+	public static final String MODIFY_TRANSITION_STATE = "ModifyTransitionState";
+	public static final String GAME_STATE = "GameState";
+	public static final String FRAME = "Frame";
+	public static final String DISPLAY_MESSAGE = "DisplayMessage";
+	public static final String DISPLAY_IMAGE = "DisplayImage";
 
-
+	
 	public static final String HELP_HTML_URL = "./src/game_authoring_environment/resources/help.html";
 	public static final String ABOUT_HTML_URL = "./src/game_authoring_environment/resources/about.html";
 	
+	public static final String SPACE = " ";
 
 
 	
