@@ -571,5 +571,9 @@ public abstract class GameObject extends JGObject {
 	public String getMyGfx() {
 		return myStaticGfxName;
 	}
+	
+	public void setStaticGfx(String image) {
+		myStaticGfxName = image;
+	}
 
 }

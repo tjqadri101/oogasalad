@@ -535,8 +535,19 @@ public class GameEngine extends StdGame {
 			int ysize) {
 		loadImage(imgfile);
 		object.setImage(imgfile);// animation?
+		object.setStaticGfx(imgfile);
 		object.setSize(xsize, ysize);
 		object.updateImageURL(imgfile);
+	}
+	
+	public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
+		loadImage(imgfile);
+		object.setJumpingImage(imgfile);
+	}
+	
+	public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
+		loadImage(imgfile);
+		object.setMovingImage(imgfile);
 	}
 
 	public void modifyActorImage(int unique_id, String imgfile, int xsize,
