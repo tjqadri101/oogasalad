@@ -51,9 +51,17 @@ public class GAEController {
 	public GAEController(){
 		playerID = SaladConstants.PLAYER_ID;
 		myDataController = new DataController();
+
+
 		myGameEngine = myDataController.initGameEngine(true);
-		g = new GAE(this);	
+		//createGAE(this);
+		g = new GAE(this);
 		setUpVariables();
+		createLevel(1);
+		createScene(0,1);
+		switchScene(0,1);
+
+
 	}
 
 	
@@ -441,7 +449,7 @@ public class GAEController {
 	/**
      * Modify actor's image without providing actor id. The selectedActorID is used.
      */
-	public void modifyActorImageNoID( String url, int xSize, int ySize){
+	public void modifyActorImageNoID(String url, int xSize, int ySize){
 		modifyActorImage(selectedActorID, url, xSize, ySize);
 	}
 	
@@ -893,6 +901,9 @@ public class GAEController {
 		libraryPanel.setTab(index);
 	}
 		
+	public int getActorID(){
+		return selectedActorID;
+	}
 	
 	public DataController getDataController(){
 		return myDataController;
@@ -910,6 +921,7 @@ public class GAEController {
 		selectedActorID = newID;
 	}
 	
+
 	public void setActorPanelSelection(int actorID){
 		switchLibraryTab(1);
 		ActorsPanel ap= (ActorsPanel) panelMap.get(SaladConstants.ACTOR_PANEL);
@@ -930,6 +942,11 @@ public class GAEController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getActorCollisionID(){
+		//myDataController.getGame().getNonPlayerColid(int  int sceneidint id)
+		return 0;
 	}
 
 	public void setActorImageURL(String URL){
