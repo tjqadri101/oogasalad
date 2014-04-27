@@ -391,7 +391,7 @@ public abstract class GameObject extends JGObject {
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
 		myActionManager.jump();
-		setImage(myJumpingGfxName);
+		if (myJumpingGfxName != null) setImage(myJumpingGfxName); //hardcode to be modified later
 	}
 
 	/**
@@ -407,9 +407,9 @@ public abstract class GameObject extends JGObject {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
 		if (xspeed != 0) {
-			setImage(myMovingGfxName);
+			setImage(myMovingGfxName); //hardcode to be modified later
 		} else {
-			setImage(myStaticGfxName);
+			setImage(myStaticGfxName); //hardcode to be modified later
 		}
 	}
 
@@ -441,7 +441,9 @@ public abstract class GameObject extends JGObject {
 		parameters.add(tysize);
 		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior,
 				parameters, SaladConstants.COLLIDE, this);
-		setImage(myStaticGfxName);
+		if (myStaticGfxName != null) { //hardcode to be modified later
+			setImage(myStaticGfxName);
+		}
 	}
 	
 	@Override
