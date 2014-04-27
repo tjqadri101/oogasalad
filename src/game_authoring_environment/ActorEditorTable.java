@@ -81,11 +81,12 @@ public class ActorEditorTable extends PanelTable{
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					String str = arg0.getItem().toString();
 					System.out.println("new selected item:"+arg0.getItem().toString());
+				      JTextField xSizeField = new JTextField(10);
+				      JTextField ySizeField = new JTextField(10);
+				      JTextField speedField = new JTextField(10);
 					switch(str){
+
 					case "Slow Shoot":{
-						      JTextField xSizeField = new JTextField(10);
-						      JTextField ySizeField = new JTextField(10);
-						      JTextField speedField = new JTextField(10);
 						      JTextField[] texts = {xSizeField, ySizeField, speedField};
 						      String[] strings = {"x size:", "y size:", "Speed:"};
 						      JPanel myPanel = createOptionInputPanel(texts, strings);
@@ -93,13 +94,22 @@ public class ActorEditorTable extends PanelTable{
 						      int result = JOptionPane.showConfirmDialog(null, myPanel, 
 						               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
 						      if (result == JOptionPane.OK_OPTION) {
-						         gController.modifyActorSlowShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 1, Integer.parseInt(speedField.getText()));
+						         gController.modifyActorSlowShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()));
 						      }
 
 						   break;
 					}
 					case "Quick Shoot":
-						gController.modifyActorQuickShootNoID("bullet.png", 2, 2, 2, 2, 10);
+						  JTextField bulletsField = new JTextField(10);
+					      JTextField[] texts_ = {xSizeField, ySizeField, speedField, bulletsField};
+					      String[] strings_ = {"x size:", "y size:", "Speed:", "Number of Bullets Per Shot"};
+					      JPanel myPanel = createOptionInputPanel(texts_, strings_);
+
+					      int result = JOptionPane.showConfirmDialog(null, myPanel, 
+					               "Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+					      if (result == JOptionPane.OK_OPTION) {
+					         gController.modifyActorQuickShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()) );
+					      }
 						break;
 					default:
 						break;

@@ -944,6 +944,10 @@ public class GAEController {
 		}
 	}
 
+	public int getActorCollisionID(){
+		//myDataController.getGame().getNonPlayerColid(int  int sceneidint id)
+		return 0;
+	}
 
 	public void setActorImageURL(String URL){
 		String xval = "100";
