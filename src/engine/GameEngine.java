@@ -4,7 +4,6 @@ import saladConstants.SaladConstants;
 import stage.Game;
 import stage.Scene;
 import stage.Transition;
-import stage.Transition.StateType;
 import util.SaladUtil;
 import jgame.JGColor;
 import jgame.platform.StdGame;
@@ -73,6 +72,7 @@ public class GameEngine extends StdGame {
 	public void initGame() {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
 		// setTileSettings("#",2,0);
+		setSequences(startgame_ingame, 0, false, 300, lifelost_ingame, 0, gameover_ingame, 0);
 	}
 
 	public boolean checkGoal() {
@@ -263,28 +263,28 @@ public class GameEngine extends StdGame {
 		paintFrameEdit();
 	}
 
-	public void StartTitle() {
-		setTransition(StateType.Title);
+	public void startTitle() {
+		setTransition("Title");
 	}
 
-	public void StartStartGame() {
-		setTransition(StateType.StartGame);
+	public void startStartGame() {
+		setTransition("StartGame");
 	}
 
-	public void StartStartLevel() {
-		setTransition(StateType.StartLevel);
+	public void startStartLevel() {
+		setTransition("StartLevel");
 	}
 
-	public void StartLevelDone() {
-		setTransition(StateType.LevelDone);
+	public void startLevelDone() {
+		setTransition("LevelDone");
 	}
 
-	public void StartLifeLost() {
-		setTransition(StateType.LifeLost);
+	public void startLifeLost() {
+		setTransition("LifeLost");
 	}
 
-	public void StartGameOver() {
-		setTransition(StateType.GameOver);
+	public void startGameOver() {
+		setTransition("GameOver");
 	}
 
 	// @Override
@@ -301,12 +301,13 @@ public class GameEngine extends StdGame {
 	// public void paintFrameStartLevel(){
 	//
 	// }
-	//
-	// @Override
-	// public void paintFrameLevelDone(){
-	//
-	// }
-	//
+	
+	 @Override
+	 public void paintFrameLevelDone(){
+		 super.paintFrameLevelDone();
+		 paintTransition("LevelDone");
+	 }
+	
 	// @Override
 	// public void paintFrameLifeLost(){
 	//
@@ -448,20 +449,29 @@ public class GameEngine extends StdGame {
 	
 	
 	// unfinished
-	private void setTransition(StateType type) {
-		// setSequences(startgame_ingame, 0, leveldone_ingame, 0,
-		// lifelost_ingame, 0, gameover_ingame, 0);
-		Transition trans = myGame.getNonLevelScene(type);
-		String url = trans.getBackground();
-		if (url != null) {
-			loadImage(url);
-			setBGImage(url);
-		}
-		// something else to do ?
+	private void setTransition(String gameState) {
+		Transition trans = myGame.getTransitionState(gameState);
+		setBackground(trans.getBackground());
 	}
-
 	
+	private void paintTransition(String gameState) {
+		Transition trans = myGame.getTransitionState(gameState);
+		for (Entry<double[], String> entry: trans.getInstructions()) {
+			double x = entry.getKey()[0];
+			double y = entry.getKey()[1];
+			String instruction = entry.getValue();
+			drawString(instruction, x, y, 0);
+		}
+		for (Entry<double[], String> entry: trans.getImages()) {
+			double x = entry.getKey()[0];
+			double y = entry.getKey()[1];
+			String imgfile = entry.getValue();
+			loadImage(imgfile);
+			drawImage(imgfile, x, y, false);
+		}
+	}
 	
+	//check
 	public void setCurrentScene(int currentLevelID, int currentSceneID) {
 		if (myCurrentScene != null) {
 			for (GameObject go : myCurrentScene.getGameObjects()) {
@@ -557,7 +567,7 @@ public class GameEngine extends StdGame {
 
 	public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			double xpos, double ypos, String name, int colid, int lives) {
-	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager etm = getGame().getTEM();
 		loadImage(imgfile);
 		Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				name, colid, lives, myGame.getCollisionManager(),
@@ -575,7 +585,7 @@ public class GameEngine extends StdGame {
 
 	public NonPlayer createActor(int unique_id, String imgfile, int xsize,
 			int ysize, double xpos, double ypos, String name, int colid, int lives) {
-	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager etm = getGame().getTEM();
 		loadImage(imgfile);
 		NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				ypos, name, colid, lives, myGame.getCollisionManager(),
@@ -584,11 +594,7 @@ public class GameEngine extends StdGame {
 			myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
 		}
 		object.resume_in_view = false;
-
-		if (!isEditingMode) {
-			object.suspend();// not sure how things are created for playing the
-								// game
-		}
+//		object.setIsActive(true);
 		return object;
 	}
 	
