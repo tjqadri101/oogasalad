@@ -54,6 +54,7 @@ public class GameFactoryManagerTest extends TestCase{
 // here the levelID=1, SceneID=0, objID=0
     }
     /*
+     * 
     @Test
     public void testDeleteLevel() throws FactoryException{
         String DELETE_LEVEL = "DeleteLevel,ID,2";

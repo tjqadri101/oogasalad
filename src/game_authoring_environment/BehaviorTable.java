@@ -14,6 +14,10 @@ public class BehaviorTable extends PanelTable {
 
 	private GAEController gController;
 	private static final String[] collisionTypes = {"Explode", "HitterEliminateVictim", "PerishTogether", "StayOnTile"};
+	private String currentSelectedItem;
+	private String currentImputID;
+	
+	
 	public BehaviorTable(GAEController c) {
 		gController = c;
 	}
@@ -33,6 +37,7 @@ public class BehaviorTable extends PanelTable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("new text:" + tf.getText());	
+				currentImputID = tf.getText();
 			}			
 		});
 		
@@ -48,6 +53,7 @@ public class BehaviorTable extends PanelTable {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					System.out.println("new selected item:"+arg0.getItem().toString());
 					// call the change method in GAEController here (change level;change scene etc)
+					currentSelectedItem = arg0.getItem().toString();
 				}				
 			}
 		});		
@@ -56,6 +62,14 @@ public class BehaviorTable extends PanelTable {
 		
 		
 		
+	}
+	
+	public String getCurrentSelectedItem(){
+		return currentSelectedItem;
+	}
+	
+	public int getCurrentInputID(){
+		return Integer.parseInt(currentImputID);
 	}
 
 }
