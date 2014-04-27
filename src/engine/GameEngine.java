@@ -600,4 +600,7 @@ public class GameEngine extends StdGame {
 		return object;
 	}
 	
+	public void reviveObject() {
+		myGame.getRevivalManager().undo();
+	}
 }
