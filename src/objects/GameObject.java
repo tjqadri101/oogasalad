@@ -409,32 +409,13 @@ public abstract class GameObject extends JGObject {
 
 	@Override
 	public void hit(JGObject other) {
-		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager
-				.getCollisionBehavior(colid, other.colid));
-		if (parameters == null)
-			return; // just to make sure
-		String collisionBehavior = (String) parameters.get(0);
-		parameters.remove(0);
-		parameters.add(0, other);
-		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior,
-				parameters, SaladConstants.COLLIDE, this);
+		myCollisionManager.hitObject(myBehaviors, this, (GameObject) other);
 	}
 
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		// myInAirCounter = 0;
-		List<Object> parameters = SaladUtil.copyObjectList(
-				myCollisionManager.getTileCollisionBehavior(colid, tilecid));
-		if (parameters == null) return; // just to make sure
-		String collisionBehavior = (String) parameters.get(0);
-		parameters.remove(0);
-		parameters.add(tilecid);
-		parameters.add(tx);
-		parameters.add(ty);
-		parameters.add(txsize);
-		parameters.add(tysize);
-		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior,
-				parameters, SaladConstants.COLLIDE, this);
+		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
 		if (myStaticGfxName != null) { //hardcode to be modified later
 			setImage(myStaticGfxName);
 		}
