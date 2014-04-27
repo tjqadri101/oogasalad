@@ -140,4 +140,8 @@ public class DataController {
 		myImageBuffer.resizedUpload(x, y, source);
 	}
 	
+	public void reviveObject() {
+		myGameEngine.reviveObject();
+	}
+	
 }

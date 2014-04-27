@@ -10,6 +10,7 @@ import engineManagers.*;
 import util.AttributeMaker;
 import util.SaladUtil;
 import engineManagers.CollisionManager;
+import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 
 /**
@@ -19,11 +20,13 @@ import engineManagers.ScoreManager;
  * @author: Justin (Zihao) Zhang,
  * @contribution: Steve (Siyang) Wang, David Chou
  */
+
 public abstract class GameObject extends JGObject {
 
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
+	protected RevivalManager myRevivalManager;
 
 	protected String myTrigger;
 	protected boolean myTriggerFlag;
@@ -70,7 +73,7 @@ public abstract class GameObject extends JGObject {
 	protected GameObject(int uniqueID, String staticGfxName, int xsize,
 			int ysize, double xpos, double ypos, String name, int collisionId,
 			int blood, CollisionManager collisionManager,
-			ScoreManager scoreManager, BloodManager bloodManager) {
+			ScoreManager scoreManager, BloodManager bloodManager, RevivalManager revivalManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId,
 				staticGfxName);
 		myBehaviors = ResourceBundle
@@ -84,6 +87,7 @@ public abstract class GameObject extends JGObject {
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
 		myBloodManager = bloodManager;
+		myRevivalManager = revivalManager;
 		myStaticGfxName = staticGfxName;
 		myName = name;
 		initSideDetectors();
@@ -485,6 +489,13 @@ public abstract class GameObject extends JGObject {
 				parameters, SaladConstants.COLLIDE, this);
 		setImage(myStaticGfxName);
 	}
+	
+	@Override
+	public void remove() {
+		if (isAlive()) eng.removeObject(this); 
+		is_alive=false; 
+		myRevivalManager.addRemovedObject(this);
+	}
 
 	public void autoMove() {
 		if (myMoveBehavior == null)
@@ -538,65 +549,6 @@ public abstract class GameObject extends JGObject {
 		return myBloodManager;
 	}
 	
-//	/**
-//         * Used for triggerManager to inspect the trigger
-//         * @return Trigger
-//         */
-//
-//        public String getTrigger(){
-//                return myTrigger;
-//        }
-//        
-//        /**
-//         * Used for triggerManager to checkTrigger at each doFrame in engine
-//         * @return Trigger
-//         */
-//        
-//        public boolean checkTrigger(GameEngine myEngine){
-//            if (myTrigger == null) return false;
-//            ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
-//            Object answer = SaladUtil.behaviorReflection(behaviors, myTrigger, myTriggerParameter, "checkTrigger", myEngine);
-//            myTriggerFlag = (boolean) answer;
-//            return myTriggerFlag;
-//        }
-////Not 100% ready for observer pattern yet        
-//        /**
-//         * Below four methods overriding the interface Subject in the observer pattern
-//         */
-//        @Override
-//        public void register(Observer obj) {
-//            if(obj == null) throw new NullPointerException("Null Observer");
-//            synchronized (MUTEX) {
-//            if(!myObservers.contains(obj)) myObservers.add(obj);
-//            }
-//        }
-//        @Override 
-//        public void unregister(Observer obj) {
-//            synchronized (MUTEX) {
-//            myObservers.remove(obj);
-//            }
-//        }
-//        @Override
-//        public void notifyObservers() {
-//            List<Observer> observersLocal = null;
-//            //synchronization is used to make sure any observer registered after message is received is not notified
-//            synchronized (MUTEX) {
-//                if (!isUpdated)
-//                    return;
-//                observersLocal = new ArrayList<>(this.myObservers);
-//                this.isUpdated=false;
-//            }
-//            for (Observer obj : observersLocal) {
-//                obj.update();
-//            }
-//     
-//        }
-//        @Override
-//        public String getUpdate(Observer obj) {
-//            return myTrigger;
-//        }
-//	
-	
 	
 /* @Steve:
  * The following getter and setters used for GameFactoryTest
@@ -628,6 +580,14 @@ public abstract class GameObject extends JGObject {
 	 */
 	public String getMyGfx() {
 		return myStaticGfxName;
+	}
+	
+	public void setStaticGfx(String image) {
+		myStaticGfxName = image;
+	}
+
+	public RevivalManager getRevivalManager() {
+		return myRevivalManager;
 	}
 
 }

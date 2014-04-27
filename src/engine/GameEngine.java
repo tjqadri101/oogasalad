@@ -54,9 +54,6 @@ public class GameEngine extends StdGame {
 	protected char myTileCid;
 
 	protected boolean isEditingMode;
-//?? discuss if needed to put it here
-	protected TriggerEventManager myTEM = new TriggerEventManager(this);
-	
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -102,7 +99,7 @@ public class GameEngine extends StdGame {
 
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-//	        TriggerEventManager etm = getGame().getTEM();
+//	        TriggerEventManager myTEM = getGame().getTEM();
 		timer++;//change later
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -116,7 +113,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-//		etm.checkTrigger();
+//		myTEM.checkTrigger(this);
 		if (checkGoal()) {
 			if (level >= 3) {
 				gameOver();
@@ -548,8 +545,19 @@ public class GameEngine extends StdGame {
 			int ysize) {
 		loadImage(imgfile);
 		object.setImage(imgfile);// animation?
+		object.setStaticGfx(imgfile);
 		object.setSize(xsize, ysize);
 		object.updateImageURL(imgfile);
+	}
+	
+	public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
+		loadImage(imgfile);
+		object.setJumpingImage(imgfile);
+	}
+	
+	public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
+		loadImage(imgfile);
+		object.setMovingImage(imgfile);
 	}
 
 	public void modifyActorImage(int unique_id, String imgfile, int xsize,
@@ -571,7 +579,7 @@ public class GameEngine extends StdGame {
 		loadImage(imgfile);
 		Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				name, colid, lives, myGame.getCollisionManager(),
-				myGame.getScoreManager(), myGame.getBloodManager());
+				myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
 		myGame.setPlayer(object);
 		myPlayer = object;
 		object.resume_in_view = false;
@@ -589,7 +597,7 @@ public class GameEngine extends StdGame {
 		loadImage(imgfile);
 		NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				ypos, name, colid, lives, myGame.getCollisionManager(),
-				myGame.getScoreManager(), myGame.getBloodManager());
+				myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
 		if (unique_id != SaladConstants.NULL_UNIQUE_ID) {
 			myGame.addNonPlayer(myCurrentLevelID, myCurrentSceneID, object);
 		}
@@ -598,4 +606,7 @@ public class GameEngine extends StdGame {
 		return object;
 	}
 	
+	public void reviveObject() {
+		myGame.getRevivalManager().undo();
+	}
 }

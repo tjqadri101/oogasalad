@@ -8,6 +8,8 @@ import java.util.Map;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.InputManager;
+import engineManagers.LiveManager;
+import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
 import engineManagers.TriggerEventManager;
@@ -29,13 +31,15 @@ public class Game {
 	protected Map<String, Transition> myTransitionStateMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
+	protected LiveManager myLiveManager;
 	protected TriggerEventManager myTriggerManager;
+	protected RevivalManager myRevivalManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
-	protected Player myPlayer;
+	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-    protected TriggerEventManager etm;
+//    protected TriggerEventManager myTEM;
 
 
 	public Game(){
@@ -43,11 +47,13 @@ public class Game {
 		myLevelMap = new HashMap<Integer, Level>();
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
+		myLiveManager = new LiveManager();
+		myRevivalManager = new RevivalManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
-    	etm = new TriggerEventManager(null);
+//    	myTEM = new TriggerEventManager();
 	}
 
 	private void initTransitionStateMap() {
@@ -188,17 +194,25 @@ public class Game {
 	 * @return nothing
 	 */
 	public void setPlayer(Player player){
-		myPlayer = player;
+		myPlayerMap.put(player.getID(), player);
+		myLiveManager.addPlayer(player);
 	}
 	
 	/** 
      * Called to get the Player from the Game
-     * Parameters needed but not used to facilitate GameFactory for Reflection
-     * @param levelID, sceneID, objectID
+     * @param playerID
      * @return Player Object
      */
     public Player getPlayer(int playerID){
-    	return myPlayer;
+    	return myPlayerMap.get(playerID);
+    }
+    
+    /**
+     * Called to remove a Player matched to the playerID from the Game
+     * @param playerID
+     */
+    public void deletePlayer(int playerID){
+    	myPlayerMap.remove(playerID);
     }
 	
 	/**
@@ -277,15 +291,19 @@ public class Game {
 	/** Should only be called from Engine
 	 * @return the only instance of TriggerEventManager
 	 */
-	public TriggerEventManager getTEM(){
-	    return etm;
-	}
-	
+//	public TriggerEventManager getTEM(){
+//	    return myTEM;
+//	}
+//	
 	/* @Siyang: 
 	 * The following getter added to facilitate testing. 
 	 */
 	public Map<Integer, Level> getMyLevelMap(){
 	    return myLevelMap;
+	}
+
+	public RevivalManager getRevivalManager() {
+		return myRevivalManager;
 	}	
 
 }
