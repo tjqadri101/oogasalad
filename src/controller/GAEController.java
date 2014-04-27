@@ -817,9 +817,9 @@ public class GAEController {
 	}
 	
 	//the following two methods are not ready yet
-	/*public void modifyTriggerManager(int ID){
-		String order = SaladConstants.MODIFY_TRIGGER_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ ID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_TYPE;
+	/*public void modifyTriggerEventManagerTime(int ID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ ID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TIME + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_TYPE;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

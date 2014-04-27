@@ -46,7 +46,7 @@ public class MenuBar extends JMenuBar{
 	
 	private JMenu createFileMenu(){
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(makeMenuItem("Save As...", "saveGameFile"));
+		fileMenu.add(makeMenuItem(getCurrentInstance(), "Save As...", "saveGameFile"));
 		/*JMenuItem m = new JMenuItem("Save As...");
 		m.addActionListener(new ActionListener(){
 			@Override
@@ -54,32 +54,25 @@ public class MenuBar extends JMenuBar{
 				saveGameFile();
 		}});
 		fileMenu.add(m);*/
-		/*JMenuItem m2 = new JMenuItem("Open");
-		m2.addActionListener(new ActionListener(){
-			@Override
-			 public void actionPerformed (ActionEvent event){
-				openGameFile();
-		}});
-		fileMenu.add(m2);*/
-		fileMenu.add(makeMenuItem("Open", "openGameFile"));
-		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
+		fileMenu.add(makeMenuItem(getCurrentInstance(), "Open", "openGameFile"));
+		fileMenu.add(makeMenuItem(getCurrentInstance(), "Quit", "closeProgram"));
 		return fileMenu;
 	}
 	
 	private JMenu createEditMenu(){
 		JMenu editMenu = new JMenu("Edit");
-		editMenu.add(makeMenuItem("Undo", "doNothing"));
-		editMenu.add(makeMenuItem("Redo", "doNothing"));
-		editMenu.add(makeMenuItem("Cut", "doNothing"));
-		editMenu.add(makeMenuItem("Copy", "doNothing"));
-		editMenu.add(makeMenuItem("Paste", "doNothing"));
+		editMenu.add(makeMenuItem(gController.getDataController(), "Undo", "doNothing"));
+		//editMenu.add(makeMenuItem(getCurrentInstance(), "Redo", "doNothing"));
+		//editMenu.add(makeMenuItem(getCurrentInstance(), "Cut", "doNothing"));
+		//editMenu.add(makeMenuItem(getCurrentInstance(), "Copy", "doNothing"));
+		//editMenu.add(makeMenuItem(getCurrentInstance(), "Paste", "doNothing"));
 		return editMenu;
 	}
 	
 	private JMenu createHelpMenu(){
 		JMenu helpMenu = new JMenu("Help");
-		helpMenu.add(makeMenuItem("About", "createAboutPanel"));
-		helpMenu.add(makeMenuItem("Help page", "createHelpPanel"));
+		helpMenu.add(makeMenuItem(getCurrentInstance(), "About", "createAboutPanel"));
+		helpMenu.add(makeMenuItem(getCurrentInstance(), "Help page", "createHelpPanel"));
 		return helpMenu;
 	}
 	
@@ -153,32 +146,10 @@ public class MenuBar extends JMenuBar{
 	
 	
 	
-	public JComponent makeMenuItem(String label, String method) {
+	public JComponent makeMenuItem(Object target, String label, String method) {
 		JMenuItem m = new JMenuItem(label);
 		
-		/*try {
-		final Method onClickMethod = getCurrentInstance().getClass()
-				.getDeclaredMethod(method);
-		m.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				try {
-					onClickMethod.setAccessible(true);
-					onClickMethod.invoke(getCurrentInstance());
-					onClickMethod.setAccessible(false);
-				}
-				catch (Exception e1) {
-					throw new ReflectionException(e1.getMessage());
-				}
-			}
-		});
-
-	} catch (Exception e) {
-		throw new ReflectionException(e.getMessage());
-	}*/
-		
-		MethodAction action = new MethodAction(getCurrentInstance() ,method);
+		MethodAction action = new MethodAction(target ,method);
 		m.addActionListener(action);
 		
 		return m;
@@ -189,29 +160,5 @@ public class MenuBar extends JMenuBar{
 	private MenuBar getCurrentInstance(){
 		return this;
 	}
-
-	/*// for testing purposes
-	 private static void createAndShowGUI() {
-	        //Create and set up the window.
-	        JFrame frame = new JFrame("MenuBarDemo");
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	        //Create and set up the content pane.
-	        MenuBar demo = new MenuBar();
-	        frame.setJMenuBar(demo);
-	        //Display the window.
-	        frame.setSize(450, 260);
-	        frame.setVisible(true);
-	    }
-
-	    public static void main(String[] args) {
-	        //Schedule a job for the event-dispatching thread:
-	        //creating and showing this application's GUI.
-	        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-	            public void run() {
-	                createAndShowGUI();
-	            }
-	        });
-	    }*/
 
 }
