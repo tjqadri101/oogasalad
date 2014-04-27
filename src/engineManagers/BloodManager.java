@@ -10,6 +10,7 @@ import util.SaladUtil;
 /**
  * Manage the Change of the blood of all Game Objects
  * For Player, manage the blood for its each life
+ * 
  * @author Main Justin (Zihao) Zhang
  *
  */

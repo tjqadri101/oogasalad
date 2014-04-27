@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import jgame.JGObject;
 import saladConstants.SaladConstants;
-import engine.GameEngine;
 import engineManagers.*;
 import util.AttributeMaker;
 import util.SaladUtil;
@@ -18,7 +17,7 @@ import engineManagers.ScoreManager;
  * unit that can execute certain actions and interactions
  * 
  * @author: Justin (Zihao) Zhang,
- * @contribution: Steve (Siyang) Wang, David Chou
+ * @contribution: David Chou
  */
 
 public abstract class GameObject extends JGObject {
@@ -28,20 +27,9 @@ public abstract class GameObject extends JGObject {
 	protected BloodManager myBloodManager;
 	protected RevivalManager myRevivalManager;
 
-	protected String myTrigger;
-	protected boolean myTriggerFlag;
-	// Not 100% ready to implement observer pattern
-	protected List<Observer> myObservers;
-	protected boolean isUpdated;
-	private final Object MUTEX = new Object();
-	protected List<Object> myTriggerParameter;
-	protected List<Object> myEventParameter;
-	protected String myEvent;
-
-
 	protected int myXSize;
 	protected int myYSize;
-	protected double myInitX;
+	protected double myInitX; 
 	protected double myInitY;
 	protected int myInitBlood;
 	protected int myBlood;
@@ -91,7 +79,6 @@ public abstract class GameObject extends JGObject {
 		myStaticGfxName = staticGfxName;
 		myName = name;
 		initSideDetectors();
-//		myObservers = new ArrayList<>();
 	}
 
 	public boolean getIsActive() {
@@ -549,6 +536,20 @@ public abstract class GameObject extends JGObject {
 		return myBloodManager;
 	}
 	
+	/**
+	 * @return the Gfx info
+	 */
+	public String getMyGfx() {
+		return myStaticGfxName;
+	}
+	
+	public void setStaticGfx(String image) {
+		myStaticGfxName = image;
+	}
+
+	public RevivalManager getRevivalManager() {
+		return myRevivalManager;
+	}
 	
 /* @Steve:
  * The following getter and setters used for GameFactoryTest
@@ -574,20 +575,5 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
-
-	/**
-	 * @return the Gfx info
-	 */
-	public String getMyGfx() {
-		return myStaticGfxName;
-	}
-	
-	public void setStaticGfx(String image) {
-		myStaticGfxName = image;
-	}
-
-	public RevivalManager getRevivalManager() {
-		return myRevivalManager;
-	}
 
 }

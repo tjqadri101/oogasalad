@@ -180,7 +180,7 @@ public final class SaladConstants {
 	public static final String DISPLAY_MESSAGE = "DisplayMessage";
 	public static final String DISPLAY_IMAGE = "DisplayImage";
 
-	
+	public static final String SPACE = " ";
 
 
 	

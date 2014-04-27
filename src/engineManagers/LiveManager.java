@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import objects.GameObject;
 import objects.Player;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;

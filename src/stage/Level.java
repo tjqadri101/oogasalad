@@ -4,18 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import engineManagers.Observer;
 import objects.GameObject;
 import objects.NonPlayer;
-import objects.Subject;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 
 /**
- * @author Justin (Zihao) Zhang
- * @Contribution David Chou, Steve (Siyang) Wang
+ * @author Main Justin (Zihao) Zhang
+ * @contribution David Chou
  */
-public class Level implements Subject {
+public class Level {
 
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
@@ -23,13 +21,6 @@ public class Level implements Subject {
 	protected List<Object> myWinParameters;
     protected String myEventBehavior;
     private ArrayList<Object> myEventParameters;
-            protected List<Observer> myObservers;
-            protected boolean isUpdated;
-            private final Object MUTEX= new Object();
-            protected List<Object> myTriggerParameter;
-            protected List<Object> myEventParameter;
-            protected String myTrigger;
-            protected String myEvent;
 
 	public Level(int id) {
 		myID = id;
@@ -46,9 +37,6 @@ public class Level implements Subject {
 
 	public void addScene(int sceneID) {
 		Scene scene = new Scene(sceneID);
-/*Commented out, not fully ready to switch to observer pattern*/
-//	              scene.register(etm);
-//	              etm.setSubject(scene);
 		mySceneMap.put(sceneID, scene);
 	}
 	
@@ -87,7 +75,8 @@ public class Level implements Subject {
 	public List<Object> getWinParameters(){
 		return myWinParameters;
 	}
-	// following similar to teh winBehavior consider refactoring 
+	
+	// following similar to the winBehavior consider refactoring 
 	public void setEventBehavior(String type, Object ... args){
 	    myEventBehavior = type;
 	    myEventParameters = new ArrayList<Object>();
@@ -125,43 +114,6 @@ public class Level implements Subject {
 		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_GOAL, myWinBehavior, true, myWinParameters));
 		return answer;
 	}
-	
-	    
-        /**
-         * Below four methods overriding the interface Subject in the observer pattern
-         */
-        @Override
-        public void register(Observer obj) {
-            if(obj == null) throw new NullPointerException("Null Observer");
-            synchronized (MUTEX) {
-            if(!myObservers.contains(obj)) myObservers.add(obj);
-            }
-        }
-        @Override 
-        public void unregister(Observer obj) {
-            synchronized (MUTEX) {
-            myObservers.remove(obj);
-            }
-        }
-        @Override
-        public void notifyObservers() {
-            List<Observer> observersLocal = null;
-            //synchronization is used to make sure any observer registered after message is received is not notified
-            synchronized (MUTEX) {
-                if (!isUpdated)
-                    return;
-                observersLocal = new ArrayList<>(this.myObservers);
-                this.isUpdated=false;
-            }
-            for (Observer obj : observersLocal) {
-                obj.update();
-            }
-     
-        }
-        @Override
-        public String getUpdate(Observer obj) {
-            return myTrigger;
-        }
 	
 	/* @Siyang: 
          * The following getter added to facilitate testing. 
