@@ -123,6 +123,7 @@ public final class SaladConstants {
 
     public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
     public static final double DEFAULT_ACTOR_SPEED = 5;
+    public static final int DEFAULT_INIT_LIVES = 3;
     
     public static final int POSITIVE_DIRECTION = 1;
     public static final int NEGATIVE_DIRECTION = -1;
@@ -151,11 +152,20 @@ public final class SaladConstants {
 	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
 	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
 	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
+<<<<<<< HEAD
 	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
+=======
+	public static final String MODIFY_TRIGGER_MANAGER = "ModifyTriggerManager";
+	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
+	public static final String MODIFY_LIFE_MANAGER = "ModifyLifeManager";
+>>>>>>> ab386ec3b72f7e7231d4f9b3ab23fc96ee9cd296
 	public static final String SET_TRIGGER = "SetTrigger";
 	public static final String SET_EVENT = "SetEvent";
 	public static final String TRIGGER_TYPE = "TriggerType";
 	public static final String EVENT_TYPE = "EventType";
+	public static final String SET_INIT_LIVES = "SetInitLives";
+	public static final String RESTORE_LIFE_BY_LEVEL ="RestoreLifeByLevel";
+	
 
 
 	
