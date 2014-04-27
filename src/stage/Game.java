@@ -17,7 +17,6 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
-import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
  * @author Main Justin (Zihao) Zhang
@@ -29,7 +28,7 @@ public class Game {
 	public static final int NONUSE_ID = 0;
 
 	protected Map<Integer, Level> myLevelMap;
-	protected Map<StateType, Transition> myNonLevelSceneMap;
+	protected Map<String, Transition> myTransitionStateMap;
 	protected ScoreManager myScoreManager;
 	protected BloodManager myBloodManager;
 	protected LiveManager myLiveManager;
@@ -44,8 +43,9 @@ public class Game {
 
 
 	public Game(){
+		initTransitionStateMap();
 		myLevelMap = new HashMap<Integer, Level>();
-		myNonLevelSceneMap = new HashMap<StateType, Transition>();
+		myPlayerMap = new HashMap<Integer, Player>();// ???
 		myScoreManager = new ScoreManager();
 		myBloodManager = new BloodManager();
 		myLiveManager = new LiveManager();
@@ -55,6 +55,13 @@ public class Game {
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
 //    	myTEM = new TriggerEventManager();
+	}
+
+	private void initTransitionStateMap() {
+		myTransitionStateMap = new HashMap<String, Transition>();
+		for (String gameState: Transition.TRANSITION_STATE){
+			myTransitionStateMap.put(gameState, new Transition(gameState));
+		}
 	}
 
 	/**
@@ -208,22 +215,13 @@ public class Game {
     public void deletePlayer(int playerID){
     	myPlayerMap.remove(playerID);
     }
-
-	/**
-	 * Called to add the non-level transition scenes to the Game
-	 * @param StateType
-	 * @return void
-	 */
-	public void addNonLevelScene(StateType type){
-		myNonLevelSceneMap.put(type, new Transition(type));
-	}
 	
 	/**
-	 * Called to get the non-level transition from the Game
+	 * Called to get the transition state from the Game
 	 * @return a Transition
 	 */
-	public Transition getNonLevelScene(StateType type){
-		return myNonLevelSceneMap.get(type);
+	public Transition getTransitionState(String gameState){
+		return myTransitionStateMap.get(gameState);
 	}
     
     /**
@@ -285,7 +283,7 @@ public class Game {
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
 		answer.addAll(myCollisionManager.getAttributes());
-		for(Transition value: myNonLevelSceneMap.values()){
+		for(Transition value: myTransitionStateMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
 		return answer;
