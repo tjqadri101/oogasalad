@@ -438,10 +438,9 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		// myInAirCounter = 0;
-		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager
-				.getTileCollisionBehavior(colid, tilecid));
-		if (parameters == null)
-			return; // just to make sure
+		List<Object> parameters = SaladUtil.copyObjectList(
+				myCollisionManager.getTileCollisionBehavior(colid, tilecid));
+		if (parameters == null) return; // just to make sure
 		String collisionBehavior = (String) parameters.get(0);
 		parameters.remove(0);
 		parameters.add(tilecid);
