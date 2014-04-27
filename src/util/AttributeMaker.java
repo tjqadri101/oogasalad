@@ -95,7 +95,10 @@ public class AttributeMaker {
 		StringBuilder attribute = new StringBuilder();
 		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
 		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
-		for(Object o: args){ attribute.append(SaladConstants.SEPARATOR + o.toString()); }
+		for(Object o: args){ 
+			if(o == null) attribute.append("null");
+			attribute.append(SaladConstants.SEPARATOR + o.toString()); 
+		}
 		return attribute.toString();
 	}
 	

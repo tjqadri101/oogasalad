@@ -27,6 +27,7 @@ public abstract class GameObject extends JGObject {
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
 	protected RevivalManager myRevivalManager;
+	protected ActionManager myActionManager;
 
 	protected int myXSize;
 	protected int myYSize;
@@ -45,17 +46,19 @@ public abstract class GameObject extends JGObject {
 	protected List<String> myAttributes;
 	protected String myName;
 	protected boolean myIsActive;
+	
+	protected int myDirection;
 
-	protected ResourceBundle myBehaviors;
-	protected String myDieBehavior;
-	protected String myMoveBehavior;
-	protected String myJumpBehavior;
-	protected String myShootBehavior;
-
-	protected List<Object> myShootParameters;
-	protected List<Object> myDieParameters;
-	protected List<Object> myMoveParameters;
-	protected List<Object> myJumpParameters;
+	protected ResourceBundle myBehaviors; //delete later
+//	protected String myDieBehavior;
+//	protected String myMoveBehavior;
+//	protected String myJumpBehavior;
+//	protected String myShootBehavior;
+//
+//	protected List<Object> myShootParameters;
+//	protected List<Object> myDieParameters;
+//	protected List<Object> myMoveParameters;
+//	protected List<Object> myJumpParameters;
 	protected SideDetector[] mySideDetectors;
 
 	protected GameObject(int uniqueID, String staticGfxName, int xsize,
@@ -66,7 +69,7 @@ public abstract class GameObject extends JGObject {
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
 						+ SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
-		setBlood(blood); // change later
+		setInitBlood(blood); // change later
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
 		myAttributes = new ArrayList<String>();
@@ -76,7 +79,11 @@ public abstract class GameObject extends JGObject {
 		myRevivalManager = revivalManager;
 		myStaticGfxName = staticGfxName;
 		myName = name;
+		myActionManager = new ActionManager(this);
 		initSideDetectors();
+		System.out.println((creationString() + SaladConstants.ID + myUniqueID + 
+				SaladConstants.IMAGE + false + myStaticGfxName + myXSize + myYSize + SaladConstants.POSITION + myInitX + 
+				myInitY + SaladConstants.NAME + myName + SaladConstants.COLLISION_ID + colid + SaladConstants.LIVES + myInitBlood));
 		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.IMAGE, false, myStaticGfxName, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
 				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
@@ -183,18 +190,23 @@ public abstract class GameObject extends JGObject {
 	}
 
 	/**
-	 * Do not call this method directly Used for getAttributes() method
+	 * Used for ActionManager or GameObject itself to getAttributes
 	 * 
 	 * @return String
 	 */
-	protected String modificationString() {
+	public String modificationString() {
 		if (this instanceof Player) {
 			return SaladConstants.MODIFY_PLAYER;
 		}
 		return SaladConstants.MODIFY_ACTOR;
 	}
 	
-	protected String creationString(){
+	/**
+	 * Used for ActionManager or GameObject itself to getAttributes
+	 * 
+	 * @return String
+	 */
+	public String creationString(){
 		if(this instanceof Player){
 			return SaladConstants.CREATE_PLAYER;
 		}
@@ -214,9 +226,9 @@ public abstract class GameObject extends JGObject {
 	 * Restore to original state within a scene Used for live-editing
 	 */
 	public void restore(boolean resetLife) {
-		setInitPos(myInitX, myInitY);
-		setInitSpeed(myInitXSpeed, myInitYSpeed);
-		setBlood(myInitBlood);
+		setPos(myInitX, myInitY);
+		setSpeed(myInitXSpeed, myInitYSpeed);
+		restoreBlood();
 		if (resetLife) {
 			//Live Manager
 		}
@@ -225,7 +237,7 @@ public abstract class GameObject extends JGObject {
 			is_alive = true;
 		}
 		if (mySideDetectors!=null){
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
 				mySideDetectors[i].restore(false);
 			}
 		}
@@ -234,7 +246,7 @@ public abstract class GameObject extends JGObject {
 	public void resume(){
 		super.resume();
 		if (mySideDetectors!=null){
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
 				mySideDetectors[i].resume();
 			}
 		}
@@ -273,11 +285,12 @@ public abstract class GameObject extends JGObject {
 	 * @param a String specifying one of the die behaviors
 	 */
 	public void setDieBehavior(String s, Object... args) {
-		myDieBehavior = s;
-		myDieParameters = SaladUtil.convertArgsToObjectList(args);
-		myAttributes.add(AttributeMaker.addAttribute(modificationString(),
-				SaladConstants.ID, myUniqueID, myDieBehavior, true,
-				myDieParameters));
+//		myDieBehavior = s;
+//		myDieParameters = SaladUtil.convertArgsToObjectList(args);
+//		myAttributes.add(AttributeMaker.addAttribute(modificationString(),
+//				SaladConstants.ID, myUniqueID, myDieBehavior, true,
+//				myDieParameters));
+		myActionManager.setDieBehavior(s, args);
 	}
 
 	/**
@@ -292,9 +305,13 @@ public abstract class GameObject extends JGObject {
 	 * 
 	 * @param lives
 	 */
-	public void setBlood(int blood) {
+	public void setInitBlood(int blood) {
 		myInitBlood = blood;
-		myBlood = blood;
+		restoreBlood();
+	}
+	
+	protected void restoreBlood(){
+		myBlood = myInitBlood;
 	}
 
 	/**
@@ -324,11 +341,12 @@ public abstract class GameObject extends JGObject {
 	 *            of the initial jump speed
 	 */
 	public void setJumpBehavior(String s, Object... args) {
-		myJumpBehavior = s;
-		myJumpParameters = SaladUtil.convertArgsToObjectList(args);
-		myAttributes.add(AttributeMaker.addAttribute(modificationString(),
-				SaladConstants.ID, myUniqueID, myJumpBehavior, true,
-				myJumpParameters));
+//		myJumpBehavior = s;
+//		myJumpParameters = SaladUtil.convertArgsToObjectList(args);
+//		myAttributes.add(AttributeMaker.addAttribute(modificationString(),
+//				SaladConstants.ID, myUniqueID, myJumpBehavior, true,
+//				myJumpParameters));
+		myActionManager.setJumpBehavior(s, args);
 	}
 
 	/**
@@ -340,11 +358,12 @@ public abstract class GameObject extends JGObject {
 	 *            : parameters
 	 */
 	public void setShootBehavior(String s, Object... args) {
-		myShootBehavior = s;
-		myShootParameters = SaladUtil.convertArgsToObjectList(args);
-		myAttributes.add(AttributeMaker.addAttribute(modificationString(),
-				SaladConstants.ID, myUniqueID, myShootBehavior, true,
-				myShootParameters));
+//		myShootBehavior = s;
+//		myShootParameters = SaladUtil.convertArgsToObjectList(args);
+//		myAttributes.add(AttributeMaker.addAttribute(modificationString(),
+//				SaladConstants.ID, myUniqueID, myShootBehavior, true,
+//				myShootParameters));
+		myActionManager.setShootBehavior(s, args);
 	}
 
 	/**
@@ -358,17 +377,19 @@ public abstract class GameObject extends JGObject {
 	 *            : the y speed
 	 */
 	public void setMoveBehavior(String s, Object... args) {
-		myMoveBehavior = s;
-		myMoveParameters = SaladUtil.convertArgsToObjectList(args);
-		myAttributes.add(AttributeMaker.addAttribute(modificationString(),
-				SaladConstants.ID, myUniqueID, myMoveBehavior, true,
-				myMoveParameters));
+//		myMoveBehavior = s;
+//		myMoveParameters = SaladUtil.convertArgsToObjectList(args);
+//		myAttributes.add(AttributeMaker.addAttribute(modificationString(),
+//				SaladConstants.ID, myUniqueID, myMoveBehavior, true,
+//				myMoveParameters));
+		myActionManager.setMoveBehavior(s, args);
 	}
 
 	public void die() {
-		if (myDieBehavior == null) return;
-		SaladUtil.behaviorReflection(myBehaviors, myDieBehavior,
-				myDieParameters, SaladConstants.REMOVE, this);
+//		if (myDieBehavior == null) return;
+//		SaladUtil.behaviorReflection(myBehaviors, myDieBehavior,
+//				myDieParameters, SaladConstants.REMOVE, this);
+		myActionManager.die();
 	}
 
 	// public void bounce(){
@@ -406,9 +427,10 @@ public abstract class GameObject extends JGObject {
 
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
-		if (myJumpBehavior == null) return;
-		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior,
-				myJumpParameters, SaladConstants.JUMP, this);
+//		if (myJumpBehavior == null) return;
+//		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior,
+//				myJumpParameters, SaladConstants.JUMP, this);
+		myActionManager.jump();
 		setImage(myJumpingGfxName);
 	}
 
@@ -470,15 +492,17 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void autoMove() {
-		if (myMoveBehavior == null) return;
-		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior,
-				myMoveParameters, SaladConstants.MOVE, this);
+//		if (myMoveBehavior == null) return;
+//		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior,
+//				myMoveParameters, SaladConstants.MOVE, this);
+		myActionManager.autoMove();
 	}
 
 	public void shoot() {
-		if (myShootBehavior == null) return;
-		SaladUtil.behaviorReflection(myBehaviors, myShootBehavior,
-				myShootParameters, SaladConstants.SHOOT, this);
+//		if (myShootBehavior == null) return;
+//		SaladUtil.behaviorReflection(myBehaviors, myShootBehavior,
+//				myShootParameters, SaladConstants.SHOOT, this);
+		myActionManager.shoot();
 	}
 
 	/**
@@ -489,6 +513,7 @@ public abstract class GameObject extends JGObject {
 	 * @return a list of Strings
 	 */
 	public List<String> getAttributes() {
+		myAttributes.addAll(myActionManager.getAttributes());
 		return myAttributes;
 	}
 
@@ -541,16 +566,16 @@ public abstract class GameObject extends JGObject {
     /**
      * @return the myMoveBehavior
      */
-    public String getMyMoveBehavior () {
-        return myMoveBehavior;
-    }
-
-    /**
-     * @return the myDieBehavior
-     */
-    public String getMyDieBehavior () {
-        return myDieBehavior;
-    }
+//    public String getMyMoveBehavior () {
+//        return myMoveBehavior;
+//    }
+//
+//    /**
+//     * @return the myDieBehavior
+//     */
+//    public String getMyDieBehavior () {
+//        return myDieBehavior;
+//    }
     
     /**
      * @return the myInitX
