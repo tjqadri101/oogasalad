@@ -10,6 +10,7 @@ import engineManagers.*;
 import util.AttributeMaker;
 import util.SaladUtil;
 import engineManagers.CollisionManager;
+import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 
 /**
@@ -25,6 +26,7 @@ public abstract class GameObject extends JGObject {
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
+	protected RevivalManager myRevivalManager;
 
 	protected String myTrigger;
 	protected boolean myTriggerFlag;
@@ -71,7 +73,7 @@ public abstract class GameObject extends JGObject {
 	protected GameObject(int uniqueID, String staticGfxName, int xsize,
 			int ysize, double xpos, double ypos, String name, int collisionId,
 			int blood, CollisionManager collisionManager,
-			ScoreManager scoreManager, BloodManager bloodManager) {
+			ScoreManager scoreManager, BloodManager bloodManager, RevivalManager revivalManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId,
 				staticGfxName);
 		myBehaviors = ResourceBundle
@@ -85,6 +87,7 @@ public abstract class GameObject extends JGObject {
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
 		myBloodManager = bloodManager;
+		myRevivalManager = revivalManager;
 		myStaticGfxName = staticGfxName;
 		myName = name;
 		initSideDetectors();
@@ -486,6 +489,13 @@ public abstract class GameObject extends JGObject {
 				parameters, SaladConstants.COLLIDE, this);
 		setImage(myStaticGfxName);
 	}
+	
+	@Override
+	public void remove() {
+		if (isAlive()) eng.removeObject(this); 
+		is_alive=false; 
+		myRevivalManager.addRemovedObject(this);
+	}
 
 	public void autoMove() {
 		if (myMoveBehavior == null)
@@ -574,6 +584,10 @@ public abstract class GameObject extends JGObject {
 	
 	public void setStaticGfx(String image) {
 		myStaticGfxName = image;
+	}
+
+	public RevivalManager getRevivalManager() {
+		return myRevivalManager;
 	}
 
 }

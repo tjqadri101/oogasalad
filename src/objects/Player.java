@@ -7,6 +7,7 @@ import java.util.Map;
 //import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
+import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
@@ -22,8 +23,8 @@ public class Player extends GameObject {
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
-			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager) {
-		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, scoreManager, bloodManager);
+			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager, RevivalManager revivalManager) {
+		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, scoreManager, bloodManager, revivalManager);
 		myIsPlayer = true;
 		myKeyMap = new HashMap<Integer, String>();
 		myInitXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;

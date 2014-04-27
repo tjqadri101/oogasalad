@@ -19,11 +19,11 @@ public class RevivalManager {
 		removedObjects = new Stack<GameObject>();
 	}
 
-	public GameObject undo() {
+	public void undo() {
 		if (removedObjects.peek() != null) {
-			return removedObjects.pop();
+			removedObjects.pop().restore(true);
 		} else {
-			return null;
+			return;
 		}
 	}
 	
