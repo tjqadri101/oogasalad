@@ -33,7 +33,7 @@ public class Game {
 	protected TriggerEventManager myTriggerManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
-	protected Player myPlayer;
+	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
     protected TriggerEventManager etm;
@@ -182,17 +182,24 @@ public class Game {
 	 * @return nothing
 	 */
 	public void setPlayer(Player player){
-		myPlayer = player;
+		myPlayerMap.put(player.getID(), player);
 	}
 	
 	/** 
      * Called to get the Player from the Game
-     * Parameters needed but not used to facilitate GameFactory for Reflection
-     * @param levelID, sceneID, objectID
+     * @param playerID
      * @return Player Object
      */
     public Player getPlayer(int playerID){
-    	return myPlayer;
+    	return myPlayerMap.get(playerID);
+    }
+    
+    /**
+     * Called to remove a Player matched to the playerID from the Game
+     * @param playerID
+     */
+    public void deletePlayer(int playerID){
+    	myPlayerMap.remove(playerID);
     }
 
 	/**

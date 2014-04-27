@@ -81,7 +81,7 @@ public class SaladUtil {
     }
 
     /**
-     * General Reflection Method 
+     * General Reflection Method for behaviors
      * @param ResourceBundle
      * @param myString
      * @param methodName
