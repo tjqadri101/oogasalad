@@ -30,7 +30,7 @@ public class SideDetector extends GameObject{
 	}
 	
 	public void move(){
-		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).timer+" "+colid);
+//		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).timer+" "+colid);
 		setPos(myParent.getLastX(), myParent.getLastY());
 		if (myParent.is_suspended) {suspend();}
 		if (!myParent.isAlive()) {remove();}
@@ -49,7 +49,7 @@ public class SideDetector extends GameObject{
 	}
 	
 	public void ground(){
-		if (myDirection == 1) System.out.println("ground() "+((GameEngine)eng).timer+" "+colid);
+//		if (myDirection == 1) System.out.println("ground() "+((GameEngine)eng).timer+" "+colid);
 		myParent.ground();
 	}
 	

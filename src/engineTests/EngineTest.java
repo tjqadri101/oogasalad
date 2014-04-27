@@ -33,7 +33,7 @@ public class EngineTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(false);
+		GameEngine engine = new GameEngine(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
@@ -62,7 +62,7 @@ public class EngineTest {
 		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 		goomba.suspend();
 
-		NonPlayer mushroom = engine.createActor(200, "mushroom1.png", 80, 80, 400, 100, SaladConstants.NULL, MUSHROOM_COLID, 1);
+		NonPlayer mushroom = engine.createActor(200, "poke-mon/104.gif", 80, 80, 400, 100, SaladConstants.NULL, MUSHROOM_COLID, 1);
 		mushroom.setDieBehavior("RegularRemove");
 		mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 		mushroom.suspend();
@@ -70,7 +70,7 @@ public class EngineTest {
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 100, 200, SaladConstants.NULL, PLAYER_COLID, 6);
 		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
-		player.setShootBehavior("SlowShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0);
+		player.setShootBehavior("SlowShoot", "splash.gif", 20, 20, BULLET_COLID, 5.0);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");

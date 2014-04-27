@@ -76,8 +76,7 @@ public class GameEngine extends StdGame {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
 //		setSequences(false, startgame_ticks, false, leveldone_ticks, false, lifelost_ticks, false, gameover_ticks);
 //		setTileSettings("#",2,0);
-		defineImage("0","0",0,"null","-");
-		defineImage("null","-",0,"null","-");
+		defineImage("null","0",0,"null","-");
 		if (isEditingMode) {setGameState("InGame");}
 	}
 
