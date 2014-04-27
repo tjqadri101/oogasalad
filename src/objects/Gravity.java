@@ -1,12 +1,19 @@
 package objects;
 
 import saladConstants.SaladConstants;
-
+import util.AttributeMaker;
+/**
+ * Manage the Gravity of the Game
+ * @author Main Justin (Zihao) Zhang
+ *
+ */
 public class Gravity {
 	
 	protected double myMagnitude;
 	
-	public Gravity(){}
+	public Gravity(){
+		myMagnitude = SaladConstants.DEFAULT_GRAVITY_MAGNITUDE;
+	}
 	
 	public void setMagnitude(double magnitude){
 		myMagnitude = magnitude;
@@ -17,7 +24,7 @@ public class Gravity {
 	 * @return String Attribute
 	 */
 	public String getAttributes(){
-		return SaladConstants.MODIFY_GRAVITY + "," + SaladConstants.GRAVITY_MAGNITUDE + "," + myMagnitude;
+		return AttributeMaker.addAttribute(SaladConstants.MODIFY_GRAVITY, SaladConstants.GRAVITY_MAGNITUDE, myMagnitude);
 	}
 	
 	/**

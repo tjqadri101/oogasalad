@@ -1,32 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Game>
-	<GameElement>
-		<Key>ModifyScoreManager</Key>
-		<Type_0>InitialScore</Type_0>
-		<Parameter_0>0</Parameter_0>
-	</GameElement>
-	<GameElement>
-		<Key>CreateLevel</Key>
-		<Type_0>ID</Type_0>
-		<Parameter_0>0</Parameter_0>
-	</GameElement>
-	<GameElement>
-		<Key>SwitchLevel</Key>
-		<Type_0>ID</Type_0>
-		<Parameter_0>0</Parameter_0>
-	</GameElement>
-	<GameElement>
-		<Key>CreateScene</Key>
-		<Type_0>ID</Type_0>
-		<Parameter_0>0</Parameter_0>
-		<Type_1>Image</Type_1>
-		<Parameter_1>null</Parameter_1>
-	</GameElement>
-	<GameElement>
-		<Key>SwitchScene</Key>
-		<Type_0>ID</Type_0>
-		<Parameter_0>0</Parameter_0>
-		<Type_1>Image</Type_1>
-		<Parameter_1>null</Parameter_1>
-	</GameElement>
-</Game>
+<list>
+	<String>CreateLevel,ID,1</String>
+	<String>CreateScene,ID,1,ID,0</String>
+	<String>SwitchScene,ID,1,ID,0</String>
+	<String>SetDragTile,Colid,2,DragImage,brick.png</String>
+	<String>CreateActor,ID,1,Image,actor_blank.png,100,100,Position,100.0,200.0,Name,Actor
+		1,CollisionID,1,Lives,1</String>
+	<String>ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,2
+	</String>
+	<String>CreateActor,ID,2,Image,actor_blank.png,100,100,Position,100.0,200.0,Name,Actor
+		2,CollisionID,1,Lives,1</String>
+	<String>ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,2
+	</String>
+	<String>ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,2
+	</String>
+	<String>CreateActor,ID,2,Image,actor_blank.png,100,100,Position,100.0,200.0,Name,Actor
+		2,CollisionID,1,Lives,1</String>
+</list>

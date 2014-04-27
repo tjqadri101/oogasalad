@@ -54,6 +54,7 @@ import reflection.Reflection;
 public class PlayMenuBar extends JMenuBar {
 
 	private static DataController myController;
+	private File currentGame;
 
 	public PlayMenuBar(DataController myController) {
 		super();
@@ -61,13 +62,21 @@ public class PlayMenuBar extends JMenuBar {
 		this.add(createFileMenu());
 	}
 
+	/**
+	 * Sets up the menu bar
+	 * @return JMenu to be added to the JMenuBar
+	 */
 	public JMenu createFileMenu() {
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(makeMenuItem("Open", "openGameFile"));
+		fileMenu.add(makeMenuItem("Open New Game", "createGame"));
+		fileMenu.add(makeMenuItem("Restart Game", "restart"));
 		fileMenu.add(makeMenuItem("Quit", "closeProgram"));
 		return fileMenu;
 	}
 
+	/**
+	 * Stops the game from playing
+	 */
 	public void closeProgram() {
 
 		int n = JOptionPane.showConfirmDialog(null,
@@ -78,19 +87,43 @@ public class PlayMenuBar extends JMenuBar {
 		}
 	}
 
-	public void openGameFile() throws Exception {
+	/**
+	 * Loads an XML file to create all of the objects necessary to start the game
+	 * @throws Exception
+	 */
+	public void createGame() throws Exception {
 		File loadedFile = chooseGameFile("Load");
 		if (loadedFile == null) {
 			return;
 		}
+		parseFile(loadedFile);
+	}
+
+	/**
+	 * Takes the file and turns it into the game
+	 * @param loadedFile
+	 * @throws Exception
+	 */
+	private void parseFile(File loadedFile) throws Exception {
 		try {
 			myController.readXML(loadedFile.getAbsolutePath());
 		} catch (IOException ioe) {
-			// ioe.printStackTrace();
 			System.exit(1);
 		}
 	}
+	
+	/**
+	 * Reloads the current file to recreate the game
+	 * @throws Exception
+	 */
+	public void restart() throws Exception {
+		parseFile(currentGame);
+	}
 
+	/**
+	 * Opens the JFileChooser to locate the specified XML file
+	 * @param command
+	 */
 	public File chooseGameFile(String command) {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(
 				"XML file", "xml");
@@ -102,9 +135,16 @@ public class PlayMenuBar extends JMenuBar {
 			return null;
 		}
 		File curFile = chooser.getSelectedFile();
+		currentGame = curFile;
 		return curFile;
 	}
 
+	/**
+	 * Reflective method that creates all menu components
+	 * @param label
+	 * @param method
+	 * @return
+	 */
 	public JComponent makeMenuItem(String label, String method) {
 		JMenuItem m = new JMenuItem(label);
 		
@@ -129,7 +169,7 @@ public class PlayMenuBar extends JMenuBar {
 		throw new ReflectionException(e.getMessage());
 	}*/
 		
-		MethodAction action = new MethodAction(getCurrentInstance() ,method);
+		MethodAction action = new MethodAction(getCurrentInstance(), method);
 		m.addActionListener(action);
 		
 		return m;
@@ -140,27 +180,27 @@ public class PlayMenuBar extends JMenuBar {
 	}
 
 	// for testing purposes
-	private static void createAndShowGUI() {
-		// Create and set up the window.
-		JFrame frame = new JFrame("MenuBarDemo");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		// Create and set up the content pane.
-		PlayMenuBar demo = new PlayMenuBar(myController);
-		frame.setJMenuBar(demo);
-		// Display the window.
-		frame.setSize(450, 260);
-		frame.setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		// Schedule a job for the event-dispatching thread:
-		// creating and showing this application's GUI.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGUI();
-			}
-		});
-	}
+//	private static void createAndShowGUI() {
+//		// Create and set up the window.
+//		JFrame frame = new JFrame("MenuBarDemo");
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//		// Create and set up the content pane.
+//		PlayMenuBar demo = new PlayMenuBar(myController);
+//		frame.setJMenuBar(demo);
+//		// Display the window.
+//		frame.setSize(450, 260);
+//		frame.setVisible(true);
+//	}
+//
+//	public static void main(String[] args) {
+//		// Schedule a job for the event-dispatching thread:
+//		// creating and showing this application's GUI.
+//		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				createAndShowGUI();
+//			}
+//		});
+//	}
 
 }

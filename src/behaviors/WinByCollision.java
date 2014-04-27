@@ -1,31 +1,30 @@
 package behaviors;
 
 import java.util.List;
-import jgame.JGObject;
+
+import objects.GameObject;
 import objects.NonPlayer;
-import objects.Player;
-
+import stage.Game;
 import engine.GameEngine;
-
+/**
+ * @param int object's ID
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class WinByCollision extends Winnable{
 
-	protected WinByCollision(GameEngine engine) {
+	public WinByCollision(GameEngine engine) {
 		super(engine);
 	}
-	
-	    
-        /**
-         * @param target, player
-         */
-        @Override
-        public boolean checkGoal(List<Object> params) {
-//              System.out.println("checkGoal called " + myEngine.timer + " " + timeLimit);
-                NonPlayer target = (NonPlayer) params.get(0);
-
-/*can either check hit, or check the life value of the player. Latter is better, but how to 
-decrement when the NonPlayer is hitted?*/
-                        
-                return !target.isAlive();
-        }
+	   
+    /**
+     * @param objectID
+     */
+    @Override
+    public boolean checkGoal(List<Object> params) {
+    	int id = (Integer) params.get(0);
+    	NonPlayer object = myEngine.getGame().getNonPlayer(myEngine.getCurrentLevelID(), myEngine.getCurrentSceneID(), id);
+    	return myEngine.getGame().getPlayer(Game.NONUSE_ID).isAlive() && !object.isAlive();
+    }
 
 }

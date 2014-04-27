@@ -39,4 +39,8 @@ public class LeftPanel extends JSplitPane {
 	public AttributesPanel getAttributes(){
 		return attributesPane;
 	}
+
+	public Library getLibrary() {
+		return libraryPane;
+	}
 }

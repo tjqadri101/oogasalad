@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engineManagers.BloodManager;
+import engineManagers.CollisionManager;
 import engineManagers.InputManager;
 import engineManagers.ScoreManager;
 import engineManagers.TimerManager;
+import engineManagers.TriggerEventManager;
 import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
@@ -15,34 +18,37 @@ import objects.Player;
 import stage.Transition.StateType;
 /**
  * A data structure that holds all the information about a game
- * @author Main David Chou, Justin (Zihao) Zhang
+ * @author Main Justin (Zihao) Zhang
+ * @contribution David Chou
  * @help Isaac (Shenghan) Chen
  */
 public class Game {
 
-	public static final int DEFAULT_SCORE = 0;
 	public static final int NONUSE_ID = 0;
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<StateType, Transition> myNonLevelSceneMap;
-//	protected ScoreManager myScoreManager;
+	protected ScoreManager myScoreManager;
+	protected BloodManager myBloodManager;
+	protected TriggerEventManager myTriggerManager;
 //	protected InputManager myInputManager;
 //	protected TimerManager myTimerManager;
-	protected Player myPlayer;
-    protected List<int[]> myCollisionPair;
-    protected List<int[]> myTileCollisionPair;
+	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
+    protected CollisionManager myCollisionManager;
+    protected TriggerEventManager myTEM;
 
 
 	public Game(){
 		myLevelMap = new HashMap<Integer, Level>();
 		myNonLevelSceneMap = new HashMap<StateType, Transition>();
-//		myScoreManager = new ScoreManager(DEFAULT_SCORE);
+		myScoreManager = new ScoreManager();
+		myBloodManager = new BloodManager();
 //		myInputManager = new InputManager();
 //		myTimerManager = new TimerManager();
-		myCollisionPair = new ArrayList<int[]>();
-    	myTileCollisionPair = new ArrayList<int[]>();
     	myGravity = new Gravity();
+    	myCollisionManager = new CollisionManager();
+    	myTEM = new TriggerEventManager();
 	}
 
 	/**
@@ -51,6 +57,8 @@ public class Game {
 	 */
 	public void addLevel(int levelID) {
 		Level level = new Level(levelID);
+//                level.register(etm);
+//                etm.setSubject(level);
 		myLevelMap.put(levelID, level);
 	}
 
@@ -72,8 +80,7 @@ public class Game {
 	 * @return nothing
 	 */
 	public void addNonPlayer(int levelID, int sceneID, NonPlayer object){
-		NonPlayer o = (NonPlayer) object;
-		myLevelMap.get(levelID).addNonPlayer(sceneID, o);
+		myLevelMap.get(levelID).addNonPlayer(sceneID, object);
 	}
 
 	/**
@@ -165,7 +172,7 @@ public class Game {
 			Level level = myLevelMap.get(levelID);
 			objects.addAll(level.getObjectsByColid(colid));
 		}
-		if(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID));
+		if(getPlayer(NONUSE_ID) != null && getPlayer(NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID));
 		return objects;
 	}
 	
@@ -175,27 +182,24 @@ public class Game {
 	 * @return nothing
 	 */
 	public void setPlayer(Player player){
-		myPlayer = player;
+		myPlayerMap.put(player.getID(), player);
 	}
 	
 	/** 
      * Called to get the Player from the Game
-     * Parameters needed but not used to facilitate GameFactory for Reflection
-     * @param levelID, sceneID, objectID
+     * @param playerID
      * @return Player Object
      */
-    public Player getPlayer(int levelID, int sceneID, int objectID){
-    	return myPlayer;
+    public Player getPlayer(int playerID){
+    	return myPlayerMap.get(playerID);
     }
     
-    /** @Siyang: added for the sake of testing
-     * Called to get the Player from the Game
-     * Parameters needed but not used to facilitate GameFactory for Reflection
-     * @param levelID, sceneID, objectID
-     * @return Player Object
+    /**
+     * Called to remove a Player matched to the playerID from the Game
+     * @param playerID
      */
-    public Player getPlayer(){
-        return myPlayer;
+    public void deletePlayer(int playerID){
+    	myPlayerMap.remove(playerID);
     }
 
 	/**
@@ -219,22 +223,32 @@ public class Game {
 	 * Get gravity for the engine to apply the force
 	 * @return Gravity
 	 */
-    public Gravity getGravity(){
+    public Gravity getGravity(Object ... args){
     	return myGravity;
     }
-	
-	/**
-	 * Add collision pairs
-	 * @param srccid
-	 * @param type
-	 * @param dstcid
-	 */
-    public void addCollisionPair(int srccid, String type, int dstcid){
-    	myCollisionPair.add(new int[]{srccid,dstcid});
-    	List<GameObject> objects = getObjectsByColid(dstcid);
-    	for(GameObject o: objects){
-    		o.setCollisionBehavior(type, srccid);
-    	}
+    
+    /**
+     * Get the collision manager for the Game
+     * @return CollisionManager
+     */
+    public CollisionManager getCollisionManager(){
+    	return myCollisionManager;
+    }
+    
+    /**
+     * Get the score manager of the Game
+     * @return ScoreManager
+     */
+    public ScoreManager getScoreManager(){
+    	return myScoreManager;
+    }
+    
+    /**
+     * Get the blood manager of the Game
+     * @return BloodManager
+     */
+    public BloodManager getBloodManager(){
+    	return myBloodManager;
     }
     
     /**
@@ -246,36 +260,6 @@ public class Game {
     public void deleteNonPlayer(int levelID, int sceneID, int objectID){
     	getScene(levelID, sceneID).deleteNonPlayer(objectID);
     }
-    
-    /**
-     * Get the collision pair
-     * @return
-     */
-    public List<int[]> getCollisionPair(){
-    	return myCollisionPair;
-    }
-    
-    /**
-     * Get the tile collision pair
-     * @return
-     */
-    public List<int[]> getTileCollisionPair(){
-    	return myTileCollisionPair;
-    }
-    
-    /**
-     * Add tile collision pairs
-     * @param tilecid
-     * @param type
-     * @param objectcid
-     */
-    public void addTileCollisionPair(int tilecid, String type, int objectcid){
-    	myTileCollisionPair.add(new int[]{tilecid, objectcid});
-    	List<GameObject> objects = getObjectsByColid(objectcid);
-    	for(GameObject o: objects){
-    		o.setTileCollisionBehavior(type, tilecid);
-    	}
-    }
 	
 	/**
 	 * Called to get the Attributes of the whole Game
@@ -286,15 +270,25 @@ public class Game {
 //		answer.addAll(myScoreManager.getAttributes()); 
 //		answer.addAll(myInputManager.getAttributes()); 
 //		answer.addAll(myTimerManager.getAttributes()); 
-		answer.addAll(getPlayer(NONUSE_ID, NONUSE_ID, NONUSE_ID).getAttributes());
+		answer.add(myGravity.getAttributes());
+		if(getPlayer(NONUSE_ID) != null){
+			answer.addAll(getPlayer(NONUSE_ID).getAttributes());	
+		}
 		for(Integer key: myLevelMap.keySet()){
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
+		answer.addAll(myCollisionManager.getAttributes());
 		for(Transition value: myNonLevelSceneMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
-		answer.add(myGravity.getAttributes());
 		return answer;
+	}
+	
+	/** Should only be called from Engine
+	 * @return the only instance of TriggerEventManager
+	 */
+	public TriggerEventManager getTEM(){
+	    return myTEM;
 	}
 	
 	/* @Siyang: 

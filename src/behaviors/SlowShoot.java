@@ -6,7 +6,15 @@ import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
-
+/**
+ * @param String bullet's Image Name
+ * @param int x size of the image
+ * @param int y size of the image
+ * @param int collision ID of the bullet
+ * @param double absolute speed of the bullet
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class SlowShoot extends Shootable{
 
 	public SlowShoot(GameObject o) {
@@ -56,6 +64,7 @@ public class SlowShoot extends Shootable{
 		
 		NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 		object.setSpeed(shootXSpeed, shootYSpeed);
+		object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 	}
 
 }

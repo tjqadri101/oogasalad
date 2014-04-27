@@ -29,6 +29,15 @@ public class ImageBufferTest extends JFrame {
 	public static void main (String args[]) throws IOException {
 		ImageBufferTest ibt = new ImageBufferTest();
 //		ibt.myImageBuffer.upload();
-		ibt.myImageBuffer.resizedUpload(50, 50, "src/images/4096.png");
+//		ibt.myImageBuffer.resizedUpload(50, 50, "src/images/4096.png");
+//		ibt.myImageBuffer.resizedUpload(50, 50, "src/images/brick_wall_decayed.jpg");
+//		ibt.myImageBuffer.resizedUpload(50, 50, "src/images/brick_wall_red.jpg");
+//		ibt.myImageBuffer.resizedUpload(50, 50, "src/images/brick_wall_tiled_perfect.png");
+//		ibt.myImageBuffer.resizedUpload(50, 50, "src/images/mortar_single.png");
+//		ibt.myImageBuffer.resizedUpload(500, 500, "src/images/roger_federer_1.jpg");
+//		ibt.myImageBuffer.resizedUpload(500, 500, "src/images/roger_federer_2.jpg");
+//		ibt.myImageBuffer.resizedUpload(500, 500, "src/images/roger_federer_3.jpg");
+//		ibt.myImageBuffer.resizedUpload(500, 500, "src/images/roger_federer_4.jpg");
+//		
 	}
 }

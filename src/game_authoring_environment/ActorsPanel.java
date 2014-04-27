@@ -26,7 +26,7 @@ import controller.GAEController;
 
 public class ActorsPanel extends Panel {
 
-	private static final String ACTOR_DEFAULT_IMAGE = "resources/actor_blank.png";
+	private static final String ACTOR_DEFAULT_IMAGE = "actor_blank.png";
 
 	private SubPanel mySubPanel;
 	private JTable myActorsTable;
@@ -74,10 +74,9 @@ public class ActorsPanel extends Panel {
 			public void valueChanged(ListSelectionEvent e) {
 				if(!e.getValueIsAdjusting()){
 					if(myActorsTable.isFocusOwner()){
-						mySelectedRow = myActorsTable.getSelectedRow();	
-						gController.updateSelectedActorID(getSelectedActorID());
-						gController.switchActiveAttributesTab(2); //actor tab is at index 2
-						gController.updateAttributesActorInfo();
+						System.out.println("valueChange");
+						mySelectedRow = myActorsTable.getSelectedRow();							
+						update();
 					}
 				}
 			}
@@ -119,10 +118,24 @@ public class ActorsPanel extends Panel {
 
 		return outPanel;
 	}
+	
+	private void update(){
+		gController.updateSelectedActorID(getSelectedActorID());
+		gController.switchActiveAttributesTab(2); //actor tab is at index 2
+		gController.updateAttributesActorInfo();
+	}
+	
+	public void update(int selectedID){
+		int actorIndex = actorIDtoRow(selectedID);
+		int indexInTable = myActorsTable.convertRowIndexToView(actorIndex);
+		myActorsTable.getSelectionModel().setSelectionInterval(indexInTable, indexInTable);
+		mySelectedRow = indexInTable;							
+		update();
+	}
 
 	private void addActors(){		
 		String newActorName = "Actor " + myActorsCount;		
-		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, "Actor " + myActorsCount);
+		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, 100, 100,100.0,200.0, "Actor " + myActorsCount, 1, 1);
 		ImageIcon icon = urlToScaledImageIcon("src/game_authoring_environment/resources/actor_blank.png");
 		Object toAdd[] = {icon , newActorName, ""};
 		actorsTableModel.addRow(toAdd);
@@ -171,5 +184,7 @@ public class ActorsPanel extends Panel {
 		}
 		return (Integer) null;
 	}
+
+	
 
 }

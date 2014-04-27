@@ -30,6 +30,8 @@ public class GameeditorPanel extends Panel {
 	private String GameName;
 	private Integer DisplayWidth;
 	private Integer DisplayHeight;
+	private DefaultTableModel myTableModel;
+	private JTable myTable;
 	
 	public GameeditorPanel(GAEController gController) {
 		super(PanelType.GAMEEDITOR);
@@ -44,7 +46,7 @@ public class GameeditorPanel extends Panel {
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
 		//this.add(makeTable(), BorderLayout.SOUTH);
-		this.add(makeTable(), BorderLayout.CENTER);
+		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 	
 
 	}
@@ -70,32 +72,15 @@ public class GameeditorPanel extends Panel {
 		return jb;
 	}
 	
-	public void update(){
-		construct();
+	
+	public JTable createTable(){
+		GameEditorTable table = new GameEditorTable(gController);
+		
+		return table;
 	}
 	
-	protected JComponent makeTable(){
-		 JTable table2 = new JTable();
-		 
-		 String[] columnNames = {"Category",
-				  "Value",
-				  "Type"};
-				
-		Object[][] data = {
-				{"Name", new String(),
-				"text"},
-				{"Time", new Integer(0),
-				"real"},
-				{"Display Width", new Integer(480),
-				"real"},
-				{"Display Height", new Integer(320),
-				"real"},
-				//{"Actor Tags", new String(), "text"}
-				};
-		 JComponent t =  ViewFactory.createScrollingTable(columnNames, data);
-	
-		
-		return t;
+	public void update(){
+		construct();
 	}
 	
 	

@@ -30,14 +30,6 @@ public class Library extends JTabbedPane {
 		makePanels(controller);
 		addTabs();
 	
-		ChangeListener changeListener = new ChangeListener() {
-		      public void stateChanged(ChangeEvent changeEvent) {
-		        JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-		        int index = sourceTabbedPane.getSelectedIndex();
-		        controller.switchActiveAttributesTab(index);
-		      }
-		    };
-		    this.addChangeListener(changeListener);
 	}
 
 	private void addTabs() {
@@ -62,6 +54,10 @@ public class Library extends JTabbedPane {
 		map.put(SaladConstants.SCENE_PANEL, myScenesPanel);
 		map.put(SaladConstants.ACTOR_PANEL, myActorsPanel);
 		return map;
+	}
+
+	public void setTab(int index) {
+		this.setSelectedIndex(index);		
 	}
 	
 }

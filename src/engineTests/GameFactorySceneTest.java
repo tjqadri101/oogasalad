@@ -12,9 +12,11 @@ import objects.NonPlayer;
 import objects.Player;
 import org.junit.Test;
 import stage.Game;
+import util.IParser;
 import jgame.platform.StdGame;
 import junit.framework.TestCase;
 import engine.GameEngine;
+import engineManagers.CollisionManager;
 import gameFactory.FactoryException;
 import gameFactory.GameFactory;
 
@@ -29,10 +31,14 @@ public class GameFactorySceneTest extends TestCase{
     protected GameFactory myFactory;
     protected NonPlayer myActor;
     protected Player myPlayer;
-    protected static final Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreatePlayer","ID",0,"PlayerImage","actor_default.png",3,3,
-                                                                          "position",20.0,30.0,"Name","myPlayer","CollisionID",0, "Lives",1};
-    protected static final Object[] PARSED_OBJECT_ARRAY = new Object[] {0, "actor_default.png",3,3,
-                                                                      20.0, 30.0, "myPlayer", 0, 1};
+    protected IParser p;
+    protected CollisionManager cm;
+    private static final String CREATE_ACTOR = "CreateActor,ID,0,Image,actor_default.png,3,3," +
+            "Position,0.0,0.0,Name,myActor,CollisionID,0,Lives,1";
+//    protected static final Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreatePlayer","ID",0,"PlayerImage","actor_default.png",3,3,
+//                                                                          "position",20.0,30.0,"Name","myPlayer","CollisionID",0, "Lives",1};
+//    protected static final Object[] PARSED_OBJECT_ARRAY = new Object[] {0, "actor_default.png",3,3,
+//                                                                      20.0, 30.0, "myPlayer", 0, 1};
 
     protected void setUp(){
         myGame = new Game();
@@ -42,37 +48,20 @@ public class GameFactorySceneTest extends TestCase{
             myGame.addScene(1, 0);
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
-        
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myPlayer = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);   
-    }
-    
-    @Test
-    public void testDFParser() throws IndexOutOfBoundsException{
-
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        List<Object> PARSED_OBJECT_LIST = Arrays.asList(PARSED_OBJECT_ARRAY);
-
-        List<Object> parsedObjList = null;
-        try {
-            parsedObjList = (List<Object>) myFactory.parseOrder(CREATEPLAYER_OBJECT_LIST, (String) CREATEPLAYER_OBJECT_LIST.get(0)).get("Argument");
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(parsedObjList, PARSED_OBJECT_LIST);
-        assertEquals(parsedObjList.get(1),"actor_default.png");
+        p = new IParser();
+        cm = new CollisionManager();
+//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);   
     }
     
     @Test
     public void testCreateScene() throws FactoryException{
-
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateScene","ID",1,"ID",1};
-
-        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        String CREATE_SCENE = "CreateScene,ID,1,ID,1";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateScene","ID",1,"ID",1};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(CREATE_SCENE);
 
         try {
-            myFactory.processOrder(CREATELEVEL_OBJECT_LIST);
+            myFactory.processOrder(CREATE_SCENE);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
@@ -80,32 +69,30 @@ public class GameFactorySceneTest extends TestCase{
         assertEquals(2, myGame.getMyLevelMap().get(1).getMySceneMap().size());
 // here the levelID=1, SceneID=0, objID=0
     }
-    
+
     // SwitchScene done through Engine
     @Test
     public void testSwitchScene() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"SwitchScene","ID",1,"ID",0};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        String SWITCH_SCENE = "SwitchScene,ID,1,ID,0";
+//        Object[] UNPARSED_ORDER = new Object[] {"SwitchScene","ID",1,"ID",0};
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
         try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+            myFactory.processOrder(SWITCH_SCENE);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
         }
         assertEquals(0, myEngine.getCurrentSceneID());
     }
-    
+
     @Test
     public void testDeleteScene() throws FactoryException{
-
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"DeleteScene","ID",1,"ID",1};
-
-        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        String DELETE_SCENE = "DeleteScene,ID,1,ID,1";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"DeleteScene","ID",1,"ID",1};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
 
         try {
-            myFactory.processOrder(CREATELEVEL_OBJECT_LIST);
+            myFactory.processOrder(DELETE_SCENE);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
@@ -113,33 +100,33 @@ public class GameFactorySceneTest extends TestCase{
         assertEquals(1, myGame.getMyLevelMap().get(1).getMySceneMap().size());
 // here the levelID=1, SceneID=0, objID=0
     }
-    
+
+    /**
+     * Need to re-check this
+     * @throws FactoryException
+     */
     @Test
     public void testModifySceneBackground() throws FactoryException{
-
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"ModifyScene","ID",0,"Background","bg.png"};
-
-        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-
+        String MODIFY_BKGD = "ModifyBackground,Background,devil.png";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"ModifyScene","ID",0,"Background","bg.png"};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         try {
-            myFactory.processOrder(CREATELEVEL_OBJECT_LIST);
+            myFactory.processOrder(MODIFY_BKGD);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(1, myGame.getMyLevelMap().get(1).getMySceneMap().size());
+        assertEquals("bg.png", myGame.getMyLevelMap().get(1).getMySceneMap().get(0).getBackgroundImage());
 // here the levelID=1, SceneID=0, objID=0
     }
-    
+
     @Test
     public void testModifyScenePlayerInitialP() throws FactoryException{
-
-        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"ModifyScene","ID",0,"PlayerInitialPosition",100.0,200.0};
-
-        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-
+        String SCENE_PLAYERPOS = "ModifyScene,ID,0,PlayerInitialPosition,100.0,200.0";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"ModifyScene","ID",0,"PlayerInitialPosition",100.0,200.0};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         try {
-            myFactory.processOrder(CREATELEVEL_OBJECT_LIST);
+            myFactory.processOrder(SCENE_PLAYERPOS);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
@@ -148,7 +135,4 @@ public class GameFactorySceneTest extends TestCase{
 
 // here the levelID=1, SceneID=0, objID=0
     }
-
-    
-
 }

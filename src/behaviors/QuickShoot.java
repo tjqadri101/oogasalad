@@ -6,7 +6,16 @@ import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
 import saladConstants.SaladConstants;
-
+/**
+ * @param String bullet's Image Name
+ * @param int x size of the image
+ * @param int y size of the image
+ * @param int collision ID of the bullet
+ * @param double absolute speed of the bullet
+ * @param int bullets per shoot
+ * 
+ * @author Main Justin (Zihao) Zhang
+ */
 public class QuickShoot extends Shootable{
 
 	public QuickShoot(GameObject o) {
@@ -60,7 +69,8 @@ public class QuickShoot extends Shootable{
 		
 		for(int i = 0; i < times; i ++){
 			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos+20*i, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
-			object.setSpeed(shootXSpeed, shootYSpeed);			
+			object.setSpeed(shootXSpeed, shootYSpeed);	
+			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 		}
 
 	}

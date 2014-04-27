@@ -1,356 +1,546 @@
 package objects;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-
-//import engineManagers.ScoreManager;
-import reflection.Reflection;
-import saladConstants.SaladConstants;
 import jgame.JGObject;
+import saladConstants.SaladConstants;
+import engine.GameEngine;
+import engineManagers.*;
+import util.AttributeMaker;
+import util.SaladUtil;
+import engineManagers.CollisionManager;
+import engineManagers.ScoreManager;
+
 /**
- * GameObject is the superclass of Player and NonPlayer
- * GameObject is a game unit that can execute certain actions and interactions 
- * @Author: Justin (Zihao) Zhang
+ * GameObject is the superclass of Player and NonPlayer GameObject is a game
+ * unit that can execute certain actions and interactions
+ * 
+ * @author: Justin (Zihao) Zhang,
+ * @contribution: Steve (Siyang) Wang, David Chou
  */
+
 public abstract class GameObject extends JGObject {
-    
-//	protected ScoreManager myScoreManager;
+
+	protected ScoreManager myScoreManager;
+	protected CollisionManager myCollisionManager;
+	protected BloodManager myBloodManager;
+
+	protected String myTrigger;
+	protected boolean myTriggerFlag;
+	// Not 100% ready to implement observer pattern
+	protected List<Observer> myObservers;
+	protected boolean isUpdated;
+	private final Object MUTEX = new Object();
+	protected List<Object> myTriggerParameter;
+	protected List<Object> myEventParameter;
+	protected String myEvent;
+
+
 	protected int myXSize;
 	protected int myYSize;
 	protected double myInitX;
 	protected double myInitY;
-	protected int myInitLives;
-	protected int myLives;
+	protected int myInitBlood;
+	protected int myBlood;
 	protected int myUniqueID;
 	protected int myJumpTimes;
-	protected boolean myIsInAir;
+	protected int myIsInAir;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
+	protected String myStaticGfxName;
+	protected String myJumpingGfxName;
+	protected String myMovingGfxName;
 	protected List<String> myAttributes;
-	
-	protected boolean myIsPlayer;//need change
-    
+	protected String myName;
+	protected boolean myIsPlayer; // need change
+	protected boolean myIsActive;
+
 	protected ResourceBundle myBehaviors;
 	protected String myDieBehavior;
 	protected String myMoveBehavior;
 	protected String myJumpBehavior;
 	protected String myShootBehavior;
-	protected Map<Integer, String> myCollisionBehavior;
-	protected Map<Integer, String> myTileCollisionBehavior;
 
 	protected List<Object> myShootParameters;
 	protected List<Object> myDieParameters;
 	protected List<Object> myMoveParameters;
 	protected List<Object> myJumpParameters;
-	protected Map<Integer, List<Object>> myCollisionParameters;
-	protected Map<Integer, List<Object>> myTileCollisionParameters;
-	protected SideDetecter[] mySideDetecters;//plz review
-	
-	protected GameObject(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, String name, int collisionId, int lives){
-		super(name, true, xpos, ypos, collisionId, gfxname);
-		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.DEFAULT_BEHAVIOR);
-		myCollisionBehavior = new HashMap<Integer, String>();
-		myCollisionParameters = new HashMap<Integer, List<Object>>();
-		myTileCollisionBehavior = new HashMap<Integer, String>();
-		myTileCollisionParameters = new HashMap<Integer, List<Object>>();
+	protected SideDetector[] mySideDetectors;
+
+	protected GameObject(int uniqueID, String staticGfxName, int xsize,
+			int ysize, double xpos, double ypos, String name, int collisionId,
+			int blood, CollisionManager collisionManager,
+			ScoreManager scoreManager, BloodManager bloodManager) {
+		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId,
+				staticGfxName);
+		myBehaviors = ResourceBundle
+				.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+						+ SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
-		setLives(lives); // change later
+		setBlood(blood); // change later
 		myUniqueID = uniqueID;
+		setSize(xsize, ysize);
+		myAttributes = new ArrayList<String>();
+		myCollisionManager = collisionManager;
+		myScoreManager = scoreManager;
+		myBloodManager = bloodManager;
+		myStaticGfxName = staticGfxName;
+		myName = name;
+		initSideDetectors();
+//		myObservers = new ArrayList<>();
+	}
+
+	public boolean getIsActive() {
+		return myIsActive;
+	}
+
+	public void setIsActive(boolean active) {
+		myIsActive = active;
+	}
+
+	/**
+	 * 
+	 */
+	private void initSideDetectors() {
+		if (myUniqueID == SaladConstants.NULL_UNIQUE_ID)
+			return;
+		mySideDetectors = new SideDetector[4];
+		for (int i = 0; i < 4; i++) {
+			setSideDetector(new SideDetector(this, i, SideDetector.SDcid(colid,
+					i)));
+		}
+	}
+
+	/**
+	 * Reset the name
+	 * 
+	 * @param name
+	 */
+	public void resetName(String name) {
+		myName = name;
+	}
+
+	/**
+	 * Get the collision manager associated with this object
+	 * 
+	 * @return myCollisionManager
+	 */
+	public CollisionManager getCollisionManager() {
+		return myCollisionManager;
+	}
+
+	/**
+	 * Get the side collision detector associated with this object in direction
+	 * of dir
+	 * 
+	 * @param dir
+	 * @return mySideDetectors
+	 */
+	public SideDetector getSideDetector(int dir) {
+		return mySideDetectors[dir];
+	}
+
+	/**
+	 * Set the side collision detector associated with this object in direction
+	 * of dir
+	 * 
+	 * @param detector
+	 * @return mySideDetectors
+	 */
+	public void setSideDetector(SideDetector detector) {
+		mySideDetectors[detector.myDirection] = detector;
+	}
+
+	/**
+	 * Set the dimension of the object image
+	 * 
+	 * @param xsize
+	 * @param ysize
+	 */
+	public void setSize(int xsize, int ysize) {
 		myXSize = xsize;
 		myYSize = ysize;
-		myAttributes = new ArrayList<String>();
-		mySideDetecters = new SideDetecter[4];//plz review
 	}
-	
+
 	/**
 	 * Get the x size of the object image
+	 * 
 	 * @return int
 	 */
-	public int getXSize(){
+	public int getXSize() {
 		return myXSize;
 	}
-	
+
 	/**
 	 * Get the y size of the object image
+	 * 
 	 * @return int
 	 */
-	public int getYSize(){
+	public int getYSize() {
 		return myYSize;
 	}
-	
-	public void setInitPos(double x, double y){
+
+	/**
+	 * Set the initial position of the object in a scene
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void setInitPos(double x, double y) {
 		super.setPos(x, y);
 		myInitX = x;
 		myInitY = y;
 	}
-	
+
 	/**
+	 * Do not call this method directly Used for getAttributes() method
 	 * 
-	 * @return
+	 * @return String
 	 */
-	protected String ModificationString(){
-		if(myIsPlayer){
+	protected String ModificationString() {
+		if (myIsPlayer) {
 			return SaladConstants.MODIFY_PLAYER;
 		}
 		return SaladConstants.MODIFY_ACTOR;
 	}
-	
-	@Override
-	public void setSpeed(double xspeed, double yspeed){
+
+	public void setInitSpeed(double xspeed, double yspeed) {
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
 		myInitYSpeed = yspeed;
-		myAttributes.add(ModificationString() + "," + SaladConstants.ID + "," + myUniqueID + "," + 
-				SaladConstants.SPEED + "," + myInitXSpeed + "," + myInitYSpeed);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(),
+				SaladConstants.ID, myUniqueID, SaladConstants.SPEED, false,
+				myInitXSpeed, myInitYSpeed));
 	}
-	
+
 	/**
-	 * Restore to original state within a scene
-	 * Used for live-editing
+	 * Restore to original state within a scene Used for live-editing
 	 */
-	public void restore(){
+	public void restore(boolean resetLife) {
 		setInitPos(myInitX, myInitY);
-		setLives(myInitLives);
+		setInitSpeed(myInitXSpeed, myInitYSpeed);
+		setBlood(myInitBlood);
+		if (resetLife) {
+			// lifeManager ?
+		}
+		if (!is_alive) {
+			eng.markAddObject(this);
+			is_alive = true;
+		}
+		if (mySideDetectors!=null){
+			for (int i = 0; i < 4; i++) {
+				mySideDetectors[i].restore(false);
+			}
+		}
 	}
 	
+	public void resume(){
+		super.resume();
+		if (mySideDetectors!=null){
+			for (int i = 0; i < 4; i++) {
+				mySideDetectors[i].resume();
+			}
+		}
+	}
+	
+//	public void suspend(){
+//		super.resume();
+//		if (mySideDetectors!=null){
+//			for (int i = 0; i < 4; i++) {
+//				mySideDetectors[i].suspend();
+//			}
+//		}
+//	}
+
 	/**
 	 * Reset the unique ID
-	 * @param the new uniqueID
+	 * 
+	 * @param the
+	 *            new uniqueID
 	 */
-	public void resetID(int uniqueID){
+	public void resetID(int uniqueID) {
 		myUniqueID = uniqueID;
 	}
-	
+
 	/**
 	 * Get the unique ID
+	 * 
 	 * @return int
 	 */
-	public int getID(){
+	public int getID() {
 		return myUniqueID;
 	}
-	
+
 	/**
 	 * Set the Die Behavior
-	 * @param a String specifying one of the die behaviors
+	 * 
+	 * @param a
+	 *            String specifying one of the die behaviors
 	 */
-	public void setDieBehavior(String s, Object ... args){
+	public void setDieBehavior(String s, Object... args) {
 		myDieBehavior = s;
 		myDieParameters = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
+		for (int i = 0; i < args.length; i++) {
 			myDieParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myDieBehavior, myDieBehavior, myDieParameters);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(),
+				SaladConstants.ID, myUniqueID, myDieBehavior, true,
+				myDieParameters));
 	}
-	
+
 	/**
-	 * Add attribute for behaviors already set
-	 * @param s
-	 * @param params
+	 * Change the number of lives
 	 */
-	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken);
-		for(Object o: params){
-			String att = o.toString();
-			attribute.append("," + att);
-		}
-		myAttributes.add(attribute.toString());
+	public void changeBlood(int blood) {
+		myBlood += blood;
 	}
-	
-	protected void addAttributes(String firstType, Object param, String secondType, String typeToken, int integerToken, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(ModificationString() + "," + firstType + "," + param + "," + secondType + "," + typeToken + "," + integerToken);
-		for(Object o: params){
-			String att = o.toString();
-			attribute.append("," + att);
-		}
-		myAttributes.add(attribute.toString());
-	}
-	
-	/**
-	 * Decrement the number of lives
-	 */
-	public void loseLife(){
-		myLives --;
-	}
-	
+
 	/**
 	 * Initialize the number of lives
+	 * 
 	 * @param lives
 	 */
-	public void setLives(int lives){
-		myInitLives = lives;
-		myLives = lives;
+	public void setBlood(int blood) {
+		myInitBlood = blood;
+		myBlood = blood;
 	}
-	
+
 	/**
 	 * Get current number of lives
+	 * 
 	 * @return
 	 */
-	public int getLives(){
-		return myLives;
+	public int getBlood() {
+		return myBlood;
 	}
-	
+
+	/**
+	 * Get number of initial lives
+	 * 
+	 * @return
+	 */
+	public int getInitBlood() {
+		return myInitBlood;
+	}
+
 	/**
 	 * Set the jump behavior
-	 * @param String specifying one of the jump behaviors
-	 * @param Magnitude of the initial jump speed
+	 * 
+	 * @param String
+	 *            specifying one of the jump behaviors
+	 * @param Magnitude
+	 *            of the initial jump speed
 	 */
-	public void setJumpBehavior(String s, Object ... args){
+	public void setJumpBehavior(String s, Object... args) {
 		myJumpBehavior = s;
 		myJumpParameters = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
+		for (int i = 0; i < args.length; i++) {
 			myJumpParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myJumpBehavior, myJumpBehavior, myJumpParameters);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(),
+				SaladConstants.ID, myUniqueID, myJumpBehavior, true,
+				myJumpParameters));
 	}
-	
-    /**
-     * Set the shoot behavior
-     * @param s: shoot type
-     * @param args: parameters
-     */
-	public void setShootBehavior(String s, Object ... args){
+
+	/**
+	 * Set the shoot behavior
+	 * 
+	 * @param s
+	 *            : shoot type
+	 * @param args
+	 *            : parameters
+	 */
+	public void setShootBehavior(String s, Object... args) {
 		myShootBehavior = s;
 		myShootParameters = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
+		for (int i = 0; i < args.length; i++) {
 			myShootParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myShootBehavior, myShootBehavior, myShootParameters);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(),
+				SaladConstants.ID, myUniqueID, myShootBehavior, true,
+				myShootParameters));
 	}
-	
+
 	/**
 	 * Set the move behavior
-	 * @param s: String specifying the move behavior
-	 * @param xspeed: the x speed 
-	 * @param yspeed: the y speed
+	 * 
+	 * @param s
+	 *            : String specifying the move behavior
+	 * @param xspeed
+	 *            : the x speed
+	 * @param yspeed
+	 *            : the y speed
 	 */
-	public void setMoveBehavior(String s, Object ... args){
+	public void setMoveBehavior(String s, Object... args) {
 		myMoveBehavior = s;
 		myMoveParameters = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
+		for (int i = 0; i < args.length; i++) {
 			myMoveParameters.add(args[i]);
 		}
-		addAttributes(SaladConstants.ID, myUniqueID, myMoveBehavior, myMoveBehavior, myMoveParameters);
+		myAttributes.add(AttributeMaker.addAttribute(ModificationString(),
+				SaladConstants.ID, myUniqueID, myMoveBehavior, true,
+				myMoveParameters));
 	}
-	
-	/**
-	 * Set the collision behavior
-	 * @param type: String specifying the collision behavior
-	 * @param id: the collision ID of the hitter
-	 */
-	public void setCollisionBehavior(String type, int otherColid, Object ... args){
-		myCollisionBehavior.put(otherColid, type);
-		List<Object> objects = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
-			objects.add(args[i]);
-		}
-		myCollisionParameters.put(otherColid, objects);
-		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, otherColid, objects);
+
+	public void die() {
+		if (myDieBehavior == null)
+			return;
+		SaladUtil.behaviorReflection(myBehaviors, myDieBehavior,
+				myDieParameters, SaladConstants.REMOVE, this);
 	}
-	
-	/**
-	 * Set the tile collision behavior
-	 * @param type: String specifying the tile collision behavior
-	 * @param tileID: the tile collision ID
-	 */
-	public void setTileCollisionBehavior(String type, int tileColid, Object ... args){
-		myTileCollisionBehavior.put(tileColid, type);
-		List<Object> objects = new ArrayList<Object>();
-		for(int i = 0; i < args.length; i ++){
-			objects.add(args[i]);
-		}
-		myTileCollisionParameters.put(tileColid, objects);
-		addAttributes(SaladConstants.COLLISION_ID, colid, type, type, tileColid, objects);
+
+	// public void bounce(){
+	// xspeed *= -1;
+	// yspeed *= -1;
+	// }
+
+	public void stop() {
+		setSpeed(0);
+		setPos(getLastX(), getLastY());
 	}
-	
-	public void die(){
-		if(myDieBehavior == null) return;
-		behaviorReflection(myBehaviors, myDieBehavior, myDieParameters, "remove");	
+
+	public void ground() {
+		myIsInAir = 1;
+		myJumpTimes = 0;
+		stop();
 	}
-	
+
 	/**
 	 * Reset the collision ID
+	 * 
 	 * @param new collisionID
 	 */
-	public void resetCollisionID(int collisionID){
+	public void resetCollisionID(int collisionID) {
 		colid = collisionID;
 	}
-	
-	public void jump(){
-		myJumpTimes ++;
-		myIsInAir = true;
-		if(myJumpBehavior == null) return;
-		behaviorReflection(myBehaviors, myJumpBehavior, myJumpParameters, "jump");
+
+	public void setJumpingImage(String jumpGfx) {
+		myJumpingGfxName = jumpGfx;
 	}
-	
+
+	public void setMovingImage(String moveGfx) {
+		myMovingGfxName = moveGfx;
+	}
+
+	public void jump() {
+		if (myIsInAir == 0) {
+			myJumpTimes++;
+		}
+		if (myJumpBehavior == null)
+			return;
+		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior,
+				myJumpParameters, SaladConstants.JUMP, this);
+		setImage(myJumpingGfxName);
+		
+	}
+
 	/**
-	 * Do not call this method directly
-	 * @param ResourceBundle
-	 * @param myString
-	 * @param methodName
+	 * 
+	 * @return int jump times
 	 */
-	protected void behaviorReflection(ResourceBundle myBundle, String myString, List<Object> objects, String methodName){
-		if(myString == null) return;
-		try{
-			Object behavior = Reflection.createInstance(myBundle.getString(myString), this);
-			Reflection.callMethod(behavior, methodName, objects);	
-		} catch (Exception e){
-			e.printStackTrace(); // should never reach here
+	public int getJumpTimes() {
+		return myJumpTimes;
+	}
+
+	@Override
+	public void move() {
+		if (myBlood <= 0)
+			die();
+		myIsInAir = 2 * (myIsInAir % 2);
+		if (xspeed != 0) {
+			setImage(myMovingGfxName);
+		} else {
+			setImage(myStaticGfxName);
 		}
 	}
-	
+
 	@Override
-	public void move(){
-		if(myLives <= 0) die();
+	public void hit(JGObject other) {
+		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager
+				.getCollisionBehavior(colid, other.colid));
+		if (parameters == null)
+			return; // just to make sure
+		String collisionBehavior = (String) parameters.get(0);
+		parameters.remove(0);
+		parameters.add(0, other);
+		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior,
+				parameters, SaladConstants.COLLIDE, this);
 	}
-	
+
 	@Override
-	public void hit(JGObject other)
-    {
-		if(!myCollisionBehavior.containsKey(other.colid)) return;
-		List<Object> params = myCollisionParameters.get(other.colid);
-		params.add(other); //add the hitter to the end of the parameter list
-		behaviorReflection(myBehaviors, myCollisionBehavior.get(other.colid), params, "collide");
-    }
-	
-	@Override
-	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize){
-//		myInAirCounter = 0;
-		if(!myTileCollisionBehavior.containsKey(tilecid)) return;
-		List<Object> params = myTileCollisionParameters.get(tilecid);
-		params.add(tilecid);
-		params.add(tx);
-		params.add(ty);
-		params.add(txsize);
-		params.add(tysize);
-		behaviorReflection(myBehaviors, myTileCollisionBehavior.get(tilecid), params, "collide");
+	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
+		// myInAirCounter = 0;
+		List<Object> parameters = SaladUtil.copyObjectList(myCollisionManager
+				.getTileCollisionBehavior(colid, tilecid));
+		if (parameters == null)
+			return; // just to make sure
+		String collisionBehavior = (String) parameters.get(0);
+		parameters.remove(0);
+		parameters.add(tilecid);
+		parameters.add(tx);
+		parameters.add(ty);
+		parameters.add(txsize);
+		parameters.add(tysize);
+		SaladUtil.behaviorReflection(myBehaviors, collisionBehavior,
+				parameters, SaladConstants.COLLIDE, this);
+		setImage(myStaticGfxName);
 	}
-	
-	public void autoMove(){
-		if(myMoveBehavior == null) return;
-		behaviorReflection(myBehaviors, myMoveBehavior, myMoveParameters, "move");
+
+	public void autoMove() {
+		if (myMoveBehavior == null)
+			return;
+		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior,
+				myMoveParameters, SaladConstants.MOVE, this);
 	}
-	
-	public void shoot(){
-		if(myShootBehavior == null) return;
-		behaviorReflection(myBehaviors, myShootBehavior, myShootParameters, "shoot");
+
+	public void shoot() {
+		if (myShootBehavior == null)
+			return;
+		SaladUtil.behaviorReflection(myBehaviors, myShootBehavior,
+				myShootParameters, SaladConstants.SHOOT, this);
 	}
-	
+
 	/**
-	 * Should be called by the Parser class to get all attributes of the GameObject
-	 * Return a list of Strings that match with the Data Format but without Key 
+	 * Should be called by the Parser class to get all attributes of the
+	 * GameObject Return a list of Strings that match with the Data Format but
+	 * without Key
+	 * 
 	 * @return a list of Strings
 	 */
-	public List<String> getAttributes(){
+	public List<String> getAttributes() {
 		return myAttributes;
 	}
+
+	/**
+	 * When ModifyActor/PlayerImage is called, the gfx info is passed along
+	 * 
+	 * @param gfxname
+	 */
+	public void updateImageURL(String gfxname) {
+		myStaticGfxName = gfxname;
+	}
+
+	/**
+	 * Used for behaviors to get the ScoreManager to update scores
+	 * 
+	 * @return ScoreManager
+	 */
+	public ScoreManager getScoreManager() {
+		return myScoreManager;
+	}
+
+	/**
+	 * Used for behaviors to get the BloodManager to update blood
+	 * 
+	 * @return BloodManager
+	 */
+	public BloodManager getBloodManager() {
+		return myBloodManager;
+	}
 	
-/* @NOTE:
+	
+/* @Steve:
  * The following getter and setters used for GameFactoryTest
  * Will remove them once finished
  */
@@ -374,26 +564,16 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
-    
-    //plz review
-	public void addSDCollisionBehavior(String direction, String type, int otherColid, Object ... args){
-		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-		if (dir == -1) return;
-		SideDetecter sd = mySideDetecters[dir];
-		if (sd == null){
-			sd = new SideDetecter(this,dir);
-			mySideDetecters[dir] = sd;
-		}
-		sd.setCollisionBehavior(type, otherColid, args);
+
+	/**
+	 * @return the Gfx info
+	 */
+	public String getMyGfx() {
+		return myStaticGfxName;
 	}
-	public void addSDTileCollisionBehavior(String direction, String type, int tileColid, Object ... args){
-		int dir = Arrays.asList(new String[]{"up","bottom","left","right"}).indexOf(direction);
-		if (dir == -1) return;
-		SideDetecter sd = mySideDetecters[dir];
-		if (sd == null){
-			sd = new SideDetecter(this,dir);
-			mySideDetecters[dir] = sd;
-		}
-		sd.setTileCollisionBehavior(type, tileColid, args);
+	
+	public void setStaticGfx(String image) {
+		myStaticGfxName = image;
 	}
+
 }

@@ -44,29 +44,12 @@ public class GameFactoryTileTest extends TestCase{
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
         
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myPlayer = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+//        myPlayer = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
     }
     
     @Test
-    public void testDFParser() throws IndexOutOfBoundsException{
-
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        List<Object> PARSED_OBJECT_LIST = Arrays.asList(PARSED_OBJECT_ARRAY);
-
-        List<Object> parsedObjList = null;
-        try {
-            parsedObjList = (List<Object>) myFactory.parseOrder(CREATEPLAYER_OBJECT_LIST, (String) CREATEPLAYER_OBJECT_LIST.get(0)).get("Argument");
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(parsedObjList, PARSED_OBJECT_LIST);
-        assertEquals(parsedObjList.get(1),"actor_default.png");
-    }
-    
-    @Test
-    public void testCreatePlayer() throws FactoryException{
+    public void testCreateTile() throws FactoryException{
 
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         Player myObject = null;

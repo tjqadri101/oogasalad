@@ -180,13 +180,18 @@ public class Reflection
         return results;
     }
 
-    
+    /**
+     * @Modified Siyang Wang
+     * Made actuals.length >= formals.length-1, so that it can also handle
+     * [int hitterColid, String type, int victimColid, Object ... args] method arguments 
+     *  when only three parameters are given
+     */
     // are parameters of compatible types and in same order?
     private static boolean typesMatch (Member function,
                                        Class<?>[] formals, Object[] actuals)
     {
         if ((actuals.length == formals.length) || 
-            (actuals.length >= formals.length && isVarArgs(function)))
+            (actuals.length >= formals.length-1 && isVarArgs(function)))
         {
             int idx = 0;
             // check each parameter individually
