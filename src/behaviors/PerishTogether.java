@@ -26,6 +26,7 @@ public class PerishTogether extends Collision{
 				myObject, hitter);
 		myObject.getBloodManager().update(SaladConstants.COLLISION, 
 				myObject, hitter);
+		//myObject.getTriggerEventManager().update(SaladConstants.COLLISION, myObject, hitter);
 		hitter.die();
 	}
 }
