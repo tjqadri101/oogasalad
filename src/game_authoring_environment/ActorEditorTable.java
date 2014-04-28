@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import objects.NonPlayer;
 import controller.GAEController;
 
 public class ActorEditorTable extends PanelTable{
@@ -210,8 +211,12 @@ public class ActorEditorTable extends PanelTable{
 
 	@Override
 	void updateTable() {
+		NonPlayer actor = gController.getNonPlayer();
 		
-
+		
+		makeTable();
+		init();
+		
 	}
 
 }

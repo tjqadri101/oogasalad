@@ -165,4 +165,8 @@ public class DataController {
 		int j = myGame.getNonPlayerColid(getCurrentLevelID(), getCurrentSceneID(), id);
 		return j;
 	}
+	
+    public NonPlayer getNonPlayer(int objectID){
+        return myGame.getLevel(getCurrentLevelID()).getNonPlayer(getCurrentSceneID(), objectID);
+    }
 }
