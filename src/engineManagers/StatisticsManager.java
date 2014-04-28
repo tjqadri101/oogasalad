@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import objects.GameObject;
+import objects.SideDetector;
 import saladConstants.SaladConstants;
 import util.SaladUtil;
 /**
@@ -30,6 +31,14 @@ public abstract class StatisticsManager {
 		System.out.println("setValue: " + value);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, args);
 		myMap.put(condition, value);
+	}
+	
+	protected int checkIfSideDetectorColid (GameObject object){
+		if (object instanceof SideDetector){
+			SideDetector detector = (SideDetector) object;
+			return detector.getParentColid();
+		}
+		return object.colid;
 	}
 	
 	public abstract void update(String info, GameObject victim, GameObject hitter);

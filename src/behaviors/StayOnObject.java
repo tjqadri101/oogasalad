@@ -4,13 +4,13 @@ import java.util.List;
 
 import objects.GameObject;
 /**
- * No parameters needed
  * 
  * @author Main Justin (Zihao) Zhang
+ *
  */
-public class Eliminate extends Collision{
+public class StayOnObject extends Collision {
 
-	public Eliminate(GameObject o) {
+	public StayOnObject(GameObject o) {
 		super(o);
 	}
 
@@ -18,6 +18,7 @@ public class Eliminate extends Collision{
 	public void collide(List<Object> objects) {
 		GameObject hitter = (GameObject) objects.get(0);
 		updateManagers(hitter);
-		myObject.die(); 
+		hitter.ground();
 	}
+
 }

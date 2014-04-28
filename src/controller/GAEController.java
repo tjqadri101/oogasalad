@@ -62,6 +62,8 @@ public class GAEController {
 		createLevel(1);
 		createScene(1,0);
 		switchScene(1,0);
+		//uploadImage(100,100,)
+		createPlayer(playerID, null, 100, 100, 100, 100, "Default", 0, 1);
 
 
 	}
@@ -428,7 +430,7 @@ public class GAEController {
 				SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + ",CollisionID,"+ colID +  SaladConstants.SEPARATOR + 
 				SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
-		this.modifyCollisBehavStayOnTile(colID, 2, "All");
+		setColIDStayOnEveryTileID(colID);
 		System.out.println(order);
 	}
 
@@ -730,7 +732,7 @@ public class GAEController {
 	}
 
 
-	public void modifyCollisBehavStayOnTile(int victimColID,int tileColID, String moveDirection){
+	public void modifyCollisBehavStayOnTile(int victimColID,char tileColID, String moveDirection){
 		String order = SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR
 				+ victimColID + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE
 				+ SaladConstants.SEPARATOR + tileColID+ SaladConstants.SEPARATOR + moveDirection;
@@ -1088,6 +1090,13 @@ public class GAEController {
 					return map2;}}}
 		Map<String, Integer> k = new HashMap<String, Integer>();
 		return k;
+	}
+	
+	private void setColIDStayOnEveryTileID(int actorColID){
+		System.out.println(myDataController.getGame().getOccupiedTileColids());
+		for(char tileID :myDataController.getGame().getOccupiedTileColids()){
+			this.modifyCollisBehavStayOnTile(actorColID, tileID, "All");
+		}
 	}
 
 }

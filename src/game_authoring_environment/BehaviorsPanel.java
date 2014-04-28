@@ -43,7 +43,7 @@ public class BehaviorsPanel extends Panel {
 		this.setLayout(new BorderLayout());
 		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
 		//this.add(createKeySetButton(),BorderLayout.SOUTH);
-		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
+		//this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 
 	}
 
@@ -109,6 +109,8 @@ public class BehaviorsPanel extends Panel {
 	    	    			int returnVal = chooser.showOpenDialog(getParent());
 	    	    			if(returnVal == JFileChooser.APPROVE_OPTION) {
 	    	    				imageName = chooser.getSelectedFile().getName();
+	    	    				String path = chooser.getSelectedFile().getPath();
+	    	    				gController.uploadImage(20, 20, path);
 	    	    			}			
 	    	    		}catch(Exception e){
 	    	    		}

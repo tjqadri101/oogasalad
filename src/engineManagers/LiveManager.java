@@ -118,8 +118,10 @@ public class LiveManager extends StatisticsManager {
 
 	@Override
 	public void update(String info, GameObject victim, GameObject hitter) {
+		int victimColid = checkIfSideDetectorColid(victim);
+		int hitterColid = checkIfSideDetectorColid(hitter);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, hitter.colid);
+				info, victimColid, hitterColid);
 		if(!myMap.containsKey(condition)) return;
 		if(hitter instanceof Player){
 			Player p = (Player) hitter;
@@ -130,8 +132,9 @@ public class LiveManager extends StatisticsManager {
 	}
 	
 	public void update(String info, GameObject victim, int tileColid){
+		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, tileColid);
+				info, victimColid, tileColid);
 		if(!myMap.containsKey(condition)) return;
 		if(victim instanceof Player){
 			Player p = (Player) victim;
