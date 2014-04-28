@@ -3,8 +3,10 @@ package objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import jgame.JGObject;
 import saladConstants.SaladConstants;
+import statistics.GameStats;
 import engineManagers.*;
 import util.AttributeMaker;
 import engineManagers.CollisionManager;
@@ -278,6 +280,7 @@ public abstract class GameObject extends JGObject {
 	 * @param lives
 	 */
 	public void setInitBlood(int blood) {
+		GameStats.set(getName() + " " + SaladConstants.BLOOD, blood);
 		myInitBlood = blood;
 		restoreBlood();
 	}
@@ -418,6 +421,7 @@ public abstract class GameObject extends JGObject {
 
 	public void shoot() {
 		myActionManager.shoot();
+		GameStats.update(getName() + " " + SaladConstants.SHOOT, 1); // may not be needed
 	}
 
 	/**
