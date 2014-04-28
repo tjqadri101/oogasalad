@@ -70,9 +70,9 @@ public class ScoreManager extends StatisticsManager{
 		myScore += myMap.get(condition);
 	}
 	
-	public void update(String info, String oldLevelOrSceneID, String newLevelOrSceneID){
+	public void update(String info, int oldLevelOrSceneID){
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, oldLevelOrSceneID, newLevelOrSceneID);
+				info, oldLevelOrSceneID);
 		if(myMap.get(condition) == null) return;
 		myScore += myMap.get(condition);
 	}

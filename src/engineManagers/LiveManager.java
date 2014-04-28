@@ -32,13 +32,23 @@ public class LiveManager extends StatisticsManager {
 		myRestore = true;
 	}
 	
+	/**
+	 * Set the initial number of lives of a player
+	 * @param lives
+	 * @param playerID
+	 */
 	public void setInitLives(int lives, int playerID){
 		if(!myPlayerMap.containsKey(playerID)) return;
 		myInitLifeMap.put(myPlayerMap.get(playerID), lives);
 	}
 	
+	/**
+	 * Get the current number of lives of a player
+	 * @param playerID
+	 * @return
+	 */
 	public int getCurrentLife(int playerID){
-		if(!myPlayerMap.containsKey(playerID)) return DEFAULT_NULL_LIVES;
+		if(!myPlayerMap.containsKey(playerID) || myPlayerMap == null) return DEFAULT_NULL_LIVES;
 		return myCurrentLifeMap.get(myPlayerMap.get(playerID));
 	}
 	
@@ -88,9 +98,20 @@ public class LiveManager extends StatisticsManager {
 			param.append(player.getID());
 			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
 					param.toString().split(SaladConstants.SEPARATOR)));
-			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BLOOD_MANAGER, type, false, params));
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LIFE_MANAGER, type, false, params));
 		}
-		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BLOOD_MANAGER, SaladConstants.RESTORE_LIFE_BY_LEVEL, myRestore));
+		for (String condition: myMap.keySet()){
+			String type = null;
+			StringBuilder param = new StringBuilder();
+			param.append(myMap.get(condition) + SaladConstants.SEPARATOR);
+			param.append(condition);
+			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
+					param.toString().split(SaladConstants.SEPARATOR)));
+			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.COLLISION;
+			if(condition.startsWith(SaladConstants.TILE_COLLISION)) type = SaladConstants.TILE_COLLISION;
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LIFE_MANAGER, type, false, params));
+		}
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LIFE_MANAGER, SaladConstants.RESTORE_LIFE_BY_LEVEL, myRestore));
 		return answer;
 	}
 
