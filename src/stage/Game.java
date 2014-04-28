@@ -41,7 +41,7 @@ public class Game {
 	protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-//    protected TriggerEventManager myEventManager;
+    protected TriggerEventManager myTEManager;
     protected Map<Character, String> myTileImageMap;
 
 
@@ -57,7 +57,7 @@ public class Game {
 		myInputManager = new InputManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
-//    	myEventManager = new TriggerEventManager();
+    	myTEManager = new TriggerEventManager();
 	}
 
 	/**
@@ -363,10 +363,14 @@ public class Game {
 	/** Should only be called from Engine
 	 * @return the only instance of TriggerEventManager
 	 */
-//	public TriggerEventManager getEventManager(){
-//	    return myEventManager;
-//	}
-//	
+	public TriggerEventManager getEventManager(){
+	    return myTEManager;
+	}
+
+        public RevivalManager getRevivalManager() {
+                return myRevivalManager;
+        }       
+	
 	/* @Siyang: 
 	 * The following getter added to facilitate testing. 
 	 */
@@ -374,8 +378,5 @@ public class Game {
 	    return myLevelMap;
 	}
 
-	public RevivalManager getRevivalManager() {
-		return myRevivalManager;
-	}	
 
 }
