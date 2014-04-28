@@ -4,6 +4,7 @@ import saladConstants.SaladConstants;
 import stage.Game;
 import stage.Scene;
 import stage.Transition;
+import statistics.StatsController;
 import util.SaladUtil;
 import jgame.JGColor;
 import jgame.platform.StdGame;
@@ -60,12 +61,14 @@ public class GameEngine extends StdGame {
 	protected boolean isPlaying;
 	protected boolean isTileEditing;
 	protected boolean scene_restart = true;//
+	protected StatsController myStatsController;
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
 		isEditingMode = editing;
 		isLoading = true;
 		isPlaying = editing;
+		myStatsController = new StatsController(this, "Mario Game");
 	}
 
 	@Override
