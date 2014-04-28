@@ -63,7 +63,7 @@ public class ActorEditorTable extends PanelTable{
 						JTextField ySpeed = new JTextField(10);
 						JTextField[] texts = {xSpeed, ySpeed};
 						String[] strings = {"x speed:", "y speed:"};
-						JPanel myPanel = createOptionInputPanel(texts, strings);
+						JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
 
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
@@ -82,7 +82,7 @@ public class ActorEditorTable extends PanelTable{
 						JTextField Speed = new JTextField(10);
 						JTextField[] texts = {amplitude, Speed};
 						String[] strings = {"Amplitude:", "Speed:"};
-						JPanel myPanel = createOptionInputPanel(texts, strings);
+						JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
 
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
@@ -115,7 +115,7 @@ public class ActorEditorTable extends PanelTable{
 					case "Slow Shoot":{
 						JTextField[] texts = {xSizeField, ySizeField, speedField};
 						String[] strings = {"x size:", "y size:", "Speed:"};
-						JPanel myPanel = createOptionInputPanel(texts, strings);
+						JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
 
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
@@ -129,7 +129,7 @@ public class ActorEditorTable extends PanelTable{
 						JTextField bulletsField = new JTextField(10);
 						JTextField[] texts_ = {xSizeField, ySizeField, speedField, bulletsField};
 						String[] strings_ = {"x size:", "y size:", "Speed:", "Number of Bullets Per Shot"};
-						JPanel myPanel = createOptionInputPanel(texts_, strings_);
+						JPanel myPanel = ViewFactory.createOptionInputPanel(texts_, strings_);
 
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
