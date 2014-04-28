@@ -5,7 +5,6 @@ import stage.Game;
 import stage.Scene;
 import stage.Transition;
 import statistics.StatsController;
-import util.SaladUtil;
 import jgame.JGColor;
 import jgame.platform.StdGame;
 import objects.GameObject;
@@ -15,8 +14,6 @@ import objects.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
-import engineManagers.TriggerEventManager;
 
 /**
  * @Author: Isaac (Shenghan) Chen
@@ -637,12 +634,12 @@ public class GameEngine extends StdGame {
 	 }
 
 	 
+
 	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
 		 object.setSize(xsize, ysize);
 		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
-
 
 	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
 		 GameObject object = myGame.getNonPlayer(myCurrentLevelID,
