@@ -75,7 +75,7 @@ public class EngineTest {
 		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 300, 300, SaladConstants.NULL, PLAYER_COLID, 6);
 		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
-		player.setShootBehavior("SpreadShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4);
+		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
@@ -98,6 +98,8 @@ public class EngineTest {
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(1, "Time");
 		game.getScoreManager().setValue(50, "LevelDone", 1);
+		
+		player.getAnimationManager().modifyImage("Jump", "engine/actor_blank");
 		engine.loadingDone();
         return engine;
 	}

@@ -3,8 +3,10 @@ package objects;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import jgame.JGObject;
 import saladConstants.SaladConstants;
+import statistics.GameStats;
 import engineManagers.*;
 import util.AttributeMaker;
 import engineManagers.CollisionManager;
@@ -43,7 +45,7 @@ public abstract class GameObject extends JGObject {
 	protected int myIsInAir;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
-	protected String myStaticGfxName;
+	protected String myDefaultImage;
 	protected List<String> myAttributes;
 	protected String myName;
 	
@@ -72,14 +74,14 @@ public abstract class GameObject extends JGObject {
 		myBloodManager = bloodManager;
 		myRevivalManager = revivalManager;
 		myLiveManager = liveManager;
-		myStaticGfxName = staticGfxName;
+		myDefaultImage = staticGfxName;
 		myName = name;
 		myActionManager = new ActionManager(this);
 		myAnimationManager = new AnimationManager(this);
 		myTEManager = triggerEventManager;
 		initSideDetectors();
 		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
-				SaladConstants.IMAGE, false, myStaticGfxName, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
+				SaladConstants.IMAGE, false, myDefaultImage, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
 				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
 	}
 
@@ -278,6 +280,7 @@ public abstract class GameObject extends JGObject {
 	 * @param lives
 	 */
 	public void setInitBlood(int blood) {
+		GameStats.set(getName() + " " + SaladConstants.BLOOD, blood);
 		myInitBlood = blood;
 		restoreBlood();
 	}
@@ -388,6 +391,16 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
+		System.out.println(xdir);
+		if (xdir < 0) {
+			myAnimationManager.updateImage("BKMove");
+			System.out.println("updatedImage");
+		} else if (xdir > 0) {
+			setImage("src/engine/bossFire.png");
+			System.out.println("updatedImage");
+		} else {
+			setImage(myDefaultImage);
+		}
 	}
 
 	@Override
@@ -399,6 +412,7 @@ public abstract class GameObject extends JGObject {
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		// myInAirCounter = 0;
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
+		setImage(myDefaultImage);
 	}
 	
 	@Override
@@ -418,6 +432,7 @@ public abstract class GameObject extends JGObject {
 
 	public void shoot() {
 		myActionManager.shoot();
+		GameStats.update(getName() + " " + SaladConstants.SHOOT, 1); // may not be needed
 	}
 
 	/**
@@ -438,7 +453,7 @@ public abstract class GameObject extends JGObject {
 	 * @param gfxname
 	 */
 	public void updateImageURL(String gfxname) {
-		myStaticGfxName = gfxname;
+		myDefaultImage = gfxname;
 	}
 
 	/**
@@ -472,11 +487,11 @@ public abstract class GameObject extends JGObject {
 	 * @return the Gfx info
 	 */
 	public String getMyGfx() {
-		return myStaticGfxName;
+		return myDefaultImage;
 	}
 	
 	public void setStaticGfx(String image) {
-		myStaticGfxName = image;
+		myDefaultImage = image;
 	}
 
 	public RevivalManager getRevivalManager() {
@@ -501,6 +516,10 @@ public abstract class GameObject extends JGObject {
 
 	public void modifyDynamicImage(String action, String imgfile, int xsize, int ysize) {
 		myAnimationManager.modifyImage(action, imgfile);
+	}
+	
+	public AnimationManager getAnimationManager() {
+		return myAnimationManager;
 	}
 
 }
