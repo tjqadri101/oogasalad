@@ -60,8 +60,8 @@ public class GAEController {
 		g = new GAE(this);
 		setUpVariables();
 		createLevel(1);
-		createScene(0,1);
-		switchScene(0,1);
+		createScene(1,0);
+		switchScene(1,0);
 
 
 	}
@@ -657,7 +657,7 @@ public class GAEController {
 	
 	
 	public void modifyCollisBehavStayOnTile(int victimColID,int tileColID, String moveDirection){
-		String order = SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR
+		String order = SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.TILE_COLID + SaladConstants.SEPARATOR
 				+ victimColID + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE
 				+ SaladConstants.SEPARATOR + tileColID+ SaladConstants.SEPARATOR + moveDirection;
 		if (!DEBUG) myDataController.receiveOrder(order);

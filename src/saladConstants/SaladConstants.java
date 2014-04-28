@@ -57,6 +57,7 @@ public final class SaladConstants {
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
 	public static final String COLLISION_ID = "Colid";
 	public static final String COLLISION = "Collision";
+	public static final String TILE_COLID = "TileColid";
 	
 	//General Behaviors
 	public static final String DIE = "die";
@@ -115,6 +116,7 @@ public final class SaladConstants {
     public static final String DATA_FORMAT_REFLECTION = "DataFormatReflection";
     public static final String TYPE_FORMAT = "TypeFormat";
     public static final String NONCLEAR_KEYS_FILE = "PlayerKeys";
+    public static final String OBJECT_IMAGES = "ObjectImages";
     
     public static final String NON_CLEAR_KEYS = "NonClearKeys";
 

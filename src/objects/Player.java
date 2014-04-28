@@ -96,6 +96,12 @@ public class Player extends GameObject {
 	}
 	
 	@Override
+	public void die(){
+		super.die();
+		myLiveManager.decrementLive(getID());
+	}
+	
+	@Override
 	public List<String> getAttributes(){
 		List<String> answer = super.getAttributes();
 		for(int key: myKeyMap.keySet()){

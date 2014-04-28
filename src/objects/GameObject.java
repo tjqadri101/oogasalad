@@ -29,6 +29,8 @@ public abstract class GameObject extends JGObject {
 	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
 
+	protected AnimationManager myAnimationManager;
+
 	protected int myXSize;
 	protected int myYSize;
 	protected double myInitX; 
@@ -378,7 +380,7 @@ public abstract class GameObject extends JGObject {
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
 		myActionManager.jump();
-		if (myJumpingGfxName != null) setImage(myJumpingGfxName); //hardcode to be modified later
+		myAnimationManager.updateImage(this, "Jump") ; //hardcode to be modified later
 	}
 
 	/**
@@ -393,11 +395,13 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
-//		if (xspeed != 0) {
-//			setImage(myMovingGfxName); //hardcode to be modified later
-//		} else {
-//			setImage(myStaticGfxName); //hardcode to be modified later
-//		}
+		if (xspeed > 0) {
+			myAnimationManager.updateImage(this, "FDMove");
+		} else if (xspeed < 0) {
+			myAnimationManager.updateImage(this, "BKMove");
+		} else {
+			setImage(myStaticGfxName);
+		}
 	}
 
 	@Override
@@ -409,9 +413,7 @@ public abstract class GameObject extends JGObject {
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		// myInAirCounter = 0;
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
-		if (myStaticGfxName != null) { //hardcode to be modified later
-			setImage(myStaticGfxName);
-		}
+		setImage(myStaticGfxName);
 	}
 	
 	@Override
