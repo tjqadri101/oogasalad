@@ -3,6 +3,8 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
+import saladConstants.SaladConstants;
+import statistics.GameStats;
 /**
  * No parameters needed
  * 
@@ -19,5 +21,6 @@ public class Eliminate extends Collision{
 		GameObject hitter = (GameObject) objects.get(0);
 		updateManagers(hitter);
 		myObject.die(); 
+		GameStats.update(SaladConstants.ENEMY_KILLED, 1);
 	}
 }
