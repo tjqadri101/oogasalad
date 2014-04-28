@@ -499,4 +499,8 @@ public abstract class GameObject extends JGObject {
         return myActionManager;
     }
 
+	public void modifyDynamicImage(String action, String imgfile, int xsize, int ysize) {
+		myAnimationManager.modifyImage(action, imgfile);
+	}
+
 }
