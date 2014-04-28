@@ -148,4 +148,8 @@ public class ActionManager {
 		return myAttributes;
 	}
 	
+	// added for the sake of testing
+	public List<Object> getDieBehavior(){
+	        return myDieParameters;
+	}
 }

@@ -227,6 +227,18 @@ public class Game {
     	return myPlayerMap.get(playerID).colid;
     }
     
+    /**
+     * Get a list of all the current players
+     * @return list of players
+     */
+    public List<Player> getAllPlayers(){
+    	List<Player> players = new ArrayList<Player>();
+    	for(Player p: myPlayerMap.values()){
+    		players.add(p);
+    	}
+    	return players;
+    }
+    
     
     /**
      * Called to remove a Player matched to the playerID from the Game

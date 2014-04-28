@@ -98,6 +98,7 @@ public class LiveManager extends StatisticsManager {
 			param.append(player.getID());
 			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
 					param.toString().split(SaladConstants.SEPARATOR)));
+			type = SaladConstants.SET_INIT_LIVES;
 			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LIFE_MANAGER, type, false, params));
 		}
 		for (String condition: myMap.keySet()){
@@ -107,8 +108,8 @@ public class LiveManager extends StatisticsManager {
 			param.append(condition);
 			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
 					param.toString().split(SaladConstants.SEPARATOR)));
-			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.COLLISION;
-			if(condition.startsWith(SaladConstants.TILE_COLLISION)) type = SaladConstants.TILE_COLLISION;
+			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.SET_COLLISION_LIVE;
+			else if(condition.startsWith(SaladConstants.TILE_COLLISION)) type = SaladConstants.SET_TILE_COLLISION_LIVE;
 			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LIFE_MANAGER, type, false, params));
 		}
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LIFE_MANAGER, SaladConstants.RESTORE_LIFE_BY_LEVEL, myRestore));
