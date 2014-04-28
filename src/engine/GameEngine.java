@@ -386,7 +386,6 @@ public class GameEngine extends StdGame {
 	 
 	 private void displayPlayerInfo() {
 		 if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
-			 System.out.println(myPlayer.getBlood()+" "+myPlayer.getInitBlood());
 			 drawRect(myPlayer.x + myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 13.5,
 					 myPlayer.getXSize() / 2, 10, false, true);
