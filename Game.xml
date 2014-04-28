@@ -1,1 +1,11 @@
-
+<list>
+	<string>CreateLevel,ID,1</string>
+	<String>CreateScene,ID,1,ID,0</String>
+	<string>SwitchScene,ID,1,ID,0</string>
+	<string>CreateLevel,ID,1</string>
+	<string>CreateScene,ID,1,ID,0</string>
+	<String>SwitchScene,ID,1,ID,0</String>
+	<String>CreatePlayer,ID,0,Image,null,100,100,Position,100.0,100.0,Name,Default,CollisionID,0,Lives,1
+		FDMove
+	</String>
+</list>
