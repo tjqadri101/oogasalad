@@ -18,7 +18,6 @@ import util.SaladUtil;
  * Intended to manage all collision behaviors between objects and objects, objects and tiles
  * @author Main Justin (Zihao) Zhang
  * @contribution (set directional collision) Shenghan Chen
- *
  */
 public class CollisionManager {
 	
@@ -51,7 +50,7 @@ public class CollisionManager {
 	 * @param tileColid
 	 * @param args parameters
 	 */
-	public void addTileCollisionPair(int victimColid, String type, int tileColid, Object ... args){
+	public void addTileCollisionPair(int victimColid, String type, char tileColid, Object ... args){
 		addPairs(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR, myTileCollisionMap, 
 				victimColid, type, tileColid, args);
 	}
@@ -184,7 +183,7 @@ public class CollisionManager {
 		else addCollisionPair(SideDetector.SDcid(victimColid, dir), type, hitterColid,args);
 	}
 	
-	public void setDirectionalTileCollisionBehavior(int victimColid, String type, int tileColid, String direction, Object ... args){
+	public void setDirectionalTileCollisionBehavior(int victimColid, String type, char tileColid, String direction, Object ... args){
 		int dir = Arrays.asList(new String[]{SaladConstants.Top,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
 		if(dir == 4) addTileCollisionPair(victimColid, type, tileColid, args);
