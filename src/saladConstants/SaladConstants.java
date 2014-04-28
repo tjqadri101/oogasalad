@@ -10,9 +10,12 @@ public final class SaladConstants {
 	public static final String CREATE_SCENE = "CreateScene";
 	public static final String SWITCH_SCENE = "SwitchScene";
 	public static final String MODIFY_SCENE = "ModifyScene";
+	public static final String MODIFY_INIT_SCENE = "ModifyInitScene";
+	public static final String SET_INIT_SCENE = "SetInitialScene";
 	public static final String DELETE_LEVEL = "DeleteLevel";
 	public static final String DELETE_SCENE = "DeleteScene";
 	public static final String RESET_LEVEL_ID = "ResetLevelID";
+	
 	
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
@@ -58,7 +61,7 @@ public final class SaladConstants {
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
 	public static final String COLLISION_ID = "Colid";
 	public static final String COLLISION = "Collision";
-	public static final String TILE_COLID = "TileColid";
+	public static final String TILE_COLID = "TileID";
 	
 	//General Behaviors
 	public static final String DIE = "die";
@@ -82,6 +85,7 @@ public final class SaladConstants {
 	public static final String SHOW_CORPSE = "ShowCorpse";
 	public static final String IMMORTAL = "Immortal";
 	public static final String CAN_NOT_COLLIDE = "CanNotCollide";
+	public static final String CAN_NOT_JUMP = "CanNotJump";
     
     
 	public static final String POSITION = "Position";
@@ -189,6 +193,7 @@ public final class SaladConstants {
 	public static final String SPACE = " ";
 	public static final String NULL = "null";
 	public static final int NUM_SIDE_DETECTORS = 4;
+
 	public static final int NEUTRAL_DIRECTION = 0;
 
 	public static final String LEVEL_DONE = "LevelDone";

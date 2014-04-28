@@ -27,6 +27,7 @@ public class BloodManager extends StatisticsManager{
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, victim.colid, hitter.colid);
 		if(!myMap.containsKey(condition)) return;
+		System.out.println("BloodManager update collision: " + myMap.get(condition));
 		hitter.changeBlood(myMap.get(condition));
 	}
 	

@@ -113,7 +113,7 @@ public class BehaviorsPanel extends Panel {
 	    	    		}catch(Exception e){
 	    	    		}
 	    	        }
-	        	int colID = Integer.parseInt(tf.getText());
+	        	char colID = tf.getText().charAt(0);
 	        	gController.setDragTile(colID, imageName);
 	            gController.getEngine().setTileEditing(true);
 	        }
