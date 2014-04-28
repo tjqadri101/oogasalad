@@ -86,7 +86,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	/**
-	 * 
+	 * Initial the side detectors
 	 */
 	protected void initSideDetectors() {
 		if (myUniqueID == SaladConstants.NULL_UNIQUE_ID) return;
@@ -204,6 +204,11 @@ public abstract class GameObject extends JGObject {
 		return SaladConstants.CREATE_ACTOR;
 	}
 
+	/**
+	 * Set the intial speed 
+	 * @param xspeed
+	 * @param yspeed
+	 */
 	public void setInitSpeed(double xspeed, double yspeed) {
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
@@ -231,6 +236,9 @@ public abstract class GameObject extends JGObject {
 		}
 	}
 	
+	/**
+	 * Resume in view
+	 */
 	public void resume(){
 		super.resume();
 		if (mySideDetectors!=null){
@@ -240,6 +248,9 @@ public abstract class GameObject extends JGObject {
 		}
 	}
 	
+	/**
+	 * suspend from view
+	 */
 	public void suspend(){
 		super.suspend();
 		if (mySideDetectors!=null){
@@ -358,10 +369,10 @@ public abstract class GameObject extends JGObject {
 		myActionManager.die();
 	}
 
-	 public void bounce(){
+	public void bounce(){
 		 xspeed *= -1;
 		 yspeed *= -1;
-	 }
+	}
 
 	public void stop() {
 		setSpeed(0);
