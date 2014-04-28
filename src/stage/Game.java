@@ -344,11 +344,16 @@ public class Game {
         List <String> answer = new ArrayList<String>();
         answer.addAll(myScoreManager.getAttributes()); 
         answer.addAll(myInputManager.getAttributes()); 
+      
         answer.add(myGravity.getAttributes());
         for (Entry<Character, String> entry : getTileImageMap()) {
             Character cid = entry.getKey();
             String imgfile = entry.getValue();
             answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
+        }
+        
+        for(String s: answer){
+        	System.out.println("answer "+s); 
         }
         for (int playerID: myPlayerMap.keySet()){
             answer.addAll(myPlayerMap.get(playerID).getAttributes());	
