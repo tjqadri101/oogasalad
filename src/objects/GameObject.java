@@ -431,10 +431,14 @@ public abstract class GameObject extends JGObject {
 	 * @param args
 	 */
 	public void updateManagers(Object ... args){
-		if(myScoreManager != null) Reflection.callMethod(myScoreManager, "update", args);
-		if(myBloodManager != null) Reflection.callMethod(myBloodManager, "update", args);
-		if(myLiveManager != null) Reflection.callMethod(myLiveManager, "update", args);
-		if(myEventManager != null) Reflection.callMethod(myEventManager, "update", args);
+		try{
+			if(myScoreManager != null) Reflection.callMethod(myScoreManager, "update", args);
+			if(myBloodManager != null) Reflection.callMethod(myBloodManager, "update", args);
+			if(myLiveManager != null) Reflection.callMethod(myLiveManager, "update", args);
+			if(myEventManager != null) Reflection.callMethod(myEventManager, "update", args);	
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
