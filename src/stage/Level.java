@@ -35,7 +35,7 @@ public class Level {
 	}
 	
 	public void setInitialSceneID(int sceneID){
-		if(!mySceneMap.containsKey(sceneID))
+		if(mySceneMap.containsKey(sceneID))
 			myInitialSceneID = sceneID;
 	}
 	
