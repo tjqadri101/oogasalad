@@ -152,14 +152,4 @@ public class ActionManager {
 		return myAttributes;
 	}
 	
-	// added for the sake of testing
-	public String getDieBehavior(){
-	        return myDieBehavior;
-	}
-	
-	// added for the sake of testing
-    public String getMoveBehavior () {
-        // TODO Auto-generated method stub
-        return myMoveBehavior;
-    }
 }

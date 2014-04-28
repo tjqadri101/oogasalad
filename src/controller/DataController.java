@@ -155,8 +155,7 @@ public class DataController {
 		myGameEngine.reviveObject();
 	}
 	
-	
-	//kat needs these methods:
+
 	public Map<Integer, NonPlayer> getMapOfPlayers(int sceneID){
 		Map<Integer, NonPlayer> nonPlayerMap = myGame.getLevel(getCurrentLevelID()).getScene(sceneID).getObjectMap();
 		return nonPlayerMap;
