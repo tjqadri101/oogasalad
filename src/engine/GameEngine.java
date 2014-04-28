@@ -15,6 +15,7 @@ import objects.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import engineManagers.TriggerEventManager;
 
 /**
  * @Author: Isaac (Shenghan) Chen
@@ -157,7 +158,8 @@ public class GameEngine extends StdGame {
 	
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-//	        TriggerEventManager myTEM = getGame().getTEM();
+	        if (myGame==null){return;}
+	        TriggerEventManager myTEM = getGame().getTEManager();
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
 		if (drag()) {myViewOffsetPlayer = false;}
@@ -170,7 +172,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-//		myTEM.checkTrigger(this);
+		myTEM.checkTrigger(this);
 //		if (checkGoal()) {
 //			if (level >= 3) {
 //				gameOver();
@@ -616,6 +618,7 @@ public class GameEngine extends StdGame {
 	 }
 
 	 public Game getGame() {
+//	     if (myGame == null) {return null;}
 		 return myGame;
 	 }
 

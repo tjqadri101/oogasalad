@@ -421,6 +421,8 @@ public abstract class GameObject extends JGObject {
 		} else {
 			setImage(myDefaultImage);
 		}
+		System.out.println("Position: " + x + " " + y);
+		
 	}
 
 	@Override
@@ -445,6 +447,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void autoMove() {
+	    System.out.println("autoMove");
 		myActionManager.autoMove();
 	}
 
