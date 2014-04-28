@@ -72,6 +72,7 @@ public class Player extends GameObject {
 			y -= myMovingYSpeed*eng.getGameSpeed();
 		}
 		ydir = SaladConstants.NEGATIVE_DIRECTION;
+		xdir = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveDown(){
@@ -79,6 +80,7 @@ public class Player extends GameObject {
 			y += myMovingYSpeed*eng.getGameSpeed();
 		}
 		ydir = SaladConstants.POSITIVE_DIRECTION;
+		xdir = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveLeft(){
@@ -86,6 +88,7 @@ public class Player extends GameObject {
 			x -= myMovingXSpeed*eng.getGameSpeed();
 		}
 		xdir = SaladConstants.NEGATIVE_DIRECTION;
+		ydir = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveRight(){
@@ -93,6 +96,7 @@ public class Player extends GameObject {
 			x += myMovingXSpeed*eng.getGameSpeed();
 		}
 		xdir = SaladConstants.POSITIVE_DIRECTION;
+		ydir = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	@Override
