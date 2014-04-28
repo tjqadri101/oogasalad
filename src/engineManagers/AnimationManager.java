@@ -37,6 +37,14 @@ public class AnimationManager {
 			String key = keys.nextElement();
 			myImageMappings.put(key, SaladConstants.DEFAULT_ENGINE_PACKAGE + myAnimationResources.getString(key));
 		}
+		checkImageMappings();
+	}
+
+	private void checkImageMappings() {
+		for (String s : myImageMappings.keySet()) {
+			System.out.println(s);
+			System.out.println(myImageMappings.get(s));
+		}
 	}
 	/**
 	 * Will cause the appearing image of the object to change to the appropriate behavior
@@ -45,7 +53,12 @@ public class AnimationManager {
 	 */
 	public void updateImage(String behavior) {
 		String newImg = myImageMappings.get(behavior);
-		if (newImg != null) myObject.setImage(newImg);
+		if (newImg != null) {
+			myObject.setImage(newImg);
+			System.out.println(newImg);
+		} else {
+			System.out.println("Behavior is null");
+		}
 	}
 	/**
 	 * Changes the corresponding behavioral image to the new image specified
