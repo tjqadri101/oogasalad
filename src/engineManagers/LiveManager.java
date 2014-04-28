@@ -42,6 +42,16 @@ public class LiveManager extends StatisticsManager {
 		return myCurrentLifeMap.get(myPlayerMap.get(playerID));
 	}
 	
+	/**
+	 * Decrement a live for a player matched with the playerID
+	 * @param playerID
+	 */
+	public void decrementLive(int playerID){
+		int currentLive = myCurrentLifeMap.get(myPlayerMap.get(playerID));
+		currentLive --;
+		myCurrentLifeMap.put(myPlayerMap.get(playerID), currentLive);
+	}
+	
 	public void addPlayer(Player player){
 		myPlayerMap.put(player.getID(), player);
 		myInitLifeMap.put(player, DEFAULT_INITIAL_LIVES);

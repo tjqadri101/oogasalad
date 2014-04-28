@@ -33,7 +33,7 @@ public class GameObjectTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(false);
+		GameEngine engine = new GameEngine(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
@@ -46,6 +46,8 @@ public class GameObjectTest {
 		
 		game.getTransitionState("Title").setBackground("floorImage.jpg");
 		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
+		game.getTransitionState("Title").addInstruction(400, 3360, "NEW LEVEL! LET'S GO");
+		
 		
 		engine.setSceneView(null,false,false,1200,40);
 		engine.loadTileImage(TILE_COLID, "brick.png");
@@ -89,9 +91,7 @@ public class GameObjectTest {
 		
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, ENEMY_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
-		game.getBloodManager().setValue(1, "Collision", MUSHROOM_COLID, PLAYER_COLID);
-		game.getLiveManager().setValue(1, "Collision", PLAYER_COLID, MUSHROOM_COLID);
-//		engine.loadingDone();
+		engine.loadingDone();
         return engine;
 	}
 }
