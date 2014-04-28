@@ -1395,7 +1395,7 @@ public class GAEController {
 	}
 	
 	public Map<Integer, NonPlayer> getMapOfPlayers(){
-		Map<Integer, NonPlayer> map = myDataController.getMapOfPlayers(selectedSceneID);
+		Map<Integer, NonPlayer> map = myDataController.getMapOfNonPlayers(selectedSceneID);
 		return map;
 	}
 

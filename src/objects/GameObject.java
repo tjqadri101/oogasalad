@@ -486,27 +486,27 @@ public abstract class GameObject extends JGObject {
 	 * 
 	 * @return ScoreManager
 	 */
-	public ScoreManager getScoreManager() {
-		return myScoreManager;
-	}
+//	public ScoreManager getScoreManager() {
+//		return myScoreManager;
+//	}
 
 	/**
 	 * Used for behaviors to get the BloodManager to update blood
 	 * 
 	 * @return BloodManager
 	 */
-	public BloodManager getBloodManager() {
-		return myBloodManager;
-	}
+//	public BloodManager getBloodManager() {
+//		return myBloodManager;
+//	}
 	
 	/**
 	 * Used for behaviors to get the LiveManager to update blood
 	 * 
 	 * @return LiveManager
 	 */
-	public LiveManager getLiveManager(){
-		return myLiveManager;
-	}
+//	public LiveManager getLiveManager(){
+//		return myLiveManager;
+//	}
 	
 	/**
 	 * @return the Gfx info
@@ -523,9 +523,9 @@ public abstract class GameObject extends JGObject {
 		return myRevivalManager;
 	}
 	
-	public TriggerEventManager getTEManager(){
-	        return myTEManager;
-	}
+//	public TriggerEventManager getTEManager(){
+//	        return myTEManager;
+//	}
     
     /**
      * @return the myInitX
