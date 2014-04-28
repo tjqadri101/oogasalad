@@ -103,8 +103,6 @@ public class ActoreditorPanel extends Panel {
 				String path = chooser.getSelectedFile().getPath();
 				String name = chooser.getSelectedFile().getName();
 
-				//gController.modifyActorImageNoID(path, 100, 100);
-
 				gController.uploadImage(100, 100, path);
 				gController.updateActorImage(path,name);
 				gController.setActorImageURL(name);
