@@ -40,7 +40,7 @@ public class GameEngine extends StdGame {
 	protected int myCurrentLevelID;
 	protected int myCurrentSceneID;
 	protected Scene myCurrentScene;
-	protected Scene myEmptyScene = new Scene(0);
+//	protected Scene myEmptyScene = new Scene(0);
 	protected Player myPlayer;
 	protected int myTimer;
 	
@@ -79,7 +79,6 @@ public class GameEngine extends StdGame {
 //		setTileSettings("#",2,0);
 		defineImage("null","0",0,"null","-");
 		setGameState("Edit");
-		myEmptyScene = new Scene(0);
 		myTimer = 0;
 		lives = 1;
 	}
@@ -124,7 +123,7 @@ public class GameEngine extends StdGame {
 		int ticks4 = myGame.getTransitionState("GameOver").getFrame();
 		if (ticks4 > -1) {leveldone_ticks = ticks4;}
 		//reflection
-		if (inGameState("Title")) {setTransition("Title");}
+		if (inGameState("Title")) {setTransition("Title");System.out.println("???");}
 	}
 	
 	
@@ -158,6 +157,7 @@ public class GameEngine extends StdGame {
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
 //	        TriggerEventManager myTEM = getGame().getTEM();
+		myTimer ++;
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
 		if (drag()) {myViewOffsetPlayer = false;}
@@ -226,9 +226,9 @@ public class GameEngine extends StdGame {
 	
 	/* start<state> methods */
 	
-//	public void startTitle() {
-//		setTransition("Title");
-//	}
+	public void startTitle() {
+		setTransition("Title");
+	}
 
 	public void startStartGame() {
 		setTransition("StartGame");
@@ -248,6 +248,10 @@ public class GameEngine extends StdGame {
 	}
 
 	public void startGameOver() {
+		hideScene();
+		myPlayer.remove();
+		myCurrentScene = new Scene(0);
+		showScene();
 		setTransition("GameOver");
 	}
 	
@@ -614,6 +618,10 @@ public class GameEngine extends StdGame {
 
 	 public Game getGame() {
 		 return myGame;
+	 }
+	 
+	 public int getMyTimer() {
+		 return myTimer;
 	 }
 
 	 public int getCurrentLevelID() {
