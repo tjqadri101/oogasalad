@@ -183,9 +183,5 @@ public final class SaladConstants {
 	public static final String SPACE = " ";
 	public static final String NULL = "null";
 	public static final int NUM_SIDE_DETECTORS = 4;
-
-	
-
-
 	
 }
