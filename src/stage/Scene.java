@@ -50,6 +50,7 @@ public class Scene {
 		initTiles();
 	}
 	
+	
 	public String[] getTiles(){
 		return myTiles;
 	}

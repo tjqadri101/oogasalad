@@ -25,6 +25,10 @@ public class SideDetector extends GameObject{
 		return parent_cid*GENERATOR_FACTOR+dir;
 	}
 	
+	public int getParentColid(){
+		return myParent.colid;
+	}
+	
 	public void changeBlood(int blood){
 		myParent.changeBlood(blood);
 	}

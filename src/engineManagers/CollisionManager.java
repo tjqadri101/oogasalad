@@ -99,11 +99,11 @@ public class CollisionManager {
 		if (parameters == null) return; 
 		String collisionBehavior = (String) parameters.get(0);
 		parameters.remove(0);
-		parameters.add(tilecid);
-		parameters.add(tx);
-		parameters.add(ty);
-		parameters.add(txsize);
-		parameters.add(tysize);
+		parameters.add(0, tysize);
+		parameters.add(0, txsize);
+		parameters.add(0, ty);
+		parameters.add(0, tx);
+		parameters.add(0, tilecid);
 		SaladUtil.behaviorReflection(behaviors, collisionBehavior,
 				parameters, SaladConstants.COLLIDE, victim);
 	}

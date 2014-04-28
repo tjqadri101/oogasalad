@@ -57,15 +57,18 @@ public class ScoreManager extends StatisticsManager{
 	 */
 	@Override
 	public void update(String info, GameObject victim, GameObject hitter){
+		int hitterColid = checkIfSideDetectorColid(hitter);
+		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, hitter.colid);
+				info, victimColid, hitterColid);
 		if(!myMap.containsKey(condition)) return;
 		myScore += myMap.get(condition);
 	}
 	
 	@Override
 	public void update(String info, GameObject victim, int tilecid) {
-		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, info, victim.colid, tilecid);
+		int victimColid = checkIfSideDetectorColid(victim);
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, info, victimColid, tilecid);
 		if(!myMap.containsKey(condition)) return;
 		myScore += myMap.get(condition);
 	}

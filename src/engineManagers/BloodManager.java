@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import objects.GameObject;
+import objects.SideDetector;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
@@ -24,16 +25,21 @@ public class BloodManager extends StatisticsManager{
 
 	@Override
 	public void update(String info, GameObject victim, GameObject hitter) {
+		System.out.println("update called");
+		int hitterColid = checkIfSideDetectorColid(hitter);
+		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, hitter.colid);
+				info, victimColid, hitterColid);
+		System.out.println("update: " + condition);
 		if(!myMap.containsKey(condition)) return;
 		System.out.println("BloodManager update collision: " + myMap.get(condition));
 		hitter.changeBlood(myMap.get(condition));
 	}
 	
 	public void update(String info, GameObject victim, int tileColid){
+		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, tileColid);
+				info, victimColid, tileColid);
 		if(!myMap.containsKey(condition)) return;
 		victim.changeBlood(myMap.get(condition));
 	}

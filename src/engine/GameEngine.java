@@ -40,7 +40,7 @@ public class GameEngine extends StdGame {
 	protected int myCurrentLevelID;
 	protected int myCurrentSceneID;
 	protected Scene myCurrentScene;
-//	protected Scene myEmptyScene = new Scene(0);
+	protected Scene myEmptyScene = new Scene(0);
 	protected Player myPlayer;
 	protected int myTimer;
 	
@@ -59,7 +59,7 @@ public class GameEngine extends StdGame {
 	protected boolean isLoading;
 	protected boolean isPlaying;
 	protected boolean isTileEditing;
-	protected boolean scene_restart;//
+	protected boolean scene_restart = true;//
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -79,6 +79,7 @@ public class GameEngine extends StdGame {
 //		setTileSettings("#",2,0);
 		defineImage("null","0",0,"null","-");
 		setGameState("Edit");
+		myEmptyScene = new Scene(0);
 		myTimer = 0;
 		lives = 1;
 	}
