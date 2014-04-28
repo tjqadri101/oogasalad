@@ -77,6 +77,7 @@ public class Game {
 	 */
 	public void addScene(int levelID, int sceneID){
 		myLevelMap.get(levelID).addScene(sceneID);
+
 	}
 	
 	/**
@@ -88,6 +89,7 @@ public class Game {
 	 */
 	public void addNonPlayer(int levelID, int sceneID, NonPlayer object){
 		myLevelMap.get(levelID).addNonPlayer(sceneID, object);
+
 	}
 
 	/**
@@ -323,12 +325,18 @@ public class Game {
 			answer.addAll(myLevelMap.get(key).getAttributes()); 
 		}
 		answer.addAll(myCollisionManager.getAttributes());
+		
 		for(Transition value: myTransitionStateMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
 		answer.addAll(myLiveManager.getAttributes());
 		answer.addAll(myBloodManager.getAttributes());
 		// myTriggerManager
+		
+		
+		for(String s: answer){ 
+			System.out.println("game attr "+ s); 
+		}
 		return answer;
 	}
 	
