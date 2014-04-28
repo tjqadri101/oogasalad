@@ -42,7 +42,7 @@ public class Game {
     protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-    protected TriggerEventManager myTEManager;
+    protected TriggerEventManager myTEM;
     protected Map<Character, String> myTileImageMap;
     protected String myName;
 
@@ -60,7 +60,7 @@ public class Game {
         myInputManager = new InputManager();
         myGravity = new Gravity();
         myCollisionManager = new CollisionManager();
-        myTEManager = new TriggerEventManager();
+        myTEM = new TriggerEventManager();
         myName = DEFAULT_NAME;
 
     }
@@ -386,7 +386,7 @@ public class Game {
      * @return the only instance of TriggerEventManager
      */
     public TriggerEventManager getTEManager () {
-        return myTEManager;
+        return myTEM;
     }
 
 

@@ -38,7 +38,7 @@ public class AnimationManager {
 		if (newImg != null) {
 			myObject.setImage(newImg);
 		} else {
-			System.out.println("Behavior is null");
+//			System.out.println("Behavior is null");
 		}
 	}
 	/**

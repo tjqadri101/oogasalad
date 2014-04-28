@@ -103,6 +103,9 @@ public class EngineTest {
 		game.getScoreManager().setValue(1, "Time");
 		game.getScoreManager().setValue(50, "LevelDone", 1);
 		
+		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
+		game.getTEManager().setEventOrTriggerBehavior(1, "EventLevelDone", "");
+		
 		engine.loadingDone();
         return engine;
 	}
