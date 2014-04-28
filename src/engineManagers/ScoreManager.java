@@ -21,7 +21,7 @@ public class ScoreManager extends StatisticsManager{
 		super();
 		myInitScore = startScore;
 		restore();
-		GameStats.set("Score", startScore);
+		GameStats.set(SaladConstants.SCORE, startScore);
 	}
 	
 	public ScoreManager(){
@@ -65,7 +65,7 @@ public class ScoreManager extends StatisticsManager{
 				info, victimColid, hitterColid);
 		if(!myMap.containsKey(condition)) return;
 		myScore += myMap.get(condition);
-		GameStats.update("Score", myMap.get(condition));
+		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
 	}
 	
 	@Override
@@ -74,7 +74,7 @@ public class ScoreManager extends StatisticsManager{
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, info, victimColid, tilecid);
 		if(!myMap.containsKey(condition)) return;
 		myScore += myMap.get(condition);
-		GameStats.update("Score", myMap.get(condition));
+		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
 	}
 	
 	public void update(String info, int oldLevelOrSceneID){
@@ -82,13 +82,13 @@ public class ScoreManager extends StatisticsManager{
 				info, oldLevelOrSceneID);
 		if(myMap.get(condition) == null) return;
 		myScore += myMap.get(condition);
-		GameStats.update("Score", myMap.get(condition));
+		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
 	}
 	
 	public void update(String condition){
 		if(myMap.containsKey(condition)){
 			myScore += myMap.get(condition);
-			GameStats.update("Score", myMap.get(condition));
+			GameStats.update(SaladConstants.SCORE, myMap.get(condition));
 		}
 	}
 	

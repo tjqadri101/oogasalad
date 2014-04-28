@@ -203,6 +203,7 @@ public final class SaladConstants {
 	public static final String SET_TILE_COLLISION_LIVE = "SetTileCollisionLive";
 
 	public static final String BLOOD = "Blood";
+	public static final String LIVE = "Live";
 	public static final String SCORE = "Score";
 	public static final String ENEMY_KILLED = "Enemies Killed";
 

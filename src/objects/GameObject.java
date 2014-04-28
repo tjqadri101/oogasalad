@@ -104,6 +104,15 @@ public abstract class GameObject extends JGObject {
 	public void resetName(String name) {
 		myName = name;
 	}
+	
+	/**
+	 * Get Name
+	 * @return
+	 */
+	public String getObjectName(){
+		System.out.println("GetName: " + myName);
+		return myName;
+	}
 
 	/**
 	 * Get the collision manager associated with this object
@@ -280,7 +289,7 @@ public abstract class GameObject extends JGObject {
 	 * @param lives
 	 */
 	public void setInitBlood(int blood) {
-		GameStats.set(getName() + " " + SaladConstants.BLOOD, blood);
+		GameStats.set(myName + " " + SaladConstants.BLOOD, blood);
 		myInitBlood = blood;
 		restoreBlood();
 	}
@@ -408,9 +417,7 @@ public abstract class GameObject extends JGObject {
 	public void remove() {
 		super.remove();
 		if (mySideDetectors!=null){
-			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
-				mySideDetectors[i].remove();
-			}
+			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) { mySideDetectors[i].remove();}
 		}
 		if (myUniqueID != SaladConstants.NULL_UNIQUE_ID) myRevivalManager.addRemovedObject(this);
 	}
@@ -421,7 +428,7 @@ public abstract class GameObject extends JGObject {
 
 	public void shoot() {
 		myActionManager.shoot();
-		GameStats.update(getName() + " " + SaladConstants.SHOOT, 1); // may not be needed
+		GameStats.update(myName + " " + SaladConstants.SHOOT, 1); // may not be needed
 	}
 
 	/**

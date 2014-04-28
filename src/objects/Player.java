@@ -3,6 +3,7 @@ package objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import engineManagers.AnimationManager;
 //import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
@@ -16,7 +17,7 @@ import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
- * @Author: Justin (Zihao) Zhang
+ * @author Main Justin (Zihao) Zhang
  */
 public class Player extends GameObject {
 	
