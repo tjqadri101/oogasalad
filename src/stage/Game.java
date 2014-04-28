@@ -13,7 +13,6 @@ import engineManagers.InputManager;
 import engineManagers.LiveManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
-import engineManagers.TimerManager;
 import engineManagers.TriggerEventManager;
 import objects.GameObject;
 import objects.Gravity;
@@ -60,22 +59,6 @@ public class Game {
     	myCollisionManager = new CollisionManager();
 //    	myEventManager = new TriggerEventManager();
 	}
-
-	protected void initTransitionStateMap() {
-		myTransitionStateMap = new HashMap<String, Transition>();
-		for (String gameState: Transition.TRANSITION_STATE){
-			myTransitionStateMap.put(gameState, new Transition(gameState));
-		}
-	}
-	
-	public void defineTileImage(char cid, String imgfile){
-		myTileImageMap.put(cid, imgfile);
-	}
-	
-	public Set<Entry<Character, String>> getTileImageMap(){
-		return myTileImageMap.entrySet();
-	}
-	
 
 	/**
 	 * @param the level ID that you want to add
@@ -301,6 +284,10 @@ public class Game {
     	return myBloodManager;
     }
     
+    /**
+     * Get the Live Manager of the Game
+     * @return LiveManager
+     */
     public LiveManager getLiveManager(){
     	return myLiveManager;
     }
@@ -343,6 +330,21 @@ public class Game {
 		answer.addAll(myBloodManager.getAttributes());
 		// myTriggerManager
 		return answer;
+	}
+	
+	protected void initTransitionStateMap() {
+		myTransitionStateMap = new HashMap<String, Transition>();
+		for (String gameState: Transition.TRANSITION_STATE){
+			myTransitionStateMap.put(gameState, new Transition(gameState));
+		}
+	}
+	
+	public void defineTileImage(char cid, String imgfile){
+		myTileImageMap.put(cid, imgfile);
+	}
+	
+	public Set<Entry<Character, String>> getTileImageMap(){
+		return myTileImageMap.entrySet();
 	}
 	
 	
