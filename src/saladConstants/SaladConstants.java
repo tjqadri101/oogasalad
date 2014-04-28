@@ -224,6 +224,10 @@ public final class SaladConstants {
 
 	public static final String SET_INITIAL_SCENE = "SetInitialScene";
 
+	public static final String SET_COLLISION_LIFE = "SetCollisionLife";
+
+	public static final String SET_TILE_COLLISION_LIFE = "SetTileCollisionLife";
+
 
 
 	
