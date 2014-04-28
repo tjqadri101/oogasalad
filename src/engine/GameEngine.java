@@ -153,8 +153,6 @@ public class GameEngine extends StdGame {
 	
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-		timer++;
-		System.out.println(timer);
 //	        TriggerEventManager myTEM = getGame().getTEM();
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
@@ -175,6 +173,8 @@ public class GameEngine extends StdGame {
 //			} else
 //				levelDone();
 //		}
+		myGame.getScoreManager().update("Time");
+		myGame.getScoreManager().update("Time");
 	}
 	
 	public void paintFrameEdit() {
@@ -223,6 +223,7 @@ public class GameEngine extends StdGame {
 	}
 
 	public void startLevelDone() {
+		myGame.getScoreManager().update("LevelDone");
 		setTransition("LevelDone");
 	}
 
