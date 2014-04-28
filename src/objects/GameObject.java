@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jgame.JGObject;
+import reflection.Reflection;
 import saladConstants.SaladConstants;
 import statistics.GameStats;
 import engineManagers.*;
@@ -417,6 +418,16 @@ public abstract class GameObject extends JGObject {
 			setImage(myDefaultImage);
 		}
 	}
+	
+	public void updateManagers(Object ... args){
+		System.out.println("GameObject updateManagers called ");
+		if(args.length == 3){
+			Reflection.callMethod(myScoreManager, "update", args);
+			Reflection.callMethod(myBloodManager, "update", args);
+			Reflection.callMethod(myLiveManager, "update", args);
+			Reflection.callMethod(myTEManager, "updateCollision", args);
+		}
+	}
 
 	@Override
 	public void hit(JGObject other) {
@@ -475,27 +486,27 @@ public abstract class GameObject extends JGObject {
 	 * 
 	 * @return ScoreManager
 	 */
-	public ScoreManager getScoreManager() {
-		return myScoreManager;
-	}
+//	public ScoreManager getScoreManager() {
+//		return myScoreManager;
+//	}
 
 	/**
 	 * Used for behaviors to get the BloodManager to update blood
 	 * 
 	 * @return BloodManager
 	 */
-	public BloodManager getBloodManager() {
-		return myBloodManager;
-	}
+//	public BloodManager getBloodManager() {
+//		return myBloodManager;
+//	}
 	
 	/**
 	 * Used for behaviors to get the LiveManager to update blood
 	 * 
 	 * @return LiveManager
 	 */
-	public LiveManager getLiveManager(){
-		return myLiveManager;
-	}
+//	public LiveManager getLiveManager(){
+//		return myLiveManager;
+//	}
 	
 	/**
 	 * @return the Gfx info
@@ -512,9 +523,9 @@ public abstract class GameObject extends JGObject {
 		return myRevivalManager;
 	}
 	
-	public TriggerEventManager getTEManager(){
-	        return myTEManager;
-	}
+//	public TriggerEventManager getTEManager(){
+//	        return myTEManager;
+//	}
     
     /**
      * @return the myInitX
