@@ -26,6 +26,8 @@ public abstract class StatisticsManager {
 	 * @param args
 	 */
 	public void setValue(int value, Object ... args){
+		SaladUtil.printObjectList(SaladUtil.convertArgsToObjectList(args));
+		System.out.println("setValue: " + value);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, args);
 		myMap.put(condition, value);
 	}

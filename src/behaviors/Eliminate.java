@@ -16,6 +16,7 @@ public class Eliminate extends Collision{
 
 	@Override
 	public void collide(List<Object> objects) {
+		System.out.println("Eliminate called ");
 		GameObject hitter = (GameObject) objects.get(0);
 		updateManagers(hitter);
 		myObject.die(); 

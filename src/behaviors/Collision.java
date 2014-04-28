@@ -17,6 +17,7 @@ public abstract class Collision {
 	}
 	
 	protected void updateManagers(GameObject hitter){
+		System.out.println("updateManagers called ");
 		myObject.getScoreManager().update(SaladConstants.COLLISION, 
 				myObject, hitter);
 		//object has an instance of TEM, so that they can call TEM if collide
