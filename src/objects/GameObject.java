@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jgame.JGObject;
+import reflection.Reflection;
 import saladConstants.SaladConstants;
 import statistics.GameStats;
 import engineManagers.*;
@@ -416,6 +417,27 @@ public abstract class GameObject extends JGObject {
 		} else {
 			setImage(myDefaultImage);
 		}
+	}
+	
+	public void updateManagers(Object ... args){
+		System.out.println("GameObject updateManagers called ");
+		if(args.length == 3){
+			Reflection.callMethod(myScoreManager, "update", args);
+			Reflection.callMethod(myBloodManager, "update", args);
+			Reflection.callMethod(myLiveManager, "update", args);
+			Reflection.callMethod(myTEManager, "updateCollision", args);
+		}
+//		myScoreManager().update(SaladConstants.COLLISION, 
+//				myObject, hitter);
+//		
+//		//object has an instance of TEM, so that they can call TEM if collide
+//		//alternative: collision has engine
+//		myObject.getTEManager().updateCollision(SaladConstants.COLLISION, myObject, hitter);
+//		
+//		myObject.getBloodManager().update(SaladConstants.COLLISION, 
+//				myObject, hitter);
+//		myObject.getLiveManager().update(SaladConstants.COLLISION, 
+//				myObject, hitter);
 	}
 
 	@Override
