@@ -89,21 +89,39 @@ public class IParser {
     }
     
     /**
-     * Do not call this method directly; called by Reflection within DataController
+     * Do not call this method directly; called by Reflection within IParser
+     */
+    public Boolean convertStringToBoolean(String s){
+        if (s.equalsIgnoreCase("true") || s.equalsIgnoreCase("false")) {
+            return Boolean.valueOf(s);
+        } else {
+            throw new ClassCastException(); // should not reach here
+        }
+    }
+    
+    /**
+     * Do not call this method directly; called by Reflection within IParser
+     */
+    public Character convertStringToChar(String s){
+        return s.charAt(0);
+    }
+    
+    /**
+     * Do not call this method directly; called by Reflection within IParser
      */
     public Integer convertStringToInteger(String s){
         return Integer.valueOf(s);
     }
 
     /**
-     * Do not call this method directly; called by Reflection within DataController
+     * Do not call this method directly; called by Reflection within IParser
      */
     public Double convertStringToDouble(String s){
         return Double.valueOf(s);
     }
 
     /**
-     * Do not call this method directly; called by Reflection within DataController
+     * Do not call this method directly; called by Reflection within IParser
      */
     public String convertStringToString(String s){
         return s;

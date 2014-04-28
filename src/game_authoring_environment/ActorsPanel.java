@@ -181,7 +181,6 @@ public class ActorsPanel extends Panel {
 		myActorsTable.setRowHeight(icon.getIconHeight() +2);
 		myActorsTable.getColumnModel().getColumn(0).setMaxWidth(icon.getIconWidth() +2);
 		myActorsCount++;
-
 	}
 	
 	/**

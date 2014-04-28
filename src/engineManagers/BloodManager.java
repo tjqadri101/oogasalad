@@ -37,9 +37,9 @@ public class BloodManager extends StatisticsManager{
 		victim.changeBlood(myMap.get(condition));
 	}
 
-	public void update(String info, String oldLevelOrSceneID, String newLevelOrSceneID, GameObject object) {
+	public void update(String info, int oldLevelOrSceneID, GameObject object) {
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, oldLevelOrSceneID, newLevelOrSceneID);
+				info, oldLevelOrSceneID);
 		if(!myMap.containsKey(condition)) return;
 		object.changeBlood(myMap.get(condition));
 	}
@@ -60,7 +60,9 @@ public class BloodManager extends StatisticsManager{
 			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
 					param.toString().split(SaladConstants.SEPARATOR)));
 			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.SET_COLLISION_BLOOD;
-			if(condition.startsWith(SaladConstants.TILE_COLLISION)) type = SaladConstants.SET_TILE_COLLISION_BLOOD;
+			else if(condition.startsWith(SaladConstants.TILE_COLLISION)) type = SaladConstants.SET_TILE_COLLISION_BLOOD;
+			else if(condition.startsWith(SaladConstants.LEVEL_DONE) || condition.startsWith(SaladConstants.SCENE_DONE)) 
+				type = SaladConstants.SET_TRANSITION_BLOOD;
 			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BLOOD_MANAGER, type, false, params));
 		}
 		return answer;

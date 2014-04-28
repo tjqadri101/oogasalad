@@ -41,34 +41,28 @@ public class QuickShoot extends Shootable{
 		double shootXSpeed, shootYSpeed, xpos, ypos;
 		if(xface < 0){
 			xpos = myObject.x - xsize;
-//			shootXSpeed = -shootSpeed;
 		}
 		else if (xface > 0){
 			xpos = myObject.x + myObject.getXSize();
-//			shootXSpeed = shootSpeed;
 		}
 		else{
 			xpos = myObject.x + myObject.getXSize()/2;
-//			shootXSpeed = myObject.xdir*shootSpeed;
 		}
 		if(yface < 0){
 			ypos = myObject.y - ysize;
-//			shootYSpeed = -shootSpeed;
 		}
 		else if (yface > 0){
 			ypos = myObject.y + myObject.getYSize(); 
-//			shootYSpeed = shootSpeed;
 		}
 		else{
 			ypos = myObject.y + myObject.getYSize()/2;
-//			shootYSpeed = myObject.ydir*shootSpeed;
 		}
 		shootXSpeed = myObject.xdir*shootSpeed;
-//		shootYSpeed = myObject.ydir*shootSpeed;
-		shootYSpeed = 0;
+		shootYSpeed = myObject.ydir*shootSpeed;
 		
 		for(int i = 0; i < times; i ++){
 			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos+20*i, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
+			object.expiry = object.expire_off_view;
 			object.setSpeed(shootXSpeed, shootYSpeed);	
 			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 		}

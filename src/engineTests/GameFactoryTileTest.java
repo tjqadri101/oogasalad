@@ -49,99 +49,101 @@ public class GameFactoryTileTest extends TestCase{
     }
     
     @Test
-    public void testCreateTile() throws FactoryException{
+    public void testModifyTileCollisionBehavior() throws FactoryException{
+        String MODIFY_TILE_BEHAVIOR = "ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,A,All";
 
         List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
         Player myObject = null;
         try {
-            myObject = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+            myObject = (Player) myFactory.processOrder(MODIFY_TILE_BEHAVIOR);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(myObject, myGame.getPlayer());
+//        assertEquals("StayOnTile", myGame.getCollisionManager().getCollisionPair(1,'A'));
+        
 // here the levelID=1, SceneID=0, objID=0
     }
-    
-    @Test
-    public void testModifyPlayerDie() throws FactoryException{
-        
-        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myPlayer = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"Die","ShowCorpse"};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals("ShowCorpse", myGame.getPlayer().getMyDieBehavior());
-    }
-    
-    @Test
-    public void testModifyPlayerChangetoID() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ChangeToID", 1};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(1, myGame.getPlayer().getID());
-    }
-    
-    @Test
-    public void testModifyPlayerChangeCollisionID() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ChangeCollisionID", 1};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(1, myGame.getPlayer().colid);
-    }
-    
-    @Test
-    public void testModifyPlayerPosition() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"Position", 100.0, 100.0};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(100.0, myGame.getPlayer().x);
-        assertEquals(100.0, myGame.getPlayer().y);
-    }
-    
-    @Test
-    public void testModifyPlayerMove() throws FactoryException{
-        
-        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"Move","RegularMove", 10.0, 10.0};
-
-        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals("RegularMove", myGame.getPlayer().getMyMoveBehavior());
-        assertEquals(10.0, myGame.getPlayer().getMyInitX());
-    }
-    
+//    
+//    @Test
+//    public void testModifyPlayerDie() throws FactoryException{
+//        
+//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+//        myPlayer = (Player) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"Die","ShowCorpse"};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals("ShowCorpse", myGame.getPlayer().getMyDieBehavior());
+//    }
+//    
+//    @Test
+//    public void testModifyPlayerChangetoID() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ChangeToID", 1};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals(1, myGame.getPlayer().getID());
+//    }
+//    
+//    @Test
+//    public void testModifyPlayerChangeCollisionID() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ChangeCollisionID", 1};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals(1, myGame.getPlayer().colid);
+//    }
+//    
+//    @Test
+//    public void testModifyPlayerPosition() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"Position", 100.0, 100.0};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals(100.0, myGame.getPlayer().x);
+//        assertEquals(100.0, myGame.getPlayer().y);
+//    }
+//    
+//    @Test
+//    public void testModifyPlayerMove() throws FactoryException{
+//        
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"Move","RegularMove", 10.0, 10.0};
+//
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFYACTOR_OBJECT_LIST);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals("RegularMove", myGame.getPlayer().getMyMoveBehavior());
+//        assertEquals(10.0, myGame.getPlayer().getMyInitX());
+//    }
+//    
     
 }

@@ -18,16 +18,23 @@ import util.IParser;
  */
 public class GameFactory {
 
-    private GameEngine myEngine;
-    private int  myLevelID, mySceneID;
-    private Game myGame;
-    private IParser p;
+    private static final String LEVEL_SCENE_OBJECT = "LevelSceneObject";
+    private static final String LEVEL_SCENE = "LevelScene";
+    private static final String OBJECT_ID = "objectID";
+    private static final String LEVEL = "level";
+    private static final String GAME_STATE = "GameState";
+    private static final String REFLECT = "Reflect";
+    private static final String PREFIX_GET = "get";
     private static final String NO_PARAMETER = "\"\"";
     private static final String REGEX = "\\,";
     private static final String RESOURCE_PACKAGE = "engineResources/";
     private static final String DEFAULT_FORMAT= "DataFormat";
     private static final String DEFAULT_PATH= "OrderPath"; 
     private static final String DEFAULT_METHOD= "MethodMatcher";
+    private GameEngine myEngine;
+    private int  myLevelID, mySceneID;
+    private Game myGame;
+    private IParser p;
     protected ResourceBundle myFormat, myPath, myMethod;
     private String instruction;
     private List<Object> objArgList;
@@ -60,8 +67,8 @@ public class GameFactory {
         String GameRefMethod = Arrays.asList(myPath.getString(instruction).split(REGEX)).get(2);
         String GameRefPara= Arrays.asList(myPath.getString(instruction).split(REGEX)).get(3);
 
-        Object refObj = Reflection.callMethod(this, "get"+RFIndicator); 
-        return (GameObject) Reflection.callMethod(this, reflectionChoice+"Reflect", 
+        Object refObj = Reflection.callMethod(this, PREFIX_GET+RFIndicator); 
+        return (GameObject) Reflection.callMethod(this, reflectionChoice+REFLECT, 
                                                   refObj, GameRefMethod, GameRefPara);
     }
 
@@ -95,12 +102,13 @@ public class GameFactory {
             throws FactoryException {
         Object obj = null;
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
-
         if (!GameReflectPara.equals(NO_PARAMETER)){
             obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(GameReflectPara));
+            
         }
         else{
             obj = Reflection.callMethod(refObj, GameRefMethod);
+//            methodToInvoke = myMethod.getString(typeMethodList.get(0));
             // when getting player, gravity... those who does not take-in any parameter
         }
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
@@ -113,13 +121,14 @@ public class GameFactory {
      * @return the desired array parameter
      */
     private Object[] idSelector (String numArg) {
-        int objectID = (Integer) objArgList.remove(0);
-        Map<String,Object[]> am = new HashMap<String,Object[]>();
-        am.put("level", new Object[]{myLevelID});
-        am.put("objectID", new Object[]{objectID});
-        am.put("LevelScene", new Object[]{myLevelID, mySceneID});
-        am.put("LevelSceneObject",new Object[]{myLevelID, mySceneID, objectID});
-        return am.get(numArg);
+        Object objectID = objArgList.remove(0);
+        Map<String,Object[]> argMap = new HashMap<String,Object[]>();
+        argMap.put(GAME_STATE, new Object[]{objectID});
+        argMap.put(LEVEL, new Object[]{myLevelID});
+        argMap.put(OBJECT_ID, new Object[]{objectID});
+        argMap.put(LEVEL_SCENE, new Object[]{myLevelID, mySceneID});
+        argMap.put(LEVEL_SCENE_OBJECT,new Object[]{myLevelID, mySceneID, objectID});
+        return argMap.get(numArg);
     }
 
     /**

@@ -33,21 +33,22 @@ public class EngineTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(false);
+		GameEngine engine = new GameEngine(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
-		game.addLevel(1);
-		game.addScene(1, 0);
-		game.getLevel(1).setInitialSceneID(0);
+		for (int i=0;i<10;i++){
+			game.addLevel(i+1);
+			game.addScene(i+1, i);
+			game.getLevel(i+1).setInitialSceneID(i);
+			game.getScene(i+1, i).setPlayerInitPosition((i+1)*100, 200);
+		}
 		engine.setCurrentScene(1, 0);
-		game.getScene(1, 0).setPlayerInitPosition(100, 200);
 		game.getGravity().setMagnitude(0.1);
 		
 		game.getTransitionState("Title").setBackground("floorImage.jpg");
 		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
 		game.getTransitionState("Title").addInstruction(400, 3360, "NEW LEVEL! LET'S GO");
-		
 		
 		engine.setSceneView(null,false,false,1200,40);
 		engine.loadTileImage(TILE_COLID, "brick.png");
@@ -59,7 +60,7 @@ public class EngineTest {
 		actor.setDieBehavior("RegularRemove");
 		actor.setMoveBehavior("BackForthMove", 8.0, 5);
 		actor.setShootBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 100);
-		
+		actor.resume_in_view = true;
 		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 1);
 		goomba.setDieBehavior("RegularRemove");
 		goomba.setMoveBehavior("BackForthMove",5.0, 10);
@@ -91,6 +92,8 @@ public class EngineTest {
 		
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, ENEMY_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
+		game.getScoreManager().setValue(1, "Time");
+		game.getScoreManager().setValue(50, "LevelDone", 1);
 		engine.loadingDone();
         return engine;
 	}

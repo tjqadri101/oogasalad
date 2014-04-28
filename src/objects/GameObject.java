@@ -28,6 +28,7 @@ public abstract class GameObject extends JGObject {
 	protected RevivalManager myRevivalManager;
 	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
+
 	protected AnimationManager myAnimationManager;
 
 	protected int myXSize;
@@ -380,7 +381,7 @@ public abstract class GameObject extends JGObject {
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
 		myActionManager.jump();
-		myAnimationManager.updateImage(this, "Jump") ; //hardcode to be modified later
+//		myAnimationManager.updateImage(this, "Jump") ; //hardcode to be modified later
 	}
 
 	/**
@@ -503,6 +504,11 @@ public abstract class GameObject extends JGObject {
      */
     public double getMyInitX() {
         return myInitX;
+    }
+    
+    // Added for the test case
+    public ActionManager getActionManager(){
+        return myActionManager;
     }
 
 }

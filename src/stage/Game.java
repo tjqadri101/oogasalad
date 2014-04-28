@@ -13,7 +13,6 @@ import engineManagers.InputManager;
 import engineManagers.LiveManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
-import engineManagers.TimerManager;
 import engineManagers.TriggerEventManager;
 import objects.GameObject;
 import objects.Gravity;
@@ -60,22 +59,6 @@ public class Game {
     	myCollisionManager = new CollisionManager();
 //    	myEventManager = new TriggerEventManager();
 	}
-
-	private void initTransitionStateMap() {
-		myTransitionStateMap = new HashMap<String, Transition>();
-		for (String gameState: Transition.TRANSITION_STATE){
-			myTransitionStateMap.put(gameState, new Transition(gameState));
-		}
-	}
-	
-	public void defineTileImage(char cid, String imgfile){
-		myTileImageMap.put(cid, imgfile);
-	}
-	
-	public Set<Entry<Character, String>> getTileImageMap(){
-		return myTileImageMap.entrySet();
-	}
-	
 
 	/**
 	 * @param the level ID that you want to add
@@ -137,6 +120,14 @@ public class Game {
 		return myLevelMap.get(levelID);
 	}
 	
+	/**
+	 * Get an actor's collision ID by its unique ID
+	 * Called by Graphic Authorizing Environment to display collisoin IDs
+	 * @param levelID
+	 * @param sceneID
+	 * @param objectID
+	 * @return colid
+	 */
 	public int getNonPlayerColid(int levelID, int sceneID, int objectID){
 		return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID).colid;
 	}
@@ -223,8 +214,25 @@ public class Game {
     	return myPlayerMap.get(playerID);
     }
     
+    /**
+     * Get a player's collision ID by its unique ID
+     * @param playerID
+     * @return player's colid
+     */
     public int getPlayerColid(int playerID){
     	return myPlayerMap.get(playerID).colid;
+    }
+    
+    /**
+     * Get a list of all the current players
+     * @return list of players
+     */
+    public List<Player> getAllPlayers(){
+    	List<Player> players = new ArrayList<Player>();
+    	for(Player p: myPlayerMap.values()){
+    		players.add(p);
+    	}
+    	return players;
     }
     
     
@@ -276,6 +284,10 @@ public class Game {
     	return myBloodManager;
     }
     
+    /**
+     * Get the Live Manager of the Game
+     * @return LiveManager
+     */
     public LiveManager getLiveManager(){
     	return myLiveManager;
     }
@@ -292,12 +304,12 @@ public class Game {
 	
 	/**
 	 * Called to get the Attributes of the whole Game
-	 * @return a list of Objects that matched with the GAE Data Format
+	 * @return a list of Objects that matched with a specific Data Format
 	 */
 	public List<String> getAttributes() {
 		List <String> answer = new ArrayList<String>();
 		answer.addAll(myScoreManager.getAttributes()); 
-//		answer.addAll(myInputManager.getAttributes()); 
+		answer.addAll(myInputManager.getAttributes()); 
 		answer.add(myGravity.getAttributes());
 		for (Entry<Character, String> entry : getTileImageMap()) {
 			Character cid = entry.getKey();
@@ -314,8 +326,27 @@ public class Game {
 		for(Transition value: myTransitionStateMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
+		answer.addAll(myLiveManager.getAttributes());
+		answer.addAll(myBloodManager.getAttributes());
+		// myTriggerManager
 		return answer;
 	}
+	
+	protected void initTransitionStateMap() {
+		myTransitionStateMap = new HashMap<String, Transition>();
+		for (String gameState: Transition.TRANSITION_STATE){
+			myTransitionStateMap.put(gameState, new Transition(gameState));
+		}
+	}
+	
+	public void defineTileImage(char cid, String imgfile){
+		myTileImageMap.put(cid, imgfile);
+	}
+	
+	public Set<Entry<Character, String>> getTileImageMap(){
+		return myTileImageMap.entrySet();
+	}
+	
 	
 	/** Should only be called from Engine
 	 * @return the only instance of TriggerEventManager

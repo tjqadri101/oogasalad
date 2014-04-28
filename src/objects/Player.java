@@ -70,29 +70,39 @@ public class Player extends GameObject {
 	public void moveUp(){
 		if (y > 0) {
 			y -= myMovingYSpeed*eng.getGameSpeed();
-			ydir = SaladConstants.NEGATIVE_DIRECTION;
 		}
+		ydir = SaladConstants.NEGATIVE_DIRECTION;
+		xdir = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveDown(){
 		if (y + getYSize() < eng.pfHeight()) {
 			y += myMovingYSpeed*eng.getGameSpeed();
-			ydir = SaladConstants.POSITIVE_DIRECTION;
 		}
+		ydir = SaladConstants.POSITIVE_DIRECTION;
+		xdir = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveLeft(){
 		if (x > 0) {
 			x -= myMovingXSpeed*eng.getGameSpeed();
-			xdir = SaladConstants.NEGATIVE_DIRECTION;
 		}
+		xdir = SaladConstants.NEGATIVE_DIRECTION;
+		ydir = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveRight(){
 		if (x + getXSize() < eng.pfWidth()) {
 			x += myMovingXSpeed*eng.getGameSpeed();
-			xdir = SaladConstants.POSITIVE_DIRECTION;
 		}
+		xdir = SaladConstants.POSITIVE_DIRECTION;
+		ydir = SaladConstants.NEUTRAL_DIRECTION;
+	}
+	
+	@Override
+	public void die(){
+		super.die();
+		myLiveManager.decrementLive(getID());
 	}
 	
 	@Override
