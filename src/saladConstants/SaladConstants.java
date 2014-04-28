@@ -86,7 +86,8 @@ public final class SaladConstants {
 	public static final String IMMORTAL = "Immortal";
 	public static final String CAN_NOT_COLLIDE = "CanNotCollide";
 	public static final String CAN_NOT_JUMP = "CanNotJump";
-    
+    public static final String BACK_FORTH_MOVE_WITH_VERTICAL_SPEED = "BackForthMoveWithVerticalSpeed";
+    public static final String STAY_ON_OBJECT = "StayOnObject";
     
 	public static final String POSITION = "Position";
 	public static final String NAME = "Name";

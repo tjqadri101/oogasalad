@@ -12,7 +12,7 @@ import saladConstants.SaladConstants;
  */
 public class SpreadShoot extends Shootable{
 
-	protected SpreadShoot(GameObject o) {
+	public SpreadShoot(GameObject o) {
 		super(o);
 	}
 
