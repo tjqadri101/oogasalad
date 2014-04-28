@@ -4,6 +4,7 @@ import java.util.List;
 
 import engine.GameEngine;
 import objects.GameObject;
+import util.SaladUtil;
 /**
  * @param double amplitude of the moving pattern
  * @param int latency; larger latency leads to slower speed

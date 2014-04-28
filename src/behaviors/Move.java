@@ -2,6 +2,7 @@ package behaviors;
 
 import java.util.List;
 
+import engine.GameEngine;
 import objects.GameObject;
 /**
  * @param double xspeed
@@ -18,8 +19,10 @@ public class Move extends Movable{
 	@Override
 	public void move(List<Object> objects) {
 		double xspeed, yspeed;
+		GameEngine engine = (GameEngine) myObject.eng;
 		xspeed = (Double) objects.get(0);
 		yspeed = (Double) objects.get(1);
-		myObject.setInitSpeed(xspeed,yspeed);	
+		myObject.y += yspeed;
+		myObject.x += xspeed;
 	}
 }
