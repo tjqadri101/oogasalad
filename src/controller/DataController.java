@@ -161,4 +161,9 @@ public class DataController {
 		Map<Integer, NonPlayer> nonPlayerMap = myGame.getLevel(getCurrentLevelID()).getScene(sceneID).getObjectMap();
 		return nonPlayerMap;
 	}
+	
+	public int getCurrentPlayerColID(int id){
+		int j = myGame.getNonPlayerColid(getCurrentLevelID(), getCurrentSceneID(), id);
+		return j;
+	}
 }

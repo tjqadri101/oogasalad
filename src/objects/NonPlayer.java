@@ -21,6 +21,12 @@ public class NonPlayer extends GameObject {
 		
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, 
 				scoreManager, bloodManager, revivalManager, liveManager, triggerEventManager);
+	
+		colid = collisionId;
+	}
+	
+	public int getColID(){
+		return colid; 
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,7 +32,9 @@ public class BehaviorsPanel extends Panel {
 	private SubPanel mySubPanel;
 	private GAEController gController;
 	private JTable myTable; 
+	private static final String[] collisionTypesStrings = {"Explode", "HitterEliminateVictim", "PerishTogether", "StayOnObject", "Rebounce", "StayOnTile", "KilledByTile"};
 
+	
 	public BehaviorsPanel(GAEController gController) {
 		super(PanelType.BEHAVIORS);
 		this.gController = gController;
@@ -43,7 +46,7 @@ public class BehaviorsPanel extends Panel {
 	protected void construct() {
 		this.setLayout(new BorderLayout());
 		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
-		//this.add(createKeySetButton(),BorderLayout.SOUTH);
+		this.add(addCollisionButton(),BorderLayout.SOUTH);
 		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 
 	}
@@ -84,7 +87,7 @@ public class BehaviorsPanel extends Panel {
 		return outPanel;
 	}
 
-	
+
 
 	private void enterTileEditingMode(){
 		JPanel panel = new JPanel(new GridLayout(0, 1));
@@ -92,51 +95,95 @@ public class BehaviorsPanel extends Panel {
 		panel.add(tf);
 		String imageName = BRICK_DEFAULT_IMAGE;
 		int result = JOptionPane.showConfirmDialog(null, panel, "Enter tile collision ID",
-	            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-	        if (result == JOptionPane.OK_OPTION) {
-	        	JPanel panel2 = new JPanel(new GridLayout(0, 1));
-	    		JLabel lb = new JLabel("Do you want to set the brick image? (Not mandatory)");
-	    		panel2.add(lb);
-	    		int result2 = JOptionPane.showConfirmDialog(null, panel2, "Confirm",
-	    	            JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-	    	        if (result2 == JOptionPane.OK_OPTION) {
-	    	        	try{
-	    	    			JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
-	    	    			UIManager.put("FileChooser.openDialogTitleText", "Choose Tile Image");
-	    	    			SwingUtilities.updateComponentTreeUI(chooser);
-	    	    			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-	    	    					"jpg", "gif","png","jpeg");
-	    	    			chooser.setFileFilter(filter);
-	    	    			int returnVal = chooser.showOpenDialog(getParent());
-	    	    			if(returnVal == JFileChooser.APPROVE_OPTION) {
-	    	    				imageName = chooser.getSelectedFile().getName();
-	    	    				String path = chooser.getSelectedFile().getPath();
-	    	    				gController.uploadImage(20, 20, path);
-	    	    			}			
-	    	    		}catch(Exception e){
-	    	    		}
-	    	        }
-	        	char colID = tf.getText().charAt(0);
-	        	gController.setDragTile(colID, imageName);
-	            gController.getEngine().setTileEditing(true);
-	        }
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if (result == JOptionPane.OK_OPTION) {
+			JPanel panel2 = new JPanel(new GridLayout(0, 1));
+			JLabel lb = new JLabel("Do you want to set the brick image? (Not mandatory)");
+			panel2.add(lb);
+			int result2 = JOptionPane.showConfirmDialog(null, panel2, "Confirm",
+					JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+			if (result2 == JOptionPane.OK_OPTION) {
+				try{
+					JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+					UIManager.put("FileChooser.openDialogTitleText", "Choose Tile Image");
+					SwingUtilities.updateComponentTreeUI(chooser);
+					FileNameExtensionFilter filter = new FileNameExtensionFilter(
+							"jpg", "gif","png","jpeg");
+					chooser.setFileFilter(filter);
+					int returnVal = chooser.showOpenDialog(getParent());
+					if(returnVal == JFileChooser.APPROVE_OPTION) {
+						imageName = chooser.getSelectedFile().getName();
+						String path = chooser.getSelectedFile().getPath();
+						gController.uploadImage(20, 20, path);
+					}			
+				}catch(Exception e){
+				}
+			}
+			char colID = tf.getText().charAt(0);
+			gController.setDragTile(colID, imageName);
+			gController.getEngine().setTileEditing(true);
+		}
 	}
-	
+
 	private void exitTileEditingMode(){
 		gController.getEngine().setTileEditing(false);
 		System.out.println("TileEditingMode Exited");
 	}
-	
+
 	public JTable createTable(){
-		myTable = new BehaviorTable(gController);
+		String[] columnNames = {"Hitter","Hittee","CollisionType"};
+
+		Object[][] data = {
+				{"Kathy", "Smith",
+				"Snowboarding"},
+				{"John", "Doe",
+				"Rowing"},
+				{"Sue", "Black",
+				"Knitting"}};
+		myTable = new JTable(data, columnNames);
 		return myTable;
 	}
-	public void createCollisionPanel(){
+	public Integer[] createCollisionPanel(){
 		JPanel myPanel = new JPanel();
 		Map<Integer, NonPlayer> mapofNonPlayers = gController.getMapOfPlayers();
+		TreeSet<Integer> colIDs = new TreeSet<Integer>();
 		for(Integer i : mapofNonPlayers.keySet()){
-			System.out.println(i);
+			NonPlayer p = mapofNonPlayers.get(i);
+			colIDs.add(p.getColID());
 		}
+		Integer[] colids = new Integer[colIDs.size()+1]; 
+		int j=0;
+		for(Integer i : colIDs){
+			colids[j] = i;
+			j++;
+		}
+		colids[j]=2;
+		return colids;
 	}
-	
+
+	public JButton addCollisionButton(){
+		JButton j = new JButton("Add a collision");
+		j.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				JComboBox hitterBox = new JComboBox(createCollisionPanel());
+				JComboBox hitteeBox = new JComboBox(createCollisionPanel());
+				JComboBox collisionTypes = new JComboBox(collisionTypesStrings);
+				JComboBox[] texts = {hitterBox, hitteeBox, collisionTypes};
+				String[] strings = {"ID of Hitter:", "ID being Hit:", "Type of Collision:"};
+				JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+				int result = JOptionPane.showConfirmDialog(null, myPanel, 
+						"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+				//	gController.modifyActorSlowShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()));
+				}
+			}
+		});
+
+		return j;
+
+
+
+	}
 }

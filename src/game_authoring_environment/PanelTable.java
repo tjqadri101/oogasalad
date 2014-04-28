@@ -45,6 +45,12 @@ public abstract class PanelTable extends JTable{
 		init();
 		
 	}
+	public PanelTable(Object[] o){
+		new JTable();
+		headerObject = o;
+		makeTable();
+		init();
+	}
 
 	public void makeTable(){
 		myTableModel = new DefaultTableModel(headerObject, 0){
