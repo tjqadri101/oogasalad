@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import objects.GameObject;
-import objects.Subject;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;

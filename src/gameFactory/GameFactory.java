@@ -108,7 +108,7 @@ public class GameFactory {
         }
         else{
             obj = Reflection.callMethod(refObj, GameRefMethod);
-            methodToInvoke = myMethod.getString(typeMethodList.get(0));
+//            methodToInvoke = myMethod.getString(typeMethodList.get(0));
             // when getting player, gravity... those who does not take-in any parameter
         }
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);

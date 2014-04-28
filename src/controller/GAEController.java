@@ -398,7 +398,7 @@ public class GAEController {
 						SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + ",CollisionID,"+ colID +  SaladConstants.SEPARATOR + 
 						SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
-		this.modifyCollisBehavStayOnTile(colID, 2, "All");
+		//this.modifyCollisBehavStayOnTile(colID, 2, "All");
 		System.out.println(order);
 	}
 	
@@ -830,7 +830,7 @@ public class GAEController {
 	
 	public void modifyTransitionStateBackground(String gameState, String url){
 		String order = SaladConstants.MODIFY_TRANSITION_STATE + SaladConstants.SEPARATOR + SaladConstants.GAME_STATE + 
-				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.BACKGROUND + 
+				SaladConstants.SEPARATOR + gameState + SaladConstants.SEPARATOR + SaladConstants.TSBACKGROUND + 
 				SaladConstants.SEPARATOR + url;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
