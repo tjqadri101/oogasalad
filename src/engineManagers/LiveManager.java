@@ -62,7 +62,7 @@ public class LiveManager extends StatisticsManager {
 		int currentLive = myCurrentLifeMap.get(myPlayerMap.get(playerID));
 		currentLive --;
 		myCurrentLifeMap.put(myPlayerMap.get(playerID), currentLive);
-		GameStats.update(myPlayerMap.get(playerID).getName() + " Live", lives);
+		GameStats.update(myPlayerMap.get(playerID).getName() + " Live", -1);
 	}
 	
 	public void addPlayer(Player player){
@@ -88,6 +88,7 @@ public class LiveManager extends StatisticsManager {
 	 */
 	protected void restore(){
 		for(Player o: myPlayerMap.values()){
+			GameStats.update(o.getName() + " Live", myInitLifeMap.get(o) - myCurrentLifeMap.get(o));
 			myCurrentLifeMap.put(o, myInitLifeMap.get(o));
 		}
 	}
@@ -129,6 +130,7 @@ public class LiveManager extends StatisticsManager {
 		if(hitter instanceof Player){
 			Player p = (Player) hitter;
 			int changeLive = myMap.get(condition);
+			GameStats.update(p.getName() + " Live", changeLive);
 			int finalLive = myCurrentLifeMap.get(p) + changeLive;
 			myCurrentLifeMap.put(p, finalLive);	
 		}
@@ -142,6 +144,7 @@ public class LiveManager extends StatisticsManager {
 		if(victim instanceof Player){
 			Player p = (Player) victim;
 			int changeLive = myMap.get(condition);
+			GameStats.update(p.getName() + " Live", changeLive);
 			int finalLive = myCurrentLifeMap.get(p) + changeLive;
 			myCurrentLifeMap.put(p, finalLive);	
 		}

@@ -38,10 +38,11 @@ public class Player extends GameObject {
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 
-		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
-		myAnimationManager = new AnimationManager(this);
+		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, 
+		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 		myTEManager = new TriggerEventManager();
-		}
+		myAnimationManager = new AnimationManager(this);
+	}
 	
 	public void setKey(int key, String type){
 		myKeyMap.put(key, type);
