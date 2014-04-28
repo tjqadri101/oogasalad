@@ -33,13 +33,12 @@ public abstract class StatisticsManager {
 		myMap.put(condition, value);
 	}
 	
-	protected int checkIfSideDetectorColid (GameObject o){
-		if (o instanceof SideDetector){
-			SideDetector detector = (SideDetector) o;
+	protected int checkIfSideDetectorColid (GameObject object){
+		if (object instanceof SideDetector){
+			SideDetector detector = (SideDetector) object;
 			return detector.getParentColid();
-//			System.out.println("update is side detector " + otherColid);
 		}
-		return o.colid;
+		return object.colid;
 	}
 	
 	public abstract void update(String info, GameObject victim, GameObject hitter);
