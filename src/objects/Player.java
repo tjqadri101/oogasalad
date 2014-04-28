@@ -8,6 +8,7 @@ import engineManagers.AnimationManager;
 //import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
+import engineManagers.LiveManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 import reflection.Reflection;
@@ -27,8 +28,10 @@ public class Player extends GameObject {
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
-			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager, RevivalManager revivalManager) {
-		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, scoreManager, bloodManager, revivalManager);
+			CollisionManager collisionManager, ScoreManager scoreManager, 
+			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager) {
+		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, 
+				scoreManager, bloodManager, revivalManager, liveManager);
 		myKeyMap = new HashMap<Integer, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;

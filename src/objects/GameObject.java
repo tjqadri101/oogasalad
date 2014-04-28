@@ -26,7 +26,7 @@ public abstract class GameObject extends JGObject {
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
 	protected RevivalManager myRevivalManager;
-	
+	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
 
 	protected int myXSize;
@@ -54,8 +54,8 @@ public abstract class GameObject extends JGObject {
 
 	protected GameObject(int uniqueID, String staticGfxName, int xsize,
 			int ysize, double xpos, double ypos, String name, int collisionId,
-			int blood, CollisionManager collisionManager,
-			ScoreManager scoreManager, BloodManager bloodManager, RevivalManager revivalManager) {
+			int blood, CollisionManager collisionManager, ScoreManager scoreManager, 
+			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
 						+ SaladConstants.OBJECT_BEHAVIOR);
@@ -68,6 +68,7 @@ public abstract class GameObject extends JGObject {
 		myScoreManager = scoreManager;
 		myBloodManager = bloodManager;
 		myRevivalManager = revivalManager;
+		myLiveManager = liveManager;
 		myStaticGfxName = staticGfxName;
 		myName = name;
 		myActionManager = new ActionManager(this);
@@ -476,6 +477,15 @@ public abstract class GameObject extends JGObject {
 	 */
 	public BloodManager getBloodManager() {
 		return myBloodManager;
+	}
+	
+	/**
+	 * Used for behaviors to get the LiveManager to update blood
+	 * 
+	 * @return LiveManager
+	 */
+	public LiveManager getLiveManager(){
+		return myLiveManager;
 	}
 	
 	/**

@@ -3,7 +3,6 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
-import saladConstants.SaladConstants;
 /**
  * No parameters needed
  * 
@@ -22,11 +21,7 @@ public class PerishTogether extends Collision{
 	public void collide(List<Object> objects) {
 		myObject.die();
 		GameObject hitter = (GameObject) objects.get(0);
-		myObject.getScoreManager().update(SaladConstants.COLLISION, 
-				myObject, hitter);
-		myObject.getBloodManager().update(SaladConstants.COLLISION, 
-				myObject, hitter);
-		//myObject.getTriggerEventManager().update(SaladConstants.COLLISION, myObject, hitter);
+		updateManagers(hitter);
 		hitter.die();
 	}
 }
