@@ -78,8 +78,7 @@ public class PlayereditorPanel extends Panel {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				char[] characters = {'c'};
-				String moveUp_ = "i";
+				String moveUp_ = null;
 				String moveDown_ = null;
 				String moveLeft_= null;
 				String jump_ = null;
@@ -88,21 +87,50 @@ public class PlayereditorPanel extends Panel {
 
 				Map<String, Integer> map = gController.getKeyMap(SaladConstants.PLAYER_ID);
 				for(String s : map.keySet()){
-					System.out.println(s);
+					
+					char k = (char) (map.get(s).intValue());
+					System.out.println(s + k);
+					switch(s){
+					case "moveUp": 
+						moveUp_ = String.valueOf(k);
+						break;
+					case "moveDown": 
+						moveDown_ = String.valueOf(k);
+						break;
+					case "moveLeft": 
+						moveLeft_ = String.valueOf(k);
+						break;
+					case "moveRight": 
+						moveRight_ = String.valueOf(k);
+						break;
+					case "shoot": 
+						shoot_ = String.valueOf(k);
+						break;
+					case "jump": 
+						jump_ = String.valueOf(k);
+						break;
+					}
 				}
 				
 				JTextField moveUp = new JTextField(2);
 				moveUp.setText(moveUp_);
+				
 				JTextField moveDown = new JTextField(2);
 				moveDown.setText(moveDown_);
+				
 				JTextField moveLeft = new JTextField(2);
 				moveLeft.setText(moveLeft_);
-				JTextField jump = new JTextField(2);
-				jump.setText(jump_);
+				
 				JTextField moveRight = new JTextField(2);
 				moveRight.setText(moveRight_);
+				
+				JTextField jump = new JTextField(2);
+				jump.setText(jump_);
+				
 				JTextField shoot = new JTextField(2);
-				moveRight.setText(moveRight_);
+				shoot.setText(shoot_);
+				
+
 				JTextField[] texts = {moveUp, moveDown, moveLeft, moveRight, jump, shoot};
 				String[] strings = {"MoveUp Key:", "MoveDown Key:", "MoveLeft Key:", "MoveRight Key:", "Jump Key:","Shoot Key:",};
 				JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
@@ -140,6 +168,8 @@ public class PlayereditorPanel extends Panel {
 		});
 		return button;
 	}
+	
+	
 	public void updateTable(){
 		List<String> s = gController.getAttributes();
 		String firstrow = s.get(0);
