@@ -3,6 +3,7 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
+import saladConstants.SaladConstants;
 /**
  * 
  * @author Main Justin (Zihao) Zhang
@@ -13,6 +14,19 @@ public abstract class Collision {
 	
 	protected Collision(GameObject o){
 		myObject = o;
+	}
+	
+	protected void updateManagers(GameObject hitter){
+		myObject.getScoreManager().update(SaladConstants.COLLISION, 
+				myObject, hitter);
+		//object has an instance of TEM, so that they can call TEM if collide
+		//alternative: collision has engine
+		//myObject.getTriggerEventManager().update(SaladConstants.COLLISION, myObject, hitter);
+		
+		myObject.getBloodManager().update(SaladConstants.COLLISION, 
+				myObject, hitter);
+		myObject.getLiveManager().update(SaladConstants.COLLISION, 
+				myObject, hitter);
 	}
 	
 	public abstract void collide(List<Object> objects);

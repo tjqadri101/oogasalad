@@ -11,7 +11,7 @@ import saladConstants.SaladConstants;
 import stage.Game;
 import engine.GameEngine;
 
-public class EngineTest {
+public class GameObjectTest {
 	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
@@ -33,7 +33,7 @@ public class EngineTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(false);
+		GameEngine engine = new GameEngine(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
