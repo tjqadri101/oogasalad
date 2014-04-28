@@ -636,6 +636,13 @@ public class GameEngine extends StdGame {
 		 object.updateImageURL(imgfile);
 	 }
 
+	 
+	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
+		 loadImage(imgfile);
+		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
+	 }
+
+
 	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
 		 GameObject object = myGame.getNonPlayer(myCurrentLevelID,
 				 myCurrentSceneID, unique_id);
