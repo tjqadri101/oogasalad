@@ -63,7 +63,8 @@ public class GAEController {
 		createScene(1,0);
 		switchScene(1,0);
 		//uploadImage(100,100,)
-		modifyGravityMagnitude((double)0);
+		double d = 0;
+		modifyGravityMagnitude(d);
 		createPlayer(playerID, null, 100, 100, 100, 100, "Default", 0, 1);
 
 
@@ -1403,4 +1404,9 @@ public class GAEController {
 		List<GameObject> objectColID = myDataController.getGame().getLevel(levelID).getScene(scene).getObjectsByColid(colID);
 		return objectColID;
 	}
+	
+	public NonPlayer getNonPlayer(){
+		return myDataController.getNonPlayer(selectedSceneID);
+	}
+	
 }

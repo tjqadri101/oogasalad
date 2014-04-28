@@ -12,8 +12,10 @@ import engineManagers.TriggerEventManager;
  * @author Main Justin (Zihao) Zhang
  *
  */
+
 public class NonPlayer extends GameObject {
 
+	
 	public NonPlayer(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
 			CollisionManager collisionManager, ScoreManager scoreManager, BloodManager bloodManager, 
@@ -28,6 +30,10 @@ public class NonPlayer extends GameObject {
 	public int getColID(){
 		return colid; 
 	}
+	
+	
+	
+	
 
 	@Override
 	public void move(){
