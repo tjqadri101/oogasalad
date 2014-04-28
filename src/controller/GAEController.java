@@ -486,8 +486,44 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	/**
+	 * Modify actor to shoot slowly
+	 * 
+	 * @param ID
+	 * @param shootByTime
+	 * @param imgURL
+	 * @param xSize
+	 * @param ySize
+	 * @param collID
+	 * @param speed
+	 * @param latency
+	 */
+	public void modifyActorToSlowShoot(int ID, String shootByTime, String imgURL, int xSize, int ySize, int collID, double speed, int latency ){ 
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + ID + SaladConstants.SEPARATOR + SaladConstants.SLOW_SHOOT_BY_TIME + SaladConstants.SEPARATOR + 
+				shootByTime + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize + SaladConstants.SEPARATOR +
+				collID + SaladConstants.SEPARATOR + speed + SaladConstants.SEPARATOR + latency; 
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	
-
+	/**
+	 * Modify actor's vertical movement
+	 * 
+	 * @param ID
+	 * @param backForthMoveWithVerticalSpeed
+	 * @param imgURL
+	 * @param amplitude
+	 * @param lantency
+	 * @param ySpeed
+	 */
+	public void modifyActorMovement(int ID, String backForthMoveWithVerticalSpeed, String imgURL, double amplitude, int lantency, double ySpeed){ 
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + ID + SaladConstants.SEPARATOR + SaladConstants.BACK_FORTH_MOVE_WITH_VERTICAL_SPEED + SaladConstants.SEPARATOR + 
+				backForthMoveWithVerticalSpeed + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + amplitude + SaladConstants.SEPARATOR + lantency + SaladConstants.SEPARATOR +
+				ySpeed; 
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	public void modifyActorImage(int ID, String url, int xSize, int ySize){
 		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ ID +SaladConstants.SEPARATOR + 
 				SaladConstants.IMAGE + SaladConstants.SEPARATOR+url + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize;
