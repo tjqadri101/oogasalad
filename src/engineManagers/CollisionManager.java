@@ -11,6 +11,7 @@ import java.util.Set;
 
 import objects.GameObject;
 import objects.SideDetector;
+import reflection.Reflection;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
@@ -175,16 +176,29 @@ public class CollisionManager {
 		map.put(pair, objects);
 	}
 	
-	//Better use reflection or whatever means to combine pair/tile collision in one method
-	
+	/**
+	 * If the collision involves direction, reflect on this method
+	 * @param victimColid
+	 * @param type
+	 * @param hitterColid
+	 * @param direction
+	 * @param args
+	 */
 	public void setDirectionalCollisionBehavior(int victimColid, String type, int hitterColid, String direction, Object ... args){
 		int dir = Arrays.asList(new String[]{SaladConstants.Top,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
 		if(dir == 4) addCollisionPair(victimColid, type, hitterColid, args);
-
 		else addCollisionPair(SideDetector.SDcid(victimColid, dir), type, hitterColid,args);
 	}
 	
+	/**
+	 * If the collision involves direction, reflect on this method
+	 * @param victimColid
+	 * @param type
+	 * @param tileColid
+	 * @param direction
+	 * @param args
+	 */
 	public void setDirectionalTileCollisionBehavior(int victimColid, String type, char tileColid, String direction, Object ... args){
 		int dir = Arrays.asList(new String[]{SaladConstants.Top,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
