@@ -25,11 +25,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.plaf.LayerUI;
 
-
-
-
-
-
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;

@@ -353,6 +353,7 @@ public class Game {
         for (int playerID: myPlayerMap.keySet()){
             answer.addAll(myPlayerMap.get(playerID).getAttributes());	
         }
+        
         for(Integer key: myLevelMap.keySet()){
             answer.addAll(myLevelMap.get(key).getAttributes()); 
         }
