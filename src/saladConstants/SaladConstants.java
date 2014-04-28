@@ -189,7 +189,8 @@ public final class SaladConstants {
 
 	public static final String LEVEL_DONE = "LevelDone";
 	public static final String SCENE_DONE = "SceneDone";
-
+	public static final String SET_COLLISION_LIVE = "SetCollisionLive";
+	public static final String SET_TILE_COLLISION_LIVE = "SetTileCollisionLive";
 
 	
 }
