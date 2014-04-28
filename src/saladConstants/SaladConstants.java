@@ -50,6 +50,7 @@ public final class SaladConstants {
 	public static final String TEST_XMLFILE_URL = "test.xml";
 	
 	public static final String BACKGROUND = "Background";
+	public static final String TSBACKGROUND = "TSBackground";
 	public static final String LEVEL = "level";
 	public static final String SCENE = "scene";
 	public static final String ID = "ID";
@@ -148,8 +149,11 @@ public final class SaladConstants {
 	public static final String MODIFY_SCORE_MANAGER = "ModifyScoreManager";
 	public static final String SET_COLLISION_SCORE = "SetCollisionScore";
 	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
+	public static final String TIME = "Time";
+	public static final String SET_SCORE_CONDITION = "SetScoreCondition";
 	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
 	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
+	public static final String SET_TRANSITION_BLOOD = "SetTransitionBlood";
 
 	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
 	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
@@ -186,7 +190,10 @@ public final class SaladConstants {
 	public static final String NULL = "null";
 	public static final int NUM_SIDE_DETECTORS = 4;
 
-	
+	public static final String LEVEL_DONE = "LevelDone";
+	public static final String SCENE_DONE = "SceneDone";
+	public static final String SET_COLLISION_LIVE = "SetCollisionLive";
+	public static final String SET_TILE_COLLISION_LIVE = "SetTileCollisionLive";
 
 
 	
