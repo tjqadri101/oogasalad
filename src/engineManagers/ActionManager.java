@@ -101,12 +101,8 @@ public class ActionManager {
 	
 	public void autoMove() {
 		if (myMoveBehavior == null) return;
-		System.out.println("ActionManagere autoMove " + myMoveBehavior);
-		SaladUtil.printObjectList(myMoveParameters);
 		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior,
 				myMoveParameters, SaladConstants.MOVE, myObject);
-		System.out.println("Reflection Succeeds");
-		
 	}
 
 	public void shoot() {
