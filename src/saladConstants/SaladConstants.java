@@ -66,7 +66,7 @@ public final class SaladConstants {
 	public static final String DIE = "die";
 	public static final String MOVE = "move";
 	public static final String SHOOT = "shoot";
-	public static final String JUMP = "jump";
+	public static final String JUMP = "Jump";
 	public static final String COLLIDE = "collide";
 	public static final String REMOVE = "remove";
 	
