@@ -398,7 +398,7 @@ public class GAEController {
 						SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + ",CollisionID,"+ colID +  SaladConstants.SEPARATOR + 
 						SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
-		//this.modifyCollisBehavStayOnTile(colID, 2, "All");
+		this.modifyCollisBehavStayOnTile(colID, 2, "All");
 		System.out.println(order);
 	}
 	
@@ -607,8 +607,8 @@ public class GAEController {
 	}*/
 	
 	
-	public void setDragTile(int colID, String url){
-		String order = SaladConstants.SET_DRAG_TILE + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + colID +
+	public void setDragTile(char colID, String url){
+		String order = SaladConstants.SET_DRAG_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_COLID + SaladConstants.SEPARATOR + colID +
 				SaladConstants.SEPARATOR + SaladConstants.DRAG_IMAGE + SaladConstants.SEPARATOR + url;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -657,7 +657,7 @@ public class GAEController {
 	
 	
 	public void modifyCollisBehavStayOnTile(int victimColID,int tileColID, String moveDirection){
-		String order = SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.TILE_COLID + SaladConstants.SEPARATOR
+		String order = SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR
 				+ victimColID + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_TILE
 				+ SaladConstants.SEPARATOR + tileColID+ SaladConstants.SEPARATOR + moveDirection;
 		if (!DEBUG) myDataController.receiveOrder(order);
