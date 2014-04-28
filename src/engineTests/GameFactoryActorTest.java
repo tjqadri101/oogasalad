@@ -208,7 +208,8 @@ public class GameFactoryActorTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals("RegularRemove", myGame.getNonPlayer(1,0,0).getMyDieBehavior());
+        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
+        assert(set.contains("RegularRemove"));
     }
     
     @Test
