@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Map.Entry;
-import java.util.Set;
 import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
@@ -29,7 +26,7 @@ public class Scene {
 	
 	protected int myID;
 	protected double initPlayerX;
-	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
+	protected double initPlayerY; 
 	protected int myFieldXSize;
 	protected int myFieldYSize;
 	protected Map<Integer, NonPlayer> myObjectMap;
@@ -195,9 +192,11 @@ public class Scene {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, SaladConstants.ID, myID));
-		List<Object> backgroundParams = SaladUtil.convertArgsToObjectList(myBackground, myIfWrapHorizontal, 
-				myIfWrapVertical, myFieldXSize, myFieldYSize);
-		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE_VIEW, SaladConstants.BACKGROUND, false, backgroundParams));
+		if(myBackground != null){
+			List<Object> backgroundParams = SaladUtil.convertArgsToObjectList(myBackground, myIfWrapHorizontal, 
+					myIfWrapVertical, myFieldXSize, myFieldYSize);
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE_VIEW, SaladConstants.BACKGROUND, false, backgroundParams));	
+		}
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.PLAYER_INITIAL_POSITION, false, initPlayerX, initPlayerY));
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
