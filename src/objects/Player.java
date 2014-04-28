@@ -3,6 +3,7 @@ package objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import engineManagers.AnimationManager;
 //import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
@@ -16,7 +17,7 @@ import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
- * @Author: Justin (Zihao) Zhang
+ * @author Main Justin (Zihao) Zhang
  */
 public class Player extends GameObject {
 	
@@ -50,26 +51,19 @@ public class Player extends GameObject {
 	public void move(){
 		checkKeys();
 		super.move();
-		if (xspeed > 0) {
-			myAnimationManager.updateImage("FDMove");
-		} else if (xspeed < 0) {
-			myAnimationManager.updateImage("BKMove");
-		} else {
-			setImage(myStaticGfxName);
-		}
+		
 	}
 	
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		super.hit_bg(tilecid, tx, ty, txsize, tysize);
-		setImage(myStaticGfxName);
+		setImage(myDefaultImage);
 	}
 	
 	@Override
 	public void jump() {
-		if (myIsInAir == 0) { myJumpTimes++; }
-		myActionManager.jump();
-		myAnimationManager.updateImage("Jump") ; //hardcode to be modified later
+		super.jump();
+		myAnimationManager.updateImage("Jump");
 	}
 
 	

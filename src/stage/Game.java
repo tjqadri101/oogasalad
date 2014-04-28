@@ -47,6 +47,7 @@ public class Game {
     protected String myName;
 
 
+
     public Game(){
         initTransitionStateMap();
         myTileImageMap = new HashMap<Character, String>();
@@ -331,6 +332,7 @@ public class Game {
      * @param the object ID
      */
     public void deleteNonPlayer(int levelID, int sceneID, int objectID){
+
         getScene(levelID, sceneID).deleteNonPlayer(objectID);
     }
 

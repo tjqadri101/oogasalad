@@ -41,7 +41,7 @@ public class LiveManager extends StatisticsManager {
 	public void setInitLives(int lives, int playerID){
 		if(!myPlayerMap.containsKey(playerID)) return;
 		myInitLifeMap.put(myPlayerMap.get(playerID), lives);
-		GameStats.set(myPlayerMap.get(playerID).getName() + " Live", lives);
+		GameStats.set(myPlayerMap.get(playerID).getObjectName() + " " + SaladConstants.LIVE, lives);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class LiveManager extends StatisticsManager {
 		int currentLive = myCurrentLifeMap.get(myPlayerMap.get(playerID));
 		currentLive --;
 		myCurrentLifeMap.put(myPlayerMap.get(playerID), currentLive);
-		GameStats.update(myPlayerMap.get(playerID).getName() + " Live", -1);
+		GameStats.update(myPlayerMap.get(playerID).getObjectName() + " " + SaladConstants.LIVE, -1);
 	}
 	
 	public void addPlayer(Player player){
@@ -89,7 +89,7 @@ public class LiveManager extends StatisticsManager {
 	protected void restore(){
 		for(Player o: myPlayerMap.values()){
 			if(myCurrentLifeMap.containsKey(o)){
-				GameStats.update(o.getName() + " Live", myInitLifeMap.get(o) - myCurrentLifeMap.get(o));
+				GameStats.update(o.getObjectName() + " " + SaladConstants.LIVE, myInitLifeMap.get(o) - myCurrentLifeMap.get(o));
 			}
 			myCurrentLifeMap.put(o, myInitLifeMap.get(o));
 		}
@@ -132,7 +132,7 @@ public class LiveManager extends StatisticsManager {
 		if(hitter instanceof Player){
 			Player p = (Player) hitter;
 			int changeLive = myMap.get(condition);
-			GameStats.update(p.getName() + " Live", changeLive);
+			GameStats.update(p.getObjectName() + " " + SaladConstants.LIVE, changeLive);
 			int finalLive = myCurrentLifeMap.get(p) + changeLive;
 			myCurrentLifeMap.put(p, finalLive);	
 		}
@@ -146,7 +146,7 @@ public class LiveManager extends StatisticsManager {
 		if(victim instanceof Player){
 			Player p = (Player) victim;
 			int changeLive = myMap.get(condition);
-			GameStats.update(p.getName() + " Live", changeLive);
+			GameStats.update(p.getObjectName() + " " + SaladConstants.LIVE, changeLive);
 			int finalLive = myCurrentLifeMap.get(p) + changeLive;
 			myCurrentLifeMap.put(p, finalLive);	
 		}
