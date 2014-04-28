@@ -57,6 +57,7 @@ public final class SaladConstants {
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
 	public static final String COLLISION_ID = "Colid";
 	public static final String COLLISION = "Collision";
+	public static final String TILE_COLID = "TileColid";
 	
 	//General Behaviors
 	public static final String DIE = "die";
