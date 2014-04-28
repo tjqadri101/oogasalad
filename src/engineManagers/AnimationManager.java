@@ -2,6 +2,7 @@ package engineManagers;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import objects.GameObject;
@@ -17,6 +18,7 @@ public class AnimationManager {
 
 	protected HashMap<String, String> myImageMappings;
 	protected ResourceBundle myAnimationResources;
+	protected List<String> myAttributes;
 	
 	public AnimationManager() {
 		myImageMappings = new HashMap<String, String>();

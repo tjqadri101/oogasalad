@@ -74,6 +74,7 @@ public abstract class GameObject extends JGObject {
 		myStaticGfxName = staticGfxName;
 		myName = name;
 		myActionManager = new ActionManager(this);
+		myAnimationManager = new AnimationManager();
 		initSideDetectors();
 		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.IMAGE, false, myStaticGfxName, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
