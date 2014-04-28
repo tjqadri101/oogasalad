@@ -62,6 +62,8 @@ public class GAEController {
 		createLevel(1);
 		createScene(1,0);
 		switchScene(1,0);
+		//uploadImage(100,100,)
+		createPlayer(playerID, null, 100, 100, 100, 100, "Default", 0, 1);
 
 
 	}
