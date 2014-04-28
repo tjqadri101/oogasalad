@@ -72,7 +72,11 @@ public class EngineTest {
 		
 		
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 300, 300, "Player", PLAYER_COLID, 6);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 300, 300, SaladConstants.NULL, PLAYER_COLID, 6);
+		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
+		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
+		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
+
 		player.setDieBehavior("RegularRemove");
 		player.setJumpBehavior("Jump", 5.0, 1);
 		player.setShootBehavior("QuickShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4);
@@ -99,7 +103,6 @@ public class EngineTest {
 		game.getScoreManager().setValue(1, "Time");
 		game.getScoreManager().setValue(50, "LevelDone", 1);
 		
-		player.getAnimationManager().modifyImage("Jump", "engine/actor_blank");
 		engine.loadingDone();
         return engine;
 	}

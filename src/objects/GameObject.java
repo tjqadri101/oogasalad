@@ -31,7 +31,6 @@ public abstract class GameObject extends JGObject {
 	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
 	protected TriggerEventManager myTEManager;
-
 	protected AnimationManager myAnimationManager;
 
 	protected int myXSize;
@@ -48,6 +47,8 @@ public abstract class GameObject extends JGObject {
 	protected String myDefaultImage;
 	protected List<String> myAttributes;
 	protected String myName;
+//	protected int myInitDieTime; //used for die after a certain time
+//	protected boolean myDieWait;
 	
 	protected int myDirection; // change later
 
@@ -76,6 +77,7 @@ public abstract class GameObject extends JGObject {
 		myLiveManager = liveManager;
 		myDefaultImage = staticGfxName;
 		myName = name;
+//		myDieWait = false;
 		myActionManager = new ActionManager(this);
 		myAnimationManager = new AnimationManager(this);
 		myTEManager = triggerEventManager;
@@ -86,7 +88,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	/**
-	 * 
+	 * Initial the side detectors
 	 */
 	protected void initSideDetectors() {
 		if (myUniqueID == SaladConstants.NULL_UNIQUE_ID) return;
@@ -204,6 +206,11 @@ public abstract class GameObject extends JGObject {
 		return SaladConstants.CREATE_ACTOR;
 	}
 
+	/**
+	 * Set the intial speed 
+	 * @param xspeed
+	 * @param yspeed
+	 */
 	public void setInitSpeed(double xspeed, double yspeed) {
 		super.setSpeed(xspeed, yspeed);
 		myInitXSpeed = xspeed;
@@ -231,6 +238,9 @@ public abstract class GameObject extends JGObject {
 		}
 	}
 	
+	/**
+	 * Resume in view
+	 */
 	public void resume(){
 		super.resume();
 		if (mySideDetectors!=null){
@@ -240,6 +250,9 @@ public abstract class GameObject extends JGObject {
 		}
 	}
 	
+	/**
+	 * suspend from view
+	 */
 	public void suspend(){
 		super.suspend();
 		if (mySideDetectors!=null){
@@ -358,10 +371,10 @@ public abstract class GameObject extends JGObject {
 		myActionManager.die();
 	}
 
-	 public void bounce(){
+	public void bounce(){
 		 xspeed *= -1;
 		 yspeed *= -1;
-	 }
+	}
 
 	public void stop() {
 		setSpeed(0);
@@ -386,6 +399,7 @@ public abstract class GameObject extends JGObject {
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
 		myActionManager.jump();
+		myAnimationManager.updateImage("Jump");
 	}
 
 	/**
@@ -400,13 +414,10 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
-		System.out.println(xdir);
 		if (xdir < 0) {
 			myAnimationManager.updateImage("BKMove");
-			System.out.println("updatedImage");
 		} else if (xdir > 0) {
-			setImage("src/engine/bossFire.png");
-			System.out.println("updatedImage");
+			myAnimationManager.updateImage("FDMove");
 		} else {
 			setImage(myDefaultImage);
 		}
@@ -471,6 +482,10 @@ public abstract class GameObject extends JGObject {
 	public ScoreManager getScoreManager() {
 		return myScoreManager;
 	}
+	
+//	public void dieAfterTime(int time){
+//		
+//	}
 
 	/**
 	 * Used for behaviors to get the BloodManager to update blood
