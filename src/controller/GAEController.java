@@ -25,6 +25,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.plaf.LayerUI;
 
+
+import objects.GameObject;
+import objects.NonPlayer;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
@@ -60,7 +63,7 @@ public class GAEController {
 		createScene(1,0);
 		switchScene(1,0);
 		//uploadImage(100,100,)
-		//	modifyGravityMagnitude(0);
+		modifyGravityMagnitude((double)0);
 		createPlayer(playerID, null, 100, 100, 100, 100, "Default", 0, 1);
 
 
@@ -642,6 +645,14 @@ public class GAEController {
 		modifyActorID(selectedActorID, newID);
 	}
 
+	public void modifyActorColIDNoID(int newColID){
+		int oldColID = myDataController.getCurrentPlayerColID(selectedActorID);
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ oldColID+SaladConstants.SEPARATOR + 
+				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	public void modifyActorColID(int oldColID,int newColID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+oldColID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
@@ -1381,5 +1392,15 @@ public class GAEController {
 			this.modifyCollisBehavStayOnTile(actorColID, tileID, "All");
 		}
 	}
+	
+	public Map<Integer, NonPlayer> getMapOfPlayers(){
+		Map<Integer, NonPlayer> map = myDataController.getMapOfPlayers(selectedSceneID);
+		return map;
+	}
 
+	public List<GameObject> getObjectsByColid(int scene, int colID){ 
+		int levelID = getCurrentLevelID();
+		List<GameObject> objectColID = myDataController.getGame().getLevel(levelID).getScene(scene).getObjectsByColid(colID);
+		return objectColID;
+	}
 }

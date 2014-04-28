@@ -43,6 +43,9 @@ public class Scene {
 		initTiles();
 	}
 	
+	public Map<Integer, NonPlayer> getObjectMap(){
+		return myObjectMap;
+	}
 	
 	public String[] getTiles(){
 		return myTiles;
