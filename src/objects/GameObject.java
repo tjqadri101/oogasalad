@@ -377,6 +377,7 @@ public abstract class GameObject extends JGObject {
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
 		myActionManager.jump();
+		myAnimationManager.updateImage("Jump");
 	}
 
 	/**
@@ -391,13 +392,10 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
-		System.out.println(xdir);
 		if (xdir < 0) {
 			myAnimationManager.updateImage("BKMove");
-			System.out.println("updatedImage");
 		} else if (xdir > 0) {
-			setImage("src/engine/bossFire.png");
-			System.out.println("updatedImage");
+			myAnimationManager.updateImage("FDMove");
 		} else {
 			setImage(myDefaultImage);
 		}
