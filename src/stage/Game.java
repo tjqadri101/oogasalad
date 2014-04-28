@@ -42,7 +42,7 @@ public class Game {
     protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-    protected TriggerEventManager myTEManager;
+    protected TriggerEventManager myTEM;
     protected Map<Character, String> myTileImageMap;
     protected String myName;
 
@@ -60,7 +60,7 @@ public class Game {
         myInputManager = new InputManager();
         myGravity = new Gravity();
         myCollisionManager = new CollisionManager();
-        myTEManager = new TriggerEventManager();
+        myTEM = new TriggerEventManager();
         myName = DEFAULT_NAME;
 
     }
@@ -344,15 +344,19 @@ public class Game {
         List <String> answer = new ArrayList<String>();
         answer.addAll(myScoreManager.getAttributes()); 
         answer.addAll(myInputManager.getAttributes()); 
+      
         answer.add(myGravity.getAttributes());
         for (Entry<Character, String> entry : getTileImageMap()) {
             Character cid = entry.getKey();
             String imgfile = entry.getValue();
             answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
         }
+        
+
         for (int playerID: myPlayerMap.keySet()){
             answer.addAll(myPlayerMap.get(playerID).getAttributes());	
         }
+        
         for(Integer key: myLevelMap.keySet()){
             answer.addAll(myLevelMap.get(key).getAttributes()); 
         }
@@ -386,7 +390,7 @@ public class Game {
      * @return the only instance of TriggerEventManager
      */
     public TriggerEventManager getTEManager () {
-        return myTEManager;
+        return myTEM;
     }
 
 

@@ -35,6 +35,9 @@ public class GameSaverAndLoader {
 	 * @return Nothing
 	 */
 	public void save(List<String> attributes, String url) throws IOException { 
+			for(String s: attributes){ 
+				System.out.println("Attribute string: " + s); 
+			}
 			myXMLWriter.write(attributes, url); 
 	}
 	

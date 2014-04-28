@@ -165,7 +165,7 @@ public final class SaladConstants {
 	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
 	public static final String MODIFY_LIFE_MANAGER = "ModifyLifeManager";
 
-	public static final String SET_TRIGGER_BY_TIME = "SetTriggerByTime";
+	public static final String TRIGGER_BY_TIME = "TriggerByTime";
 	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
 	public static final String SET_TRIGGER_BY_COLLISION = "SetTriggerByCollision";
 	public static final String SET_TRIGGER_BY_TILE_COLLISION = "SetTriggerByTileCollision";
@@ -216,6 +216,17 @@ public final class SaladConstants {
 	public static final String SCORE = "Score";
 	public static final String ENEMY_KILLED = "Enemies Killed";
 	public static final String SLOW_SHOOT_BY_TIME = "SlowShootByTime";
+
+	public static final String MODIFY_COLLISION_BEHAVIOUR = "ModifyCollisionBehavior";
+	public static final String REBOUND = "Rebound";
+
+	public static final String KILL_BY_TILE = "KillByTile";
+
+	public static final String SET_INITIAL_SCENE = "SetInitialScene";
+
+	public static final String SET_COLLISION_LIFE = "SetCollisionLife";
+
+	public static final String SET_TILE_COLLISION_LIFE = "SetTileCollisionLife";
 
 
 
