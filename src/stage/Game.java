@@ -29,6 +29,7 @@ import util.AttributeMaker;
 public class Game {
 
 	public static final int NONUSE_ID = 0;
+	public static final String DEFAULT_NAME = "Game";
 
 	protected Map<Integer, Level> myLevelMap;
 	protected Map<String, Transition> myTransitionStateMap;
@@ -43,6 +44,7 @@ public class Game {
     protected CollisionManager myCollisionManager;
 //    protected TriggerEventManager myEventManager;
     protected Map<Character, String> myTileImageMap;
+    protected String myName;
 
 
 	public Game(){
@@ -57,6 +59,7 @@ public class Game {
 		myInputManager = new InputManager();
     	myGravity = new Gravity();
     	myCollisionManager = new CollisionManager();
+    	myName = DEFAULT_NAME;
 //    	myEventManager = new TriggerEventManager();
 	}
 
@@ -78,6 +81,34 @@ public class Game {
 	public void addScene(int levelID, int sceneID){
 		myLevelMap.get(levelID).addScene(sceneID);
 
+	}
+	
+	/**
+	 * Get a list of tile collision IDs
+	 * @return a list of Characters
+	 */
+	public List<Character> getOccupiedTileColids(){
+		List<Character> answer = new ArrayList<Character>();
+		for(char c: myTileImageMap.keySet()){
+			if(c != 0) answer.add(c);
+		}
+		return answer;
+	}
+	
+	/**
+	 * Set the name of the Game
+	 * @param name
+	 */
+	public void setName(String name){
+		myName = name;
+	}
+	
+	/**
+	 * Get the current name of Game
+	 * @return name
+	 */
+	public String getName(){
+		return myName;
 	}
 	
 	/**

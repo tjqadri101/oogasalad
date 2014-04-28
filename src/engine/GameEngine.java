@@ -4,6 +4,7 @@ import saladConstants.SaladConstants;
 import stage.Game;
 import stage.Scene;
 import stage.Transition;
+import statistics.StatsController;
 import util.SaladUtil;
 import jgame.JGColor;
 import jgame.platform.StdGame;
@@ -11,12 +12,10 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
-
 import engineManagers.TriggerEventManager;
 
 /**
@@ -25,6 +24,7 @@ import engineManagers.TriggerEventManager;
  * @Contribution Steve (Siyang) Wang
  */
 
+@SuppressWarnings("serial")
 public class GameEngine extends StdGame {
 
 	public static final int FRAMES_PER_SECOND = 70;
@@ -40,7 +40,7 @@ public class GameEngine extends StdGame {
 	protected int myCurrentLevelID;
 	protected int myCurrentSceneID;
 	protected Scene myCurrentScene;
-//	protected Scene myEmptyScene = new Scene(0);
+	protected Scene myEmptyScene = new Scene(0);
 	protected Player myPlayer;
 	protected int myTimer;
 	
@@ -59,13 +59,15 @@ public class GameEngine extends StdGame {
 	protected boolean isLoading;
 	protected boolean isPlaying;
 	protected boolean isTileEditing;
-	protected boolean scene_restart;//
+	protected boolean scene_restart = true;//
+	protected StatsController myStatsController;
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
 		isEditingMode = editing;
 		isLoading = true;
 		isPlaying = editing;
+		myStatsController = new StatsController(this, myGame.getName());
 	}
 
 	@Override
@@ -79,6 +81,7 @@ public class GameEngine extends StdGame {
 //		setTileSettings("#",2,0);
 		defineImage("null","0",0,"null","-");
 		setGameState("Edit");
+		myEmptyScene = new Scene(0);
 		myTimer = 0;
 		lives = 1;
 	}
@@ -632,15 +635,10 @@ public class GameEngine extends StdGame {
 		 object.setSize(xsize, ysize);
 		 object.updateImageURL(imgfile);
 	 }
-
-	 public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
+	 
+	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
-		 object.setJumpingImage(imgfile);
-	 }
-
-	 public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
-		 loadImage(imgfile);
-		 object.setMovingImage(imgfile);
+		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
 
 	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
@@ -660,7 +658,8 @@ public class GameEngine extends StdGame {
 		 loadImage(imgfile);
 		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				 name, colid, lives, myGame.getCollisionManager(),
-				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
+				 myGame.getScoreManager(), myGame.getBloodManager(), 
+				 myGame.getRevivalManager(), myGame.getLiveManager(), myGame.getTEManager());
 		 myGame.setPlayer(object);
 		 myPlayer = object;
 		 if (myGame.getLiveManager() != null) {
@@ -676,7 +675,8 @@ public class GameEngine extends StdGame {
 		 loadImage(imgfile);
 		 NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				 ypos, name, colid, lives, myGame.getCollisionManager(),
-				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
+				 myGame.getScoreManager(), myGame.getBloodManager(), 
+				 myGame.getRevivalManager(), myGame.getLiveManager(),myGame.getTEManager());
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
 		 if (isPlaying) {object.resume();}
 		 return object;

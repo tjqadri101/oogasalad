@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import objects.GameObject;
+import objects.SideDetector;
 import saladConstants.SaladConstants;
+import statistics.GameStats;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
@@ -24,18 +26,22 @@ public class BloodManager extends StatisticsManager{
 
 	@Override
 	public void update(String info, GameObject victim, GameObject hitter) {
+		int hitterColid = checkIfSideDetectorColid(hitter);
+		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, hitter.colid);
+				info, victimColid, hitterColid);
 		if(!myMap.containsKey(condition)) return;
-		System.out.println("BloodManager update collision: " + myMap.get(condition));
 		hitter.changeBlood(myMap.get(condition));
+		GameStats.update(hitter.getName() + " Blood", myMap.get(condition));
 	}
 	
 	public void update(String info, GameObject victim, int tileColid){
+		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, tileColid);
+				info, victimColid, tileColid);
 		if(!myMap.containsKey(condition)) return;
 		victim.changeBlood(myMap.get(condition));
+		GameStats.update(victim.getName() + " Blood", myMap.get(condition));
 	}
 
 	public void update(String info, int oldLevelOrSceneID, GameObject object) {
@@ -43,11 +49,13 @@ public class BloodManager extends StatisticsManager{
 				info, oldLevelOrSceneID);
 		if(!myMap.containsKey(condition)) return;
 		object.changeBlood(myMap.get(condition));
+		GameStats.update(object.getName() + " Blood", myMap.get(condition));
 	}
 
 	public void update(String condition, GameObject object) {
 		if(!myMap.containsKey(condition)) return;
 		object.changeBlood(myMap.get(condition));
+		GameStats.update(object.getName() + " Blood", myMap.get(condition));
 	}
 
 	@Override

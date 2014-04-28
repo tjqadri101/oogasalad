@@ -5,6 +5,7 @@
 
 package play;
 
+import engine.GameEngine;
 import game_authoring_environment.ViewFactory;
 
 import java.awt.event.ActionEvent;
@@ -54,12 +55,14 @@ import reflection.Reflection;
 public class PlayMenuBar extends JMenuBar {
 
 	private static DataController myController;
+	private static GameEngine myEngine;
 	private File currentGame;
 
-	public PlayMenuBar(DataController myController) {
+	public PlayMenuBar(DataController myController, GameEngine gameEngine) {
 		super();
 		this.myController = myController;
 		this.add(createFileMenu());
+		myEngine = gameEngine;
 	}
 
 	/**
@@ -110,6 +113,7 @@ public class PlayMenuBar extends JMenuBar {
 		} catch (IOException ioe) {
 			System.exit(1);
 		}
+		myEngine.loadingDone();
 	}
 	
 	/**

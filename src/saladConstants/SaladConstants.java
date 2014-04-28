@@ -20,7 +20,6 @@ public final class SaladConstants {
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
 	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
-//	public static final String MODIFY_BACKGROUND = "ModifyBackground";
 	public static final String MODIFY_SCENE_VIEW = "ModifySceneView";
 	
 	public static final String GAME_EDITOR_PANEL = "GameEditor";
@@ -61,7 +60,7 @@ public final class SaladConstants {
 	public static final String PLAYER_INITIAL_POSITION = "PlayerInitialPosition";
 	public static final String COLLISION_ID = "Colid";
 	public static final String COLLISION = "Collision";
-	public static final String TILE_COLID = "TileColid";
+	public static final String TILE_COLID = "TileID";
 	
 	//General Behaviors
 	public static final String DIE = "die";
@@ -86,7 +85,8 @@ public final class SaladConstants {
 	public static final String IMMORTAL = "Immortal";
 	public static final String CAN_NOT_COLLIDE = "CanNotCollide";
 	public static final String CAN_NOT_JUMP = "CanNotJump";
-    
+    public static final String BACK_FORTH_MOVE_WITH_VERTICAL_SPEED = "BackForthMoveWithVerticalSpeed";
+    public static final String STAY_ON_OBJECT = "StayOnObject";
     
 	public static final String POSITION = "Position";
 	public static final String NAME = "Name";

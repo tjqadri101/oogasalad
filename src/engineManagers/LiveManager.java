@@ -8,6 +8,7 @@ import java.util.Map;
 import objects.GameObject;
 import objects.Player;
 import saladConstants.SaladConstants;
+import statistics.GameStats;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
@@ -40,6 +41,7 @@ public class LiveManager extends StatisticsManager {
 	public void setInitLives(int lives, int playerID){
 		if(!myPlayerMap.containsKey(playerID)) return;
 		myInitLifeMap.put(myPlayerMap.get(playerID), lives);
+		GameStats.set(myPlayerMap.get(playerID).getName() + " Live", lives);
 	}
 	
 	/**
@@ -60,6 +62,7 @@ public class LiveManager extends StatisticsManager {
 		int currentLive = myCurrentLifeMap.get(myPlayerMap.get(playerID));
 		currentLive --;
 		myCurrentLifeMap.put(myPlayerMap.get(playerID), currentLive);
+		GameStats.update(myPlayerMap.get(playerID).getName() + " Live", lives);
 	}
 	
 	public void addPlayer(Player player){
@@ -118,8 +121,10 @@ public class LiveManager extends StatisticsManager {
 
 	@Override
 	public void update(String info, GameObject victim, GameObject hitter) {
+		int victimColid = checkIfSideDetectorColid(victim);
+		int hitterColid = checkIfSideDetectorColid(hitter);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, hitter.colid);
+				info, victimColid, hitterColid);
 		if(!myMap.containsKey(condition)) return;
 		if(hitter instanceof Player){
 			Player p = (Player) hitter;
@@ -130,8 +135,9 @@ public class LiveManager extends StatisticsManager {
 	}
 	
 	public void update(String info, GameObject victim, int tileColid){
+		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victim.colid, tileColid);
+				info, victimColid, tileColid);
 		if(!myMap.containsKey(condition)) return;
 		if(victim instanceof Player){
 			Player p = (Player) victim;
