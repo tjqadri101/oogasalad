@@ -273,6 +273,7 @@ public class GameEngine extends StdGame {
 	 public void paintFrameGameOver(){
 		 super.paintFrameGameOver();//
 		 paintTransition("GameOver");
+		 setGameState("DisplayStats"); // added by Justin
 	 }
 	 
 	 @Override
@@ -680,6 +681,14 @@ public class GameEngine extends StdGame {
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
 		 if (isPlaying) {object.resume();}
 		 return object;
+	 }
+	 
+	 public void startDisplayStats() {
+		 myStatsController.saveGameStats(); 
+	 }
+
+	 public void paintFrameDisplayStats() {
+		 myStatsController.displayStats();
 	 }
 
 	 public void reviveObject() {
