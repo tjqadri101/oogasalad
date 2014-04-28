@@ -90,6 +90,7 @@ public class GameObjectTest {
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, ENEMY_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
 		game.getBloodManager().setValue(1, "Collision", MUSHROOM_COLID, PLAYER_COLID);
+		game.getLiveManager().setValue(1, "Collision", PLAYER_COLID, MUSHROOM_COLID);
 //		engine.loadingDone();
         return engine;
 	}
