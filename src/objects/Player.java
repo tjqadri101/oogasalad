@@ -24,7 +24,6 @@ public class Player extends GameObject {
 	protected List<String> myNonClearKeys;
 	protected double myMovingXSpeed;
 	protected double myMovingYSpeed;
-	protected AnimationManager myAnimationManager;
 	protected TriggerEventManager myTEManager;
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
@@ -41,7 +40,6 @@ public class Player extends GameObject {
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, 
 		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 		myTEManager = new TriggerEventManager();
-		myAnimationManager = new AnimationManager(this);
 	}
 	
 	public void setKey(int key, String type){
