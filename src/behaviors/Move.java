@@ -24,5 +24,9 @@ public class Move extends Movable{
 		yspeed = (Double) objects.get(1);
 		myObject.y += yspeed;
 		myObject.x += xspeed;
+		if(yspeed > 0){ myObject.ydir = 1; }
+		else{ myObject.ydir = -1; }
+		if(xspeed > 0){ myObject.xdir = 1; }
+		else{ myObject.xdir = -1; }
 	}
 }
