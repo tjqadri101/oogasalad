@@ -431,10 +431,10 @@ public abstract class GameObject extends JGObject {
 	 * @param args
 	 */
 	public void updateManagers(Object ... args){
-		Reflection.callMethod(myScoreManager, "update", args);
-		Reflection.callMethod(myBloodManager, "update", args);
-		Reflection.callMethod(myLiveManager, "update", args);
-		Reflection.callMethod(myEventManager, "update", args);
+		if(myScoreManager != null) Reflection.callMethod(myScoreManager, "update", args);
+		if(myBloodManager != null) Reflection.callMethod(myBloodManager, "update", args);
+		if(myLiveManager != null) Reflection.callMethod(myLiveManager, "update", args);
+		if(myEventManager != null) Reflection.callMethod(myEventManager, "update", args);
 	}
 
 	@Override
@@ -459,13 +459,12 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void autoMove() {
-	 //   System.out.println("autoMove");
 		myActionManager.autoMove();
 	}
 
 	public void shoot() {
 		myActionManager.shoot();
-		GameStats.update(myName + " " + SaladConstants.SHOOT, 1); // may not be needed
+		GameStats.update(myName + SaladConstants.SPACE + SaladConstants.SHOOT, 1); // may not be needed
 	}
 
 	/**
@@ -515,7 +514,7 @@ public abstract class GameObject extends JGObject {
 //	public LiveManager getLiveManager(){
 //		return myLiveManager;
 //	}
-//	
+	
 	/**
 	 * @return the Gfx info
 	 */
