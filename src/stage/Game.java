@@ -61,7 +61,7 @@ public class Game {
 //    	myEventManager = new TriggerEventManager();
 	}
 
-	private void initTransitionStateMap() {
+	protected void initTransitionStateMap() {
 		myTransitionStateMap = new HashMap<String, Transition>();
 		for (String gameState: Transition.TRANSITION_STATE){
 			myTransitionStateMap.put(gameState, new Transition(gameState));
@@ -137,6 +137,14 @@ public class Game {
 		return myLevelMap.get(levelID);
 	}
 	
+	/**
+	 * Get an actor's collision ID by its unique ID
+	 * Called by Graphic Authorizing Environment to display collisoin IDs
+	 * @param levelID
+	 * @param sceneID
+	 * @param objectID
+	 * @return colid
+	 */
 	public int getNonPlayerColid(int levelID, int sceneID, int objectID){
 		return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID).colid;
 	}
@@ -223,6 +231,11 @@ public class Game {
     	return myPlayerMap.get(playerID);
     }
     
+    /**
+     * Get a player's collision ID by its unique ID
+     * @param playerID
+     * @return player's colid
+     */
     public int getPlayerColid(int playerID){
     	return myPlayerMap.get(playerID).colid;
     }
@@ -304,12 +317,12 @@ public class Game {
 	
 	/**
 	 * Called to get the Attributes of the whole Game
-	 * @return a list of Objects that matched with the GAE Data Format
+	 * @return a list of Objects that matched with a specific Data Format
 	 */
 	public List<String> getAttributes() {
 		List <String> answer = new ArrayList<String>();
 		answer.addAll(myScoreManager.getAttributes()); 
-//		answer.addAll(myInputManager.getAttributes()); 
+		answer.addAll(myInputManager.getAttributes()); 
 		answer.add(myGravity.getAttributes());
 		for (Entry<Character, String> entry : getTileImageMap()) {
 			Character cid = entry.getKey();
@@ -326,8 +339,12 @@ public class Game {
 		for(Transition value: myTransitionStateMap.values()){
 			answer.addAll(value.getAttributes()); 
 		} // need check if before level or after
+		answer.addAll(myLiveManager.getAttributes());
+		answer.addAll(myBloodManager.getAttributes());
+		// myTriggerManager
 		return answer;
 	}
+	
 	
 	/** Should only be called from Engine
 	 * @return the only instance of TriggerEventManager
