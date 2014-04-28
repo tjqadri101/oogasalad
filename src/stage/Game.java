@@ -103,6 +103,14 @@ public class Game {
 	}
 	
 	/**
+	 * Get the current name of Game
+	 * @return name
+	 */
+	public String getName(){
+		return myName;
+	}
+	
+	/**
 	 * Called to add a new NonPlayer to a particular scene of a particular level
 	 * @param the level ID that the new Game Object belongs to 
 	 * @param the new scene ID that the new Game Object belongs to

@@ -67,7 +67,7 @@ public class GameEngine extends StdGame {
 		isEditingMode = editing;
 		isLoading = true;
 		isPlaying = editing;
-		myStatsController = new StatsController(this, "Mario Game");
+		myStatsController = new StatsController(this, Game.DEFAULT_NAME);
 	}
 
 	@Override
