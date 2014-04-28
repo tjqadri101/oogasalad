@@ -39,8 +39,7 @@ public class NonPlayer extends GameObject {
 	public void move(){
 		super.move();
 		autoMove();
-//		if(getID() == -1){
-//			System.out.println(getImageName());
-//		}
+		jump();
+		shoot();
 	}
 }

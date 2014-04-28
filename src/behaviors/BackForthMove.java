@@ -24,7 +24,7 @@ public class BackForthMove extends Movable{
 		double amplitude = (Double) objects.get(0);
 		int latency = (Integer) objects.get(1);
 		GameEngine engine = (GameEngine) myObject.eng;
-		myObject.x = myObject.x + amplitude * Math.sin(engine.timer/latency);
+		myObject.x = myObject.x + amplitude * Math.sin(engine.getSaladTimer()/latency);
 	}
 
 }

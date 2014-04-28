@@ -632,7 +632,7 @@ public class GameEngine extends StdGame {
 		 return myGame;
 	 }
 	 
-	 public int getMyTimer() {
+	 public int getSaladTimer() {
 		 return myTimer;
 	 }
 
