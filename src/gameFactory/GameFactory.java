@@ -103,8 +103,9 @@ public class GameFactory {
         Object obj = null;
         String methodToInvoke = myMethod.getString(typeMethodList.get(1));
         if (!GameReflectPara.equals(NO_PARAMETER)){
+//            System.out.println("twoStepReflection" + idSelector(GameReflectPara));
             obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(GameReflectPara));
-            
+//            System.out.println("twoStepReflection" + obj);
         }
         else{
             obj = Reflection.callMethod(refObj, GameRefMethod);
