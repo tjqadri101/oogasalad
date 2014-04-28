@@ -427,17 +427,6 @@ public abstract class GameObject extends JGObject {
 			Reflection.callMethod(myLiveManager, "update", args);
 			Reflection.callMethod(myTEManager, "updateCollision", args);
 		}
-//		myScoreManager().update(SaladConstants.COLLISION, 
-//				myObject, hitter);
-//		
-//		//object has an instance of TEM, so that they can call TEM if collide
-//		//alternative: collision has engine
-//		myObject.getTEManager().updateCollision(SaladConstants.COLLISION, myObject, hitter);
-//		
-//		myObject.getBloodManager().update(SaladConstants.COLLISION, 
-//				myObject, hitter);
-//		myObject.getLiveManager().update(SaladConstants.COLLISION, 
-//				myObject, hitter);
 	}
 
 	@Override
