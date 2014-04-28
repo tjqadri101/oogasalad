@@ -17,7 +17,7 @@ import util.SaladUtil;
 /**
  * Intended to manage all collision behaviors between objects and objects, objects and tiles
  * @author Main Justin (Zihao) Zhang
- * @contribution Shenghan Chen
+ * @contribution (set directional collision) Shenghan Chen
  *
  */
 public class CollisionManager {
@@ -62,7 +62,7 @@ public class CollisionManager {
 	 * @param hitterColid
 	 * @return Object list
 	 */
-	public List<Object> getCollisionBehavior(int victimColid, int hitterColid){
+	protected List<Object> getCollisionBehavior(int victimColid, int hitterColid){
 		String pair = victimColid + SaladConstants.SEPARATOR + hitterColid;
 		return myCollisionMap.get(pair);
 	}
@@ -115,7 +115,7 @@ public class CollisionManager {
 	 * @param tileColid
 	 * @return Object list
 	 */
-	public List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
+	protected List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
 		String pair = victimColid + SaladConstants.SEPARATOR + tileColid;
 		return myTileCollisionMap.get(pair);
 	}

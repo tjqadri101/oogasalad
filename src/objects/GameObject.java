@@ -7,7 +7,6 @@ import jgame.JGObject;
 import saladConstants.SaladConstants;
 import engineManagers.*;
 import util.AttributeMaker;
-import util.SaladUtil;
 import engineManagers.CollisionManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
