@@ -163,7 +163,7 @@ public class DataController {
 	 * @param sceneID
 	 * @return a map mapping from uniqueIDs to non-players
 	 */
-	public Map<Integer, NonPlayer> getMapOfPlayers(int sceneID){
+	public Map<Integer, NonPlayer> getMapOfNonPlayers(int sceneID){
 		Map<Integer, NonPlayer> nonPlayerMap = myGame.getLevel(getCurrentLevelID()).getScene(sceneID).getObjectMap();
 		return nonPlayerMap;
 	}
