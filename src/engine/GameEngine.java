@@ -11,12 +11,10 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
-
 import engineManagers.TriggerEventManager;
 
 /**
@@ -25,6 +23,7 @@ import engineManagers.TriggerEventManager;
  * @Contribution Steve (Siyang) Wang
  */
 
+@SuppressWarnings("serial")
 public class GameEngine extends StdGame {
 
 	public static final int FRAMES_PER_SECOND = 70;
@@ -661,7 +660,8 @@ public class GameEngine extends StdGame {
 		 loadImage(imgfile);
 		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				 name, colid, lives, myGame.getCollisionManager(),
-				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
+				 myGame.getScoreManager(), myGame.getBloodManager(), 
+				 myGame.getRevivalManager(), myGame.getLiveManager(), myGame.getTEManager());
 		 myGame.setPlayer(object);
 		 myPlayer = object;
 		 if (myGame.getLiveManager() != null) {
@@ -677,7 +677,8 @@ public class GameEngine extends StdGame {
 		 loadImage(imgfile);
 		 NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				 ypos, name, colid, lives, myGame.getCollisionManager(),
-				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
+				 myGame.getScoreManager(), myGame.getBloodManager(), 
+				 myGame.getRevivalManager(), myGame.getLiveManager(),myGame.getTEManager());
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
 		 if (isPlaying) {object.resume();}
 		 return object;

@@ -28,6 +28,7 @@ public abstract class GameObject extends JGObject {
 	protected RevivalManager myRevivalManager;
 	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
+	protected TriggerEventManager myTEManager;
 
 	protected AnimationManager myAnimationManager;
 
@@ -56,7 +57,8 @@ public abstract class GameObject extends JGObject {
 	protected GameObject(int uniqueID, String staticGfxName, int xsize,
 			int ysize, double xpos, double ypos, String name, int collisionId,
 			int blood, CollisionManager collisionManager, ScoreManager scoreManager, 
-			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager) {
+			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager,
+			TriggerEventManager triggerEventManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
 		suspend();
 		resume_in_view = false;
@@ -76,6 +78,7 @@ public abstract class GameObject extends JGObject {
 		myName = name;
 		myActionManager = new ActionManager(this);
 		myAnimationManager = new AnimationManager();
+		myTEManager = triggerEventManager;
 		initSideDetectors();
 		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.IMAGE, false, myStaticGfxName, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
@@ -497,6 +500,10 @@ public abstract class GameObject extends JGObject {
 
 	public RevivalManager getRevivalManager() {
 		return myRevivalManager;
+	}
+	
+	public TriggerEventManager getTEManager(){
+	        return myTEManager;
 	}
     
     /**
