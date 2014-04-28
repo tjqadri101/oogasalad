@@ -13,7 +13,7 @@ public class SideDetector extends GameObject{
 	public SideDetector(GameObject parent, int direction, int cid) {
 		super(SaladConstants.NULL_UNIQUE_ID, SaladConstants.NULL, 0, 0, 0, 0, SaladConstants.NULL, cid, 1, 
 				parent.getCollisionManager(), parent.getScoreManager(), parent.getBloodManager(), 
-				parent.getRevivalManager(), parent.getLiveManager());
+				parent.getRevivalManager(), parent.getLiveManager(), parent.getTEManager());
 		myParent = parent;
 		myDirection = direction;
 		move();

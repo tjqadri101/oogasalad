@@ -28,21 +28,54 @@ public class TriggerEventManager {
     protected Map<Integer, List<Object>> myTriggerMap;
     protected Map<Integer, List<Object>> myEventMap;
     protected Game myGame;
-    protected List<Class> mySubjectList;
     protected GameEngine myEngine;
     protected Integer myCurrentLevel;
     protected Integer myCurrentScene;
     protected List<String> myAttributes;
 
     public TriggerEventManager () {
-        myGame = myEngine.getGame();
         myTriggerMap = new HashMap<Integer, List<Object>>();
         myEventMap = new HashMap<Integer, List<Object>>();
-        mySubjectList = new ArrayList<>();
         myAttributes = new ArrayList<>();
     }
-
+    /**
+     * Called by Collision and TileCollision when the trigger is collision
+     */
+    public void updateCollision(String collisionBehavior, GameObject myObject, GameObject hitter){
+//        List<Object> actual = new ArrayList();
+        for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
+            List<Object> collisionPara = entry.getValue();
+            if (compareParameters(collisionPara,collisionBehavior,myObject,hitter)){
+                doEvent(myEngine,entry.getKey());
+            }
+        }
+    }
+    
+    /** 
+     * Called from main loop to compare parameters
+     */
+    private boolean compareParameters (List<Object> collisionPara,
+                                       String collisionBehavior,
+                                       GameObject myObject,
+                                       GameObject hitter) {
+        if((collisionPara.get(0).equals(collisionBehavior))&&collisionPara.get(1).equals(myObject)
+                &&collisionPara.get(2).equals(hitter)){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Called by Collision and TileCollision when the trigger is collision
+     */
+    public void updateCollision(String collisionBehavior, GameObject myObject, int tilecid){
+        
+    }
+    
+    /** 
+     * Called by engine in the doFrame
+     */
     public void checkTrigger (GameEngine myEngine) {
+        this.myEngine = myEngine;
         for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
             int etPairID = entry.getKey();
             List<Object> triggerList = entry.getValue();
@@ -75,19 +108,21 @@ public class TriggerEventManager {
             behaviorParameters.add(args[i]);
         }
         if (behaviorName.contains(TRIGGER_INDICATOR)) {
-//            String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER,
-//                                                SaladConstants.COLLISION_ID, args[1], args[2], true, args[2]);
             myTriggerMap.put(etPairID, behaviorParameters);
         }
         else {
             myEventMap.put(etPairID, behaviorParameters);
         }
+        String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER,
+                                                       SaladConstants.COLLISION_ID, etPairID, behaviorName, true, args);
+        myAttributes.add(attribute);
     }
+
 
     public List<String> getAttributes(){
         return myAttributes;
     }
-    
+
     // See if putting same methods together works
     /*
      * public void setEventBehavior(int etPairID, String eventBehavior, Object ... args){
