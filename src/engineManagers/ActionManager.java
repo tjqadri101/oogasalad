@@ -19,6 +19,7 @@ public class ActionManager {
 	protected ResourceBundle myBehaviors;
 	protected List<String> myAttributes;
 	protected GameObject myObject;
+	
 	protected String myDieBehavior;
 	protected String myMoveBehavior;
 	protected String myJumpBehavior;
