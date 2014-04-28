@@ -83,10 +83,10 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public GameObject(int uniqueID, String staticGfxName, int xsize, 
-			int ysize, double xpos, double ypos, String name, int collisionId, int blood, CollisionManager collisionManager){
+			int ysize, double xpos, double ypos, String name, int collisionId, int blood, 
+			CollisionManager collisionManager, TriggerEventManager eventManager){
 		this(uniqueID, staticGfxName, xsize, ysize, xpos, ypos, name, collisionId, blood, 
-				collisionManager, null, null, null, null, null); // need check
-		
+				collisionManager, null, null, null, null, eventManager); 
 	}
 
 	/**
@@ -529,9 +529,9 @@ public abstract class GameObject extends JGObject {
 //		return myRevivalManager;
 //	}
 	
-//	public TriggerEventManager getTEManager(){
-//	        return myEventManager;
-//	}
+	public TriggerEventManager getEventManager(){
+	        return myEventManager;
+	}
     
     /**
      * @return the myInitX
