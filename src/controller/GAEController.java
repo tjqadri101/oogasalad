@@ -18,11 +18,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.plaf.LayerUI;
+
 
 
 
@@ -63,6 +65,7 @@ public class GAEController {
 		createScene(1,0);
 		switchScene(1,0);
 		//uploadImage(100,100,)
+	//	modifyGravityMagnitude(0);
 		createPlayer(playerID, null, 100, 100, 100, 100, "Default", 0, 1);
 
 
@@ -93,6 +96,7 @@ public class GAEController {
 				SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + ",CollisionID," + colID + SaladConstants.SEPARATOR + 
 				SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
+		setColIDStayOnEveryTileID(colID);
 		System.out.println(order);
 	}
 
@@ -1077,7 +1081,7 @@ public class GAEController {
 					Map<Integer, String> map = myDataController.getGame().getPlayer(playerId2).getKeyMap();
 					System.out.println("map");
 
-					Map<String, Integer> map2 = new HashMap<String, Integer>();
+					HashMap<String, Integer> map2 = new HashMap<String, Integer>();
 					System.out.println("map");
 
 					for(Integer K : map.keySet()){

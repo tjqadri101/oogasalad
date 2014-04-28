@@ -35,7 +35,7 @@ public class AnimationManager {
 		Enumeration<String> keys = myAnimationResources.getKeys();
 		while (keys.hasMoreElements()) {
 			String key = keys.nextElement();
-			myImageMappings.put(key, "engine/" + myAnimationResources.getString(key));
+			myImageMappings.put(key, SaladConstants.DEFAULT_ENGINE_PACKAGE + myAnimationResources.getString(key));
 		}
 	}
 	/**
