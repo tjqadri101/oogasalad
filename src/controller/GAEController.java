@@ -218,13 +218,66 @@ public class GAEController {
 		modifyPlayerRegRemove(playerID);
 	}
 
+
+
 	public void modifyPlayerImmortal(int ID){
 		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
 				SaladConstants.IMMORTAL + SaladConstants.SEPARATOR+SaladConstants.IMMORTAL;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	
+	/**
+	 * Modify an object to enable it stand another. 
+	 * 
+	 * @param victimCollisionID
+	 * @param stayOnObject
+	 * @param hitterCollID
+	 * @param direction
+	 */
 
+	public void modifyCollisionBehaviorToStayOnObject(int victimCollisionID, String stayOnObject, int hitterCollID, String direction){
+		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+victimCollisionID+SaladConstants.SEPARATOR + 
+				SaladConstants.STAY_ON_OBJECT + SaladConstants.SEPARATOR + stayOnObject + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR + 
+				direction;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+	/**
+	 * Modify and object to enable it rebound off of another.  
+	 * 
+	 * @param victimCollisionID
+	 * @param rebound
+	 * @param hitterCollID
+	 * @param direction
+	 */
+	public void modifyCollisionBehaviorToRebound(int victimCollisionID, String rebound, int hitterCollID, String direction){
+		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
+				SaladConstants.REBOUND + SaladConstants.SEPARATOR + rebound + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR + 
+				direction;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+	 * Modify an object such that it dies on colliding with a tile. 
+	 * 
+	 * @param victimCollisionID
+	 * @param killedByTile
+	 * @param collID
+	 * @param direction
+	 */
+	public void modifyCollisionBehaviorToDieByTile(int victimCollisionID, String killedByTile, char collID, String direction){
+		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
+				SaladConstants.KILL_BY_TILE + SaladConstants.SEPARATOR + killedByTile + SaladConstants.SEPARATOR + collID + SaladConstants.SEPARATOR + 
+				direction;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
+	
 	/**
 	 * Modify player by making it immortal without providing player id. The already specified playerID is used.
 	 */
@@ -831,6 +884,19 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	/**
+	 * Sets a level's initial scene
+	 * 
+	 * @param levelID
+	 * @param sceneID
+	 */
+	public void setInitialScene(int levelID, int sceneID){
+		String order = SaladConstants.MODIFY_LEVEL + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + 
+				SaladConstants.SET_INITIAL_SCENE + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + sceneID;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	public void switchScene(int levelID, int sceneID){
 		String order = SaladConstants.SWITCH_SCENE + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+levelID+SaladConstants.SEPARATOR + 
 				SaladConstants.ID + SaladConstants.SEPARATOR+sceneID;
@@ -1032,10 +1098,17 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	public void modifyTriggerEventManagerTime(int eventTriggerPairID, int time){
+	/**
+	 * Trigger event manager using time
+	 * 
+	 * @param eventTriggerPairID
+	 * @param triggerByTime
+	 * @param time
+	 */
+	public void modifyTriggerEventManagerTime(int eventTriggerPairID, String triggerByTime, int time){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.SET_TRIGGER_BY_TIME + SaladConstants.SEPARATOR 
-				+ SaladConstants.SET_TRIGGER_BY_TIME  + SaladConstants.SEPARATOR + time;
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_TIME + SaladConstants.SEPARATOR 
+				+ triggerByTime  + SaladConstants.SEPARATOR + time;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

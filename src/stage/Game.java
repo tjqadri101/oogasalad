@@ -352,9 +352,7 @@ public class Game {
             answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
         }
         
-        for(String s: answer){
-        	System.out.println("answer "+s); 
-        }
+
         for (int playerID: myPlayerMap.keySet()){
             answer.addAll(myPlayerMap.get(playerID).getAttributes());	
         }
