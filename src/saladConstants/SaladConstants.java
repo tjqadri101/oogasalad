@@ -187,7 +187,8 @@ public final class SaladConstants {
 	public static final String NULL = "null";
 	public static final int NUM_SIDE_DETECTORS = 4;
 
-	
+	public static final String LEVEL_DONE = "LevelDone";
+	public static final String SCENE_DONE = "SceneDone";
 
 
 	
