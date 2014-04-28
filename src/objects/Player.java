@@ -37,6 +37,7 @@ public class Player extends GameObject {
 		myKeyMap = new HashMap<Integer, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
+
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, 
 		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 		myTEManager = new TriggerEventManager();
