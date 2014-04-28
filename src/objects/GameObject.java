@@ -358,10 +358,10 @@ public abstract class GameObject extends JGObject {
 		myActionManager.die();
 	}
 
-	// public void bounce(){
-	// xspeed *= -1;
-	// yspeed *= -1;
-	// }
+	 public void bounce(){
+		 xspeed *= -1;
+		 yspeed *= -1;
+	 }
 
 	public void stop() {
 		setSpeed(0);
