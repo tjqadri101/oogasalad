@@ -1,13 +1,13 @@
 package engineManagers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import objects.GameObject;
+import objects.SideDetector;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
@@ -38,44 +38,40 @@ public class TriggerEventManager {
         myEventMap = new HashMap<Integer, List<Object>>();
         myAttributes = new ArrayList<>();
     }
+    
     /**
-     * Called by Collision and TileCollision when the trigger is collision
+     * Called by Collision when the trigger is collision
      */
     public void updateCollision(String collisionBehavior, GameObject myObject, GameObject hitter){
 //        List<Object> actual = new ArrayList();
+        GameObject hitterObj= checkIfSideDetectorColid(hitter);
+        GameObject victimObj= checkIfSideDetectorColid(myObject);
         for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
             List<Object> collisionPara = entry.getValue();
-            if (compareParameters(collisionPara,collisionBehavior,myObject,hitter)){
+            if (compareParameters(collisionPara,collisionBehavior,victimObj,hitterObj)){
+                doEvent(myEngine,entry.getKey());
+            }
+        }
+    }
+    
+    /**
+     * Called by TileCollision when the trigger is TileCollision
+     */
+    public void updateCollision(String collisionBehavior, GameObject myObject, Integer tilecid){
+        GameObject victimObj= checkIfSideDetectorColid(myObject);
+        for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
+            List<Object> collisionPara = entry.getValue();
+            if (compareParameters(collisionPara,collisionBehavior,victimObj,tilecid)){
                 doEvent(myEngine,entry.getKey());
             }
         }
     }
     
     /** 
-     * Called from main loop to compare parameters
-     */
-    private boolean compareParameters (List<Object> collisionPara,
-                                       String collisionBehavior,
-                                       GameObject myObject,
-                                       GameObject hitter) {
-        if((collisionPara.get(0).equals(collisionBehavior))&&collisionPara.get(1).equals(myObject)
-                &&collisionPara.get(2).equals(hitter)){
-            return true;
-        }
-        return false;
-    }
-    /**
-     * Called by Collision and TileCollision when the trigger is collision
-     */
-    public void updateCollision(String collisionBehavior, GameObject myObject, int tilecid){
-        
-    }
-    
-    /** 
      * Called by engine in the doFrame
      */
-    public void checkTrigger (GameEngine myEngine) {
-        this.myEngine = myEngine;
+    public void checkTrigger (GameEngine engine) {
+        myEngine = engine;
         for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
             int etPairID = entry.getKey();
             List<Object> triggerList = entry.getValue();
@@ -99,6 +95,31 @@ public class TriggerEventManager {
                 .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                            + SaladConstants.OBJECT_BEHAVIOR);
         SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, DO_EVENT, myEngine);
+    }
+
+    /** 
+     * Called to test if sideDetector
+     */
+    protected GameObject checkIfSideDetectorColid (GameObject object){
+        if (object instanceof SideDetector){
+                SideDetector detector = (SideDetector) object;
+                return detector.getParent();
+        }
+        return object;
+    }
+
+    /** 
+     * Called from main loop to compare parameters
+     */
+    private boolean compareParameters (List<Object> collisionPara,
+                                       String collisionBehavior,
+                                       GameObject myObject,
+                                       Object hitter) {
+        if((collisionPara.get(0).equals(collisionBehavior))&&collisionPara.get(1).equals(myObject)
+                &&collisionPara.get(2).equals(hitter)){
+            return true;
+        }
+        return false;
     }
 
     public void setEventOrTriggerBehavior (int etPairID, String behaviorName, Object ... args) {
