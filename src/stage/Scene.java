@@ -19,7 +19,6 @@ import util.SaladUtil;
  * @author Main Justin (Zihao) Zhang
  * @contribution David Chou
  * @contribution (for tiles) Shenghan Chen
- * @contribution (for trigger) Steve (Siyang) Wang
  */
 
 public class Scene {
@@ -35,12 +34,6 @@ public class Scene {
 	protected int myFieldYSize;
 	protected Map<Integer, NonPlayer> myObjectMap;
 	protected String[] myTiles;
-	
-	   protected String myTrigger;
-	        protected boolean myTriggerFlag;
-	        protected List<Object> myTriggerParameter;
-	        protected List<Object> myEventParameter;
-	        protected String myEvent;
             
 	
 	public Scene(int id) {
@@ -213,57 +206,6 @@ public class Scene {
 		answer.add(tiles);
 		return answer;
 	}
-	
-	/**
-         * Used for triggerManager to inspect the trigger
-         * @return Trigger
-         */
-        public String getTrigger(){
-                return myTrigger;
-        }        
-
-        /**
-         * Used for triggerManager to checkTrigger at each doFrame in engine
-         * @return Trigger
-         */
-        public boolean checkTrigger(GameEngine myEngine){
-                if (myTrigger == null) return false;
-                ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
-                Object answer = SaladUtil.behaviorReflection(behaviors, myTrigger, myTriggerParameter, "checkTrigger", myEngine);
-                myTriggerFlag = (boolean) answer;
-                return myTriggerFlag;
-        }       
-        
-        /**
-         * Used for triggerManager to inspect the trigger
-         * @return Trigger
-         */
-        public String getEvent(){
-                return myEvent;
-        }  
-        
-        /**
-         * Used for triggerManager to checkTrigger at each doFrame in engine
-         * @return Trigger
-         */
-        public void doEvent(GameEngine myEngine){
-            try{
-                ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
-                SaladUtil.behaviorReflection(behaviors, myEvent, myEventParameter, "doEvent", myEngine);
-            }
-            catch(Exception e){
-                e.printStackTrace(); // shall not reach here
-            }
-        }
-        
-        /**
-         * Used for to set events for specific object
-         * @return Trigger
-         */
-        public void setTriggerAndEvent(Object ... args){
-            //unimplemented
-//                myTrigger
-        }
 	
 	/*@Siyang 
 	 * Public method added for testing only. 
