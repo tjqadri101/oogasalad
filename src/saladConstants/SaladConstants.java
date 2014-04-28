@@ -150,6 +150,7 @@ public final class SaladConstants {
 	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
 	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
 	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
+	public static final String SET_TRANSITION_BLOOD = "SetTransitionBlood";
 
 	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
 	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
