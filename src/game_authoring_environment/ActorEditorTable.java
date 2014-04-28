@@ -172,6 +172,23 @@ public class ActorEditorTable extends PanelTable{
 		});		
 		myTableModel.addRow(fourthRow);
 		classMap.put(3,fourthRow[1]);
+		final JTextField tf1 = new JTextField();
+		Object[] fifthRow = {"Speed (X,Y)", tf1}; // each row should be in this format
+		tf1.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(tf1.getText());
+				String input = tf1.getText().toString();
+				String delim = ",";
+				String[] list = input.split(delim);
+				if(list.length == 2);{
+					gController.modifyActorSpeedNoID(Double.parseDouble(list[0]), Double.parseDouble(list[1]));
+				}
+		}			
+		});
+
+		myTableModel.addRow(fifthRow); // actually adding to the table
+		classMap.put(4,fifthRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)		
 
 
 	}

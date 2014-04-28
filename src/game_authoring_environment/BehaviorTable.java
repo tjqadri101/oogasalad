@@ -6,6 +6,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.GAEController;
@@ -30,8 +31,8 @@ public class BehaviorTable extends PanelTable {
 
 	@Override
 	void init() {
-
-		final JTextField tf = new JTextField();
+		
+/*		final JTextField tf = new JTextField();
 		Object[] firstRow = {"Collision ID", tf}; // each row should be in this format
 		tf.addActionListener(new ActionListener(){
 			@Override
@@ -58,8 +59,8 @@ public class BehaviorTable extends PanelTable {
 			}
 		});		
 		myTableModel.addRow(secondRow);
-		classMap.put(1,secondRow[1]);
-		
+		classMap.put(1,secondRow[1]);*/
+	
 		
 		
 	}

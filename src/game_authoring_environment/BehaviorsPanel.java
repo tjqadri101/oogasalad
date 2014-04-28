@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import objects.NonPlayer;
 import controller.GAEController;
 
 public class BehaviorsPanel extends Panel {
@@ -43,7 +44,7 @@ public class BehaviorsPanel extends Panel {
 		this.setLayout(new BorderLayout());
 		this.add(new JScrollPane(mySubPanel),BorderLayout.NORTH);
 		//this.add(createKeySetButton(),BorderLayout.SOUTH);
-		//this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
+		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 
 	}
 
@@ -130,6 +131,12 @@ public class BehaviorsPanel extends Panel {
 		myTable = new BehaviorTable(gController);
 		return myTable;
 	}
-
-
+	public void createCollisionPanel(){
+		JPanel myPanel = new JPanel();
+		Map<Integer, NonPlayer> mapofNonPlayers = gController.getMapOfPlayers();
+		for(Integer i : mapofNonPlayers.keySet()){
+			System.out.println(i);
+		}
+	}
+	
 }

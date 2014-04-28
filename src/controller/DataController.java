@@ -1,10 +1,14 @@
 package controller;
 
 import imagebuffer.ImageBuffer;
+
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
 import javax.xml.parsers.ParserConfigurationException;
 
+import objects.NonPlayer;
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
@@ -151,4 +155,10 @@ public class DataController {
 		myGameEngine.reviveObject();
 	}
 	
+	
+	//kat needs these methods:
+	public Map<Integer, NonPlayer> getMapOfPlayers(int sceneID){
+		Map<Integer, NonPlayer> nonPlayerMap = myGame.getLevel(getCurrentLevelID()).getScene(sceneID).getObjectMap();
+		return nonPlayerMap;
+	}
 }

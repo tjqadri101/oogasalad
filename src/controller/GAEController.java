@@ -30,6 +30,8 @@ import javax.swing.plaf.LayerUI;
 
 
 
+
+import objects.NonPlayer;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
@@ -65,7 +67,7 @@ public class GAEController {
 		createScene(1,0);
 		switchScene(1,0);
 		//uploadImage(100,100,)
-		//	modifyGravityMagnitude(0);
+		modifyGravityMagnitude((double)0);
 		createPlayer(playerID, null, 100, 100, 100, 100, "Default", 0, 1);
 
 
@@ -1256,6 +1258,11 @@ public class GAEController {
 		for(char tileID :myDataController.getGame().getOccupiedTileColids()){
 			this.modifyCollisBehavStayOnTile(actorColID, tileID, "All");
 		}
+	}
+	
+	public Map<Integer, NonPlayer> getMapOfPlayers(){
+		Map<Integer, NonPlayer> map = myDataController.getMapOfPlayers(selectedSceneID);
+		return map;
 	}
 
 }
