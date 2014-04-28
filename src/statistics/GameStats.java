@@ -31,7 +31,7 @@ public class GameStats {
 	
 	public static void update(String statToChange, int amount){
 		getStatsObject(statToChange).changeStat(amount);
-		System.out.println("updating: " + statToChange + " by " + amount);
+//		System.out.println("updating: " + statToChange + " by " + amount);
 	}
 	
 	public static void set(String statToSet, int amount){
