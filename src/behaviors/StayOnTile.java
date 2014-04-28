@@ -24,8 +24,6 @@ public class StayOnTile extends TileCollision {
 	@Override
 	public void collide(List<Object> objects) {
 		myObject.ground();
-		System.out.println("StayOnTile: " + objects.get(0));
-		System.out.println("StayOnTile: " + objects.get(1));
 		updateManagers((Integer) objects.get(0));
 	}
 
