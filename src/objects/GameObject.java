@@ -28,6 +28,7 @@ public abstract class GameObject extends JGObject {
 	protected RevivalManager myRevivalManager;
 	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
+
 	protected AnimationManager myAnimationManager;
 
 	protected int myXSize;

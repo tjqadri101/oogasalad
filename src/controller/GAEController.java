@@ -60,8 +60,8 @@ public class GAEController {
 		g = new GAE(this);
 		setUpVariables();
 		createLevel(1);
-		createScene(0,1);
-		switchScene(0,1);
+		createScene(1,0);
+		switchScene(1,0);
 
 
 	}
