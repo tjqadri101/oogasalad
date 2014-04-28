@@ -68,7 +68,7 @@ public class ActorEditorTable extends PanelTable{
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result == JOptionPane.OK_OPTION) {
-							gController.modifyActorRegMoveNoID(Integer.parseInt(xSpeed.getText()), Integer.parseInt(ySpeed.getText()));
+							gController.modifyActorRegMoveNoID(Double.valueOf(xSpeed.getText()), Double.valueOf(ySpeed.getText()));
 
 						}
 
