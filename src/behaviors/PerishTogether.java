@@ -3,6 +3,8 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
+import saladConstants.SaladConstants;
+import statistics.GameStats;
 /**
  * No parameters needed
  * 
@@ -23,5 +25,6 @@ public class PerishTogether extends Collision{
 		GameObject hitter = (GameObject) objects.get(0);
 		updateManagers(hitter);
 		hitter.die();
+		GameStats.update(SaladConstants.ENEMY_KILLED, 1);
 	}
 }

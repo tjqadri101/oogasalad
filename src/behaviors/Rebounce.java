@@ -3,16 +3,14 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
-import saladConstants.SaladConstants;
-import statistics.GameStats;
 /**
- * No parameters needed
- * 
+ * Only the hitter rebounces while hitting the victim
+ * The hitter cannot be a player
  * @author Main Justin (Zihao) Zhang
  */
-public class Eliminate extends Collision{
+public class Rebounce extends Collision{
 
-	public Eliminate(GameObject o) {
+	public Rebounce(GameObject o) {
 		super(o);
 	}
 
@@ -20,7 +18,6 @@ public class Eliminate extends Collision{
 	public void collide(List<Object> objects) {
 		GameObject hitter = (GameObject) objects.get(0);
 		updateManagers(hitter);
-		myObject.die(); 
-		GameStats.update(SaladConstants.ENEMY_KILLED, 1);
+		hitter.bounce();
 	}
 }
