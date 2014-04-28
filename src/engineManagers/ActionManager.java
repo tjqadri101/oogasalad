@@ -82,7 +82,6 @@ public class ActionManager {
 	 *            : the y speed
 	 */
 	public void setMoveBehavior(String s, Object... args) {
-	    System.out.println("setMoveBehavior: " + s);
 		myMoveBehavior = s;
 		myMoveParameters = SaladUtil.convertArgsToObjectList(args);
 	}
