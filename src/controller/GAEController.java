@@ -122,6 +122,13 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	
+	public void modifyPlayerToSpreadShoot(int ID, String url, int xSize, int ySize){
+		String order = SaladConstants.MODIFY_PLAYER_IMAGE + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ ID +SaladConstants.SEPARATOR + 
+				SaladConstants.IMAGE + SaladConstants.SEPARATOR+url + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 
 	/**
 	 * Modify player's image without providing player id. The already specified player ID is used.
@@ -850,6 +857,80 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	/**
+	 * Sets the tile collision score 
+	 * 
+	 * @param scoreChange
+	 * @param tileCollision
+	 * @param victimCollID
+	 * @param tileCollID
+	 */
+	public void modifyScoreManagerTileCollisionScore(int scoreChange, String tileCollision, int victimCollID, char tileCollID){ 
+		String order = SaladConstants.MODIFY_SCORE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_TILE_COLLISION_SCORE + 
+				SaladConstants.SEPARATOR + scoreChange + SaladConstants.SEPARATOR + tileCollision + SaladConstants.SEPARATOR +
+				victimCollID + SaladConstants.SEPARATOR + tileCollID; 
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+	 * Sets a Level's transition score 
+	 * 
+	 * @param scoreChange
+	 * @param levelDone
+	 * @param oldLevel
+	 */
+	public void setLevelTransitionScore(int scoreChange, String levelDone, int oldLevel){ 
+		String order = SaladConstants.MODIFY_SCORE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_TRANSITION_SCORE + 
+				SaladConstants.SEPARATOR + scoreChange + SaladConstants.SEPARATOR + levelDone + SaladConstants.SEPARATOR +
+				oldLevel; 
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+	 * Set's a scene's transition score 
+	 * 
+	 * @param scoreChange
+	 * @param sceneDone
+	 * @param oldScene
+	 */	
+	public void setSceneTransitionScore(int scoreChange, String sceneDone, int oldScene){ 
+		String order = SaladConstants.MODIFY_SCORE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_TRANSITION_SCORE + 
+				SaladConstants.SEPARATOR + scoreChange + SaladConstants.SEPARATOR + sceneDone + SaladConstants.SEPARATOR +
+				oldScene; 
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+	 * Set Level's transition blood 
+	 * 
+	 * @param changeBlood
+	 * @param levelDone
+	 * @param oldLevel
+	 */
+	public void SetLevelTransitionBlood(int changeBlood, String levelDone, int oldLevel){ 
+		String order = SaladConstants.MODIFY_BLOOD_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_TILE_COLLISION_BLOOD + SaladConstants.SEPARATOR 
+				+ changeBlood + SaladConstants.SEPARATOR + levelDone + SaladConstants.SEPARATOR + oldLevel; 
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+	 * Set scene's transition blood 
+	 * 
+	 * @param changeBlood
+	 * @param sceneDone
+	 * @param oldScene
+	 */
+	public void SetSceneTransitionBlood(int changeBlood, String sceneDone, int oldScene){ 
+		String order = SaladConstants.MODIFY_BLOOD_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_TILE_COLLISION_BLOOD + SaladConstants.SEPARATOR 
+				+ changeBlood + SaladConstants.SEPARATOR + sceneDone + SaladConstants.SEPARATOR + oldScene; 
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	// prevStage e.g. Level1, Scene1.
 	// newStage e.g. Level2, Scene2
 	public void modifyScoreManagerTransitionScore(int score, String prevStage, String newStage){
@@ -873,6 +954,8 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	
+	
 	
 	public void modifyBloodManagerHitter(int score, int changeBlood, int victimColID, int hitterColID){
 		String order = SaladConstants.MODIFY_BLOOD_MANAGER + SaladConstants.SEPARATOR +  SaladConstants.SET_COLLISION_BLOOD + 
@@ -978,6 +1061,14 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	
+	public void modifyGameName(String name){
+		String order = SaladConstants.MODIFY_GAME + SaladConstants.SEPARATOR + SaladConstants.SET_NAME + SaladConstants.SEPARATOR +  name ;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
 	// GAE funtions below. NOT orders sending to DataController
 
 	/**
