@@ -5,6 +5,12 @@ import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+/**
+ * The Panel factory where every panel is created. Using factory pattern.
+ * 
+ * @author Nick Pengyi Pan
+ * 
+ * */
 public abstract class Panel extends JPanel{
 	
 	private PanelType type = null;

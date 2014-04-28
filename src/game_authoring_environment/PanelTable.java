@@ -142,17 +142,7 @@ public abstract class PanelTable extends JTable{
 		  }
 	}
 	
-	public JPanel createOptionInputPanel(JTextField[] textAreas, String[] titles){
-		JPanel myPanel = new JPanel();
-		for(int i=0; i<textAreas.length; i++){
-			myPanel.add(new JLabel(titles[i]));
-			myPanel.add(textAreas[i]);
-			myPanel.add(Box.createHorizontalStrut(15));
-			
-		}
-		
-		return myPanel;
-	}
+
 
 	
 }

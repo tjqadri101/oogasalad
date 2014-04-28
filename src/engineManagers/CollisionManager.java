@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.Set;
 
+import objects.GameObject;
 import objects.SideDetector;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
@@ -15,7 +17,7 @@ import util.SaladUtil;
 /**
  * Intended to manage all collision behaviors between objects and objects, objects and tiles
  * @author Main Justin (Zihao) Zhang
- * @contribution Shenghan Chen
+ * @contribution (set directional collision) Shenghan Chen
  *
  */
 public class CollisionManager {
@@ -60,9 +62,51 @@ public class CollisionManager {
 	 * @param hitterColid
 	 * @return Object list
 	 */
-	public List<Object> getCollisionBehavior(int victimColid, int hitterColid){
+	protected List<Object> getCollisionBehavior(int victimColid, int hitterColid){
 		String pair = victimColid + SaladConstants.SEPARATOR + hitterColid;
 		return myCollisionMap.get(pair);
+	}
+	
+	/**
+	 * Called by Game Object to do collision with other Game Object
+	 * @param behaviors
+	 * @param victim
+	 * @param hitter
+	 */
+	public void hitObject(ResourceBundle behaviors, GameObject victim, GameObject hitter){
+		List<Object> parameters = SaladUtil.copyObjectList(
+				getCollisionBehavior(victim.colid, hitter.colid));
+		if (parameters == null) return; 
+		String collisionBehavior = (String) parameters.get(0);
+		parameters.remove(0);
+		parameters.add(0, hitter);
+		SaladUtil.behaviorReflection(behaviors, collisionBehavior,
+				parameters, SaladConstants.COLLIDE, victim);
+	}
+	
+	/**
+	 * Called by Game Object to do collision with tiles
+	 * @param behaviors
+	 * @param victim
+	 * @param tilecid
+	 * @param tx
+	 * @param ty
+	 * @param txsize
+	 * @param tysize
+	 */
+	public void hitTile(ResourceBundle behaviors, GameObject victim, int tilecid, int tx, int ty, int txsize, int tysize){
+		List<Object> parameters = SaladUtil.copyObjectList(
+				getTileCollisionBehavior(victim.colid, tilecid));
+		if (parameters == null) return; 
+		String collisionBehavior = (String) parameters.get(0);
+		parameters.remove(0);
+		parameters.add(tilecid);
+		parameters.add(tx);
+		parameters.add(ty);
+		parameters.add(txsize);
+		parameters.add(tysize);
+		SaladUtil.behaviorReflection(behaviors, collisionBehavior,
+				parameters, SaladConstants.COLLIDE, victim);
 	}
 	
 	/**
@@ -71,7 +115,7 @@ public class CollisionManager {
 	 * @param tileColid
 	 * @return Object list
 	 */
-	public List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
+	protected List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
 		String pair = victimColid + SaladConstants.SEPARATOR + tileColid;
 		return myTileCollisionMap.get(pair);
 	}

@@ -5,16 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import objects.GameObject;
 import objects.Player;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
- * Manage the overall lives of the Players throughout the whole Game
+ * Manage the overall lives and change of the lives for the Players throughout the whole Game
  * @author Main Justin (Zihao) Zhang
  *
  */
-public class LiveManager {
+public class LiveManager extends StatisticsManager {
 	
 	public static final int DEFAULT_INITIAL_LIVES = 5;
 	public static final int DEFAULT_NULL_LIVES = 0;
@@ -51,6 +52,9 @@ public class LiveManager {
 		myRestore = ifRestore;
 	}
 
+	/**
+	 * Called by engine to update live while finishing a level
+	 */
 	public void updateLevelDoneLives(){
 		if(myRestore){ restore(); }
 	}
@@ -78,5 +82,30 @@ public class LiveManager {
 		}
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_BLOOD_MANAGER, SaladConstants.RESTORE_LIFE_BY_LEVEL, myRestore));
 		return answer;
+	}
+
+	@Override
+	public void update(String info, GameObject victim, GameObject hitter) {
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
+				info, victim.colid, hitter.colid);
+		if(!myMap.containsKey(condition)) return;
+		if(hitter instanceof Player){
+			Player p = (Player) hitter;
+			int changeLive = myMap.get(condition);
+			int finalLive = myCurrentLifeMap.get(p) + changeLive;
+			myCurrentLifeMap.put(p, finalLive);	
+		}
+	}
+	
+	public void update(String info, GameObject victim, int tileColid){
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
+				info, victim.colid, tileColid);
+		if(!myMap.containsKey(condition)) return;
+		if(victim instanceof Player){
+			Player p = (Player) victim;
+			int changeLive = myMap.get(condition);
+			int finalLive = myCurrentLifeMap.get(p) + changeLive;
+			myCurrentLifeMap.put(p, finalLive);	
+		}
 	}
 }

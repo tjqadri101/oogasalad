@@ -637,7 +637,7 @@ public class GameEngine extends StdGame {
 		 loadImage(imgfile);
 		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				 name, colid, lives, myGame.getCollisionManager(),
-				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
+				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
 		 myGame.setPlayer(object);
 		 myPlayer = object;
 		 if (isPlaying) {object.resume();}
@@ -650,7 +650,7 @@ public class GameEngine extends StdGame {
 		 loadImage(imgfile);
 		 NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				 ypos, name, colid, lives, myGame.getCollisionManager(),
-				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
+				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
 		 if (isPlaying) {object.remove();}
 		 return object;

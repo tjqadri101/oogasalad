@@ -15,6 +15,12 @@ import javax.swing.JScrollPane;
 
 import controller.GAEController;
 
+/**
+ * The panel where you can add/delete/select scenes. Extends Penel.
+ * 
+ * @author Nick Pengyi Pan
+ * 
+ * */
 public class ScenePanel extends Panel{
 	
 	private SubPanel mySubPanel;
@@ -42,6 +48,9 @@ public class ScenePanel extends Panel{
 		this.add(new JScrollPane(myScenesList),BorderLayout.CENTER);
 	}
 
+	/**
+	 * Make the actor list within the panel.
+	 * */
 	private void makeSceneList() {
 		myScenesList = new JList();
 		myScenesList.setModel(listModel);
@@ -67,10 +76,20 @@ public class ScenePanel extends Panel{
 		
 	}
 	
+	/**
+	 * Switch to the scene that the user selected
+	 * @param null
+	 * @return null
+	 * */
 	private void switchToScene() {
-		gController.switchScene(1, getSelectedSceneID());// TODO!!!!! need to add variation to level, currently all 1		
+		gController.switchScene(gController.getCurrentLevelID(), getSelectedSceneID());	
 	}
 
+	/**
+	 * Make the sub panel at the top where the buttons exist
+	 * @param null
+	 * @return null
+	 * */
 	@Override
 	protected void makeSubPanel() {
 		mySubPanel = (SubPanel) ViewFactory.buildPanel(PanelType.SUB,gController);
@@ -79,6 +98,11 @@ public class ScenePanel extends Panel{
 		mySubPanel.construct();
 	}
 
+	/**
+	 * Make the sub panel items. Two buttons: Add/Delete and set the listener for each of them
+	 * @param null
+	 * @return JComponent
+	 * */
 	@Override
 	protected JComponent makeSubPanelItems() {
 		JPanel outPanel = new JPanel();
@@ -106,6 +130,11 @@ public class ScenePanel extends Panel{
 		return outPanel;
 	}
 	
+	/**
+	 * Create new scene. Called when the user click the Add button.
+	 * @param null
+	 * @return null
+	 * */
 	private void addScene(){		
 			listModel.addElement("Scene " + mySceneCount);
 			//add scene here
@@ -115,15 +144,25 @@ public class ScenePanel extends Panel{
 		
 	}
 	
+	/**
+	 * Delete the current selected scene. Called when the user clicks Delete button.
+	 * @param null
+	 * @return null
+	 * */
 	private void deleteScene(){		
 		if(mySelectedIndex > 0){
 			//delete scene here			
-			gController.deleteScene(1,getSelectedSceneID());// level ID = 1 here is hardcoded, need to modify later
+			gController.deleteScene(gController.getCurrentLevelID(),getSelectedSceneID());
 			listModel.remove(mySelectedIndex);
 			mySelectedIndex = -1;
 		}		
 	}
 	
+	/**
+	 * Get the selected scene ID in the table.
+	 * @param null
+	 * @return selected actor ID
+	 * */
 	private int getSelectedSceneID(){
 		String sceneName = listModel.get(mySelectedIndex);
 		int sceneID = Integer.parseInt(sceneName.split(" ")[sceneName.split(" ").length-1]);

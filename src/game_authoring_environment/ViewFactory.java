@@ -5,11 +5,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -60,6 +64,16 @@ public class ViewFactory {
 		//Add the scroll pane to this panel.
 		return scrollPane;
 	}
+	public static JPanel createOptionInputPanel(JTextField[] textAreas, String[] titles){
+		JPanel myPanel = new JPanel();
+		for(int i=0; i<textAreas.length; i++){
+			myPanel.add(new JLabel(titles[i]));
+			myPanel.add(textAreas[i]);
+			myPanel.add(Box.createHorizontalStrut(15));
+			
+		}
 		
+		return myPanel;
+	}
 	
 }
