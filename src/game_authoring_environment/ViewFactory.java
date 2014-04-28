@@ -64,7 +64,7 @@ public class ViewFactory {
 		//Add the scroll pane to this panel.
 		return scrollPane;
 	}
-	public static JPanel createOptionInputPanel(JTextField[] textAreas, String[] titles){
+	public static JPanel createOptionInputPanel(JComponent[] textAreas, String[] titles){
 		JPanel myPanel = new JPanel();
 		for(int i=0; i<textAreas.length; i++){
 			myPanel.add(new JLabel(titles[i]));
