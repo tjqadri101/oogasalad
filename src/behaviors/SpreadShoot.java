@@ -60,9 +60,9 @@ public class SpreadShoot extends Shootable{
 		shootYSpeed = myObject.ydir*shootSpeed;
 		
 		for(int i = 0; i < times; i ++){
-			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos+20*i, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
+			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 			object.expiry = object.expire_off_view;
-			object.setSpeed(shootXSpeed, shootYSpeed);	
+			object.setSpeed(shootXSpeed*(-times/2 + i), shootYSpeed*(-times/2 + i));	
 			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 		}
 	}
