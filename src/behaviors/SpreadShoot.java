@@ -27,8 +27,8 @@ public class SpreadShoot extends Shootable{
 	@Override
 	public void shoot(List<Object> objects) {
 		GameEngine engine = (GameEngine) myObject.eng;
-		double xface = myObject.xdir * myObject.xspeed;
-		double yface = myObject.ydir * myObject.yspeed;
+//		double xface = myObject.xdir * myObject.xspeed;
+//		double yface = myObject.ydir * myObject.yspeed;
 		
 		String imageName = (String) objects.get(0);
 		int xsize = (Integer) objects.get(1);
@@ -38,19 +38,19 @@ public class SpreadShoot extends Shootable{
 		int times = (Integer) objects.get(5);
 		
 		double shootXSpeed, shootYSpeed, xpos, ypos;
-		if(xface < 0){
+		if(myObject.xdir < 0){
 			xpos = myObject.x - xsize;
 		}
-		else if (xface > 0){
+		else if (myObject.xdir > 0){
 			xpos = myObject.x + myObject.getXSize();
 		}
 		else{
 			xpos = myObject.x + myObject.getXSize()/2;
 		}
-		if(yface < 0){
+		if(myObject.ydir < 0){
 			ypos = myObject.y - ysize;
 		}
-		else if (yface > 0){
+		else if (myObject.ydir > 0){
 			ypos = myObject.y + myObject.getYSize(); 
 		}
 		else{
@@ -62,7 +62,12 @@ public class SpreadShoot extends Shootable{
 		for(int i = 0; i < times; i ++){
 			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 			object.expiry = object.expire_off_view;
-			object.setSpeed(shootXSpeed*(-times/2 + i), shootYSpeed*(-times/2 + i));	
+			if(myObject.xdir == 0){
+				object.setSpeed(shootXSpeed*(-times/2 + i), shootYSpeed);					
+			}
+			else{
+				object.setSpeed(shootXSpeed, shootYSpeed*(-times/2 + i));	
+			}	
 			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 		}
 	}

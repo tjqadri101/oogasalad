@@ -88,7 +88,9 @@ public class LiveManager extends StatisticsManager {
 	 */
 	protected void restore(){
 		for(Player o: myPlayerMap.values()){
-			GameStats.update(o.getName() + " Live", myInitLifeMap.get(o) - myCurrentLifeMap.get(o));
+			if(myCurrentLifeMap.containsKey(o)){
+				GameStats.update(o.getName() + " Live", myInitLifeMap.get(o) - myCurrentLifeMap.get(o));
+			}
 			myCurrentLifeMap.put(o, myInitLifeMap.get(o));
 		}
 	}

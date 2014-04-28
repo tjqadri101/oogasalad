@@ -67,7 +67,6 @@ public class GameEngine extends StdGame {
 		isEditingMode = editing;
 		isLoading = true;
 		isPlaying = editing;
-		myStatsController = new StatsController(this, myGame.getName());
 	}
 
 	@Override
@@ -612,6 +611,7 @@ public class GameEngine extends StdGame {
 
 	 public void setGame(Game mygame) {
 		 myGame = mygame;
+		 myStatsController = new StatsController(this, myGame.getName());
 	 }
 
 	 public Game getGame() {
@@ -638,8 +638,8 @@ public class GameEngine extends StdGame {
 
 	 
 	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
-		 loadImage(imgfile);
-		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
+//		 loadImage(imgfile);
+//		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
 
 
