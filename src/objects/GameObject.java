@@ -10,6 +10,7 @@ import saladConstants.SaladConstants;
 import statistics.GameStats;
 import engineManagers.*;
 import util.AttributeMaker;
+import util.SaladUtil;
 import engineManagers.CollisionManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
@@ -426,13 +427,16 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void updateManagers(Object ... args){
-		System.out.println("GameObject updateManagers called ");
-		if(args.length == 3){
-			Reflection.callMethod(myScoreManager, "update", args);
-			Reflection.callMethod(myBloodManager, "update", args);
-			Reflection.callMethod(myLiveManager, "update", args);
-			Reflection.callMethod(myEventManager, "updateCollision", args);
-		}
+		Reflection.callMethod(myScoreManager, "update", args);
+		Reflection.callMethod(myBloodManager, "update", args);
+		Reflection.callMethod(myLiveManager, "update", args);
+		Reflection.callMethod(myEventManager, "update", args);
+//		if(order.startsWith(SaladConstants.COLLISION) || order.startsWith(SaladConstants.TILE_COLLISION)){
+//			Reflection.callMethod(myScoreManager, "update", args);
+//			Reflection.callMethod(myBloodManager, "update", args);
+//			Reflection.callMethod(myLiveManager, "update", args);
+//			Reflection.callMethod(myEventManager, "update", args);
+//		}
 	}
 
 	@Override

@@ -109,7 +109,9 @@ public class CollisionManager {
 				parameters, SaladConstants.COLLIDE, victim);
 	}
 	
-//	public void resetColid()
+	public void resetColid(){
+		
+	}
 	
 	/**
 	 * Get the collision behavior between an object and a tile

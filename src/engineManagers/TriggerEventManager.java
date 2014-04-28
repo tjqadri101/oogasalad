@@ -42,7 +42,7 @@ public class TriggerEventManager {
     /**
      * Called by Collision when the trigger is collision
      */
-    public void updateCollision(String collisionBehavior, GameObject myObject, GameObject hitter){
+    public void update(String collisionBehavior, GameObject myObject, GameObject hitter){
         //        List<Object> actual = new ArrayList();
         GameObject hitterObj= checkIfSideDetectorColid(hitter);
         GameObject victimObj= checkIfSideDetectorColid(myObject);
@@ -63,7 +63,7 @@ public class TriggerEventManager {
     /**
      * Called by TileCollision when the trigger is TileCollision
      */
-    public void updateCollision(String collisionBehavior, GameObject myObject, Integer tilecid){
+    public void update(String collisionBehavior, GameObject myObject, Integer tilecid){
         GameObject victimObj= checkIfSideDetectorColid(myObject);
         for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
             List<Object> collisionPara = entry.getValue();
@@ -86,7 +86,7 @@ public class TriggerEventManager {
         myEngine = engine; 
 
         for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
-            System.out.println("aaaaaaaa");
+            System.out.println("TriggerEventManager checkTrigger called: ");
             int etPairID = entry.getKey();
             List<Object> triggerList = entry.getValue();
             if(triggerList.size()!=0){
