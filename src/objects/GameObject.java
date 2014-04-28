@@ -28,6 +28,7 @@ public abstract class GameObject extends JGObject {
 	protected RevivalManager myRevivalManager;
 	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
+	protected TriggerEventManager myTEManager;
 
 	protected AnimationManager myAnimationManager;
 
@@ -43,8 +44,6 @@ public abstract class GameObject extends JGObject {
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
 	protected String myStaticGfxName;
-	protected String myJumpingGfxName;
-	protected String myMovingGfxName;
 	protected List<String> myAttributes;
 	protected String myName;
 	
@@ -56,7 +55,8 @@ public abstract class GameObject extends JGObject {
 	protected GameObject(int uniqueID, String staticGfxName, int xsize,
 			int ysize, double xpos, double ypos, String name, int collisionId,
 			int blood, CollisionManager collisionManager, ScoreManager scoreManager, 
-			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager) {
+			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager,
+			TriggerEventManager triggerEventManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
 		suspend();
 		resume_in_view = false;
@@ -75,7 +75,8 @@ public abstract class GameObject extends JGObject {
 		myStaticGfxName = staticGfxName;
 		myName = name;
 		myActionManager = new ActionManager(this);
-		myAnimationManager = new AnimationManager();
+		myAnimationManager = new AnimationManager(this);
+		myTEManager = triggerEventManager;
 		initSideDetectors();
 		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.IMAGE, false, myStaticGfxName, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
@@ -370,18 +371,9 @@ public abstract class GameObject extends JGObject {
 		colid = collisionID;
 	}
 
-	public void setJumpingImage(String jumpGfx) {
-		myJumpingGfxName = jumpGfx;
-	}
-
-	public void setMovingImage(String moveGfx) {
-		myMovingGfxName = moveGfx;
-	}
-
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
 		myActionManager.jump();
-//		myAnimationManager.updateImage(this, "Jump") ; //hardcode to be modified later
 	}
 
 	/**
@@ -396,13 +388,6 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
-		if (xspeed > 0) {
-			myAnimationManager.updateImage(this, "FDMove");
-		} else if (xspeed < 0) {
-			myAnimationManager.updateImage(this, "BKMove");
-		} else {
-			setImage(myStaticGfxName);
-		}
 	}
 
 	@Override
@@ -414,7 +399,6 @@ public abstract class GameObject extends JGObject {
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		// myInAirCounter = 0;
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
-		setImage(myStaticGfxName);
 	}
 	
 	@Override
@@ -498,6 +482,10 @@ public abstract class GameObject extends JGObject {
 	public RevivalManager getRevivalManager() {
 		return myRevivalManager;
 	}
+	
+	public TriggerEventManager getTEManager(){
+	        return myTEManager;
+	}
     
     /**
      * @return the myInitX
@@ -510,5 +498,9 @@ public abstract class GameObject extends JGObject {
     public ActionManager getActionManager(){
         return myActionManager;
     }
+
+	public void modifyDynamicImage(String action, String imgfile, int xsize, int ysize) {
+		myAnimationManager.modifyImage(action, imgfile);
+	}
 
 }

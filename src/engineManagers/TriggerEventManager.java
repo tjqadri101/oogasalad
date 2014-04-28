@@ -1,13 +1,13 @@
 package engineManagers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import objects.GameObject;
+import objects.SideDetector;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
@@ -28,21 +28,50 @@ public class TriggerEventManager {
     protected Map<Integer, List<Object>> myTriggerMap;
     protected Map<Integer, List<Object>> myEventMap;
     protected Game myGame;
-    protected List<Class> mySubjectList;
     protected GameEngine myEngine;
     protected Integer myCurrentLevel;
     protected Integer myCurrentScene;
     protected List<String> myAttributes;
 
     public TriggerEventManager () {
-        myGame = myEngine.getGame();
         myTriggerMap = new HashMap<Integer, List<Object>>();
         myEventMap = new HashMap<Integer, List<Object>>();
-        mySubjectList = new ArrayList<>();
         myAttributes = new ArrayList<>();
     }
-
-    public void checkTrigger (GameEngine myEngine) {
+    
+    /**
+     * Called by Collision when the trigger is collision
+     */
+    public void updateCollision(String collisionBehavior, GameObject myObject, GameObject hitter){
+//        List<Object> actual = new ArrayList();
+        GameObject hitterObj= checkIfSideDetectorColid(hitter);
+        GameObject victimObj= checkIfSideDetectorColid(myObject);
+        for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
+            List<Object> collisionPara = entry.getValue();
+            if (compareParameters(collisionPara,collisionBehavior,victimObj,hitterObj)){
+                doEvent(myEngine,entry.getKey());
+            }
+        }
+    }
+    
+    /**
+     * Called by TileCollision when the trigger is TileCollision
+     */
+    public void updateCollision(String collisionBehavior, GameObject myObject, Integer tilecid){
+        GameObject victimObj= checkIfSideDetectorColid(myObject);
+        for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
+            List<Object> collisionPara = entry.getValue();
+            if (compareParameters(collisionPara,collisionBehavior,victimObj,tilecid)){
+                doEvent(myEngine,entry.getKey());
+            }
+        }
+    }
+    
+    /** 
+     * Called by engine in the doFrame
+     */
+    public void checkTrigger (GameEngine engine) {
+        myEngine = engine;
         for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
             int etPairID = entry.getKey();
             List<Object> triggerList = entry.getValue();
@@ -68,6 +97,31 @@ public class TriggerEventManager {
         SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, DO_EVENT, myEngine);
     }
 
+    /** 
+     * Called to test if sideDetector
+     */
+    protected GameObject checkIfSideDetectorColid (GameObject object){
+        if (object instanceof SideDetector){
+                SideDetector detector = (SideDetector) object;
+                return detector.getParent();
+        }
+        return object;
+    }
+
+    /** 
+     * Called from main loop to compare parameters
+     */
+    private boolean compareParameters (List<Object> collisionPara,
+                                       String collisionBehavior,
+                                       GameObject myObject,
+                                       Object hitter) {
+        if((collisionPara.get(0).equals(collisionBehavior))&&collisionPara.get(1).equals(myObject)
+                &&collisionPara.get(2).equals(hitter)){
+            return true;
+        }
+        return false;
+    }
+
     public void setEventOrTriggerBehavior (int etPairID, String behaviorName, Object ... args) {
         List<Object> behaviorParameters = new ArrayList<Object>();
         behaviorParameters.add(behaviorName);
@@ -75,19 +129,21 @@ public class TriggerEventManager {
             behaviorParameters.add(args[i]);
         }
         if (behaviorName.contains(TRIGGER_INDICATOR)) {
-//            String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER,
-//                                                SaladConstants.COLLISION_ID, args[1], args[2], true, args[2]);
             myTriggerMap.put(etPairID, behaviorParameters);
         }
         else {
             myEventMap.put(etPairID, behaviorParameters);
         }
+        String attribute = AttributeMaker.addAttribute(SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER,
+                                                       SaladConstants.COLLISION_ID, etPairID, behaviorName, true, args);
+        myAttributes.add(attribute);
     }
+
 
     public List<String> getAttributes(){
         return myAttributes;
     }
-    
+
     // See if putting same methods together works
     /*
      * public void setEventBehavior(int etPairID, String eventBehavior, Object ... args){
