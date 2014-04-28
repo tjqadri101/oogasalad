@@ -291,7 +291,7 @@ public class GAEController {
 	 * @param magnitude
 	 * @param numJumps
 	 */
-	public void modifyPlayerJumpBehavior(int ID, double magnitude, double numJumps){
+	public void modifyPlayerJumpBehavior(int ID, double magnitude, int numJumps){
 		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
 				SaladConstants.JUMP + SaladConstants.SEPARATOR+SaladConstants.JUMP + SaladConstants.SEPARATOR + magnitude + 
 				SaladConstants.SEPARATOR +  numJumps;
@@ -306,7 +306,7 @@ public class GAEController {
 	 * @param numJumps
 	 */
 	
-	public void modifyPlayerJumpBehaviorNoID( double magnitude, double numJumps){
+	public void modifyPlayerJumpBehaviorNoID( double magnitude, int numJumps){
 		modifyPlayerJumpBehavior(playerID, magnitude, numJumps);
 	}
 	
