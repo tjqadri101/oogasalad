@@ -33,7 +33,7 @@ import engine.GameEngine;
  */
 public class EngineFrame extends JFrame{
 
-	private JPanel myPanel;
+	private EnginePanel myPanel;
 	private JMenuBar myMenuBar;
 
 	private DataController myController;
@@ -42,8 +42,8 @@ public class EngineFrame extends JFrame{
 	public EngineFrame() {
 		myController = new DataController();
 		initializeViewSpecs();
-		addMenu();
 		addPanel();
+		addMenu();
 		finalizeView();
 	}
 
@@ -61,7 +61,7 @@ public class EngineFrame extends JFrame{
 
 
 	private void addMenu() {
-		myMenuBar = new PlayMenuBar(myController);
+		myMenuBar = new PlayMenuBar(myController, myPanel.getEngine());
 		setJMenuBar(myMenuBar);
 	}
 
