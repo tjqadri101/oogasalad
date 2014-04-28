@@ -28,8 +28,6 @@ public class QuickShoot extends Shootable{
 	@Override
 	public void shoot(List<Object> objects) {
 		GameEngine engine = (GameEngine) myObject.eng;
-		double xface = myObject.xdir * myObject.xspeed;
-		double yface = myObject.ydir * myObject.yspeed;
 		
 		String imageName = (String) objects.get(0);
 		int xsize = (Integer) objects.get(1);
@@ -39,24 +37,12 @@ public class QuickShoot extends Shootable{
 		int times = (Integer) objects.get(5);
 		
 		double shootXSpeed, shootYSpeed, xpos, ypos;
-		if(xface < 0){
-			xpos = myObject.x - xsize;
-		}
-		else if (xface > 0){
-			xpos = myObject.x + myObject.getXSize();
-		}
-		else{
-			xpos = myObject.x + myObject.getXSize()/2;
-		}
-		if(yface < 0){
-			ypos = myObject.y - ysize;
-		}
-		else if (yface > 0){
-			ypos = myObject.y + myObject.getYSize(); 
-		}
-		else{
-			ypos = myObject.y + myObject.getYSize()/2;
-		}
+		if(myObject.xdir < 0){ xpos = myObject.x - xsize; }
+		else if (myObject.xdir > 0){ xpos = myObject.x + myObject.getXSize(); }
+		else{ xpos = myObject.x + myObject.getXSize()/2; }
+		if(myObject.ydir < 0){ ypos = myObject.y - ysize; }
+		else if (myObject.ydir > 0){ ypos = myObject.y + myObject.getYSize(); }
+		else{ ypos = myObject.y + myObject.getYSize()/2; }
 		shootXSpeed = myObject.xdir*shootSpeed;
 		shootYSpeed = myObject.ydir*shootSpeed;
 		
