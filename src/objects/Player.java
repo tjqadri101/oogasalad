@@ -37,12 +37,11 @@ public class Player extends GameObject {
 		myKeyMap = new HashMap<Integer, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
-		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, 
-		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
+
+		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
+		myAnimationManager = new AnimationManager(this);
 		myTEManager = new TriggerEventManager();
-		myAnimationManager = new AnimationManager();
-		
-	}
+		}
 	
 	public void setKey(int key, String type){
 		myKeyMap.put(key, type);
@@ -52,7 +51,28 @@ public class Player extends GameObject {
 	public void move(){
 		checkKeys();
 		super.move();
+		if (xspeed > 0) {
+			myAnimationManager.updateImage("FDMove");
+		} else if (xspeed < 0) {
+			myAnimationManager.updateImage("BKMove");
+		} else {
+			setImage(myStaticGfxName);
+		}
 	}
+	
+	@Override
+	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
+		super.hit_bg(tilecid, tx, ty, txsize, tysize);
+		setImage(myStaticGfxName);
+	}
+	
+	@Override
+	public void jump() {
+		if (myIsInAir == 0) { myJumpTimes++; }
+		myActionManager.jump();
+		myAnimationManager.updateImage("Jump") ; //hardcode to be modified later
+	}
+
 	
 	protected void checkKeys(){
 		for(int key: myKeyMap.keySet()){

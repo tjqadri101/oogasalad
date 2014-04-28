@@ -25,14 +25,11 @@ public class BloodManager extends StatisticsManager{
 
 	@Override
 	public void update(String info, GameObject victim, GameObject hitter) {
-		System.out.println("update called");
 		int hitterColid = checkIfSideDetectorColid(hitter);
 		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, victimColid, hitterColid);
-		System.out.println("update: " + condition);
 		if(!myMap.containsKey(condition)) return;
-		System.out.println("BloodManager update collision: " + myMap.get(condition));
 		hitter.changeBlood(myMap.get(condition));
 	}
 	

@@ -67,7 +67,7 @@ public class GameEngine extends StdGame {
 		isEditingMode = editing;
 		isLoading = true;
 		isPlaying = editing;
-		myStatsController = new StatsController(this, "Mario Game");
+		myStatsController = new StatsController(this, myGame.getName());
 	}
 
 	@Override
@@ -634,16 +634,6 @@ public class GameEngine extends StdGame {
 		 object.setStaticGfx(imgfile);//same thing
 		 object.setSize(xsize, ysize);
 		 object.updateImageURL(imgfile);
-	 }
-
-	 public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
-		 loadImage(imgfile);
-		 object.setJumpingImage(imgfile);
-	 }
-
-	 public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
-		 loadImage(imgfile);
-		 object.setMovingImage(imgfile);
 	 }
 
 	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {

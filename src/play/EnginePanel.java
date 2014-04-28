@@ -38,5 +38,9 @@ public class EnginePanel extends JPanel {
 		add(gameEngine, BorderLayout.CENTER);
 		setVisible(true);
 	}
+	
+	public GameEngine getEngine() {
+		return gameEngine;
+	}
 
 }
