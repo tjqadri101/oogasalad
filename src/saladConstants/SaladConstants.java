@@ -66,7 +66,7 @@ public final class SaladConstants {
 	public static final String DIE = "die";
 	public static final String MOVE = "move";
 	public static final String SHOOT = "shoot";
-	public static final String JUMP = "jump";
+	public static final String JUMP = "Jump";
 	public static final String COLLIDE = "collide";
 	public static final String REMOVE = "remove";
 	
@@ -78,6 +78,7 @@ public final class SaladConstants {
 	public static final String REGULAR_MOVE = "RegularMove";
 	public static final String REGULAR_REMOVE = "RegularRemove";
 	public static final String BACK_FORTH_MOVE = "BackForthMove";
+
 	public static final String IMMOBILE = "Immobile";
 	public static final String SLOW_SHOOT = "SlowShoot";
 	public static final String QUICK_SHOOT = "QuickShoot";
@@ -214,6 +215,9 @@ public final class SaladConstants {
 	public static final String LIVE = "Live";
 	public static final String SCORE = "Score";
 	public static final String ENEMY_KILLED = "Enemies Killed";
+	public static final String SLOW_SHOOT_BY_TIME = "SlowShootByTime";
+
+
 
 	
 }
