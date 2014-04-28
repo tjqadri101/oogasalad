@@ -504,5 +504,10 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
+    
+    // Added for the test case
+    public ActionManager getActionManager(){
+        return myActionManager;
+    }
 
 }
