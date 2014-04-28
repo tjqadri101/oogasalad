@@ -398,7 +398,7 @@ public class GAEController {
 						SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + ",CollisionID,"+ colID +  SaladConstants.SEPARATOR + 
 						SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
-		this.modifyCollisBehavStayOnTile(colID, 2, "All");
+		//this.modifyCollisBehavStayOnTile(colID, 2, "All");
 		System.out.println(order);
 	}
 	
