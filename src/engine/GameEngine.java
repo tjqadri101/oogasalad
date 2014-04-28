@@ -11,6 +11,7 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -145,6 +146,7 @@ public class GameEngine extends StdGame {
 	
 	public void doFrameInGame() {
 		doFrameEdit();
+		
 	}
 	
 	public void paintFrameInGame() {
@@ -189,6 +191,7 @@ public class GameEngine extends StdGame {
 				else {lives = current_lives;}
 			}
 		}
+		timer ++; //add by Justin
 	}
 	
 	public void paintFrameEdit() {
