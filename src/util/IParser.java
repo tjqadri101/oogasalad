@@ -49,6 +49,7 @@ public class IParser {
             allAnswer.add(orders[i]); //add key
             i ++;
             while(i < orders.length){
+                    System.out.println("IParser:" + orders[i]);
                     allAnswer.add(orders[i]); //add type
                     typeAnswer.add(orders[i]); //add type to the typeAnswer
                     String type = myDataFormat.getString(orders[i]);
