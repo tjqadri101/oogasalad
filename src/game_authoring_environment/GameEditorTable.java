@@ -189,7 +189,18 @@ public class GameEditorTable extends PanelTable {
 			});	
 		myTableModel.addRow(seventhRow);
 		classMap.put(6,seventhRow[1]);
-
+		
+		final JTextField tf4 = new JTextField();
+		Object[] eighthRow = {"Gravity Magnitude", tf4}; // each row should be in this format
+		tf4.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(tf4.getText());
+				gController.modifyGravityMagnitude(Double.parseDouble(tf4.getText()));
+			}			
+		});
+		myTableModel.addRow(eighthRow);
+		classMap.put(7,eighthRow[1]);
 		}
 	}
 

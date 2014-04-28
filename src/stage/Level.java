@@ -18,8 +18,6 @@ public class Level {
 	protected Map<Integer, Scene> mySceneMap;
 	protected int myID;
 	protected int myInitialSceneID;
-    protected String myEventBehavior;
-    private ArrayList<Object> myEventParameters;
 
 	public Level(int id) {
 		myID = id;
@@ -67,22 +65,6 @@ public class Level {
 	public void removeScene(int sceneID) {
 		mySceneMap.remove(sceneID);
 	}
-	
-	public void setEventBehavior(String type, Object ... args){
-	    myEventBehavior = type;
-	    myEventParameters = new ArrayList<Object>();
-	    for(int i = 0; i < args.length; i ++){
-	        myEventParameters.add(args[i]);
-	    }
-	}
-
-    public String getEventBehavior() {
-    	return myEventBehavior;
-    }       
-        
-    public List<Object> getEventParameters(){
-    	return myEventParameters;
-    }
 
 	public List<GameObject> getObjectsByColid(int colid){
 		List<GameObject> objects = new ArrayList<GameObject>();
@@ -96,6 +78,7 @@ public class Level {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_LEVEL, SaladConstants.ID, myID));
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LEVEL, SaladConstants.ID, myID, SaladConstants.SET_INIT_SCENE, false, myInitialSceneID));
 		for(int a: mySceneMap.keySet()){
 			List<String> sceneAttribute = mySceneMap.get(a).getAttributes();
 			String attribute = AttributeMaker.addAttribute(SaladConstants.SWITCH_SCENE, SaladConstants.ID, myID, SaladConstants.ID, false, mySceneMap.get(a).getID()); 

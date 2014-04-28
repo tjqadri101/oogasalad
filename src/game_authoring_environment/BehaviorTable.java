@@ -6,6 +6,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.GAEController;
@@ -13,6 +14,7 @@ import controller.GAEController;
 public class BehaviorTable extends PanelTable {
 
 	private GAEController gController;
+	private static final String[] colIDs = {"1","2"};
 	private static final String[] collisionTypes = {"Explode", "HitterEliminateVictim", "PerishTogether", "StayOnTile"};
 	private String currentSelectedItem;
 	private String currentImputID;
@@ -20,6 +22,7 @@ public class BehaviorTable extends PanelTable {
 	
 	public BehaviorTable(GAEController c) {
 		gController = c;
+		
 	}
 
 	@Override
@@ -30,8 +33,8 @@ public class BehaviorTable extends PanelTable {
 
 	@Override
 	void init() {
-
-		final JTextField tf = new JTextField();
+		
+	/*	final JTextField tf = new JTextField();
 		Object[] firstRow = {"Collision ID", tf}; // each row should be in this format
 		tf.addActionListener(new ActionListener(){
 			@Override
@@ -39,13 +42,10 @@ public class BehaviorTable extends PanelTable {
 				System.out.println("new text:" + tf.getText());	
 				currentImputID = tf.getText();
 			}			
-		});
-		
-		myTableModel.addRow(firstRow); // actually adding to the table
-		classMap.put(0,firstRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)
-		
+		});*/
 		JComboBox collisionTypesBox = new JComboBox(collisionTypes);
-		Object[] secondRow = {"Collision Type", collisionTypesBox};
+		JComboBox colIDsBox = new JComboBox(colIDs);
+		Object[] firstRow = {"String", "String", "sample"};
 		collisionTypesBox.setSelectedIndex(0);
 		collisionTypesBox.addItemListener(new ItemListener() {
 			@Override
@@ -57,9 +57,13 @@ public class BehaviorTable extends PanelTable {
 				}				
 			}
 		});		
+		myTableModel.addRow(firstRow); // actually adding to the table
+		classMap.put(0,firstRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)
+		/*
+		
 		myTableModel.addRow(secondRow);
 		classMap.put(1,secondRow[1]);
-		
+	*/
 		
 		
 	}

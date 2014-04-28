@@ -1,5 +1,6 @@
 package engineManagers;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.ResourceBundle;
 
 import objects.GameObject;
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 
 /**
  * 
@@ -19,29 +21,25 @@ public class AnimationManager {
 	protected HashMap<String, String> myImageMappings;
 	protected ResourceBundle myAnimationResources;
 	protected List<String> myAttributes;
+	protected GameObject myObject;
 	
-	public AnimationManager() {
+	public AnimationManager(GameObject object) {
 		myImageMappings = new HashMap<String, String>();
-		constructImageMappings();
+		myObject = object;
 	}
 	
-	private void constructImageMappings() {
-		myAnimationResources = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
-				+ SaladConstants.OBJECT_IMAGES);
-		Enumeration<String> keys = myAnimationResources.getKeys();
-		while (keys.hasMoreElements()) {
-			String key = keys.nextElement();
-			myImageMappings.put(key, myAnimationResources.getString(key));
-		}
-	}
 	/**
 	 * Will cause the appearing image of the object to change to the appropriate behavior
 	 * @param obj
 	 * @param behavior
 	 */
-	public void updateImage(GameObject obj, String behavior) {
+	public void updateImage(String behavior) {
 		String newImg = myImageMappings.get(behavior);
-		if (newImg != null) obj.setImage(newImg);
+		if (newImg != null) {
+			myObject.setImage(newImg);
+		} else {
+//			System.out.println("Behavior is null");
+		}
 	}
 	/**
 	 * Changes the corresponding behavioral image to the new image specified
@@ -52,4 +50,17 @@ public class AnimationManager {
 		myImageMappings.put(behavior, newImage);
 	}
 	
+	public void makeImageAttributes() {
+		for (String key : myImageMappings.keySet()) {
+			List<Object> temp = new ArrayList<Object>();
+			temp.add(myObject.getXSize());
+			temp.add(myObject.getYSize());
+			myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(), SaladConstants.ID, myObject.getID(), key, true, temp ));
+		}
+	}
+	
+	public List<String> getAttributes(){
+		
+		return myAttributes;
+	}
 }

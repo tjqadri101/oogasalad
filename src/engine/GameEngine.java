@@ -4,7 +4,7 @@ import saladConstants.SaladConstants;
 import stage.Game;
 import stage.Scene;
 import stage.Transition;
-import util.SaladUtil;
+import statistics.StatsController;
 import jgame.JGColor;
 import jgame.platform.StdGame;
 import objects.GameObject;
@@ -15,8 +15,6 @@ import objects.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
-
 import engineManagers.TriggerEventManager;
 
 /**
@@ -25,6 +23,7 @@ import engineManagers.TriggerEventManager;
  * @Contribution Steve (Siyang) Wang
  */
 
+@SuppressWarnings("serial")
 public class GameEngine extends StdGame {
 
 	public static final int FRAMES_PER_SECOND = 70;
@@ -60,6 +59,7 @@ public class GameEngine extends StdGame {
 	protected boolean isPlaying;
 	protected boolean isTileEditing;
 	protected boolean scene_restart = true;//
+	protected StatsController myStatsController;
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -146,6 +146,7 @@ public class GameEngine extends StdGame {
 	
 	public void doFrameInGame() {
 		doFrameEdit();
+		
 	}
 	
 	public void paintFrameInGame() {
@@ -156,8 +157,9 @@ public class GameEngine extends StdGame {
 	
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-//	        TriggerEventManager myTEM = getGame().getTEM();
-		myTimer ++;
+		myTimer += this.getGameSpeed();
+	        if (myGame==null){return;}
+	        TriggerEventManager myTEM = getGame().getTEManager();
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
 		if (drag()) {myViewOffsetPlayer = false;}
@@ -170,7 +172,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-//		myTEM.checkTrigger(this);
+		myTEM.checkTrigger(this);
 //		if (checkGoal()) {
 //			if (level >= 3) {
 //				gameOver();
@@ -191,6 +193,7 @@ public class GameEngine extends StdGame {
 				else {lives = current_lives;}
 			}
 		}
+		timer ++; //add by Justin
 	}
 	
 	public void paintFrameEdit() {
@@ -279,6 +282,7 @@ public class GameEngine extends StdGame {
 	 public void paintFrameGameOver(){
 		 super.paintFrameGameOver();//
 		 paintTransition("GameOver");
+		 setGameState("DisplayStats"); // added by Justin
 	 }
 	 
 	 @Override
@@ -614,9 +618,11 @@ public class GameEngine extends StdGame {
 
 	 public void setGame(Game mygame) {
 		 myGame = mygame;
+		 myStatsController = new StatsController(this, myGame.getName());
 	 }
 
 	 public Game getGame() {
+//	     if (myGame == null) {return null;}
 		 return myGame;
 	 }
 	 
@@ -642,14 +648,12 @@ public class GameEngine extends StdGame {
 		 object.updateImageURL(imgfile);
 	 }
 
-	 public void modifyJumpImage(GameObject object, String imgfile, int xsize, int ysize) {
-		 loadImage(imgfile);
-		 object.setJumpingImage(imgfile);
-	 }
+	 
 
-	 public void modifyMoveImage(GameObject object, String imgfile, int xsize, int ysize) {
+	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
-		 object.setMovingImage(imgfile);
+		 object.setSize(xsize, ysize);
+		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
 
 	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
@@ -669,7 +673,8 @@ public class GameEngine extends StdGame {
 		 loadImage(imgfile);
 		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				 name, colid, lives, myGame.getCollisionManager(),
-				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
+				 myGame.getScoreManager(), myGame.getBloodManager(), 
+				 myGame.getRevivalManager(), myGame.getLiveManager(), myGame.getTEManager());
 		 myGame.setPlayer(object);
 		 myPlayer = object;
 		 if (myGame.getLiveManager() != null) {
@@ -685,10 +690,19 @@ public class GameEngine extends StdGame {
 		 loadImage(imgfile);
 		 NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				 ypos, name, colid, lives, myGame.getCollisionManager(),
-				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
+				 myGame.getScoreManager(), myGame.getBloodManager(), 
+				 myGame.getRevivalManager(), myGame.getLiveManager(),myGame.getTEManager());
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
 		 if (isPlaying) {object.resume();}
 		 return object;
+	 }
+	 
+	 public void startDisplayStats() {
+		 myStatsController.saveGameStats(); 
+	 }
+
+	 public void paintFrameDisplayStats() {
+		 myStatsController.displayStats();
 	 }
 
 	 public void reviveObject() {

@@ -8,9 +8,9 @@ import objects.GameObject;
  * 
  * @author Main Justin (Zihao) Zhang
  */
-public class StayOnTile extends TileCollision {
+public class KilledByTile extends TileCollision {
 
-	public StayOnTile(GameObject o) {
+	public KilledByTile(GameObject o) {
 		super(o);
 	}
 
@@ -24,6 +24,7 @@ public class StayOnTile extends TileCollision {
 	@Override
 	public void collide(List<Object> objects) {
 		myObject.ground();
+		myObject.die();
 		updateManagers((Integer) objects.get(0));
 	}
 

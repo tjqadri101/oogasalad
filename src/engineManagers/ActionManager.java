@@ -3,7 +3,6 @@ package engineManagers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import objects.GameObject;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
@@ -83,6 +82,7 @@ public class ActionManager {
 	 *            : the y speed
 	 */
 	public void setMoveBehavior(String s, Object... args) {
+	    System.out.println("setMoveBehavior: " + s);
 		myMoveBehavior = s;
 		myMoveParameters = SaladUtil.convertArgsToObjectList(args);
 	}
@@ -101,8 +101,12 @@ public class ActionManager {
 	
 	public void autoMove() {
 		if (myMoveBehavior == null) return;
+		System.out.println("ActionManagere autoMove " + myMoveBehavior);
+		SaladUtil.printObjectList(myMoveParameters);
 		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior,
 				myMoveParameters, SaladConstants.MOVE, myObject);
+		System.out.println("Reflection Succeeds");
+		
 	}
 
 	public void shoot() {
@@ -148,8 +152,4 @@ public class ActionManager {
 		return myAttributes;
 	}
 	
-	// added for the sake of testing
-	public List<Object> getDieBehavior(){
-	        return myDieParameters;
-	}
 }

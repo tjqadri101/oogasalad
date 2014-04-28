@@ -69,7 +69,7 @@ public class GameFactorySceneTest extends TestCase{
         assertEquals(2, myGame.getMyLevelMap().get(1).getMySceneMap().size());
 // here the levelID=1, SceneID=0, objID=0
     }
-
+/*
     // SwitchScene done through Engine
     @Test
     public void testSwitchScene() throws FactoryException{
@@ -101,10 +101,10 @@ public class GameFactorySceneTest extends TestCase{
 // here the levelID=1, SceneID=0, objID=0
     }
 
-    /**
+    *//**
      * Need to re-check this
      * @throws FactoryException
-     */
+     *//*
     @Test
     public void testModifySceneBackground() throws FactoryException{
         String MODIFY_BKGD = "ModifyBackground,Background,devil.png";
@@ -134,5 +134,5 @@ public class GameFactorySceneTest extends TestCase{
         assertEquals(100.0, myGame.getMyLevelMap().get(1).getMySceneMap().get(0).getPlayerInitPosition()[0]);
 
 // here the levelID=1, SceneID=0, objID=0
-    }
+    }*/
 }

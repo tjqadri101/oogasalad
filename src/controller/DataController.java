@@ -1,10 +1,14 @@
 package controller;
 
 import imagebuffer.ImageBuffer;
+
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+
 import javax.xml.parsers.ParserConfigurationException;
 
+import objects.NonPlayer;
 import engine.GameEngine;
 import gameFactory.GameFactory;
 import parser.GameSaverAndLoader;
@@ -147,8 +151,39 @@ public class DataController {
 		myImageBuffer.resizedUpload(x, y, source);
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to revive the last killed/dead object
+	 */
 	public void reviveObject() {
 		myGameEngine.reviveObject();
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to get a map of non-players
+	 * @param sceneID
+	 * @return a map mapping from uniqueIDs to non-players
+	 */
+	public Map<Integer, NonPlayer> getMapOfNonPlayers(int sceneID){
+		Map<Integer, NonPlayer> nonPlayerMap = myGame.getLevel(getCurrentLevelID()).getScene(sceneID).getObjectMap();
+		return nonPlayerMap;
+	}
+	
+	/**
+	 * Called by Game Authorizing Environment to get the current player's colid mathed with the uniqueID
+	 * @param id
+	 * @return colid
+	 */
+	public int getCurrentPlayerColID(int id){
+		int j = myGame.getNonPlayerColid(getCurrentLevelID(), getCurrentSceneID(), id);
+		return j;
+	}
+	
+	/**
+	 * Called by Game Authorizing Enviornment to get a non-player matched with the uniqueID
+	 * @param objectID
+	 * @return non-player
+	 */
+    public NonPlayer getNonPlayer(int objectID){
+        return myGame.getLevel(getCurrentLevelID()).getNonPlayer(getCurrentSceneID(), objectID);
+    }
 }

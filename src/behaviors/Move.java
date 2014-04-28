@@ -20,6 +20,11 @@ public class Move extends Movable{
 		double xspeed, yspeed;
 		xspeed = (Double) objects.get(0);
 		yspeed = (Double) objects.get(1);
-		myObject.setInitSpeed(xspeed,yspeed);	
+		myObject.y += yspeed;
+		myObject.x += xspeed;
+		if(yspeed > 0){ myObject.ydir = 1; }
+		else{ myObject.ydir = -1; }
+		if(xspeed > 0){ myObject.xdir = 1; }
+		else{ myObject.xdir = -1; }
 	}
 }
