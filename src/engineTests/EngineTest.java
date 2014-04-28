@@ -98,6 +98,8 @@ public class EngineTest {
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(1, "Time");
 		game.getScoreManager().setValue(50, "LevelDone", 1);
+		
+		player.getAnimationManager().modifyImage("Jump", "engine/actor_blank");
 		engine.loadingDone();
         return engine;
 	}

@@ -73,18 +73,18 @@ public class SceneeditorPanel extends Panel {
 
 
 	private void chooseActor(String displayText) {
-			JTextField xSize = new JTextField(10);
-			JTextField ySize = new JTextField(10);
-			JCheckBox verticalWrap = new JCheckBox();
-			JCheckBox horizontalWrap = new JCheckBox();
-			JComponent[] texts = {xSize, ySize, verticalWrap, horizontalWrap};
-			String[] strings = {"Width:", "Height:", "Wrap Vertically?", "Wrap Horizontally?"};
-			JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+		JTextField xSize = new JTextField(10);
+		JTextField ySize = new JTextField(10);
+		JCheckBox verticalWrap = new JCheckBox();
+		JCheckBox horizontalWrap = new JCheckBox();
+		JComponent[] texts = {xSize, ySize, verticalWrap, horizontalWrap};
+		String[] strings = {"Width:", "Height:", "Wrap Vertically?", "Wrap Horizontally?"};
+		JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
 
-			int result = JOptionPane.showConfirmDialog(null, myPanel, 
-					"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
-			if (result == JOptionPane.OK_OPTION) {
-				try{
+		int result = JOptionPane.showConfirmDialog(null, myPanel, 
+				"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.OK_OPTION) {
+			try{
 				JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
 				UIManager.put("FileChooser.openDialogTitleText", displayText);
 				SwingUtilities.updateComponentTreeUI(chooser);
@@ -96,8 +96,8 @@ public class SceneeditorPanel extends Panel {
 					String path = chooser.getSelectedFile().getPath();
 					String name = chooser.getSelectedFile().getName();
 
-					gController.uploadImage(800, 600, path);
-					gController.modifySceneBackground(name, true, true, 80, 40);
+					gController.uploadImage(Integer.parseInt(xSize.getText().toString()), Integer.parseInt(ySize.getText().toString()), path);
+					gController.modifySceneBackground(name, horizontalWrap.isSelected(), verticalWrap.isSelected(), 800, 400);
 				}			
 
 			}

@@ -180,12 +180,16 @@ public final class SaladConstants {
 	
 	public static final String TILE_COLLISION = "TileCollision";
 	public static final String SET_TILE_COLLISION_BLOOD = "SetTileCollisionBlood";
+	public static final String SET_TILE_COLLISION_SCORE = "SetTileCollisionScore";
+	
 
 	public static final String MODIFY_TRANSITION_STATE = "ModifyTransitionState";
 	public static final String GAME_STATE = "GameState";
 	public static final String FRAME = "Frame";
 	public static final String DISPLAY_MESSAGE = "DisplayMessage";
 	public static final String DISPLAY_IMAGE = "DisplayImage";
+	public static final String SET_NAME = "SetName";
+
 
 	
 	public static final String HELP_HTML_URL = "./src/game_authoring_environment/resources/help.html";
@@ -201,6 +205,10 @@ public final class SaladConstants {
 	public static final String SCENE_DONE = "SceneDone";
 	public static final String SET_COLLISION_LIVE = "SetCollisionLive";
 	public static final String SET_TILE_COLLISION_LIVE = "SetTileCollisionLive";
+
+
+	public static final String MODIFY_GAME = "ModifyGame";
+
 
 	public static final String BLOOD = "Blood";
 	public static final String LIVE = "Live";
