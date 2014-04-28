@@ -9,6 +9,7 @@ import saladConstants.SaladConstants;
  * @author Main Justin (Zihao) Zhang
  *
  */
+
 public abstract class TileCollision {
 	protected GameObject myObject; 
 	
@@ -21,7 +22,7 @@ public abstract class TileCollision {
 				myObject, tilecid);
 		//object has an instance of TEM, so that they can call TEM if collide
 		//alternative: collision has engine
-		//myObject.getTriggerEventManager().update(SaladConstants.COLLISION, myObject, hitter);
+		myObject.getTEManager().updateCollision(SaladConstants.COLLISION, myObject, tilecid);
 		
 		myObject.getBloodManager().update(SaladConstants.TILE_COLLISION, 
 				myObject, tilecid);

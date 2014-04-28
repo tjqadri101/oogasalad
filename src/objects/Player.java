@@ -3,7 +3,6 @@ package objects;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import engineManagers.AnimationManager;
 //import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
@@ -11,6 +10,7 @@ import engineManagers.CollisionManager;
 import engineManagers.LiveManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
+import engineManagers.TriggerEventManager;
 import reflection.Reflection;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
@@ -25,18 +25,28 @@ public class Player extends GameObject {
 	protected double myMovingXSpeed;
 	protected double myMovingYSpeed;
 	protected AnimationManager myAnimationManager;
+	protected TriggerEventManager myTEManager;
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
 			CollisionManager collisionManager, ScoreManager scoreManager, 
-			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager) {
+			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager,
+			TriggerEventManager triggerEventManager) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, 
-				scoreManager, bloodManager, revivalManager, liveManager);
+				scoreManager, bloodManager, revivalManager, liveManager, triggerEventManager);
 		myKeyMap = new HashMap<Integer, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
+<<<<<<< HEAD
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 		myAnimationManager = new AnimationManager(this);
+=======
+		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, 
+		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
+		myTEManager = new TriggerEventManager();
+		myAnimationManager = new AnimationManager();
+		
+>>>>>>> 9e8fb51f9ff054e10cf87d3ce63b35c1a89c6e93
 	}
 	
 	public void setKey(int key, String type){
