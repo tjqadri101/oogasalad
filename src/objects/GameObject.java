@@ -426,17 +426,15 @@ public abstract class GameObject extends JGObject {
 		}
 	}
 	
+	/**
+	 * Called by behaviors to update the managers
+	 * @param args
+	 */
 	public void updateManagers(Object ... args){
 		Reflection.callMethod(myScoreManager, "update", args);
 		Reflection.callMethod(myBloodManager, "update", args);
 		Reflection.callMethod(myLiveManager, "update", args);
 		Reflection.callMethod(myEventManager, "update", args);
-//		if(order.startsWith(SaladConstants.COLLISION) || order.startsWith(SaladConstants.TILE_COLLISION)){
-//			Reflection.callMethod(myScoreManager, "update", args);
-//			Reflection.callMethod(myBloodManager, "update", args);
-//			Reflection.callMethod(myLiveManager, "update", args);
-//			Reflection.callMethod(myEventManager, "update", args);
-//		}
 	}
 
 	@Override
