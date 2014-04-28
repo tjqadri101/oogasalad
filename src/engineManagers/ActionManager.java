@@ -9,8 +9,9 @@ import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * Manager the actions for a Game Object
- * For every new action A added to a Game Object, a setABehavior, an A() and a makeAAttribute methods 
- * are needed to faciliate the action
+ * For every new action X added to a Game Object, a setXBehavior, an X() and a makeXAttribute methods 
+ * are needed to add in this class
+ * 
  * @author Main Justin (Zihao) Zhang
  */
 public class ActionManager {
