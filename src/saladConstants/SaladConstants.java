@@ -148,6 +148,8 @@ public final class SaladConstants {
 	public static final String MODIFY_SCORE_MANAGER = "ModifyScoreManager";
 	public static final String SET_COLLISION_SCORE = "SetCollisionScore";
 	public static final String SET_TRANSITION_SCORE = "SetTransitionScore";
+	public static final String TIME = "Time";
+	public static final String SET_SCORE_CONDITION = "SetScoreCondition";
 	public static final String MODIFY_BLOOD_MANAGER ="ModifyBloodManager";
 	public static final String SET_COLLISION_BLOOD = "SetCollisionBlood";
 	public static final String SET_TRANSITION_BLOOD = "SetTransitionBlood";
@@ -191,6 +193,7 @@ public final class SaladConstants {
 	public static final String SCENE_DONE = "SceneDone";
 	public static final String SET_COLLISION_LIVE = "SetCollisionLive";
 	public static final String SET_TILE_COLLISION_LIVE = "SetTileCollisionLive";
+
 
 	
 }

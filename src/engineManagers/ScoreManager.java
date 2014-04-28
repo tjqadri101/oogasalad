@@ -99,7 +99,8 @@ public class ScoreManager extends StatisticsManager{
 			List<Object> params = SaladUtil.convertStringListToObjectList(SaladUtil.convertStringArrayToList(
 					param.toString().split(SaladConstants.SEPARATOR)));
 			if(condition.startsWith(SaladConstants.COLLISION)) type = SaladConstants.SET_COLLISION_SCORE;
-			else if(condition.startsWith(SaladConstants.LEVEL) || condition.startsWith(SaladConstants.SCENE)) type = SaladConstants.SET_TRANSITION_SCORE;
+			else if(condition.startsWith(SaladConstants.LEVEL_DONE) || condition.startsWith(SaladConstants.SCENE_DONE)) type = SaladConstants.SET_TRANSITION_SCORE;
+			else if(condition.startsWith(SaladConstants.TIME)) type = SaladConstants.SET_SCORE_CONDITION;
 			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCOREMANAGER, type, false, params));
 		}
 		return answer;
