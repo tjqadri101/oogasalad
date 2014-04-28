@@ -31,7 +31,6 @@ public abstract class GameObject extends JGObject {
 	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
 	protected TriggerEventManager myTEManager;
-
 	protected AnimationManager myAnimationManager;
 
 	protected int myXSize;
@@ -48,6 +47,8 @@ public abstract class GameObject extends JGObject {
 	protected String myDefaultImage;
 	protected List<String> myAttributes;
 	protected String myName;
+//	protected int myInitDieTime; //used for die after a certain time
+//	protected boolean myDieWait;
 	
 	protected int myDirection; // change later
 
@@ -76,6 +77,7 @@ public abstract class GameObject extends JGObject {
 		myLiveManager = liveManager;
 		myDefaultImage = staticGfxName;
 		myName = name;
+//		myDieWait = false;
 		myActionManager = new ActionManager(this);
 		myAnimationManager = new AnimationManager(this);
 		myTEManager = triggerEventManager;
@@ -482,6 +484,10 @@ public abstract class GameObject extends JGObject {
 	public ScoreManager getScoreManager() {
 		return myScoreManager;
 	}
+	
+//	public void dieAfterTime(int time){
+//		
+//	}
 
 	/**
 	 * Used for behaviors to get the BloodManager to update blood
