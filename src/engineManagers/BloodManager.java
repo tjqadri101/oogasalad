@@ -28,6 +28,7 @@ public class BloodManager extends StatisticsManager{
 		System.out.println("update called");
 		int otherColid = hitter.colid;
 		if (hitter instanceof SideDetector){
+			System.out.println("update is side detector");
 			SideDetector detector = (SideDetector) hitter;
 			otherColid = detector.getParentColid();
 		}
