@@ -104,7 +104,14 @@ public class GameEngine extends StdGame {
 		return true;
 	}
 	
-	
+	public void loadingBegin() {
+		if (isEditingMode) {return;}
+		isLoading = true;
+		isPlaying = false;
+		hideScene();
+		myCurrentScene = new Scene(0);
+		showScene();
+	}
 	
 	public void loadingDone() {
 		if (isEditingMode) {return;}
@@ -252,7 +259,6 @@ public class GameEngine extends StdGame {
 
 	public void startGameOver() {
 		hideScene();
-		myPlayer.remove();
 		myCurrentScene = new Scene(0);
 		showScene();
 		setTransition("GameOver");
@@ -653,7 +659,7 @@ public class GameEngine extends StdGame {
 	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
 		 object.setSize(xsize, ysize);
-		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
+//		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
 
 	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
