@@ -46,7 +46,6 @@ public abstract class GameObject extends JGObject {
 	protected String myMovingGfxName;
 	protected List<String> myAttributes;
 	protected String myName;
-	protected boolean myIsActive;
 	
 	protected int myDirection; // change later
 
@@ -58,6 +57,8 @@ public abstract class GameObject extends JGObject {
 			int blood, CollisionManager collisionManager, ScoreManager scoreManager, 
 			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
+		suspend();
+		resume_in_view = false;
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
 						+ SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
@@ -77,14 +78,6 @@ public abstract class GameObject extends JGObject {
 		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.IMAGE, false, myStaticGfxName, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
 				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
-	}
-
-	public boolean getIsActive() {
-		return myIsActive;
-	}
-
-	public void setIsActive(boolean active) {
-		myIsActive = active;
 	}
 
 	/**
@@ -234,7 +227,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public void suspend(){
-		super.resume();
+		super.suspend();
 		if (mySideDetectors!=null){
 			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
 				mySideDetectors[i].suspend();
@@ -434,7 +427,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void autoMove() {
-//		myActionManager.autoMove();
+		myActionManager.autoMove();
 	}
 
 	public void shoot() {

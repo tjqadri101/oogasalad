@@ -1,9 +1,7 @@
 package engineManagers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import objects.GameObject;
 import saladConstants.SaladConstants;
@@ -61,7 +59,14 @@ public class ScoreManager extends StatisticsManager{
 	public void update(String info, GameObject victim, GameObject hitter){
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, victim.colid, hitter.colid);
-		if(myMap.get(condition) == null) return;
+		if(!myMap.containsKey(condition)) return;
+		myScore += myMap.get(condition);
+	}
+	
+	@Override
+	public void update(String info, GameObject victim, int tilecid) {
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, info, victim.colid, tilecid);
+		if(!myMap.containsKey(condition)) return;
 		myScore += myMap.get(condition);
 	}
 	

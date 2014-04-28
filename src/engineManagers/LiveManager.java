@@ -98,7 +98,8 @@ public class LiveManager extends StatisticsManager {
 	}
 	
 	public void update(String info, GameObject victim, int tileColid){
-		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, victim.colid, tileColid);
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
+				info, victim.colid, tileColid);
 		if(!myMap.containsKey(condition)) return;
 		if(victim instanceof Player){
 			Player p = (Player) victim;

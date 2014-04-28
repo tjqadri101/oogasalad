@@ -31,6 +31,8 @@ public abstract class StatisticsManager {
 	}
 	
 	public abstract void update(String info, GameObject victim, GameObject hitter);
+	
+	public abstract void update(String info, GameObject victim, int tilecid);
 
 	public abstract List<String> getAttributes();
 
