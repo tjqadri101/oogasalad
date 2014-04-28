@@ -151,26 +151,12 @@ public class GameEngine extends StdGame {
 	
 	
 	
-	private void updateActive() {
-		if (!isLoading) {return;}
-		for (GameObject object : myCurrentScene.getGameObjects()) {
-			if (object.getIsActive()) {object.resume();}
-			else {
-				object.suspend();
-				System.out.println("updateActive "+object.is_suspended);
-				}
-		}
-		if (myPlayer != null) {
-			if (myPlayer.getIsActive()) {myPlayer.resume();}
-			else {myPlayer.suspend();}
-		}
-	}
-	
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
+		timer++;
+		System.out.println(timer);
 //	        TriggerEventManager myTEM = getGame().getTEM();
 		if (myCurrentScene == null) {return;}
-		updateActive();
 		boolean viewOffset = false;
 		if (drag()) {myViewOffsetPlayer = false;}
 		else {
@@ -489,7 +475,7 @@ public class GameEngine extends StdGame {
 		 for (int j = 0; j < height; j++) {
 			 array[j] = temp;
 		 }
-		 setTiles(left, top, array);
+		 if(isPlaying) setTiles(left, top, array);
 		 myCurrentScene.updateTiles(cid, left, top, width, height);
 	 }
 	
@@ -541,20 +527,18 @@ public class GameEngine extends StdGame {
 	 }
 
 	 public void setCurrentScene(int currentLevelID, int currentSceneID) {
-		 System.out.println(this.isEditingMode);
-		 System.out.println(this.isLoading);
-		 System.out.println(this.isPlaying);
-		 System.out.println();
 		 if (myCurrentScene != null) {
 			 for (GameObject object : myCurrentScene.getGameObjects()) {
-				 object.suspend();System.out.println("setCurrentScene "+object.is_suspended);
+				 object.suspend();
 			 }
 			 if (myPlayer != null) {myPlayer.suspend();}
 			 removeObjects(null, 0, false);
 		 }
+		 
 		 myCurrentLevelID = currentLevelID;
 		 myCurrentSceneID = currentSceneID;
 		 myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
+		 
 		 setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
 				 myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
 		 setTiles(0, 0, myCurrentScene.getTiles());
@@ -656,8 +640,7 @@ public class GameEngine extends StdGame {
 				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
 		 myGame.setPlayer(object);
 		 myPlayer = object;
-		 object.resume_in_view = false;
-		 if (isEditingMode) {object.setIsActive(true);}
+		 if (isPlaying) {object.resume();}
 		 return object;
 	 }
 
@@ -669,8 +652,7 @@ public class GameEngine extends StdGame {
 				 ypos, name, colid, lives, myGame.getCollisionManager(),
 				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager());
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
-		 object.resume_in_view = false;
-		 if (isEditingMode) {object.setIsActive(true);}
+		 if (isPlaying) {object.remove();}
 		 return object;
 	 }
 
