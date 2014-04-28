@@ -114,7 +114,7 @@ public class CollisionManager {
 	 * @param tileColid
 	 * @return Object list
 	 */
-	protected List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
+	public List<Object> getTileCollisionBehavior(int victimColid, int tileColid){
 		String pair = victimColid + SaladConstants.SEPARATOR + tileColid;
 		return myTileCollisionMap.get(pair);
 	}
@@ -197,4 +197,5 @@ public class CollisionManager {
 	public List<String> getAttributes(){
 		return myAttributes;
 	}
+	
 }

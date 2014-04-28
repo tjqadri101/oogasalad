@@ -380,7 +380,7 @@ public abstract class GameObject extends JGObject {
 	public void jump() {
 		if (myIsInAir == 0) { myJumpTimes++; }
 		myActionManager.jump();
-		myAnimationManager.updateImage(this, "Jump") ; //hardcode to be modified later
+//		myAnimationManager.updateImage(this, "Jump") ; //hardcode to be modified later
 	}
 
 	/**

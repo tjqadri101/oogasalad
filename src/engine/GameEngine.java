@@ -81,7 +81,6 @@ public class GameEngine extends StdGame {
 		setGameState("Edit");
 		myTimer = 0;
 		lives = 1;
-		level = 1;
 	}
 	
 //	public boolean checkGoal() {
@@ -178,8 +177,11 @@ public class GameEngine extends StdGame {
 //				levelDone();
 //		}
 		if (myGame != null) {
-			if (myGame.getLiveManager() != null) {myGame.getScoreManager().update("Time");}
 			if (myGame.getScoreManager() != null) {
+				myGame.getScoreManager().update("Time");
+				score = myGame.getScoreManager().getCurrentValue();
+			}
+			if (myGame.getLiveManager() != null && myPlayer != null) {
 				int current_lives = myGame.getLiveManager().getCurrentLife(myPlayer.getID());
 				if (current_lives < lives) {
 					lives = current_lives+1;
@@ -541,19 +543,26 @@ public class GameEngine extends StdGame {
 	 }
 
 	 public void setCurrentScene(int currentLevelID, int currentSceneID) {
-		 if (myCurrentScene != null) {
+		 hideScene();
+		 myCurrentLevelID = currentLevelID;
+		 myCurrentSceneID = currentSceneID;
+		 myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
+		 showScene();
+	 }
+
+	private void hideScene() {
+		if (myCurrentScene != null) {
 			 for (GameObject object : myCurrentScene.getGameObjects()) {
 				 object.suspend();
 			 }
 			 if (myPlayer != null) {myPlayer.suspend();}
 			 removeObjects(null, 0, false);
 		 }
-		 myGame.getScoreManager().update("SceneDone", myCurrentSceneID);
-		 myCurrentLevelID = currentLevelID;
-		 myCurrentSceneID = currentSceneID;
-		 myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
-		 
-		 setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
+		 if(isPlaying) {myGame.getScoreManager().update("SceneDone", myCurrentSceneID);}
+	}
+
+	private void showScene() {
+		setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
 				 myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
 		 setTiles(0, 0, myCurrentScene.getTiles());
 		 if (myPlayer != null) {
@@ -564,7 +573,7 @@ public class GameEngine extends StdGame {
 		 for (GameObject object : myCurrentScene.getGameObjects()) {
 			 object.resume();
 		 }
-	 }
+	}
 	
 	 /* scene view modification methods */
 
@@ -654,6 +663,9 @@ public class GameEngine extends StdGame {
 				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
 		 myGame.setPlayer(object);
 		 myPlayer = object;
+		 if (myGame.getLiveManager() != null) {
+			 myGame.getLiveManager().addPlayer(object);
+		 }
 		 if (isPlaying) {object.resume();}
 		 return object;
 	 }
@@ -666,7 +678,7 @@ public class GameEngine extends StdGame {
 				 ypos, name, colid, lives, myGame.getCollisionManager(),
 				 myGame.getScoreManager(), myGame.getBloodManager(), myGame.getRevivalManager(), myGame.getLiveManager());
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
-		 if (isPlaying) {object.remove();}
+		 if (isPlaying) {object.resume();}
 		 return object;
 	 }
 

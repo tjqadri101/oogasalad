@@ -64,6 +64,7 @@ public class SlowShoot extends Shootable{
 		System.out.println(shootXSpeed+" "+shootYSpeed);
 		
 		NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
+		object.expiry = object.expire_off_view;
 		object.setSpeed(shootXSpeed, shootYSpeed);
 		object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 	}
