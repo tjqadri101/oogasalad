@@ -56,14 +56,14 @@ public class EngineTest {
 		engine.createTiles(TILE_COLID,20,15,10,1);
 		engine.createTiles('0',30,30,5,1);
 		
-		NonPlayer actor = engine.createActor(123, "poke-mon/024.gif", 200, 200, 800, 450, SaladConstants.NULL, ENEMY_COLID, 1);
-		actor.setDieBehavior("RegularRemove");
-		actor.setMoveBehavior("BackForthMove", 8.0, 5);
-		actor.setShootBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 100);
-		actor.resume_in_view = true;
-		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 1);
-		goomba.setDieBehavior("RegularRemove");
-		goomba.setMoveBehavior("BackForthMove",5.0, 10);
+//		NonPlayer actor = engine.createActor(123, "poke-mon/024.gif", 200, 200, 800, 450, SaladConstants.NULL, ENEMY_COLID, 1);
+//		actor.setDieBehavior("RegularRemove");
+//		actor.setMoveBehavior("BackForthMove", 8.0, 5);
+//		actor.setShootBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 100);
+
+//		NonPlayer goomba = engine.createActor(300, "poke-mon/042.gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 1);
+//		goomba.setDieBehavior("RegularRemove");
+//		goomba.setMoveBehavior("BackForthMove",5.0, 10);
 
 		NonPlayer mushroom = engine.createActor(200, "poke-mon/104.gif", 80, 80, 400, 100, SaladConstants.NULL, MUSHROOM_COLID, 1);
 		mushroom.setDieBehavior("RegularRemove");
@@ -90,6 +90,7 @@ public class EngineTest {
 //		game.getCollisionManager().setDirectionalTileCollisionBehavior(PLAYER_COLID, "StayOnTile", TILE_COLID,"Bottom");
 		game.getCollisionManager().setDirectionalTileCollisionBehavior(MUSHROOM_COLID, "StayOnTile", TILE_COLID,"All");
 		
+		game.getBloodManager().setValue(10, "Collision",MUSHROOM_COLID,PLAYER_COLID);
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, ENEMY_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(1, "Time");
