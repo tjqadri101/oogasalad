@@ -86,7 +86,7 @@ public class Game {
 	public List<Character> getOccupiedTileColids(){
 		List<Character> answer = new ArrayList<Character>();
 		for(char c: myTileImageMap.keySet()){
-			answer.add(c);
+			if(c != 0) answer.add(c);
 		}
 		return answer;
 	}
