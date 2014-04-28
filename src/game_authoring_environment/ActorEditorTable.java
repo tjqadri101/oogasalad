@@ -20,6 +20,8 @@ public class ActorEditorTable extends PanelTable{
 	private static final String[] moveTypes = {"Immobile", "Regular", "Cyclical"};
 	private static final String[] shootTypes = {"None", "Slow Shoot", "Quick Shoot"};
 	private static final String[] dieTypes = {"Immortal", /*"Disappear",*/ "Show Corpse"};
+	
+	private String name; 
 	//private static final String[] collisionTypes = {"Explode", "Hitter Eliminate Victim"};
 	
 	private GAEController gController;
@@ -32,7 +34,7 @@ public class ActorEditorTable extends PanelTable{
 	@Override
 	public void init() {
 
-		final JTextField tf = new JTextField("test");
+		final JTextField tf = new JTextField(name);
 		Object[] firstRow = {"Name", tf}; // each row should be in this format
 		tf.addActionListener(new ActionListener(){
 			@Override

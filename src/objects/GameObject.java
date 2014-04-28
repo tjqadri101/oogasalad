@@ -421,7 +421,7 @@ public abstract class GameObject extends JGObject {
 		} else {
 			setImage(myDefaultImage);
 		}
-		System.out.println("Position: " + x + " " + y);
+	//	System.out.println("Position: " + x + " " + y);
 		
 	}
 
@@ -447,7 +447,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void autoMove() {
-	    System.out.println("autoMove");
+	 //   System.out.println("autoMove");
 		myActionManager.autoMove();
 	}
 

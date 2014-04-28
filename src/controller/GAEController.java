@@ -255,9 +255,9 @@ public class GAEController {
 	 * @param hitterCollID
 	 * @param direction
 	 */
-	public void modifyCollisionBehaviorToRebound(int victimCollisionID, String rebound, int hitterCollID, String direction){
+	public void modifyCollisionBehaviorToRebound(int victimCollisionID, int hitterCollID, String direction){
 		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
-				SaladConstants.REBOUND + SaladConstants.SEPARATOR + rebound + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR + 
+				SaladConstants.REBOUND + SaladConstants.SEPARATOR + SaladConstants.REBOUND + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR + 
 				direction;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
