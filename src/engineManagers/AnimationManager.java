@@ -57,11 +57,11 @@ public class AnimationManager {
 	}
 	
 	public void makeImageAttributes() {
-		for (String s : myImageMappings.keySet()) {
+		for (String key : myImageMappings.keySet()) {
 			List<Object> temp = new ArrayList<Object>();
-			temp.add(s);
-			temp.add(myImageMappings.get(s));
-			myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(), SaladConstants.ID, myObject.getID() ));
+			temp.add(myObject.getXSize());
+			temp.add(myObject.getYSize());
+			myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(), SaladConstants.ID, myObject.getID(), key, true, temp ));
 		}
 	}
 	

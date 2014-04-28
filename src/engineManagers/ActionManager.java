@@ -3,7 +3,6 @@ package engineManagers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import objects.GameObject;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
@@ -149,7 +148,13 @@ public class ActionManager {
 	}
 	
 	// added for the sake of testing
-	public List<Object> getDieBehavior(){
-	        return myDieParameters;
+	public String getDieBehavior(){
+	        return myDieBehavior;
 	}
+	
+	// added for the sake of testing
+    public String getMoveBehavior () {
+        // TODO Auto-generated method stub
+        return myMoveBehavior;
+    }
 }

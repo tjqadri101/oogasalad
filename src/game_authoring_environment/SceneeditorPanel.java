@@ -73,8 +73,6 @@ public class SceneeditorPanel extends Panel {
 
 
 	private void chooseActor(String displayText) {
-		
-
 			JTextField xSize = new JTextField(10);
 			JTextField ySize = new JTextField(10);
 			JCheckBox verticalWrap = new JCheckBox();
@@ -99,9 +97,7 @@ public class SceneeditorPanel extends Panel {
 					String name = chooser.getSelectedFile().getName();
 
 					gController.uploadImage(800, 600, path);
-
-					//				gController.modifySceneBackground(name, boolean wrapHorizontal, boolean wrapVertical, int playFieldXSize, int playFieldYSize)(name);
-
+					gController.modifySceneBackground(name, true, true, 80, 40);
 				}			
 
 			}
