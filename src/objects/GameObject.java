@@ -29,7 +29,7 @@ public abstract class GameObject extends JGObject {
 	protected RevivalManager myRevivalManager;
 	
 	protected ActionManager myActionManager;
-
+	
 	protected int myXSize;
 	protected int myYSize;
 	protected double myInitX; 

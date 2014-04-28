@@ -27,7 +27,6 @@ public class GameFactoryManagerTest extends TestCase{
     protected GameFactory myFactory;
     protected NonPlayer myActor;
 
-
     protected void setUp(){
         myGame = new Game();
         myEngine = new GameEngine(true);
