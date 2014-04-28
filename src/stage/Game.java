@@ -80,6 +80,18 @@ public class Game {
 	}
 	
 	/**
+	 * Get a list of tile collision IDs
+	 * @return a list of Characters
+	 */
+	public List<Character> getOccupiedTileColids(){
+		List<Character> answer = new ArrayList<Character>();
+		for(char c: myTileImageMap.keySet()){
+			answer.add(c);
+		}
+		return answer;
+	}
+	
+	/**
 	 * Called to add a new NonPlayer to a particular scene of a particular level
 	 * @param the level ID that the new Game Object belongs to 
 	 * @param the new scene ID that the new Game Object belongs to
