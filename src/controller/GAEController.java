@@ -1341,6 +1341,7 @@ public class GAEController {
 	public void uploadImage(int xSize,int ySize, String url){
 		try {
 			if (!DEBUG) myDataController.uploadImage(xSize, ySize, url);
+			return;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

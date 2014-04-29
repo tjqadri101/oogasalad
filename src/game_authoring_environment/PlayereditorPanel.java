@@ -29,7 +29,7 @@ public class PlayereditorPanel extends Panel {
 
 	private SubPanel mySubPanel;
 	private GAEController gController;
-	private JTable myTable;
+	private PlayerEditorTable myTable;
 	private boolean playerExists;
 	private String playerName;
 	
@@ -46,6 +46,7 @@ public class PlayereditorPanel extends Panel {
 		this.removeAll();
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
+		System.out.println("bool at point " + playerExists);
 		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 		if(!playerExists){
 			System.out.println("test if");
@@ -79,7 +80,7 @@ public class PlayereditorPanel extends Panel {
 
 	private JTable createTable(){
 		System.out.println("test create tables");
-		myTable = new PlayerEditorTable(gController, this);
+		myTable = new PlayerEditorTable(gController, this, playerExists);
 		System.out.println("test create tables");
 		return myTable;
 	}
@@ -89,13 +90,32 @@ public class PlayereditorPanel extends Panel {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				
-				gController.createPlayer(gController.getPlayerID(), null, 100, 100, 100, 100, myTable.getName(), 0, 1);
-				playerExists = true;
-				((PlayerEditorTable) myTable).setPlayerExists(true);
-				makeSubPanel();
-				construct();
-				
+				try{
+					JFileChooser chooser = new JFileChooser("src/engineImages/");
+					UIManager.put("FileChooser.openDialogTitleText", null);
+					SwingUtilities.updateComponentTreeUI(chooser);
+					FileNameExtensionFilter filter = new FileNameExtensionFilter(
+							"jpg", "gif","png","jpeg");
+					chooser.setFileFilter(filter);
+					int returnVal = chooser.showOpenDialog(getParent());
+					if(returnVal == JFileChooser.APPROVE_OPTION) {
+						String path = chooser.getSelectedFile().getPath();
+						String name = chooser.getSelectedFile().getName();
+						
+					//	gController.uploadImage(100, 100, path);
+						gController.createPlayer(gController.getPlayerID(), path, 100, 100, 100, 100, myTable.getName(), 0, 1);
+						playerExists = true;
+						((PlayerEditorTable) myTable).setPlayerExists(true);
+						makeSubPanel();
+						construct();
+						
+						
+						
+					}			
+				}
+				catch(Exception J){
+				}
+		
 				
 			}
 		});
@@ -234,8 +254,9 @@ public class PlayereditorPanel extends Panel {
 			if(returnVal == JFileChooser.APPROVE_OPTION) {
 				String path = chooser.getSelectedFile().getPath();
 				String name = chooser.getSelectedFile().getName();
-
-				gController.modifyPlayerImageNoID(path, 100, 100);
+				
+				gController.uploadImage(100, 100, path);
+				gController.modifyPlayerImageNoID(name, 100, 100);
 				
 			}			
 		}catch(Exception e){
@@ -246,9 +267,6 @@ public class PlayereditorPanel extends Panel {
 		System.out.println("updating playerID:"+actorID);	
 	}
 
-	public boolean doesPlayerExist() {
-		return playerExists;
-	}
 
 }
 

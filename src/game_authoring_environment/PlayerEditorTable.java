@@ -35,17 +35,22 @@ public class PlayerEditorTable extends PanelTable {
 	private String playerName;
 	private boolean playerExists;
 	
-	public PlayerEditorTable(GAEController c, PlayereditorPanel p){
-		super();
+	public PlayerEditorTable(GAEController c, PlayereditorPanel p, boolean playerExists2){
+		super(playerExists2);
 		parentPanel = p;
 		gController = c;
-		playerExists = false;
+		setPlayerExists(playerExists2);
+		makeTable();
+		init();
+
+		
 	}
 
 
 	@Override
 	public void init() {
 		System.out.println("init");
+		System.out.println(playerExists);
 		//player name
 		final JTextField tf = new JTextField(playerName);
 		Object[] firstRow = {"Name", tf}; // each row should be in this format

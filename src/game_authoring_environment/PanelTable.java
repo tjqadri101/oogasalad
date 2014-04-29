@@ -45,6 +45,11 @@ public abstract class PanelTable extends JTable{
 		init();
 		
 	}
+	public PanelTable(boolean b){
+		new JTable();
+		headerObject = new Object[]{"Property",""};
+		
+	}
 	public PanelTable(Object[] o){
 		new JTable();
 		headerObject = o;
