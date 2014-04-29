@@ -15,12 +15,13 @@ import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 
 /**
- * GameObject is the superclass of Player and NonPlayer GameObject is a game
- * unit that can execute certain actions and interactions
+ * GameObject is the superclass of Player and NonPlayer 
+ * GameObject is a game unit that can execute certain actions and interactions
  * 
- * @author: Main Justin (Zihao) Zhang,
- * @contribution: (side detectors/jump handling): Shenghan Chen
- * @contribution: David Chou
+ * @author: Main Justin (Zihao) Zhang
+ * 
+ * @contribution (side detectors/jump handling): Shenghan Chen
+ * @contribution (animations): David Chou
  */
 
 public abstract class GameObject extends JGObject {
@@ -51,6 +52,7 @@ public abstract class GameObject extends JGObject {
 	protected String myName;
 	protected int myXHead;
 	protected int myYHead;
+	protected List<GameObject> myShotThings;
 	protected SideDetector[] mySideDetectors;
 
 	public GameObject(int uniqueID, String staticGfxName, int xsize,
@@ -67,6 +69,7 @@ public abstract class GameObject extends JGObject {
 		setInitBlood(blood);
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
+		myShotThings = new ArrayList<GameObject>();
 		myAttributes = new ArrayList<String>();
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
@@ -485,6 +488,29 @@ public abstract class GameObject extends JGObject {
 	
 	public TriggerEventManager getEventManager(){
 		return myEventManager;
+	}
+	
+	/**
+	 * Get the number of the shots that are alive on the screen
+	 * @return
+	 */
+	public int getNumAliveShots(){
+		int count = 0;
+		for(GameObject object: myShotThings){
+			if(object.isAlive()) count ++;
+		}
+//		for(GameObject object: myShotThings){
+//			if(!object.isAlive()) myShotThings.remove(object);
+//		}
+		return count;
+	}
+	
+	/**
+	 * Add the shot bullet
+	 * @param object
+	 */
+	public void addShotThing(GameObject object){
+		myShotThings.add(object);
 	}
     
     /**
