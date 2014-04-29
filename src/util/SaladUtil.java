@@ -60,11 +60,11 @@ public class SaladUtil {
      */
     public static void printObjectList(List<Object> list){
         System.out.println();
-        System.out.print("StringList print starts: ");
+        System.out.print("*StringList print starts: ");
         for(Object s: list){
-            System.out.print(s.toString() + "/");
+            System.out.print("/" + s.toString());
         }
-        System.out.print("//StringList print ends.");
+        System.out.print("*StringList print ends.");
     }
 
     /**

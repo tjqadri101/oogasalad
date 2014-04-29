@@ -64,8 +64,7 @@ public class GAEController {
 		switchScene(1,0);
 		//uploadImage(100,100,)
 		double d = 0;
-		modifyGravityMagnitude(d);
-		createPlayer(playerID, null, 100, 100, 100, 100, "Default", 0, 1);
+		//modifyGravityMagnitude(d);
 
 
 	}
@@ -647,7 +646,7 @@ public class GAEController {
 	}
 
 	public void modifyActorColIDNoID(int newColID){
-		int oldColID = myDataController.getCurrentPlayerColID(selectedActorID);
+		int oldColID = myDataController.getGame().getPlayer(selectedActorID).colid;
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ oldColID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -1288,7 +1287,7 @@ public class GAEController {
 	}
 
 	public List<String> getAttributes(){
-		List<String> s = myDataController.getActorInfo(selectedActorID);
+		List<String> s = myDataController.getNonPlayer(selectedActorID).getAttributes();
 		return s;
 	}
 
@@ -1342,6 +1341,7 @@ public class GAEController {
 	public void uploadImage(int xSize,int ySize, String url){
 		try {
 			if (!DEBUG) myDataController.uploadImage(xSize, ySize, url);
+			return;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1407,6 +1407,11 @@ public class GAEController {
 	
 	public NonPlayer getNonPlayer(){
 		return myDataController.getNonPlayer(selectedSceneID);
+	}
+
+
+	public int getPlayerID() {
+		return playerID;
 	}
 	
 }

@@ -46,8 +46,6 @@ public class Game {
     protected Map<Character, String> myTileImageMap;
     protected String myName;
 
-
-
     public Game(){
         initTransitionStateMap();
         myTileImageMap = new HashMap<Character, String>();
@@ -154,18 +152,6 @@ public class Game {
     }
 
     /**
-     * Get an actor's collision ID by its unique ID
-     * Called by Graphic Authorizing Environment to display collisoin IDs
-     * @param levelID
-     * @param sceneID
-     * @param objectID
-     * @return colid
-     */
-    public int getNonPlayerColid(int levelID, int sceneID, int objectID){
-        return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID).colid;
-    }
-
-    /**
      * Called to remove an existing scene from a particular level
      * @param the level ID that the scene belongs to 
      * @param the scene ID
@@ -248,15 +234,6 @@ public class Game {
     }
 
     /**
-     * Get a player's collision ID by its unique ID
-     * @param playerID
-     * @return player's colid
-     */
-    public int getPlayerColid(int playerID){
-        return myPlayerMap.get(playerID).colid;
-    }
-
-    /**
      * Get a list of all the current players
      * @return list of players
      */
@@ -289,7 +266,7 @@ public class Game {
      * Get gravity for the engine to apply the force
      * @return Gravity
      */
-    public Gravity getGravity(Object ... args){
+    public Gravity getGravity(){
         return myGravity;
     }
 
@@ -397,15 +374,5 @@ public class Game {
     public RevivalManager getRevivalManager() {
         return myRevivalManager;
     }       
-
-    /* @Siyang: 
-     * The following getter added to facilitate testing. 
-     */
-    public Map<Integer, Level> getMyLevelMap(){
-        return myLevelMap;
-    }
-
-
-
 
 }

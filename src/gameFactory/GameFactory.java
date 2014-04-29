@@ -59,6 +59,7 @@ public class GameFactory {
 
         objArgList = (List<Object>) p.parseParameter(order);
         typeMethodList =  (List<String>) p.parseType(order);
+        System.out.println("ProcessFactory: typeMethodList is :" + typeMethodList);
         instruction = p.getOrderKey(order);
 
         //      TODO: Simplify code below:       
@@ -76,6 +77,7 @@ public class GameFactory {
      * Creation or modification through oneStep reflection:
      *  invoke method directly
      *  (See FactoryOrderPath.Properties or exhaustive list of create/modify through Engine)
+     *  methodMatcher directly matches the Key here
      */
     public GameObject oneStepReflect (Object refObj, String GameRefInfo, String GameReflectPara) 
             throws FactoryException {
@@ -97,20 +99,19 @@ public class GameFactory {
      *          First need to grab the instance of object
      *          Then need invoke method on the instance
      *  (See FactoryOrderPath.Properties for exhaustive list of create/modify through Game)
+     *  methodMatcher directly matches via the second element of typeMethodList
      */
-    public GameObject twoStepReflect (Object refObj, String GameRefMethod, String GameReflectPara) 
+    public GameObject twoStepReflect (Object refObj, String GameRefMethod, String GameReflectPara)
             throws FactoryException {
         Object obj = null;
-        String methodToInvoke = myMethod.getString(typeMethodList.get(1));
+        String methodToInvoke = null;
         if (!GameReflectPara.equals(NO_PARAMETER)){
-//            System.out.println("twoStepReflection" + idSelector(GameReflectPara));
+            methodToInvoke = myMethod.getString(typeMethodList.get(1));
             obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(GameReflectPara));
-//            System.out.println("twoStepReflection" + obj);
         }
         else{
+            methodToInvoke = myMethod.getString(typeMethodList.get(0));
             obj = Reflection.callMethod(refObj, GameRefMethod);
-//            methodToInvoke = myMethod.getString(typeMethodList.get(0));
-            // when getting player, gravity... those who does not take-in any parameter
         }
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
         return (GameObject) Reflection.callMethod(obj, methodToInvoke, argumentArray);

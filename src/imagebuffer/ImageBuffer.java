@@ -106,6 +106,9 @@ public class ImageBuffer {
 	 * This method will transfer the chosenFile to the final destination
 	 */
 	public void copyFile( ) throws IOException {
+		if (fileExists()) {
+			return;
+		}
 	    FileInputStream fis = new FileInputStream(chosenFile); 
 	    FileOutputStream fos = new FileOutputStream(finalPath);  
 	    FileChannel srcChannel = fis.getChannel();  
@@ -115,6 +118,12 @@ public class ImageBuffer {
 	    destChannel.close();  
 	    fis.close();  
 	    fos.close();      
+	}
+	
+	public boolean fileExists() {
+		File f = new File(finalPath);
+		boolean preexistingFile = (f.exists() || ! f.exists() ) ? true : false;
+		return preexistingFile;
 	}
 	
 	public String getFinalPath() {

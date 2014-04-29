@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import saladConstants.SaladConstants;
 import jgame.platform.JGEngine;
 
 /**
@@ -22,7 +23,6 @@ import jgame.platform.JGEngine;
  */
 public class StatsController {
 	
-	protected static final String PATH = "src/statistics/PersistentStats.txt";
 	protected static final int SIZE_OF_STATS_LIST = 5;
 
 	protected StatsDisplay myStatsDisplay;
@@ -43,22 +43,20 @@ public class StatsController {
 	
 	private List<StatsList> loadStats(){
 
-		System.out.println("loading stats");
+//		System.out.println("loading stats");
 		List<StatsList> allStats = new ArrayList<StatsList>();
 		Map<String, StatsList> allStatsMap = new HashMap<String, StatsList>();
 
 		try{
-			Scanner sc = new Scanner(new File(PATH));
+			Scanner sc = new Scanner(new File(SaladConstants.PATH));
 
 			while(sc.hasNextLine()){
 				String line = sc.nextLine();
-				String[] tempAr = line.split(",");
-				System.out.println(tempAr[3]);
-				System.out.println(tempAr[3].getClass());
+				String[] tempAr = line.split(SaladConstants.SEPARATOR);
+//				System.out.println(tempAr[3]);
+//				System.out.println(tempAr[3].getClass());
 				Integer valueInt = Integer.parseInt(tempAr[3]);
-				if(!tempAr[1].equals(myGameName)){
-					continue;
-				}
+				if(!tempAr[1].equals(myGameName)){ continue; }
 				StatsObject tempUserStat = new StatsObject(tempAr[2], valueInt);
 				String statName = tempAr[0];
 				if(!allStatsMap.containsKey(statName)){
@@ -87,13 +85,13 @@ public class StatsController {
 	}
 	
 	private void save(String userName){
-		System.out.println("saving stats");
+//		System.out.println("saving stats");
 		
 		userStats = GameStats.getAllStatsObjects();
 		
 		try{
 		
-			File file = new File(PATH);
+			File file = new File(SaladConstants.PATH);
 			if (!file.exists()) {
 				file.createNewFile();
 			}

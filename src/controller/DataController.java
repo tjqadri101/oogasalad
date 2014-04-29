@@ -85,24 +85,6 @@ public class DataController {
 		for(String order: orders){ callFactoryToProcess(order); }
 	}
 	
-	
-	/**
-	 * Called by Game Authorizing Environment to read the info about an Actor
-	 * @param an id number matched to the Game Object to get
-	 * @return a list of String orders attached to the Game Object
-	 */
-	public List<String> getActorInfo(int id){
-		return myGame.getNonPlayer(myGameEngine.getCurrentLevelID(), myGameEngine.getCurrentSceneID(), id).getAttributes();
-	}
-	
-	/**
-	 * Called by Game Authorizing Environment to read the info about the Player
-	 * @return a list of String orders attached to Player
-	 */
-	public List<String> getPlayerInfo(){
-		return myGame.getPlayer(Game.NONUSE_ID).getAttributes();
-	}
-	
 	/**
 	 * Called by Game Authorizing Environment to retrieve the current level ID
 	 * @return the current level ID
@@ -166,16 +148,6 @@ public class DataController {
 	public Map<Integer, NonPlayer> getMapOfNonPlayers(int sceneID){
 		Map<Integer, NonPlayer> nonPlayerMap = myGame.getLevel(getCurrentLevelID()).getScene(sceneID).getObjectMap();
 		return nonPlayerMap;
-	}
-	
-	/**
-	 * Called by Game Authorizing Environment to get the current player's colid mathed with the uniqueID
-	 * @param id
-	 * @return colid
-	 */
-	public int getCurrentPlayerColID(int id){
-		int j = myGame.getNonPlayerColid(getCurrentLevelID(), getCurrentSceneID(), id);
-		return j;
 	}
 	
 	/**

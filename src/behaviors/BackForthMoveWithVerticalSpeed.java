@@ -26,8 +26,12 @@ public class BackForthMoveWithVerticalSpeed extends Movable{
 		int latency = (Integer) objects.get(1);
 		double yspeed = (Double) objects.get(2);
 		GameEngine engine = (GameEngine) myObject.eng;
-		myObject.x = myObject.x + amplitude * Math.sin(engine.getSaladTimer()/latency);
+		double diff = Math.sin(engine.getSaladTimer()/latency);
+		myObject.x = myObject.x + amplitude * diff;
 		myObject.y += yspeed;
+		if(diff >= 0) myObject.setXHead(1);
+		else myObject.setXHead(-1);
+		myObject.setYHead(1);
 	}
 
 }

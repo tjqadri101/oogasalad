@@ -86,6 +86,21 @@ public class GameFactoryActorTest extends TestCase{
 //        System.out.println("the speed in the speed test is " + myGame.getNonPlayer(1, 0, 0).xspeed);
 //        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
     }
+    
+    @Test
+    public void testModifyGravity() throws FactoryException{
+        String MODIFY_GRAVITY= "ModifyGravity,Magnitude,0.1";
+
+        try {
+            myFactory.processOrder(MODIFY_GRAVITY);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        System.out.println("the speed in the speed test is " + myGame.getNonPlayer(1, 0, 0).xspeed);
+//        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
+    }
+    
 
 /*    @Test
     public void testModifyActorChangetoID() throws FactoryException{
@@ -213,21 +228,21 @@ public class GameFactoryActorTest extends TestCase{
         assert(set.contains("RegularRemove"));
     }
     */
-    @Test
-    public void testModifyActorImage() throws FactoryException{
-        String MODIFY_IMAGE = "ModifyActorImage,ID,0,Image,actor_default.png,10,10";
-//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
-//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
-//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFY_IMAGE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals("actor_default.png", myGame.getNonPlayer(1,0,0).getMyGfx());
-    }
+//    @Test
+//    public void testModifyActorImage() throws FactoryException{
+//        String MODIFY_IMAGE = "ModifyActorImage,ID,0,Image,actor_default.png,10,10";
+////        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+//        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
+////        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
+////        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+//        try {
+//            myFactory.processOrder(MODIFY_IMAGE);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            fail("Exception");
+//        }
+//        assertEquals("actor_default.png", myGame.getNonPlayer(1,0,0).getMyGfx());
+//    }
     
 
 //

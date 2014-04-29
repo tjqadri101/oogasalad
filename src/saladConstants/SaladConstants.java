@@ -69,6 +69,7 @@ public final class SaladConstants {
 	public static final String JUMP = "jump";
 	public static final String COLLIDE = "collide";
 	public static final String REMOVE = "remove";
+	public static final String UPDATE_JUMP = "Jump";
 	
 	//Specific Behaviors
 	public static final String EXPLODE = "Explode";
@@ -127,7 +128,7 @@ public final class SaladConstants {
     
     public static final String NON_CLEAR_KEYS = "NonClearKeys";
 
-    public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.1;
+    public static final double DEFAULT_GRAVITY_MAGNITUDE = 0.0;
     public static final double DEFAULT_ACTOR_SPEED = 5;
     public static final int DEFAULT_INIT_LIVES = 3;
     
@@ -231,6 +232,7 @@ public final class SaladConstants {
 
 	public static final String EVENT_ENEMY_SHOWER = "EventEnemyShower";
 
+	public static final String PATH = "src/statistics/PersistentStats.txt";
 
 
 
