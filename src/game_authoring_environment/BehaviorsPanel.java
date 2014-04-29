@@ -161,7 +161,7 @@ public class BehaviorsPanel extends Panel {
 		TreeSet<Integer> colIDs = new TreeSet<Integer>();
 		for(Integer i : mapofNonPlayers.keySet()){
 			NonPlayer p = mapofNonPlayers.get(i);
-			colIDs.add(p.getColID());
+			colIDs.add(p.colid);
 		}
 		Integer[] colids = new Integer[colIDs.size()+1]; 
 		int j=0;
