@@ -22,9 +22,9 @@ public class Move extends Movable{
 		yspeed = (Double) objects.get(1);
 		myObject.y += yspeed;
 		myObject.x += xspeed;
-		if(yspeed > 0){ myObject.ydir = 1; }
-		else{ myObject.ydir = -1; }
-		if(xspeed > 0){ myObject.xdir = 1; }
-		else{ myObject.xdir = -1; }
+		if(yspeed > 0){ myObject.setYHead(1); }
+		else{ myObject.setYHead(-1); }
+		if(xspeed > 0){ myObject.setXHead(1); }
+		else{ myObject.setXHead(-1); }
 	}
 }

@@ -49,6 +49,9 @@ public abstract class GameObject extends JGObject {
 	protected List<String> myAttributes;
 	protected String myName;
 
+	protected int myXHead;
+	protected int myYHead;
+	
 	protected ResourceBundle myBehaviors; //
 	protected SideDetector[] mySideDetectors;
 
@@ -78,6 +81,8 @@ public abstract class GameObject extends JGObject {
 		myAnimationManager = new AnimationManager(this);
 		myEventManager = eventManager;
 		initSideDetectors();
+		myXHead = xdir;
+		myYHead = ydir;
 		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.IMAGE, false, myDefaultImage, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
 				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
@@ -99,6 +104,22 @@ public abstract class GameObject extends JGObject {
 		for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
 			setSideDetector(new SideDetector(this, i, SideDetector.SDcid(colid, i)));
 		}
+	}
+	
+	public int getXHead(){
+		return myXHead;
+	}
+	
+	public int getYHead(){
+		return myYHead;
+	}
+	
+	public void setXHead(int head){
+		myXHead = head;
+	}
+	
+	public void setYHead(int head){
+		myYHead = head;
 	}
 
 	/**
