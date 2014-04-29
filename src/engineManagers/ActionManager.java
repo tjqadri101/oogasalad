@@ -88,6 +88,24 @@ public class ActionManager {
 		myMoveParameters = SaladUtil.convertArgsToObjectList(args);
 	}
 	
+	/**
+	 * Called by Actor to rebounce if regular move behavior
+	 */
+	public void bounce(){
+		if(myMoveBehavior == SaladConstants.REGULAR_MOVE){
+			double xspeed = (Double) myMoveParameters.get(0);
+			double yspeed = (Double) myMoveParameters.get(1);
+			List<Object> newParams = new ArrayList<Object>();
+			newParams.add(-1*xspeed);
+			newParams.add(-1*yspeed);
+			myMoveParameters = newParams;
+		}
+		else if (myObject.xspeed != 0 || myObject.yspeed != 0){
+			myObject.xspeed *= -1;
+			myObject.yspeed *= -1;
+		}
+	}
+	
 	public void die() {
 		if (myDieBehavior == null) return;
 		SaladUtil.behaviorReflection(myBehaviors, myDieBehavior,

@@ -3,6 +3,7 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
+import saladConstants.SaladConstants;
 /**
  * @param double xspeed
  * @param double yspeed
@@ -22,9 +23,9 @@ public class Move extends Movable{
 		yspeed = (Double) objects.get(1);
 		myObject.y += yspeed;
 		myObject.x += xspeed;
-		if(yspeed > 0){ myObject.setYHead(1); }
-		else{ myObject.setYHead(-1); }
-		if(xspeed > 0){ myObject.setXHead(1); }
-		else{ myObject.setXHead(-1); }
+		if(yspeed > 0){ myObject.setYHead(SaladConstants.POSITIVE_DIRECTION); }
+		else{ myObject.setYHead(SaladConstants.NEGATIVE_DIRECTION); }
+		if(xspeed > 0){ myObject.setXHead(SaladConstants.POSITIVE_DIRECTION); }
+		else{ myObject.setXHead(SaladConstants.NEGATIVE_DIRECTION); }
 	}
 }

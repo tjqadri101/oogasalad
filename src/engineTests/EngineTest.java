@@ -61,7 +61,7 @@ public class EngineTest {
 			goomba.setMoveBehavior("BackForthMove",5.0, 10);
 			goomba.setShootBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100);
 			
-			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 1);
+			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);
 			mushroom.setDieBehavior("RegularRemove");
 			mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 			mushroom.setShootBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100);
@@ -91,8 +91,8 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		
-		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
-		game.getCollisionManager().setDirectionalCollisionBehavior(BULLET_COLID, "PerishTogether", MUSHROOM_COLID,"All");
+		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "Rebounce", BOMB_COLID,"All");
+		game.getCollisionManager().setDirectionalCollisionBehavior(BULLET_COLID, "ShootHitObject", MUSHROOM_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(MUSHROOM_COLID, "HitterEliminateVictim", PLAYER_COLID,"Top");
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID,"Left");
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID,"Right");
@@ -109,7 +109,7 @@ public class EngineTest {
 		game.getGravity().setMagnitude(0.1);
 		
 //		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
-//		game.getTEManager().setEventOrTriggerBehavior(1, "EventLevelDone", "");
+//		game.getTEManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		engine.loadingDone();
         return engine;
 	}
