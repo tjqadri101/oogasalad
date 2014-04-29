@@ -646,7 +646,7 @@ public class GAEController {
 	}
 
 	public void modifyActorColIDNoID(int newColID){
-		int oldColID = myDataController.getCurrentPlayerColID(selectedActorID);
+		int oldColID = myDataController.getGame().getPlayer(selectedActorID).colid;
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ oldColID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -1287,7 +1287,7 @@ public class GAEController {
 	}
 
 	public List<String> getAttributes(){
-		List<String> s = myDataController.getActorInfo(selectedActorID);
+		List<String> s = myDataController.getNonPlayer(selectedActorID).getAttributes();
 		return s;
 	}
 
@@ -1394,7 +1394,7 @@ public class GAEController {
 	}
 	
 	public Map<Integer, NonPlayer> getMapOfPlayers(){
-		Map<Integer, NonPlayer> map = myDataController.getMapOfPlayers(selectedSceneID);
+		Map<Integer, NonPlayer> map = myDataController.getMapOfNonPlayers(selectedSceneID);
 		return map;
 	}
 

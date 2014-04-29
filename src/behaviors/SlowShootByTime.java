@@ -12,7 +12,7 @@ import saladConstants.SaladConstants;
  * @param int y size of the image
  * @param int collision ID of the bullet
  * @param double absolute speed of the bullet
- * @param int time latency
+ * @param int time latency, the larger the slower
  * @author Main Justin (Zihao) Zhang
  */
 public class SlowShootByTime extends Shootable{
@@ -33,16 +33,16 @@ public class SlowShootByTime extends Shootable{
 		int latency = (Integer) objects.get(5);
 		
 		double shootXSpeed, shootYSpeed, xpos, ypos;
-		if(myObject.xdir < 0){ xpos = myObject.x - xsize; }
-		else if (myObject.xdir > 0){ xpos = myObject.x + myObject.getXSize(); }
+		if(myObject.getXHead() < 0){ xpos = myObject.x - xsize; }
+		else if (myObject.getXHead() > 0){ xpos = myObject.x + myObject.getXSize(); }
 		else{ xpos = myObject.x + myObject.getXSize()/2; }
-		if(myObject.ydir < 0){ ypos = myObject.y - ysize; }
-		else if (myObject.ydir > 0){ ypos = myObject.y + myObject.getYSize(); }
+		if(myObject.getYHead() < 0){ ypos = myObject.y - ysize; }
+		else if (myObject.getYHead() > 0){ ypos = myObject.y + myObject.getYSize(); }
 		else{ ypos = myObject.y + myObject.getYSize()/2; }
-		shootXSpeed = myObject.xdir*shootSpeed;
-		shootYSpeed = myObject.ydir*shootSpeed;
+		shootXSpeed = myObject.getXHead()*shootSpeed;
+		shootYSpeed = myObject.getYHead()*shootSpeed;
 		
-		if(engine.timer/latency == 0){
+		if(engine.getSaladTimer() % (engine.getGameSpeed() * latency) == 0){
 			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 			object.expiry = object.expire_off_view;
 			object.setSpeed(shootXSpeed, shootYSpeed);

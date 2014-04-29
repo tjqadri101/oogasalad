@@ -32,14 +32,14 @@ public class SlowShoot extends Shootable{
 		double shootSpeed = (Double) objects.get(4);
 		
 		double shootXSpeed, shootYSpeed, xpos, ypos;
-		if(myObject.xdir < 0){ xpos = myObject.x - xsize; }
-		else if (myObject.xdir > 0){ xpos = myObject.x + myObject.getXSize(); }
-		else{ xpos = myObject.x + myObject.getXSize()/2; }
-		if(myObject.ydir < 0){ ypos = myObject.y - ysize; }
-		else if (myObject.ydir > 0){ ypos = myObject.y + myObject.getYSize(); }
+		if(myObject.getXHead() < 0){ xpos = myObject.x - xsize; }
+		else if (myObject.getXHead() > 0){ xpos = myObject.x + myObject.getXSize(); }
+		else{ xpos = myObject.getXHead() + myObject.getXSize()/2; }
+		if(myObject.getYHead() < 0){ ypos = myObject.y - ysize; }
+		else if (myObject.getYHead() > 0){ ypos = myObject.y + myObject.getYSize(); }
 		else{ ypos = myObject.y + myObject.getYSize()/2; }
-		shootXSpeed = myObject.xdir*shootSpeed;
-		shootYSpeed = myObject.ydir*shootSpeed;
+		shootXSpeed = myObject.getXHead()*shootSpeed;
+		shootYSpeed = myObject.getYHead()*shootSpeed;
 		
 		NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 		object.expiry = object.expire_off_view;

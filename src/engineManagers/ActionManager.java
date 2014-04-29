@@ -9,8 +9,9 @@ import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * Manager the actions for a Game Object
- * For every new action A added to a Game Object, a setABehavior, an A() and a makeAAttribute methods 
- * are needed to faciliate the action
+ * For every new action X added to a Game Object, a setXBehavior, an X() and a makeXAttribute methods 
+ * are needed to add in this class
+ * 
  * @author Main Justin (Zihao) Zhang
  */
 public class ActionManager {
@@ -18,6 +19,7 @@ public class ActionManager {
 	protected ResourceBundle myBehaviors;
 	protected List<String> myAttributes;
 	protected GameObject myObject;
+	
 	protected String myDieBehavior;
 	protected String myMoveBehavior;
 	protected String myJumpBehavior;
@@ -82,7 +84,6 @@ public class ActionManager {
 	 *            : the y speed
 	 */
 	public void setMoveBehavior(String s, Object... args) {
-	    System.out.println("setMoveBehavior: " + s);
 		myMoveBehavior = s;
 		myMoveParameters = SaladUtil.convertArgsToObjectList(args);
 	}
@@ -101,12 +102,8 @@ public class ActionManager {
 	
 	public void autoMove() {
 		if (myMoveBehavior == null) return;
-		System.out.println("ActionManagere autoMove " + myMoveBehavior);
-		SaladUtil.printObjectList(myMoveParameters);
 		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior,
 				myMoveParameters, SaladConstants.MOVE, myObject);
-		System.out.println("Reflection Succeeds");
-		
 	}
 
 	public void shoot() {
@@ -152,14 +149,4 @@ public class ActionManager {
 		return myAttributes;
 	}
 	
-	// added for the sake of testing
-	public String getDieBehavior(){
-	        return myDieBehavior;
-	}
-	
-	// added for the sake of testing
-    public String getMoveBehavior () {
-        // TODO Auto-generated method stub
-        return myMoveBehavior;
-    }
 }

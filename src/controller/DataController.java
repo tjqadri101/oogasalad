@@ -85,24 +85,6 @@ public class DataController {
 		for(String order: orders){ callFactoryToProcess(order); }
 	}
 	
-	
-	/**
-	 * Called by Game Authorizing Environment to read the info about an Actor
-	 * @param an id number matched to the Game Object to get
-	 * @return a list of String orders attached to the Game Object
-	 */
-	public List<String> getActorInfo(int id){
-		return myGame.getNonPlayer(myGameEngine.getCurrentLevelID(), myGameEngine.getCurrentSceneID(), id).getAttributes();
-	}
-	
-	/**
-	 * Called by Game Authorizing Environment to read the info about the Player
-	 * @return a list of String orders attached to Player
-	 */
-	public List<String> getPlayerInfo(){
-		return myGame.getPlayer(Game.NONUSE_ID).getAttributes();
-	}
-	
 	/**
 	 * Called by Game Authorizing Environment to retrieve the current level ID
 	 * @return the current level ID
@@ -151,22 +133,28 @@ public class DataController {
 		myImageBuffer.resizedUpload(x, y, source);
 	}
 	
+	/**
+	 * Called by Game Authorizing Environment to revive the last killed/dead object
+	 */
 	public void reviveObject() {
 		myGameEngine.reviveObject();
 	}
 	
-	
-	//kat needs these methods:
-	public Map<Integer, NonPlayer> getMapOfPlayers(int sceneID){
+	/**
+	 * Called by Game Authorizing Environment to get a map of non-players
+	 * @param sceneID
+	 * @return a map mapping from uniqueIDs to non-players
+	 */
+	public Map<Integer, NonPlayer> getMapOfNonPlayers(int sceneID){
 		Map<Integer, NonPlayer> nonPlayerMap = myGame.getLevel(getCurrentLevelID()).getScene(sceneID).getObjectMap();
 		return nonPlayerMap;
 	}
 	
-	public int getCurrentPlayerColID(int id){
-		int j = myGame.getNonPlayerColid(getCurrentLevelID(), getCurrentSceneID(), id);
-		return j;
-	}
-	
+	/**
+	 * Called by Game Authorizing Enviornment to get a non-player matched with the uniqueID
+	 * @param objectID
+	 * @return non-player
+	 */
     public NonPlayer getNonPlayer(int objectID){
         return myGame.getLevel(getCurrentLevelID()).getNonPlayer(getCurrentSceneID(), objectID);
     }

@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import jgame.JGObject;
+import reflection.Reflection;
 import saladConstants.SaladConstants;
 import statistics.GameStats;
 import engineManagers.*;
 import util.AttributeMaker;
+import util.SaladUtil;
 import engineManagers.CollisionManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
@@ -18,7 +20,6 @@ import engineManagers.ScoreManager;
  * unit that can execute certain actions and interactions
  * 
  * @author: Main Justin (Zihao) Zhang,
- * @contribution (images/animations): David Chou
  * @contribution (side detectors/jump handling): Shenghan Chen
  */
 
@@ -30,7 +31,7 @@ public abstract class GameObject extends JGObject {
 	protected RevivalManager myRevivalManager;
 	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
-	protected TriggerEventManager myTEManager;
+	protected TriggerEventManager myEventManager;
 	protected AnimationManager myAnimationManager;
 
 	protected int myXSize;
@@ -47,19 +48,18 @@ public abstract class GameObject extends JGObject {
 	protected String myDefaultImage;
 	protected List<String> myAttributes;
 	protected String myName;
-//	protected int myInitDieTime; //used for die after a certain time
-//	protected boolean myDieWait;
-	
-	protected int myDirection; // change later
 
-	protected ResourceBundle myBehaviors; //delete later
+	protected int myXHead;
+	protected int myYHead;
+	
+	protected ResourceBundle myBehaviors; //
 	protected SideDetector[] mySideDetectors;
 
-	protected GameObject(int uniqueID, String staticGfxName, int xsize,
+	public GameObject(int uniqueID, String staticGfxName, int xsize,
 			int ysize, double xpos, double ypos, String name, int collisionId,
 			int blood, CollisionManager collisionManager, ScoreManager scoreManager, 
 			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager,
-			TriggerEventManager triggerEventManager) {
+			TriggerEventManager eventManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
 		suspend();
 		resume_in_view = false;
@@ -77,14 +77,22 @@ public abstract class GameObject extends JGObject {
 		myLiveManager = liveManager;
 		myDefaultImage = staticGfxName;
 		myName = name;
-//		myDieWait = false;
 		myActionManager = new ActionManager(this);
 		myAnimationManager = new AnimationManager(this);
-		myTEManager = triggerEventManager;
+		myEventManager = eventManager;
 		initSideDetectors();
+		myXHead = xdir;
+		myYHead = ydir;
 		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.IMAGE, false, myDefaultImage, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
 				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
+	}
+	
+	public GameObject(int uniqueID, String staticGfxName, int xsize, 
+			int ysize, double xpos, double ypos, String name, int collisionId, int blood, 
+			CollisionManager collisionManager, TriggerEventManager eventManager){
+		this(uniqueID, staticGfxName, xsize, ysize, xpos, ypos, name, collisionId, blood, 
+				collisionManager, null, null, null, null, eventManager); 
 	}
 
 	/**
@@ -96,6 +104,22 @@ public abstract class GameObject extends JGObject {
 		for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
 			setSideDetector(new SideDetector(this, i, SideDetector.SDcid(colid, i)));
 		}
+	}
+	
+	public int getXHead(){
+		return myXHead;
+	}
+	
+	public int getYHead(){
+		return myYHead;
+	}
+	
+	public void setXHead(int head){
+		myXHead = head;
+	}
+	
+	public void setYHead(int head){
+		myYHead = head;
 	}
 
 	/**
@@ -112,7 +136,6 @@ public abstract class GameObject extends JGObject {
 	 * @return
 	 */
 	public String getObjectName(){
-		System.out.println("GetName: " + myName);
 		return myName;
 	}
 
@@ -421,8 +444,21 @@ public abstract class GameObject extends JGObject {
 		} else {
 			setImage(myDefaultImage);
 		}
-	//	System.out.println("Position: " + x + " " + y);
-		
+	}
+	
+	/**
+	 * Called by behaviors to update the managers
+	 * @param args
+	 */
+	public void updateManagers(Object ... args){
+		try{
+			if(myScoreManager != null) Reflection.callMethod(myScoreManager, "update", args);
+			if(myBloodManager != null) Reflection.callMethod(myBloodManager, "update", args);
+			if(myLiveManager != null) Reflection.callMethod(myLiveManager, "update", args);
+			if(myEventManager != null) Reflection.callMethod(myEventManager, "update", args);	
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -447,13 +483,12 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void autoMove() {
-	 //   System.out.println("autoMove");
 		myActionManager.autoMove();
 	}
 
 	public void shoot() {
 		myActionManager.shoot();
-		GameStats.update(myName + " " + SaladConstants.SHOOT, 1); // may not be needed
+		GameStats.update(myName + SaladConstants.SPACE + SaladConstants.SHOOT, 1); // may not be needed
 	}
 
 	/**
@@ -478,16 +513,12 @@ public abstract class GameObject extends JGObject {
 	}
 
 	/**
-	 * Used for behaviors to get the ScoreManager to update scores
+	 * Used for side detectors to get the ScoreManager to update scores
 	 * 
 	 * @return ScoreManager
 	 */
-	public ScoreManager getScoreManager() {
-		return myScoreManager;
-	}
-	
-//	public void dieAfterTime(int time){
-//		
+//	public ScoreManager getScoreManager() {
+//		return myScoreManager;
 //	}
 
 	/**
@@ -495,18 +526,18 @@ public abstract class GameObject extends JGObject {
 	 * 
 	 * @return BloodManager
 	 */
-	public BloodManager getBloodManager() {
-		return myBloodManager;
-	}
+//	public BloodManager getBloodManager() {
+//		return myBloodManager;
+//	}
 	
 	/**
 	 * Used for behaviors to get the LiveManager to update blood
 	 * 
 	 * @return LiveManager
 	 */
-	public LiveManager getLiveManager(){
-		return myLiveManager;
-	}
+//	public LiveManager getLiveManager(){
+//		return myLiveManager;
+//	}
 	
 	/**
 	 * @return the Gfx info
@@ -519,12 +550,12 @@ public abstract class GameObject extends JGObject {
 		myDefaultImage = image;
 	}
 
-	public RevivalManager getRevivalManager() {
-		return myRevivalManager;
-	}
+//	public RevivalManager getRevivalManager() {
+//		return myRevivalManager;
+//	}
 	
-	public TriggerEventManager getTEManager(){
-	        return myTEManager;
+	public TriggerEventManager getEventManager(){
+	        return myEventManager;
 	}
     
     /**
@@ -533,18 +564,5 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
-    
-    // Added for the test case
-    public ActionManager getActionManager(){
-        return myActionManager;
-    }
-
-	public void modifyDynamicImage(String action, String imgfile, int xsize, int ysize) {
-		myAnimationManager.modifyImage(action, imgfile);
-	}
-	
-	public AnimationManager getAnimationManager() {
-		return myAnimationManager;
-	}
 
 }
