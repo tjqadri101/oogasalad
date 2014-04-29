@@ -24,6 +24,8 @@ public class EventEnemyShower extends Eventable{
     /**
      * Called via reflection to invoke the doEvent method
      * params may include: 
+     * @param maxEnemy
+     * @param gfx
      */
     @Override
     public void doEvent (List<Object> params) {
