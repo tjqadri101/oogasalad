@@ -13,6 +13,8 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
+	public static final int LEVELS = 8;
+	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
 	public static final int PLAYER_COLID = 4;
@@ -35,37 +37,40 @@ public class EngineTest {
 	public GameEngine testEngine(){
 		
 		GameEngine engine = new GameEngine(false);
+		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
-		for (int i=0;i<8;i++){
+		for (int i=0;i<LEVELS;i++){
 			game.addLevel(i+1);
 			game.addScene(i+1, i);
 			game.getLevel(i+1).setInitialSceneID(i);
 			game.getScene(i+1, i).setPlayerInitPosition((i+1)*100, 200);
 			engine.setCurrentScene(i+1, i);
 			
-			engine.setSceneView(null,false,false,1200,40);
+			engine.setSceneView(null,false,true,1200,40);
 			engine.loadTileImage(TILE_COLID, "brick.png");
 			engine.createTiles(TILE_COLID,0,15+i,1180,1);
 			engine.createTiles(TILE_COLID,20,15,10,1);
 			engine.createTiles('0',30,25+i,5,1);
 			
-			NonPlayer actor = engine.createActor(123+i, "poke-mon/0"+(13+i)+".gif", 200, 200, 800, 450, SaladConstants.NULL, ENEMY_COLID, 1);
+			NonPlayer actor = engine.createActor(123, "poke-mon/0"+(13+i)+".gif", 200, 200, 800, 450, SaladConstants.NULL, ENEMY_COLID, 1);
 			actor.setDieBehavior("RegularRemove");
 			actor.setMoveBehavior("BackForthMove", 8.0, 5);
 			actor.setShootBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100);
 
-			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 1);
+			NonPlayer goomba = engine.createActor(300, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 1);
 			goomba.setDieBehavior("RegularRemove");
 			goomba.setMoveBehavior("BackForthMove",5.0, 10);
 			goomba.setShootBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100);
 			
-			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 1);
+			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(19+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 1);
 			mushroom.setDieBehavior("RegularRemove");
 			mushroom.setMoveBehavior("BackForthMove",6.0, 20);
 			mushroom.setShootBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100);
 		}
+		
+		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");
 		
 		game.getGravity().setMagnitude(0.1);
 		
@@ -75,7 +80,7 @@ public class EngineTest {
 		
 		
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 300, 300, SaladConstants.NULL, PLAYER_COLID, 6);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 300, 300, "Nick", PLAYER_COLID, 6);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
 		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
@@ -110,6 +115,7 @@ public class EngineTest {
 		
 //		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
 //		game.getTEManager().setEventOrTriggerBehavior(1, "EventLevelDone", "");
+		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;
 	}
