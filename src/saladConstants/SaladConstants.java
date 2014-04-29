@@ -232,6 +232,7 @@ public final class SaladConstants {
 
 	public static final String EVENT_ENEMY_SHOWER = "EventEnemyShower";
 
+	public static final String PATH = "src/statistics/PersistentStats.txt";
 
 
 

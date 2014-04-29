@@ -488,7 +488,6 @@ public abstract class GameObject extends JGObject {
 
 	public void shoot() {
 		myActionManager.shoot();
-		GameStats.update(myName + SaladConstants.SPACE + SaladConstants.SHOOT, 1); // may not be needed
 	}
 
 	/**

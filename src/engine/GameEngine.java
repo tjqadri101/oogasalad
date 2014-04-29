@@ -18,9 +18,9 @@ import java.util.Map.Entry;
 import engineManagers.TriggerEventManager;
 
 /**
- * @Author: Isaac (Shenghan) Chen
- * @Contribution: Justin (Zihao) Zhang
- * @Contribution Steve (Siyang) Wang
+ * @author Main Isaac (Shenghan) Chen
+ * @contribution (for creation): Justin (Zihao) Zhang
+ * @contribution (for TriggerEventManager handling) Steve (Siyang) Wang
  */
 
 @SuppressWarnings("serial")
