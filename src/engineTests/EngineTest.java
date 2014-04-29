@@ -109,7 +109,7 @@ public class EngineTest {
 		game.getGravity().setMagnitude(0.1);
 		
 //		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
-//		game.getTEManager().setEventOrTriggerBehavior(1, "EventLevelDone", "");
+//		game.getTEManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		engine.loadingDone();
         return engine;
 	}

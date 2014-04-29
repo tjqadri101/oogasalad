@@ -39,7 +39,6 @@ public abstract class Shootable {
 				xpos, ypos, SaladConstants.SHOOT_NAME, 
 				colid, SaladConstants.SHOOT_LIVES);
 		object.expiry = object.expire_off_view;
-//		object.setSpeed(xspeed, yspeed);
 		object.setMoveBehavior(SaladConstants.REGULAR_MOVE, xspeed, yspeed);
 		object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 	}

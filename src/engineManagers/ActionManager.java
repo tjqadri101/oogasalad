@@ -100,6 +100,10 @@ public class ActionManager {
 			newParams.add(-1*yspeed);
 			myMoveParameters = newParams;
 		}
+		else if (myObject.xspeed != 0 || myObject.yspeed != 0){
+			myObject.xspeed *= -1;
+			myObject.yspeed *= -1;
+		}
 	}
 	
 	public void die() {
