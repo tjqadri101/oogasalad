@@ -4,8 +4,6 @@ import java.util.List;
 
 import engine.GameEngine;
 import objects.GameObject;
-import objects.NonPlayer;
-import saladConstants.SaladConstants;
 /**
  * Shoot a line of bullets and spread out
  * @author Main Justin (Zihao) Zhang
@@ -40,7 +38,7 @@ public class SpreadShoot extends Shootable{
 		for(int i = 0; i < times; i ++){
 			if(myObject.getXHead() == 0)
 				createShootThing(engine, imageName, xsize, ysize, property[0], property[1], colid,
-						shootSpeed*(-1.0*times/2 + i), property[3]);	
+						shootSpeed*(-times/2 + i), property[3]);	
 			else
 				createShootThing(engine, imageName, xsize, ysize, property[0], property[1], colid,
 						property[2], shootSpeed*(-times/2 + i));
