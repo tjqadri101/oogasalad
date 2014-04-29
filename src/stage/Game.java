@@ -24,7 +24,7 @@ import util.AttributeMaker;
  * A data structure that holds all the information about a game
  * @author Main Justin (Zihao) Zhang
  * @contribution David Chou
- * @help Isaac (Shenghan) Chen
+ * @contribution (tile map) Isaac (Shenghan) Chen
  */
 public class Game {
 

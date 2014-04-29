@@ -25,11 +25,12 @@ public class Jump extends Jumpable{
 	public void jump(List<Object> params){
 		double magnitude = (Double) params.get(0);
 		int times = (Integer) params.get(1);
-		if(myObject.getJumpTimes() > times){return;}
-		myObject.ydir = 1;
-		myObject.yspeed -= magnitude;
 		
+		if (myObject.getJumpTimes() >= times) return;
+		myObject.setYHead(SaladConstants.POSITIVE_DIRECTION);
+		myObject.ydir = SaladConstants.POSITIVE_DIRECTION;
+		myObject.yspeed -= magnitude;
 		if (myObject.getIsInAir() == 0) { myObject.incrementJumpTimes(1); }
-		myObject.updateImage("Jump");
+		myObject.updateImage(SaladConstants.UPDATE_JUMP);
 	}
 }
