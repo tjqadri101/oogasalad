@@ -129,10 +129,10 @@ public class LiveManager extends StatisticsManager {
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, victimColid, hitterColid);
 		if(!myMap.containsKey(condition)) return;
-		if(hitter instanceof Player){
-			Player p = (Player) hitter;
+		if(victim instanceof Player){
+			Player p = (Player) victim;
 			int changeLive = myMap.get(condition);
-			GameStats.update(p.getObjectName() + " " + SaladConstants.LIVE, changeLive);
+			GameStats.update(p.getObjectName() + SaladConstants.SPACE + SaladConstants.LIVE, changeLive);
 			int finalLive = myCurrentLifeMap.get(p) + changeLive;
 			myCurrentLifeMap.put(p, finalLive);	
 		}

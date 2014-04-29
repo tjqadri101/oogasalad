@@ -20,7 +20,8 @@ import engineManagers.ScoreManager;
  * unit that can execute certain actions and interactions
  * 
  * @author: Main Justin (Zihao) Zhang,
- * @contribution (side detectors/jump handling): Shenghan Chen
+ * @contribution: (side detectors/jump handling): Shenghan Chen
+ * @contribution: David Chou
  */
 
 public abstract class GameObject extends JGObject {
@@ -325,7 +326,7 @@ public abstract class GameObject extends JGObject {
 	 * @param lives
 	 */
 	public void setInitBlood(int blood) {
-		GameStats.set(myName + " " + SaladConstants.BLOOD, blood);
+		GameStats.set(myName + SaladConstants.SPACE + SaladConstants.BLOOD, blood);
 		myInitBlood = blood;
 		restoreBlood();
 	}
@@ -395,8 +396,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void bounce(){
-		 xspeed *= -1;
-		 yspeed *= -1;
+		myActionManager.bounce();
 	}
 
 	public void stop() {
@@ -437,9 +437,9 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
-		if (xdir < 0) {
+		if (myXHead < 0) {
 			myAnimationManager.updateImage("BKMove");
-		} else if (xdir > 0) {
+		} else if (myXHead > 0) {
 			myAnimationManager.updateImage("FDMove");
 		} else {
 			setImage(myDefaultImage);
@@ -531,35 +531,9 @@ public abstract class GameObject extends JGObject {
 //		return myRevivalManager;
 //	}
 	
-	/**
-	 * Used for side detectors to get the ScoreManager to update scores
-	 * 
-	 * @return ScoreManager
-	 */
-//	public ScoreManager getScoreManager() {
-//		return myScoreManager;
-//	}
-
-	/**
-	 * Used for side detectors to get the BloodManager to update blood
-	 * 
-	 * @return BloodManager
-	 */
-//	public BloodManager getBloodManager() {
-//		return myBloodManager;
-//	}
-	
-	/**
-	 * Used for side detectors to get the LiveManager to update blood
-	 * 
-	 * @return LiveManager
-	 */
-//	public LiveManager getLiveManager(){
-//		return myLiveManager;
-//	}
 	
 	public TriggerEventManager getEventManager(){
-	        return myEventManager;
+		return myEventManager;
 	}
     
     /**
@@ -568,5 +542,17 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
+
+    /**
+     * Allows the user to modify the image for different actions
+     * @param action
+     * @param imgfile
+     * @param xsize
+     * @param ysize
+     */
+	public void modifyDynamicImage(String action, String imgfile, int xsize,
+			int ysize) {
+		myAnimationManager.modifyImage(action, imgfile);
+	}
 
 }
