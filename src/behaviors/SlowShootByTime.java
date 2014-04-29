@@ -42,7 +42,7 @@ public class SlowShootByTime extends Shootable{
 		shootXSpeed = myObject.getXHead()*shootSpeed;
 		shootYSpeed = myObject.getYHead()*shootSpeed;
 		
-		if(engine.getSaladTimer() % latency == 0){
+		if(engine.getSaladTimer() % (engine.getGameSpeed() * latency) == 0){
 			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 			object.expiry = object.expire_off_view;
 			object.setSpeed(shootXSpeed, shootYSpeed);

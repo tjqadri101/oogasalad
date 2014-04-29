@@ -46,8 +46,9 @@ public class SpreadShootByTime extends Shootable{
 		else{ ypos = myObject.y + myObject.getYSize()/2; }
 		shootXSpeed = myObject.getXHead()*shootSpeed;
 		shootYSpeed = myObject.getYHead()*shootSpeed;
-		
-		if(engine.getSaladTimer() % latency == 0){
+
+		if(engine.getSaladTimer() % (engine.getGameSpeed() * latency) == 0){
+			System.out.println("Shoot!!");
 			for(int i = 0; i < times; i ++){
 				NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 				object.expiry = object.expire_off_view;
