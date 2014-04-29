@@ -136,7 +136,6 @@ public abstract class GameObject extends JGObject {
 	 * @return
 	 */
 	public String getObjectName(){
-		System.out.println("GetName: " + myName);
 		return myName;
 	}
 

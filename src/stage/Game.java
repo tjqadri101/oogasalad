@@ -248,15 +248,6 @@ public class Game {
     }
 
     /**
-     * Get a player's collision ID by its unique ID
-     * @param playerID
-     * @return player's colid
-     */
-    public int getPlayerColid(int playerID){
-        return myPlayerMap.get(playerID).colid;
-    }
-
-    /**
      * Get a list of all the current players
      * @return list of players
      */
@@ -289,7 +280,7 @@ public class Game {
      * Get gravity for the engine to apply the force
      * @return Gravity
      */
-    public Gravity getGravity(Object ... args){
+    public Gravity getGravity(){
         return myGravity;
     }
 
@@ -397,15 +388,5 @@ public class Game {
     public RevivalManager getRevivalManager() {
         return myRevivalManager;
     }       
-
-    /* @Siyang: 
-     * The following getter added to facilitate testing. 
-     */
-    public Map<Integer, Level> getMyLevelMap(){
-        return myLevelMap;
-    }
-
-
-
 
 }

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import engineManagers.AnimationManager;
-//import engineManagers.AnimationManager;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.LiveManager;
@@ -43,6 +41,11 @@ public class Player extends GameObject {
 		myTEManager = new TriggerEventManager();
 	}
 	
+	/**
+	 * Called by Factory to set the key
+	 * @param key
+	 * @param type
+	 */
 	public void setKey(int key, String type){
 		myKeyMap.put(key, type);
 	}
@@ -63,7 +66,7 @@ public class Player extends GameObject {
 	@Override
 	public void jump() {
 		super.jump();
-		myAnimationManager.updateImage("Jump");
+		myAnimationManager.updateImage(SaladConstants.UPDATE_JUMP);
 	}
 
 	
@@ -89,32 +92,32 @@ public class Player extends GameObject {
 		if (y > 0) {
 			y -= myMovingYSpeed*eng.getGameSpeed();
 		}
-		ydir = SaladConstants.NEGATIVE_DIRECTION;
-		xdir = SaladConstants.NEUTRAL_DIRECTION;
+		myYHead = SaladConstants.NEGATIVE_DIRECTION;
+		myXHead = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveDown(){
 		if (y + getYSize() < eng.pfHeight()) {
 			y += myMovingYSpeed*eng.getGameSpeed();
 		}
-		ydir = SaladConstants.POSITIVE_DIRECTION;
-		xdir = SaladConstants.NEUTRAL_DIRECTION;
+		myYHead = SaladConstants.POSITIVE_DIRECTION;
+		myXHead = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveLeft(){
 		if (x > 0) {
 			x -= myMovingXSpeed*eng.getGameSpeed();
 		}
-		xdir = SaladConstants.NEGATIVE_DIRECTION;
-		ydir = SaladConstants.NEUTRAL_DIRECTION;
+		myXHead = SaladConstants.NEGATIVE_DIRECTION;
+		myYHead = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	public void moveRight(){
 		if (x + getXSize() < eng.pfWidth()) {
 			x += myMovingXSpeed*eng.getGameSpeed();
 		}
-		xdir = SaladConstants.POSITIVE_DIRECTION;
-		ydir = SaladConstants.NEUTRAL_DIRECTION;
+		myXHead = SaladConstants.POSITIVE_DIRECTION;
+		myYHead = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
 	@Override

@@ -12,7 +12,7 @@ import saladConstants.SaladConstants;
  * @param int y size of the image
  * @param int collision ID of the bullet
  * @param double absolute speed of the bullet
- * @param int time latency
+ * @param int time latency, the larger the slower
  * @author Main Justin (Zihao) Zhang
  */
 public class SlowShootByTime extends Shootable{
