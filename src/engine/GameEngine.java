@@ -39,7 +39,6 @@ public class GameEngine extends StdGame {
 	protected int myCurrentLevelID;
 	protected int myCurrentSceneID;
 	protected Scene myCurrentScene;
-//	protected Scene myEmptyScene = new Scene(0);
 	protected Player myPlayer;
 	protected int myTimer;
 	
@@ -78,7 +77,7 @@ public class GameEngine extends StdGame {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
 //		setTileSettings("#",2,0);
 		defineImage("null","0",0,"null","-");
-		setGameState("Edit");
+		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
 	}
@@ -115,12 +114,13 @@ public class GameEngine extends StdGame {
 	
 	public void loadingDone() {
 		if (isEditingMode) {return;}
+		finishLoading();
 		isLoading = false;
 		isPlaying = true;
-		finishLoading();
 	}
 	
 	private void finishLoading() {
+		//reflection
 		int ticks1 = myGame.getTransitionState("StartGame").getFrame();
 		if (ticks1 > -1) {leveldone_ticks = ticks1;}
 		int ticks2 = myGame.getTransitionState("LevelDone").getFrame();
@@ -129,8 +129,6 @@ public class GameEngine extends StdGame {
 		if (ticks3 > -1) {leveldone_ticks = ticks3;}
 		int ticks4 = myGame.getTransitionState("GameOver").getFrame();
 		if (ticks4 > -1) {leveldone_ticks = ticks4;}
-		//reflection
-		if (inGameState("Title")) {setTransition("Title");System.out.println("???");}
 	}
 	
 	
@@ -164,7 +162,6 @@ public class GameEngine extends StdGame {
 	
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-		myTimer += this.getGameSpeed();
 	        if (myGame==null){return;}
 	        TriggerEventManager myTEM = getGame().getTEManager();
 		if (myCurrentScene == null) {return;}
@@ -200,7 +197,6 @@ public class GameEngine extends StdGame {
 				else {lives = current_lives;}
 			}
 		}
-		timer ++; //add by Justin
 	}
 	
 	public void paintFrameEdit() {
@@ -221,7 +217,9 @@ public class GameEngine extends StdGame {
 	@Override
 	public void doFrame() {
 		if (getKey('L')) {levelDone();clearKey('L');} //cheat key for testing
-		if (getKey('K')) {lifeLost();clearKey('K');} //cheat key for testing
+		if (getKey('K')) {myPlayer.remove();lifeLost();clearKey('K');} //cheat key for testing
+		if (getKey('O')) {myPlayer.remove();gameOver();clearKey('O');} //cheat key for testing
+		myTimer += getGameSpeed();
 		if (!isEditingMode && isPlaying) {
 			super.doFrame();
 		}
@@ -231,6 +229,17 @@ public class GameEngine extends StdGame {
 	public void paintFrame() {
 		if (!isEditingMode && isPlaying) {
 			super.paintFrame();
+		}
+		if (!isEditingMode && isLoading) {
+			String loading = "Loading";
+			String dot = ".";
+			int cycle = 6;
+			int frame = 20;
+			int number = myTimer % (((int)getGameSpeed())*cycle*frame);
+			for (int i = 0; i < number/frame; i++) {
+				loading += dot;
+			}
+			drawString(loading, viewWidth()/2, viewHeight()/2, 0);
 		}
 	}
 	
@@ -244,9 +253,9 @@ public class GameEngine extends StdGame {
 		setTransition("StartGame");
 	}
 	
-	public void startStartLevel() {
-		setTransition("StartLevel");//
-	}
+//	public void startStartLevel() {
+//		setTransition("StartLevel");
+//	}
 
 	public void startLevelDone() {
 		myGame.getScoreManager().update("LevelDone", myCurrentLevelID);
@@ -268,40 +277,60 @@ public class GameEngine extends StdGame {
 	
 	@Override
 	 public void paintFrameTitle(){
-		 super.paintFrameTitle();//
 		 paintTransition("Title");
+		 if (myGame.getTransitionState("Title") != null &&
+				 myGame.getTransitionState("Title").getInstructions().isEmpty()) {
+			 super.paintFrameTitle();
+		 }
 	 }
+	
+	@Override
+	 public void paintFrameStartGame(){
+		 paintTransition("StartGame");
+		 if (myGame.getTransitionState("StartGame") != null &&
+				 myGame.getTransitionState("StartGame").getInstructions().isEmpty()) {
+			 super.paintFrameStartGame();
+		 }
+	 }
+	
+//	@Override
+//	 public void paintFrameStartLevel(){
+//		 paintTransition("StartLevel");
+//		 if (myGame.getTransitionState("StartLevel") != null &&
+//				 myGame.getTransitionState("StartLevel").getInstructions().isEmpty()) {
+//			 super.paintFrameStartLevel();
+//		 }
+//	 }
 	
 	 @Override
 	 public void paintFrameLevelDone(){
-		 super.paintFrameLevelDone();//
 		 paintTransition("LevelDone");
+		 if (myGame.getTransitionState("LevelDone") != null &&
+				 myGame.getTransitionState("LevelDone").getInstructions().isEmpty()) {
+			 super.paintFrameLevelDone();
+		 }
 	 }
 	
 	 @Override
 	 public void paintFrameLifeLost(){
-		 super.paintFrameLifeLost();//
 		 paintTransition("LifeLost");
+		 if (myGame.getTransitionState("LifeLost") != null &&
+				 myGame.getTransitionState("LifeLost").getInstructions().isEmpty()) {
+			 super.paintFrameLifeLost();
+		 }
 	 }
 	
 	 @Override
 	 public void paintFrameGameOver(){
-		 super.paintFrameGameOver();//
 		 paintTransition("GameOver");
-		 setGameState("DisplayStats"); // added by Justin
+		 if (myGame.getTransitionState("GameOver") != null &&
+				 myGame.getTransitionState("GameOver").getInstructions().isEmpty()) {
+			 super.paintFrameGameOver();
+		 }
 	 }
 	 
-	 @Override
-	 public void paintFrameStartGame(){
-		 super.paintFrameStartGame();//
-		 paintTransition("StartGame");
-	 }
-	 
-	 //
-	 @Override
-	 public void paintFrameStartLevel(){
-		 super.paintFrameStartLevel();//
-		 paintTransition("StartLevel");
+	 public void gotoTitle(){
+		 setGameState("DisplayStats");
 	 }
 	
 //	 @Override
@@ -408,7 +437,7 @@ public class GameEngine extends StdGame {
 					 myPlayer.y - myPlayer.getYSize() / 13.5,
 					 (1.0 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
 					 10, true, true);
-			 drawString("lol help!", myPlayer.x + myPlayer.getXSize() / 2,
+			 drawString(myPlayer.getName(), myPlayer.x + myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 3, 0, true);
 		 }
 	 }
@@ -440,10 +469,11 @@ public class GameEngine extends StdGame {
 			 myClickedID = -1;
 		 }
 		 if (myMouseButton == 1 && currentMouse1) {
-			 GameObject object = myCurrentScene.getNonPlayer(myClickedID);
-			 if (myPlayer != null && myClickedID == myPlayer.getID()) {
-				 object = myPlayer;
-			 }
+			 GameObject object = null;
+			 GameObject actor = myGame.getPlayer(myClickedID);
+			 GameObject player = myCurrentScene.getNonPlayer(myClickedID);
+			 if (actor != null) {object = actor;}
+			 if (player != null) {object = player;}
 			 if (object != null) {
 				 object.x += MouseX - myMouseX;
 				 object.y += MouseY - myMouseY;
@@ -506,7 +536,7 @@ public class GameEngine extends StdGame {
 		 for (int j = 0; j < height; j++) {
 			 array[j] = temp;
 		 }
-		 if(isPlaying) setTiles(left, top, array);
+		 if(isPlaying) {setTiles(left, top, array);}
 		 myCurrentScene.updateTiles(cid, left, top, width, height);
 	 }
 	

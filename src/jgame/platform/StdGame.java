@@ -307,7 +307,7 @@ public abstract class StdGame extends JGEngine {
 		level=level_selected;
 		stage=level;
 		score=0;
-		lives=initial_lives;
+//		lives=initial_lives;
 	}
 	/** Initialise play specifically after a new life is introduced (that is,
 	 * at game start and after the player has died.  This is typically used to
@@ -473,7 +473,7 @@ public abstract class StdGame extends JGEngine {
 		}
 	}
 	/** Go to title or to highscore entry screen. */
-	private void gotoTitle() {
+	public void gotoTitle() {
 		seqtimer=0;
 		clearKey(key_startgame);
 		if (highscores!=null
