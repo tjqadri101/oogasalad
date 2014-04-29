@@ -2,7 +2,10 @@ package behaviors;
 
 import java.util.List;
 
+import engine.GameEngine;
 import objects.GameObject;
+import objects.NonPlayer;
+import saladConstants.SaladConstants;
 /**
  * 
  * @author Main Justin (Zihao) Zhang
@@ -28,6 +31,16 @@ public abstract class Shootable {
 		shootYSpeed = myObject.getYHead()*shootSpeed;
 		double[] answer = {xpos, ypos, shootXSpeed, shootYSpeed};
 		return answer;
+	}
+	
+	protected void createShootThing(GameEngine engine, String imageName, int xsize, int ysize,
+			double xpos, double ypos, int colid, double xspeed, double yspeed){
+		NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, 
+				xpos, ypos, SaladConstants.SHOOT_NAME, 
+				colid, SaladConstants.SHOOT_LIVES);
+		object.expiry = object.expire_off_view;
+		object.setSpeed(xspeed, yspeed);
+		object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 	}
 	
 	public abstract void shoot(List<Object> objects);

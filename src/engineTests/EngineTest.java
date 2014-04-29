@@ -91,7 +91,7 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		
-		game.getCollisionManager().setDirectionalCollisionBehavior(BOMB_COLID, "PerishTogether", PLAYER_COLID,"All");
+		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(BULLET_COLID, "PerishTogether", MUSHROOM_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(MUSHROOM_COLID, "HitterEliminateVictim", PLAYER_COLID,"Top");
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID,"Left");
@@ -101,17 +101,15 @@ public class EngineTest {
 //		game.getCollisionManager().setDirectionalTileCollisionBehavior(PLAYER_COLID, "StayOnTile", TILE_COLID,"Bottom");
 		game.getCollisionManager().setDirectionalTileCollisionBehavior(MUSHROOM_COLID, "StayOnTile", TILE_COLID,"All");
 		
-		game.getBloodManager().setValue(-10, "Collision",MUSHROOM_COLID,PLAYER_COLID);
+		game.getBloodManager().setValue(-1, "Collision",PLAYER_COLID,BOMB_COLID);
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, ENEMY_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(5, SaladConstants.COLLISION, MUSHROOM_COLID, PLAYER_COLID);
 		game.getScoreManager().setValue(1, "Time");
 		game.getScoreManager().setValue(50, "LevelDone", 1);
-		
 		game.getGravity().setMagnitude(0.1);
 		
 //		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
 //		game.getTEManager().setEventOrTriggerBehavior(1, "EventLevelDone", "");
-		
 		engine.loadingDone();
         return engine;
 	}

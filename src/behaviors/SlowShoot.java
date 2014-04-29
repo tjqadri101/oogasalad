@@ -33,10 +33,8 @@ public class SlowShoot extends Shootable{
 		
 		double[] property = locateShootLocation(xsize, ysize, shootSpeed);
 		
-		NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, property[0], property[1], SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
-		object.expiry = object.expire_off_view;
-		object.setSpeed(property[2], property[3]);
-		object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
+		createShootThing(engine, imageName, xsize, ysize, property[0], property[1], colid,
+				property[2], property[3]);	
 	}
 
 }

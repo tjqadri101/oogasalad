@@ -468,7 +468,7 @@ public abstract class GameObject extends JGObject {
 
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
-		// myInAirCounter = 0;
+		myIsInAir = 0;
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
 		setImage(myDefaultImage);
 	}
@@ -510,33 +510,6 @@ public abstract class GameObject extends JGObject {
 	public void updateImageURL(String gfxname) {
 		myDefaultImage = gfxname;
 	}
-
-	/**
-	 * Used for side detectors to get the ScoreManager to update scores
-	 * 
-	 * @return ScoreManager
-	 */
-//	public ScoreManager getScoreManager() {
-//		return myScoreManager;
-//	}
-
-	/**
-	 * Used for behaviors to get the BloodManager to update blood
-	 * 
-	 * @return BloodManager
-	 */
-//	public BloodManager getBloodManager() {
-//		return myBloodManager;
-//	}
-	
-	/**
-	 * Used for behaviors to get the LiveManager to update blood
-	 * 
-	 * @return LiveManager
-	 */
-//	public LiveManager getLiveManager(){
-//		return myLiveManager;
-//	}
 	
 	/**
 	 * @return the Gfx info
@@ -549,8 +522,40 @@ public abstract class GameObject extends JGObject {
 		myDefaultImage = image;
 	}
 
+	/**
+	 * Used for side detectors to get the ScoreManager to update scores
+	 * 
+	 * @return RevivalManager
+	 */
 //	public RevivalManager getRevivalManager() {
 //		return myRevivalManager;
+//	}
+	
+	/**
+	 * Used for side detectors to get the ScoreManager to update scores
+	 * 
+	 * @return ScoreManager
+	 */
+//	public ScoreManager getScoreManager() {
+//		return myScoreManager;
+//	}
+
+	/**
+	 * Used for side detectors to get the BloodManager to update blood
+	 * 
+	 * @return BloodManager
+	 */
+//	public BloodManager getBloodManager() {
+//		return myBloodManager;
+//	}
+	
+	/**
+	 * Used for side detectors to get the LiveManager to update blood
+	 * 
+	 * @return LiveManager
+	 */
+//	public LiveManager getLiveManager(){
+//		return myLiveManager;
 //	}
 	
 	public TriggerEventManager getEventManager(){

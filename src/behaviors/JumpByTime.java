@@ -30,7 +30,7 @@ public class JumpByTime extends Jumpable{
 		int latency = (Integer) params.get(2);
 		
 		if(myObject.getJumpTimes() > times){return;}
-		if(engine.getSaladTimer() % latency == 0){
+		if((engine.getSaladTimer() + latency) % (latency) == 0){
 			myObject.ydir = 1;
 			myObject.yspeed -= magnitude;	
 		}

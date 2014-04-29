@@ -4,8 +4,6 @@ import java.util.List;
 
 import engine.GameEngine;
 import objects.GameObject;
-import objects.NonPlayer;
-import saladConstants.SaladConstants;
 /**
  * @param String bullet's Image Name
  * @param int x size of the image
@@ -39,14 +37,14 @@ public class QuickShoot extends Shootable{
 		double[] property = locateShootLocation(xsize, ysize, shootSpeed);
 		
 		for(int i = 0; i < times; i ++){
-			double currentXPos = property[0];
-			double currentYPos = property[1];
-			if(myObject.getXHead() == 0){ currentYPos = currentYPos+(-20.0*times/2+i*20); }
-			else{ currentXPos = currentXPos+(-20.0*times/2+i*20); }	
-			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, currentXPos, currentYPos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
-			object.expiry = object.expire_off_view;
-			object.setSpeed(property[2], property[3]);	
-			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
+			if(myObject.getXHead() == 0){
+				createShootThing(engine, imageName, xsize, ysize, property[0], property[1] + (-20.0*times/2+i*20), colid,
+						property[2], property[3]);		
+			}
+			else{
+				createShootThing(engine, imageName, xsize, ysize, property[0] + (-20.0*times/2+i*20), property[1], colid,
+						property[2], property[3]);
+			}
 		}
 
 	}
