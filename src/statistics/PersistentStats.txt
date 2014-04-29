@@ -1,7 +1,0 @@
-Score,Game,null,102
-null Blood,Game,null,1
-null Live,Game,null,-6
-null shoot,Game,null,202
-Mushroom shoot,Game,null,101
-ShootObjects shoot,Game,null,3494
-Enemies Killed,Game,null,6
