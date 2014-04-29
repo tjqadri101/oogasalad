@@ -20,7 +20,8 @@ import engineManagers.ScoreManager;
  * unit that can execute certain actions and interactions
  * 
  * @author: Main Justin (Zihao) Zhang,
- * @contribution (side detectors/jump handling): Shenghan Chen
+ * @contribution: (side detectors/jump handling): Shenghan Chen
+ * @contribution: David Chou
  */
 
 public abstract class GameObject extends JGObject {
@@ -541,5 +542,17 @@ public abstract class GameObject extends JGObject {
     public double getMyInitX() {
         return myInitX;
     }
+
+    /**
+     * Allows the user to modify the image for different actions
+     * @param action
+     * @param imgfile
+     * @param xsize
+     * @param ysize
+     */
+	public void modifyDynamicImage(String action, String imgfile, int xsize,
+			int ysize) {
+		myAnimationManager.modifyImage(action, imgfile);
+	}
 
 }
