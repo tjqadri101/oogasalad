@@ -32,20 +32,12 @@ public class SlowShootByTime extends Shootable{
 		double shootSpeed = (Double) objects.get(4);
 		int latency = (Integer) objects.get(5);
 		
-		double shootXSpeed, shootYSpeed, xpos, ypos;
-		if(myObject.getXHead() < 0){ xpos = myObject.x - xsize; }
-		else if (myObject.getXHead() > 0){ xpos = myObject.x + myObject.getXSize(); }
-		else{ xpos = myObject.x + myObject.getXSize()/2; }
-		if(myObject.getYHead() < 0){ ypos = myObject.y - ysize; }
-		else if (myObject.getYHead() > 0){ ypos = myObject.y + myObject.getYSize(); }
-		else{ ypos = myObject.y + myObject.getYSize()/2; }
-		shootXSpeed = myObject.getXHead()*shootSpeed;
-		shootYSpeed = myObject.getYHead()*shootSpeed;
+		double[] property = locateShootLocation(xsize, ysize, shootSpeed);
 		
 		if(engine.getSaladTimer() % (engine.getGameSpeed() * latency) == 0){
-			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, xpos, ypos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
+			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, property[0], property[1], SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 			object.expiry = object.expire_off_view;
-			object.setSpeed(shootXSpeed, shootYSpeed);
+			object.setSpeed(property[2], property[3]);
 			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);	
 		}
 	}

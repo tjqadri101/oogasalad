@@ -38,7 +38,6 @@ public class Player extends GameObject {
 
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, 
 		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
-		myTEManager = new TriggerEventManager();
 	}
 	
 	/**
@@ -54,7 +53,6 @@ public class Player extends GameObject {
 	public void move(){
 		checkKeys();
 		super.move();
-		
 	}
 	
 	@Override

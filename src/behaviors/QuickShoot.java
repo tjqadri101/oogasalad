@@ -36,24 +36,16 @@ public class QuickShoot extends Shootable{
 		double shootSpeed = (Double) objects.get(4);
 		int times = (Integer) objects.get(5);
 		
-		double shootXSpeed, shootYSpeed, xpos, ypos;
-		if(myObject.getXHead() < 0){ xpos = myObject.x - xsize; }
-		else if (myObject.getXHead() > 0){ xpos = myObject.x + myObject.getXSize(); }
-		else{ xpos = myObject.getXHead() + myObject.getXSize()/2; }
-		if(myObject.getYHead() < 0){ ypos = myObject.y - ysize; }
-		else if (myObject.getYHead() > 0){ ypos = myObject.y + myObject.getYSize(); }
-		else{ ypos = myObject.y + myObject.getYSize()/2; }
-		shootXSpeed = myObject.getXHead()*shootSpeed;
-		shootYSpeed = myObject.getYHead()*shootSpeed;
+		double[] property = locateShootLocation(xsize, ysize, shootSpeed);
 		
 		for(int i = 0; i < times; i ++){
-			double currentXPos = xpos;
-			double currentYPos = ypos;
+			double currentXPos = property[0];
+			double currentYPos = property[1];
 			if(myObject.getXHead() == 0){ currentYPos = currentYPos+(-20.0*times/2+i*20); }
 			else{ currentXPos = currentXPos+(-20.0*times/2+i*20); }	
 			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, currentXPos, currentYPos, SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
 			object.expiry = object.expire_off_view;
-			object.setSpeed(shootXSpeed, shootYSpeed);	
+			object.setSpeed(property[2], property[3]);	
 			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
 		}
 
