@@ -154,18 +154,6 @@ public class Game {
     }
 
     /**
-     * Get an actor's collision ID by its unique ID
-     * Called by Graphic Authorizing Environment to display collisoin IDs
-     * @param levelID
-     * @param sceneID
-     * @param objectID
-     * @return colid
-     */
-    public int getNonPlayerColid(int levelID, int sceneID, int objectID){
-        return myLevelMap.get(levelID).getNonPlayer(sceneID, objectID).colid;
-    }
-
-    /**
      * Called to remove an existing scene from a particular level
      * @param the level ID that the scene belongs to 
      * @param the scene ID
