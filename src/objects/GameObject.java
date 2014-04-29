@@ -325,7 +325,7 @@ public abstract class GameObject extends JGObject {
 	 * @param lives
 	 */
 	public void setInitBlood(int blood) {
-		GameStats.set(myName + " " + SaladConstants.BLOOD, blood);
+		GameStats.set(myName + SaladConstants.SPACE + SaladConstants.BLOOD, blood);
 		myInitBlood = blood;
 		restoreBlood();
 	}
@@ -395,8 +395,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void bounce(){
-		 xspeed *= -1;
-		 yspeed *= -1;
+		myActionManager.bounce();
 	}
 
 	public void stop() {
@@ -531,35 +530,9 @@ public abstract class GameObject extends JGObject {
 //		return myRevivalManager;
 //	}
 	
-	/**
-	 * Used for side detectors to get the ScoreManager to update scores
-	 * 
-	 * @return ScoreManager
-	 */
-//	public ScoreManager getScoreManager() {
-//		return myScoreManager;
-//	}
-
-	/**
-	 * Used for side detectors to get the BloodManager to update blood
-	 * 
-	 * @return BloodManager
-	 */
-//	public BloodManager getBloodManager() {
-//		return myBloodManager;
-//	}
-	
-	/**
-	 * Used for side detectors to get the LiveManager to update blood
-	 * 
-	 * @return LiveManager
-	 */
-//	public LiveManager getLiveManager(){
-//		return myLiveManager;
-//	}
 	
 	public TriggerEventManager getEventManager(){
-	        return myEventManager;
+		return myEventManager;
 	}
     
     /**
