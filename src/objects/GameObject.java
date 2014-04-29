@@ -24,7 +24,8 @@ import engineManagers.ScoreManager;
  */
 
 public abstract class GameObject extends JGObject {
-
+	
+	protected ResourceBundle myBehaviors; 
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
@@ -48,10 +49,8 @@ public abstract class GameObject extends JGObject {
 	protected String myDefaultImage;
 	protected List<String> myAttributes;
 	protected String myName;
-
 	protected int myXHead;
 	protected int myYHead;
-	protected ResourceBundle myBehaviors; //
 	protected SideDetector[] mySideDetectors;
 
 	public GameObject(int uniqueID, String staticGfxName, int xsize,
@@ -360,7 +359,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void bounce(){
-//		myActionManager.bounce();
+		myActionManager.bounce();
 	}
 
 	public void stop() {
@@ -404,14 +403,14 @@ public abstract class GameObject extends JGObject {
 		if (myBlood <= 0) doAction(SaladConstants.DIE);
 		myIsInAir = 2 * (myIsInAir % 2);
 		if (myXHead < 0) {
-			myAnimationManager.updateImage("BKMove");
+			myAnimationManager.updateImage(SaladConstants.BK_MOVE);
 		} else if (myXHead > 0) {
-			myAnimationManager.updateImage("FDMove");
+			myAnimationManager.updateImage(SaladConstants.FD_MOVE);
 		}
 	}
 	
-	/*
-	 * 
+	/**
+	 * Update the image
 	 * @param behavior
 	 */
 	public void updateImage(String behavior){
@@ -428,9 +427,7 @@ public abstract class GameObject extends JGObject {
 			if(myBloodManager != null) Reflection.callMethod(myBloodManager, "update", args);
 			if(myLiveManager != null) Reflection.callMethod(myLiveManager, "update", args);
 			if(myEventManager != null) Reflection.callMethod(myEventManager, "update", args);	
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		} catch (Exception e){ e.printStackTrace(); }
 	}
 
 	@Override
@@ -440,7 +437,6 @@ public abstract class GameObject extends JGObject {
 
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
-		myIsInAir = 0;
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
 //		if (myXHead == 0) setImage(myDefaultImage);
 	}
@@ -486,16 +482,6 @@ public abstract class GameObject extends JGObject {
 	public void setStaticGfx(String image) {
 		myDefaultImage = image;
 	}
-
-	/**
-	 * Used for side detectors to get the ScoreManager to update scores
-	 * 
-	 * @return RevivalManager
-	 */
-//	public RevivalManager getRevivalManager() {
-//		return myRevivalManager;
-//	}
-	
 	
 	public TriggerEventManager getEventManager(){
 		return myEventManager;
