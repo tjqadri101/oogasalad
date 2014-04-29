@@ -13,6 +13,8 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
+	public static final int LEVELS = 8;
+	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
 	public static final int PLAYER_COLID = 4;
@@ -35,17 +37,18 @@ public class EngineTest {
 	public GameEngine testEngine(){
 		
 		GameEngine engine = new GameEngine(false);
+		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
-		for (int i=0;i<8;i++){
+		for (int i=0;i<LEVELS;i++){
 			game.addLevel(i+1);
 			game.addScene(i+1, i);
 			game.getLevel(i+1).setInitialSceneID(i);
 			game.getScene(i+1, i).setPlayerInitPosition((i+1)*100, 200);
 			engine.setCurrentScene(i+1, i);
 			
-			engine.setSceneView(null,false,false,1200,40);
+			engine.setSceneView(null,false,true,1200,40);
 			engine.loadTileImage(TILE_COLID, "brick.png");
 			engine.createTiles(TILE_COLID,0,15+i,1180,1);
 			engine.createTiles(TILE_COLID,20,15,10,1);
@@ -60,12 +63,14 @@ public class EngineTest {
 			goomba.setBehavior("RegularRemove");
 			goomba.setBehavior("BackForthMove",5.0, 10);
 			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100, 4);
-			
+
 			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);
 			mushroom.setBehavior("RegularRemove");
 			mushroom.setBehavior("BackForthMove",6.0, 20);
 			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
 		}
+		
+//		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");
 		
 		game.getGravity().setMagnitude(0.1);
 		
@@ -73,7 +78,7 @@ public class EngineTest {
 		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
 		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
-		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, SaladConstants.NULL, PLAYER_COLID, 30);
+		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
 		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
@@ -112,6 +117,7 @@ public class EngineTest {
 		
 //		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
 //		game.getTEManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
+		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;
 	}

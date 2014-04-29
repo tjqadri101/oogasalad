@@ -1,5 +1,6 @@
 package imagebuffer;
 
+import engine.GameEngine;
 import game_authoring_environment.ViewFactory;
 
 import java.awt.Graphics2D;
@@ -34,7 +35,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ImageBuffer {
 
-	private static final String DEFAULT_FOLDER_PATH = "src/engineImages/";
+	private static final String DEFAULT_FOLDER_PATH = "src/engine/"+GameEngine.BUFFER_IMAGE_FOLDER;
 	private String finalPath;
 	private File chosenFile;
 	private String fileName;
