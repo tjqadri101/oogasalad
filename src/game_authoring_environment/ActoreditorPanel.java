@@ -66,13 +66,23 @@ public class ActoreditorPanel extends Panel {
 		return myTable;
 	}
 	
+	public JButton createDeleteButton(){
+		JButton b = new JButton("Delete Actor");
+		b.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				gController.deleteActorNoID();
+			}			
+		});
+		return b;
+	}
 	
 	public void updateTable(){
 		List<String> s = gController.getAttributes();
 		String firstrow = s.get(0);
 		String[] strings = firstrow.split(",");
 		for(String k : strings){
-			//System.out.println(k);
+
 		}
 	}
 

@@ -30,21 +30,33 @@ public class PlayereditorPanel extends Panel {
 	private SubPanel mySubPanel;
 	private GAEController gController;
 	private JTable myTable;
-
+	private boolean playerExists;
+	private String playerName;
+	
 	public PlayereditorPanel(GAEController gController) {
 		super(PanelType.PLAYEREDITOR);
 		this.gController = gController;
 		makeSubPanel();
+		playerExists = false;
 		construct();
 	}
 
 	@Override
 	protected void construct() {
+		this.removeAll();
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
 		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
-		this.add(createKeySetButton(), BorderLayout.SOUTH);
-	}
+		if(!playerExists){
+			System.out.println("test if");
+			this.add(createPlayerButton(), BorderLayout.SOUTH);
+		}
+		else{
+			System.out.println("test else");
+			this.add(createKeySetButton(), BorderLayout.SOUTH);
+	
+		}	
+		}
 
 	@Override
 	protected void makeSubPanel() {
@@ -58,9 +70,7 @@ public class PlayereditorPanel extends Panel {
 	protected JComponent makeSubPanelItems() {
 		JPanel panel = new JPanel();
 		JButton jb  = makeChooseButton();
-		JButton jb2 = createKeySetButton();
 		panel.add(jb);
-		panel.add(jb2);
 		return jb;
 	}
 	public void update(){
@@ -68,9 +78,28 @@ public class PlayereditorPanel extends Panel {
 	}
 
 	private JTable createTable(){
+		System.out.println("test create tables");
 		myTable = new PlayerEditorTable(gController, this);
-		
+		System.out.println("test create tables");
 		return myTable;
+	}
+	
+	public JButton createPlayerButton(){
+		JButton button = new JButton("Create Player");
+		button.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				
+				gController.createPlayer(gController.getPlayerID(), null, 100, 100, 100, 100, myTable.getName(), 0, 1);
+				playerExists = true;
+				((PlayerEditorTable) myTable).setPlayerExists(true);
+				makeSubPanel();
+				construct();
+				
+				
+			}
+		});
+		return button;
 	}
 	
 	public JButton createKeySetButton(){
@@ -215,6 +244,10 @@ public class PlayereditorPanel extends Panel {
 	
 	public void updateInfo(int actorID){
 		System.out.println("updating playerID:"+actorID);	
+	}
+
+	public boolean doesPlayerExist() {
+		return playerExists;
 	}
 
 }

@@ -64,8 +64,7 @@ public class GAEController {
 		switchScene(1,0);
 		//uploadImage(100,100,)
 		double d = 0;
-		modifyGravityMagnitude(d);
-		createPlayer(playerID, null, 100, 100, 100, 100, "Default", 0, 1);
+		//modifyGravityMagnitude(d);
 
 
 	}
@@ -1407,6 +1406,11 @@ public class GAEController {
 	
 	public NonPlayer getNonPlayer(){
 		return myDataController.getNonPlayer(selectedSceneID);
+	}
+
+
+	public int getPlayerID() {
+		return playerID;
 	}
 	
 }
