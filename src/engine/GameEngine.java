@@ -688,7 +688,7 @@ public class GameEngine extends StdGame {
 
 	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
-		 object.setSize(xsize, ysize);
+		 object.setSize(object.getXSize(), object.getYSize());
 		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
 
