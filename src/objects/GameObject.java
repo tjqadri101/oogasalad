@@ -20,7 +20,8 @@ import engineManagers.ScoreManager;
  * unit that can execute certain actions and interactions
  * 
  * @author: Main Justin (Zihao) Zhang,
- * @contribution (side detectors/jump handling): Shenghan Chen
+ * @contribution: (side detectors/jump handling): Shenghan Chen
+ * @contribution: David Chou
  */
 
 public abstract class GameObject extends JGObject {
