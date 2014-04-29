@@ -165,7 +165,7 @@ public class GameEngine extends StdGame {
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
 	        if (myGame==null){return;}
-	        TriggerEventManager myTEM = getGame().getTEManager();
+	        TriggerEventManager myTEM = getGame().getTriggerManager();
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
 		if (drag()) {myViewOffsetPlayer = false;}
@@ -695,8 +695,8 @@ public class GameEngine extends StdGame {
 
 	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
-		 object.setSize(xsize, ysize);
-//		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
+		 object.setSize(object.getXSize(), object.getYSize());
+		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
 
 	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
@@ -712,12 +712,11 @@ public class GameEngine extends StdGame {
 
 	 public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			 double xpos, double ypos, String name, int colid, int lives) {
-		 //	        TriggerEventManager etm = getGame().getTEM();
 		 loadImage(imgfile);
 		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				 name, colid, lives, myGame.getCollisionManager(),
 				 myGame.getScoreManager(), myGame.getBloodManager(), 
-				 myGame.getRevivalManager(), myGame.getLiveManager(), myGame.getTEManager());
+				 myGame.getRevivalManager(), myGame.getLiveManager(), myGame.getTriggerManager());
 		 myGame.setPlayer(object);
 		 myPlayer = object;
 		 if (myGame.getLiveManager() != null) {
@@ -729,12 +728,11 @@ public class GameEngine extends StdGame {
 
 	 public NonPlayer createActor(int unique_id, String imgfile, int xsize,
 			 int ysize, double xpos, double ypos, String name, int colid, int lives) {
-		 //	        TriggerEventManager etm = getGame().getTEM();
 		 loadImage(imgfile);
 		 NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				 ypos, name, colid, lives, myGame.getCollisionManager(),
 				 myGame.getScoreManager(), myGame.getBloodManager(), 
-				 myGame.getRevivalManager(), myGame.getLiveManager(),myGame.getTEManager());
+				 myGame.getRevivalManager(), myGame.getLiveManager(),myGame.getTriggerManager());
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
 		 if (isPlaying) {object.resume();}
 		 return object;

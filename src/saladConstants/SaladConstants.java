@@ -16,7 +16,6 @@ public final class SaladConstants {
 	public static final String DELETE_SCENE = "DeleteScene";
 	public static final String RESET_LEVEL_ID = "ResetLevelID";
 	
-	
 	public static final String MODIFY_INPUTMANAGER = "ModifyInputManager";
 	public static final String MODIFY_SCOREMANAGER = "ModifyScoreManager";
 	public static final String MODIFY_TIMERMANAGER = "ModifyTimerManager";
@@ -226,15 +225,25 @@ public final class SaladConstants {
 	public static final String SET_COLLISION_LIFE = "SetCollisionLife";
 	public static final String SET_TILE_COLLISION_LIFE = "SetTileCollisionLife";
 
+	
+	public static final String SPREAD_SHOOT_BY_TIME = "SpreadShootByTime";
+	public static final String JUMP_BY_TIME = "JumpByTime";
+	public static final String SPREAD_SHOOT = "SpreadShoot";
+	public static final String FD_MOVE = "FDMove";
+	public static final String BK_MOVE = "BKMove";
 	public static final String TRIGGER_BY_REMOVE = "TriggerByRemove";
-
 	public static final String EVENT_LEVEL_DONE = "EventLevelDone";
-
 	public static final String EVENT_ENEMY_SHOWER = "EventEnemyShower";
-
-	public static final String PATH = "src/statistics/PersistentStats.txt";
-
-
+	public static final String SHOOT_HIT_OBJECT = "ShootHitObject";
 
 	
+	
+	public static final String PATH = "src/statistics/PersistentStats.txt";
+	public static final String BEHAVIOR_METHOD = "BehaviorMethod";
+
+	
+
+	
+
+
 }

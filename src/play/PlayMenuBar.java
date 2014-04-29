@@ -95,6 +95,7 @@ public class PlayMenuBar extends JMenuBar {
 	 * @throws Exception
 	 */
 	public void createGame() throws Exception {
+		myEngine.loadingBegin();
 		File loadedFile = chooseGameFile("Load");
 		if (loadedFile == null) {
 			return;

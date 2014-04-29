@@ -19,13 +19,6 @@ public abstract class TileCollision {
 	
 	protected void updateManagers(int tilecid){
 		myObject.updateManagers(SaladConstants.TILE_COLLISION, myObject, tilecid);
-//		myObject.getScoreManager().update(SaladConstants.TILE_COLLISION, 
-//				myObject, tilecid);
-//		myObject.getTEManager().updateCollision(SaladConstants.COLLISION, myObject, tilecid);
-//		myObject.getBloodManager().update(SaladConstants.TILE_COLLISION, 
-//				myObject, tilecid);
-//		myObject.getLiveManager().update(SaladConstants.TILE_COLLISION, 
-//				myObject, tilecid);
 	}
 	
 	public abstract void collide(List<Object> objects);

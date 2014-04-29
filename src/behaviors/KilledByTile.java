@@ -3,6 +3,7 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
+import saladConstants.SaladConstants;
 /**
  * No parameter needed
  * 
@@ -24,7 +25,7 @@ public class KilledByTile extends TileCollision {
 	@Override
 	public void collide(List<Object> objects) {
 		myObject.ground();
-		myObject.die();
+		myObject.doAction(SaladConstants.DIE);
 		updateManagers((Integer) objects.get(0));
 	}
 

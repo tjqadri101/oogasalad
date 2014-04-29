@@ -21,10 +21,10 @@ public class PerishTogether extends Collision{
 	 */
 	@Override
 	public void collide(List<Object> objects) {
-		myObject.die();
+		myObject.doAction(SaladConstants.DIE);
 		GameObject hitter = (GameObject) objects.get(0);
 		updateManagers(hitter);
-		hitter.die();
+		hitter.doAction(SaladConstants.DIE);
 		GameStats.update(SaladConstants.ENEMY_KILLED, 1);
 	}
 }

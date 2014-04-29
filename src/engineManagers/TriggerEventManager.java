@@ -97,7 +97,7 @@ public class TriggerEventManager extends StatisticsManager{
                 triggerList.remove(0);
                 if (triggerBehavior == null)
                     break;
-                System.out.println("TEM: behavior" + triggerBehavior);
+                System.out.println("TEM: behavior " + triggerBehavior);
                 ResourceBundle behaviors = ResourceBundle
                         .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                                    + SaladConstants.OBJECT_BEHAVIOR);
@@ -152,6 +152,7 @@ public class TriggerEventManager extends StatisticsManager{
         for (int i = 0; i < args.length; i++) {
             behaviorParameters.add(args[i]);
         }
+        System.out.println("SetEventOrTriggerB: behaviroParar: " + behaviorParameters);
         if (behaviorName.contains(TRIGGER_INDICATOR)) {
             myTriggerMap.put(etPairID, behaviorParameters);
         }
