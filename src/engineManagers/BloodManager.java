@@ -28,12 +28,11 @@ public class BloodManager extends StatisticsManager{
 	public void update(String info, GameObject victim, GameObject hitter) {
 		int hitterColid = checkIfSideDetectorColid(hitter);
 		int victimColid = checkIfSideDetectorColid(victim);
-		System.out.println("*BloodManager called: " + info + " " + victim.colid + " " + hitter.colid);
+//		System.out.println("*BloodManager called: " + info + " " + victim.colid + " " + hitter.colid);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, victimColid, hitterColid);
 		if(!myMap.containsKey(condition)) return;
-		System.out.println("Condition: " + condition);
-		hitter.changeBlood(myMap.get(condition));
+		victim.changeBlood(myMap.get(condition));
 		GameStats.update(hitter.getObjectName() + " " + SaladConstants.BLOOD, myMap.get(condition));
 	}
 	

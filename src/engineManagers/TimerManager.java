@@ -5,13 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /*
  * @Author: Justin (Zihao) Zhang
  */
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 /**
  * May not be needed
- * @Author: Justin (Zihao) Zhang
+ * @author Main Justin (Zihao) Zhang
  */
 public class TimerManager {
 	
@@ -28,7 +30,8 @@ public class TimerManager {
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		for(String state: myTimerMap.keySet()){
-			answer.add(SaladConstants.MODIFY_TIMERMANAGER + "," + state + "," + myTimerMap.get(state));
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_TIMERMANAGER, 
+					state, myTimerMap.get(state)));
 		}
 		return answer;
 	}

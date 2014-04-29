@@ -40,7 +40,7 @@ public abstract class StatisticsManager {
 			System.out.println("isSideDtector: " + detector.getParentColid());
 			return detector.getParentColid();
 		}
-		System.out.println("notSideDetector " + object.getClass());
+//		System.out.println("notSideDetector " + object.getClass());
 		return object.colid;
 	}
 	
