@@ -52,13 +52,13 @@ public class SideDetector extends GameObject{
 		setPos(myParent.getLastX(), myParent.getLastY());
 	}
 	
-	public void die(){
-		myParent.die();
-	}
-	
-	public void jump(){
-		myParent.jump();
-	}
+//	public void die(){
+//		myParent.die();
+//	}
+//	
+//	public void jump(){
+//		myParent.jump();
+//	}
 	
 	public void stop(){
 		myParent.stop();

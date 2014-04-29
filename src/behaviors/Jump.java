@@ -3,6 +3,7 @@ package behaviors;
 import java.util.List;
 
 import objects.GameObject;
+import saladConstants.SaladConstants;
 /**
  * @param double magnitude
  * @param int jump times allowed while in the air
@@ -27,5 +28,8 @@ public class Jump extends Jumpable{
 		if(myObject.getJumpTimes() > times){return;}
 		myObject.ydir = 1;
 		myObject.yspeed -= magnitude;
+		
+		if (myObject.getIsInAir() == 0) { myObject.incrementJumpTimes(1); }
+		myObject.updateImage("Jump");
 	}
 }

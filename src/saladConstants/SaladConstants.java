@@ -240,6 +240,7 @@ public final class SaladConstants {
 	
 	
 	public static final String PATH = "src/statistics/PersistentStats.txt";
+	public static final String BEHAVIOR_METHOD = "BehaviorMethod";
 
 	
 

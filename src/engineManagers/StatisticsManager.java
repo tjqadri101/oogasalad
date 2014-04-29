@@ -27,9 +27,9 @@ public abstract class StatisticsManager {
 	 * @param args
 	 */
 	public void setValue(int value, Object ... args){
-		System.out.println();
-		System.out.println("**Statistics Manager setValue: " + value);
-		SaladUtil.printObjectList(SaladUtil.convertArgsToObjectList(args));
+//		System.out.println();
+//		System.out.println("**Statistics Manager setValue: " + value);
+//		SaladUtil.printObjectList(SaladUtil.convertArgsToObjectList(args));
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, args);
 		myMap.put(condition, value);
 	}
@@ -37,7 +37,7 @@ public abstract class StatisticsManager {
 	protected int checkIfSideDetectorColid (GameObject object){
 		if (object instanceof SideDetector){
 			SideDetector detector = (SideDetector) object;
-			System.out.println("isSideDtector: " + detector.getParentColid());
+//			System.out.println("isSideDtector: " + detector.getParentColid());
 			return detector.getParentColid();
 		}
 //		System.out.println("notSideDetector " + object.getClass());

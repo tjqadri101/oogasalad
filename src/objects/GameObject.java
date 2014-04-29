@@ -10,7 +10,6 @@ import saladConstants.SaladConstants;
 import statistics.GameStats;
 import engineManagers.*;
 import util.AttributeMaker;
-import util.SaladUtil;
 import engineManagers.CollisionManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
@@ -52,7 +51,6 @@ public abstract class GameObject extends JGObject {
 
 	protected int myXHead;
 	protected int myYHead;
-	
 	protected ResourceBundle myBehaviors; //
 	protected SideDetector[] mySideDetectors;
 
@@ -105,6 +103,23 @@ public abstract class GameObject extends JGObject {
 		for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) {
 			setSideDetector(new SideDetector(this, i, SideDetector.SDcid(colid, i)));
 		}
+	}
+	
+	/**
+	 * Set a behavior
+	 * @param s
+	 * @param args
+	 */
+	public void setBehavior(String behavior, Object ...args){
+		myActionManager.setBehavior(behavior, args);
+	}
+	
+	/**
+	 * Perform an action
+	 * @param action
+	 */
+	public void doAction(String action){
+		myActionManager.doAction(action);
 	}
 	
 	public int getXHead(){
@@ -305,15 +320,6 @@ public abstract class GameObject extends JGObject {
 	}
 
 	/**
-	 * Set the Die Behavior
-	 * 
-	 * @param a String specifying one of the die behaviors
-	 */
-	public void setDieBehavior(String s, Object... args) {
-		myActionManager.setDieBehavior(s, args);
-	}
-
-	/**
 	 * Change the number of lives
 	 */
 	public void changeBlood(int blood) {
@@ -353,48 +359,6 @@ public abstract class GameObject extends JGObject {
 		return myInitBlood;
 	}
 
-	/**
-	 * Set the jump behavior
-	 * 
-	 * @param String
-	 *            specifying one of the jump behaviors
-	 * @param Magnitude
-	 *            of the initial jump speed
-	 */
-	public void setJumpBehavior(String s, Object... args) {
-		myActionManager.setJumpBehavior(s, args);
-	}
-
-	/**
-	 * Set the shoot behavior
-	 * 
-	 * @param s
-	 *            : shoot type
-	 * @param args
-	 *            : parameters
-	 */
-	public void setShootBehavior(String s, Object... args) {
-		myActionManager.setShootBehavior(s, args);
-	}
-
-	/**
-	 * Set the move behavior
-	 * 
-	 * @param s
-	 *            : String specifying the move behavior
-	 * @param xspeed
-	 *            : the x speed
-	 * @param yspeed
-	 *            : the y speed
-	 */
-	public void setMoveBehavior(String s, Object... args) {
-		myActionManager.setMoveBehavior(s, args);
-	}
-
-	public void die() {
-		myActionManager.die();
-	}
-
 	public void bounce(){
 		myActionManager.bounce();
 	}
@@ -418,11 +382,13 @@ public abstract class GameObject extends JGObject {
 	public void resetCollisionID(int collisionID) {
 		colid = collisionID;
 	}
-
-	public void jump() {
-		if (myIsInAir == 0) { myJumpTimes++; }
-		myActionManager.jump();
-		myAnimationManager.updateImage("Jump");
+	
+	public int getIsInAir(){
+		return myIsInAir;
+	}
+	
+	public void incrementJumpTimes(int change){
+		myJumpTimes += change;
 	}
 
 	/**
@@ -435,7 +401,7 @@ public abstract class GameObject extends JGObject {
 
 	@Override
 	public void move() {
-		if (myBlood <= 0) die();
+		if (myBlood <= 0) doAction(SaladConstants.DIE);
 		myIsInAir = 2 * (myIsInAir % 2);
 		if (myXHead < 0) {
 			myAnimationManager.updateImage("BKMove");
@@ -444,6 +410,14 @@ public abstract class GameObject extends JGObject {
 		} else {
 			setImage(myDefaultImage);
 		}
+	}
+	
+	/*
+	 * 
+	 * @param behavior
+	 */
+	public void updateImage(String behavior){
+		myAnimationManager.updateImage(behavior);
 	}
 	
 	/**
@@ -470,7 +444,7 @@ public abstract class GameObject extends JGObject {
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		myIsInAir = 0;
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
-		setImage(myDefaultImage);
+//		setImage(myDefaultImage);
 	}
 	
 	@Override
@@ -480,14 +454,6 @@ public abstract class GameObject extends JGObject {
 			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) { mySideDetectors[i].remove();}
 		}
 		if (myUniqueID != SaladConstants.NULL_UNIQUE_ID) myRevivalManager.addRemovedObject(this);
-	}
-
-	public void autoMove() {
-		myActionManager.autoMove();
-	}
-
-	public void shoot() {
-		myActionManager.shoot();
 	}
 
 	/**

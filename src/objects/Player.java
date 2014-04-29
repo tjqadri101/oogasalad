@@ -61,18 +61,18 @@ public class Player extends GameObject {
 		setImage(myDefaultImage);
 	}
 	
-	@Override
-	public void jump() {
-		super.jump();
-		myAnimationManager.updateImage(SaladConstants.UPDATE_JUMP);
-	}
+//	@Override
+//	public void jump() {
+//		super.jump();
+//		myAnimationManager.updateImage(SaladConstants.UPDATE_JUMP);
+//	}
 
 	
 	protected void checkKeys(){
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				String methodName = myKeyMap.get(key);
-				Reflection.callMethod(this, methodName);
+				Reflection.callMethod(myActionManager, "doAction", methodName);
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
 			}
 		}
@@ -118,11 +118,11 @@ public class Player extends GameObject {
 		myYHead = SaladConstants.NEUTRAL_DIRECTION;
 	}
 	
-	@Override
-	public void die(){
-		super.die();
-		myLiveManager.decrementLive(getID());
-	}
+//	@Override
+//	public void die(){
+//		super.die();
+//		myLiveManager.decrementLive(getID());
+//	}
 	
 	@Override
 	public List<String> getAttributes(){

@@ -41,7 +41,7 @@ public class LiveManager extends StatisticsManager {
 	public void setInitLives(int lives, int playerID){
 		if(!myPlayerMap.containsKey(playerID)) return;
 		myInitLifeMap.put(myPlayerMap.get(playerID), lives);
-		GameStats.set(myPlayerMap.get(playerID).getObjectName() + " " + SaladConstants.LIVE, lives);
+		GameStats.set(myPlayerMap.get(playerID).getObjectName() + SaladConstants.SPACE + SaladConstants.LIVE, lives);
 	}
 	
 	/**
