@@ -46,8 +46,6 @@ public class Game {
     protected Map<Character, String> myTileImageMap;
     protected String myName;
 
-
-
     public Game(){
         initTransitionStateMap();
         myTileImageMap = new HashMap<Character, String>();

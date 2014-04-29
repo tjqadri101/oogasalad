@@ -13,10 +13,10 @@ public class StatsDisplay {
 	private int SCREEN_WIDTH_SPACING;
 	private static final int COLUMNS = 3;
 	private static final int VERTICAL_SPACING = 20;
-	private static final JGFont MAIN_HEADER_FONT=new JGFont("MAIN_HEADER_FONT", JGFont.BOLD, 24.0);
+	private static final JGFont MAIN_HEADER_FONT=new JGFont("MAIN_HEADER_FONT", JGFont.BOLD, 16.0);
 	private static final JGFont HEADER_FONT=new JGFont("HEADER_FONT", JGFont.BOLD, 16.0);
 	private static final JGFont ENTRY_FONT=new JGFont("ENTRY_FONT", JGFont.PLAIN, 12.0);
-	private static final JGColor HEADER_COLOR=JGColor.red;
+	private static final JGColor HEADER_COLOR=JGColor.blue;
 	private static final JGColor ENTRY_COLOR=JGColor.white;
 
 	public StatsDisplay(JGEngine engine) {
