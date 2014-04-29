@@ -124,18 +124,32 @@ public abstract class GameObject extends JGObject {
 		myActionManager.doAction(action);
 	}
 	
+	/**
+	 * Get the x head direction
+	 * @return
+	 */
 	public int getXHead(){
 		return myXHead;
 	}
 	
+	/**
+	 * Get the y head direction
+	 */
 	public int getYHead(){
 		return myYHead;
 	}
 	
+	/**
+	 * set the x head direction
+	 */
 	public void setXHead(int head){
 		myXHead = head;
 	}
 	
+	/**
+	 * set the y head direction
+	 * @param head
+	 */
 	public void setYHead(int head){
 		myYHead = head;
 	}
@@ -370,6 +384,9 @@ public abstract class GameObject extends JGObject {
 		setPos(getLastX(), getLastY());
 	}
 
+	/**
+	 * Called when hit the ground
+	 */
 	public void ground() {
 		myIsInAir = 1;
 		myJumpTimes = 0;
