@@ -437,9 +437,9 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) die();
 		myIsInAir = 2 * (myIsInAir % 2);
-		if (xdir < 0) {
+		if (myXHead < 0) {
 			myAnimationManager.updateImage("BKMove");
-		} else if (xdir > 0) {
+		} else if (myXHead > 0) {
 			myAnimationManager.updateImage("FDMove");
 		} else {
 			setImage(myDefaultImage);
