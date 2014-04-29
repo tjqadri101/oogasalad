@@ -38,11 +38,12 @@ public class SpreadShoot extends Shootable{
 		double[] property = locateShootLocation(xsize, ysize, shootSpeed);
 		
 		for(int i = 0; i < times; i ++){
-			NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, property[0], property[1], SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
-			object.expiry = object.expire_off_view;
-			if(myObject.getXHead() == 0){ object.setSpeed(shootSpeed*(-1.0*times/2 + i), property[3]); }
-			else{ object.setSpeed(property[2], shootSpeed*(-times/2 + i)); }	
-			object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
+			if(myObject.getXHead() == 0)
+				createShootThing(engine, imageName, xsize, ysize, property[0], property[1], colid,
+						shootSpeed*(-1.0*times/2 + i), property[3]);	
+			else
+				createShootThing(engine, imageName, xsize, ysize, property[0], property[1], colid,
+						property[2], shootSpeed*(-times/2 + i));
 		}
 	}
 

@@ -35,19 +35,17 @@ public class SpreadShootByTime extends Shootable{
 		int colid = (Integer) objects.get(3);
 		double shootSpeed = (Double) objects.get(4);
 		int times = (Integer) objects.get(5);
-		int latency = (Integer) objects.get(5);
+		int latency = (Integer) objects.get(6);
 		
 		double[] property = locateShootLocation(xsize, ysize, shootSpeed);
-		
-//		System.out.println("Shoot Check Time: " + engine.getSaladTimer() % (engine.getGameSpeed() * latency));
-		if(engine.getSaladTimer() % (engine.getGameSpeed() * latency) == 0){
-			System.out.println("Shoot!!");
+		if( ( engine.getSaladTimer() + latency) % (latency) == 0){
 			for(int i = 0; i < times; i ++){
-				NonPlayer object = engine.createActor(SaladConstants.NULL_UNIQUE_ID, imageName, xsize, ysize, property[0], property[1], SaladConstants.SHOOT_NAME, colid, SaladConstants.SHOOT_LIVES);
-				object.expiry = object.expire_off_view;
-				if(myObject.getXHead() == 0){ object.setSpeed(shootSpeed*(-1.0*times/2 + i), property[3]); }
-				else{ object.setSpeed(property[2], shootSpeed*(-times/2 + i)); }	
-				object.setDieBehavior(SaladConstants.REGULAR_REMOVE);
+				if(myObject.getXHead() == 0)
+					createShootThing(engine, imageName, xsize, ysize, property[0], property[1], colid,
+							shootSpeed*(-1.0*times/2 + i), property[3]);	
+				else
+					createShootThing(engine, imageName, xsize, ysize, property[0], property[1], colid,
+							property[2], shootSpeed*(-times/2 + i));
 			}
 		}
 	}
