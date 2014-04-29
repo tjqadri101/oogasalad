@@ -569,4 +569,16 @@ public abstract class GameObject extends JGObject {
         return myInitX;
     }
 
+    /**
+     * Allows the user to modify the image for different actions
+     * @param action
+     * @param imgfile
+     * @param xsize
+     * @param ysize
+     */
+	public void modifyDynamicImage(String action, String imgfile, int xsize,
+			int ysize) {
+		myAnimationManager.modifyImage(action, imgfile);
+	}
+
 }
