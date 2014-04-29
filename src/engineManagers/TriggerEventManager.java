@@ -20,7 +20,7 @@ import util.SaladUtil;
  * 
  * @Author: Steve (Siyang) Wang
  */
-public class TriggerEventManager {
+public class TriggerEventManager extends StatisticsManager{
 
     private static final String DO_EVENT = "doEvent";
     private static final String CHECK_TRIGGER = "checkTrigger";
@@ -41,38 +41,41 @@ public class TriggerEventManager {
 
     /**
      * Called by Collision when the trigger is collision
+     * @param info: Collision Behavior
      */
-    public void update(String collisionBehavior, GameObject myObject, GameObject hitter){
+    @Override
+    public void update (String info, GameObject victim, GameObject hitter){
         //        List<Object> actual = new ArrayList();
-        GameObject hitterObj= checkIfSideDetectorColid(hitter);
-        GameObject victimObj= checkIfSideDetectorColid(myObject);
-        for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
-            List<Object> collisionPara = entry.getValue();
-            try{
-                if (collisionPara.size()==3){
-                    if (compareParameters(collisionPara,collisionBehavior,victimObj,hitterObj)){
-                        doEvent(myEngine,entry.getKey());
-                    }
-                } 
-            }catch (IndexOutOfBoundsException e){
-                System.out.println("Caught IOException: " + e.getMessage());
-            }
-        }
+        GameObject hitterObj= checkIfIsSideDetector(hitter);
+        GameObject victimObj= checkIfIsSideDetector(victim);
+        checkCollisionTrigger(info, hitterObj, victimObj);
     }
-
+    
     /**
      * Called by TileCollision when the trigger is TileCollision
      */
-    public void update(String collisionBehavior, GameObject myObject, Integer tilecid){
-        GameObject victimObj= checkIfSideDetectorColid(myObject);
+    @Override
+    public void update (String info, GameObject victim, int tilecid){
+        GameObject victimObj= checkIfIsSideDetector(victim);
+        checkCollisionTrigger(info, victimObj, tilecid);
+    }
+
+    /**
+     * @param collisionBehavior
+     * @param hitterObj
+     * @param victimObj
+     */
+    private void checkCollisionTrigger (String collisionBehavior,
+                                        GameObject victim,
+                                        Object obj) {
         for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
             List<Object> collisionPara = entry.getValue();
             try{
                 if (collisionPara.size()==3){
-                    if (compareParameters(collisionPara,collisionBehavior,victimObj,tilecid)){
+                    if (compareParameters(collisionPara,collisionBehavior,victim,obj)){
                         doEvent(myEngine,entry.getKey());
                     }
-                }
+                } 
             }catch (IndexOutOfBoundsException e){
                 System.out.println("Caught IOException: " + e.getMessage());
             }
@@ -120,7 +123,7 @@ public class TriggerEventManager {
     /** 
      * Called to test if sideDetector
      */
-    protected GameObject checkIfSideDetectorColid (GameObject object){
+    protected GameObject checkIfIsSideDetector(GameObject object){
         if (object instanceof SideDetector){
             SideDetector detector = (SideDetector) object;
             return detector.getParent();
@@ -135,7 +138,7 @@ public class TriggerEventManager {
                                        String collisionBehavior,
                                        GameObject myObject,
                                        Object hitter) {
-        if((collisionPara.get(0).equals(collisionBehavior))&&
+        if(     (collisionPara.get(0).equals(collisionBehavior))&&
                 collisionPara.get(1).equals(myObject)&&
                 collisionPara.get(2).equals(hitter)){
             return true;
