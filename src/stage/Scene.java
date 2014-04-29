@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Map.Entry;
-import java.util.Set;
 import engine.GameEngine;
 import objects.GameObject;
 import objects.NonPlayer;
@@ -19,7 +16,6 @@ import util.SaladUtil;
  * @author Main Justin (Zihao) Zhang
  * @contribution David Chou
  * @contribution (for tiles) Shenghan Chen
- * @contribution (for trigger) Steve (Siyang) Wang
  */
 
 public class Scene {
@@ -30,17 +26,11 @@ public class Scene {
 	
 	protected int myID;
 	protected double initPlayerX;
-	protected double initPlayerY; // tell GAE to send two orders for creating the player; one to setInitPosition, the other one to create the object
+	protected double initPlayerY; 
 	protected int myFieldXSize;
 	protected int myFieldYSize;
 	protected Map<Integer, NonPlayer> myObjectMap;
 	protected String[] myTiles;
-	
-	   protected String myTrigger;
-	        protected boolean myTriggerFlag;
-	        protected List<Object> myTriggerParameter;
-	        protected List<Object> myEventParameter;
-	        protected String myEvent;
             
 	
 	public Scene(int id) {
@@ -50,6 +40,9 @@ public class Scene {
 		initTiles();
 	}
 	
+	public Map<Integer, NonPlayer> getObjectMap(){
+		return myObjectMap;
+	}
 	
 	public String[] getTiles(){
 		return myTiles;
@@ -199,9 +192,11 @@ public class Scene {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, SaladConstants.ID, myID));
-		List<Object> backgroundParams = SaladUtil.convertArgsToObjectList(myBackground, myIfWrapHorizontal, 
-				myIfWrapVertical, myFieldXSize, myFieldYSize);
-		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE_VIEW, SaladConstants.BACKGROUND, false, backgroundParams));
+		if(myBackground != null){
+			List<Object> backgroundParams = SaladUtil.convertArgsToObjectList(myBackground, myIfWrapHorizontal, 
+					myIfWrapVertical, myFieldXSize, myFieldYSize);
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE_VIEW, SaladConstants.BACKGROUND, false, backgroundParams));	
+		}
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.PLAYER_INITIAL_POSITION, false, initPlayerX, initPlayerY));
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
@@ -213,57 +208,6 @@ public class Scene {
 		answer.add(tiles);
 		return answer;
 	}
-	
-	/**
-         * Used for triggerManager to inspect the trigger
-         * @return Trigger
-         */
-        public String getTrigger(){
-                return myTrigger;
-        }        
-
-        /**
-         * Used for triggerManager to checkTrigger at each doFrame in engine
-         * @return Trigger
-         */
-        public boolean checkTrigger(GameEngine myEngine){
-                if (myTrigger == null) return false;
-                ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
-                Object answer = SaladUtil.behaviorReflection(behaviors, myTrigger, myTriggerParameter, "checkTrigger", myEngine);
-                myTriggerFlag = (boolean) answer;
-                return myTriggerFlag;
-        }       
-        
-        /**
-         * Used for triggerManager to inspect the trigger
-         * @return Trigger
-         */
-        public String getEvent(){
-                return myEvent;
-        }  
-        
-        /**
-         * Used for triggerManager to checkTrigger at each doFrame in engine
-         * @return Trigger
-         */
-        public void doEvent(GameEngine myEngine){
-            try{
-                ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.OBJECT_BEHAVIOR);
-                SaladUtil.behaviorReflection(behaviors, myEvent, myEventParameter, "doEvent", myEngine);
-            }
-            catch(Exception e){
-                e.printStackTrace(); // shall not reach here
-            }
-        }
-        
-        /**
-         * Used for to set events for specific object
-         * @return Trigger
-         */
-        public void setTriggerAndEvent(Object ... args){
-            //unimplemented
-//                myTrigger
-        }
 	
 	/*@Siyang 
 	 * Public method added for testing only. 

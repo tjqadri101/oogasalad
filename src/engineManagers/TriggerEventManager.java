@@ -38,54 +38,74 @@ public class TriggerEventManager {
         myEventMap = new HashMap<Integer, List<Object>>();
         myAttributes = new ArrayList<>();
     }
-    
+
     /**
      * Called by Collision when the trigger is collision
      */
-    public void updateCollision(String collisionBehavior, GameObject myObject, GameObject hitter){
-//        List<Object> actual = new ArrayList();
+    public void update(String collisionBehavior, GameObject myObject, GameObject hitter){
+        //        List<Object> actual = new ArrayList();
         GameObject hitterObj= checkIfSideDetectorColid(hitter);
         GameObject victimObj= checkIfSideDetectorColid(myObject);
         for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
             List<Object> collisionPara = entry.getValue();
-            if (compareParameters(collisionPara,collisionBehavior,victimObj,hitterObj)){
-                doEvent(myEngine,entry.getKey());
+            try{
+                if (collisionPara.size()==3){
+                    if (compareParameters(collisionPara,collisionBehavior,victimObj,hitterObj)){
+                        doEvent(myEngine,entry.getKey());
+                    }
+                } 
+            }catch (IndexOutOfBoundsException e){
+                System.out.println("Caught IOException: " + e.getMessage());
             }
         }
     }
-    
+
     /**
      * Called by TileCollision when the trigger is TileCollision
      */
-    public void updateCollision(String collisionBehavior, GameObject myObject, Integer tilecid){
+    public void update(String collisionBehavior, GameObject myObject, Integer tilecid){
         GameObject victimObj= checkIfSideDetectorColid(myObject);
         for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
             List<Object> collisionPara = entry.getValue();
-            if (compareParameters(collisionPara,collisionBehavior,victimObj,tilecid)){
-                doEvent(myEngine,entry.getKey());
+            try{
+                if (collisionPara.size()==3){
+                    if (compareParameters(collisionPara,collisionBehavior,victimObj,tilecid)){
+                        doEvent(myEngine,entry.getKey());
+                    }
+                }
+            }catch (IndexOutOfBoundsException e){
+                System.out.println("Caught IOException: " + e.getMessage());
             }
         }
     }
-    
+
     /** 
      * Called by engine in the doFrame
      */
     public void checkTrigger (GameEngine engine) {
-        myEngine = engine;
+        myEngine = engine; 
+
         for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
+            System.out.println("TriggerEventManager checkTrigger called: ");
             int etPairID = entry.getKey();
             List<Object> triggerList = entry.getValue();
-            String triggerBehavior = (String) triggerList.remove(0);
-            if (triggerBehavior == null)
-                break;
-            ResourceBundle behaviors = ResourceBundle
-                    .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
-                               + SaladConstants.OBJECT_BEHAVIOR);
-            Object answer = SaladUtil.behaviorReflection(behaviors, triggerBehavior,
-                                                         triggerList, CHECK_TRIGGER, myEngine);
-            if ((boolean) answer)
-                doEvent(myEngine, etPairID);
+            if(triggerList.size()!=0){
+                String triggerBehavior = triggerList.get(0).toString();
+                triggerList.remove(0);
+                if (triggerBehavior == null)
+                    break;
+                System.out.println("TEM: behavior" + triggerBehavior);
+                ResourceBundle behaviors = ResourceBundle
+                        .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+                                   + SaladConstants.OBJECT_BEHAVIOR);
+                Object answer = SaladUtil.behaviorReflection(behaviors, triggerBehavior,
+                                                             triggerList, CHECK_TRIGGER, myEngine);
+                // Nullpointer exception here... Consider going through salad reflection
+                if ((boolean) answer)
+                    doEvent(myEngine, etPairID);
+            }
         }
+
     }
 
     private void doEvent (GameEngine myEngine, int etPairID) {
@@ -102,8 +122,8 @@ public class TriggerEventManager {
      */
     protected GameObject checkIfSideDetectorColid (GameObject object){
         if (object instanceof SideDetector){
-                SideDetector detector = (SideDetector) object;
-                return detector.getParent();
+            SideDetector detector = (SideDetector) object;
+            return detector.getParent();
         }
         return object;
     }
@@ -115,8 +135,9 @@ public class TriggerEventManager {
                                        String collisionBehavior,
                                        GameObject myObject,
                                        Object hitter) {
-        if((collisionPara.get(0).equals(collisionBehavior))&&collisionPara.get(1).equals(myObject)
-                &&collisionPara.get(2).equals(hitter)){
+        if((collisionPara.get(0).equals(collisionBehavior))&&
+                collisionPara.get(1).equals(myObject)&&
+                collisionPara.get(2).equals(hitter)){
             return true;
         }
         return false;

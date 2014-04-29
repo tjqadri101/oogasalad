@@ -4,6 +4,7 @@ import java.util.List;
 
 import engine.GameEngine;
 import objects.GameObject;
+import util.SaladUtil;
 /**
  * @param double amplitude of the moving pattern
  * @param int latency; larger latency leads to slower speed
@@ -23,7 +24,11 @@ public class BackForthMove extends Movable{
 		double amplitude = (Double) objects.get(0);
 		int latency = (Integer) objects.get(1);
 		GameEngine engine = (GameEngine) myObject.eng;
-		myObject.x = myObject.x + amplitude * Math.sin(engine.timer/latency);
+		double diff = Math.sin(engine.getSaladTimer()/latency);
+		myObject.x = myObject.x + amplitude * diff;
+		if(diff >= 0) myObject.setXHead(1);
+		else myObject.setXHead(-1);
+		myObject.setYHead(0);
 	}
 
 }

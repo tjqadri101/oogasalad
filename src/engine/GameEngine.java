@@ -11,9 +11,11 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import engineManagers.TriggerEventManager;
 
 /**
  * @Author: Isaac (Shenghan) Chen
@@ -37,7 +39,7 @@ public class GameEngine extends StdGame {
 	protected int myCurrentLevelID;
 	protected int myCurrentSceneID;
 	protected Scene myCurrentScene;
-	protected Scene myEmptyScene = new Scene(0);
+//	protected Scene myEmptyScene = new Scene(0);
 	protected Player myPlayer;
 	protected int myTimer;
 	
@@ -77,7 +79,6 @@ public class GameEngine extends StdGame {
 //		setTileSettings("#",2,0);
 		defineImage("null","0",0,"null","-");
 		setGameState("Edit");
-		myEmptyScene = new Scene(0);
 		myTimer = 0;
 		lives = 1;
 	}
@@ -103,7 +104,14 @@ public class GameEngine extends StdGame {
 		return true;
 	}
 	
-	
+	public void loadingBegin() {
+		if (isEditingMode) {return;}
+		isLoading = true;
+		isPlaying = false;
+		hideScene();
+		myCurrentScene = new Scene(0);
+		showScene();
+	}
 	
 	public void loadingDone() {
 		if (isEditingMode) {return;}
@@ -122,7 +130,7 @@ public class GameEngine extends StdGame {
 		int ticks4 = myGame.getTransitionState("GameOver").getFrame();
 		if (ticks4 > -1) {leveldone_ticks = ticks4;}
 		//reflection
-		if (inGameState("Title")) {setTransition("Title");}
+		if (inGameState("Title")) {setTransition("Title");System.out.println("???");}
 	}
 	
 	
@@ -145,6 +153,7 @@ public class GameEngine extends StdGame {
 	
 	public void doFrameInGame() {
 		doFrameEdit();
+		
 	}
 	
 	public void paintFrameInGame() {
@@ -155,7 +164,9 @@ public class GameEngine extends StdGame {
 	
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
-//	        TriggerEventManager myTEM = getGame().getTEM();
+		myTimer += this.getGameSpeed();
+	        if (myGame==null){return;}
+	        TriggerEventManager myTEM = getGame().getTEManager();
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
 		if (drag()) {myViewOffsetPlayer = false;}
@@ -168,7 +179,7 @@ public class GameEngine extends StdGame {
 			else {myViewOffsetPlayer = false;}
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
-//		myTEM.checkTrigger(this);
+		myTEM.checkTrigger(this);
 //		if (checkGoal()) {
 //			if (level >= 3) {
 //				gameOver();
@@ -189,6 +200,7 @@ public class GameEngine extends StdGame {
 				else {lives = current_lives;}
 			}
 		}
+		timer ++; //add by Justin
 	}
 	
 	public void paintFrameEdit() {
@@ -224,9 +236,9 @@ public class GameEngine extends StdGame {
 	
 	/* start<state> methods */
 	
-//	public void startTitle() {
-//		setTransition("Title");
-//	}
+	public void startTitle() {
+		setTransition("Title");
+	}
 
 	public void startStartGame() {
 		setTransition("StartGame");
@@ -246,6 +258,9 @@ public class GameEngine extends StdGame {
 	}
 
 	public void startGameOver() {
+		hideScene();
+		myCurrentScene = new Scene(0);
+		showScene();
 		setTransition("GameOver");
 	}
 	
@@ -613,7 +628,12 @@ public class GameEngine extends StdGame {
 	 }
 
 	 public Game getGame() {
+//	     if (myGame == null) {return null;}
 		 return myGame;
+	 }
+	 
+	 public int getSaladTimer() {
+		 return myTimer;
 	 }
 
 	 public int getCurrentLevelID() {
@@ -639,7 +659,7 @@ public class GameEngine extends StdGame {
 	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
 		 object.setSize(xsize, ysize);
-		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
+//		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
 
 	 public void modifyActorImage(int unique_id, String imgfile, int xsize, int ysize) {
