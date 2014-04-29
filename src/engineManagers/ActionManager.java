@@ -12,8 +12,8 @@ import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * Manager the actions for a Game Object
- * For every new action X added to a Game Object, a setXBehavior, an X() and a makeXAttribute methods 
- * are needed to add in this class
+ * This class is totally flexible in the sense that every newly added action will not result in any
+ * code changes here
  * 
  * @author Main Justin (Zihao) Zhang
  */

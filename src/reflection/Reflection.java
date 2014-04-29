@@ -65,6 +65,32 @@ public class Reflection
         }
     }
     
+    /** @author Justin (Zihao) Zhang
+     *   
+     * @param takes target object, the name of the method you want to get
+     * @return the Method (only those that are declared in the runtime class of the target object)
+     */
+    public static Method getDeclaredMethod(Object target, String name)
+        throws ReflectionException, ClassNotFoundException
+    {
+        try
+        {
+            Method[] toCall = target.getClass().getDeclaredMethods();
+            for (Method current: toCall)
+            {
+                if (current.getName().equals(name)){
+                    return current;
+                }
+            }
+            throw new ReflectionException("No matching public constructor for " + name);
+        }
+        catch (Exception e)
+        {
+            throw new ReflectionException("No matching public method " + name + 
+                                          " for " + target.getClass().getName());
+        }
+    }
+    
     /** @author Steve (Siyang) Wang
      *   
      * @param takes target object, the name of the method you want to get

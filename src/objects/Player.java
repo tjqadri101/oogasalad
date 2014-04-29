@@ -61,6 +61,7 @@ public class Player extends GameObject {
 		setImage(myDefaultImage);
 	}
 	
+//  Actors can also jump!! -- Justin Zhang
 //	@Override
 //	public void jump() {
 //		super.jump();
@@ -72,7 +73,12 @@ public class Player extends GameObject {
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				String methodName = myKeyMap.get(key);
-				Reflection.callMethod(myActionManager, "doAction", methodName);
+				try{
+					Reflection.getDeclaredMethod(this, methodName);	
+					Reflection.callMethod(this, methodName);
+				} catch (Exception e){
+					Reflection.callMethod(myActionManager, "doAction", methodName);	
+				}
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
 			}
 		}
@@ -117,12 +123,6 @@ public class Player extends GameObject {
 		myXHead = SaladConstants.POSITIVE_DIRECTION;
 		myYHead = SaladConstants.NEUTRAL_DIRECTION;
 	}
-	
-//	@Override
-//	public void die(){
-//		super.die();
-//		myLiveManager.decrementLive(getID());
-//	}
 	
 	@Override
 	public List<String> getAttributes(){

@@ -452,6 +452,7 @@ public abstract class GameObject extends JGObject {
 			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) { mySideDetectors[i].remove();}
 		}
 		if (myUniqueID != SaladConstants.NULL_UNIQUE_ID) myRevivalManager.addRemovedObject(this);
+		if (this instanceof Player) myLiveManager.decrementLive(getID());
 	}
 
 	/**
