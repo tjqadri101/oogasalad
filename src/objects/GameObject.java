@@ -396,7 +396,7 @@ public abstract class GameObject extends JGObject {
 	}
 
 	public void bounce(){
-		myActionManager.bounce();
+//		myActionManager.bounce();
 	}
 
 	public void stop() {
@@ -441,8 +441,6 @@ public abstract class GameObject extends JGObject {
 			myAnimationManager.updateImage("BKMove");
 		} else if (myXHead > 0) {
 			myAnimationManager.updateImage("FDMove");
-		} else {
-			setImage(myDefaultImage);
 		}
 	}
 	
@@ -470,7 +468,7 @@ public abstract class GameObject extends JGObject {
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		myIsInAir = 0;
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
-		setImage(myDefaultImage);
+//		if (myXHead == 0) setImage(myDefaultImage);
 	}
 	
 	@Override
