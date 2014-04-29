@@ -91,6 +91,7 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		
+		game.getCollisionManager().setDirectionalCollisionBehavior(BOMB_COLID, "PerishTogether", PLAYER_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(BULLET_COLID, "PerishTogether", MUSHROOM_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(MUSHROOM_COLID, "HitterEliminateVictim", PLAYER_COLID,"Top");
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID,"Left");
