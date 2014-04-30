@@ -40,23 +40,31 @@ public abstract class PanelTable extends JTable{
 	
 	public PanelTable(){
 		new JTable();
+		resize();
 		headerObject = new Object[]{"Property",""};
 		makeTable();
 		init();
 		
 	}
+	
 	public PanelTable(boolean b){
 		new JTable();
+		resize();
 		headerObject = new Object[]{"Property",""};
 		
 	}
 	public PanelTable(Object[] o){
 		new JTable();
+		resize();
 		headerObject = o;
 		makeTable();
 		init();
 	}
 
+	private void resize() {
+		this.setRowHeight(20);
+		
+	}
 	public void makeTable(){
 		myTableModel = new DefaultTableModel(headerObject, 0){
 			@Override
