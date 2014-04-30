@@ -83,7 +83,7 @@ public class TriggerManagerTest extends TestCase{
         try {
             myGame.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
             myGame.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-            myGame.getTriggerManager().doEvent(myEngine, 1);
+            myGame.getTriggerManager().performEvent(myEngine, 1);
             /*private void doEvent (GameEngine myEngine, int etPairID) {
                 List<Object> rawPara = myEventMap.get(etPairID);
                 int size = rawPara.size();

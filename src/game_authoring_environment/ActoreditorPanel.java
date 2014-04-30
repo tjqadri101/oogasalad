@@ -55,6 +55,13 @@ public class ActoreditorPanel extends Panel {
 		return jb;
 	}
 	
+	private JButton makeAnimationButton(){
+		JButton j = new JButton("Animate Actor");
+			
+		
+		return j;
+	}
+	
 	public void update(int currentSelectedActorID){
 		updateTable();
 		System.out.println("ActoreditorPanel switched to actorID:"+currentSelectedActorID);
