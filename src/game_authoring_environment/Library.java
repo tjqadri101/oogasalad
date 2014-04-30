@@ -20,7 +20,7 @@ public class Library extends JTabbedPane {
 	private static final int LIBRARY_PANEL_WIDTH = FULL_VIEW_WIDTH * 1/5;
 	
 	private JPanel myScenesPanel;
-	private JPanel myBehaviorsPanel;
+	private JPanel myTilePanel;
 	private JPanel myActorsPanel;
 	private GAEController controller;
 
@@ -38,19 +38,19 @@ public class Library extends JTabbedPane {
 		ImageIcon behaviorsTabIcon = new ImageIcon(this.getClass().getResource("resources/behaviorsIcon.png"));
 		this.addTab("",sceneTabIcon, myScenesPanel);
 		this.addTab( "", actorsTabIcon, myActorsPanel);
-		this.addTab( "", behaviorsTabIcon, myBehaviorsPanel);
+		this.addTab( "", behaviorsTabIcon, myTilePanel);
 		
 	}
 
 	private void makePanels(GAEController gController) {
 		myScenesPanel = ViewFactory.buildPanel(PanelType.SCENE,gController);
-		myBehaviorsPanel = ViewFactory.buildPanel(PanelType.BEHAVIORS,gController);
+		myTilePanel = ViewFactory.buildPanel(PanelType.TILE,gController);
 		myActorsPanel = ViewFactory.buildPanel(PanelType.ACTORS,gController);
 		
 	}
 	
 	public HashMap<String, JPanel> setUpMap(HashMap<String, JPanel> map){
-		map.put(SaladConstants.BEHAVIOR_PANEL, myBehaviorsPanel);
+		map.put(SaladConstants.TILE_PANEL, myTilePanel);
 		map.put(SaladConstants.SCENE_PANEL, myScenesPanel);
 		map.put(SaladConstants.ACTOR_PANEL, myActorsPanel);
 		return map;
