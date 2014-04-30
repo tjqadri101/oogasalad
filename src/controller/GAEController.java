@@ -11,6 +11,7 @@ import game_authoring_environment.GAE;
 import game_authoring_environment.LeftPanel;
 import game_authoring_environment.Library;
 import game_authoring_environment.MenuBar;
+import game_authoring_environment.RightPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -85,14 +86,18 @@ public class GAEController {
 	public GameEngine getEngine(){
 		return myGameEngine;
 	}
+	
+	public RightPanel getRightPanel(){
+		return fv.getRightPanel();
+	}
 
 
 	public void createPlayer(int ID,String url, int xSize, int ySize, double xPos, double yPos, String name, int colID, int lives){
 		String order = SaladConstants.CREATE_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR +
 				SaladConstants.IMAGE + SaladConstants.SEPARATOR+url+ SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize +
 				SaladConstants.SEPARATOR + SaladConstants.POSITION + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos + 
-				SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + SaladConstants.COLLISION_ID + colID + SaladConstants.SEPARATOR + 
-				SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
+				SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR +
+				colID + SaladConstants.SEPARATOR + SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		setColIDStayOnEveryTileID(colID);
 		System.out.println(order);
