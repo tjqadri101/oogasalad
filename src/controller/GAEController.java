@@ -505,25 +505,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-
-	public void modifyActorBackForthMove(int ID, double amplitude, int latency){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
-				SaladConstants.BACK_FORTH_MOVE + SaladConstants.SEPARATOR + SaladConstants.BACK_FORTH_MOVE+ SaladConstants.SEPARATOR 
-				+ amplitude + SaladConstants.SEPARATOR + latency;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
 	/**
 	 * Modify actor's regular move property without providing actor id. The selectedActorID is used.
 	 */
 	public void modifyActorBackForthMoveNoID(double amplitude, int latency){
-		modifyActorBackForthMove(selectedActorID, amplitude, latency);
-	}
-
-	public void modifyActorRegRemove(int ID){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
-				SaladConstants.REGULAR_REMOVE + SaladConstants.SEPARATOR +SaladConstants.REGULAR_REMOVE;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+selectedActorID+SaladConstants.SEPARATOR + 
+				SaladConstants.BACK_FORTH_MOVE + SaladConstants.SEPARATOR + SaladConstants.BACK_FORTH_MOVE+ SaladConstants.SEPARATOR 
+				+ amplitude + SaladConstants.SEPARATOR + latency;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -532,12 +520,8 @@ public class GAEController {
 	 * Modify actor by doing a regular remove without providing actor id. The selectedActorID is used.
 	 */
 	public void modifyActorRegRemoveNoID(){
-		modifyActorRegRemove(selectedActorID);
-	}
-
-	public void modifyActorImmortal(int ID){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
-				SaladConstants.IMMORTAL + SaladConstants.SEPARATOR+SaladConstants.IMMORTAL;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+selectedActorID+SaladConstants.SEPARATOR + 
+				SaladConstants.REGULAR_REMOVE + SaladConstants.SEPARATOR +SaladConstants.REGULAR_REMOVE;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -546,12 +530,9 @@ public class GAEController {
 	 * Modify actor by making it immortal without providing actor id. The selectedActorID is used.
 	 */
 	public void modifyActorImmortalNoID(){
-		modifyActorImmortal(selectedActorID);
-	}
-
-	public void modifyActorImmobile(int ID){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR + 
-				SaladConstants.IMMOBILE + SaladConstants.SEPARATOR+SaladConstants.IMMOBILE;
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + 
+				SaladConstants.SEPARATOR+selectedActorID+SaladConstants.SEPARATOR + 
+				SaladConstants.IMMORTAL + SaladConstants.SEPARATOR+SaladConstants.IMMORTAL;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -560,7 +541,10 @@ public class GAEController {
 	 * Modify actor by making it immobile without providing actor id. The selectedActorID is used.
 	 */
 	public void modifyActorImmobileNoID(){
-		modifyActorImmobile(selectedActorID);
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+
+				selectedActorID+SaladConstants.SEPARATOR + SaladConstants.IMMOBILE + SaladConstants.SEPARATOR+SaladConstants.IMMOBILE;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
 	}
 
 	/**
@@ -635,18 +619,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-
-	public void deleteActor(int ID){
-		String order = SaladConstants.DELETE_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + ID;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
 	/**
 	 * Delete actor without providing actor id. The selectedActorID is used.
 	 */
 	public void deleteActorNoID(){
-		deleteActor(selectedActorID);
+		String order = SaladConstants.DELETE_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + selectedActorID;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
 	}
 
 	public void modifyCollisBehavHitElimVic(int victimColID,int hitterColID, String moveDirection){
