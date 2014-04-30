@@ -1,10 +1,10 @@
 package engineTests;
 
 import java.awt.BorderLayout;
-
+import java.util.List;
+import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import objects.NonPlayer;
 import objects.Player;
 import saladConstants.SaladConstants;
@@ -118,8 +118,9 @@ public class EngineTest {
 		game.getGravity().setMagnitude(0.1);
 		game.getLiveManager().setInitLives(3, 0);
 		
-//		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
-//		game.getTEManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
+		
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;
