@@ -125,6 +125,7 @@ public class ActorsPanel extends Panel {
 			public void actionPerformed (ActionEvent e){
 				addActors();
 			}
+			
 		});
 
 		JButton deleteButton = ViewFactory.createJButton("Delete");

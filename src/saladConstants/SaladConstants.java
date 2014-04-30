@@ -9,6 +9,7 @@ public final class SaladConstants {
 	public static final String MODIFY_LEVEL = "ModifyLevel";
 	public static final String CREATE_SCENE = "CreateScene";
 	public static final String SWITCH_SCENE = "SwitchScene";
+	public static final String SWITCH_SCENE_TO_NEW_LEVEL_ID = "switchSceneToNewLevelID";
 	public static final String MODIFY_SCENE = "ModifyScene";
 	public static final String MODIFY_INIT_SCENE = "ModifyInitScene";
 	public static final String SET_INIT_SCENE = "SetInitialScene";
@@ -30,7 +31,7 @@ public final class SaladConstants {
 	public static final String BEHAVIOR_PANEL = "Behavior";
 	public static final String ELEMENT_LABEL = "Element";
 	public static final String ROOT_ELEMENT_LABEL = "Root";
-	
+	public static final String TILE_PANEL = "Tile";
 	
 	public static final String STATE_GAMEOVER = "GameOver";
 	public static final String STATE_STARTTITLE = "StartTitle";
@@ -46,6 +47,7 @@ public final class SaladConstants {
 	public static final String CREATE_ACTOR = "CreateActor";
 	public static final String MODIFY_ACTOR = "ModifyActor";
 	public static final String DELETE_ACTOR = "DeleteActor";
+	public static final String MODIFY_ACTOR_ANIMATION = "ModifyActorAnimation";
 	
 	
 	public static final String TEST_XMLFILE_URL = "test.xml";
@@ -84,6 +86,7 @@ public final class SaladConstants {
 	public static final String QUICK_SHOOT = "QuickShoot";
 	public static final String SHOW_CORPSE = "ShowCorpse";
 	public static final String IMMORTAL = "Immortal";
+	public static final String CAN_MOVE_IN_AIR = "CanMoveInAir";
 	public static final String CAN_NOT_COLLIDE = "CanNotCollide";
 	public static final String CAN_NOT_JUMP = "CanNotJump";
     public static final String BACK_FORTH_MOVE_WITH_VERTICAL_SPEED = "BackForthMoveWithVerticalSpeed";
@@ -164,7 +167,7 @@ public final class SaladConstants {
 
 	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
 	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
-	public static final String MODIFY_LIFE_MANAGER = "ModifyLifeManager";
+	public static final String MODIFY_LIFE_MANAGER = "ModifyLiveManager";
 
 	public static final String TRIGGER_BY_TIME = "TriggerByTime";
 	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
@@ -174,6 +177,7 @@ public final class SaladConstants {
 	public static final String SET_EVENT_ENEMY_SHOWER = "SetEventEnemyShower";
 	public static final String SET_TRIGGER = "SetTrigger";
 	public static final String SET_EVENT = "SetEvent";
+	public static final String EVENT_LOSE_GAME = "EventLoseGame";
 
 	public static final String TRIGGER_TYPE = "TriggerType";
 	public static final String EVENT_TYPE = "EventType";
@@ -219,10 +223,9 @@ public final class SaladConstants {
 	public static final String SLOW_SHOOT_BY_TIME = "SlowShootByTime";
 
 	public static final String MODIFY_COLLISION_BEHAVIOUR = "ModifyCollisionBehavior";
-	public static final String REBOUND = "Rebound";
+	public static final String REBOUND = "Rebounce";
 
 	public static final String KILL_BY_TILE = "KillByTile";
-	public static final String SET_INITIAL_SCENE = "SetInitialScene";
 	public static final String SET_COLLISION_LIFE = "SetCollisionLife";
 	public static final String SET_TILE_COLLISION_LIFE = "SetTileCollisionLife";
 
@@ -241,6 +244,11 @@ public final class SaladConstants {
 
 	public static final String PATH = "src/statistics/PersistentStats.txt";
 	public static final String BEHAVIOR_METHOD = "BehaviorMethod";
+
+	
+
+
+
 	
 
 	

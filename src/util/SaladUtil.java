@@ -91,7 +91,9 @@ public class SaladUtil {
                                             List<Object> objects, String methodName, Object constructorParam){
         if(myString == null) return null;
         try{
+//            System.out.println("behaviorReflection: " + myBundle.getString(myString));
             Object behavior = Reflection.createInstance(myBundle.getString(myString), constructorParam);
+            // I think here is the problem 
             return Reflection.callMethod(behavior, methodName, objects);	
         } catch (Exception e){
             e.printStackTrace(); // should never reach here

@@ -1,6 +1,0 @@
-Score,Game,,45
-null Blood,Game,,1
-Nick Live,Game,,3
-Score,Game,ad,74
-null Blood,Game,ad,1
-Nick Live,Game,ad,3

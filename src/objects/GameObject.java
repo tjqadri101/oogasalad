@@ -438,6 +438,7 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void move() {
 		if (myBlood <= 0) doAction(SaladConstants.DIE);
+
 		myAirCounter = 2 * (myAirCounter % 2);
 	}
 	
@@ -491,6 +492,7 @@ public abstract class GameObject extends JGObject {
 	 */
 	public List<String> getAttributes() {
 		myAttributes.addAll(myActionManager.getAttributes());
+		myAttributes.addAll(myAnimationManager.getAttributes());
 		return myAttributes;
 	}
 
@@ -527,9 +529,11 @@ public abstract class GameObject extends JGObject {
 		for(GameObject object: myShotThings){
 			if(object.isAlive()) count ++;
 		}
-//		for(GameObject object: myShotThings){
-//			if(!object.isAlive()) myShotThings.remove(object);
-//		}
+		List<GameObject> temp = new ArrayList<GameObject>();
+		for(GameObject object: myShotThings){
+			if(object.isAlive()) temp.add(object);
+		}
+		myShotThings = temp;
 		return count;
 	}
 	

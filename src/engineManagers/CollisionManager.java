@@ -39,9 +39,9 @@ public class CollisionManager {
 	 * @param victimColid
 	 * @param args parameters
 	 */
-	public void addCollisionPair(int victimColid, String type, int hitterColid, Object ... args){
+	public void addCollisionPair(int victimColid, String type, int hitterColid, String direction, Object ... args){
 		addPairs(SaladConstants.MODIFY_COLLISION_BEHAVIOR, myCollisionMap, 
-				victimColid, type, hitterColid, args);
+				victimColid, type, hitterColid, direction, args);
 	}
 	
 	/**
@@ -51,9 +51,9 @@ public class CollisionManager {
 	 * @param tileColid
 	 * @param args parameters
 	 */
-	public void addTileCollisionPair(int victimColid, String type, char tileColid, Object ... args){
+	public void addTileCollisionPair(int victimColid, String type, char tileColid, String direction, Object ... args){
 		addPairs(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR, myTileCollisionMap, 
-				victimColid, type, tileColid, args);
+				victimColid, type, tileColid, direction, args);
 	}
 	
 	/**
@@ -109,10 +109,6 @@ public class CollisionManager {
 				parameters, SaladConstants.COLLIDE, victim);
 	}
 	
-	public void resetColid(){
-		
-	}
-	
 	/**
 	 * Get the collision behavior between an object and a tile
 	 * @param victimColid
@@ -166,10 +162,11 @@ public class CollisionManager {
 	 * @param colid2
 	 * @param args
 	 */
-	protected void addPairs(String key, Map<String, List<Object>> map, int colid1, String type, int colid2, Object ... args){
+	protected void addPairs(String key, Map<String, List<Object>> map, int colid1, String type, int colid2, String direction, Object ... args){
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
 		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
 		attributeParams.add(0, colid2);
+		attributeParams.add(1, direction);
 		String attribute = AttributeMaker.addAttribute(key, 
 				SaladConstants.COLLISION_ID, colid1, type, true, attributeParams);
 		myAttributes.add(attribute);
@@ -189,8 +186,8 @@ public class CollisionManager {
 	public void setDirectionalCollisionBehavior(int victimColid, String type, int hitterColid, String direction, Object ... args){
 		int dir = Arrays.asList(new String[]{SaladConstants.Top,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
-		if(dir == 4) addCollisionPair(victimColid, type, hitterColid, args);
-		else addCollisionPair(SideDetector.SDcid(victimColid, dir), type, hitterColid,args);
+		if(dir == 4) addCollisionPair(victimColid, type, hitterColid, direction, args);
+		else addCollisionPair(SideDetector.SDcid(victimColid, dir), type, hitterColid,direction,args);
 	}
 	
 	/**
@@ -204,8 +201,8 @@ public class CollisionManager {
 	public void setDirectionalTileCollisionBehavior(int victimColid, String type, char tileColid, String direction, Object ... args){
 		int dir = Arrays.asList(new String[]{SaladConstants.Top,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
-		if(dir == 4) addTileCollisionPair(victimColid, type, tileColid, args);
-		else addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, args);
+		if(dir == 4) addTileCollisionPair(victimColid, type, tileColid, direction, args);
+		else addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, direction, args);
 	}
 	
 	/**
@@ -213,6 +210,7 @@ public class CollisionManager {
 	 * @return String List
 	 */
 	public List<String> getAttributes(){
+		SaladUtil.printStringList(myAttributes);
 		return myAttributes;
 	}
 	

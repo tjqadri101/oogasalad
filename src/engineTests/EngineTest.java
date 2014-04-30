@@ -1,10 +1,8 @@
 package engineTests;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import objects.NonPlayer;
 import objects.Player;
 import saladConstants.SaladConstants;
@@ -44,7 +42,7 @@ public class EngineTest {
 		for (int i=0;i<LEVELS;i++){
 			game.addLevel(i+1);
 			game.addScene(i+1, i);
-			game.getLevel(i+1).setInitialSceneID(i);
+			game.getLevel(i+1).setInitialScene(i);
 			game.getScene(i+1, i).setPlayerInitPosition((i+1)*100, 200);
 			engine.setCurrentScene(i+1, i);
 			
@@ -125,10 +123,11 @@ public class EngineTest {
 		engine.gotoGameState("Title");
 		engine.setCurrentScene(1, 0);
 		
-//		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
-//		game.getTEManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
+//		System.out.println("\n EngineTest finished constructing game");
         return engine;
 	}
 }
