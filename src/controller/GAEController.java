@@ -774,7 +774,7 @@ public class GAEController {
 	 */
 	public void setInitialScene(int levelID, int sceneID){
 		String order = SaladConstants.MODIFY_LEVEL + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + 
-				SaladConstants.SET_INITIAL_SCENE + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + sceneID;
+				SaladConstants.SET_INITIAL_SCENE_ID + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + sceneID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

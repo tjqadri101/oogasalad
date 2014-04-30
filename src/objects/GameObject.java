@@ -528,9 +528,11 @@ public abstract class GameObject extends JGObject {
 		for(GameObject object: myShotThings){
 			if(object.isAlive()) count ++;
 		}
-//		for(GameObject object: myShotThings){
-//			if(!object.isAlive()) myShotThings.remove(object);
-//		}
+		List<GameObject> temp = new ArrayList<GameObject>();
+		for(GameObject object: myShotThings){
+			if(object.isAlive()) temp.add(object);
+		}
+		myShotThings = temp;
 		return count;
 	}
 	
