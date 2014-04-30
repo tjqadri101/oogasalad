@@ -323,7 +323,7 @@ public class Game {
         for (Entry<Character, String> entry : getTileImageMap()) { // need check
             Character cid = entry.getKey();
             String imgfile = entry.getValue();
-            answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid.toString(), 
+            answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.TILE_COLID, cid.toString(), 
             		SaladConstants.DRAG_IMAGE, false, imgfile));
         }
         for (int playerID: myPlayerMap.keySet()){
