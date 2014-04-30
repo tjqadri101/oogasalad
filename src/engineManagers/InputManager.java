@@ -1,7 +1,6 @@
 package engineManagers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +9,7 @@ import java.util.ResourceBundle;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
+import util.SaladUtil;
 /**
  * @author Main Justin (Zihao) Zhang
  * Only intended for non-player keys
@@ -17,9 +17,6 @@ import util.AttributeMaker;
 public class InputManager {
 	
 	protected ResourceBundle myKeyMethods;
-	
-	public static final List<String> CHEAT_KEY_EVENTS = Arrays.asList(new String[]{
-		"SceneDone", "BloodFull", "LifeIncrease", "GameOver"});
 	protected GameEngine myEngine;
 	
 	/**
@@ -47,7 +44,9 @@ public class InputManager {
 	public void checkKey(){
 		for(int key: myKeyMap.keySet()){
 			if(myEngine.getKey(key)){
-				
+				List<Object> params = new ArrayList<Object>();
+				SaladUtil.behaviorReflection(myKeyMethods, myKeyMap.get(key),
+						params, SaladConstants.CHECK_KEY, myEngine);
 			}
 		}
 	}
@@ -59,11 +58,6 @@ public class InputManager {
 	 */
 	public void setKey(int key, String methodName){
 		myKeyMap.put(key, methodName);
-	}
-	
-	//may be deleted
-	public Map<Integer, String> getKeyMap(){
-		return myKeyMap;
 	}
 	
 	/**

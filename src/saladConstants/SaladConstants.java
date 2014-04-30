@@ -249,7 +249,7 @@ public final class SaladConstants {
 	public static final String LIVE_MANAGER = "LiveManager";
 	public static final String TRIGGER_EVENT_MANAGER = "TriggerEventManager";
 	public static final String OBJECT_DO_ACTION = "doAction";
-	
+	public static final String CHECK_KEY = "checkKey";
 
 	
 
