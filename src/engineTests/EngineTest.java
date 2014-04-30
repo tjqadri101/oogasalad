@@ -94,6 +94,8 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		
+		engine.modifyPlayerImage(0, "poke-mon/025.gif", 0, 0);
+		
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(MUSHROOM_COLID, "ShootHitObject", BULLET_COLID,"All");
