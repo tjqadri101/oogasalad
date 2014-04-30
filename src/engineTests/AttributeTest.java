@@ -92,9 +92,10 @@ public class AttributeTest {
     	List<String> att = myGame.getAttributes();
     	assertEquals(att.get(0), DEFAULT_GRAVITY);
     	assertEquals(att.get(1), CREATE_PLAYER_ORDER);
-    	assertEquals(att.get(2), PLAYER_SPEED);
-    	assertEquals(att.get(3), PLAYER_AIR);
-    	assertEquals(att.get(4), CREATE_LEVEL_1);
+    	assertEquals(att.get(2), MODIFY_PLAYER_SHOOT);
+    	assertEquals(att.get(3), PLAYER_SPEED);
+    	assertEquals(att.get(4), PLAYER_AIR);
+    	assertEquals(att.get(5), CREATE_LEVEL_1);
 	}
 	
 	@Test

@@ -117,10 +117,7 @@ public class EngineTest {
 		game.getLiveManager().setInitLives(3, 0);
 		game.getInputManager().setKey('G', "LifeIncrease");
 		game.getInputManager().setKey('F', "GameOver");
-		
-		game.getInputManager().setKey('O', "GameOver");
-		game.getInputManager().setKey('K', "LifeLost");
-		game.getInputManager().setKey('L', "LevelDone");
+		game.getInputManager().setKey('K', "LevelDone");
 		
 		engine.gotoGameState("Title");
 		engine.setCurrentScene(1, 0);
