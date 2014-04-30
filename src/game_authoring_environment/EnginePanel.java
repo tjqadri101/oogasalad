@@ -27,6 +27,17 @@ public class EnginePanel extends JPanel{
 				}								
 			}
 			
+		});		
+		this.addPropertyChangeListener("updatePos",new PropertyChangeListener(){
+
+			@Override
+			public void propertyChange(PropertyChangeEvent arg0) {
+				int selectedID = (int)(long)arg0.getNewValue();
+				if(selectedID != -1){
+					gController.getRightPanel();
+				}								
+			}
+			
 		});
 	}	
 
