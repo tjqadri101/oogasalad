@@ -12,7 +12,8 @@ import java.util.Map;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 /**
- * May not be needed
+ * This class is not used in this project
+ * This class has not been deleted just in case if the project needs this class later
  * @author Main Justin (Zihao) Zhang
  */
 public class TimerManager {

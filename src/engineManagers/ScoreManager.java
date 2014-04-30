@@ -52,7 +52,7 @@ public class ScoreManager extends StatisticsManager{
 	}
 	
 	/**
-	 * 
+	 * Called to update a condition between two objects
 	 * @param info
 	 * @param victim
 	 * @param hitter
@@ -68,7 +68,9 @@ public class ScoreManager extends StatisticsManager{
 		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
 	}
 	
-	@Override
+	/**
+	 * Called to update a condition between an object and a tile
+	 */
 	public void update(String info, GameObject victim, int tilecid) {
 		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, info, victimColid, tilecid);
@@ -77,6 +79,11 @@ public class ScoreManager extends StatisticsManager{
 		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
 	}
 	
+	/**
+	 * Called to update a transition to a new scene or level
+	 * @param info
+	 * @param oldLevelOrSceneID
+	 */
 	public void update(String info, int oldLevelOrSceneID){
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, oldLevelOrSceneID);
@@ -85,6 +92,10 @@ public class ScoreManager extends StatisticsManager{
 		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
 	}
 	
+	/**
+	 * Called to update a general condition
+	 * @param condition
+	 */
 	public void update(String condition){
 		if(myMap.containsKey(condition)){
 			myScore += myMap.get(condition);

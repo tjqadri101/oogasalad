@@ -10,7 +10,6 @@ import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * Manage the Change of the blood of all Game Objects
- * For Player, manage the blood for its each life
  * 
  * @author Main Justin (Zihao) Zhang
  *
@@ -23,6 +22,9 @@ public class BloodManager extends StatisticsManager{
 		super();
 	}
 
+	/**
+	 * Called to update the blood of a GameObject by a condition between two objects
+	 */
 	@Override
 	public void update(String info, GameObject victim, GameObject hitter) {
 		int hitterColid = checkIfSideDetectorColid(hitter);
@@ -35,6 +37,10 @@ public class BloodManager extends StatisticsManager{
 				SaladConstants.BLOOD, myMap.get(condition));
 	}
 	
+	/**
+	 * Called to update the blood of a GameObject by a condition between an object and a tile
+	 */
+	@Override
 	public void update(String info, GameObject victim, int tileColid){
 		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
@@ -45,6 +51,12 @@ public class BloodManager extends StatisticsManager{
 				+ SaladConstants.BLOOD, myMap.get(condition));
 	}
 
+	/**
+	 * Called to update the blood of a GameObject by a transition to a new scene or level
+	 * @param info
+	 * @param oldLevelOrSceneID
+	 * @param object
+	 */
 	public void update(String info, int oldLevelOrSceneID, GameObject object) {
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, oldLevelOrSceneID);
@@ -54,6 +66,11 @@ public class BloodManager extends StatisticsManager{
 				+ SaladConstants.BLOOD, myMap.get(condition));
 	}
 
+	/**
+	 * Called to update a general condition
+	 * @param condition
+	 * @param object
+	 */
 	public void update(String condition, GameObject object) {
 		if(!myMap.containsKey(condition)) return;
 		object.changeBlood(myMap.get(condition));
@@ -61,6 +78,9 @@ public class BloodManager extends StatisticsManager{
 				+ SaladConstants.BLOOD, myMap.get(condition));
 	}
 
+	/**
+	 * Called to get the attribute of the blood manager
+	 */
 	@Override
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
