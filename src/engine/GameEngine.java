@@ -181,13 +181,7 @@ public class GameEngine extends StdGame {
 			else {lives = current_lives;}
 		}
 		if (myGame.getInputManager() != null) {
-			Map<Integer, String> inputMap = myGame.getInputManager().getKeyMap();
-			for (int key: inputMap.keySet()) {
-				if (getKey(key)) {
-					doCheatKey(inputMap.get(key));
-					clearKey(key);
-				}
-			}
+			myGame.getInputManager().checkKey();
 		}
 	}
 	
@@ -681,6 +675,7 @@ public class GameEngine extends StdGame {
 	 public void setGame(Game mygame) {
 		 myGame = mygame;
 		 myStatsController = new StatsController(this, myGame.getName());
+		 myGame.getInputManager().initCheckKey(this);
 	 }
 
 	 public Game getGame() {
@@ -777,26 +772,5 @@ public class GameEngine extends StdGame {
 //		 createActor(new_unique_id, actor.getMyGfx(), actor.getXSize(), actor.getYSize(),
 //				 actor.x, actor.y, actor.getObjectName(), actor.colid, actor.getInitBlood());
 //	 }
-	 
-	 public void doCheatKey(String event) {
-		 int num = InputManager.CHEAT_KEY_EVENTS.indexOf(event);
-		 switch(num){
-		 case 0:
-			 //"EnemyShower"
-			 break;
-		 case 1:
-			 //"SceneDone"
-			 break;
-		 case 2:
-			 //"BloodFull"
-			 break;
-		 case 3:
-			 //"LifeIncrease"
-			 break;
-		 case 4:
-			 gameOver();
-			 break;
-		 }
-	 }
 
 }
