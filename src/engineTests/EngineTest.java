@@ -93,7 +93,7 @@ public class EngineTest {
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
 		
-//		engine.modifyPlayerImage(0, "poke-mon/025.gif", 0, 0);
+		engine.modifyPlayerImage(0, "poke-mon/025.gif", 0, 0);
 		
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
@@ -127,7 +127,6 @@ public class EngineTest {
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
-//		System.out.println("\n EngineTest finished constructing game");
         return engine;
 	}
 }
