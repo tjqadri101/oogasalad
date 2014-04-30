@@ -35,11 +35,12 @@ import controller.GAEController;
 import reflection.ReflectionException;
 import reflection.Reflection;
 import reflection.MethodAction;
+import saladConstants.SaladConstants;
 
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
 	
-	public static final String[] keyBehavior = {"EnemyShower", "SceneDone", "BloodFull", "LifeIncrease", "GameOver"}; 
+	public static final String[] keyBehavior = {SaladConstants.LEVEL_DONE, SaladConstants.LIFE_INCREASE, SaladConstants.GAME_OVER}; 
 	public String selectedBehavior;
 	public JTextField keyField;
 	public GAEController myGAEController;
@@ -150,7 +151,7 @@ public class MenuBar extends JMenuBar{
 
 	
 	public void popUpAndSetKey() {
-		selectedBehavior = "EnemyShower";
+		selectedBehavior = SaladConstants.LEVEL_DONE;
 		Integer inputKey = null;		
 		keyField = new JTextField(10);
 		JButton setButton = new JButton("Set");

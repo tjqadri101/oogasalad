@@ -251,6 +251,12 @@ public final class SaladConstants {
 	public static final String OBJECT_DO_ACTION = "doAction";
 	public static final String CHECK_KEY = "checkKey";
 
+	public static final String BLOOD_FULL = "BloodFull";
+	public static final String LIFE_INCREASE = "LifeIncrease";
+	public static final String GAME_OVER = "GameOver";
+	public static final String JUMP_ANIMATION = "JumpAnimation";
+	
+
 	
 
 
