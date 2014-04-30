@@ -221,7 +221,7 @@ public final class SaladConstants {
 	public static final String SLOW_SHOOT_BY_TIME = "SlowShootByTime";
 
 	public static final String MODIFY_COLLISION_BEHAVIOUR = "ModifyCollisionBehavior";
-	public static final String REBOUND = "Rebound";
+	public static final String REBOUND = "Rebounce";
 
 	public static final String KILL_BY_TILE = "KillByTile";
 	public static final String SET_COLLISION_LIFE = "SetCollisionLife";
