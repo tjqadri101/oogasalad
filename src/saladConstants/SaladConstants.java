@@ -163,7 +163,7 @@ public final class SaladConstants {
 
 	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
 	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
-	public static final String MODIFY_LIFE_MANAGER = "ModifyLifeManager";
+	public static final String MODIFY_LIFE_MANAGER = "ModifyLiveManager";
 
 	public static final String TRIGGER_BY_TIME = "TriggerByTime";
 	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
