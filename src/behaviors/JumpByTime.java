@@ -35,7 +35,7 @@ public class JumpByTime extends Jumpable{
 			myObject.setYHead(SaladConstants.POSITIVE_DIRECTION);
 			myObject.ydir = SaladConstants.POSITIVE_DIRECTION;
 			myObject.yspeed -= magnitude;	
-			if (myObject.getIsInAir() == 0) { myObject.incrementJumpTimes(1); }
+			if (myObject.getAirCounter() == 0) { myObject.incrementJumpTimes(1); }
 			myObject.updateImage(SaladConstants.UPDATE_JUMP);
 		}
 	}

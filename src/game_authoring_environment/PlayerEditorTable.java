@@ -77,7 +77,6 @@ public class PlayerEditorTable extends PanelTable {
 				@Override
 				public void itemStateChanged(ItemEvent arg0) {
 					if(arg0.getStateChange() == ItemEvent.SELECTED){
-						JPanel myPanel = new JPanel();
 						JOptionPane.showMessageDialog(null, "Create the Player First, then add this feature", "alert", JOptionPane.ERROR_MESSAGE);
 						shootTypesBox.setSelectedIndex(0);
 					}
@@ -150,6 +149,8 @@ public class PlayerEditorTable extends PanelTable {
 		myTableModel.addRow(thirdRow);
 		classMap.put(1,thirdRow[1]);
 		System.out.println("init");
+		
+		
 		//DEATH DROPDOWN:
 		final JComboBox dieTypesBox = new JComboBox(dieTypes);
 		Object[] fourthRow = {"Death Behavior", dieTypesBox};
@@ -276,7 +277,7 @@ public class PlayerEditorTable extends PanelTable {
 		classMap.put(4,sixthRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)		
 
 		final JCheckBox cb = new JCheckBox();
-		Object[] seventhRow = {"Jump",cb};
+		Object[] seventhRow = {"Set AutoMovement",cb};
 		cb.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
