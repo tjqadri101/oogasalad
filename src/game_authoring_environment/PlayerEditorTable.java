@@ -107,7 +107,7 @@ public class PlayerEditorTable extends PanelTable {
 							int result = JOptionPane.showConfirmDialog(null, myPanel, 
 									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result == JOptionPane.OK_OPTION) {
-								gController.modifyPlayerSlowShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(colIDField.getText()), Integer.parseInt(speedField.getText()));
+								gController.modifyPlayerSlowShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(colIDField.getText()), Integer.parseInt(speedField.getText()));
 							}
 
 							break;
@@ -120,7 +120,7 @@ public class PlayerEditorTable extends PanelTable {
 							int result = JOptionPane.showConfirmDialog(null, myPanel, 
 									"Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result == JOptionPane.OK_OPTION) {
-								gController.modifyPlayerQuickShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(colIDField.getText()), Double.parseDouble(speedField.getText()),Integer.parseInt(bulletsField.getText()) );
+								gController.modifyPlayerQuickShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(colIDField.getText()), Double.parseDouble(speedField.getText()),Integer.parseInt(bulletsField.getText()) );
 							}
 							break;}
 						case "Spread Shoot":
@@ -137,7 +137,7 @@ public class PlayerEditorTable extends PanelTable {
 							break;
 						}
 						case "None":
-							gController.modifyPlayerSlowShootNoID("bullet.png", 0, 0, 0, 0);
+							gController.modifyPlayerSlowShoot("bullet.png", 0, 0, 0, 0);
 						default:
 							break;
 						}
@@ -176,7 +176,7 @@ public class PlayerEditorTable extends PanelTable {
 						System.out.println("new selected item:"+arg0.getItem().toString());
 						switch(str){
 						case "Immortal":
-							gController.modifyPlayerImmortalNoID();
+							gController.modifyPlayerImmortal();
 							break;
 						case "Show Corpse":
 							JTextField xSizeField = new JTextField(10);
@@ -212,7 +212,7 @@ public class PlayerEditorTable extends PanelTable {
 							break;
 
 						case "Remove Corpse":
-							gController.modifyPlayerRegRemoveNoID();
+							gController.modifyPlayerRegRemove();
 							break;
 						default:
 							break;
@@ -241,7 +241,7 @@ public class PlayerEditorTable extends PanelTable {
 					int result = JOptionPane.showConfirmDialog(null, myPanel, 
 							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 					if (result == JOptionPane.OK_OPTION) {
-						gController.modifyPlayerJumpBehaviorNoID(Double.parseDouble(magnitudeField.getText()), Integer.parseInt(numberJumpsField.getText()) );
+						gController.modifyPlayerJumpBehavior(Double.parseDouble(magnitudeField.getText()), Integer.parseInt(numberJumpsField.getText()) );
 					}
 					else{
 						jb.setSelected(false);
@@ -250,7 +250,7 @@ public class PlayerEditorTable extends PanelTable {
 				else{
 					System.out.println("now checked:"+false);
 					int id = gController.getActorID();
-					gController.modifyPlayerNotToJump(id,"CanNotJump");
+					gController.modifyPlayerCanNotJump("CanNotJump");
 				}
 			}
 		});	
@@ -268,7 +268,7 @@ public class PlayerEditorTable extends PanelTable {
 				String delim = ",";
 				String[] list = input.split(delim);
 				if(list.length == 2);{
-					gController.modifyPlayerSpeedNoID(Double.parseDouble(list[0]), Double.parseDouble(list[1]));
+					gController.modifyPlayerSpeed(Double.parseDouble(list[0]), Double.parseDouble(list[1]));
 				}
 			}			
 		});
@@ -292,7 +292,7 @@ public class PlayerEditorTable extends PanelTable {
 					int result = JOptionPane.showConfirmDialog(null, myPanel, 
 							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 					if (result == JOptionPane.OK_OPTION) {
-						gController.modifyPlayerSpeedNoID(Double.parseDouble(xSpeed.getText()), Double.parseDouble(ySpeed.getText()) );
+						gController.modifyPlayerSpeed(Double.parseDouble(xSpeed.getText()), Double.parseDouble(ySpeed.getText()) );
 					}
 					else{
 						cb.setSelected(false);
@@ -301,7 +301,7 @@ public class PlayerEditorTable extends PanelTable {
 				else{
 					System.out.println("now checked:"+false);
 					int id = gController.getActorID();
-					gController.modifyPlayerSpeedNoID(0,0);
+					gController.modifyPlayerSpeed(0,0);
 				}
 			}
 		});	
