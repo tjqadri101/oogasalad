@@ -751,14 +751,6 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	public void resetLevelID(int oldLevelID, int newLevelID){
-		String order = SaladConstants.RESET_LEVEL_ID + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+oldLevelID + SaladConstants.SEPARATOR
-				+ SaladConstants.ID + SaladConstants.SEPARATOR+newLevelID;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
-
 	public void createLevel(int levelID){
 		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+levelID;
 		if (!DEBUG) myDataController.receiveOrder(order);
