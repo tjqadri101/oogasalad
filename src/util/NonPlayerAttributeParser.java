@@ -1,6 +1,12 @@
 package util;
 
 import java.util.ArrayList;
+
+/**
+ * @author anthonyotienoolawo
+ * 
+ * This class parses non-player attributes. 
+ */
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +33,8 @@ public class NonPlayerAttributeParser {
 		
 		for(String attribute : attributes ){
 			parsedAttributes.add(parser.parseToMap(attribute)); 
-		}	
-		
+		}		
 		return parsedAttributes; 
 	}
 	
-	
-
-
 }

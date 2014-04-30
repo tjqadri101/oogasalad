@@ -30,7 +30,7 @@ public final class SaladConstants {
 	public static final String BEHAVIOR_PANEL = "Behavior";
 	public static final String ELEMENT_LABEL = "Element";
 	public static final String ROOT_ELEMENT_LABEL = "Root";
-	
+	public static final String TILE_PANEL = "Tile";
 	
 	public static final String STATE_GAMEOVER = "GameOver";
 	public static final String STATE_STARTTITLE = "StartTitle";
@@ -165,7 +165,7 @@ public final class SaladConstants {
 
 	public static final String MODIFY_TRIGGER_EVENT_MANAGER = "ModifyTriggerEventManager";
 	public static final String MODIFY_EVENT_MANAGER = "ModifyEventManager";
-	public static final String MODIFY_LIFE_MANAGER = "ModifyLifeManager";
+	public static final String MODIFY_LIFE_MANAGER = "ModifyLiveManager";
 
 	public static final String TRIGGER_BY_TIME = "TriggerByTime";
 	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
@@ -223,7 +223,6 @@ public final class SaladConstants {
 	public static final String REBOUND = "Rebound";
 
 	public static final String KILL_BY_TILE = "KillByTile";
-	public static final String SET_INITIAL_SCENE = "SetInitialScene";
 	public static final String SET_COLLISION_LIFE = "SetCollisionLife";
 	public static final String SET_TILE_COLLISION_LIFE = "SetTileCollisionLife";
 
