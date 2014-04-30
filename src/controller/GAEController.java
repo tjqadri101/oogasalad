@@ -25,7 +25,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.plaf.LayerUI;
 
-
 import objects.GameObject;
 import objects.NonPlayer;
 import engine.GameEngine;
@@ -752,14 +751,6 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	public void resetLevelID(int oldLevelID, int newLevelID){
-		String order = SaladConstants.RESET_LEVEL_ID + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+oldLevelID + SaladConstants.SEPARATOR
-				+ SaladConstants.ID + SaladConstants.SEPARATOR+newLevelID;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
-
 	public void createLevel(int levelID){
 		String order = SaladConstants.CREATE_LEVEL + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+levelID;
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -768,13 +759,10 @@ public class GAEController {
 
 	/**
 	 * Sets a level's initial scene
-	 * 
-	 * @param levelID
-	 * @param sceneID
 	 */
 	public void setInitialScene(int levelID, int sceneID){
 		String order = SaladConstants.MODIFY_LEVEL + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + 
-				SaladConstants.SET_INITIAL_SCENE_ID + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + sceneID;
+				SaladConstants.SET_INIT_SCENE + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + sceneID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -800,17 +788,6 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	/**
-	 * 
-	 * @param levelID
-	 * @param sceneID
-	 */
-	public void modifyInitScene(int levelID, int sceneID ){ 
-		String order = SaladConstants.MODIFY_INIT_SCENE + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + 
-				SaladConstants.SET_INIT_SCENE + sceneID;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
 
 	public void modifySceneBackground(String path, boolean wrapHorizontal, boolean wrapVertical, int playFieldXSize, int playFieldYSize){
 		String order = SaladConstants.MODIFY_SCENE_VIEW + SaladConstants.SEPARATOR + SaladConstants.BACKGROUND + 
@@ -829,11 +806,15 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	/**
-	 * 
-	 * @param key
-	 * @param keyFunction
-	 */
+
+	public void modifyGameSwitchSceneToNewLevelID(int oldLevelID, int newLevelID, int sceneID){
+		String order =  SaladConstants.MODIFY_GAME + SaladConstants.SEPARATOR + SaladConstants.SWITCH_SCENE_TO_NEW_LEVEL_ID
+				+ SaladConstants.SEPARATOR + oldLevelID + SaladConstants.SEPARATOR + newLevelID + SaladConstants.SEPARATOR +
+				sceneID;
+				if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);		
+		
+	}
 	public void modifyInputManager(int key, String keyFunction){ 
 		String order = SaladConstants.MODIFY_INPUTMANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_KEY + SaladConstants.SEPARATOR + key + 
 				SaladConstants.SEPARATOR + keyFunction; 
@@ -1255,6 +1236,10 @@ public class GAEController {
 		for(char tileID :myDataController.getGame().getOccupiedTileColids()){
 			this.modifyCollisBehavStayOnTile(actorColID, tileID, "All");
 		}
+	}
+	
+	public List<Character> getTileColIDs(){
+		return myDataController.getGame().getOccupiedTileColids();
 	}
 	
 	public Map<Integer, NonPlayer> getMapOfPlayers(){
