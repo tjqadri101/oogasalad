@@ -1,169 +1,94 @@
 package engineManagers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+
 import objects.GameObject;
 import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
  * Manager the actions for a Game Object
- * For every new action X added to a Game Object, a setXBehavior, an X() and a makeXAttribute methods 
- * are needed to add in this class
+ * This class is totally flexible in the sense that every newly added action will not result in any
+ * code changes here
  * 
  * @author Main Justin (Zihao) Zhang
  */
 public class ActionManager {
 
 	protected ResourceBundle myBehaviors;
+	protected ResourceBundle myBehaviorMethods;
 	protected List<String> myAttributes;
 	protected GameObject myObject;
-	
-	protected String myDieBehavior;
-	protected String myMoveBehavior;
-	protected String myJumpBehavior;
-	protected String myShootBehavior;
-
-	protected List<Object> myShootParameters;
-	protected List<Object> myDieParameters;
-	protected List<Object> myMoveParameters;
-	protected List<Object> myJumpParameters;
+	protected List<String> myActions;
+	protected Map<String, List<Object>> myActionMap;
 	
 	public ActionManager(GameObject object){
 		myObject = object;
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
 				+ SaladConstants.OBJECT_BEHAVIOR);
+		myBehaviorMethods = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+				+ SaladConstants.BEHAVIOR_METHOD);
 		myAttributes = new ArrayList<String>();
+		myActions = new ArrayList<String>();
+		myActionMap = new HashMap<String, List<Object>>();
 	}
 	
 	/**
-	 * Set the Die Behavior
-	 * 
-	 * @param a String specifying one of the die behaviors
-	 */
-	public void setDieBehavior(String s, Object... args) {
-		myDieBehavior = s;
-		myDieParameters = SaladUtil.convertArgsToObjectList(args);
-	}
-	
-	/**
-	 * Set the jump behavior
-	 * 
-	 * @param String
-	 *            specifying one of the jump behaviors
-	 * @param Magnitude
-	 *            of the initial jump speed
-	 */
-	public void setJumpBehavior(String s, Object... args) {
-		myJumpBehavior = s;
-		myJumpParameters = SaladUtil.convertArgsToObjectList(args);
-	}
-	
-	/**
-	 * Set the shoot behavior
-	 * 
+	 * Set the action behavior
 	 * @param s
-	 *            : shoot type
 	 * @param args
-	 *            : parameters
 	 */
-	public void setShootBehavior(String s, Object... args) {
-		myShootBehavior = s;
-		myShootParameters = SaladUtil.convertArgsToObjectList(args);
+	public void setBehavior(String s, Object ... args){
+		myActions.add(s);
+		myActionMap.put(s, SaladUtil.convertArgsToObjectList(args));
 	}
 	
 	/**
-	 * Set the move behavior
-	 * 
-	 * @param s
-	 *            : String specifying the move behavior
-	 * @param xspeed
-	 *            : the x speed
-	 * @param yspeed
-	 *            : the y speed
+	 * Perform an action
+	 * @param type
 	 */
-	public void setMoveBehavior(String s, Object... args) {
-		myMoveBehavior = s;
-		myMoveParameters = SaladUtil.convertArgsToObjectList(args);
+	public void doAction(String type){
+		for(String action: myActions){
+			String current = myBehaviorMethods.getString(action);
+			if(current.equals(type)){
+				SaladUtil.behaviorReflection(myBehaviors, action,
+						myActionMap.get(action), type, myObject);
+			}
+		}
 	}
 	
 	/**
 	 * Called by Actor to rebounce if regular move behavior
 	 */
 	public void bounce(){
-		if(myMoveBehavior == SaladConstants.REGULAR_MOVE){
-			double xspeed = (Double) myMoveParameters.get(0);
-			double yspeed = (Double) myMoveParameters.get(1);
-			List<Object> newParams = new ArrayList<Object>();
-			newParams.add(-1*xspeed);
-			newParams.add(-1*yspeed);
-			myMoveParameters = newParams;
+		for(String action: myActions){
+			String current = myBehaviorMethods.getString(action);
+			if(current.equals(SaladConstants.MOVE) && action == SaladConstants.REGULAR_MOVE){
+				double xspeed = (Double) myActionMap.get(action).get(0);
+				double yspeed = (Double) myActionMap.get(action).get(1);
+				List<Object> newParams = new ArrayList<Object>();
+				newParams.add(-1*xspeed);
+				newParams.add(-1*yspeed);
+				myActionMap.put(action, newParams);
+				return;
+			}
 		}
-		else if (myObject.xspeed != 0 || myObject.yspeed != 0){
+		if (myObject.xspeed != 0 || myObject.yspeed != 0){
 			myObject.xspeed *= -1;
 			myObject.yspeed *= -1;
 		}
 	}
 	
-	public void die() {
-		if (myDieBehavior == null) return;
-		SaladUtil.behaviorReflection(myBehaviors, myDieBehavior,
-				myDieParameters, SaladConstants.REMOVE, myObject);
-	}
-	
-	public void jump() {
-		if (myJumpBehavior == null) return;
-		SaladUtil.behaviorReflection(myBehaviors, myJumpBehavior,
-				myJumpParameters, SaladConstants.JUMP, myObject);
-	}
-	
-	public void autoMove() {
-		if (myMoveBehavior == null) return;
-		SaladUtil.behaviorReflection(myBehaviors, myMoveBehavior,
-				myMoveParameters, SaladConstants.MOVE, myObject);
-	}
-
-	public void shoot() {
-		if (myShootBehavior == null) return;
-		SaladUtil.behaviorReflection(myBehaviors, myShootBehavior,
-				myShootParameters, SaladConstants.SHOOT, myObject);
-	}
-	
-	protected void makeDieAttribute(){
-		if(myDieBehavior == null) return;
-		myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(),
-				SaladConstants.ID, myObject.getID(), myDieBehavior, true,
-				myDieParameters));
-	}
-	
-	protected void makeJumpAttribute(){
-		if(myJumpBehavior == null) return;
-		myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(),
-				SaladConstants.ID, myObject.getID(), myJumpBehavior, true,
-				myJumpParameters));
-	}
-	
-	protected void makeShootAttribute(){
-		if(myShootBehavior == null) return;
-		myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(),
-				SaladConstants.ID, myObject.getID(), myShootBehavior, true,
-				myShootParameters));
-	}
-	
-	protected void makeMoveAttribute(){
-		if(myMoveBehavior == null) return;
-		myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(),
-				SaladConstants.ID, myObject.getID(), myMoveBehavior, true,
-				myMoveParameters));
-	}
-	
-	
 	public List<String> getAttributes(){
-		makeDieAttribute();
-		makeJumpAttribute();
-		makeShootAttribute();
-		makeMoveAttribute();
+		for(String action: myActions){
+			myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(),
+					SaladConstants.ID, myObject.getID(), action, true,
+					myActionMap.get(action)));	
+		}
 		return myAttributes;
 	}
 	

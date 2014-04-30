@@ -15,5 +15,5 @@ public abstract class Removable {
 		myObject = o;
 	}
 	
-	public abstract void remove(List<Object> params);
+	public abstract void die(List<Object> params);
 }

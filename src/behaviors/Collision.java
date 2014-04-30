@@ -18,7 +18,7 @@ public abstract class Collision {
 	
 	protected void updateManagers(GameObject hitter){
 		myObject.updateManagers(SaladConstants.COLLISION, myObject, hitter);
-		hitter.updateManagers(SaladConstants.COLLISION, myObject, hitter);
+		hitter.updateManagers(SaladConstants.COLLISION, hitter, myObject);
 	}
 	
 	public abstract void collide(List<Object> objects);

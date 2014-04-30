@@ -1,5 +1,6 @@
 package objects;
 
+import saladConstants.SaladConstants;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.LiveManager;
@@ -32,8 +33,8 @@ public class NonPlayer extends GameObject {
 	@Override
 	public void move(){
 		super.move();
-		autoMove();
-		jump();
-		shoot();
+		doAction(SaladConstants.MOVE);
+		doAction(SaladConstants.JUMP);
+		doAction(SaladConstants.SHOOT);
 	}
 }

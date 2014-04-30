@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import saladConstants.SaladConstants;
+import util.AttributeMaker;
 /**
  * @Author: Justin (Zihao) Zhang
  * Only intended for non-player keys
@@ -32,7 +33,8 @@ public class InputManager {
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		for(int key: myKeyMap.keySet()){
-			answer.add(SaladConstants.MODIFY_INPUTMANAGER + "," + key + "," + myKeyMap.get(key));
+			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_INPUTMANAGER, 
+					String.valueOf(key), myKeyMap.get(key)));
 		}
 		return answer;
 	}

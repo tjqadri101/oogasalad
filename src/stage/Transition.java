@@ -9,7 +9,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import saladConstants.SaladConstants;
-
+/**
+ * 
+ * @author Main Isaac (Shenghan) Chen
+ *
+ */
 public class Transition {
 	
 	public static String[] TRANSITION_STATE = new String[]{"StartGame", "LevelDone", "LifeLost", "GameOver",

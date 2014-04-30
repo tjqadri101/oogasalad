@@ -20,6 +20,7 @@ public class TriggerByEnterTile extends Triggerable{
 	public TriggerByEnterTile(GameEngine engine){
 		super(engine);
 	}
+	
 	/**
 	 * Check if the Player has moved to a tile
 	 * @param int Player's ID
@@ -28,7 +29,6 @@ public class TriggerByEnterTile extends Triggerable{
 	 * @param int tile x size
 	 * @param int tile y size
 	 */
-	
 	@Override
 	public boolean checkTrigger(List<Object> params) {
 		//Wait until tile order and tile stored info are determined
@@ -39,10 +39,10 @@ public class TriggerByEnterTile extends Triggerable{
 		int ysize = (Integer) params.get(4);
 		
 		Player player = myEngine.getGame().getPlayer(playerID);
-		if(player.x > xpos && player.x < xpos + xsize && player.y > ypos && player.y < ypos + ysize){
+		if(player.x + player.getXSize()/2 > xpos && player.x + player.getXSize()/2 < xpos + xsize 
+				&& player.y + player.getYSize()/2 > ypos && player.y + player.getYSize()/2 < ypos + ysize){
 			return true;
 		}
-		
 		return false;
 	}
 

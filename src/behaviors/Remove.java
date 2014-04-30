@@ -15,7 +15,7 @@ public class Remove extends Removable{
 	}
 
 	@Override
-	public void remove(List<Object> params) {
+	public void die(List<Object> params) {
 		myObject.remove();
 	}
 }

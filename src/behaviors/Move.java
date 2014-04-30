@@ -29,3 +29,4 @@ public class Move extends Movable{
 		else{ myObject.setXHead(SaladConstants.NEGATIVE_DIRECTION); }
 	}
 }
+

@@ -20,7 +20,7 @@ public class ShootHitObject extends Collision{
 	public void collide(List<Object> objects) {
 		GameObject hitter = (GameObject) objects.get(0);
 		updateManagers(hitter);
-		hitter.die();
+		hitter.doAction(SaladConstants.DIE);
 		GameStats.update(SaladConstants.ENEMY_KILLED, 1);
 	}
 }

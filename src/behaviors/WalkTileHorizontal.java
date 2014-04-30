@@ -15,7 +15,7 @@ public class WalkTileHorizontal extends TileCollision{
 	 */
 	@Override
 	public void collide(List<Object> objects) {
-		
+		//possibly an event
 	}
 
 }

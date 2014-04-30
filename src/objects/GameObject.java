@@ -10,22 +10,23 @@ import saladConstants.SaladConstants;
 import statistics.GameStats;
 import engineManagers.*;
 import util.AttributeMaker;
-import util.SaladUtil;
 import engineManagers.CollisionManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
 
 /**
- * GameObject is the superclass of Player and NonPlayer GameObject is a game
- * unit that can execute certain actions and interactions
+ * GameObject is the superclass of Player and NonPlayer 
+ * GameObject is a game unit that can execute certain actions and interactions
  * 
- * @author: Main Justin (Zihao) Zhang,
- * @contribution: (side detectors/jump handling): Shenghan Chen
- * @contribution: David Chou
+ * @author: Main Justin (Zihao) Zhang
+ * 
+ * @contribution (side detectors/jump handling): Shenghan Chen
+ * @contribution (animations): David Chou
  */
 
 public abstract class GameObject extends JGObject {
-
+	
+	protected ResourceBundle myBehaviors; 
 	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
 	protected BloodManager myBloodManager;
@@ -49,11 +50,9 @@ public abstract class GameObject extends JGObject {
 	protected String myDefaultImage;
 	protected List<String> myAttributes;
 	protected String myName;
-
 	protected int myXHead;
 	protected int myYHead;
-	
-	protected ResourceBundle myBehaviors; //
+	protected List<GameObject> myShotThings;
 	protected SideDetector[] mySideDetectors;
 
 	public GameObject(int uniqueID, String staticGfxName, int xsize,
@@ -70,6 +69,7 @@ public abstract class GameObject extends JGObject {
 		setInitBlood(blood);
 		myUniqueID = uniqueID;
 		setSize(xsize, ysize);
+		myShotThings = new ArrayList<GameObject>();
 		myAttributes = new ArrayList<String>();
 		myCollisionManager = collisionManager;
 		myScoreManager = scoreManager;
@@ -107,20 +107,61 @@ public abstract class GameObject extends JGObject {
 		}
 	}
 	
+	/**
+	 * Set a behavior
+	 * @param s
+	 * @param args
+	 */
+	public void setBehavior(String behavior, Object ...args){
+		myActionManager.setBehavior(behavior, args);
+	}
+	
+	/**
+	 * Perform an action
+	 * @param action
+	 */
+	public void doAction(String action){
+		myActionManager.doAction(action);
+	}
+	
+	/**
+	 * Get the x head direction
+	 * @return
+	 */
 	public int getXHead(){
 		return myXHead;
 	}
 	
+	/**
+	 * Get the y head direction
+	 */
 	public int getYHead(){
 		return myYHead;
 	}
 	
+	/**
+	 * set the x head direction
+	 */
 	public void setXHead(int head){
 		myXHead = head;
+		if (myXHead < 0) {
+			myAnimationManager.updateImage(SaladConstants.BK_MOVE);
+		} else if (myXHead >= 0) {
+			myAnimationManager.updateImage(SaladConstants.FD_MOVE);
+		}
 	}
 	
+	/**
+	 * set the y head direction
+	 * @param head
+	 */
 	public void setYHead(int head){
 		myYHead = head;
+		if (myYHead < 0) {
+			myAnimationManager.updateImage(SaladConstants.UP_MOVE);
+		} else if (myYHead >= 0) {
+			myAnimationManager.updateImage(SaladConstants.DW_MOVE);
+		}
 	}
 
 	/**
@@ -305,15 +346,6 @@ public abstract class GameObject extends JGObject {
 	}
 
 	/**
-	 * Set the Die Behavior
-	 * 
-	 * @param a String specifying one of the die behaviors
-	 */
-	public void setDieBehavior(String s, Object... args) {
-		myActionManager.setDieBehavior(s, args);
-	}
-
-	/**
 	 * Change the number of lives
 	 */
 	public void changeBlood(int blood) {
@@ -353,50 +385,8 @@ public abstract class GameObject extends JGObject {
 		return myInitBlood;
 	}
 
-	/**
-	 * Set the jump behavior
-	 * 
-	 * @param String
-	 *            specifying one of the jump behaviors
-	 * @param Magnitude
-	 *            of the initial jump speed
-	 */
-	public void setJumpBehavior(String s, Object... args) {
-		myActionManager.setJumpBehavior(s, args);
-	}
-
-	/**
-	 * Set the shoot behavior
-	 * 
-	 * @param s
-	 *            : shoot type
-	 * @param args
-	 *            : parameters
-	 */
-	public void setShootBehavior(String s, Object... args) {
-		myActionManager.setShootBehavior(s, args);
-	}
-
-	/**
-	 * Set the move behavior
-	 * 
-	 * @param s
-	 *            : String specifying the move behavior
-	 * @param xspeed
-	 *            : the x speed
-	 * @param yspeed
-	 *            : the y speed
-	 */
-	public void setMoveBehavior(String s, Object... args) {
-		myActionManager.setMoveBehavior(s, args);
-	}
-
-	public void die() {
-		myActionManager.die();
-	}
-
 	public void bounce(){
-//		myActionManager.bounce();
+		myActionManager.bounce();
 	}
 
 	public void stop() {
@@ -404,6 +394,9 @@ public abstract class GameObject extends JGObject {
 		setPos(getLastX(), getLastY());
 	}
 
+	/**
+	 * Called when hit the ground
+	 */
 	public void ground() {
 		myIsInAir = 1;
 		myJumpTimes = 0;
@@ -418,11 +411,13 @@ public abstract class GameObject extends JGObject {
 	public void resetCollisionID(int collisionID) {
 		colid = collisionID;
 	}
-
-	public void jump() {
-		if (myIsInAir == 0) { myJumpTimes++; }
-		myActionManager.jump();
-		myAnimationManager.updateImage("Jump");
+	
+	public int getIsInAir(){
+		return myIsInAir;
+	}
+	
+	public void incrementJumpTimes(int change){
+		myJumpTimes += change;
 	}
 
 	/**
@@ -435,13 +430,17 @@ public abstract class GameObject extends JGObject {
 
 	@Override
 	public void move() {
-		if (myBlood <= 0) die();
+		if (myBlood <= 0) doAction(SaladConstants.DIE);
 		myIsInAir = 2 * (myIsInAir % 2);
-		if (myXHead < 0) {
-			myAnimationManager.updateImage("BKMove");
-		} else if (myXHead > 0) {
-			myAnimationManager.updateImage("FDMove");
-		}
+		System.out.println("xHead: " + myXHead);
+	}
+	
+	/**
+	 * Update the image
+	 * @param behavior
+	 */
+	public void updateImage(String behavior){
+		myAnimationManager.updateImage(behavior);
 	}
 	
 	/**
@@ -454,9 +453,7 @@ public abstract class GameObject extends JGObject {
 			if(myBloodManager != null) Reflection.callMethod(myBloodManager, "update", args);
 			if(myLiveManager != null) Reflection.callMethod(myLiveManager, "update", args);
 			if(myEventManager != null) Reflection.callMethod(myEventManager, "update", args);	
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+		} catch (Exception e){ e.printStackTrace(); }
 	}
 
 	@Override
@@ -466,10 +463,10 @@ public abstract class GameObject extends JGObject {
 
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
-		myIsInAir = 0;
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
 		myXHead = 0;
 //		if (myXHead == 0) setImage(myDefaultImage);
+		setImage(myDefaultImage);
 	}
 	
 	@Override
@@ -479,14 +476,7 @@ public abstract class GameObject extends JGObject {
 			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) { mySideDetectors[i].remove();}
 		}
 		if (myUniqueID != SaladConstants.NULL_UNIQUE_ID) myRevivalManager.addRemovedObject(this);
-	}
-
-	public void autoMove() {
-		myActionManager.autoMove();
-	}
-
-	public void shoot() {
-		myActionManager.shoot();
+		if (this instanceof Player) myLiveManager.decrementLive(getID());
 	}
 
 	/**
@@ -520,19 +510,32 @@ public abstract class GameObject extends JGObject {
 	public void setStaticGfx(String image) {
 		myDefaultImage = image;
 	}
-
-	/**
-	 * Used for side detectors to get the ScoreManager to update scores
-	 * 
-	 * @return RevivalManager
-	 */
-//	public RevivalManager getRevivalManager() {
-//		return myRevivalManager;
-//	}
-	
 	
 	public TriggerEventManager getEventManager(){
 		return myEventManager;
+	}
+	
+	/**
+	 * Get the number of the shots that are alive on the screen
+	 * @return
+	 */
+	public int getNumAliveShots(){
+		int count = 0;
+		for(GameObject object: myShotThings){
+			if(object.isAlive()) count ++;
+		}
+//		for(GameObject object: myShotThings){
+//			if(!object.isAlive()) myShotThings.remove(object);
+//		}
+		return count;
+	}
+	
+	/**
+	 * Add the shot bullet
+	 * @param object
+	 */
+	public void addShotThing(GameObject object){
+		myShotThings.add(object);
 	}
     
     /**

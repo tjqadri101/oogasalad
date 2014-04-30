@@ -20,7 +20,7 @@ public class Eliminate extends Collision{
 	public void collide(List<Object> objects) {
 		GameObject hitter = (GameObject) objects.get(0);
 		updateManagers(hitter);
-		myObject.die(); 
+		myObject.doAction(SaladConstants.DIE); 
 		GameStats.update(SaladConstants.ENEMY_KILLED, 1);
 	}
 }

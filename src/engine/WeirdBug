@@ -1,0 +1,322 @@
+Exception in thread "main" java.lang.NullPointerException
+	at jgame.impl.SortedArray.get(SortedArray.java:202)
+	at jgame.impl.SortedArray.put(SortedArray.java:94)
+	at jgame.impl.EngineLogic.markAddObject(EngineLogic.java:747)
+	at jgame.platform.JGEngine.markAddObject(JGEngine.java:289)
+	at jgame.JGObject.initObject(JGObject.java:195)
+	at jgame.JGObject.<init>(JGObject.java:389)
+	at objects.GameObject.<init>(GameObject.java:60)
+	at objects.GameObject.<init>(GameObject.java:90)
+	at objects.SideDetector.<init>(SideDetector.java:26)
+	at objects.GameObject.initSideDetectors(GameObject.java:100)
+	at objects.GameObject.<init>(GameObject.java:80)
+	at objects.NonPlayer.<init>(NonPlayer.java:25)
+	at engine.GameEngine.createActor(GameEngine.java:704)
+	at engineTests.EngineTest.testEngine(EngineTest.java:58)
+	at engineTests.EngineTest.main(EngineTest.java:27)
+
+
+	
+Exception in thread "main" java.lang.NullPointerException
+	at jgame.impl.SortedArray.get(SortedArray.java:202)
+	at jgame.impl.SortedArray.put(SortedArray.java:94)
+	at jgame.impl.EngineLogic.markAddObject(EngineLogic.java:747)
+	at jgame.platform.JGEngine.markAddObject(JGEngine.java:289)
+	at jgame.JGObject.initObject(JGObject.java:195)
+	at jgame.JGObject.<init>(JGObject.java:389)
+	at objects.GameObject.<init>(GameObject.java:63)
+	at objects.NonPlayer.<init>(NonPlayer.java:26)
+	at engine.GameEngine.createActor(GameEngine.java:733)
+	at engineTests.EngineTest.testEngine(EngineTest.java:64)
+	at engineTests.EngineTest.main(EngineTest.java:28)
+	
+	
+
+ initGame
+
+ doFrame
+
+ doFrame
+
+ doFrame
+
+ doFrame
+
+ doFrame
+
+ doFrame
+
+ doFrame
+
+ doFrame
+
+ doFrame
+
+ doFrame
+markAddObject 1
+
+ doFrame
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+
+ doFrame
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+markAddObject 1
+markAddObject 10000
+
+ doFrame
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+markAddObject 50000
+markAddObject 50001
+markAddObject 50002
+markAddObject 50003
+
+ doFrame
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 1
+markAddObject 10000
+markAddObject 10001
+markAddObject 10002
+markAddObject 10003
+markAddObject 5
+
+ doFrame
+Exception in thread "main" java.lang.NullPointerException
+	at jgame.impl.SortedArray.get(SortedArray.java:202)
+	at jgame.impl.SortedArray.put(SortedArray.java:94)
+	at jgame.impl.EngineLogic.markAddObject(EngineLogic.java:747)
+	at jgame.platform.JGEngine.markAddObject(JGEngine.java:289)
+	at jgame.JGObject.initObject(JGObject.java:195)
+	at jgame.JGObject.<init>(JGObject.java:389)
+	at objects.GameObject.<init>(GameObject.java:63)
+	at objects.GameObject.<init>(GameObject.java:95)
+	at objects.SideDetector.<init>(SideDetector.java:26)
+	at objects.GameObject.initSideDetectors(GameObject.java:105)
+	at objects.GameObject.<init>(GameObject.java:83)
+	at objects.NonPlayer.<init>(NonPlayer.java:26)
+	at engine.GameEngine.createActor(GameEngine.java:732)
+	at engineTests.EngineTest.testEngine(EngineTest.java:66)
+	at engineTests.EngineTest.main(EngineTest.java:30)
+
+ doFrame

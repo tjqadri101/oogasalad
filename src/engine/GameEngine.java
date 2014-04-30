@@ -26,6 +26,8 @@ import engineManagers.TriggerEventManager;
 @SuppressWarnings("serial")
 public class GameEngine extends StdGame {
 
+	public static final String BUFFER_IMAGE_FOLDER = "ImageBuffer/";
+	
 	public static final int FRAMES_PER_SECOND = 70;
 	public static final int MAX_FRAMES_TO_SKIP = 2;
 	public static final int JGPOINT_X = 800;//
@@ -163,7 +165,7 @@ public class GameEngine extends StdGame {
 	// drag;move->gravity->collision->setViewOffset
 	public void doFrameEdit() {
 	        if (myGame==null){return;}
-	        TriggerEventManager myTEM = getGame().getTEManager();
+	        TriggerEventManager myTEM = getGame().getTriggerManager();
 		if (myCurrentScene == null) {return;}
 		boolean viewOffset = false;
 		if (drag()) {myViewOffsetPlayer = false;}
@@ -216,6 +218,7 @@ public class GameEngine extends StdGame {
 	
 	@Override
 	public void doFrame() {
+//		System.out.println("\n doFrame");
 		if (getKey('L')) {levelDone();clearKey('L');} //cheat key for testing
 		if (getKey('K')) {myPlayer.remove();lifeLost();clearKey('K');} //cheat key for testing
 		if (getKey('O')) {myPlayer.remove();gameOver();clearKey('O');} //cheat key for testing
@@ -227,9 +230,11 @@ public class GameEngine extends StdGame {
 
 	@Override
 	public void paintFrame() {
+//		System.out.println("\n paintFrame");
 		if (!isEditingMode && isPlaying) {
 			super.paintFrame();
 		}
+//		System.out.println("survived");
 		if (!isEditingMode && isLoading) {
 			String loading = "Loading";
 			String dot = ".";
@@ -437,7 +442,7 @@ public class GameEngine extends StdGame {
 					 myPlayer.y - myPlayer.getYSize() / 13.5,
 					 (1.0 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
 					 10, true, true);
-			 drawString(myPlayer.getName(), myPlayer.x + myPlayer.getXSize() / 2,
+			 drawString(myPlayer.getObjectName(), myPlayer.x + myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 3, 0, true);
 		 }
 	 }
@@ -548,14 +553,14 @@ public class GameEngine extends StdGame {
 	 }
 
 	 public void loadTileImage(char cid, String imgfile){
-		 defineImage(cid+"",cid+"",cid,imgfile,"-");
+		 defineImage(cid+"",cid+"",cid,BUFFER_IMAGE_FOLDER+imgfile,"-");
 		 myGame.defineTileImage(cid, imgfile);
 		 if(isEditingMode) {myTileCid = cid;}
 	 }
 
 	 private void loadImage(String imgfile) {
 		 if (imgfile == null) {return;}
-		 defineImage(imgfile, "-", 0, imgfile, "-");
+		 defineImage(imgfile, "-", 0, BUFFER_IMAGE_FOLDER+imgfile, "-");
 	 }
 
 	 /* switching scene & transition state methods */
@@ -609,15 +614,17 @@ public class GameEngine extends StdGame {
 	private void showScene() {
 		setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
 				 myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
-		 setTiles(0, 0, myCurrentScene.getTiles());
-		 if (myPlayer != null) {
-			 myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
-					 myCurrentScene.getPlayerInitPosition()[1]);
-			 myPlayer.resume();
-		 }
-		 for (GameObject object : myCurrentScene.getGameObjects()) {
-			 object.resume();
-		 }
+		if (isPlaying) {
+			setTiles(0, 0, myCurrentScene.getTiles());
+			if (myPlayer != null) {
+				myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
+						myCurrentScene.getPlayerInitPosition()[1]);
+				myPlayer.resume();
+			}
+			for (GameObject object : myCurrentScene.getGameObjects()) {
+				object.resume();
+			}
+		}
 	}
 	
 	 /* scene view modification methods */
@@ -705,12 +712,11 @@ public class GameEngine extends StdGame {
 
 	 public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			 double xpos, double ypos, String name, int colid, int lives) {
-		 //	        TriggerEventManager etm = getGame().getTEM();
 		 loadImage(imgfile);
 		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				 name, colid, lives, myGame.getCollisionManager(),
 				 myGame.getScoreManager(), myGame.getBloodManager(), 
-				 myGame.getRevivalManager(), myGame.getLiveManager(), myGame.getTEManager());
+				 myGame.getRevivalManager(), myGame.getLiveManager(), myGame.getTriggerManager());
 		 myGame.setPlayer(object);
 		 myPlayer = object;
 		 if (myGame.getLiveManager() != null) {
@@ -722,12 +728,11 @@ public class GameEngine extends StdGame {
 
 	 public NonPlayer createActor(int unique_id, String imgfile, int xsize,
 			 int ysize, double xpos, double ypos, String name, int colid, int lives) {
-		 //	        TriggerEventManager etm = getGame().getTEM();
 		 loadImage(imgfile);
 		 NonPlayer object = new NonPlayer(unique_id, imgfile, xsize, ysize, xpos,
 				 ypos, name, colid, lives, myGame.getCollisionManager(),
 				 myGame.getScoreManager(), myGame.getBloodManager(), 
-				 myGame.getRevivalManager(), myGame.getLiveManager(),myGame.getTEManager());
+				 myGame.getRevivalManager(), myGame.getLiveManager(),myGame.getTriggerManager());
 		 if (unique_id != SaladConstants.NULL_UNIQUE_ID) {myCurrentScene.addNonPlayer(object);}
 		 if (isPlaying) {object.resume();}
 		 return object;
