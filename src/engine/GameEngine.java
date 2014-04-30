@@ -104,10 +104,10 @@ public class GameEngine extends StdGame {
 //		return (Boolean) answer;
 //	}
 
-	public boolean checkTrigger() {
+/*	public boolean checkTrigger() {
 		// consider combineing the checkTrigger to checkGoal()
 		return true;
-	}
+	}*/
 	
 	public void loadingBegin() {
 		if (isEditingMode) {return;}

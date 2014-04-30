@@ -16,6 +16,7 @@ public class AttributeTest {
 	public static final String CREATE_LEVEL_1 = "CreateLevel,ID,1";
 	public static final String CREATE_SCENE_1 = "CreateScene,ID,1,ID,0";
 	public static final String SWITCH_SCENE_1 = "SwitchScene,ID,1,ID,0";
+	public static final String DEFAULT_GRAVITY = "ModifyGravity,Magnitude,0.0";
 	
 	
 	protected DataController myController;
@@ -40,7 +41,13 @@ public class AttributeTest {
     	myController.receiveOrder(CREATE_ACTOR_ORDER);
     	myController.receiveOrder(MODIFY_ACTOR_SHOOT);
     	List<String> att = myGame.getAttributes();
-    	assertEquals(att.get(0), CREATE_LEVEL_1);
+    	assertEquals(att.get(0), DEFAULT_GRAVITY);
+    	assertEquals(att.get(1), CREATE_LEVEL_1);
+    	assertEquals(att.get(2), "ModifyLevel,ID,1,SetInitialScene,0");
+    	assertEquals(att.get(3), CREATE_SCENE_1);
+    	assertEquals(att.get(4), SWITCH_SCENE_1);
+    	assertEquals(att.get(5), CREATE_ACTOR_ORDER);
+    	assertEquals(att.get(6), MODIFY_ACTOR_SHOOT);
 	}
 	
 	
