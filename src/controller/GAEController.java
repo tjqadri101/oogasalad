@@ -797,7 +797,6 @@ public class GAEController {
 	}
 
 
-
 	public void modifySceneBackground(String path, boolean wrapHorizontal, boolean wrapVertical, int playFieldXSize, int playFieldYSize){
 		String order = SaladConstants.MODIFY_SCENE_VIEW + SaladConstants.SEPARATOR + SaladConstants.BACKGROUND + 
 				SaladConstants.SEPARATOR + path + SaladConstants.SEPARATOR + String.valueOf(wrapHorizontal) + 
@@ -815,11 +814,15 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	/**
-	 * 
-	 * @param key
-	 * @param keyFunction
-	 */
+
+	public void modifyGameSwitchSceneToNewLevelID(int oldLevelID, int newLevelID, int sceneID){
+		String order =  SaladConstants.MODIFY_GAME + SaladConstants.SEPARATOR + SaladConstants.SWITCH_SCENE_TO_NEW_LEVEL_ID
+				+ SaladConstants.SEPARATOR + oldLevelID + SaladConstants.SEPARATOR + newLevelID + SaladConstants.SEPARATOR +
+				sceneID;
+				if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);		
+		
+	}
 	public void modifyInputManager(int key, String keyFunction){ 
 		String order = SaladConstants.MODIFY_INPUTMANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_KEY + SaladConstants.SEPARATOR + key + 
 				SaladConstants.SEPARATOR + keyFunction; 
