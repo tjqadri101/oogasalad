@@ -177,6 +177,7 @@ public final class SaladConstants {
 	public static final String SET_EVENT_ENEMY_SHOWER = "SetEventEnemyShower";
 	public static final String SET_TRIGGER = "SetTrigger";
 	public static final String SET_EVENT = "SetEvent";
+	public static final String EVENT_LOSE_GAME = "EventLoseGame";
 
 	public static final String TRIGGER_TYPE = "TriggerType";
 	public static final String EVENT_TYPE = "EventType";
@@ -243,6 +244,8 @@ public final class SaladConstants {
 
 	public static final String PATH = "src/statistics/PersistentStats.txt";
 	public static final String BEHAVIOR_METHOD = "BehaviorMethod";
+
+	
 
 
 

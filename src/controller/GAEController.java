@@ -963,46 +963,41 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void modifyTriggerEventManagerLoseGame(int eventTriggerPairID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_LOSE_GAME + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_LOSE_GAME;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 
 	public void modifyLifeManagerInitLives(int lives, int playerID){
-		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + SaladConstants.SEPARATOR 
-				+ lives + SaladConstants.SEPARATOR + playerID; 
+		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + 
+				SaladConstants.SEPARATOR + lives + SaladConstants.SEPARATOR + playerID; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	/**
-	 * 
-	 * 
-	 * @param changeOfLife
-	 * @param collision
-	 * @param victimCollidID
-	 * @param hitterCollidID
-	 */
-	public void modifyLifeManagerSetCollisionLife(int changeOfLife, String collision, int victimCollidID, int hitterCollidID){
+	public void modifyLifeManagerSetCollisionLife(int changeOfLife,int victimCollidID, int hitterCollidID){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_COLLISION_LIFE + SaladConstants.SEPARATOR 
-				+ changeOfLife + SaladConstants.SEPARATOR + collision + SaladConstants.SEPARATOR + victimCollidID + SaladConstants.SEPARATOR + hitterCollidID; 
+				+ changeOfLife + SaladConstants.SEPARATOR + SaladConstants.COLLISION + SaladConstants.SEPARATOR + 
+				victimCollidID + SaladConstants.SEPARATOR + hitterCollidID; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 	
-	/**
-	 * 
-	 * @param changeOfLife
-	 * @param tileCollision
-	 * @param victimCollidID
-	 * @param tileCollID
-	 */
-	public void modifyLifeManagerSetTileCollisionLife(int changeOfLife, String tileCollision, int victimCollidID, char tileCollID){
+
+	public void modifyLifeManagerSetTileCollisionLife(int changeOfLife, int victimCollidID, char tileCollID){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_TILE_COLLISION_LIFE + SaladConstants.SEPARATOR 
-				+ changeOfLife + SaladConstants.SEPARATOR + tileCollision + SaladConstants.SEPARATOR + victimCollidID + SaladConstants.SEPARATOR + tileCollID; 
+				+ changeOfLife + SaladConstants.SEPARATOR + SaladConstants.TILE_COLLISION + SaladConstants.SEPARATOR + 
+				victimCollidID + SaladConstants.SEPARATOR + tileCollID; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 
 	public void modifyLifeManagerRestoreLife(boolean restore){
-		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.RESTORE_LIFE_BY_LEVEL + SaladConstants.SEPARATOR 
-				+ String.valueOf(restore); 
+		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.RESTORE_LIFE_BY_LEVEL 
+				+ SaladConstants.SEPARATOR + String.valueOf(restore); 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
