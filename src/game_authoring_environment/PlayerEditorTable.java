@@ -97,30 +97,31 @@ public class PlayerEditorTable extends PanelTable {
 						JTextField speedField = new JTextField(10);
 						JTextField bulletsField = new JTextField(10);
 						JTextField colIDField = new JTextField(10);
+						JTextField maxBullets = new JTextField(10);
 						switch(str){
 
 						case "Slow Shoot":{
-							JTextField[] texts = {xSizeField, ySizeField,colIDField, speedField};
-							String[] strings = {"x size:", "y size:", "Collision ID", "Speed:"};
+							JTextField[] texts = {xSizeField, ySizeField,colIDField, speedField, maxBullets};
+							String[] strings = {"x size:", "y size:", "Collision ID", "Speed:", "Max Bullets"};
 							JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
 
 							int result = JOptionPane.showConfirmDialog(null, myPanel, 
 									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result == JOptionPane.OK_OPTION) {
-								gController.modifyPlayerSlowShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(colIDField.getText()), Integer.parseInt(speedField.getText()));
+								gController.modifyPlayerSlowShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(colIDField.getText()), Integer.parseInt(speedField.getText()), Integer.parseInt(maxBullets.getText()));
 							}
 
 							break;
 						}
 						case "Quick Shoot":{
-							JTextField[] texts_ = {xSizeField, ySizeField,colIDField, speedField, bulletsField};
-							String[] strings_ = {"x size:", "y size:","Collision ID", "Speed:", "Number of Bullets Per Shot"};
+							JTextField[] texts_ = {xSizeField, ySizeField,colIDField, speedField, bulletsField,maxBullets};
+							String[] strings_ = {"x size:", "y size:","Collision ID", "Speed:", "Number of Bullets Per Shot", "Max Bullets"};
 							JPanel myPanel = ViewFactory.createOptionInputPanel(texts_, strings_);
 
 							int result = JOptionPane.showConfirmDialog(null, myPanel, 
 									"Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result == JOptionPane.OK_OPTION) {
-								gController.modifyPlayerQuickShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(colIDField.getText()), Double.parseDouble(speedField.getText()),Integer.parseInt(bulletsField.getText()) );
+								gController.modifyPlayerQuickShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(colIDField.getText()), Double.parseDouble(speedField.getText()),Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
 							}
 							break;}
 						case "Spread Shoot":
@@ -137,7 +138,7 @@ public class PlayerEditorTable extends PanelTable {
 							break;
 						}
 						case "None":
-							gController.modifyPlayerSlowShoot("bullet.png", 0, 0, 0, 0);
+							gController.modifyPlayerSlowShoot("bullet.png", 0, 0, 0, 0, 0);
 						default:
 							break;
 						}

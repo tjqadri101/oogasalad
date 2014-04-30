@@ -93,6 +93,19 @@ public class GameEditorTable extends PanelTable {
 		myTableModel.addRow(secondRow);
 		classMap.put(2,secondRow[1]);
 
+
+		final JTextField tf7 = new JTextField();
+		Object[] second_Row = {"Initial Lives", tf7}; // each row should be in this format
+		tf7.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(tf.getText());
+				gController.modifyLifeManagerInitLives(Integer.parseInt(tf7.getText()), 0);
+			}			
+		});
+		myTableModel.addRow(second_Row);
+		classMap.put(3,second_Row[1]);
+		
 		//GameOver, LifeLost, LevelDone,
 		final JTextField tf1 = new JTextField();
 		Object[] thirdRow = {"Game Over Frame Length", tf1}; // each row should be in this format
@@ -104,7 +117,7 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(thirdRow);
-		classMap.put(3,thirdRow[1]);
+		classMap.put(6,thirdRow[1]);
 
 		final JTextField tf2 = new JTextField();
 		Object[] fourthRow = {"Life Lost Frame Length", tf2}; // each row should be in this format
@@ -160,7 +173,7 @@ public class GameEditorTable extends PanelTable {
 			}
 		});		
 		myTableModel.addRow(sixthrow);
-		classMap.put(6,sixthrow[1]);
+		classMap.put(8,sixthrow[1]);
 
 		JComboBox gameStateDisplayImage = new JComboBox(gameStates);
 		Object[] seventhRow = {"Transition Image", gameStateDisplayImage};
@@ -213,7 +226,7 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(eighthRow);
-		classMap.put(8,eighthRow[1]);
+		classMap.put(9,eighthRow[1]);
 		
 		
 		JCheckBox cb5= new JCheckBox();
@@ -231,9 +244,19 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(ninthRow);
-		classMap.put(9,ninthRow[1]);
+		classMap.put(10,ninthRow[1]);
 		
-	
+		final JTextField tf5 = new JTextField();
+		Object[] tenthRow = {"Set Score Increase by Time", tf5}; // each row should be in this format
+		tf5.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gController.modifyScoreManagerScoreCondition(Integer.parseInt(tf5.getText().toString()));
+			}			
+		});
+		myTableModel.addRow(tenthRow);
+		classMap.put(11,tenthRow[1]);
+		
 		}
 	
 		

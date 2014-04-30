@@ -814,10 +814,10 @@ public class GAEController {
 	/**
 	 * Sets a scene's transition score 
 	 */
-	public void  modifyScoreManagerTransitionScore(int scoreChange, int oldScene){ 
+	public void  modifyScoreManagerTransitionScore(int scoreChange){ 
 		String order = SaladConstants.MODIFY_SCORE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_TRANSITION_SCORE + 
 				SaladConstants.SEPARATOR + scoreChange + SaladConstants.SEPARATOR + SaladConstants.SCENE_DONE + SaladConstants.SEPARATOR +
-				oldScene; 
+				selectedSceneID; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -825,7 +825,7 @@ public class GAEController {
 	/**
 	 * Set's a scene's transition score 
 	 */	
-	public void modifyScoreManagerScoreCondition(int scoreChange, int oldScene){ 
+	public void modifyScoreManagerScoreCondition(int scoreChange){ 
 		String order = SaladConstants.MODIFY_SCORE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_SCORE_CONDITION + 
 				SaladConstants.SEPARATOR + scoreChange + SaladConstants.SEPARATOR + SaladConstants.TIME;
 		if (!DEBUG) myDataController.receiveOrder(order);

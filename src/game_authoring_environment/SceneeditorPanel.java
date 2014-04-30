@@ -4,9 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -18,6 +21,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import objects.NonPlayer;
+import saladConstants.SaladConstants;
 import controller.GAEController;
 
 public class SceneeditorPanel extends Panel {
@@ -25,6 +30,8 @@ public class SceneeditorPanel extends Panel {
 	private GAEController gController;
 	private SubPanel mySubPanel;
 	private JTable myTable;
+
+	private static final String[] collisionLocation = {SaladConstants.Top, SaladConstants.BOTTOM, SaladConstants.LEFT, SaladConstants.RIGHT, SaladConstants.ALL};
 
 
 	public SceneeditorPanel(GAEController gController) {
@@ -55,6 +62,92 @@ public class SceneeditorPanel extends Panel {
 	protected JComponent makeSubPanelItems() {
 		JButton jb  = makeChooseButton();
 		return jb;
+	}
+	
+	private JButton makeEnemyShower(){
+		JButton b = ViewFactory.createJButton("Create Enemy Shower");
+		b.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				
+			}			
+		});
+		return b;
+	}
+	public String[] createTileColIDList(){
+		List<Character> chars = gController.getTileColIDs();
+		String[] tilIDs = new String[chars.size()];
+		for(int i=0; i<chars.size(); i++){
+			tilIDs[i] = chars.get(i).toString();
+		}
+		return tilIDs;
+	}
+	
+	public Integer[] createActorCollisionList(){
+
+		Map<Integer, NonPlayer> mapofNonPlayers = gController.getMapOfPlayers();
+		TreeSet<Integer> colIDs = new TreeSet<Integer>();
+		for(Integer i : mapofNonPlayers.keySet()){
+			NonPlayer p = mapofNonPlayers.get(i);
+			colIDs.add(p.colid);
+		}
+		Integer[] colids = new Integer[colIDs.size()]; 
+		int j=0;
+		for(Integer i : colIDs){
+			colids[j] = i;
+			j++;
+		}
+		return colids;
+	}
+	public String[] createPlayerList(){
+		String[] players = {"Player"};
+		return players;
+	}
+	
+	private JButton endSceneButton(){
+		JButton b = ViewFactory.createJButton("End Scene Event");
+		b.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				Object[] options1 = {"Collision",
+						"Tile Collision",
+						"Remove Actor", "Time", "Cancel"};
+
+				int result = JOptionPane.showOptionDialog(null,"Trigger Event By...",null,
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.PLAIN_MESSAGE,
+						null,
+						options1,
+						null);		
+				if(result == 0){
+					JComboBox hitterBox = new JComboBox(createPlayerList());
+					JComboBox hitteeBox = new JComboBox(createActorCollisionList());
+					JComboBox[] texts = {hitterBox, hitteeBox};
+					String[] strings = {"ID of Hitter:", "ID being Hit:"};
+					JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+					result = JOptionPane.showConfirmDialog(null, myPanel, 
+							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION) {
+						Object[] k = {hitterBox.getSelectedItem().toString(), hitteeBox.getSelectedItem().toString()};
+						
+						JComboBox collisionLocationBox = new JComboBox(collisionLocation);
+						JComboBox[] texts_ = {collisionLocationBox};
+						String[] strings_ = {"Where Can Collision Take Place"};
+						JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
+						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+						if (result_ == JOptionPane.OK_OPTION) {
+							int hitter = 0;
+							int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
+							String location = collisionLocationBox.getSelectedItem().toString();
+
+						}
+					}
+				}
+			}
+		});
+		return b;
 	}
 
 

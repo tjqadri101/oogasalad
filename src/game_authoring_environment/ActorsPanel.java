@@ -205,7 +205,7 @@ public class ActorsPanel extends Panel {
 	private void deleteActors(){		
 		if(mySelectedRow > -1){
 			//delete actor here			
-			gController.deleteActor(getSelectedActorID());
+			gController.deleteActorNoID();
 			actorsTableModel.removeRow(mySelectedRow);
 			mySelectedRow = -1;
 		}		

@@ -152,8 +152,7 @@ public class CollisioneditorPanel extends Panel {
 						"Actor to Tile", "Actor to Player", "Cancel"};
 
 				int result = JOptionPane.showOptionDialog(null,
-						"Enter a number between 0 and 10000",
-						"Enter a Number",
+						null,null,
 						JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE,
 						null,
@@ -181,7 +180,7 @@ public class CollisioneditorPanel extends Panel {
 						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result_ == JOptionPane.OK_OPTION) {
-							int hitter = Integer.parseInt(hitterBox.getSelectedItem().toString());
+							int hitter = 0;
 							int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 							String location = collisionLocationBox.getSelectedItem().toString();
 
@@ -274,7 +273,7 @@ public class CollisioneditorPanel extends Panel {
 						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result_ == JOptionPane.OK_OPTION) {
-							int hitter = Integer.parseInt(hitterBox.getSelectedItem().toString());
+							int hitter = 0;
 							char hittee = hitteeBox.getSelectedItem().toString().charAt(0);
 							String location = collisionLocationBox.getSelectedItem().toString();
 
@@ -400,7 +399,7 @@ public class CollisioneditorPanel extends Panel {
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result_ == JOptionPane.OK_OPTION) {
 							int hitter = Integer.parseInt(hitterBox.getSelectedItem().toString());
-							char hittee = hitteeBox.getSelectedItem().toString().charAt(0);
+							int hittee = 0;
 							String location = collisionLocationBox.getSelectedItem().toString();
 
 							switch(str){
@@ -411,7 +410,7 @@ public class CollisioneditorPanel extends Panel {
 								}
 	
 								case "ShootHitObject":{
-								//	gController.modifyCollisBehavShootHitObject(hitter, hittee, location);
+									gController.modifyCollisBehavShootHitObject(hitter, hittee, location);
 									break;
 								}
 							}
