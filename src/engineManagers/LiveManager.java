@@ -12,7 +12,7 @@ import statistics.GameStats;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
- * Manage the overall lives and change of the lives for the Players throughout the whole Game
+ * Manage the overall lives and change of the lives for the Player(s) throughout the whole Game
  * @author Main Justin (Zihao) Zhang
  *
  */
@@ -68,12 +68,20 @@ public class LiveManager extends StatisticsManager {
 				SaladConstants.SPACE + SaladConstants.LIVE, change);
 	}
 	
+	/**
+	 * Called to initiate a live for a player be default
+	 * @param player
+	 */
 	public void addPlayer(Player player){
 		myPlayerMap.put(player.getID(), player);
 		myInitLifeMap.put(player, DEFAULT_INITIAL_LIVES);
 		restore();
 	}
 	
+	/**
+	 * Set if a player's live is restored for transition of level done
+	 * @param ifRestore
+	 */
 	public void setRestore(boolean ifRestore){
 		myRestore = ifRestore;
 	}
@@ -98,6 +106,10 @@ public class LiveManager extends StatisticsManager {
 		}
 	}
 
+	/**
+	 * Called to get the attribute of LiveManager
+	 */
+	@Override
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		for(Player player: myInitLifeMap.keySet()){
@@ -125,6 +137,9 @@ public class LiveManager extends StatisticsManager {
 		return answer;
 	}
 
+	/**
+	 * Called to update the live of a player for a condition between two objects
+	 */
 	@Override
 	public void update(String info, GameObject victim, GameObject hitter) {
 		int victimColid = checkIfSideDetectorColid(victim);
@@ -141,6 +156,10 @@ public class LiveManager extends StatisticsManager {
 		}
 	}
 	
+	/**
+	 * Called to update the live of a player for a condition between an object and a tile
+	 */
+	@Override
 	public void update(String info, GameObject victim, int tileColid){
 		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 

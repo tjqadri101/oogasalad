@@ -46,11 +46,12 @@ import jgame.platform.JGEngine;
 import controller.GAEController;
 import engine.GameEngine;
 import engineTests.EngineTest;
+import objects.NonPlayer;
 
 @SuppressWarnings("serial")
 public class RightPanel extends JSplitPane {
 
-	public double curXPos, curYPos;
+	public double curActorXPos, curActorYPos;
 	public GAEController myGAEController;
 	protected JSpinner xSpinner, ySpinner;
 	public static final double POSIT_STEP = 10d;
@@ -64,8 +65,8 @@ public class RightPanel extends JSplitPane {
 	
 	private JComponent createSpinnerPanel(GAEController gController){
 		JPanel spinnerPanel = new JPanel();
-		xSpinner = addLabeledPositionSpinner(spinnerPanel, "X", "curXPos",POSIT_STEP);
-		ySpinner = addLabeledPositionSpinner(spinnerPanel, "Y", "curYPos", POSIT_STEP);
+		xSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_X", "curActorXPos",POSIT_STEP);
+		ySpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_Y", "curActorYPos", POSIT_STEP);
 		return spinnerPanel;
 	}
 	
@@ -73,7 +74,7 @@ public class RightPanel extends JSplitPane {
 	 
 
 	protected JSpinner addLabeledPositionSpinner(Container c, String label, String field, double stepSize){
-		SpinnerModel posModel = new SpinnerNumberModel(0d, 0d, 500d, stepSize);
+		SpinnerModel posModel = new SpinnerNumberModel(0d, 0d, 1000d, stepSize);
 		JLabel l = new JLabel(label);
 		c.add(l);
 		JSpinner spinner = new JSpinner(posModel);
@@ -90,7 +91,7 @@ public class RightPanel extends JSplitPane {
 						Class<?> c1 = getCurInstance().getClass();
 						Field field1 = c1.getField(curSpinner.getName());
 						field1.set(getCurInstance(),curSpinner.getValue());
-						myGAEController.modifyActorPosNoID(curXPos, curYPos);
+						myGAEController.modifyActorPosNoID(curActorXPos, curActorYPos);
 					}
 					 catch (Exception e2)
 				        {
@@ -102,8 +103,12 @@ public class RightPanel extends JSplitPane {
 		return spinner;
 	}
 	 
-	protected void updatePositionSpinners(){
-		
+	protected void updatePositionSpinners(int selectedActorID){
+		NonPlayer curActor = myGAEController.getNonPlayer();
+		curActorXPos = curActor.x;
+		curActorYPos = curActor.y;
+		xSpinner.setValue(curActorXPos);
+		ySpinner.setValue(curActorYPos);
 	}
 	
 	private RightPanel getCurInstance(){
