@@ -1,10 +1,8 @@
 package engineTests;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import objects.NonPlayer;
 import objects.Player;
 import saladConstants.SaladConstants;
@@ -12,6 +10,8 @@ import stage.Game;
 import engine.GameEngine;
 
 public class EngineTest {
+	
+	public static final int LEVELS = 8;
 	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
@@ -34,11 +34,12 @@ public class EngineTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(false);
+		GameEngine engine = new GameEngine(true);
+		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
 		engine.setGame(game);
-		for (int i=0;i<8;i++){
+		for (int i=0;i<LEVELS;i++){
 			game.addLevel(i+1);
 			game.addScene(i+1, i);
 			game.getLevel(i+1).setInitialSceneID(i);
@@ -54,18 +55,20 @@ public class EngineTest {
 			NonPlayer actor = engine.createActor(123+i, "poke-mon/0"+(13+i)+".gif", 200, 200, 300, 100, SaladConstants.NULL, ENEMY_COLID, 10);
 			actor.setBehavior("RegularRemove");
 			actor.setBehavior("BackForthMove", 8.0, 5);
-			actor.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100);
+			actor.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
 
 			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 10);
 			goomba.setBehavior("RegularRemove");
 			goomba.setBehavior("BackForthMove",5.0, 10);
-			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100);
-			
+			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100, 4);
+
 			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);
 			mushroom.setBehavior("RegularRemove");
 			mushroom.setBehavior("BackForthMove",6.0, 20);
-			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100);
+			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
 		}
+		
+//		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");
 		
 		game.getGravity().setMagnitude(0.1);
 		
@@ -73,14 +76,14 @@ public class EngineTest {
 		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
 		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
-		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, SaladConstants.NULL, PLAYER_COLID, 30);
+		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
 		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
 
 		player.setBehavior("RegularRemove");
 		player.setBehavior("Jump", 5.0, 1);
-		player.setBehavior("SpreadShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4);
+		player.setBehavior("SpreadShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4, 8);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
@@ -88,6 +91,9 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
+		player.setCanMoveInAir(false);
+		
+		engine.modifyPlayerImage(0, "poke-mon/025.gif", 0, 0);
 		
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
@@ -110,9 +116,12 @@ public class EngineTest {
 		game.getGravity().setMagnitude(0.1);
 		game.getLiveManager().setInitLives(3, 0);
 		
-//		game.getTEManager().setEventOrTriggerBehavior(1, "TriggerByTime", 400);
-//		game.getTEManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
+		
+//		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+//		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
+		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
+//		System.out.println("\n EngineTest finished constructing game");
         return engine;
 	}
 }

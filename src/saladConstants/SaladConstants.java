@@ -84,6 +84,7 @@ public final class SaladConstants {
 	public static final String QUICK_SHOOT = "QuickShoot";
 	public static final String SHOW_CORPSE = "ShowCorpse";
 	public static final String IMMORTAL = "Immortal";
+	public static final String CAN_MOVE_IN_AIR = "CanMoveInAir";
 	public static final String CAN_NOT_COLLIDE = "CanNotCollide";
 	public static final String CAN_NOT_JUMP = "CanNotJump";
     public static final String BACK_FORTH_MOVE_WITH_VERTICAL_SPEED = "BackForthMoveWithVerticalSpeed";
@@ -105,6 +106,7 @@ public final class SaladConstants {
     public static final String CREATE_GOAL = "CreateGoal";
     public static final String CREATE_TILE = "CreateTile";
     public static final String SET_DRAG_TILE = "SetDragTile";
+    public static final String TILE_MAP = "TileMap";
     public static final String TILE_IMAGE = "TileImage";
     public static final String DRAG_IMAGE = "DragImage";
     public static final String MODIFY_ACTOR_IMAGE = "ModifyActorImage";
@@ -231,17 +233,16 @@ public final class SaladConstants {
 	public static final String SPREAD_SHOOT = "SpreadShoot";
 	public static final String FD_MOVE = "FDMove";
 	public static final String BK_MOVE = "BKMove";
+	public static final String UP_MOVE = "UPMove";
+	public static final String DW_MOVE = "DWMOVE";
 	public static final String TRIGGER_BY_REMOVE = "TriggerByRemove";
 	public static final String EVENT_LEVEL_DONE = "EventLevelDone";
 	public static final String EVENT_ENEMY_SHOWER = "EventEnemyShower";
 	public static final String SHOOT_HIT_OBJECT = "ShootHitObject";
 
-	
-	
 	public static final String PATH = "src/statistics/PersistentStats.txt";
 	public static final String BEHAVIOR_METHOD = "BehaviorMethod";
-
-	
+	public static final String SET_INITIAL_SCENE_ID = "SetInitialSceneID";
 
 	
 

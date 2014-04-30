@@ -41,6 +41,7 @@ public abstract class Shootable {
 		object.expiry = object.expire_off_view;
 		object.setBehavior(SaladConstants.REGULAR_MOVE, xspeed, yspeed);
 		object.setBehavior(SaladConstants.REGULAR_REMOVE);
+		myObject.addShotThing(object);
 	}
 	
 	public abstract void shoot(List<Object> objects);

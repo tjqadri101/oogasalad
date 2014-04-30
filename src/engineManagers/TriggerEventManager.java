@@ -14,7 +14,6 @@ import stage.Game;
 import util.AttributeMaker;
 import util.SaladUtil;
 
-
 /**
  * TriggerManager keeps track of all the triggers and their corresponding events
  * 
@@ -89,33 +88,39 @@ public class TriggerEventManager extends StatisticsManager{
         myEngine = engine; 
 
         for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
-            System.out.println("TriggerEventManager checkTrigger called: ");
+            System.out.println("checkTrigger in TEM called: ");
             int etPairID = entry.getKey();
             List<Object> triggerList = entry.getValue();
+            System.out.println("checkTrigger: " + triggerList);
             if(triggerList.size()!=0){
                 String triggerBehavior = triggerList.get(0).toString();
-                triggerList.remove(0);
+                triggerList = triggerList.subList(1, triggerList.size());
+//                triggerList.remove(0);// this place causes error
                 if (triggerBehavior == null)
                     break;
-                System.out.println("TEM: behavior " + triggerBehavior);
-                ResourceBundle behaviors = ResourceBundle
-                        .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+                System.out.println("checkTrigger: TEM: behavior " + triggerBehavior);
+                ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                                    + SaladConstants.OBJECT_BEHAVIOR);
                 Object answer = SaladUtil.behaviorReflection(behaviors, triggerBehavior,
                                                              triggerList, CHECK_TRIGGER, myEngine);
                 // Nullpointer exception here... Consider going through salad reflection
                 if ((boolean) answer)
+                    System.out.println("checkTrigger returns true ");
                     doEvent(myEngine, etPairID);
             }
         }
 
     }
 
-    private void doEvent (GameEngine myEngine, int etPairID) {
-        List<Object> eventParameter = myEventMap.get(etPairID);
-        String eventBehavior = (String) eventParameter.remove(0);
-        ResourceBundle behaviors = ResourceBundle
-                .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+    public void doEvent (GameEngine myEngine, int etPairID) {
+        List<Object> rawPara = myEventMap.get(etPairID);
+        int size = rawPara.size();
+//        eventParameter.remove(0);
+        List<Object> eventParameter = rawPara.subList(1, size);
+        System.out.println("doEvent: the eventParameter is " + eventParameter);
+        String eventBehavior = (String) rawPara.get(0);
+        System.out.println("doEvent: eventBehavior is " + eventBehavior);
+        ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                            + SaladConstants.OBJECT_BEHAVIOR);
         SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, DO_EVENT, myEngine);
     }
@@ -152,7 +157,7 @@ public class TriggerEventManager extends StatisticsManager{
         for (int i = 0; i < args.length; i++) {
             behaviorParameters.add(args[i]);
         }
-        System.out.println("SetEventOrTriggerB: behaviroParar: " + behaviorParameters);
+        System.out.println("setEventOrTriggerBehavior: behaviroParar: " + behaviorParameters);
         if (behaviorName.contains(TRIGGER_INDICATOR)) {
             myTriggerMap.put(etPairID, behaviorParameters);
         }
@@ -168,7 +173,15 @@ public class TriggerEventManager extends StatisticsManager{
     public List<String> getAttributes(){
         return myAttributes;
     }
-
+    
+    public Map<Integer, List<Object>> getTriggerMap(){
+        return myTriggerMap;
+    }
+    
+    public Map<Integer, List<Object>> getEventMap(){
+        return myEventMap;
+    }
+    
     // See if putting same methods together works
     /*
      * public void setEventBehavior(int etPairID, String eventBehavior, Object ... args){

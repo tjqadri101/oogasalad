@@ -745,6 +745,7 @@ public class EngineLogic {
 
 	public void markAddObject(JGObject obj) {
 		obj_to_add.put(obj.getName(),obj);
+//		System.out.println("markAddObject "+obj.colid + " EngineLogic.markAddObject");
 	}
 
 	/** Add new object now.  Old object with the same name is replaced
@@ -812,6 +813,7 @@ public class EngineLogic {
 			JGObject o = (JGObject) obj_to_add.values[i];
 			if (prefix==null || obj_to_add.keys[i].startsWith(prefix)) {
 				if (cidmask==0 || (o.colid&cidmask)!=0) {
+//					if (o == null) {System.out.println(obj_to_add.keys[i] + " EngineLogic.doRemoveObjects");}
 					if (suspended_obj || !o.is_suspended) {
 						// Note: remove element inside element enumeration
 						obj_to_add.remove(obj_to_add.keys[i]);

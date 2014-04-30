@@ -5,6 +5,7 @@ import stage.Game;
 import stage.Scene;
 import stage.Transition;
 import statistics.StatsController;
+import jgame.Highscore;
 import jgame.JGColor;
 import jgame.platform.StdGame;
 import objects.GameObject;
@@ -26,6 +27,8 @@ import engineManagers.TriggerEventManager;
 @SuppressWarnings("serial")
 public class GameEngine extends StdGame {
 
+	public static final String BUFFER_IMAGE_FOLDER = "ImageBuffer/";
+	
 	public static final int FRAMES_PER_SECOND = 70;
 	public static final int MAX_FRAMES_TO_SKIP = 2;
 	public static final int JGPOINT_X = 800;//
@@ -52,6 +55,7 @@ public class GameEngine extends StdGame {
 	protected int myTileX;
 	protected int myTileY;
 	protected char myTileCid;
+	protected int myTileCounter = 0;
 
 	protected boolean isEditingMode;
 	protected boolean isLoading;
@@ -76,6 +80,7 @@ public class GameEngine extends StdGame {
 	public void initGame() {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
 //		setTileSettings("#",2,0);
+		setHighscores(10,new Highscore(0,"nobody"),25);
 		defineImage("null","0",0,"null","-");
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
@@ -139,12 +144,13 @@ public class GameEngine extends StdGame {
 	
 	public void initNewLife() {
 		myPlayer.resume();
-		myPlayer.restore(scene_restart);
 		if (scene_restart){
+			removeObjects(null, 0, false);
 			for (GameObject object : myCurrentScene.getGameObjects()) {
 				object.restore(true);
 			}
 		}
+		myPlayer.restore(scene_restart);
 	}
 	
 	
@@ -216,6 +222,7 @@ public class GameEngine extends StdGame {
 	
 	@Override
 	public void doFrame() {
+//		System.out.println("\n doFrame");
 		if (getKey('L')) {levelDone();clearKey('L');} //cheat key for testing
 		if (getKey('K')) {myPlayer.remove();lifeLost();clearKey('K');} //cheat key for testing
 		if (getKey('O')) {myPlayer.remove();gameOver();clearKey('O');} //cheat key for testing
@@ -227,9 +234,11 @@ public class GameEngine extends StdGame {
 
 	@Override
 	public void paintFrame() {
+//		System.out.println("\n paintFrame");
 		if (!isEditingMode && isPlaying) {
 			super.paintFrame();
 		}
+//		System.out.println("survived");
 		if (!isEditingMode && isLoading) {
 			String loading = "Loading";
 			String dot = ".";
@@ -426,6 +435,11 @@ public class GameEngine extends StdGame {
 					 (double) (Math.abs(myTileX - tileX) + 1) * tileWidth(),
 					 (double) (Math.abs(myTileY - tileY) + 1) * tileHeight(), false, false);
 		 }
+		 if (myMouseButton == 0 && myTileCounter > FRAMES_PER_SECOND) {
+			 int tileX = myTileX * TILE_WIDTH + TILE_WIDTH / 2;
+			 int tileY = myTileY * TILE_HEIGHT + TILE_HEIGHT / 2;
+			 drawString(tileX+" "+tileY, tileX, tileY, 0, true);
+		 }
 	 }
 	 
 	 private void displayPlayerInfo() {
@@ -433,11 +447,12 @@ public class GameEngine extends StdGame {
 			 drawRect(myPlayer.x + myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 13.5,
 					 myPlayer.getXSize() / 2, 10, false, true);
-			 drawRect(myPlayer.x + 0.5 * (1 + myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
+//			 System.out.println(myPlayer.getBlood() +" "+ myPlayer.getInitBlood());
+			 drawRect(myPlayer.x + (0.5 + 0.5 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 13.5,
 					 (1.0 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
 					 10, true, true);
-			 drawString(myPlayer.getName(), myPlayer.x + myPlayer.getXSize() / 2,
+			 drawString(myPlayer.getObjectName(), myPlayer.x + myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 3, 0, true);
 		 }
 	 }
@@ -490,6 +505,16 @@ public class GameEngine extends StdGame {
 					 Math.min(myTileY, tileY), Math.abs(myTileX - tileX) + 1,
 					 Math.abs(myTileY - tileY) + 1);
 		 }
+		 
+		 if (myMouseButton == 0 && !currentMouse1 && !currentMouse3) {
+			 if (myTileX != tileX || myTileY != tileY) {
+				 myTileX = tileX;
+				 myTileY = tileY;
+				 myTileCounter = 0;
+			 }
+			 else {myTileCounter ++;}
+		 }
+		 
 		 myMouseButton = 0;
 		 if (currentMouse1) {myMouseButton = 1;}
 		 if (currentMouse3) {myMouseButton = 3;}
@@ -548,14 +573,14 @@ public class GameEngine extends StdGame {
 	 }
 
 	 public void loadTileImage(char cid, String imgfile){
-		 defineImage(cid+"",cid+"",cid,imgfile,"-");
+		 defineImage(cid+"",cid+"",cid,BUFFER_IMAGE_FOLDER+imgfile,"-");
 		 myGame.defineTileImage(cid, imgfile);
 		 if(isEditingMode) {myTileCid = cid;}
 	 }
 
 	 private void loadImage(String imgfile) {
 		 if (imgfile == null) {return;}
-		 defineImage(imgfile, "-", 0, imgfile, "-");
+		 defineImage(imgfile, "-", 0, BUFFER_IMAGE_FOLDER+imgfile, "-");
 	 }
 
 	 /* switching scene & transition state methods */
@@ -609,15 +634,17 @@ public class GameEngine extends StdGame {
 	private void showScene() {
 		setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
 				 myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
-		 setTiles(0, 0, myCurrentScene.getTiles());
-		 if (myPlayer != null) {
-			 myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
-					 myCurrentScene.getPlayerInitPosition()[1]);
-			 myPlayer.resume();
-		 }
-		 for (GameObject object : myCurrentScene.getGameObjects()) {
-			 object.resume();
-		 }
+		if (isPlaying) {
+			setTiles(0, 0, myCurrentScene.getTiles());
+			if (myPlayer != null) {
+				myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
+						myCurrentScene.getPlayerInitPosition()[1]);
+				myPlayer.resume();
+			}
+			for (GameObject object : myCurrentScene.getGameObjects()) {
+				object.resume();
+			}
+		}
 	}
 	
 	 /* scene view modification methods */

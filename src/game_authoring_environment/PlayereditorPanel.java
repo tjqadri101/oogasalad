@@ -103,7 +103,7 @@ public class PlayereditorPanel extends Panel {
 						String name = chooser.getSelectedFile().getName();
 						
 					//	gController.uploadImage(100, 100, path);
-						gController.createPlayer(gController.getPlayerID(), path, 100, 100, 100, 100, myTable.getName(), 0, 1);
+						gController.createPlayer(gController.getPlayerID(), name, 100, 100, 100, 100, myTable.getName(), 0, 1);
 						playerExists = true;
 						((PlayerEditorTable) myTable).setPlayerExists(true);
 						makeSubPanel();
@@ -188,27 +188,27 @@ public class PlayereditorPanel extends Panel {
 				if (result == JOptionPane.OK_OPTION) {
 					if(moveUp.getText().length()>0){
 						int moveUp_char = moveUp.getText().toLowerCase().charAt(0);
-						gController.modifyPlayerKeyUpNoID(moveUp_char);
+						gController.modifyPlayerKeyUp(moveUp_char);
 					}
 					if(moveDown.getText().length()>0){
 						int moveDown_char =(int) moveDown.getText().toLowerCase().charAt(0);
-						gController.modifyPlayerKeyDownNoID(moveDown_char);
+						gController.modifyPlayerKeyDown(moveDown_char);
 					}
 					if(moveLeft.getText().length()>0){
 						int moveLeft_char =(int) moveLeft.getText().toLowerCase().charAt(0);
-						gController.modifyPlayerKeyLeftNoID(moveLeft_char);
+						gController.modifyPlayerKeyLeft(moveLeft_char);
 					}
 					if(moveRight.getText().length()>0){
 						int moveRight_char =(int) moveRight.getText().toLowerCase().charAt(0);
-						gController.modifyPlayerKeyRighttNoID(moveRight_char);
+						gController.modifyPlayerKeyRight(moveRight_char);
 					}
 					if(jump.getText().length()>0){
 						int jump_char = (int) jump.getText().toLowerCase().charAt(0);					
-						gController.modifyPlayerKeyJumpNoID(jump_char);
+						gController.modifyPlayerKeyJump(jump_char);
 					}
 					if(shoot.getText().length()>0){
 						int shoot_char = (int) shoot.getText().toLowerCase().charAt(0);
-						gController.modifyPlayerKeyShoottNoID(shoot_char);
+						gController.modifyPlayerKeyShoot(shoot_char);
 					}
 
 				}
@@ -256,7 +256,7 @@ public class PlayereditorPanel extends Panel {
 				String name = chooser.getSelectedFile().getName();
 				
 				gController.uploadImage(100, 100, path);
-				gController.modifyPlayerImageNoID(name, 100, 100);
+				gController.modifyPlayerImage(name, 100, 100);
 				
 			}			
 		}catch(Exception e){

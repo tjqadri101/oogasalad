@@ -13,6 +13,7 @@ import saladConstants.SaladConstants;
  * @param int collision ID of the bullet
  * @param double absolute speed of the bullet
  * @param int time latency, the larger the slower
+ * @param int max number of bullets allowed on the screen
  * @author Main Justin (Zihao) Zhang
  */
 public class SlowShootByTime extends Shootable{
@@ -31,6 +32,8 @@ public class SlowShootByTime extends Shootable{
 		int colid = (Integer) objects.get(3);
 		double shootSpeed = (Double) objects.get(4);
 		int latency = (Integer) objects.get(5);
+		int numBullets = (Integer) objects.get(6);
+		if(myObject.getNumAliveShots() >= numBullets) return;
 		
 		double[] property = locateShootLocation(xsize, ysize, shootSpeed);
 		

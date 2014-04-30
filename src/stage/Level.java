@@ -78,9 +78,12 @@ public class Level {
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_LEVEL, SaladConstants.ID, myID));
-		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LEVEL, SaladConstants.ID, myID, SaladConstants.SET_INIT_SCENE, false, myInitialSceneID));
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LEVEL, SaladConstants.ID, myID, 
+				SaladConstants.SET_INITIAL_SCENE_ID, false, myInitialSceneID));
 		for(int a: mySceneMap.keySet()){
 			List<String> sceneAttribute = mySceneMap.get(a).getAttributes();
+			sceneAttribute.add(0, AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, 
+					SaladConstants.ID, myID, SaladConstants.ID, false, mySceneMap.get(a).getID()));
 			String attribute = AttributeMaker.addAttribute(SaladConstants.SWITCH_SCENE, SaladConstants.ID, myID, SaladConstants.ID, false, mySceneMap.get(a).getID()); 
 			sceneAttribute.add(1, attribute); 
 			answer.addAll(sceneAttribute);

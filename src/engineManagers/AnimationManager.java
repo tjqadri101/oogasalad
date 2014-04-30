@@ -35,6 +35,7 @@ public class AnimationManager {
 	 */
 	public void updateImage(String behavior) {
 		String newImg = myImageMappings.get(behavior);
+//		System.out.println("updateImage: " + newImg);
 		if (newImg != null) {
 			myObject.setImage(newImg);
 		} else {
