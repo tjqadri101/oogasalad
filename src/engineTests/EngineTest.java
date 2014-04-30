@@ -1,8 +1,6 @@
 package engineTests;
 
 import java.awt.BorderLayout;
-import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import objects.NonPlayer;
@@ -119,10 +117,11 @@ public class EngineTest {
 		game.getLiveManager().setInitLives(3, 0);
 		
 		
-		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
-		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
+//		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+//		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
+//		System.out.println("\n EngineTest finished constructing game");
         return engine;
 	}
 }

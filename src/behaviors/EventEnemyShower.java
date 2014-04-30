@@ -14,12 +14,21 @@ public class EventEnemyShower extends Eventable{
     protected String gfx;
     protected static final String ENEMY_SHOWER = "EnemyShower"; 
 
-    protected EventEnemyShower (GameEngine engine) {
+    public EventEnemyShower (GameEngine engine) {
         super(engine);
         myEngine = engine;
         rg = new Random();
         gfx = "mushroom1.png";
     }
+    
+/*    public EventEnemyShower (Object null) {
+        super(null);
+//        myEngine = engine;
+        rg = new Random();
+        gfx = "mushroom1.png";
+    }*/
+    
+    
 
     /**
      * Called via reflection to invoke the doEvent method

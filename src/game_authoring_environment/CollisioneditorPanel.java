@@ -202,8 +202,9 @@ public class CollisioneditorPanel extends Panel {
 								break;
 							}
 							case "Rebounce":{
-								gController.modifyCollisionBehaviorToRebound(hittee, hitter,location);
 
+								gController.modifyCollisionBehaviorRebounce(hittee, hitter,location);
+	
 								break;
 							}
 							case "StayOnTile":{

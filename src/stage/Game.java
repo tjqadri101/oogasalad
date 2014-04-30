@@ -175,7 +175,6 @@ public class Game {
      * @return nothing
      */
     public void resetLevelID(int currentLevelID, int newLevelID) {
-        //		if(myLevelMap.containsKey(newLevelID)) throw new ResetLevelException();
         if(myLevelMap.containsKey(newLevelID)) return;
         Level level = myLevelMap.get(currentLevelID);
         level.resetID(newLevelID);
@@ -324,10 +323,8 @@ public class Game {
         for (Entry<Character, String> entry : getTileImageMap()) { // need check
             Character cid = entry.getKey();
             String imgfile = entry.getValue();
-            answer.add(SaladConstants.SET_DRAG_TILE + SaladConstants.SEPARATOR
-            		+ SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR
-            		+ cid.toString() + SaladConstants.SEPARATOR + SaladConstants.DRAG_IMAGE
-            		+ SaladConstants.SEPARATOR + imgfile);
+            answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.TILE_COLID, cid.toString(), 
+            		SaladConstants.DRAG_IMAGE, false, imgfile));
         }
         for (int playerID: myPlayerMap.keySet()){
             answer.addAll(myPlayerMap.get(playerID).getAttributes());
