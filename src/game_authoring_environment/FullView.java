@@ -37,5 +37,8 @@ import controller.GAEController;
 			return lp.getLibrary();
 		}
 		
+		public RightPanel getRightPanel(){
+			return rp;
+		}
 				
 	}

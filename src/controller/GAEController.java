@@ -11,6 +11,7 @@ import game_authoring_environment.GAE;
 import game_authoring_environment.LeftPanel;
 import game_authoring_environment.Library;
 import game_authoring_environment.MenuBar;
+import game_authoring_environment.RightPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -84,6 +85,10 @@ public class GAEController {
 
 	public GameEngine getEngine(){
 		return myGameEngine;
+	}
+	
+	public RightPanel getRightPanel(){
+		return fv.getRightPanel();
 	}
 
 
