@@ -164,4 +164,15 @@ public class AttributeMaker {
 		for(Object o: params){ attribute.append(SaladConstants.SEPARATOR + o.toString());}
 		return attribute.toString();
 	}
+	
+	/**
+	 * Add attribute of the format as: key, type, parameters
+	 * @param String key
+	 * @param String type
+	 * @param boolean duplicated (if type is duplicated in the data format)
+	 * @return String attribute 
+	 */
+	public static String addAttribute(String key, String type, boolean duplicated, Object ... args){
+		return AttributeMaker.addAttribute(key, type, false, SaladUtil.convertArgsToObjectList(args));
+	}
 }
