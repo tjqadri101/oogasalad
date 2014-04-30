@@ -19,7 +19,6 @@ public class EventLevelDone extends Eventable{
         //Consider changing the input parameter
         if(myEngine.level>=3){
             myEngine.gameOver();
-            System.out.println("lol");
     }
     else
             myEngine.levelDone();

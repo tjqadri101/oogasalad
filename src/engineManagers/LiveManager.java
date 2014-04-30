@@ -60,11 +60,12 @@ public class LiveManager extends StatisticsManager {
 	 * Decrement a live for a player matched with the playerID
 	 * @param playerID
 	 */
-	public void decrementLive(int playerID){
+	public void changeLive(int playerID, int change){
 		int currentLive = myCurrentLifeMap.get(myPlayerMap.get(playerID));
-		currentLive --;
+		currentLive += change;
 		myCurrentLifeMap.put(myPlayerMap.get(playerID), currentLive);
-		GameStats.update(myPlayerMap.get(playerID).getObjectName() + " " + SaladConstants.LIVE, -1);
+		GameStats.update(myPlayerMap.get(playerID).getObjectName() + 
+				SaladConstants.SPACE + SaladConstants.LIVE, change);
 	}
 	
 	public void addPlayer(Player player){

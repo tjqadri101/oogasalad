@@ -479,7 +479,7 @@ public abstract class GameObject extends JGObject {
 		if (myUniqueID != SaladConstants.NULL_UNIQUE_ID) myRevivalManager.addRemovedObject(this);
 		if (this instanceof Player) {
 			LiveManager liveManager = (LiveManager) getSpecificManager(SaladConstants.LIVE_MANAGER);
-			liveManager.decrementLive(myUniqueID);
+			liveManager.changeLive(myUniqueID, -1);
 		}
 	}
 	
