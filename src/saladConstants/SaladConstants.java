@@ -30,7 +30,7 @@ public final class SaladConstants {
 	public static final String BEHAVIOR_PANEL = "Behavior";
 	public static final String ELEMENT_LABEL = "Element";
 	public static final String ROOT_ELEMENT_LABEL = "Root";
-	
+	public static final String TILE_PANEL = "Tile";
 	
 	public static final String STATE_GAMEOVER = "GameOver";
 	public static final String STATE_STARTTITLE = "StartTitle";
