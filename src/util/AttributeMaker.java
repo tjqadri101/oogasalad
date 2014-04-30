@@ -1,6 +1,8 @@
 package util;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import saladConstants.SaladConstants;
 
 
@@ -38,11 +40,8 @@ public class AttributeMaker {
 	 * @return String attribute
 	 */
 	public static String addAttribute(String key, String firstType, int firstParameter, String secondType, boolean duplicated, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
-		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
-		for(Object o: params){ attribute.append(SaladConstants.SEPARATOR + o.toString()); }
-		return attribute.toString();
+		String firstParam = String.valueOf(firstParameter);
+		return AttributeMaker.addAttribute(key, firstType, firstParam, secondType, duplicated, params);
 	}
 	
 	/**
@@ -74,11 +73,8 @@ public class AttributeMaker {
 	 * @return String attribute
 	 */
 	public static String addAttribute(String key, String firstType, String firstParameter, String secondType, boolean duplicated, Object ... args){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
-		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
-		for(Object o: args){ attribute.append(SaladConstants.SEPARATOR + o.toString()); }
-		return attribute.toString();
+		List<Object> params = SaladUtil.convertArgsToObjectList(args);
+		return AttributeMaker.addAttribute(key, firstType, firstParameter, secondType, duplicated, params);
 	}
 	
 	/**
@@ -92,11 +88,8 @@ public class AttributeMaker {
 	 * @return String attribute
 	 */
 	public static String addAttribute(String key, String firstType, double firstParameter, String secondType, boolean duplicated, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
-		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
-		for(Object o: params){ attribute.append(SaladConstants.SEPARATOR + o.toString()); }
-		return attribute.toString();
+		String firstParam = String.valueOf(firstParameter);
+		return AttributeMaker.addAttribute(key, firstType, firstParam, secondType, duplicated, params);
 	}
 	
 	/**
@@ -110,17 +103,19 @@ public class AttributeMaker {
 	 * @return String attribute
 	 */
 	public static String addAttribute(String key, String firstType, int firstParameter, String secondType, boolean duplicated, Object ... args){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
-		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
-		for(Object o: args){ 
-			if(o == null) {
-				attribute.append("null");
-				continue;
-			}
-			attribute.append(SaladConstants.SEPARATOR + o.toString()); 
-		}
-		return attribute.toString();
+		List<Object> params = SaladUtil.convertArgsToObjectList(args);
+		return AttributeMaker.addAttribute(key, firstType, firstParameter, secondType, duplicated, params);
+//		StringBuilder attribute = new StringBuilder();
+//		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
+//		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
+//		for(Object o: args){ 
+//			if(o == null) {
+//				attribute.append("null");
+//				continue;
+//			}
+//			attribute.append(SaladConstants.SEPARATOR + o.toString()); 
+//		}
+//		return attribute.toString();
 	}
 	
 	/**
@@ -131,9 +126,8 @@ public class AttributeMaker {
 	 * @return String attribute
 	 */
 	public static String addAttribute(String key, String type, int parameter){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(key + SaladConstants.SEPARATOR + type + SaladConstants.SEPARATOR + parameter);
-		return attribute.toString();
+		String param = String.valueOf(parameter);
+		return AttributeMaker.addAttribute(key, type, param);
 	}
 	
 	/**
@@ -144,9 +138,8 @@ public class AttributeMaker {
 	 * @return String attribute
 	 */
 	public static String addAttribute(String key, String type, double parameter){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(key + SaladConstants.SEPARATOR + type + SaladConstants.SEPARATOR + parameter);
-		return attribute.toString();
+		String param = String.valueOf(parameter);
+		return AttributeMaker.addAttribute(key, type, param);
 	}
 	
 	/**
@@ -170,8 +163,7 @@ public class AttributeMaker {
 	 * @return String attribute
 	 */
 	public static String addAttribute(String key, String type, boolean parameter){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(key + SaladConstants.SEPARATOR + type + SaladConstants.SEPARATOR + parameter);
-		return attribute.toString();
+		String param = String.valueOf(parameter);
+		return AttributeMaker.addAttribute(key, type, param);
 	}
 }
