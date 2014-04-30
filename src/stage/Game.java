@@ -97,6 +97,7 @@ public class Game {
      * @param name
      */
     public void setName(String name){
+        System.out.println("Game: " + "setName called" );
         myName = name;
     }
 
