@@ -432,7 +432,7 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) doAction(SaladConstants.DIE);
 		myIsInAir = 2 * (myIsInAir % 2);
-		System.out.println("xHead: " + myXHead);
+	//	System.out.println("xHead: " + myXHead);
 	}
 	
 	/**
