@@ -44,7 +44,8 @@ public abstract class GameObject extends JGObject {
 	protected int myBlood;
 	protected int myUniqueID;
 	protected int myJumpTimes;
-	protected int myIsInAir;
+	protected boolean myIsInAir;
+	protected int myAirCounter;
 	protected double myInitXSpeed;
 	protected double myInitYSpeed;
 	protected String myDefaultImage;
@@ -52,6 +53,8 @@ public abstract class GameObject extends JGObject {
 	protected String myName;
 	protected int myXHead;
 	protected int myYHead;
+	protected int myPrevXHead;
+	protected int myPrevYHead;
 	protected List<GameObject> myShotThings;
 	protected SideDetector[] mySideDetectors;
 
@@ -144,11 +147,12 @@ public abstract class GameObject extends JGObject {
 	 */
 	public void setXHead(int head){
 		myXHead = head;
-		if (myXHead < 0) {
+		if (myXHead < 0 && myPrevXHead != myXHead) {
 			myAnimationManager.updateImage(SaladConstants.BK_MOVE);
-		} else if (myXHead >= 0) {
+		} else if (myXHead >= 0 && myPrevXHead != myXHead) {
 			myAnimationManager.updateImage(SaladConstants.FD_MOVE);
 		}
+		myPrevXHead = myXHead;
 	}
 	
 	/**
@@ -157,11 +161,12 @@ public abstract class GameObject extends JGObject {
 	 */
 	public void setYHead(int head){
 		myYHead = head;
-		if (myYHead < 0) {
+		if (myYHead < 0 && myPrevYHead != myYHead) {
 			myAnimationManager.updateImage(SaladConstants.UP_MOVE);
-		} else if (myYHead >= 0) {
+		} else if (myYHead >= 0 && myPrevYHead != myYHead) {
 			myAnimationManager.updateImage(SaladConstants.DW_MOVE);
 		}
+		myPrevYHead = myYHead;
 	}
 
 	/**
@@ -398,7 +403,9 @@ public abstract class GameObject extends JGObject {
 	 * Called when hit the ground
 	 */
 	public void ground() {
-		myIsInAir = 1;
+		if(myIsInAir) setImage(myDefaultImage);
+		myIsInAir = false;
+		myAirCounter = 1;
 		myJumpTimes = 0;
 		stop();
 	}
@@ -412,8 +419,8 @@ public abstract class GameObject extends JGObject {
 		colid = collisionID;
 	}
 	
-	public int getIsInAir(){
-		return myIsInAir;
+	public int getAirCounter(){
+		return myAirCounter;
 	}
 	
 	public void incrementJumpTimes(int change){
@@ -431,8 +438,7 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void move() {
 		if (myBlood <= 0) doAction(SaladConstants.DIE);
-		myIsInAir = 2 * (myIsInAir % 2);
-		System.out.println("xHead: " + myXHead);
+		myAirCounter = 2 * (myAirCounter % 2);
 	}
 	
 	/**
@@ -464,8 +470,6 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
-//		if (myXHead == 0) setImage(myDefaultImage);
-		setImage(myDefaultImage);
 	}
 	
 	@Override
@@ -527,6 +531,14 @@ public abstract class GameObject extends JGObject {
 //			if(!object.isAlive()) myShotThings.remove(object);
 //		}
 		return count;
+	}
+	
+	public void setInAir(boolean inAir){
+		myIsInAir = inAir;
+	}
+	
+	public boolean getInAir(){
+		return myIsInAir;
 	}
 	
 	/**

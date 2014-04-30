@@ -78,7 +78,7 @@ public class EngineTest {
 		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
 		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
+		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
 		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
