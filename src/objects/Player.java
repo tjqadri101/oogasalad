@@ -85,29 +85,29 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		myYHead = SaladConstants.NEGATIVE_DIRECTION;
-		myXHead = SaladConstants.NEUTRAL_DIRECTION;
+		setYHead(SaladConstants.NEGATIVE_DIRECTION);
+		setXHead(myXHead = SaladConstants.NEUTRAL_DIRECTION);
 		if(myIsInAir == 0 && !myCanMoveInAir) return;
 		if (y > 0) y -= myMovingYSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveDown(){
-		myYHead = SaladConstants.POSITIVE_DIRECTION;
-		myXHead = SaladConstants.NEUTRAL_DIRECTION;
+		setYHead(SaladConstants.POSITIVE_DIRECTION);
+		setXHead(SaladConstants.NEUTRAL_DIRECTION);
 		if(myIsInAir == 0 && !myCanMoveInAir) return;
 		if (y + getYSize() < eng.pfHeight()) y += myMovingYSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveLeft(){
-		myXHead = SaladConstants.NEGATIVE_DIRECTION;
-		myYHead = SaladConstants.NEUTRAL_DIRECTION;
+		setXHead(SaladConstants.NEGATIVE_DIRECTION);
+		setYHead(SaladConstants.NEUTRAL_DIRECTION);
 		if(myIsInAir == 0 && !myCanMoveInAir) return;
 		if (x > 0) x -= myMovingXSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveRight(){
-		myXHead = SaladConstants.POSITIVE_DIRECTION;
-		myYHead = SaladConstants.NEUTRAL_DIRECTION;
+		setXHead(SaladConstants.POSITIVE_DIRECTION);
+		setYHead(SaladConstants.NEUTRAL_DIRECTION);
 		if(myIsInAir == 0 && !myCanMoveInAir) return;
 		if (x + getXSize() < eng.pfWidth()) x += myMovingXSpeed*eng.getGameSpeed();
 	}
