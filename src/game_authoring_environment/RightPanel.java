@@ -103,7 +103,8 @@ public class RightPanel extends JSplitPane {
 		return spinner;
 	}
 	 
-	protected void updatePositionSpinners(int selectedActorID){
+	protected void updatePositionSpinners(){
+		
 		NonPlayer curActor = myGAEController.getNonPlayer();
 		curActorXPos = curActor.x;
 		curActorYPos = curActor.y;

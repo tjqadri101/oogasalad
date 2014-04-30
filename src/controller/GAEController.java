@@ -394,8 +394,10 @@ public class GAEController {
 	 * Animate an actor's jump animation
 	 */
 	public void modifyActorAnimationJump(String url, int xSize, int ySize ){
-		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.JUMP +
-				SaladConstants.SEPARATOR +  SaladConstants.JUMP + SaladConstants.SEPARATOR + url + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize; 
+		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + 
+				SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.JUMP_ANIMATION +
+				SaladConstants.SEPARATOR +  SaladConstants.JUMP + SaladConstants.SEPARATOR + url + SaladConstants.SEPARATOR + 
+				xSize + SaladConstants.SEPARATOR + ySize; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

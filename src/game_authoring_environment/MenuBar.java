@@ -40,8 +40,7 @@ import saladConstants.SaladConstants;
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
 	
-	public static final String[] keyBehavior = {SaladConstants.SCENE_DONE, SaladConstants.BLOOD_FULL, SaladConstants.LIFE_INCREASE,
-												SaladConstants.GAME_OVER}; 
+	public static final String[] keyBehavior = {SaladConstants.LEVEL_DONE, SaladConstants.LIFE_INCREASE, SaladConstants.GAME_OVER}; 
 	public String selectedBehavior;
 	public JTextField keyField;
 	public GAEController myGAEController;
@@ -152,7 +151,7 @@ public class MenuBar extends JMenuBar{
 
 	
 	public void popUpAndSetKey() {
-		selectedBehavior = SaladConstants.SCENE_DONE;
+		selectedBehavior = SaladConstants.LEVEL_DONE;
 		Integer inputKey = null;		
 		keyField = new JTextField(10);
 		JButton setButton = new JButton("Set");
