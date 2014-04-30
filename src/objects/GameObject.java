@@ -492,6 +492,7 @@ public abstract class GameObject extends JGObject {
 	 */
 	public List<String> getAttributes() {
 		myAttributes.addAll(myActionManager.getAttributes());
+		myAttributes.addAll(myAnimationManager.getAttributes());
 		return myAttributes;
 	}
 
