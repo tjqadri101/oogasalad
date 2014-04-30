@@ -156,58 +156,6 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
-
-
-	/**
-	 * Modify an object to enable it stand another. 
-	 * 
-	 * @param victimCollisionID
-	 * @param stayOnObject
-	 * @param hitterCollID
-	 * @param direction
-	 */
-
-	public void modifyCollisionBehaviorToStayOnObject(int victimCollisionID, String stayOnObject, int hitterCollID, String direction){
-		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+victimCollisionID+SaladConstants.SEPARATOR + 
-				SaladConstants.STAY_ON_OBJECT + SaladConstants.SEPARATOR + stayOnObject + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR + 
-				direction;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
-	/**
-	 * Modify and object to enable it rebound off of another.  
-	 * 
-	 * @param victimCollisionID
-	 * @param rebound
-	 * @param hitterCollID
-	 * @param direction
-	 */
-	public void modifyCollisionBehaviorToRebound(int victimCollisionID, int hitterCollID, String direction){
-		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
-				SaladConstants.REBOUND + SaladConstants.SEPARATOR + SaladConstants.REBOUND + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR + 
-				direction;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	/**
-	 * Modify an object such that it dies on colliding with a tile. 
-	 * 
-	 * @param victimCollisionID
-	 * @param killedByTile
-	 * @param collID
-	 * @param direction
-	 */
-	public void modifyCollisionBehaviorToDieByTile(int victimCollisionID, String killedByTile, char collID, String direction){
-		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
-				SaladConstants.KILL_BY_TILE + SaladConstants.SEPARATOR + killedByTile + SaladConstants.SEPARATOR + collID + SaladConstants.SEPARATOR + 
-				direction;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-	
-	
 	
 	/**
 	 * Modify player by making it immortal without providing player id. The already specified playerID is used.
@@ -740,22 +688,6 @@ public class GAEController {
 		modifyActorQuickShoot(selectedActorID, url, xSize, ySize, colID, speed, numBullets);
 	}
 
-	/*public void modifyActorShowCorpse(int ID, String url, int xSize, int ySize, int time){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPERATER + SaladConstants.ID + SaladConstants.SEPERATER+ID+SaladConstants.SEPERATER + 
-						SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER+SaladConstants.SHOW_CORPSE + SaladConstants.SEPERATER + url + 
-						SaladConstants.SEPERATER +  xSize + SaladConstants.SEPERATER + ySize + SaladConstants.SEPERATER + time;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
-	 *//**
-	 * Modify actor's corpse showing property without providing actor id. The selectedActorID is used.
-	 *//*
-	public void modifyActorShowCorpseNoID(String url, int xSize, int ySize, int time){
-		modifyActorShowCorpse(selectedActorID, url, xSize, ySize, time);
-	}*/
-
-
 	/**
 	 * 
 	 * 
@@ -778,14 +710,6 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	// not used in GAE anymore
-	/*public void createTile(int colID, String url, int leftXPos, int topYPos, int width, int height){
-		String order = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + colID
-				+ SaladConstants.SEPARATOR +SaladConstants.TILE_IMAGE + SaladConstants.SEPARATOR +url + SaladConstants.SEPARATOR + leftXPos 
-				+ SaladConstants.SEPARATOR + topYPos + SaladConstants.SEPARATOR + width + SaladConstants.SEPARATOR + height;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}*/
 
 	public void deleteActor(int ID){
 		String order = SaladConstants.DELETE_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + ID;
@@ -836,6 +760,41 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	/**
+	 * Modify an object to enable it stand another. 
+	 */
+
+	public void modifyCollisionBehaviorToStayOnObject(int victimCollisionID, int hitterCollID, String direction){
+		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR+victimCollisionID+SaladConstants.SEPARATOR + 
+				SaladConstants.STAY_ON_OBJECT + SaladConstants.SEPARATOR + SaladConstants.STAY_ON_OBJECT  + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR + 
+				direction;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+	/**
+	 * Modify and object to enable it rebound off of another.  
+	 */
+	public void modifyCollisionBehaviorRebounce(int victimCollisionID, int hitterCollID, String direction){
+		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
+				SaladConstants.REBOUND + SaladConstants.SEPARATOR + SaladConstants.REBOUND + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR + 
+				direction;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+	 * Modify an object such that it dies on colliding with a tile. 
+	 */
+	public void modifyCollisionBehaviorToDieByTile(int victimCollisionID, String killedByTile, char collID, String direction){
+		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
+				SaladConstants.KILL_BY_TILE + SaladConstants.SEPARATOR + SaladConstants.KILL_BY_TILE + SaladConstants.SEPARATOR + collID + SaladConstants.SEPARATOR + 
+				direction;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	
 
 	public void deleteLevel(int levelID){
 		String order = SaladConstants.DELETE_LEVEL + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+levelID;
