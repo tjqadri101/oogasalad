@@ -96,8 +96,8 @@ public class GAEController {
 		String order = SaladConstants.CREATE_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR +
 				SaladConstants.IMAGE + SaladConstants.SEPARATOR+url+ SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize +
 				SaladConstants.SEPARATOR + SaladConstants.POSITION + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos + 
-				SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + SaladConstants.COLLISION_ID + colID + SaladConstants.SEPARATOR + 
-				SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
+				SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR +
+				colID + SaladConstants.SEPARATOR + SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		setColIDStayOnEveryTileID(colID);
 		System.out.println(order);
