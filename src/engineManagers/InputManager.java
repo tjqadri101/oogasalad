@@ -11,8 +11,10 @@ import saladConstants.SaladConstants;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
+ * Manage all the non-player keys, including cheatKeys
+ * This class uses composition over inheritance so that any new non-player keys do not need to add 
+ * code here
  * @author Main Justin (Zihao) Zhang
- * Only intended for non-player keys
  */
 public class InputManager {
 	
@@ -47,6 +49,7 @@ public class InputManager {
 				List<Object> params = new ArrayList<Object>();
 				SaladUtil.behaviorReflection(myKeyMethods, myKeyMap.get(key),
 						params, SaladConstants.CHECK_KEY, myEngine);
+				myEngine.clearKey(key);
 			}
 		}
 	}
