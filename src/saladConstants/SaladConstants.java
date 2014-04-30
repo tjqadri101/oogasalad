@@ -84,6 +84,7 @@ public final class SaladConstants {
 	public static final String QUICK_SHOOT = "QuickShoot";
 	public static final String SHOW_CORPSE = "ShowCorpse";
 	public static final String IMMORTAL = "Immortal";
+	public static final String CAN_MOVE_IN_AIR = "CanMoveInAir";
 	public static final String CAN_NOT_COLLIDE = "CanNotCollide";
 	public static final String CAN_NOT_JUMP = "CanNotJump";
     public static final String BACK_FORTH_MOVE_WITH_VERTICAL_SPEED = "BackForthMoveWithVerticalSpeed";
@@ -240,6 +241,8 @@ public final class SaladConstants {
 
 	public static final String PATH = "src/statistics/PersistentStats.txt";
 	public static final String BEHAVIOR_METHOD = "BehaviorMethod";
+
+	
 	
 
 	

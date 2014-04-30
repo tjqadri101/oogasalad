@@ -42,7 +42,7 @@ public class RightPanel extends JSplitPane {
 	public String fieldName;
 	public GAEController myGAEController;
 	public static final double ID_STEP = 1d;
-	public static final double POSIT_STEP = .2d;
+	public static final double POSIT_STEP = 10d;
 	
 	public RightPanel(GAEController gController){
 		myGAEController = gController;
