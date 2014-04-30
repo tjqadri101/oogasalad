@@ -139,6 +139,8 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	
+	
 
 	/**
 	 * Modify player's image without providing player id. The already specified player ID is used.
@@ -530,8 +532,8 @@ public class GAEController {
 	 * @param magnitude
 	 * @param numberOfJumpsAllowedInAir
 	 */
-	public void modifyActorJump(int ID, String jump, double magnitude, int numberOfJumpsAllowedInAir){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + ID + SaladConstants.SEPARATOR + SaladConstants.JUMP + SaladConstants.SEPARATOR +
+	public void modifyActorJump(double magnitude, int numberOfJumpsAllowedInAir){
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.JUMP + SaladConstants.SEPARATOR +
 				magnitude + SaladConstants.SEPARATOR + numberOfJumpsAllowedInAir;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -542,8 +544,8 @@ public class GAEController {
 	 * @param ID
 	 * @param canNotJump
 	 */
-	public void modifyActorNotToJump(int ID, String canNotJump){ 
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + ID + SaladConstants.SEPARATOR + SaladConstants.JUMP + SaladConstants.SEPARATOR + 
+	public void modifyActorNotToJump( String canNotJump){ 
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.JUMP + SaladConstants.SEPARATOR + 
 				canNotJump; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -1350,14 +1352,6 @@ public class GAEController {
 	public int getActorCollisionID(){
 		//myDataController.getGame().getNonPlayerColid(int  int sceneidint id)
 		return 0;
-	}
-
-	public void setActorImageURL(String URL){
-		String xval = "100";
-		String yval = "100";
-		String order = SaladConstants.MODIFY_ACTOR_IMAGE + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.IMAGE + SaladConstants.SEPARATOR + URL + SaladConstants.SEPARATOR + xval + SaladConstants.SEPARATOR + yval;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
 	}
 
 	public int getSelectedIDFromDataController(){
