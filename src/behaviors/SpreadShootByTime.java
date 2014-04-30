@@ -24,6 +24,7 @@ public class SpreadShootByTime extends Shootable{
 	 * @param double absolute speed of the bullet
 	 * @param the number of bullets per shoot
 	 * @param int time latency, the larger the slower
+	 * @param int max number of bullets allowed on the screen
 	 */
 	@Override
 	public void shoot(List<Object> objects) {
@@ -36,6 +37,8 @@ public class SpreadShootByTime extends Shootable{
 		double shootSpeed = (Double) objects.get(4);
 		int times = (Integer) objects.get(5);
 		int latency = (Integer) objects.get(6);
+		int numBullets = (Integer) objects.get(7);
+		if(myObject.getNumAliveShots() >= numBullets) return;
 		
 		double[] property = locateShootLocation(xsize, ysize, shootSpeed);
 		if( ( engine.getSaladTimer() + latency) % (latency) == 0){
