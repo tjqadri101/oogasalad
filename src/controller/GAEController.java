@@ -46,6 +46,7 @@ public class GAEController {
 	private int selectedSceneID;
 	private int selectedActorID;
 	private int playerID;
+	private int eventPairID;
 
 	private static final boolean DEBUG = false;
 
@@ -53,7 +54,7 @@ public class GAEController {
 		playerID = SaladConstants.PLAYER_ID;
 		myDataController = new DataController();
 
-
+		eventPairID = 0;
 		myGameEngine = myDataController.initGameEngine(true);
 		//createGAE(this);
 		g = new GAE(this);
@@ -1130,12 +1131,18 @@ public class GAEController {
 	}
 	
 	public NonPlayer getNonPlayer(){
-		return myDataController.getNonPlayer(selectedSceneID);
-	}
+		return myDataController.getNonPlayer(selectedActorID);
+	}	
 
 
 	public int getPlayerID() {
 		return playerID;
+	}
+
+
+	public int getEventTriggerPair() {
+			eventPairID++;
+		return eventPairID;
 	}
 	
 }
