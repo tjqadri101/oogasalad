@@ -64,6 +64,24 @@ public class AttributeMaker {
 	}
 	
 	/**
+	 * Add attribute of the format as: key, type, String parameter, type, parameters
+	 * @param String key
+	 * @param String firstType
+	 * @param Object firstParameter
+	 * @param String secondType
+	 * @param boolean duplicated (if the second type is duplicated in the data format)
+	 * @param list of object parameters
+	 * @return String attribute
+	 */
+	public static String addAttribute(String key, String firstType, String firstParameter, String secondType, boolean duplicated, Object ... args){
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
+		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
+		for(Object o: args){ attribute.append(SaladConstants.SEPARATOR + o.toString()); }
+		return attribute.toString();
+	}
+	
+	/**
 	 * Add attribute of the format as: key, type, double parameter, type, parameters
 	 * @param String key
 	 * @param String firstType
