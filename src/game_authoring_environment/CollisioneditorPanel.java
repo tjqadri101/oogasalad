@@ -32,6 +32,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import objects.NonPlayer;
+import saladConstants.SaladConstants;
 import controller.GAEController;
 
 public class CollisioneditorPanel extends Panel {
@@ -48,7 +49,7 @@ public class CollisioneditorPanel extends Panel {
 	private static final String[] collision2TypesStrings = {"StayOnTile", "KilledByTile"};
 	private static final String[] collision3TypesStrings = {"Rebound", "ShootHitObject"};
 
-	private static final String[] collisionLocation = {"Up", "Down", "Left", "Right", "All"};
+	private static final String[] collisionLocation = {SaladConstants.Top, SaladConstants.BOTTOM, SaladConstants.LEFT, SaladConstants.RIGHT, SaladConstants.ALL};
 
 
 	public CollisioneditorPanel(GAEController gController) {

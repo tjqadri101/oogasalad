@@ -26,6 +26,7 @@ public class AnimationManager {
 	public AnimationManager(GameObject object) {
 		myImageMappings = new HashMap<String, String>();
 		myObject = object;
+		myAttributes = new ArrayList<String>();
 	}
 	
 	/**
