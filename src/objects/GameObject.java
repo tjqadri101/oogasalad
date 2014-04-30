@@ -438,6 +438,7 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void move() {
 		if (myBlood <= 0) doAction(SaladConstants.DIE);
+
 		myAirCounter = 2 * (myAirCounter % 2);
 	}
 	
