@@ -210,7 +210,6 @@ public class CollisionManager {
 	 * @return String List
 	 */
 	public List<String> getAttributes(){
-		SaladUtil.printStringList(myAttributes);
 		return myAttributes;
 	}
 	

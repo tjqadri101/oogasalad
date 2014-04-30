@@ -62,7 +62,7 @@ public class ActionManager {
 	}
 	
 	/**
-	 * Called by Actor to rebounce if regular move behavior
+	 * Called by Actor to rebound if regular move behavior
 	 */
 	public void bounce(){
 		for(String action: myActions){

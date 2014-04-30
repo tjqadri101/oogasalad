@@ -31,7 +31,8 @@ public class BloodManager extends StatisticsManager{
 				info, victimColid, hitterColid);
 		if(!myMap.containsKey(condition)) return;
 		victim.changeBlood(myMap.get(condition));
-		GameStats.update(hitter.getObjectName() + " " + SaladConstants.BLOOD, myMap.get(condition));
+		GameStats.update(hitter.getObjectName() + SaladConstants.SPACE + 
+				SaladConstants.BLOOD, myMap.get(condition));
 	}
 	
 	public void update(String info, GameObject victim, int tileColid){
@@ -40,7 +41,8 @@ public class BloodManager extends StatisticsManager{
 				info, victimColid, tileColid);
 		if(!myMap.containsKey(condition)) return;
 		victim.changeBlood(myMap.get(condition));
-		GameStats.update(victim.getObjectName() + " " + SaladConstants.BLOOD, myMap.get(condition));
+		GameStats.update(victim.getObjectName() + SaladConstants.SPACE
+				+ SaladConstants.BLOOD, myMap.get(condition));
 	}
 
 	public void update(String info, int oldLevelOrSceneID, GameObject object) {
@@ -48,13 +50,15 @@ public class BloodManager extends StatisticsManager{
 				info, oldLevelOrSceneID);
 		if(!myMap.containsKey(condition)) return;
 		object.changeBlood(myMap.get(condition));
-		GameStats.update(object.getObjectName() + " " + SaladConstants.BLOOD, myMap.get(condition));
+		GameStats.update(object.getObjectName() + SaladConstants.SPACE
+				+ SaladConstants.BLOOD, myMap.get(condition));
 	}
 
 	public void update(String condition, GameObject object) {
 		if(!myMap.containsKey(condition)) return;
 		object.changeBlood(myMap.get(condition));
-		GameStats.update(object.getObjectName() + " " + SaladConstants.BLOOD, myMap.get(condition));
+		GameStats.update(object.getObjectName() + SaladConstants.SPACE
+				+ SaladConstants.BLOOD, myMap.get(condition));
 	}
 
 	@Override

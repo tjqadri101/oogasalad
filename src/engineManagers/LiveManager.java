@@ -27,6 +27,7 @@ public class LiveManager extends StatisticsManager {
 	protected Map<Player, Integer> myCurrentLifeMap;
 	
 	public LiveManager(){
+		super();
 		myPlayerMap = new HashMap<Integer, Player>();
 		myInitLifeMap = new HashMap<Player, Integer>();
 		myCurrentLifeMap = new HashMap<Player, Integer>();

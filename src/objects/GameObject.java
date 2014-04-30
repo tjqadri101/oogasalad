@@ -20,21 +20,18 @@ import engineManagers.ScoreManager;
  * 
  * @author: Main Justin (Zihao) Zhang
  * 
- * @contribution (side detectors/jump handling): Shenghan Chen
- * @contribution (animations): David Chou
+ * @contribution (side detectors): Shenghan Chen
+ * @contribution (Animation Manager & Revival Manager): David Chou
  */
 
 public abstract class GameObject extends JGObject {
 	
 	protected ResourceBundle myBehaviors; 
-	protected ScoreManager myScoreManager;
 	protected CollisionManager myCollisionManager;
-	protected BloodManager myBloodManager;
 	protected RevivalManager myRevivalManager;
-	protected LiveManager myLiveManager;
 	protected ActionManager myActionManager;
-	protected TriggerEventManager myEventManager;
 	protected AnimationManager myAnimationManager;
+	protected List<StatisticsManager> myGameManagers;
 
 	protected int myXSize;
 	protected int myYSize;
@@ -75,15 +72,16 @@ public abstract class GameObject extends JGObject {
 		myShotThings = new ArrayList<GameObject>();
 		myAttributes = new ArrayList<String>();
 		myCollisionManager = collisionManager;
-		myScoreManager = scoreManager;
-		myBloodManager = bloodManager;
+		myGameManagers = new ArrayList<StatisticsManager>();
+		if(bloodManager != null) myGameManagers.add(bloodManager);
+		if(scoreManager != null) myGameManagers.add(scoreManager);
+		if(liveManager != null) myGameManagers.add(liveManager);
+		if(eventManager != null) myGameManagers.add(eventManager);
 		myRevivalManager = revivalManager;
-		myLiveManager = liveManager;
 		myDefaultImage = staticGfxName;
 		myName = name;
 		myActionManager = new ActionManager(this);
 		myAnimationManager = new AnimationManager(this);
-		myEventManager = eventManager;
 		initSideDetectors();
 		myXHead = xdir;
 		myYHead = ydir;
@@ -363,7 +361,7 @@ public abstract class GameObject extends JGObject {
 	 * @param lives
 	 */
 	public void setInitBlood(int blood) {
-		GameStats.set(myName + SaladConstants.SPACE + SaladConstants.BLOOD, blood);
+//		GameStats.set(myName + SaladConstants.SPACE + SaladConstants.BLOOD, blood);
 		myInitBlood = blood;
 		restoreBlood();
 	}
@@ -456,11 +454,10 @@ public abstract class GameObject extends JGObject {
 	 */
 	public void updateManagers(Object ... args){
 		try{
-			if(myScoreManager != null) Reflection.callMethod(myScoreManager, "update", args);
-			if(myBloodManager != null) Reflection.callMethod(myBloodManager, "update", args);
-			if(myLiveManager != null) Reflection.callMethod(myLiveManager, "update", args);
-			if(myEventManager != null) Reflection.callMethod(myEventManager, "update", args);	
-		} catch (Exception e){ e.printStackTrace(); }
+			for(StatisticsManager manager: myGameManagers){
+				if(manager != null) Reflection.callMethod(manager, SaladConstants.MANAGER_UPDATE, args);
+			}
+		} catch (Exception e){ e.printStackTrace(); } // should never reach here
 	}
 
 	@Override
@@ -480,7 +477,17 @@ public abstract class GameObject extends JGObject {
 			for (int i = 0; i < SaladConstants.NUM_SIDE_DETECTORS; i++) { mySideDetectors[i].remove();}
 		}
 		if (myUniqueID != SaladConstants.NULL_UNIQUE_ID) myRevivalManager.addRemovedObject(this);
-		if (this instanceof Player) myLiveManager.decrementLive(getID());
+		if (this instanceof Player) {
+			LiveManager liveManager = (LiveManager) getSpecificManager(SaladConstants.LIVE_MANAGER);
+			liveManager.decrementLive(myUniqueID);
+		}
+	}
+	
+	protected StatisticsManager getSpecificManager(String name){
+		for(StatisticsManager manager: myGameManagers){
+			if(manager.getClass().getName().equals(name)) return manager;
+		}
+		return null;
 	}
 
 	/**
@@ -517,7 +524,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public TriggerEventManager getEventManager(){
-		return myEventManager;
+		return (TriggerEventManager) getSpecificManager(SaladConstants.TRIGGER_EVENT_MANAGER);
 	}
 	
 	/**
