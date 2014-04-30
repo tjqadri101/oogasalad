@@ -157,7 +157,6 @@ public class CollisioneditorPanel extends Panel {
 						null,
 						options1,
 						null);		
-				System.out.println(result);
 				//player to actor
 				if(result == 0){
 					JComboBox hitterBox = new JComboBox(createPlayerList());
