@@ -36,7 +36,7 @@ public class EngineTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(true);
+		GameEngine engine = new GameEngine(false);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
