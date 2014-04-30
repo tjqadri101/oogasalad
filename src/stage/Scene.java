@@ -191,7 +191,6 @@ public class Scene {
 	
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, SaladConstants.ID, myID));
 		if(myBackground != null){
 			List<Object> backgroundParams = SaladUtil.convertArgsToObjectList(myBackground, myIfWrapHorizontal, 
 					myIfWrapVertical, myFieldXSize, myFieldYSize);
@@ -201,7 +200,7 @@ public class Scene {
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
-		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_IMAGE + SaladConstants.SEPARATOR;
+		String tiles = SaladConstants.CREATE_TILE + SaladConstants.SEPARATOR + SaladConstants.TILE_MAP + SaladConstants.SEPARATOR;
 		for (String line: getTiles()) {
 			tiles += line + SaladConstants.SPACE;
 		}
