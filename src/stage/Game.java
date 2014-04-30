@@ -324,10 +324,13 @@ public class Game {
         for (Entry<Character, String> entry : getTileImageMap()) { // need check
             Character cid = entry.getKey();
             String imgfile = entry.getValue();
-            answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
+            answer.add(SaladConstants.SET_DRAG_TILE + SaladConstants.SEPARATOR
+            		+ SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR
+            		+ cid.toString() + SaladConstants.SEPARATOR + SaladConstants.DRAG_IMAGE
+            		+ SaladConstants.SEPARATOR + imgfile);
         }
         for (int playerID: myPlayerMap.keySet()){
-            answer.addAll(myPlayerMap.get(playerID).getAttributes());	
+            answer.addAll(myPlayerMap.get(playerID).getAttributes());
         }
         
         for(Integer key: myLevelMap.keySet()){
