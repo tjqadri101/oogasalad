@@ -35,7 +35,7 @@ import objects.NonPlayer;
 import controller.GAEController;
 
 public class CollisioneditorPanel extends Panel {
-	
+
 
 	private static final String BRICK_DEFAULT_IMAGE = "brick.png";
 	private SubPanel mySubPanel;
@@ -43,7 +43,11 @@ public class CollisioneditorPanel extends Panel {
 	private JTable myTable; 
 	private List<Object[]> listData; 
 	private JTable tableWindow;
-	private static final String[] collisionTypesStrings = {/*"Explode",*/ "HitterEliminateVictim", "PerishTogether", "StayOnObject", "Rebounce" /*,"StayOnTile", "KilledByTile"*/};
+	private static final String[] collision0TypesStrings = {"HitterEliminateVictim", "PerishTogether", "StayOnObject", "Rebound", "ShootHitObject"};
+	private static final String[] collision1TypesStrings = {"StayOnTile", "KilledByTile"};
+	private static final String[] collision2TypesStrings = {"Rebound", "StayOnTile", "KilledByTile"};
+	private static final String[] collision3TypesStrings = {"Rebound", "ShootHitObject"};
+
 	private static final String[] collisionLocation = {"Up", "Down", "Left", "Right", "All"};
 
 
@@ -80,8 +84,8 @@ public class CollisioneditorPanel extends Panel {
 
 		return outPanel;
 	}
-	
-	
+
+
 	public JTable createTableWindow(){
 		String[] columnNames = {"Hitter","Hittee","CollisionType"};
 		Object[][] data = new Object[listData.size()][3];
@@ -98,7 +102,22 @@ public class CollisioneditorPanel extends Panel {
 
 	}
 
-	public Integer[] createCollisionList(){
+	public String[] createPlayerList(){
+		String[] players = {"Player"};
+		return players;
+	}
+	
+	public char[] createTileColIDList(){
+		List<Character> chars = gController.getTileColIDs();
+		char[] tilIDs = new char[chars.size()];
+		for(int i=0; i<chars.size(); i++){
+			tilIDs[i] = chars.get(i);
+		}
+		return tilIDs;
+	}
+	
+	
+	public Integer[] createActorCollisionList(){
 
 		Map<Integer, NonPlayer> mapofNonPlayers = gController.getMapOfPlayers();
 		TreeSet<Integer> colIDs = new TreeSet<Integer>();
@@ -106,13 +125,12 @@ public class CollisioneditorPanel extends Panel {
 			NonPlayer p = mapofNonPlayers.get(i);
 			colIDs.add(p.colid);
 		}
-		Integer[] colids = new Integer[colIDs.size()+1]; 
+		Integer[] colids = new Integer[colIDs.size()]; 
 		int j=0;
 		for(Integer i : colIDs){
 			colids[j] = i;
 			j++;
 		}
-		colids[j]=2;
 		return colids;
 	}
 
@@ -127,48 +145,64 @@ public class CollisioneditorPanel extends Panel {
 		ActionListener a = new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
-				JComboBox hitterBox = new JComboBox(createCollisionList());
-				JComboBox hitteeBox = new JComboBox(createCollisionList());
-				JComboBox collisionTypes = new JComboBox(collisionTypesStrings);
-				JComboBox[] texts = {hitterBox, hitteeBox, collisionTypes};
-				String[] strings = {"ID of Hitter:", "ID being Hit:", "Type of Collision:"};
-				JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+				Object[] options1 = {"Player to Actor",
+						"Player to Tile",
+						"Actor to Tile", "Actor to Player", "Cancel"};
 
-				int result = JOptionPane.showConfirmDialog(null, myPanel, 
-						"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
-				if (result == JOptionPane.OK_OPTION) {
-					String str = collisionTypes.getSelectedItem().toString();
-					Object[] k = {hitterBox.getSelectedItem().toString(), hitteeBox.getSelectedItem().toString(), str};
-					listData.add(k);
-					JComboBox collisionLocationBox = new JComboBox(collisionLocation);
-					JComboBox[] texts_ = {collisionLocationBox};
-					String[] strings_ = {"Where Can Collision Take Place"};
-					JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
-					int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+				int result = JOptionPane.showOptionDialog(null,
+						"Enter a number between 0 and 10000",
+						"Enter a Number",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.PLAIN_MESSAGE,
+						null,
+						options1,
+						null);		
+				System.out.println(result);
+				//player to actor
+				if(result == 0){
+					JComboBox hitterBox = new JComboBox(createPlayerList());
+					JComboBox hitteeBox = new JComboBox(createActorCollisionList());
+					JComboBox collisionTypes = new JComboBox(collision0TypesStrings);
+					JComboBox[] texts = {hitterBox, hitteeBox, collisionTypes};
+					String[] strings = {"ID of Hitter:", "ID being Hit:", "Type of Collision:"};
+					JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+					result = JOptionPane.showConfirmDialog(null, myPanel, 
 							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
-					if (result_ == JOptionPane.OK_OPTION) {
-						int hitter = Integer.parseInt(hitterBox.getSelectedItem().toString());
-						int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
-						String location = collisionLocationBox.getSelectedItem().toString();
+					if (result == JOptionPane.OK_OPTION) {
+						String str = collisionTypes.getSelectedItem().toString();
+						Object[] k = {hitterBox.getSelectedItem().toString(), hitteeBox.getSelectedItem().toString(), str};
+						listData.add(k);
+						JComboBox collisionLocationBox = new JComboBox(collisionLocation);
+						JComboBox[] texts_ = {collisionLocationBox};
+						String[] strings_ = {"Where Can Collision Take Place"};
+						JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
+						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+						if (result_ == JOptionPane.OK_OPTION) {
+							int hitter = Integer.parseInt(hitterBox.getSelectedItem().toString());
+							int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
+							String location = collisionLocationBox.getSelectedItem().toString();
 
-						switch(str){
-	
+							switch(str){
+
 							case "HitterEliminateVictim":{
 								System.out.println("");
 								gController.modifyCollisBehavHitElimVic(hittee, hitter,location);
 								break;
 							}
-	
+
 							case "Explode":{
-	
+
 								break;
 							}
 							case "PerishTogether":{
 								gController.modifyCollisBehavPerishTog(hittee, hitter,location);
-	
+
 								break;
 							}
 							case "Rebounce":{
+
 								gController.modifyCollisionBehaviorRebounce(hittee, hitter,location);
 	
 								break;
@@ -177,18 +211,20 @@ public class CollisioneditorPanel extends Panel {
 								break;
 							}
 							case "KilledByTile":{
-	
+
 								break;
 							}
+							}
+							makeSubPanel();
+							construct();
 						}
-						makeSubPanel();
-						construct();
 					}
 				}
-				}
-			};
+			}
+		};
 			return a;
-		}
+	}
 }
+
 
 

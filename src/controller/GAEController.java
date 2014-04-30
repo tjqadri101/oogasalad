@@ -25,7 +25,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.plaf.LayerUI;
 
-
 import objects.GameObject;
 import objects.NonPlayer;
 import engine.GameEngine;
@@ -1255,6 +1254,10 @@ public class GAEController {
 		for(char tileID :myDataController.getGame().getOccupiedTileColids()){
 			this.modifyCollisBehavStayOnTile(actorColID, tileID, "All");
 		}
+	}
+	
+	public List<Character> getTileColIDs(){
+		return myDataController.getGame().getOccupiedTileColids();
 	}
 	
 	public Map<Integer, NonPlayer> getMapOfPlayers(){
