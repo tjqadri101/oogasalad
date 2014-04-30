@@ -1,5 +1,7 @@
 package behaviors;
 
+import java.util.List;
+
 import engine.GameEngine;
 
 public class KeyGameOver extends Keyable{
@@ -9,7 +11,7 @@ public class KeyGameOver extends Keyable{
 	}
 
 	@Override
-	public void checkKey() {
+	public void checkKey(List<Object> params) {
 		myEngine.gameOver();
 	}
 

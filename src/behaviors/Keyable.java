@@ -1,5 +1,8 @@
 package behaviors;
 
+
+import java.util.List;
+
 import engine.GameEngine;
 
 public abstract class Keyable {
@@ -10,6 +13,6 @@ public abstract class Keyable {
 		myEngine = engine;
 	}
 	
-	public abstract void checkKey();
+	public abstract void checkKey(List<Object> params);
 
 }
