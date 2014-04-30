@@ -63,7 +63,7 @@ public class Player extends GameObject {
 					Reflection.getDeclaredMethod(this, methodName);	
 					Reflection.callMethod(this, methodName);
 				} catch (Exception e){
-					Reflection.callMethod(myActionManager, "doAction", methodName);	
+					Reflection.callMethod(myActionManager, SaladConstants.OBJECT_DO_ACTION, methodName);	
 				}
 				if(!myNonClearKeys.contains(methodName)) eng.clearKey(key);
 			}

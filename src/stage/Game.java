@@ -329,7 +329,7 @@ public class Game {
     public List<String> getAttributes() {
         List <String> answer = new ArrayList<String>();
         answer.add(myGravity.getAttributes());
-        for (Entry<Character, String> entry : getTileImageMap()) { // need check
+        for (Entry<Character, String> entry : myTileImageMap.entrySet()) { // need check
             Character cid = entry.getKey();
             String imgfile = entry.getValue();
             answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.TILE_COLID, cid.toString(), 
@@ -366,10 +366,6 @@ public class Game {
         myTileImageMap.put(cid, imgfile);
     }
 
-    public Set<Entry<Character, String>> getTileImageMap(){
-        return myTileImageMap.entrySet();
-    }
-
 
     /** Should only be called from Engine
      * @return the only instance of TriggerEventManager
@@ -378,13 +374,8 @@ public class Game {
         return myTriggerManager;
     }
 
-
     public RevivalManager getRevivalManager() {
         return myRevivalManager;
     }       
-    
-    public Map<Integer, Level> getLevelMap(){
-        return myLevelMap;
-    }
 
 }

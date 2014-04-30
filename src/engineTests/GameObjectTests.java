@@ -37,8 +37,8 @@ public class GameObjectTests extends TestCase {
 		public void testGetAttributes(){
 			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
 //			object.setCollisionBehavior("HitterEliminateVictim", 2);
-			object.setMoveBehavior("RegularMove", 1.0, 1.0);
-			object.setDieBehavior("RegularRemove");
+			object.setBehavior("RegularMove", 1.0, 1.0);
+			object.setBehavior("RegularRemove");
 			System.out.println(object.getAttributes());
 		}
 		
@@ -52,14 +52,14 @@ public class GameObjectTests extends TestCase {
 		@Test
 		public void testModifyMove(){
 			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
-			object.setMoveBehavior("RegularMove", 1.0, 1.0);
+			object.setBehavior("RegularMove", 1.0, 1.0);
 //			assertEquals("RegularMove", object.myMoveBehavior);
 		}
 		
 		@Test
 		public void testModifyDie(){
 			GameObject object = myEngine.createActor(123, "Mario.png", 200, 200, 600.0, 450.0, null, 2, 1);
-			object.setDieBehavior("RegularRemove");
+			object.setBehavior("RegularRemove");
 //			assertEquals("RegularRemove", object.myDieBehavior);
 		}
 		

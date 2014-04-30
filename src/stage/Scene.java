@@ -208,12 +208,4 @@ public class Scene {
 		return answer;
 	}
 	
-	/*@Siyang 
-	 * Public method added for testing only. 
-	 * Should not call this method inside the program
-	 */
-	public String getBackground(){       
-	    return myBackground;
-	}
-	
 }
