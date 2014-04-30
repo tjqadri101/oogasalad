@@ -147,6 +147,7 @@ public class MenuBar extends JMenuBar{
 		return curFile;
 
 	}
+
 	
 	public void popUpAndSetKey() {
 		selectedBehavior = "EnemyShower";
