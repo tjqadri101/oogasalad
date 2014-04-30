@@ -72,7 +72,8 @@ public class TriggerEventManager extends StatisticsManager{
             try{
                 if (collisionPara.size()==3){
                     if (compareParameters(collisionPara,collisionBehavior,victim,obj)){
-                        doEvent(myEngine,entry.getKey());
+                        System.out.println("checkCollisionBehavior called: triggerEventManager");
+                        performEvent(myEngine,entry.getKey());
                     }
                 } 
             }catch (IndexOutOfBoundsException e){
@@ -95,31 +96,31 @@ public class TriggerEventManager extends StatisticsManager{
             if(triggerList.size()!=0){
                 String triggerBehavior = triggerList.get(0).toString();
                 triggerList = triggerList.subList(1, triggerList.size());
-//                triggerList.remove(0);// this place causes error
                 if (triggerBehavior == null)
                     break;
-                System.out.println("checkTrigger: TEM: behavior " + triggerBehavior);
                 ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                                    + SaladConstants.OBJECT_BEHAVIOR);
                 Object answer = SaladUtil.behaviorReflection(behaviors, triggerBehavior,
                                                              triggerList, CHECK_TRIGGER, myEngine);
-                // Nullpointer exception here... Consider going through salad reflection
+                System.out.println("checkTrigger: the answer is " + answer);
                 if ((boolean) answer)
-                    System.out.println("checkTrigger returns true ");
-                    doEvent(myEngine, etPairID);
+                    performEvent(myEngine, etPairID);
+//                    answer = false;
             }
         }
 
     }
 
-    public void doEvent (GameEngine myEngine, int etPairID) {
+    public void performEvent (GameEngine myEngine, int etPairID) {
+//        System.out.println("performEvent is called in Manager");
         List<Object> rawPara = myEventMap.get(etPairID);
         int size = rawPara.size();
 //        eventParameter.remove(0);
         List<Object> eventParameter = rawPara.subList(1, size);
-        System.out.println("doEvent: the eventParameter is " + eventParameter);
+//        System.out.println("doEvent: the eventParameter is " + eventParameter);
         String eventBehavior = (String) rawPara.get(0);
-        System.out.println("doEvent: eventBehavior is " + eventBehavior);
+//        System.out.println("doEvent: eventBehavior is " + eventBehavior);
+        System.out.println("performEvent is called here ");
         ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                            + SaladConstants.OBJECT_BEHAVIOR);
         SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, DO_EVENT, myEngine);
