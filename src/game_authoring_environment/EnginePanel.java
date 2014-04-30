@@ -34,7 +34,7 @@ public class EnginePanel extends JPanel{
 			public void propertyChange(PropertyChangeEvent arg0) {
 				int selectedID = (int)(long)arg0.getNewValue();
 				if(selectedID != -1){
-					gController.getRightPanel();
+					gController.getRightPanel().updatePositionSpinners();
 				}								
 			}
 			
