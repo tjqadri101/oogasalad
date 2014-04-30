@@ -699,12 +699,9 @@ public class GameEngine extends StdGame {
 	 private void modifyImage(GameObject object, String imgfile, int xsize, int ysize) {
 		 loadImage(imgfile);
 		 object.setImage(imgfile);
-		 object.setStaticGfx(imgfile);//same thing
+		 object.setStaticGfx(imgfile);
 		 object.setSize(xsize, ysize);
-		 object.updateImageURL(imgfile);
 	 }
-
-	 
 
 	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
