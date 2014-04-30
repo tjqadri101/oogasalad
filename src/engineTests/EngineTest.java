@@ -121,6 +121,7 @@ public class EngineTest {
 //		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
+//		System.out.println("\n EngineTest finished constructing game");
         return engine;
 	}
 }
