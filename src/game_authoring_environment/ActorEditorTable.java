@@ -245,7 +245,7 @@ public class ActorEditorTable extends PanelTable{
 					System.out.println("new selected item:"+arg0.getItem().toString());
 					switch(str){
 					case "Immortal":
-						gController.modifyPlayerImmortalNoID();
+						gController.modifyPlayerImmortal();
 						break;
 					case "Show Corpse":
 
@@ -321,7 +321,7 @@ public class ActorEditorTable extends PanelTable{
 				else{
 					System.out.println("now checked:"+false);
 					int id = gController.getActorID();
-					gController.modifyPlayerNotToJump(id,"canNotJump");
+					gController.modifyPlayerCanNotJump("canNotJump");
 				}
 			}
 		});	
