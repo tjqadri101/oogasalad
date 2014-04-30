@@ -45,7 +45,7 @@ public class CollisioneditorPanel extends Panel {
 	private JTable tableWindow;
 	private static final String[] collision0TypesStrings = {"HitterEliminateVictim", "PerishTogether", "StayOnObject", "Rebound", "ShootHitObject"};
 	private static final String[] collision1TypesStrings = {"StayOnTile", "KilledByTile"};
-	private static final String[] collision2TypesStrings = {"Rebound", "StayOnTile", "KilledByTile"};
+	private static final String[] collision2TypesStrings = {"StayOnTile", "KilledByTile"};
 	private static final String[] collision3TypesStrings = {"Rebound", "ShootHitObject"};
 
 	private static final String[] collisionLocation = {"Up", "Down", "Left", "Right", "All"};
@@ -107,11 +107,11 @@ public class CollisioneditorPanel extends Panel {
 		return players;
 	}
 	
-	public char[] createTileColIDList(){
+	public String[] createTileColIDList(){
 		List<Character> chars = gController.getTileColIDs();
-		char[] tilIDs = new char[chars.size()];
+		String[] tilIDs = new String[chars.size()];
 		for(int i=0; i<chars.size(); i++){
-			tilIDs[i] = chars.get(i);
+			tilIDs[i] = chars.get(i).toString();
 		}
 		return tilIDs;
 	}
@@ -185,41 +185,159 @@ public class CollisioneditorPanel extends Panel {
 							String location = collisionLocationBox.getSelectedItem().toString();
 
 							switch(str){
-
-							case "HitterEliminateVictim":{
-								System.out.println("");
-								gController.modifyCollisBehavHitElimVic(hittee, hitter,location);
-								break;
-							}
-
-							case "Explode":{
-
-								break;
-							}
-							case "PerishTogether":{
-								gController.modifyCollisBehavPerishTog(hittee, hitter,location);
-
-								break;
-							}
-							case "Rebounce":{
-
-								gController.modifyCollisionBehaviorRebounce(hittee, hitter,location);
+								case "HitterEliminateVictim":{
+									System.out.println("");
+									gController.modifyCollisBehavHitElimVic(hittee, hitter,location);
+									break;
+								}
 	
-								break;
-							}
-							case "StayOnTile":{
-								break;
-							}
-							case "KilledByTile":{
-
-								break;
-							}
+								case "ShootHitObject":{
+							//		gController.modifyCollisBehavShootHitObject(hittee, hitter, location);
+									break;
+								}
+								case "PerishTogether":{
+									gController.modifyCollisBehavPerishTog(hittee, hitter,location);
+									break;
+								}
+								case "Rebounce":{
+	
+									gController.modifyCollisionBehaviorRebounce(hittee, hitter,location);
+	
+									break;
+								}
 							}
 							makeSubPanel();
 							construct();
 						}
 					}
 				}
+				else if(result == 1){
+					JComboBox hitterBox = new JComboBox(createPlayerList());
+					JComboBox hitteeBox = new JComboBox(createTileColIDList());
+					JComboBox collisionTypes = new JComboBox(collision1TypesStrings);
+					JComboBox[] texts = {hitterBox, hitteeBox, collisionTypes};
+					String[] strings = {"ID of Hitter:", "ID being Hit:", "Type of Collision:"};
+					JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+					result = JOptionPane.showConfirmDialog(null, myPanel, 
+							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION) {
+						String str = collisionTypes.getSelectedItem().toString();
+						Object[] k = {hitterBox.getSelectedItem().toString(), hitteeBox.getSelectedItem().toString(), str};
+						listData.add(k);
+						JComboBox collisionLocationBox = new JComboBox(collisionLocation);
+						JComboBox[] texts_ = {collisionLocationBox};
+						String[] strings_ = {"Where Can Collision Take Place"};
+						JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
+						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+						if (result_ == JOptionPane.OK_OPTION) {
+							int hitter = Integer.parseInt(hitterBox.getSelectedItem().toString());
+							char hittee = hitteeBox.getSelectedItem().toString().charAt(0);
+							String location = collisionLocationBox.getSelectedItem().toString();
+
+							switch(str){
+								case "StayOnTile":{
+									System.out.println("");
+									gController.modifyCollisBehavStayOnTile(hitter, hittee, location);
+									break;
+								}
+	
+								case "KilledByTile":{
+								//	gController.modifyCollisionBehaviorToDieByTile(hitter, hittee, location);
+									break;
+								}
+							}
+							makeSubPanel();
+							construct();
+						}
+					}
+				}
+				else if(result == 2){
+					JComboBox hitterBox = new JComboBox(createActorCollisionList());
+					JComboBox hitteeBox = new JComboBox(createTileColIDList());
+					JComboBox collisionTypes = new JComboBox(collision2TypesStrings);
+					JComboBox[] texts = {hitterBox, hitteeBox, collisionTypes};
+					String[] strings = {"ID of Hitter:", "ID being Hit:", "Type of Collision:"};
+					JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+					result = JOptionPane.showConfirmDialog(null, myPanel, 
+							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION) {
+						String str = collisionTypes.getSelectedItem().toString();
+						Object[] k = {hitterBox.getSelectedItem().toString(), hitteeBox.getSelectedItem().toString(), str};
+						listData.add(k);
+						JComboBox collisionLocationBox = new JComboBox(collisionLocation);
+						JComboBox[] texts_ = {collisionLocationBox};
+						String[] strings_ = {"Where Can Collision Take Place"};
+						JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
+						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+						if (result_ == JOptionPane.OK_OPTION) {
+							int hitter = Integer.parseInt(hitterBox.getSelectedItem().toString());
+							char hittee = hitteeBox.getSelectedItem().toString().charAt(0);
+							String location = collisionLocationBox.getSelectedItem().toString();
+
+							switch(str){
+								case "StayOnTile":{
+									System.out.println("");
+									gController.modifyCollisBehavStayOnTile(hitter, hittee, location);
+									break;
+								}
+	
+								case "KilledByTile":{
+								//	gController.modifyCollisionBehaviorToDieByTile(hitter, hittee, location);
+									break;
+								}
+							}
+							makeSubPanel();
+							construct();
+						}
+					}
+				}
+				else if(result == 3){
+					JComboBox hitterBox = new JComboBox(createActorCollisionList());
+					JComboBox hitteeBox = new JComboBox(createPlayerList());
+					JComboBox collisionTypes = new JComboBox(collision3TypesStrings);
+					JComboBox[] texts = {hitterBox, hitteeBox, collisionTypes};
+					String[] strings = {"ID of Hitter:", "ID being Hit:", "Type of Collision:"};
+					JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+					result = JOptionPane.showConfirmDialog(null, myPanel, 
+							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION) {
+						String str = collisionTypes.getSelectedItem().toString();
+						Object[] k = {hitterBox.getSelectedItem().toString(), hitteeBox.getSelectedItem().toString(), str};
+						listData.add(k);
+						JComboBox collisionLocationBox = new JComboBox(collisionLocation);
+						JComboBox[] texts_ = {collisionLocationBox};
+						String[] strings_ = {"Where Can Collision Take Place"};
+						JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
+						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+						if (result_ == JOptionPane.OK_OPTION) {
+							int hitter = Integer.parseInt(hitterBox.getSelectedItem().toString());
+							char hittee = hitteeBox.getSelectedItem().toString().charAt(0);
+							String location = collisionLocationBox.getSelectedItem().toString();
+
+							switch(str){
+								case "Rebound":{
+									System.out.println("");
+									gController.modifyCollisionBehaviorRebounce(hitter, hittee, location);
+									break;
+								}
+	
+								case "ShootHitObject":{
+								//	gController.modifyCollisBehavShootHitObject(hitter, hittee, location);
+									break;
+								}
+							}
+							makeSubPanel();
+							construct();
+						}
+					}
+				}
+				
 			}
 		};
 			return a;
