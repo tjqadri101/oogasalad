@@ -54,20 +54,20 @@ public class EngineTest {
 			engine.createTiles(TILE_COLID,20,15,10,1);
 			engine.createTiles('0',30,25+i,5,1);
 			
-			NonPlayer actor = engine.createActor(123+i, "poke-mon/0"+(13+i)+".gif", 200, 200, 300, 100, SaladConstants.NULL, ENEMY_COLID, 10);
-			actor.setBehavior("RegularRemove");
-			actor.setBehavior("BackForthMove", 8.0, 5);
-			actor.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100);
-
-			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 10);
-			goomba.setBehavior("RegularRemove");
-			goomba.setBehavior("BackForthMove",5.0, 10);
-			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100);
-
-			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);
-			mushroom.setBehavior("RegularRemove");
-			mushroom.setBehavior("BackForthMove",6.0, 20);
-			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100);
+//			NonPlayer actor = engine.createActor(123+i, "poke-mon/0"+(13+i)+".gif", 200, 200, 300, 100, SaladConstants.NULL, ENEMY_COLID, 10);
+//			actor.setBehavior("RegularRemove");
+//			actor.setBehavior("BackForthMove", 8.0, 5);
+//			actor.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
+//
+//			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 10);
+//			goomba.setBehavior("RegularRemove");
+//			goomba.setBehavior("BackForthMove",5.0, 10);
+//			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100, 4);
+//
+//			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);
+//			mushroom.setBehavior("RegularRemove");
+//			mushroom.setBehavior("BackForthMove",6.0, 20);
+//			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
 		}
 		
 //		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");
@@ -78,14 +78,14 @@ public class EngineTest {
 		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
 		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
-		Player player = engine.createPlayer(0, "actor_default.png", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
+		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
 		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
 
 		player.setBehavior("RegularRemove");
 		player.setBehavior("Jump", 5.0, 1);
-		player.setBehavior("SpreadShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4);
+		player.setBehavior("SpreadShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4, 8);
 		player.setKey('L', "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
@@ -93,6 +93,7 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
+		player.setCanMoveInAir(false);
 		
 		engine.modifyPlayerImage(0, "poke-mon/025.gif", 0, 0);
 		

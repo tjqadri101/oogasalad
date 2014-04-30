@@ -191,7 +191,6 @@ public class Scene {
 	
 	public List<String> getAttributes() {
 		List<String> answer = new ArrayList<String>();
-		answer.add(AttributeMaker.addAttribute(SaladConstants.CREATE_SCENE, SaladConstants.ID, myID));
 		if(myBackground != null){
 			List<Object> backgroundParams = SaladUtil.convertArgsToObjectList(myBackground, myIfWrapHorizontal, 
 					myIfWrapVertical, myFieldXSize, myFieldYSize);

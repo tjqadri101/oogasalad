@@ -103,7 +103,7 @@ public class PlayereditorPanel extends Panel {
 						String name = chooser.getSelectedFile().getName();
 						
 					//	gController.uploadImage(100, 100, path);
-						gController.createPlayer(gController.getPlayerID(), path, 100, 100, 100, 100, myTable.getName(), 0, 1);
+						gController.createPlayer(gController.getPlayerID(), name, 100, 100, 100, 100, myTable.getName(), 0, 1);
 						playerExists = true;
 						((PlayerEditorTable) myTable).setPlayerExists(true);
 						makeSubPanel();

@@ -37,6 +37,19 @@ public class GameEditorTable extends PanelTable {
 
 	@Override
 	void init() {
+		final JTextField name = new JTextField();
+		Object[] zeroRow = {"Name: ", name}; // each row should be in this format
+		name.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(name.getText());
+				gController.modifyGameName(name.getText().toString());
+			}			
+		});
+		myTableModel.addRow(zeroRow);
+		classMap.put(0,zeroRow[1]);
+		
+		
 		JComboBox gameStateBox = new JComboBox(gameStates);
 		Object[] firstRow = {"Transition Image", gameStateBox};
 		gameStateBox.setSelectedIndex(0);
@@ -66,7 +79,7 @@ public class GameEditorTable extends PanelTable {
 			}
 		});		
 		myTableModel.addRow(firstRow);
-		classMap.put(0,firstRow[1]);
+		classMap.put(1,firstRow[1]);
 
 		final JTextField tf = new JTextField();
 		Object[] secondRow = {"Initial Score", tf}; // each row should be in this format
@@ -78,7 +91,7 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(secondRow);
-		classMap.put(1,secondRow[1]);
+		classMap.put(2,secondRow[1]);
 
 		//GameOver, LifeLost, LevelDone,
 		final JTextField tf1 = new JTextField();
@@ -91,7 +104,7 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(thirdRow);
-		classMap.put(2,thirdRow[1]);
+		classMap.put(3,thirdRow[1]);
 
 		final JTextField tf2 = new JTextField();
 		Object[] fourthRow = {"Life Lost Frame Length", tf2}; // each row should be in this format
@@ -103,7 +116,7 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(fourthRow);
-		classMap.put(3,fourthRow[1]);
+		classMap.put(4,fourthRow[1]);
 
 		final JTextField tf3 = new JTextField();
 		Object[] fifthRow = {"Level Done Frame Length", tf3}; // each row should be in this format
@@ -115,7 +128,7 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(fifthRow);
-		classMap.put(4,fifthRow[1]);
+		classMap.put(5,fifthRow[1]);
 
 		//change message box
 		JComboBox gameStateMessages = new JComboBox(gameStates);
@@ -147,7 +160,7 @@ public class GameEditorTable extends PanelTable {
 			}
 		});		
 		myTableModel.addRow(sixthrow);
-		classMap.put(5,sixthrow[1]);
+		classMap.put(6,sixthrow[1]);
 
 		JComboBox gameStateDisplayImage = new JComboBox(gameStates);
 		Object[] seventhRow = {"Transition Image", gameStateDisplayImage};
@@ -188,7 +201,7 @@ public class GameEditorTable extends PanelTable {
 				
 			});	
 		myTableModel.addRow(seventhRow);
-		classMap.put(6,seventhRow[1]);
+		classMap.put(7,seventhRow[1]);
 		
 		final JTextField tf4 = new JTextField();
 		Object[] eighthRow = {"Gravity Magnitude", tf4}; // each row should be in this format
@@ -200,7 +213,7 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(eighthRow);
-		classMap.put(7,eighthRow[1]);
+		classMap.put(8,eighthRow[1]);
 		}
 	}
 
