@@ -64,8 +64,8 @@ public abstract class GameObject extends JGObject {
 			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager,
 			TriggerEventManager eventManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
-		suspend();
 		resume_in_view = false;
+		suspend();
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
 						+ SaladConstants.OBJECT_BEHAVIOR);
 		setInitPos(xpos, ypos);
@@ -438,6 +438,7 @@ public abstract class GameObject extends JGObject {
 	@Override
 	public void move() {
 		if (myBlood <= 0) doAction(SaladConstants.DIE);
+
 		myAirCounter = 2 * (myAirCounter % 2);
 	}
 	

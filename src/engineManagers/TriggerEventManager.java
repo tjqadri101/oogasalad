@@ -14,7 +14,6 @@ import stage.Game;
 import util.AttributeMaker;
 import util.SaladUtil;
 
-
 /**
  * TriggerManager keeps track of all the triggers and their corresponding events
  * 
@@ -92,14 +91,15 @@ public class TriggerEventManager extends StatisticsManager{
             System.out.println("TriggerEventManager checkTrigger called: ");
             int etPairID = entry.getKey();
             List<Object> triggerList = entry.getValue();
+            System.out.println(triggerList);
             if(triggerList.size()!=0){
                 String triggerBehavior = triggerList.get(0).toString();
-                triggerList.remove(0);
+                triggerList = triggerList.subList(1, triggerList.size());
+//                triggerList.remove(0);// this place causes error
                 if (triggerBehavior == null)
                     break;
                 System.out.println("TEM: behavior " + triggerBehavior);
-                ResourceBundle behaviors = ResourceBundle
-                        .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+                ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                                    + SaladConstants.OBJECT_BEHAVIOR);
                 Object answer = SaladUtil.behaviorReflection(behaviors, triggerBehavior,
                                                              triggerList, CHECK_TRIGGER, myEngine);
@@ -113,9 +113,10 @@ public class TriggerEventManager extends StatisticsManager{
 
     private void doEvent (GameEngine myEngine, int etPairID) {
         List<Object> eventParameter = myEventMap.get(etPairID);
-        String eventBehavior = (String) eventParameter.remove(0);
-        ResourceBundle behaviors = ResourceBundle
-                .getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+        System.out.println("doEvent: the eventParameter is " + eventParameter);
+        String eventBehavior = (String) eventParameter.get(0);
+        System.out.println("doEvent: eventBehavior is " + eventBehavior);
+        ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                            + SaladConstants.OBJECT_BEHAVIOR);
         SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, DO_EVENT, myEngine);
     }

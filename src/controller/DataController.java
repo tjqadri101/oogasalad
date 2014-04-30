@@ -82,7 +82,10 @@ public class DataController {
 		List<String> orders = myGameSaverAndLoader.load(url);
 		System.out.println("****DataController readXML****"); // delete
 		SaladUtil.printStringList(orders); // delete
-		for(String order: orders){ callFactoryToProcess(order); }
+		for(String order: orders){ 
+			System.out.println("**ReadXML received order: " + order);
+			callFactoryToProcess(order); 
+		}
 	}
 	
 	/**
