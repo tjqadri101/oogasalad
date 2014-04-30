@@ -4,6 +4,7 @@ import java.util.List;
 
 import engine.GameEngine;
 import objects.GameObject;
+import saladConstants.SaladConstants;
 /**
  * @param double magnitude
  * @param int jump times allowed while in the air
@@ -29,10 +30,13 @@ public class JumpByTime extends Jumpable{
 		int times = (Integer) params.get(1);
 		int latency = (Integer) params.get(2);
 		
-		if(myObject.getJumpTimes() > times){return;}
+		if(myObject.getJumpTimes() >= times){return;}
 		if((engine.getSaladTimer() + latency) % (latency) == 0){
-			myObject.ydir = 1;
+			myObject.setYHead(SaladConstants.POSITIVE_DIRECTION);
+			myObject.ydir = SaladConstants.POSITIVE_DIRECTION;
 			myObject.yspeed -= magnitude;	
+			if (myObject.getIsInAir() == 0) { myObject.incrementJumpTimes(1); }
+			myObject.updateImage(SaladConstants.UPDATE_JUMP);
 		}
 	}
 }

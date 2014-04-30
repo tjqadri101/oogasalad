@@ -15,7 +15,7 @@ public class CanNotRemove extends Removable{
 	}
 
 	@Override
-	public void remove(List<Object> params) {
+	public void die(List<Object> params) {
 		// do nothing
 	}
 }

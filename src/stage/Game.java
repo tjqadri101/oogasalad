@@ -24,11 +24,10 @@ import util.AttributeMaker;
  * A data structure that holds all the information about a game
  * @author Main Justin (Zihao) Zhang
  * @contribution David Chou
- * @help Isaac (Shenghan) Chen
+ * @contribution (tile map) Isaac (Shenghan) Chen
  */
 public class Game {
 
-    public static final int NONUSE_ID = 0;
     public static final String DEFAULT_NAME = "Game";
 
     protected Map<Integer, Level> myLevelMap;
@@ -42,7 +41,6 @@ public class Game {
     protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-    protected TriggerEventManager myTEM;
     protected Map<Character, String> myTileImageMap;
     protected String myName;
 
@@ -58,7 +56,7 @@ public class Game {
         myInputManager = new InputManager();
         myGravity = new Gravity();
         myCollisionManager = new CollisionManager();
-        myTEM = new TriggerEventManager();
+        myTriggerManager = new TriggerEventManager();
         myName = DEFAULT_NAME;
 
     }
@@ -99,6 +97,7 @@ public class Game {
      * @param name
      */
     public void setName(String name){
+        System.out.println("Game: " + "setName called" );
         myName = name;
     }
 
@@ -210,12 +209,15 @@ public class Game {
             Level level = myLevelMap.get(levelID);
             objects.addAll(level.getObjectsByColid(colid));
         }
-        if(getPlayer(NONUSE_ID) != null && getPlayer(NONUSE_ID).colid == colid) objects.add(getPlayer(NONUSE_ID));
+        for(int id: myPlayerMap.keySet()){
+        	if(myPlayerMap.get(id).colid == colid)
+        		objects.add(getPlayer(id));
+        }
         return objects;
     }
 
     /**
-     * Called to set the Player for the Game
+     * Called to add a Player for the Game
      * @param Player Object
      * @return nothing
      */
@@ -319,17 +321,12 @@ public class Game {
      */
     public List<String> getAttributes() {
         List <String> answer = new ArrayList<String>();
-        answer.addAll(myScoreManager.getAttributes()); 
-        answer.addAll(myInputManager.getAttributes()); 
-      
         answer.add(myGravity.getAttributes());
-        for (Entry<Character, String> entry : getTileImageMap()) {
+        for (Entry<Character, String> entry : getTileImageMap()) { // need check
             Character cid = entry.getKey();
             String imgfile = entry.getValue();
             answer.add(AttributeMaker.addAttribute(SaladConstants.SET_DRAG_TILE, SaladConstants.COLLISION_ID, cid, SaladConstants.DRAG_IMAGE, false, imgfile));
         }
-        
-
         for (int playerID: myPlayerMap.keySet()){
             answer.addAll(myPlayerMap.get(playerID).getAttributes());	
         }
@@ -337,13 +334,16 @@ public class Game {
         for(Integer key: myLevelMap.keySet()){
             answer.addAll(myLevelMap.get(key).getAttributes()); 
         }
-        answer.addAll(myCollisionManager.getAttributes());
         for(Transition value: myTransitionStateMap.values()){
             answer.addAll(value.getAttributes()); 
         } // need check if before level or after
+        answer.addAll(myCollisionManager.getAttributes());
         answer.addAll(myLiveManager.getAttributes());
         answer.addAll(myBloodManager.getAttributes());
-        // myTriggerManager
+        answer.addAll(myTriggerManager.getAttributes());
+        answer.addAll(myInputManager.getAttributes());
+        answer.addAll(myScoreManager.getAttributes()); 
+        answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_GAME, SaladConstants.SET_NAME, myName));
         return answer;
     }
 
@@ -366,8 +366,8 @@ public class Game {
     /** Should only be called from Engine
      * @return the only instance of TriggerEventManager
      */
-    public TriggerEventManager getTEManager () {
-        return myTEM;
+    public TriggerEventManager getTriggerManager () {
+        return myTriggerManager;
     }
 
 

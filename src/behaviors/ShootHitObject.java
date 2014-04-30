@@ -19,8 +19,8 @@ public class ShootHitObject extends Collision{
 	@Override
 	public void collide(List<Object> objects) {
 		GameObject hitter = (GameObject) objects.get(0);
-		updateManagers(myObject);
-		hitter.die();
+		updateManagers(hitter);
+		hitter.doAction(SaladConstants.DIE);
 		GameStats.update(SaladConstants.ENEMY_KILLED, 1);
 	}
 }

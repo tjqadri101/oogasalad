@@ -25,8 +25,8 @@ public class IParser {
      * Test the legitimacy of an order passed
      */
     private void testLegitimateOrder (String order) {
-        if (!order.contains(",")) 
-            throw new IllegalArgumentException("String " + order + " does not contain,");
+        if (!order.contains(SaladConstants.SEPARATOR)) 
+            throw new IllegalArgumentException("String " + order + " does not contain " + SaladConstants.SEPARATOR);
     }
 
     /**
@@ -44,16 +44,17 @@ public class IParser {
             List<Object> parameterAnswer = new ArrayList<Object>();
             
             testLegitimateOrder(order);
-            String[] orders = order.split(",");
+            String[] orders = order.split(SaladConstants.SEPARATOR);
             int i = 0;
             allAnswer.add(orders[i]); //add key
             i ++;
             while(i < orders.length){
-//                    System.out.println("IParser:" + orders[i]);
+                    System.out.println("IParser:" + orders[i]);
                     allAnswer.add(orders[i]); //add type
                     typeAnswer.add(orders[i]); //add type to the typeAnswer
                     String type = myDataFormat.getString(orders[i]);
-                    String[] types = type.split(","); 
+                    
+                    String[] types = type.split(SaladConstants.SEPARATOR); 
                     if(!types[0].equals(SaladConstants.NULL_TOKEN)){
                             i = i + 1;
                             for(int j = 0; j < types.length; j ++){
@@ -86,7 +87,7 @@ public class IParser {
     }
     
     public String getOrderKey(String order){
-            return order.split(",")[0];
+            return order.split(SaladConstants.SEPARATOR)[0];
     }
     
     /**

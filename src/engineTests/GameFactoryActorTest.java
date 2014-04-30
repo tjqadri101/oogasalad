@@ -87,22 +87,8 @@ public class GameFactoryActorTest extends TestCase{
 //        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
     }
     
+
     @Test
-    public void testModifyGravity() throws FactoryException{
-        String MODIFY_GRAVITY= "ModifyGravity,Magnitude,0.1";
-
-        try {
-            myFactory.processOrder(MODIFY_GRAVITY);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-//        System.out.println("the speed in the speed test is " + myGame.getNonPlayer(1, 0, 0).xspeed);
-//        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
-    }
-    
-
-/*    @Test
     public void testModifyActorChangetoID() throws FactoryException{
         
         String CHANGETOID_ORDER = "ModifyActor,ID,0,ChangeToID,1";
@@ -158,7 +144,7 @@ public class GameFactoryActorTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals("RegularMove", myGame.getNonPlayer(1, 0, 0).getActionManager().getMoveBehavior());
+//        assertEquals("RegularMove", myGame.getNonPlayer(1, 0, 0).getActionManager().getMoveBehavior());
 //        assertEquals(10.0, myGame.getNonPlayer(1, 0, 0).getMyInitX());
     }
 
@@ -181,7 +167,7 @@ public class GameFactoryActorTest extends TestCase{
     // Problem: if called when there is only one object, return error
     @Test
     public void testModifyCollisionBehavior() throws FactoryException{
-        String SET_COL_BEHAVIOR = "ModifyCollisionBehavior,Colid,1,HitterEliminateVictim,HitterEliminateVictim,2";
+        String SET_COL_BEHAVIOR = "ModifyCollisionBehavior,Colid,1,HitterEliminateVictim,HitterEliminateVictim,2,Up";
 //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Die","ShowCorpse"};
 //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
         try {
@@ -196,7 +182,7 @@ public class GameFactoryActorTest extends TestCase{
     
     @Test
     public void testModifyTileCollisionBehavior() throws FactoryException{
-        String SET_COL_BEHAVIOR = "ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,2";
+        String SET_COL_BEHAVIOR = "ModifyTileCollisionBehavior,Colid,1,StayOnTile,StayOnTile,2,Up";
 //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"Die","ShowCorpse"};
 //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
         try {
@@ -209,7 +195,7 @@ public class GameFactoryActorTest extends TestCase{
         assert(set.contains(new int[]{1,2}));
     }
     
-    // image url not provided...
+
     @Test
     public void testModifyActorDie() throws FactoryException{
         String REGULAR_DIE = "ModifyActor,ID,0,RegularRemove,RegularRemove";
@@ -224,25 +210,41 @@ public class GameFactoryActorTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
-        assert(set.contains("RegularRemove"));
+//        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
+//        assert(set.contains("RegularRemove"));
     }
-    */
-//    @Test
-//    public void testModifyActorImage() throws FactoryException{
-//        String MODIFY_IMAGE = "ModifyActorImage,ID,0,Image,actor_default.png,10,10";
-////        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-//        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
-////        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
-////        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-//        try {
-//            myFactory.processOrder(MODIFY_IMAGE);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            fail("Exception");
-//        }
-//        assertEquals("actor_default.png", myGame.getNonPlayer(1,0,0).getMyGfx());
-//    }
+    
+    @Test
+    public void testModifyGravity() throws FactoryException{
+        String MODIFY_GRAVITY= "ModifyGravity,Magnitude,0.1";
+
+        try {
+            myFactory.processOrder(MODIFY_GRAVITY);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        System.out.println("the speed in the speed test is " + myGame.getNonPlayer(1, 0, 0).xspeed);
+//        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
+    }
+    
+    @Test
+    public void testModifyActorImage() throws FactoryException{
+        String MODIFY_IMAGE = "ModifyActorAnimation,ID,0,Jump,Jump,default_actor.png,10,10";
+//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(MODIFY_IMAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        assertEquals("actor_default.png", myGame.getNonPlayer(1,0,0).getMyGfx());
+    }
+    
+
     
 
 //

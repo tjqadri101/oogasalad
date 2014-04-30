@@ -1,7 +1,11 @@
 package objects;
 
 import saladConstants.SaladConstants;
-
+/**
+ * 
+ * @author Main Isaac (Shenghan) Chen
+ *
+ */
 public class SideDetector extends GameObject{
 
 	public static final double DETECTOR_FACTOR = 0.2;
@@ -50,14 +54,6 @@ public class SideDetector extends GameObject{
 	public void move(){
 //		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).timer+" "+colid);
 		setPos(myParent.getLastX(), myParent.getLastY());
-	}
-	
-	public void die(){
-		myParent.die();
-	}
-	
-	public void jump(){
-		myParent.jump();
 	}
 	
 	public void stop(){
