@@ -45,8 +45,7 @@ public class ActorEditorTable extends PanelTable{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println(tf.getText());
-				int id = gController.getActorID();
-				gController.modifyActorName(id, tf.getText());
+				gController.modifyActorName(tf.getText());
 			}			
 		});
 

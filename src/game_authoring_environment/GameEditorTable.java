@@ -23,7 +23,7 @@ import controller.GAEController;
 public class GameEditorTable extends PanelTable {
 
 	private GAEController gController;
-	private static final String[] gameStates = {"Title", "GameOver", "LifeLost", "LevelDone", "StartGame", "StartLevel", "HighScore"}; 
+	private static final String[] gameStates = {"Title", "GameOver", "LifeLost", "LevelDone", "StartGame"}; 
 
 	public GameEditorTable(GAEController c) {
 		gController = c;
@@ -214,7 +214,29 @@ public class GameEditorTable extends PanelTable {
 		});
 		myTableModel.addRow(eighthRow);
 		classMap.put(8,eighthRow[1]);
+		
+		
+		JCheckBox cb5= new JCheckBox();
+		Object[] ninthRow = {"Restore Life At End of Level", tf4}; // each row should be in this format
+		cb5.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange() == ItemEvent.SELECTED){
+				System.out.println(tf4.getText());
+				gController.modifyLifeManagerRestoreLife(true);
+				}
+				else{
+					gController.modifyLifeManagerRestoreLife(false);
+				}
+			}			
+		});
+		myTableModel.addRow(ninthRow);
+		classMap.put(9,ninthRow[1]);
+		
+	
 		}
+	
+		
 	}
 
 

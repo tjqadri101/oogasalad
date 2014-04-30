@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -44,8 +45,8 @@ public class CollisioneditorPanel extends Panel {
 	private JTable myTable; 
 	private List<Object[]> listData; 
 	private JTable tableWindow;
-	private static final String[] collision0TypesStrings = {"HitterEliminateVictim", "PerishTogether", "StayOnObject", "Rebound", "ShootHitObject"};
-	private static final String[] collision1TypesStrings = {"StayOnTile", "KilledByTile"};
+	private static final String[] collision0TypesStrings = {"HitterEliminateVictim", "PerishTogether", "StayOnObject", "Rebound", "ShootHitObject", "Restore Blood", "Add Life", "Add Score"};
+	private static final String[] collision1TypesStrings = {"StayOnTile", "KilledByTile", "Restore Blood", "Add Life", "Add Score"};
 	private static final String[] collision2TypesStrings = {"StayOnTile", "KilledByTile"};
 	private static final String[] collision3TypesStrings = {"Rebound", "ShootHitObject"};
 
@@ -192,7 +193,7 @@ public class CollisioneditorPanel extends Panel {
 								}
 	
 								case "ShootHitObject":{
-							//		gController.modifyCollisBehavShootHitObject(hittee, hitter, location);
+									gController.modifyCollisBehavShootHitObject(hittee, hitter, location);
 									break;
 								}
 								case "PerishTogether":{
@@ -203,6 +204,47 @@ public class CollisioneditorPanel extends Panel {
 	
 									gController.modifyCollisionBehaviorRebounce(hittee, hitter,location);
 	
+									break;
+								}
+								case "Restore Blood":{
+									JTextField score = new JTextField(10);
+									JTextField blood = new JTextField(10);
+									JComponent[] texts2 = {score, blood};
+									String[] strings2 = {"Score:", "Amount of Blood:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyBloodManagerCollision(Integer.parseInt(score.getText().toString()), Integer.parseInt(blood.getText().toString()), hittee, hitter);
+									}
+									break;
+								}
+									
+								case "Add Life":{
+									JTextField score = new JTextField(10);
+									JComponent[] texts2 = {score};
+									String[] strings2 = {"Number of Lives:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyLifeManagerSetCollisionLife(Integer.parseInt(score.getText().toString()), hittee, hitter);
+									}
+									break;
+								}
+								case "Add Score":{
+									JTextField score = new JTextField(10);
+									JComponent[] texts2 = {score};
+									String[] strings2 = {"Number of Lives:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyScoreManagerCollisionScore(Integer.parseInt(score.getText().toString()), hittee, hitter);
+									}
 									break;
 								}
 							}
@@ -244,7 +286,48 @@ public class CollisioneditorPanel extends Panel {
 								}
 	
 								case "KilledByTile":{
-								//	gController.modifyCollisionBehaviorToDieByTile(hitter, hittee, location);
+									gController.modifyCollisionBehaviorToDieByTile(hitter, hittee, location);
+									break;
+								}
+								case "Restore Blood":{
+									JTextField score = new JTextField(10);
+									JTextField blood = new JTextField(10);
+									JComponent[] texts2 = {score, blood};
+									String[] strings2 = {"Score:", "Amount of Blood:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyBloodManagerTileCollision(Integer.parseInt(score.getText().toString()), hitter, hittee);
+									}
+									break;
+								}
+									
+								case "Add Life":{
+									JTextField score = new JTextField(10);
+									JComponent[] texts2 = {score};
+									String[] strings2 = {"Number of Lives:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyLifeManagerSetTileCollisionLife(Integer.parseInt(score.getText().toString()), hitter, hittee);
+									}
+									break;
+								}
+								case "Add Score":{
+									JTextField score = new JTextField(10);
+									JComponent[] texts2 = {score};
+									String[] strings2 = {"Number of Lives:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyScoreManagerTileCollisionScore(Integer.parseInt(score.getText().toString()), hitter, hittee);
+									}
 									break;
 								}
 							}
