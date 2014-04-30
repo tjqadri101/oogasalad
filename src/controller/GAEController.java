@@ -1130,8 +1130,8 @@ public class GAEController {
 	}
 	
 	public NonPlayer getNonPlayer(){
-		return myDataController.getNonPlayer(selectedSceneID);
-	}
+		return myDataController.getNonPlayer(selectedActorID);
+	}	
 
 
 	public int getPlayerID() {
