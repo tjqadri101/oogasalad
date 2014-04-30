@@ -55,12 +55,6 @@ public class Player extends GameObject {
 		super.move();
 	}
 	
-	@Override
-	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
-		super.hit_bg(tilecid, tx, ty, txsize, tysize);
-//		setImage(myDefaultImage);
-	}
-	
 	protected void checkKeys(){
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
@@ -119,10 +113,14 @@ public class Player extends GameObject {
 	@Override
 	public List<String> getAttributes(){
 		List<String> answer = super.getAttributes();
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
+				SaladConstants.SPEED, false, myMovingXSpeed, myMovingYSpeed));
 		for(int key: myKeyMap.keySet()){
 			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
 					SaladConstants.SET_KEY, false, key, myKeyMap.get(key)));
 		}
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
+				SaladConstants.CAN_MOVE_IN_AIR, false, myCanMoveInAir));
 		return answer;
 	}
 
