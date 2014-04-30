@@ -501,15 +501,6 @@ public abstract class GameObject extends JGObject {
 		myAttributes.addAll(myAnimationManager.getAttributes());
 		return myAttributes;
 	}
-
-	/**
-	 * When ModifyActor/PlayerImage is called, the gfx info is passed along
-	 * 
-	 * @param gfxname
-	 */
-	public void updateImageURL(String gfxname) {
-		myDefaultImage = gfxname;
-	}
 	
 	/**
 	 * @return the Gfx info
