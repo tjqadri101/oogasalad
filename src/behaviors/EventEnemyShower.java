@@ -21,28 +21,21 @@ public class EventEnemyShower extends Eventable{
         gfx = "mushroom1.png";
     }
     
-/*    public EventEnemyShower (Object null) {
-        super(null);
-//        myEngine = engine;
-        rg = new Random();
-        gfx = "mushroom1.png";
-    }*/
-    
-    
-
     /**
      * Called via reflection to invoke the doEvent method
      * params may include: 
      * @param maxEnemy
      * @param gfx
      */
+    
     @Override
     public void doEvent (List<Object> params) {
         maxEnemy = (int) params.get(0);
+        System.out.println("EventEnemyShower: doEvent: " + maxEnemy);
         gfx = (String) params.get(1);
         int enemyCounter = 0;
         while(true){
-            int size = rg.nextInt(10)+40;
+            int size = rg.nextInt(10)+30;
             myEngine.createActor(rg.nextInt(50), gfx, size, size, rg.nextInt(800), rg.nextInt(600), ENEMY_SHOWER, 1, rg.nextInt(5));
             if(enemyCounter == maxEnemy){
                 break;

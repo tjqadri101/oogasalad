@@ -34,7 +34,7 @@ public class EngineTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(true);
+		GameEngine engine = new GameEngine(false);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
@@ -117,8 +117,8 @@ public class EngineTest {
 		game.getLiveManager().setInitLives(3, 0);
 		
 		
-//		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
-//		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
 //		System.out.println("\n EngineTest finished constructing game");
