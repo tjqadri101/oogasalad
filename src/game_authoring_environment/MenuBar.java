@@ -1,10 +1,12 @@
 /**
- * @author Talal Javed Qadri
+ * @author Talal Javed Qadri and Nick Pan
  */
 package game_authoring_environment;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +15,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -22,6 +26,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,11 +39,14 @@ import reflection.MethodAction;
 @SuppressWarnings("serial")
 public class MenuBar extends JMenuBar{
 	
-	public GAEController gController;
+	public static final String[] keyBehavior = {"EnemyShower", "SceneDone", "BloodFull", "LifeIncrease", "GameOver"}; 
+	public String selectedBehavior;
+	public JTextField keyField;
+	public GAEController myGAEController;
 
 	public MenuBar(GAEController gController){
 		super();
-		this.gController = gController;
+		this.myGAEController = gController;
 		this.add(createFileMenu());
 		this.add(createEditMenu());
 		this.add(createHelpMenu());
@@ -61,11 +69,8 @@ public class MenuBar extends JMenuBar{
 	
 	private JMenu createEditMenu(){
 		JMenu editMenu = new JMenu("Edit");
-		editMenu.add(makeMenuItem(gController.getDataController(), "Undo", "reviveObject"));
-		//editMenu.add(makeMenuItem(getCurrentInstance(), "Redo", "doNothing"));
-		//editMenu.add(makeMenuItem(getCurrentInstance(), "Cut", "doNothing"));
-		//editMenu.add(makeMenuItem(getCurrentInstance(), "Copy", "doNothing"));
-		//editMenu.add(makeMenuItem(getCurrentInstance(), "Paste", "doNothing"));
+		editMenu.add(makeMenuItem(myGAEController.getDataController(), "Undo", "reviveObject"));
+		editMenu.add(makeMenuItem(getCurrentInstance(), "Cheat Keys", "popUpAndSetKey"));
 		return editMenu;
 	}
 	
@@ -108,9 +113,8 @@ public class MenuBar extends JMenuBar{
 			saveFile = new File(saveFile.getAbsolutePath() + ".xml");		
 		}
 		try {
-			gController.getDataController().exportXML(saveFile.getAbsolutePath());
+			myGAEController.getDataController().exportXML(saveFile.getAbsolutePath());
 		} catch (ParserConfigurationException | IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -121,7 +125,7 @@ public class MenuBar extends JMenuBar{
 			return;
 		}
 			try {
-				gController.getDataController().readXML(loadedFile.getAbsolutePath());
+				myGAEController.getDataController().readXML(loadedFile.getAbsolutePath());
 			}
 			catch (Exception ioe) {
 				//ioe.printStackTrace();
@@ -144,7 +148,44 @@ public class MenuBar extends JMenuBar{
 
 	}
 	
+	public void popUpAndSetKey() {
+		selectedBehavior = "EnemyShower";
+		Integer inputKey = null;		
+		keyField = new JTextField(10);
+		JButton setButton = new JButton("Set");
+		setButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				setCheatKey();
+			}			
+		});
+		JComboBox goalTypesBox = new JComboBox(keyBehavior);
+		goalTypesBox.setSelectedIndex(0);
+		goalTypesBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(arg0.getStateChange() == ItemEvent.SELECTED){
+					System.out.println("new selected item:"+arg0.getItem().toString());
+					selectedBehavior = arg0.getItem().toString();					
+				}				
+			}
+						
+		});	
+		JComponent[] texts = {goalTypesBox, keyField, setButton};
+		String[] strings = {"Behavior", "Key:",""};
+		JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+		int result = JOptionPane.showConfirmDialog(null, myPanel, 
+				"Please Set the Behavior and Key", JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.OK_OPTION) {
+			setCheatKey(); 
+		}
+	}
 	
+	public void setCheatKey() {
+		int key = (int)keyField.getText().charAt(0);
+		myGAEController.modifyInputManager(key, selectedBehavior);
+		
+	}
 	
 	public JComponent makeMenuItem(Object target, String label, String method) {
 		JMenuItem m = new JMenuItem(label);
