@@ -767,13 +767,10 @@ public class GAEController {
 
 	/**
 	 * Sets a level's initial scene
-	 * 
-	 * @param levelID
-	 * @param sceneID
 	 */
 	public void setInitialScene(int levelID, int sceneID){
 		String order = SaladConstants.MODIFY_LEVEL + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + 
-				SaladConstants.SET_INITIAL_SCENE_ID + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + sceneID;
+				SaladConstants.SET_INIT_SCENE + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + sceneID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -799,17 +796,7 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	/**
-	 * 
-	 * @param levelID
-	 * @param sceneID
-	 */
-	public void modifyInitScene(int levelID, int sceneID ){ 
-		String order = SaladConstants.MODIFY_INIT_SCENE + SaladConstants.SEPARATOR + levelID + SaladConstants.SEPARATOR + 
-				SaladConstants.SET_INIT_SCENE + sceneID;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
+
 
 	public void modifySceneBackground(String path, boolean wrapHorizontal, boolean wrapVertical, int playFieldXSize, int playFieldYSize){
 		String order = SaladConstants.MODIFY_SCENE_VIEW + SaladConstants.SEPARATOR + SaladConstants.BACKGROUND + 
