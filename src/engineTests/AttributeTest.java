@@ -32,7 +32,7 @@ public class AttributeTest {
 	public static final String INITIAL_SCENE = "ModifyLevel,ID,1,SetInitialScene,0";
 	public static final String ACTOR_ANIMATION = "ModifyActorAnimation,ID,1,Jump,Jump,actor_default.png,10,10";
 	public static final String SCENE_PLAYER_POSITION = "ModifyScene,ID,0,PlayerInitialPosition,0.0,0.0";
-	
+	public static final String MODIFY_PLAYER_SHOOT = "ModifyPlayer,ID,1,SlowShoot,SlowShoot,actor_default.png,10,10,2,5.0,4";
 	protected DataController myController;
 	protected GameEngine myEngine;
 	protected Game myGame;
@@ -84,7 +84,7 @@ public class AttributeTest {
     	myController.receiveOrder(CREATE_SCENE_1);
     	myController.receiveOrder(SWITCH_SCENE_1);
     	myController.receiveOrder(CREATE_PLAYER_ORDER);
-    	myController.receiveOrder(MODIFY_ACTOR_SHOOT);
+    	myController.receiveOrder(MODIFY_PLAYER_SHOOT);
 //    	myController.receiveOrder(ACTOR_ANIMATION);
     	myController.receiveOrder(MODIFY_PERISHTOGETHER);
     	myController.receiveOrder(BLOOD_COLLISION);
