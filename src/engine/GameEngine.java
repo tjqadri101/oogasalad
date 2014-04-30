@@ -5,6 +5,7 @@ import stage.Game;
 import stage.Scene;
 import stage.Transition;
 import statistics.StatsController;
+import jgame.Highscore;
 import jgame.JGColor;
 import jgame.platform.StdGame;
 import objects.GameObject;
@@ -54,6 +55,7 @@ public class GameEngine extends StdGame {
 	protected int myTileX;
 	protected int myTileY;
 	protected char myTileCid;
+	protected int myTileCounter = 0;
 
 	protected boolean isEditingMode;
 	protected boolean isLoading;
@@ -78,6 +80,7 @@ public class GameEngine extends StdGame {
 	public void initGame() {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
 //		setTileSettings("#",2,0);
+		setHighscores(10,new Highscore(0,"nobody"),25);
 		defineImage("null","0",0,"null","-");
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
@@ -141,12 +144,13 @@ public class GameEngine extends StdGame {
 	
 	public void initNewLife() {
 		myPlayer.resume();
-		myPlayer.restore(scene_restart);
 		if (scene_restart){
+			removeObjects(null, 0, false);
 			for (GameObject object : myCurrentScene.getGameObjects()) {
 				object.restore(true);
 			}
 		}
+		myPlayer.restore(scene_restart);
 	}
 	
 	
@@ -431,6 +435,11 @@ public class GameEngine extends StdGame {
 					 (double) (Math.abs(myTileX - tileX) + 1) * tileWidth(),
 					 (double) (Math.abs(myTileY - tileY) + 1) * tileHeight(), false, false);
 		 }
+		 if (myMouseButton == 0 && myTileCounter > FRAMES_PER_SECOND) {
+			 int tileX = myTileX * TILE_WIDTH + TILE_WIDTH / 2;
+			 int tileY = myTileY * TILE_HEIGHT + TILE_HEIGHT / 2;
+			 drawString(tileX+" "+tileY, tileX, tileY, 0, true);
+		 }
 	 }
 	 
 	 private void displayPlayerInfo() {
@@ -438,7 +447,8 @@ public class GameEngine extends StdGame {
 			 drawRect(myPlayer.x + myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 13.5,
 					 myPlayer.getXSize() / 2, 10, false, true);
-			 drawRect(myPlayer.x + 0.5 * (1 + myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
+//			 System.out.println(myPlayer.getBlood() +" "+ myPlayer.getInitBlood());
+			 drawRect(myPlayer.x + (0.5 + 0.5 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 13.5,
 					 (1.0 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
 					 10, true, true);
@@ -495,6 +505,16 @@ public class GameEngine extends StdGame {
 					 Math.min(myTileY, tileY), Math.abs(myTileX - tileX) + 1,
 					 Math.abs(myTileY - tileY) + 1);
 		 }
+		 
+		 if (myMouseButton == 0 && !currentMouse1 && !currentMouse3) {
+			 if (myTileX != tileX || myTileY != tileY) {
+				 myTileX = tileX;
+				 myTileY = tileY;
+				 myTileCounter = 0;
+			 }
+			 else {myTileCounter ++;}
+		 }
+		 
 		 myMouseButton = 0;
 		 if (currentMouse1) {myMouseButton = 1;}
 		 if (currentMouse3) {myMouseButton = 3;}

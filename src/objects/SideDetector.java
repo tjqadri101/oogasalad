@@ -1,5 +1,6 @@
 package objects;
 
+import engine.GameEngine;
 import saladConstants.SaladConstants;
 /**
  * 
@@ -32,7 +33,6 @@ public class SideDetector extends GameObject{
 		myDirection = direction;
 		move();
 		setSDBBox(direction);
-		resume_in_view = false;
 	}
 
 	public static int SDcid(int parent_cid, int dir){
@@ -52,8 +52,9 @@ public class SideDetector extends GameObject{
 	}
 	
 	public void move(){
-//		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).timer+" "+colid);
-		setPos(myParent.getLastX(), myParent.getLastY());
+//		if (myDirection == 1) System.out.println("move() "+((GameEngine)eng).getSaladTimer()+" "+colid);
+		if (myParent == null) {return;}
+		setPos(myParent.x, myParent.y);
 	}
 	
 	public void stop(){

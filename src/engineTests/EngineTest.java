@@ -48,7 +48,7 @@ public class EngineTest {
 			game.getScene(i+1, i).setPlayerInitPosition((i+1)*100, 200);
 			engine.setCurrentScene(i+1, i);
 			
-			engine.setSceneView(null,false,true,1200,40);
+			engine.setSceneView(null,false,false,1200,40);
 			engine.loadTileImage(TILE_COLID, "brick.png");
 			engine.createTiles(TILE_COLID,0,15+i,1180,1);
 			engine.createTiles(TILE_COLID,20,15,10,1);
@@ -94,6 +94,8 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
+		
+		engine.modifyPlayerImage(0, "poke-mon/025.gif", 0, 0);
 		
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
