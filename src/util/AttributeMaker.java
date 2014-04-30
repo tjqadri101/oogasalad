@@ -1,6 +1,5 @@
 package util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import saladConstants.SaladConstants;
@@ -12,22 +11,6 @@ import saladConstants.SaladConstants;
  * @author Main Justin (Zihao) Zhang
  */
 public class AttributeMaker {
-
-	
-	/**
-	 * Add attribute of the format as: key, type, parameters
-	 * @param String key
-	 * @param String type
-	 * @param boolean duplicated (if type is duplicated in the data format)
-	 * @return String attribute 
-	 */
-	public static String addAttribute(String key, String type, boolean duplicated, List<Object> params){
-		StringBuilder attribute = new StringBuilder();
-		attribute.append(key + SaladConstants.SEPARATOR + type);
-		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + type);}
-		for(Object o: params){ attribute.append(SaladConstants.SEPARATOR + o.toString());}
-		return attribute.toString();
-	}
 	
 	/**
 	 * Add attribute of the format as: key, type, int parameter, type, parameters
@@ -165,5 +148,20 @@ public class AttributeMaker {
 	public static String addAttribute(String key, String type, boolean parameter){
 		String param = String.valueOf(parameter);
 		return AttributeMaker.addAttribute(key, type, param);
+	}
+	
+	/**
+	 * Add attribute of the format as: key, type, parameters
+	 * @param String key
+	 * @param String type
+	 * @param boolean duplicated (if type is duplicated in the data format)
+	 * @return String attribute 
+	 */
+	public static String addAttribute(String key, String type, boolean duplicated, List<Object> params){
+		StringBuilder attribute = new StringBuilder();
+		attribute.append(key + SaladConstants.SEPARATOR + type);
+		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + type);}
+		for(Object o: params){ attribute.append(SaladConstants.SEPARATOR + o.toString());}
+		return attribute.toString();
 	}
 }
