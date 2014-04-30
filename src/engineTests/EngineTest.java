@@ -42,7 +42,7 @@ public class EngineTest {
 		for (int i=0;i<LEVELS;i++){
 			game.addLevel(i+1);
 			game.addScene(i+1, i);
-			game.getLevel(i+1).setInitialSceneID(i);
+			game.getLevel(i+1).setInitialScene(i);
 			game.getScene(i+1, i).setPlayerInitPosition((i+1)*100, 200);
 			engine.setCurrentScene(i+1, i);
 			
