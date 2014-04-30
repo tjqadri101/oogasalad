@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import engine.GameEngine;
 import saladConstants.SaladConstants;
@@ -15,8 +16,10 @@ import util.AttributeMaker;
  */
 public class InputManager {
 	
+	protected ResourceBundle myKeyMethods;
+	
 	public static final List<String> CHEAT_KEY_EVENTS = Arrays.asList(new String[]{
-		"EnemyShower", "SceneDone", "BloodFull", "LifeIncrease", "GameOver"});
+		"SceneDone", "BloodFull", "LifeIncrease", "GameOver"});
 	protected GameEngine myEngine;
 	
 	/**
@@ -26,6 +29,8 @@ public class InputManager {
 	
 	public InputManager(){
 		myKeyMap = new HashMap<Integer, String>();
+		myKeyMethods = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
+				+ SaladConstants.OBJECT_BEHAVIOR);
 	}
 	
 	/**
