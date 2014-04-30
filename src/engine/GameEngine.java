@@ -425,16 +425,22 @@ public class GameEngine extends StdGame {
 	 
 	 private void displayPlayerInfo() {
 		 if (myPlayer != null && myPlayer.isAlive() && !myPlayer.is_suspended) {
+			 drawString(myPlayer.getObjectName(), myPlayer.x + myPlayer.getXSize() / 2,
+					 myPlayer.y - myPlayer.getYSize() / 3, 0, true);
+			 
+			 double blood = 1.0 * myPlayer.getBlood() / myPlayer.getInitBlood();
+			 if (blood <= 1.0 && blood > 0.5) {setColor(JGColor.green);}
+			 if (blood <= 0.5 && blood > 0.25) {setColor(JGColor.yellow);}
+			 if (blood <= 0.25) {setColor(JGColor.red);}
+			 
+			 drawRect(myPlayer.x + 0.5 * (1 + blood) * myPlayer.getXSize() / 2,
+					 myPlayer.y - myPlayer.getYSize() / 13.5,
+					 blood * myPlayer.getXSize() / 2,10, true, true);
 			 drawRect(myPlayer.x + myPlayer.getXSize() / 2,
 					 myPlayer.y - myPlayer.getYSize() / 13.5,
 					 myPlayer.getXSize() / 2, 10, false, true);
 //			 System.out.println(myPlayer.getBlood() +" "+ myPlayer.getInitBlood());
-			 drawRect(myPlayer.x + (0.5 + 0.5 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
-					 myPlayer.y - myPlayer.getYSize() / 13.5,
-					 (1.0 * myPlayer.getBlood() / myPlayer.getInitBlood()) * myPlayer.getXSize() / 2,
-					 10, true, true);
-			 drawString(myPlayer.getObjectName(), myPlayer.x + myPlayer.getXSize() / 2,
-					 myPlayer.y - myPlayer.getYSize() / 3, 0, true);
+			 setColor(JGColor.white);
 		 }
 	 }
 
