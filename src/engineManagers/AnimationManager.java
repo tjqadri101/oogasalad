@@ -34,7 +34,9 @@ public class AnimationManager {
 	 * @param behavior
 	 */
 	public void updateImage(String behavior) {
+		System.out.println("updateImage called ");
 		String newImg = myImageMappings.get(behavior);
+		System.out.println("updateImage: " + newImg);
 		if (newImg != null) {
 			myObject.setImage(newImg);
 		} else {

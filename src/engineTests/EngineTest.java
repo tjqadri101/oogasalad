@@ -54,20 +54,20 @@ public class EngineTest {
 			engine.createTiles(TILE_COLID,20,15,10,1);
 			engine.createTiles('0',30,25+i,5,1);
 			
-			NonPlayer actor = engine.createActor(123+i, "poke-mon/0"+(13+i)+".gif", 200, 200, 300, 100, SaladConstants.NULL, ENEMY_COLID, 10);
-			actor.setBehavior("RegularRemove");
-			actor.setBehavior("BackForthMove", 8.0, 5);
-			actor.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
-
-			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 10);
-			goomba.setBehavior("RegularRemove");
-			goomba.setBehavior("BackForthMove",5.0, 10);
-			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100, 4);
-
-			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);
-			mushroom.setBehavior("RegularRemove");
-			mushroom.setBehavior("BackForthMove",6.0, 20);
-			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
+//			NonPlayer actor = engine.createActor(123+i, "poke-mon/0"+(13+i)+".gif", 200, 200, 300, 100, SaladConstants.NULL, ENEMY_COLID, 10);
+//			actor.setBehavior("RegularRemove");
+//			actor.setBehavior("BackForthMove", 8.0, 5);
+//			actor.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
+//
+//			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 10);
+//			goomba.setBehavior("RegularRemove");
+//			goomba.setBehavior("BackForthMove",5.0, 10);
+//			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100, 4);
+//
+//			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);
+//			mushroom.setBehavior("RegularRemove");
+//			mushroom.setBehavior("BackForthMove",6.0, 20);
+//			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
 		}
 		
 //		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");

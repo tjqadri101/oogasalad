@@ -144,6 +144,11 @@ public abstract class GameObject extends JGObject {
 	 */
 	public void setXHead(int head){
 		myXHead = head;
+		if (myXHead < 0) {
+			myAnimationManager.updateImage(SaladConstants.BK_MOVE);
+		} else if (myXHead >= 0) {
+			myAnimationManager.updateImage(SaladConstants.FD_MOVE);
+		}
 	}
 	
 	/**
@@ -152,6 +157,11 @@ public abstract class GameObject extends JGObject {
 	 */
 	public void setYHead(int head){
 		myYHead = head;
+		if (myYHead < 0) {
+			myAnimationManager.updateImage(SaladConstants.UP_MOVE);
+		} else if (myYHead >= 0) {
+			myAnimationManager.updateImage(SaladConstants.DW_MOVE);
+		}
 	}
 
 	/**
@@ -422,11 +432,7 @@ public abstract class GameObject extends JGObject {
 	public void move() {
 		if (myBlood <= 0) doAction(SaladConstants.DIE);
 		myIsInAir = 2 * (myIsInAir % 2);
-		if (myXHead < 0) {
-			myAnimationManager.updateImage(SaladConstants.BK_MOVE);
-		} else if (myXHead > 0) {
-			myAnimationManager.updateImage(SaladConstants.FD_MOVE);
-		}
+		System.out.println("xHead: " + myXHead);
 	}
 	
 	/**
