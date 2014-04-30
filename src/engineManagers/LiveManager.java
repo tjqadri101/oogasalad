@@ -147,7 +147,7 @@ public class LiveManager extends StatisticsManager {
 		if(victim instanceof Player){
 			Player p = (Player) victim;
 			int changeLive = myMap.get(condition);
-			GameStats.update(p.getObjectName() + " " + SaladConstants.LIVE, changeLive);
+			GameStats.update(p.getObjectName() + SaladConstants.SPACE + SaladConstants.LIVE, changeLive);
 			int finalLive = myCurrentLifeMap.get(p) + changeLive;
 			myCurrentLifeMap.put(p, finalLive);	
 		}
