@@ -14,8 +14,12 @@ import objects.NonPlayer;
 import objects.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+
+import engineManagers.InputManager;
 import engineManagers.TriggerEventManager;
 
 /**
@@ -31,8 +35,8 @@ public class GameEngine extends StdGame {
 	
 	public static final int FRAMES_PER_SECOND = 70;
 	public static final int MAX_FRAMES_TO_SKIP = 2;
-	public static final int JGPOINT_X = 800;//
-	public static final int JGPOINT_Y = 600;//
+	public static final int JGPOINT_X = 800;
+	public static final int JGPOINT_Y = 600;
 	public static final int CANVAS_WIDTH = 40;
 	public static final int CANVAS_HEIGHT = 30;
 	public static final int TILE_WIDTH = 20;
@@ -56,12 +60,13 @@ public class GameEngine extends StdGame {
 	protected int myTileY;
 	protected char myTileCid;
 	protected int myTileCounter = 0;
+	protected String myTitleBG;
 
 	protected boolean isEditingMode;
 	protected boolean isLoading;
 	protected boolean isPlaying;
 	protected boolean isTileEditing;
-	protected boolean scene_restart = true;//
+	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
 	
 	public GameEngine(boolean editing) {
@@ -80,41 +85,19 @@ public class GameEngine extends StdGame {
 	public void initGame() {
 		setFrameRate(FRAMES_PER_SECOND, MAX_FRAMES_TO_SKIP);
 //		setTileSettings("#",2,0);
-		setHighscores(10,new Highscore(0,"nobody"),25);
 		defineImage("null","0",0,"null","-");
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
 	}
 	
-//	public boolean checkGoal() {
-//		if (myCurrentScene == null)
-//			return false;
-//		String winBehavior = myGame.getLevel(myCurrentLevelID).getWinBehavior();
-//		if (winBehavior == null)
-//			return false;
-//		List<Object> winParameters = myGame.getLevel(myCurrentLevelID)
-//				.getWinParameters();
-//		ResourceBundle behaviors = ResourceBundle
-//				.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
-//						+ SaladConstants.OBJECT_BEHAVIOR);
-//		Object answer = SaladUtil.behaviorReflection(behaviors, winBehavior,
-//				winParameters, "checkGoal", this);
-//		return (Boolean) answer;
-//	}
-
-	public boolean checkTrigger() {
-		// consider combineing the checkTrigger to checkGoal()
-		return true;
-	}
+	
 	
 	public void loadingBegin() {
 		if (isEditingMode) {return;}
 		isLoading = true;
 		isPlaying = false;
-		hideScene();
-		myCurrentScene = new Scene(0);
-		showScene();
+		setEmptyScene();
 	}
 	
 	public void loadingDone() {
@@ -156,8 +139,7 @@ public class GameEngine extends StdGame {
 	
 	
 	public void doFrameInGame() {
-		doFrameEdit();
-		
+		doFrameEdit();	
 	}
 	
 	public void paintFrameInGame() {
@@ -183,24 +165,29 @@ public class GameEngine extends StdGame {
 		}
 		if (!viewOffset) {setViewOffsetEdit();}
 		myTEM.checkTrigger(this);
-//		if (checkGoal()) {
-//			if (level >= 3) {
-//				gameOver();
-//			} else
-//				levelDone();
-//		}
-		if (myGame != null) {
-			if (myGame.getScoreManager() != null) {
-				myGame.getScoreManager().update("Time");
-				score = myGame.getScoreManager().getCurrentValue();
+		doManagers();
+	}
+
+	private void doManagers() {
+		if (myGame.getScoreManager() != null) {
+			myGame.getScoreManager().update("Time");
+			score = myGame.getScoreManager().getCurrentValue();
+		}
+		if (myGame.getLiveManager() != null && myPlayer != null) {
+			int current_lives = myGame.getLiveManager().getCurrentLife(myPlayer.getID());
+			if (current_lives < lives) {
+				lives = current_lives+1;
+				lifeLost();
 			}
-			if (myGame.getLiveManager() != null && myPlayer != null) {
-				int current_lives = myGame.getLiveManager().getCurrentLife(myPlayer.getID());
-				if (current_lives < lives) {
-					lives = current_lives+1;
-					lifeLost();
+			else {lives = current_lives;}
+		}
+		if (myGame.getInputManager() != null) {
+			Map<Integer, String> inputMap = myGame.getInputManager().getKeyMap();
+			for (int key: inputMap.keySet()) {
+				if (getKey(key)) {
+					doCheatKey(inputMap.get(key));
+					clearKey(key);
 				}
-				else {lives = current_lives;}
 			}
 		}
 	}
@@ -208,14 +195,6 @@ public class GameEngine extends StdGame {
 	public void paintFrameEdit() {
 		displayPlayerInfo();
 		disPlayDragTile();
-		
-//		if (checkGoal()) {
-//			drawString("Win!!!!!!!!!!!!!!!!", viewWidth() / 2,
-//					viewHeight() / 2 + 100, 0, false);
-//		}
-//		if (checkGoal()) {
-//			// call the event module
-//		}
 	}
 	
 	
@@ -223,9 +202,6 @@ public class GameEngine extends StdGame {
 	@Override
 	public void doFrame() {
 //		System.out.println("\n doFrame");
-		if (getKey('L')) {levelDone();clearKey('L');} //cheat key for testing
-		if (getKey('K')) {myPlayer.remove();lifeLost();clearKey('K');} //cheat key for testing
-		if (getKey('O')) {myPlayer.remove();gameOver();clearKey('O');} //cheat key for testing
 		myTimer += getGameSpeed();
 		if (!isEditingMode && isPlaying) {
 			super.doFrame();
@@ -238,7 +214,6 @@ public class GameEngine extends StdGame {
 		if (!isEditingMode && isPlaying) {
 			super.paintFrame();
 		}
-//		System.out.println("survived");
 		if (!isEditingMode && isLoading) {
 			String loading = "Loading";
 			String dot = ".";
@@ -276,11 +251,13 @@ public class GameEngine extends StdGame {
 	}
 
 	public void startGameOver() {
-		hideScene();
-		myCurrentScene = new Scene(0);
-		showScene();
+		setEmptyScene();
 		setTransition("GameOver");
 	}
+	
+	public void doFrameTitle(){
+		if (isEditingMode) {setTransition("GameOver");}
+	 }
 	
 	 /* paintFrame<state> methods */
 	
@@ -337,10 +314,6 @@ public class GameEngine extends StdGame {
 			 super.paintFrameGameOver();
 		 }
 	 }
-	 
-	 public void gotoTitle(){
-		 setGameState("DisplayStats");
-	 }
 	
 //	 @Override
 //	 public void paintFrameEnterHighscore(){
@@ -359,6 +332,15 @@ public class GameEngine extends StdGame {
 //		 super.paintFramePaused();//
 //		 paintTransition("Paused");
 //	 }
+	 
+	 public void gotoGameState(String gameState){
+		 setEmptyScene();
+		 setGameState(gameState);
+	 }
+	 
+	 public void gotoTitle(){
+		 setGameState("DisplayStats");
+	 }
 	 
 	 
 	 
@@ -485,8 +467,8 @@ public class GameEngine extends StdGame {
 		 }
 		 if (myMouseButton == 1 && currentMouse1) {
 			 GameObject object = null;
-			 GameObject actor = myGame.getPlayer(myClickedID);
-			 GameObject player = myCurrentScene.getNonPlayer(myClickedID);
+			 GameObject actor = myCurrentScene.getNonPlayer(myClickedID);
+			 GameObject player = myGame.getPlayer(myClickedID);
 			 if (actor != null) {object = actor;}
 			 if (player != null) {object = player;}
 			 if (object != null) {
@@ -523,7 +505,7 @@ public class GameEngine extends StdGame {
 		 return drag;
 	 }
 
-	 public int getClickedID() {
+	 private int getClickedID() {
 		 List<GameObject> list = new ArrayList<GameObject>();
 		 if (getMouseButton(1)) {
 			 int MouseX = getMouseX() + viewXOfs();
@@ -589,8 +571,13 @@ public class GameEngine extends StdGame {
 		 if (myGame == null) {return;}
 		 Transition trans = myGame.getTransitionState(gameState);
 		 if (trans == null) {return;}
-		 loadImage(trans.getBackground());
-		 setBGImage(trans.getBackground());
+		 String bg = trans.getBackground();
+		 if (isEditingMode && gameState.equals("Title")) {
+			 if (bg.equals(myTitleBG)) {return;}
+			 myTitleBG = bg;
+		 }
+		 loadImage(bg);
+		 setBGImage(bg);
 	 }
 
 	 private void paintTransition(String gameState) {
@@ -612,12 +599,19 @@ public class GameEngine extends StdGame {
 		 }
 	 }
 
+	 private void setEmptyScene() {
+		 hideScene();
+		 myCurrentScene = new Scene(0);
+		 showScene(true);
+	 }
+	 
 	 public void setCurrentScene(int currentLevelID, int currentSceneID) {
+		 if (isEditingMode) {setGameState("Edit");}
 		 hideScene();
 		 myCurrentLevelID = currentLevelID;
 		 myCurrentSceneID = currentSceneID;
 		 myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
-		 showScene();
+		 showScene(false);
 	 }
 
 	private void hideScene() {
@@ -631,12 +625,12 @@ public class GameEngine extends StdGame {
 		 if(isPlaying) {myGame.getScoreManager().update("SceneDone", myCurrentSceneID);}
 	}
 
-	private void showScene() {
+	private void showScene(boolean empty) {
 		setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
 				 myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
 		if (isPlaying) {
 			setTiles(0, 0, myCurrentScene.getTiles());
-			if (myPlayer != null) {
+			if (myPlayer != null && !empty) {
 				myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
 						myCurrentScene.getPlayerInitPosition()[1]);
 				myPlayer.resume();
@@ -685,7 +679,6 @@ public class GameEngine extends StdGame {
 	 }
 
 	 public Game getGame() {
-//	     if (myGame == null) {return null;}
 		 return myGame;
 	 }
 	 
@@ -772,6 +765,33 @@ public class GameEngine extends StdGame {
 	 
 	 public void setTileEditing(boolean tile_editing) {
 		 isTileEditing = tile_editing;
+	 }
+	 
+//	 public void createActor(int old_unique_id, int new_unique_id) {
+//		 NonPlayer actor = myCurrentScene.getNonPlayer(old_unique_id);
+//		 createActor(new_unique_id, actor.getMyGfx(), actor.getXSize(), actor.getYSize(),
+//				 actor.x, actor.y, actor.getObjectName(), actor.colid, actor.getInitBlood());
+//	 }
+	 
+	 public void doCheatKey(String event) {
+		 int num = InputManager.CHEAT_KEY_EVENTS.indexOf(event);
+		 switch(num){
+		 case 0:
+			 //"EnemyShower"
+			 break;
+		 case 1:
+			 //"SceneDone"
+			 break;
+		 case 2:
+			 //"BloodFull"
+			 break;
+		 case 3:
+			 //"LifeIncrease"
+			 break;
+		 case 4:
+			 gameOver();
+			 break;
+		 }
 	 }
 
 }

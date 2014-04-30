@@ -1,6 +1,7 @@
 package engineManagers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,9 @@ import util.AttributeMaker;
  * Only intended for non-player keys
  */
 public class InputManager {
+	
+	public static final List<String> CHEAT_KEY_EVENTS = Arrays.asList(new String[]{
+		"EnemyShower", "SceneDone", "BloodFull", "LifeIncrease", "GameOver"});
 	
 	/**
 	 * Maps keys (i.e. 'G') to the name of the method in GameEngine
@@ -33,8 +37,9 @@ public class InputManager {
 	public List<String> getAttributes(){
 		List<String> answer = new ArrayList<String>();
 		for(int key: myKeyMap.keySet()){
-			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_INPUTMANAGER, 
-					String.valueOf(key), myKeyMap.get(key)));
+			answer.add(SaladConstants.MODIFY_INPUTMANAGER + SaladConstants.SEPARATOR
+					+ SaladConstants.SET_KEY + SaladConstants.SEPARATOR
+					+ String.valueOf(key) + SaladConstants.SEPARATOR + myKeyMap.get(key));
 		}
 		return answer;
 	}

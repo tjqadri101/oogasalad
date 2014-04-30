@@ -302,6 +302,14 @@ public class Game {
     public LiveManager getLiveManager(){
         return myLiveManager;
     }
+    
+    /**
+     * Get the Input Manager of the Game
+     * @return InputManager
+     */
+    public InputManager getInputManager(){
+        return myInputManager;
+    }
 
     /**
      * Called to delete an existing Game Object from a particular scene of a particular level
