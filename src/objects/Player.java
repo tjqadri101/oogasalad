@@ -23,7 +23,7 @@ public class Player extends GameObject {
 	protected List<String> myNonClearKeys;
 	protected double myMovingXSpeed;
 	protected double myMovingYSpeed;
-	protected TriggerEventManager myTEManager;
+	protected boolean myCanMoveInAir;
 	
 	public Player(int uniqueID, String gfxname, int xsize, int ysize, double xpos, double ypos, 
 			String name, int collisionId, int lives, 
@@ -35,7 +35,7 @@ public class Player extends GameObject {
 		myKeyMap = new HashMap<Integer, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
-
+		myCanMoveInAir = true;
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, 
 		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 	}
@@ -58,16 +58,8 @@ public class Player extends GameObject {
 	@Override
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		super.hit_bg(tilecid, tx, ty, txsize, tysize);
-		setImage(myDefaultImage);
+//		setImage(myDefaultImage);
 	}
-	
-//  Actors can also jump!! -- Justin Zhang
-//	@Override
-//	public void jump() {
-//		super.jump();
-//		myAnimationManager.updateImage(SaladConstants.UPDATE_JUMP);
-//	}
-
 	
 	protected void checkKeys(){
 		for(int key: myKeyMap.keySet()){
@@ -93,35 +85,35 @@ public class Player extends GameObject {
 	}
 	
 	public void moveUp(){
-		if (y > 0) {
-			y -= myMovingYSpeed*eng.getGameSpeed();
-		}
 		myYHead = SaladConstants.NEGATIVE_DIRECTION;
 		myXHead = SaladConstants.NEUTRAL_DIRECTION;
+		if(myIsInAir == 0 && !myCanMoveInAir) return;
+		if (y > 0) y -= myMovingYSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveDown(){
-		if (y + getYSize() < eng.pfHeight()) {
-			y += myMovingYSpeed*eng.getGameSpeed();
-		}
 		myYHead = SaladConstants.POSITIVE_DIRECTION;
 		myXHead = SaladConstants.NEUTRAL_DIRECTION;
+		if(myIsInAir == 0 && !myCanMoveInAir) return;
+		if (y + getYSize() < eng.pfHeight()) y += myMovingYSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveLeft(){
-		if (x > 0) {
-			x -= myMovingXSpeed*eng.getGameSpeed();
-		}
 		myXHead = SaladConstants.NEGATIVE_DIRECTION;
 		myYHead = SaladConstants.NEUTRAL_DIRECTION;
+		if(myIsInAir == 0 && !myCanMoveInAir) return;
+		if (x > 0) x -= myMovingXSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveRight(){
-		if (x + getXSize() < eng.pfWidth()) {
-			x += myMovingXSpeed*eng.getGameSpeed();
-		}
 		myXHead = SaladConstants.POSITIVE_DIRECTION;
 		myYHead = SaladConstants.NEUTRAL_DIRECTION;
+		if(myIsInAir == 0 && !myCanMoveInAir) return;
+		if (x + getXSize() < eng.pfWidth()) x += myMovingXSpeed*eng.getGameSpeed();
+	}
+	
+	public void setCanMoveInAir(boolean canMoveInAir){
+		myCanMoveInAir = canMoveInAir;
 	}
 	
 	@Override

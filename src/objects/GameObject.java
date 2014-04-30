@@ -459,6 +459,7 @@ public abstract class GameObject extends JGObject {
 	public void hit_bg(int tilecid, int tx, int ty, int txsize, int tysize) {
 		myCollisionManager.hitTile(myBehaviors, this, tilecid, tx, ty, txsize, tysize);
 //		if (myXHead == 0) setImage(myDefaultImage);
+		setImage(myDefaultImage);
 	}
 	
 	@Override

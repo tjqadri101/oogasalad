@@ -93,6 +93,7 @@ public class EngineTest {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
+		player.setCanMoveInAir(false);
 		
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
