@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
-
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.InputManager;
@@ -374,5 +373,9 @@ public class Game {
     public RevivalManager getRevivalManager() {
         return myRevivalManager;
     }       
+    
+    public Map<Integer, Level> getLevelMap(){
+        return myLevelMap;
+    }
 
 }

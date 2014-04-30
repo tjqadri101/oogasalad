@@ -66,9 +66,10 @@ public class GameFactorySceneTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(2, myGame.getMyLevelMap().get(1).getMySceneMap().size());
+        assertEquals(2, myGame.getLevelMap().get(1).getMySceneMap().size());
 // here the levelID=1, SceneID=0, objID=0
     }
+    
 /*
     // SwitchScene done through Engine
     @Test
