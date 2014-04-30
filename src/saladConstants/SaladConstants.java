@@ -105,6 +105,7 @@ public final class SaladConstants {
     public static final String CREATE_GOAL = "CreateGoal";
     public static final String CREATE_TILE = "CreateTile";
     public static final String SET_DRAG_TILE = "SetDragTile";
+    public static final String TILE_MAP = "TileMap";
     public static final String TILE_IMAGE = "TileImage";
     public static final String DRAG_IMAGE = "DragImage";
     public static final String MODIFY_ACTOR_IMAGE = "ModifyActorImage";

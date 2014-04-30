@@ -87,28 +87,28 @@ public class Player extends GameObject {
 	public void moveUp(){
 		setYHead(SaladConstants.NEGATIVE_DIRECTION);
 		setXHead(myXHead = SaladConstants.NEUTRAL_DIRECTION);
-		if(myIsInAir == 0 && !myCanMoveInAir) return;
+		if(myAirCounter == 0 && !myCanMoveInAir) return;
 		if (y > 0) y -= myMovingYSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveDown(){
 		setYHead(SaladConstants.POSITIVE_DIRECTION);
 		setXHead(SaladConstants.NEUTRAL_DIRECTION);
-		if(myIsInAir == 0 && !myCanMoveInAir) return;
+		if(myAirCounter == 0 && !myCanMoveInAir) return;
 		if (y + getYSize() < eng.pfHeight()) y += myMovingYSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveLeft(){
 		setXHead(SaladConstants.NEGATIVE_DIRECTION);
 		setYHead(SaladConstants.NEUTRAL_DIRECTION);
-		if(myIsInAir == 0 && !myCanMoveInAir) return;
+		if(myAirCounter == 0 && !myCanMoveInAir) return;
 		if (x > 0) x -= myMovingXSpeed*eng.getGameSpeed();
 	}
 	
 	public void moveRight(){
 		setXHead(SaladConstants.POSITIVE_DIRECTION);
 		setYHead(SaladConstants.NEUTRAL_DIRECTION);
-		if(myIsInAir == 0 && !myCanMoveInAir) return;
+		if(myAirCounter == 0 && !myCanMoveInAir) return;
 		if (x + getXSize() < eng.pfWidth()) x += myMovingXSpeed*eng.getGameSpeed();
 	}
 	
