@@ -255,6 +255,8 @@ public final class SaladConstants {
 	public static final String LIFE_INCREASE = "LifeIncrease";
 	public static final String GAME_OVER = "GameOver";
 	public static final String JUMP_ANIMATION = "JumpAnimation";
+	public static final String EVENT_CHANGE_BLOOD = "EventChangeBlood";
+	public static final String EVENT_CHANGE_LIVE = "EventChangeLive";
 	
 
 	

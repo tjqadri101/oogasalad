@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class Music {
+public abstract class Music {
         private File soundFile;
         private AudioInputStream myAudioInputStream;
         private AudioFormat myAudioFormat;
