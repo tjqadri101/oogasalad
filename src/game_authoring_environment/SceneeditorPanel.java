@@ -180,7 +180,11 @@ public class SceneeditorPanel extends Panel {
 	                        });
 	                return b;
 	                }
-	
+
+	       
+	/* This part commented out steve wrote this
+	 * 
+
 	private JButton makeLevelDone(){
 		JButton b = ViewFactory.createJButton("Create Level Done");
 		b.addActionListener(new ActionListener(){
@@ -291,7 +295,7 @@ public class SceneeditorPanel extends Panel {
 
 			});
 		return b;
-		}
+		}*/
 
 		private JPanel makebuttonpanel(){
 			JPanel k = new JPanel();
