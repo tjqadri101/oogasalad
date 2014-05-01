@@ -46,7 +46,7 @@ public class Player extends GameObject {
 	 * @param type
 	 */
 	public void setKey(int key, String type){
-//		char newkey = (char) key;
+		char newkey = (char) key;
 		myKeyMap.put(newkey, type);
 	}
 	
@@ -57,7 +57,7 @@ public class Player extends GameObject {
 	}
 	
 	protected void checkKeys(){
-		for(int key: myKeyMap.keySet()){
+		for(char key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				String methodName = myKeyMap.get(key);
 				try{

@@ -109,7 +109,7 @@ public class EngineTest {
 //		player.setKey(, "die");
 		player.setKey('A', "moveLeft");
 		player.setKey('D', "moveRight");
-		player.setKey('W', "moveUp");
+		player.setKey(97, "moveUp");
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
