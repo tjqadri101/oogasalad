@@ -63,6 +63,7 @@ public class EngineTest {
 			game.addScene(i+1, i+2);
 			engine.setCurrentScene(i+1, i+2);
 			engine.setSceneView("floorImage.jpg",false,false,1200,400);
+			engine.createTiles(TILE_COLID,0,20+i,1180,1);
 			
 			game.addScene(i+1, i);
 			game.getLevel(i+1).setInitialScene(i);
@@ -152,10 +153,10 @@ public class EngineTest {
 //		engine.gotoGameState("Title");
 //		engine.setCurrentScene(1, 0);
 		
-		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 100);
-//		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByCollision", 200);
-//		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", 2, 200.0, 100.0);
-		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
+//		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByCollision", 200);
+		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", 2, 200.0, 100.0);
+//		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 //		System.out.println("EngineTest LoadingDone");
 		engine.loadingDone();
 	}
