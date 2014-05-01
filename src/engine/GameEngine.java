@@ -93,12 +93,16 @@ public class GameEngine extends StdGame {
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
+
 		musicManager = new Music("src/engine/Sounds/PlayJoyful.wav");
 		
 		
 //		mySoundManager = new SoundManager(); // newly Added for testing music
 //		mySoundManager.setSound("src/engine/Sounds/PlayJoyful.wav");
 ////		getGame().getSoundManager().chooseInitSound();
+
+//		getGame().getSoundManager().chooseInitSound();
+//		musicManager.start();
 		
 	}
 	
@@ -732,8 +736,11 @@ public class GameEngine extends StdGame {
 		 object.setSize(xsize, ysize);
 	 }
 
-	 public void setObjectImage(GameObject object, String action, String imgfile, int xsize, int ysize){
+	 public void setObjectImage(int objectID, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
+		 GameObject object;
+		 if(objectID != 0) object = myGame.getNonPlayer(myCurrentLevelID, myCurrentSceneID, objectID);
+		 else object = myGame.getPlayer(objectID);
 		 object.setSize(object.getXSize(), object.getYSize());
 		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }
