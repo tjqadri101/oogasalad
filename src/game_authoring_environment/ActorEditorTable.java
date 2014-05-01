@@ -319,7 +319,7 @@ public class ActorEditorTable extends PanelTable{
 					String str = arg0.getItem().toString();
 					switch(str){
 					case "Immortal":
-						gController.modifyPlayerImmortal();
+						gController.modifyActorImmortalNoID();
 						break;
 					case "Disappear":
 						gController.modifyActorRegRemoveNoID();
