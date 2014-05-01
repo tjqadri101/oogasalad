@@ -24,7 +24,7 @@ import engineManagers.TriggerEventManager;
 
 /**
  * @author Main Isaac (Shenghan) Chen
- * @contribution (for creation): Justin (Zihao) Zhang
+ * @contribution (for the two methods of creating player and actor): Justin (Zihao) Zhang
  * @contribution (for TriggerEventManager handling) Steve (Siyang) Wang
  */
 
@@ -606,6 +606,7 @@ public class GameEngine extends StdGame {
 		 showScene(true);
 	 }
 	 
+	 //called by defineLevel or order from GAE
 	 public void setCurrentScene(int currentLevelID, int currentSceneID) {
 		 if (isEditingMode) {setGameState("Edit");}
 		 hideScene();
@@ -613,34 +614,47 @@ public class GameEngine extends StdGame {
 		 myCurrentSceneID = currentSceneID;
 		 myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
 		 showScene(false);
+		 if (!isLoading || myPlayer != null) {
+			 myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
+					 myCurrentScene.getPlayerInitPosition()[1]);
+		 }
 	 }
-
-	private void hideScene() {
-		if (myCurrentScene != null) {
+	 
+	 //called by TEM
+	 public void switchScene(int currentSceneID, double xpos, double ypos) {
+		 Scene scene = myGame.getScene(myCurrentLevelID, currentSceneID);
+		 if (scene == null || scene.getXSize() < xpos || scene.getYSize() < ypos) {return;}
+		 if(isPlaying) {myGame.getScoreManager().update("SceneDone", myCurrentSceneID);}
+		 hideScene();
+		 myCurrentSceneID = currentSceneID;
+		 myCurrentScene = scene;
+		 showScene(false);
+		 myPlayer.setInitPos(xpos, ypos);
+	 }
+	 
+	 private void hideScene() {
+		 if (myCurrentScene != null) {
 			 for (GameObject object : myCurrentScene.getGameObjects()) {
 				 object.suspend();
 			 }
 			 if (myPlayer != null) {myPlayer.suspend();}
 			 removeObjects(null, 0, false);
 		 }
-		 if(isPlaying) {myGame.getScoreManager().update("SceneDone", myCurrentSceneID);}
-	}
-
-	private void showScene(boolean empty) {
-		setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
+	 }
+	 
+	 private void showScene(boolean empty) {
+		 setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
 				 myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
-		if (isPlaying) {
-			setTiles(0, 0, myCurrentScene.getTiles());
-			if (myPlayer != null && !empty) {
-				myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
-						myCurrentScene.getPlayerInitPosition()[1]);
-				myPlayer.resume();
-			}
-			for (GameObject object : myCurrentScene.getGameObjects()) {
-				object.resume();
-			}
-		}
-	}
+		 if (isPlaying) {
+			 setTiles(0, 0, myCurrentScene.getTiles());
+			 if (myPlayer != null && !empty) {
+				 myPlayer.resume();
+			 }
+			 for (GameObject object : myCurrentScene.getGameObjects()) {
+				 object.resume();
+			 }
+		 }
+	 }
 	
 	 /* scene view modification methods */
 
