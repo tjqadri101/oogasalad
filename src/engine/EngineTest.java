@@ -22,7 +22,7 @@ public class EngineTest {
 	
 	public static void main(String[] arg){
 
-		GameEngine engine = new GameEngine(true){
+		GameEngine engine = new GameEngine(false){
 			public void doFrame(){
 				super.doFrame();
 				if(getKey('C')){
@@ -45,7 +45,7 @@ public class EngineTest {
 	}
 	
 	public void testEngine(GameEngine engine){
-		
+		engine.loadingBegin();
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
