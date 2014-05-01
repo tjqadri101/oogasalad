@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public abstract class Music {
+public class Music {
         private File soundFile;
         private AudioInputStream myAudioInputStream;
         private AudioFormat myAudioFormat;
@@ -19,13 +19,6 @@ public abstract class Music {
         private Thread myThread;
         
         private int BUFFER_SIZE = 12800000;
-
-        /**
-         * @param filename String of the file path to the music file
-         */
-
-        public Music() {
-        }
         
         /**
          * 
@@ -48,7 +41,7 @@ public abstract class Music {
         
         /**
          * 
-         * @param filename Reset file path of the music file
+         * @param filename Re set file path of the music file
          */
 
         public void setSound(String filename) {

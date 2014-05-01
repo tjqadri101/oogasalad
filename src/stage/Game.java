@@ -41,7 +41,7 @@ public class Game {
     protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
-    protected SoundManager mySoundManager;
+//    protected SoundManager mySoundManager;
     protected Map<Character, String> myTileImageMap;
     protected String myName;
 
@@ -58,7 +58,7 @@ public class Game {
         myGravity = new Gravity();
         myCollisionManager = new CollisionManager();
         myTriggerManager = new TriggerEventManager();
-        mySoundManager = new SoundManager();
+//        mySoundManager = new SoundManager();
         myName = DEFAULT_NAME;
 
     }
@@ -384,8 +384,8 @@ public class Game {
         return myRevivalManager;
     }       
     
-    public SoundManager getSoundManager(){
-        return mySoundManager;
-    }
+//    public SoundManager getSoundManager(){
+//        return mySoundManager;
+//    }
 
 }

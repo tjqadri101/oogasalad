@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import engineManagers.InputManager;
+import engineManagers.SoundManager;
 import engineManagers.TriggerEventManager;
 
 
@@ -69,6 +70,8 @@ public class GameEngine extends StdGame {
 	protected boolean isTileEditing;
 	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
+	protected Music musicManager;
+//	protected SoundManager mySoundManager;
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -90,8 +93,12 @@ public class GameEngine extends StdGame {
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
-		getGame().getSoundManager().chooseInitSound();
-//		musicManager.start();
+		musicManager = new Music("src/engine/Sounds/PlayJoyful.wav");
+		
+		
+//		mySoundManager = new SoundManager(); // newly Added for testing music
+//		mySoundManager.setSound("src/engine/Sounds/PlayJoyful.wav");
+////		getGame().getSoundManager().chooseInitSound();
 		
 	}
 	
@@ -246,7 +253,6 @@ public class GameEngine extends StdGame {
 	}
 
 	public void startGameOver() {
-//	    musicManager = new Music("src/engine/Sounds/PlayJoyful.wav"); // newly Added for testing music
 		setEmptyScene();
 		setTransition("GameOver");
 	}
