@@ -11,7 +11,7 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
-	public static final int LEVELS = 8;
+	public static final int LEVELS = 80;
 	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
@@ -21,24 +21,31 @@ public class EngineTest {
 	public static final char TILE_COLID = '3';
 	
 	public static void main(String[] arg){
-		
-		EngineTest et = new EngineTest();
+
+		GameEngine engine = new GameEngine(false){
+			public void doFrame(){
+				super.doFrame();
+				if(getKey('C')){
+					new EngineTest().testEngine(this);
+				}
+			}
+		};
 		JFrame mainFrame = new JFrame("EngineTest");
 		JPanel panel = new JPanel();
-		panel.add(et.testEngine());
+		panel.add(engine);
 		mainFrame.add(panel, BorderLayout.CENTER);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
 		mainFrame.setVisible(true);
+//		new EngineTest().testEngine(engine);
     }
 	
-	public GameEngine game2(){
-		return new FlappyBird().flappyBird();
+	public void game2(GameEngine engine){
+		new FlappyBird().flappyBird(engine);
 	}
 	
-	public GameEngine testEngine(){
+	public void testEngine(GameEngine engine){
 		
-		GameEngine engine = new GameEngine(true);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
@@ -133,6 +140,5 @@ public class EngineTest {
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		System.out.println("EngineTest LoadingDone");
 		engine.loadingDone();
-        return engine;
 	}
 }
