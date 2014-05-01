@@ -9,6 +9,7 @@ import reflection.Reflection;
 import saladConstants.SaladConstants;
 import engineManagers.*;
 import util.AttributeMaker;
+import util.SaladUtil;
 import engineManagers.CollisionManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
@@ -60,6 +61,7 @@ public abstract class GameObject extends JGObject {
 			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager,
 			TriggerEventManager eventManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
+		
 		resume_in_view = false;
 		suspend();
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
@@ -496,11 +498,18 @@ public abstract class GameObject extends JGObject {
 	 * @return a list of Strings
 	 */
 	public List<String> getAttributes() {
-		myAttributes.add(0, AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
-				SaladConstants.IMAGE, false, myDefaultImage, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
-				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
+		
+		myAttributes.add(0, creationString() + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + myUniqueID 
+				+ SaladConstants.SEPARATOR + SaladConstants.IMAGE + SaladConstants.SEPARATOR + myDefaultImage + 
+				SaladConstants.SEPARATOR + myXSize + SaladConstants.SEPARATOR + myYSize + SaladConstants.SEPARATOR + SaladConstants.POSITION
+				 + SaladConstants.SEPARATOR + myInitX + SaladConstants.SEPARATOR + myInitY + SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR + 
+				 myName + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + colid
+				 + SaladConstants.SEPARATOR + SaladConstants.LIVES + SaladConstants.SEPARATOR + myInitBlood);
+		
 		myAttributes.addAll(myActionManager.getAttributes());
 		myAttributes.addAll(myAnimationManager.getAttributes());
+		System.out.println("getAttributes called: ");
+		SaladUtil.printStringList(myAttributes);
 		return myAttributes;
 	}
 	
@@ -566,8 +575,7 @@ public abstract class GameObject extends JGObject {
      * @param xsize
      * @param ysize
      */
-	public void modifyDynamicImage(String action, String imgfile, int xsize,
-			int ysize) {
+	public void modifyDynamicImage(String action, String imgfile, int xsize, int ysize) {
 		myAnimationManager.modifyImage(action, imgfile);
 	}
 

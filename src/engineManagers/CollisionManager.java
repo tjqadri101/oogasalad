@@ -63,6 +63,15 @@ public class CollisionManager {
 		myAttributes.add(attribute);
 	}
 	
+	/**
+	 * Do not call this method directly
+	 * @param map
+	 * @param colid1
+	 * @param type
+	 * @param colid2
+	 * @param direction
+	 * @param args
+	 */
 	protected void addPair(Map<String, List<Object>> map, int colid1, String type, int colid2, 
 			String direction, Object ... args){
 		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
