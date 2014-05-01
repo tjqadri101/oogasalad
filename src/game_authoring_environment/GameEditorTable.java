@@ -96,7 +96,7 @@ public class GameEditorTable extends PanelTable {
 		tf7.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				gController.modifyLifeManagerInitLives(Integer.parseInt(tf7.getText()), 0);
+				gController.modifyLifeManagerInitLives(Integer.parseInt(tf7.getText()));
 			}			
 		});
 		myTableModel.addRow(third_Row);

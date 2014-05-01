@@ -357,6 +357,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	public void modifyPlayerInitBlood(int blood){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ playerID + SaladConstants.SEPARATOR  + SaladConstants.SET_INIT_BLOOD + SaladConstants.SEPARATOR + blood;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	/**
 	 * Delete player without providing player id. The already specified playerID is used for the id.
 	 */
@@ -637,6 +644,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void modifyActorInitBlood(int blood){
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ playerID + SaladConstants.SEPARATOR  + SaladConstants.SET_INIT_BLOOD + SaladConstants.SEPARATOR + blood;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	/**
 	 * 
 	 * 
@@ -677,10 +691,11 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	public void modifyCollisBehavShootHitObject(int victimCollID, int hitterCollID, String Direction){
+	public void modifyCollisBehavShootHitObject(int victimCollID, int hitterCollID, String direction){
 		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR
 				+ victimCollID + SaladConstants.SEPARATOR + SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR 
-				+ SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR + hitterCollID;
+				+ SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR +
+				direction;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -988,7 +1003,7 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
-	public void modifyLifeManagerInitLives(int lives, int playerID){
+	public void modifyLifeManagerInitLives(int lives){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + 
 				SaladConstants.SEPARATOR + lives + SaladConstants.SEPARATOR + playerID; 
 		if (!DEBUG) myDataController.receiveOrder(order);

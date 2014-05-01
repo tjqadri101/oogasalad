@@ -302,7 +302,7 @@ public class SceneeditorPanel extends Panel {
 			k.setLayout(new BorderLayout());
 			k.add(makeEnemyShower(), BorderLayout.NORTH);
 			// k.add(makeLevelDone(), BorderLayout.XX);
-			k.add(endSceneButton(), BorderLayout.SOUTH);
+			k.add(endLevelButton(), BorderLayout.SOUTH);
 			return k;
 		}
 
@@ -336,8 +336,8 @@ public class SceneeditorPanel extends Panel {
 			return players;
 		}
 
-		private JButton endSceneButton(){
-			JButton b = ViewFactory.createJButton("End Scene Event");
+		private JButton endLevelButton(){
+			JButton b = ViewFactory.createJButton("End Level Event");
 			b.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed (ActionEvent e){
@@ -441,6 +441,8 @@ public class SceneeditorPanel extends Panel {
 			});
 			return b;
 		}
+		
+		
 
 
 		private JButton makeChooseButton(){
