@@ -246,7 +246,8 @@ public class GAEController {
 	 * Modify player so it can't jump
 	 */
 	public void modifyPlayerCanNotJump(){ 
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.CAN_NOT_JUMP + 
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR +
+				playerID + SaladConstants.SEPARATOR + SaladConstants.CAN_NOT_JUMP + 
 				SaladConstants.SEPARATOR + SaladConstants.CAN_NOT_JUMP; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
