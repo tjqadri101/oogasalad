@@ -899,25 +899,6 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
-	
-	/*public void modifyTriggerEventManagerCollision(int eventTriggerPairID, int playerOrActorID, int xPos, int yPos, 
-			int xSize, int ySize){
-		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_COLLISION + SaladConstants.SEPARATOR 
-			    + SaladConstants.COLLISION + SaladConstants.SEPARATOR + playerOrActorID + SaladConstants.SEPARATOR + 
-			    xPos  + SaladConstants.SEPARATOR + yPos +  SaladConstants.SEPARATOR + xSize +  SaladConstants.SEPARATOR + ySize;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}*/
-
-
-	public void modifyTriggerEventManagerLevelDone(int eventTriggerPairID){
-		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_LEVEL_DONE + SaladConstants.SEPARATOR 
-				+ SaladConstants.EVENT_LEVEL_DONE;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
 
 	public void modifyTriggerEventManagerEnemyShower(int eventTriggerPairID, int maxEnemy, String gfx){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
