@@ -62,7 +62,7 @@ public class AnimationManager {
 	}
 	
 	public List<String> getAttributes(){
-		
+		makeImageAttributes();
 		return myAttributes;
 	}
 }

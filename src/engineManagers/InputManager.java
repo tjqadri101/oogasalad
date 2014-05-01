@@ -44,6 +44,7 @@ public class InputManager {
 	 * Called by engine in each doFrame to check keys
 	 */
 	public void checkKey(){
+		if(myEngine == null) return;
 		for(int key: myKeyMap.keySet()){
 			if(myEngine.getKey(key)){
 				List<Object> params = new ArrayList<Object>();
