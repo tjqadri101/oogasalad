@@ -5,6 +5,7 @@ import stage.Game;
 import stage.Scene;
 import stage.Transition;
 import statistics.StatsController;
+import util.Music;
 import jgame.Highscore;
 import jgame.JGColor;
 import jgame.platform.StdGame;
@@ -12,15 +13,14 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import engineManagers.InputManager;
 import engineManagers.TriggerEventManager;
+
 
 /**
  * @author Main Isaac (Shenghan) Chen
@@ -69,6 +69,7 @@ public class GameEngine extends StdGame {
 	protected boolean isTileEditing;
 	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
+	protected Music musicManager;
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -90,6 +91,9 @@ public class GameEngine extends StdGame {
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
+		musicManager = new Music("src/engine/Sounds/PlayJoyful.mp3"); // newly Added for testing music
+//		musicManager = new Music("/Users/siyangwang/Desktop/CreepyMusic.wav"); // newly Added for testing music
+		musicManager.start();
 	}
 	
 	public void loadingBegin() {

@@ -106,11 +106,11 @@ public class EngineTest {
 		player.setBehavior("RegularRemove");
 		player.setBehavior("Jump", 5.0, 1);
 		player.setBehavior("SpreadShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4, 8);
-		player.setKey('L', "die");
-		player.setKey('A', "moveLeft");
-		player.setKey('D', "moveRight");
-		player.setKey('W', "moveUp");
-		player.setKey('S', "moveDown");
+//		player.setKey(, "die");
+		player.setKey(65, "moveLeft");
+		player.setKey(68, "moveRight");
+		player.setKey(87, "moveUp");
+		player.setKey(83, "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
@@ -147,8 +147,8 @@ public class EngineTest {
 		
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 300);
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByRemove", "TriggerByRemove", BOSS_ID);
-		game.getTriggerManager().setEventOrTriggerBehavior(2, "Event, args);
+//		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByRemove", "TriggerByRemove", BOSS_ID);
+//		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", );
 //		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;

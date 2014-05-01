@@ -41,7 +41,7 @@ public class Music {
         
         /**
          * 
-         * @param filename Re set file path of the music file
+         * @param filename Reset file path of the music file
          */
 
         public void setSound(String filename) {
