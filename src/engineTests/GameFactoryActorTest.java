@@ -56,7 +56,7 @@ public class GameFactoryActorTest extends TestCase{
         //        myActor = (NonPlayer) myFactory.processOrder(STRINGINPUT);
     }
 
-    /*
+    
     @Test
     public void testCreateActor() throws FactoryException{
         String CREATE_ACTOR = "CreateActor,ID,0,Image,actor_default.png,3,3," +
@@ -121,7 +121,7 @@ public class GameFactoryActorTest extends TestCase{
 
     @Test
     public void testModifyActorChangeCollisionID() throws FactoryException{
-        String CHANGE_COLLISION_ID = "ModifyActor,ID,0,ChangeCollisionID,1";
+        String CHANGE_COLLISION_ID = "ModifyActor,ID,2,ChangeCollisionID,3";
         //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeCollisionID", 1};
         //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
         try {
@@ -244,7 +244,7 @@ public class GameFactoryActorTest extends TestCase{
         }
         //        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
         //        assert(set.contains("RegularRemove"));
-    }*/
+    }
     
     @Test
     public void testSetInitBlood() throws FactoryException{
