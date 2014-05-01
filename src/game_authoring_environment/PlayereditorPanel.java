@@ -257,13 +257,13 @@ public class PlayereditorPanel extends Panel {
 	}
 	
 	private JButton createAnimationButton(){
-		JButton j = new JButton("Animate Actor");
+		JButton j = new JButton("Animate Player");
 		j.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
 				Object[] options1 = {"Animate Jump Image",
 						"Animate Forward Move",
-						"Animate Backward Move", "Cancel"};
+						"Animate Backward Move"};
 
 				int result = JOptionPane.showOptionDialog(null,
 						"Animation options",
