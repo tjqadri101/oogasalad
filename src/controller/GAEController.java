@@ -229,18 +229,6 @@ public class GAEController {
 	}
 
 	/**
-	 * Modify player's corpse showing property without providing player id. The already specified playerID is used.
-	 */
-	public void modifyPlayerShowCorpse(String url, int xSize, int ySize, int time){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+playerID+SaladConstants.SEPARATOR + 
-				SaladConstants.SHOW_CORPSE + SaladConstants.SEPARATOR+SaladConstants.SHOW_CORPSE + SaladConstants.SEPARATOR + url + 
-				SaladConstants.SEPARATOR +  xSize + SaladConstants.SEPARATOR + ySize + SaladConstants.SEPARATOR + time;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
-
-	/**
 	 * Modify player's jump behavior without providing player id. The already specified playerID is used.
 	 */
 
