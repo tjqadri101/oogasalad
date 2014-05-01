@@ -191,7 +191,7 @@ public class MenuBar extends JMenuBar{
 	public JComponent makeMenuItem(Object target, String label, String method) {
 		JMenuItem m = new JMenuItem(label);
 		
-		MethodAction action = new MethodAction(target ,method);
+		MethodAction action = new MethodAction(target, method);
 		m.addActionListener(action);
 		
 		return m;

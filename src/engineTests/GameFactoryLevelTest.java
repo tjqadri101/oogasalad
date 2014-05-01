@@ -60,6 +60,22 @@ public class GameFactoryLevelTest extends TestCase{
     }
     
     @Test
+    public void testSetInitialScene() throws FactoryException{
+        String SET_INITIAL_SCENE = "ModifyLevel,ID,1,SetInitialScene,0";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
+        try {
+            myFactory.processOrder(SET_INITIAL_SCENE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(2, myGame.getMyLevelMap().size());
+// here the levelID=1, SceneID=0, objID=0
+    }
+    
+    @Test
     public void testDeleteLevel() throws FactoryException{
         String DELETE_LEVEL = "DeleteLevel,ID,2";
 //        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"DeleteLevel","ID",2};
@@ -87,6 +103,6 @@ public class GameFactoryLevelTest extends TestCase{
             fail("Exception");
         }
 //        Set<Integer> keys = myGame.getMyLevelMap().keySet();
-        assertTrue(keys.contains(3));
+//        assertTrue(keys.contains(3));
     }
 }

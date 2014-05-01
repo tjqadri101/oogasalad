@@ -84,9 +84,6 @@ public abstract class GameObject extends JGObject {
 		initSideDetectors();
 		myXHead = xdir;
 		myYHead = ydir;
-		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
-				SaladConstants.IMAGE, false, myDefaultImage, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
-				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
 	}
 	
 	public GameObject(int uniqueID, String staticGfxName, int xsize, 
@@ -497,6 +494,9 @@ public abstract class GameObject extends JGObject {
 	 * @return a list of Strings
 	 */
 	public List<String> getAttributes() {
+		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
+				SaladConstants.IMAGE, false, myDefaultImage, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
+				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
 		myAttributes.addAll(myActionManager.getAttributes());
 		myAttributes.addAll(myAnimationManager.getAttributes());
 		return myAttributes;
