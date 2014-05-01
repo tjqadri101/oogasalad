@@ -49,6 +49,7 @@ public final class SaladConstants {
 	public static final String MODIFY_ACTOR = "ModifyActor";
 	public static final String DELETE_ACTOR = "DeleteActor";
 	public static final String MODIFY_ACTOR_ANIMATION = "ModifyActorAnimation";
+	public static final String MODIFY_PLAYER_ANIMATION = "ModifyPlayerAnimation";
 	
 	
 	public static final String TEST_XMLFILE_URL = "test.xml";
@@ -266,6 +267,8 @@ public final class SaladConstants {
 	public static final String SCORE_MANAGER_PATH = "engineManagers.ScoreManager";
 	public static final String LIVE_MANAGER_PATH = "engineManagers.LiveManager";
 	public static final String EVENT_MANAGER_PATH = "engineManagers.TriggerEventManager";
+
+	
 	
 
 	
