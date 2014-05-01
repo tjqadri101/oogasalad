@@ -30,7 +30,7 @@ public class AttributeTest {
 	public static final String SCORE_COLLISION = "ModifyScoreManager,SetCollisionScore,5,Collision,1,2";
 	public static final String SCORE_TIME = "ModifyScoreManager,SetScoreCondition,5,Time";
 	public static final String INITIAL_SCENE = "ModifyLevel,ID,1,SetInitialScene,0";
-	public static final String ACTOR_ANIMATION = "ModifyActorAnimation,ID,1,Jump,Jump,actor_default.png,10,10";
+	public static final String ACTOR_ANIMATION = "ModifyActorAnimation,ID,1,JumpAnimation,Jump,actor_default.png,10,10";
 	public static final String SCENE_PLAYER_POSITION = "ModifyScene,ID,0,PlayerInitialPosition,0.0,0.0";
 	public static final String MODIFY_PLAYER_SHOOT = "ModifyPlayer,ID,1,SlowShoot,SlowShoot,actor_default.png,10,10,2,5.0,4";
 	protected DataController myController;
@@ -125,17 +125,32 @@ public class AttributeTest {
 //    	
 //	}
 	
-//	@Test
-//	public void testAnimation(){
-//    	myController = new DataController();
-//    	myEngine = myController.initGameEngine(true);
-//    	myGame = myEngine.getGame();
-//    	myController.receiveOrder(CREATE_ACTOR_ORDER);
-//    	myController.receiveOrder(ACTOR_ANIMATION);
-//    	
-//    	
-//    	
-//	}
+	@Test
+	public void testAnimation(){
+    	myController = new DataController();
+    	myEngine = myController.initGameEngine(true);
+    	myGame = myEngine.getGame();
+    	myController.receiveOrder(CREATE_ACTOR_ORDER);
+    	myController.receiveOrder(ACTOR_ANIMATION);
+    	
+        List<String> att = myGame.getAttributes();
+    	myController.receiveOrder(CREATE_LEVEL_1);
+    	myController.receiveOrder(CREATE_SCENE_1);
+    	myController.receiveOrder(SWITCH_SCENE_1);
+    	myController.receiveOrder(INITIAL_SCENE);
+    	myController.receiveOrder(CREATE_ACTOR_ORDER);
+    	myController.receiveOrder(ACTOR_ANIMATION);
+    	
+    	assertEquals(att.get(0), DEFAULT_GRAVITY);
+    	assertEquals(att.get(1), CREATE_LEVEL_1);
+    	assertEquals(att.get(2), INITIAL_SCENE);
+    	assertEquals(att.get(3), CREATE_SCENE_1);
+    	assertEquals(att.get(4), SWITCH_SCENE_1);
+    	assertEquals(att.get(5), SCENE_PLAYER_POSITION);
+    	assertEquals(att.get(6), CREATE_ACTOR_ORDER);
+    	assertEquals(att.get(7), ACTOR_ANIMATION);
+    	
+	}
 	
 	
 }

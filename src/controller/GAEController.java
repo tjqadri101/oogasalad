@@ -28,6 +28,7 @@ import javax.swing.plaf.LayerUI;
 
 import objects.GameObject;
 import objects.NonPlayer;
+import objects.Player;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
@@ -96,7 +97,7 @@ public class GAEController {
 		String order = SaladConstants.CREATE_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ID+SaladConstants.SEPARATOR +
 				SaladConstants.IMAGE + SaladConstants.SEPARATOR+url+ SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize +
 				SaladConstants.SEPARATOR + SaladConstants.POSITION + SaladConstants.SEPARATOR + xPos + SaladConstants.SEPARATOR + yPos + 
-				SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR +
+				SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR+name + SaladConstants.SEPARATOR+ SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR +
 				colID + SaladConstants.SEPARATOR + SaladConstants.LIVES + SaladConstants.SEPARATOR + lives;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		setColIDStayOnEveryTileID(colID);
@@ -1126,7 +1127,7 @@ public class GAEController {
 		return myDataController.getGame().getOccupiedTileColids();
 	}
 	
-	public Map<Integer, NonPlayer> getMapOfPlayers(){
+	public Map<Integer, NonPlayer> getMapOfNonPlayers(){
 		Map<Integer, NonPlayer> map = myDataController.getMapOfNonPlayers(selectedSceneID);
 		return map;
 	}
@@ -1141,7 +1142,9 @@ public class GAEController {
 		return myDataController.getNonPlayer(selectedActorID);
 	}	
 
-
+	public Player getPlayer(){
+		return myDataController.getGame().getPlayer(playerID);
+	}	
 	public int getPlayerID() {
 		return playerID;
 	}

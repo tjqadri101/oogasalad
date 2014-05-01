@@ -121,7 +121,7 @@ public class CollisioneditorPanel extends Panel {
 	
 	public Integer[] createActorCollisionList(){
 
-		Map<Integer, NonPlayer> mapofNonPlayers = gController.getMapOfPlayers();
+		Map<Integer, NonPlayer> mapofNonPlayers = gController.getMapOfNonPlayers();
 		TreeSet<Integer> colIDs = new TreeSet<Integer>();
 		for(Integer i : mapofNonPlayers.keySet()){
 			NonPlayer p = mapofNonPlayers.get(i);

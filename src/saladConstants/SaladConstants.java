@@ -70,7 +70,7 @@ public final class SaladConstants {
 	public static final String JUMP = "jump";
 	public static final String COLLIDE = "collide";
 	public static final String REMOVE = "remove";
-	public static final String UPDATE_JUMP = "Jump";
+	public static final String UPDATE_JUMP = "JumpAnimation";
 	
 	//Specific Behaviors
 	public static final String EXPLODE = "Explode";

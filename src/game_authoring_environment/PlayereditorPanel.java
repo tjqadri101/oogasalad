@@ -31,7 +31,6 @@ public class PlayereditorPanel extends Panel {
 	private GAEController gController;
 	private PlayerEditorTable myTable;
 	private boolean playerExists;
-	private String playerName;
 	
 	public PlayereditorPanel(GAEController gController) {
 		super(PanelType.PLAYEREDITOR);
@@ -101,9 +100,10 @@ public class PlayereditorPanel extends Panel {
 					if(returnVal == JFileChooser.APPROVE_OPTION) {
 						String path = chooser.getSelectedFile().getPath();
 						String name = chooser.getSelectedFile().getName();
+						String playerName = "Player" + gController.getPlayerID();
 						
 					//	gController.uploadImage(100, 100, path);
-						gController.createPlayer(gController.getPlayerID(), name, 100, 100, 100, 100, myTable.getName(), 0, 1);
+						gController.createPlayer(gController.getPlayerID(), name, 100, 100, 100, 100,playerName, 0, 1);
 						playerExists = true;
 						((PlayerEditorTable) myTable).setPlayerExists(true);
 						makeSubPanel();
