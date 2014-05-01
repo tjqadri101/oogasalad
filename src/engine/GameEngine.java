@@ -807,7 +807,7 @@ public class GameEngine extends StdGame {
 	 }
 	 
 	 public void setPaused(boolean paused) {
-		 if (isEditingMode) {return;}
+		 if (!isEditingMode) {return;}
 		 isPaused = paused;
 	 }
 	 
