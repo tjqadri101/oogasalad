@@ -141,7 +141,7 @@ public class Player extends GameObject {
 	public List<String> getAttributes(){
 		List<String> answer = super.getAttributes();
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
-				SaladConstants.SPEED, false, myMovingXSpeed, myMovingYSpeed));
+				SaladConstants.PLAYER_SPEED, false, myMovingXSpeed, myMovingYSpeed));
 		for(int key: myKeyMap.keySet()){
 			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
 					SaladConstants.SET_KEY, false, key, myKeyMap.get(key)));

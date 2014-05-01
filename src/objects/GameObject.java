@@ -481,9 +481,7 @@ public abstract class GameObject extends JGObject {
 	
 	protected StatisticsManager getSpecificManager(String name){
 		for(StatisticsManager manager: myGameManagers){
-			System.out.println("manager: " + manager.getClass().getName());
 			if(manager.getClass().getName().equals(name)){
-				System.out.println("name got!" + name);
 				return manager;
 			}
 		}
