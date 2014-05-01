@@ -6,6 +6,10 @@ import objects.GameObject;
 
 public class SoundManager extends Sound {
     
+    private SoundManager (){
+        
+    }
+    
     
 
 

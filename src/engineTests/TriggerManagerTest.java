@@ -58,23 +58,6 @@ public class TriggerManagerTest extends TestCase{
     }
     
     @Test
-    public void testSetTrigger() throws FactoryException{
-
-//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateScene","ID",1,"ID",1};
-//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(CREATE_SCENE);
-
-        try {
-            myGame.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        System.out.println(myGame.getTriggerManager().getTriggerMap().get(1));
-        System.out.println(myGame.getTriggerManager().getTriggerMap().get(1).get(0));
-        assertEquals("TriggerByTime", myGame.getTriggerManager().getTriggerMap().get(1).get(0));
-    }
-    
-    @Test
     public void testDoEvent() throws FactoryException{
         
 //        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateScene","ID",1,"ID",1};
@@ -103,5 +86,76 @@ public class TriggerManagerTest extends TestCase{
         System.out.println(myGame.getTriggerManager().getTriggerMap().get(1).get(0));
         assertEquals("TriggerByTime", myGame.getTriggerManager().getTriggerMap().get(1).get(0));*/
     }
+    
+    
+    @Test
+    public void testTEMTriggerByCollision() throws FactoryException{
+        String CREATE_LEVEL = "ModifyTriggerEventManager,ID,2,TriggerByCollision,Collision,1,2,3";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
+        try {
+            myFactory.processOrder(CREATE_LEVEL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(2, myGame.getTEM().size());
+// here the levelID=1, SceneID=0, objID=0
+    }
+    
+    
+    @Test
+    public void testTEMTriggerByRemove() throws FactoryException{
+        String CREATE_LEVEL = "ModifyTriggerEventManager,ID,3,TriggerByRemove,TriggerByRemove,0";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
+        try {
+            myFactory.processOrder(CREATE_LEVEL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(2, myGame.getTEM().size());
+// here the levelID=1, SceneID=0, objID=0
+    }
+    
+    
+    @Test
+    public void testTEMSetTriggerByTime() throws FactoryException{
+        String CREATE_LEVEL = "ModifyTriggerEventManager,ID,1,TriggerByTime,TriggerByTime,40";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
+        try {
+            myFactory.processOrder(CREATE_LEVEL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(2, myGame.getTEM().size());
+// here the levelID=1, SceneID=0, objID=0
+    }
+    
+    
+    @Test
+    public void testSetTrigger() throws FactoryException{
+
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateScene","ID",1,"ID",1};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(CREATE_SCENE);
+
+        try {
+            myGame.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        System.out.println(myGame.getTriggerManager().getTriggerMap().get(1));
+        System.out.println(myGame.getTriggerManager().getTriggerMap().get(1).get(0));
+        assertEquals("TriggerByTime", myGame.getTriggerManager().getTriggerMap().get(1).get(0));
+    }
+    
+
 }
      
