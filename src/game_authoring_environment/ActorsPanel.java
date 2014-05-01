@@ -174,7 +174,7 @@ public class ActorsPanel extends Panel {
 
 	private void addActors(){		
 		String newActorName = "Actor " + myActorsCount;		
-		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, 100, 100,100.0,200.0, "Actor " + myActorsCount, 1, 1);
+		gController.createActor(myActorsCount, ACTOR_DEFAULT_IMAGE, 100, 100,100.0,200.0, "Actor " + myActorsCount, 2, 1);
 		ImageIcon icon = urlToScaledImageIcon("src/game_authoring_environment/resources/"+ACTOR_DEFAULT_IMAGE);
 		Object toAdd[] = {icon , newActorName, ""};
 		actorsTableModel.addRow(toAdd);

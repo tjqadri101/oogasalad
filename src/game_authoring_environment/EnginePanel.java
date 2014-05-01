@@ -33,7 +33,6 @@ public class EnginePanel extends JPanel{
 			@Override
 			public void propertyChange(PropertyChangeEvent arg0) {
 				int selectedID = (int)(long)arg0.getNewValue();		
-				System.out.println("selectedID:"+selectedID);
 				if(selectedID != -1){
 					gController.getRightPanel().updateActorPositionSpinners();
 					
