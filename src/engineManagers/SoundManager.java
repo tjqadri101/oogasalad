@@ -49,24 +49,29 @@ public class SoundManager extends Music {
             super(filename);
 //            chooseInitSound();
     }
+    
+    public void playClip(String filename){
+        stop();
+        setSound(filename);
+        start();
+    }
 
     /**
      * @param ask user for what music to put in
      */
-    public void chooseInitSound(){
-        System.out.print("Pick the game mode: Creepy or Happy??? ");
-        String input = System.console().readLine();
+    public void chooseInitSound(){        
         myBackgroud = mySoundMap.get(GeneralInputBox.showMessageBox());
     }
     
+    /**
+     * allows addition from exterior 
+     */
     public void addSoundClip(String key, String fileName){
         mySoundMap.put(key, fileName);
     }
 
     public List<String> getAttributes() {
         return null;
-        
-        
     }
     
     

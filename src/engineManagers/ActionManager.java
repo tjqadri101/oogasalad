@@ -43,6 +43,12 @@ public class ActionManager {
 	 * @param args
 	 */
 	public void setBehavior(String s, Object ... args){
+		String type = myBehaviorMethods.getString(s);
+		String delete = null;
+		for(String action: myActions){
+			if(myBehaviorMethods.getString(action).equals(type)) delete = action;
+		}
+		if(delete != null) myActions.remove(delete);
 		myActions.add(s);
 		myActionMap.put(s, SaladUtil.convertArgsToObjectList(args));
 	}

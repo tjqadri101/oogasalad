@@ -197,6 +197,7 @@ public class Scene {
 			answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE_VIEW, SaladConstants.BACKGROUND, false, backgroundParams));	
 		}
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_SCENE, SaladConstants.ID, myID, SaladConstants.PLAYER_INITIAL_POSITION, false, initPlayerX, initPlayerY));
+		System.out.println("ObjectMap: " + myObjectMap.size());
 		for(int a: myObjectMap.keySet()){
 			answer.addAll(myObjectMap.get(a).getAttributes());
 		}
