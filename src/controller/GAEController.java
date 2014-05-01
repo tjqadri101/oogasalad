@@ -914,10 +914,19 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	public void modifyTriggerEventManagerRemove(int eventTriggerPairID, String triggerByRemove, int ID){
+	public void modifyTriggerEventManagerRemove(int eventTriggerPairID,  int ID){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR  + SaladConstants.ID  + SaladConstants.SEPARATOR +
 				eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_REMOVE + 
 				SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_REMOVE + SaladConstants.SEPARATOR + ID;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTriggerEventManagerCollision(int eventTriggerPairID, int victimID, int hitterID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR  + SaladConstants.ID  + SaladConstants.SEPARATOR +
+				eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_COLLISION + 
+				SaladConstants.SEPARATOR + SaladConstants.COLLISION + SaladConstants.SEPARATOR + 
+				victimID+ SaladConstants.SEPARATOR + hitterID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
