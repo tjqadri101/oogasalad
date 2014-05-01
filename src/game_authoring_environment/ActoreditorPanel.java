@@ -77,8 +77,8 @@ public class ActoreditorPanel extends Panel {
 						"Animate Backward Move", "Cancel"};
 
 				int result = JOptionPane.showOptionDialog(null,
-						"Enter a number between 0 and 10000",
-						"Enter a Number",
+						"Animation options",
+						"Select an animation type",
 						JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE,
 						null,
