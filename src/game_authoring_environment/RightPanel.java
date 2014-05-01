@@ -54,9 +54,9 @@ public class RightPanel extends JSplitPane {
 
 	public double curActorXPos, curActorYPos, curPlayerXPos, curPlayerYPos;
 	public GAEController myGAEController;
-	protected JSpinner actorXSpinner, actorYSpinner, playerXSpinner, playerYSpinner;
+	protected JSpinner actorXSpinner, actorYSpinner;
 	public static final double POSIT_STEP = 10d;
-	public boolean checkChange = false;
+
 	
 	public RightPanel(GAEController gController){
 		myGAEController = gController;
@@ -69,9 +69,6 @@ public class RightPanel extends JSplitPane {
 		JPanel spinnerPanel = new JPanel();
 		actorXSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_X", "curActorXPos",POSIT_STEP);
 		actorYSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_Y", "curActorYPos", POSIT_STEP);
-		checkChange = true;
-		playerXSpinner = addLabeledPositionSpinner(spinnerPanel, "PLAYER_X", "curPlayerXPos",POSIT_STEP);
-		playerYSpinner = addLabeledPositionSpinner(spinnerPanel, "PLAYER_Y", "curPlayerYPos", POSIT_STEP);
 		return spinnerPanel;
 	}
 	
@@ -96,12 +93,7 @@ public class RightPanel extends JSplitPane {
 						Class<?> c1 = getCurInstance().getClass();
 						Field field1 = c1.getField(curSpinner.getName());
 						field1.set(getCurInstance(),curSpinner.getValue());
-						if(!checkChange){
-							myGAEController.modifyActorPosNoID(curActorXPos, curActorYPos);
-						}
-						else{
-							myGAEController.modifyPlayerPos(curPlayerXPos, curPlayerYPos);
-						}
+						myGAEController.modifyActorPosNoID(curActorXPos, curActorYPos);
 					}
 					 catch (Exception e2)
 				        {
@@ -122,17 +114,6 @@ public class RightPanel extends JSplitPane {
 		actorYSpinner.setValue(curActorYPos);
 	}
 	
-	protected void updatePlayerPositionSpinners(){
-
-		
-		Player curPlayer = myGAEController.getPlayer();
-		if(!curPlayer.equals(null)){
-			curPlayerXPos = curPlayer.x;
-			curPlayerYPos = curPlayer.y;
-			playerXSpinner.setValue(curPlayerXPos);
-			playerYSpinner.setValue(curPlayerYPos);
-		}
-	}
 	
 	private RightPanel getCurInstance(){
 		return this;

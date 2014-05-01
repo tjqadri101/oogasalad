@@ -58,7 +58,7 @@ public class GameEditorTable extends PanelTable {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					String str = arg0.getItem().toString();
 
-					JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+					JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 					UIManager.put("FileChooser.openDialogTitleText", "Choose Transition Image");
 					SwingUtilities.updateComponentTreeUI(chooser);
 					FileNameExtensionFilter filter = new FileNameExtensionFilter(

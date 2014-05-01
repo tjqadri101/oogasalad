@@ -490,11 +490,11 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
-	public void modifyActorSpreadShoot(String spreadShoot, String imgURL, int xSize, int ySize, int collID,
+	public void modifyActorSpreadShoot(String imgURL, int xSize, int ySize, int collID,
 						double speed, int bulletsPerShot, int maxBullets ){ 
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR +
 				selectedActorID + SaladConstants.SEPARATOR + SaladConstants.SPREAD_SHOOT + SaladConstants.SEPARATOR + 
-				spreadShoot + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR 
+				SaladConstants.SPREAD_SHOOT + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR 
 				+ ySize + SaladConstants.SEPARATOR + collID + SaladConstants.SEPARATOR + speed + SaladConstants.SEPARATOR + 
 				bulletsPerShot + SaladConstants.SEPARATOR + maxBullets; 
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -763,8 +763,9 @@ public class GAEController {
 	}
 
 
-	public void modifyScenePlayerInitPos(double xPos, double yPos){
-		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPARATOR + SaladConstants.PLAYER_INIT_POS + SaladConstants.SEPARATOR + xPos + 
+	public void modifyScenePlayerInitPos(int sceneID, double xPos, double yPos){
+		String order = SaladConstants.MODIFY_SCENE + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR +
+				sceneID + SaladConstants.SEPARATOR +SaladConstants.PLAYER_INIT_POS + SaladConstants.SEPARATOR + xPos + 
 				SaladConstants.SEPARATOR + yPos;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -908,6 +909,22 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void modifyTriggerEventManagerChangeBlood(int eventTriggerPairID, int changeBlood){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_CHANGE_BLOOD + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_CHANGE_BLOOD + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + changeBlood;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTriggerEventManagerChangeLive(int eventTriggerPairID, int changeLive){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_CHANGE_LIVE + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_CHANGE_LIVE + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + changeLive;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	public void modifyTriggerEventManagerLoseGame(int eventTriggerPairID){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
 				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_LOSE_GAME + SaladConstants.SEPARATOR 

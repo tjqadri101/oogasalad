@@ -108,7 +108,7 @@ public class BehaviorsPanel extends Panel {
 					JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 			if (result2 == JOptionPane.OK_OPTION) {
 				try{
-					JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+					JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 					UIManager.put("FileChooser.openDialogTitleText", "Choose Tile Image");
 					SwingUtilities.updateComponentTreeUI(chooser);
 					FileNameExtensionFilter filter = new FileNameExtensionFilter(
