@@ -65,7 +65,7 @@ public class SceneeditorPanel extends Panel {
 		return jb;
 	}
 
-/*	       private JButton makeEnemyShower(){
+	       private JButton makeEnemyShower(){
 	                JButton b = ViewFactory.createJButton("Create Enemy Shower");
 	                b.addActionListener(new ActionListener(){
 	                        @Override
@@ -179,7 +179,7 @@ public class SceneeditorPanel extends Panel {
 
 	                        });
 	                return b;
-	                }*/
+	                }
 	
 	private JButton makeLevelDone(){
 		JButton b = ViewFactory.createJButton("Create Level Done");
@@ -370,7 +370,8 @@ public class SceneeditorPanel extends Panel {
 								int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 								String location = collisionLocationBox.getSelectedItem().toString();
 								gController.modifyTriggerEventManagerLevelDone(k2);
-// OTHER METHOD NEEDED...
+								gController.modifyTriggerEventManagerCollision(k2, hittee, hitter);
+// OTHER METHOD NEEDED...(Nick added)
 
 							}
 						}
