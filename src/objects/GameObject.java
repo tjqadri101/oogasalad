@@ -453,7 +453,10 @@ public abstract class GameObject extends JGObject {
 	public void updateManagers(Object ... args){
 		try{
 			for(StatisticsManager manager: myGameManagers){
-				if(manager != null) Reflection.callMethod(manager, SaladConstants.MANAGER_UPDATE, args);
+				if(manager != null){
+					System.out.println(manager.getClass().getName());
+					Reflection.callMethod(manager, SaladConstants.MANAGER_UPDATE, args);
+				}
 			}
 		} catch (Exception e){ e.printStackTrace(); } // should never reach here
 	}
