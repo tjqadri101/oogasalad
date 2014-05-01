@@ -85,7 +85,7 @@ public class PlayereditorPanel extends Panel {
 			@Override
 			public void actionPerformed (ActionEvent e){
 				try{
-					JFileChooser chooser = new JFileChooser("src/engineImages/");
+					JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 					UIManager.put("FileChooser.openDialogTitleText", null);
 					SwingUtilities.updateComponentTreeUI(chooser);
 					FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -181,27 +181,27 @@ public class PlayereditorPanel extends Panel {
 						"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 					if(moveUp.getText().length()>0){
-						int moveUp_char = moveUp.getText().toLowerCase().charAt(0);
+						int moveUp_char = moveUp.getText().toUpperCase().charAt(0);
 						gController.modifyPlayerKeyUp(moveUp_char);
 					}
 					if(moveDown.getText().length()>0){
-						int moveDown_char =(int) moveDown.getText().toLowerCase().charAt(0);
+						int moveDown_char =(int) moveDown.getText().toUpperCase().charAt(0);
 						gController.modifyPlayerKeyDown(moveDown_char);
 					}
 					if(moveLeft.getText().length()>0){
-						int moveLeft_char =(int) moveLeft.getText().toLowerCase().charAt(0);
+						int moveLeft_char =(int) moveLeft.getText().toUpperCase().charAt(0);
 						gController.modifyPlayerKeyLeft(moveLeft_char);
 					}
 					if(moveRight.getText().length()>0){
-						int moveRight_char =(int) moveRight.getText().toLowerCase().charAt(0);
+						int moveRight_char =(int) moveRight.getText().toUpperCase().charAt(0);
 						gController.modifyPlayerKeyRight(moveRight_char);
 					}
 					if(jump.getText().length()>0){
-						int jump_char = (int) jump.getText().toLowerCase().charAt(0);					
+						int jump_char = (int) jump.getText().toUpperCase().charAt(0);					
 						gController.modifyPlayerKeyJump(jump_char);
 					}
 					if(shoot.getText().length()>0){
-						int shoot_char = (int) shoot.getText().toLowerCase().charAt(0);
+						int shoot_char = (int) shoot.getText().toUpperCase().charAt(0);
 						gController.modifyPlayerKeyShoot(shoot_char);
 					}
 

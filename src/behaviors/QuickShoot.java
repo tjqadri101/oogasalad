@@ -4,6 +4,7 @@ import java.util.List;
 
 import engine.GameEngine;
 import objects.GameObject;
+import objects.NonPlayer;
 /**
  * @param String bullet's Image Name
  * @param int x size of the image
@@ -26,6 +27,7 @@ public class QuickShoot extends Shootable{
 	 */
 	@Override
 	public void shoot(List<Object> objects) {
+		if(myObject instanceof NonPlayer) return;
 		GameEngine engine = (GameEngine) myObject.eng;
 		
 		String imageName = (String) objects.get(0);
