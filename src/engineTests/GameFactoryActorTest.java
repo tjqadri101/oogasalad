@@ -72,6 +72,22 @@ public class GameFactoryActorTest extends TestCase{
         assertEquals(myObject, myGame.getNonPlayer(1, 0, 0));
 // here the levelID=1, SceneID=0, objID=0
     }
+    
+    @Test
+    public void testModifyActorImage() throws FactoryException{
+        String MODIFY_IMAGE = "ModifyActorImage,ID,0,ActorImage,actor_default.png,10,10";
+//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(MODIFY_IMAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        assertEquals("actor_default.png", myGame.getNonPlayer(1,0,0).getMyGfx());
+    }
 
     @Test
     public void testModifyActorSpeed() throws FactoryException{
@@ -212,23 +228,6 @@ public class GameFactoryActorTest extends TestCase{
         }
 //        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
 //        assert(set.contains("RegularRemove"));
-    }
-
-    
-    @Test
-    public void testModifyActorImage() throws FactoryException{
-        String MODIFY_IMAGE = "ModifyActorAnimation,ID,0,Jump,Jump,default_actor.png,10,10";
-//        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
-//        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
-//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(MODIFY_IMAGE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals("actor_default.png", myGame.getNonPlayer(1,0,0).getMyGfx());
     }
     
 
