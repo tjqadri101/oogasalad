@@ -172,7 +172,7 @@ public final class SaladConstants {
 	public static final String TRIGGER_BY_TIME = "TriggerByTime";
 	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
 	public static final String SET_TRIGGER_BY_COLLISION = "SetTriggerByCollision";
-	public static final String TRIGGER_BY_TILE_COLLISION = "SetTriggerByTileCollision";
+	public static final String TRIGGER_BY_TILE_COLLISION = "TriggerByTileCollision";
 	public static final String SET_EVENT_LEVEL_DONE = "SetEventLevelDone";
 	public static final String SET_EVENT_ENEMY_SHOWER = "SetEventEnemyShower";
 	public static final String SET_TRIGGER = "SetTrigger";

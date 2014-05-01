@@ -12,7 +12,7 @@ public class engineMain {
     	DataController controller = new DataController();
     	GameEngine engine = controller.initGameEngine(true);
     	Game game = engine.getGame();
-    	game.
+    	
     	controller.receiveOrder("CreateLevel,ID,1");
     	controller.receiveOrder("CreateScene,ID,1,ID,0");
     	controller.receiveOrder("SwitchScene,ID,1,ID,0");

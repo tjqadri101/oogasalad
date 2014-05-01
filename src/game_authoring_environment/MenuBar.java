@@ -167,7 +167,6 @@ public class MenuBar extends JMenuBar{
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
-					System.out.println("new selected item:"+arg0.getItem().toString());
 					selectedBehavior = arg0.getItem().toString();					
 				}				
 			}
@@ -192,7 +191,7 @@ public class MenuBar extends JMenuBar{
 	public JComponent makeMenuItem(Object target, String label, String method) {
 		JMenuItem m = new JMenuItem(label);
 		
-		MethodAction action = new MethodAction(target ,method);
+		MethodAction action = new MethodAction(target, method);
 		m.addActionListener(action);
 		
 		return m;

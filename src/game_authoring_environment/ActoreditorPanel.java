@@ -126,7 +126,6 @@ public class ActoreditorPanel extends Panel {
 
 	public void update(int currentSelectedActorID){
 		updateTable();
-		System.out.println("ActoreditorPanel switched to actorID:"+currentSelectedActorID);
 	}
 
 	private JTable createTable(){
