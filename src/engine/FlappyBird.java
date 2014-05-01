@@ -6,7 +6,7 @@ import saladConstants.SaladConstants;
 import stage.Game;
 import engine.GameEngine;
 
-public class FlappyBird extends Game {
+public class FlappyBird {
 	
 	public static final int LEVELS = 8;
 	
@@ -18,8 +18,9 @@ public class FlappyBird extends Game {
 	public static final char TILE_COLID = '3';
 	
 	
-	public FlappyBird(GameEngine engine){
+	public GameEngine flappyBird(){
 		
+		GameEngine engine = new GameEngine(false);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
@@ -63,7 +64,7 @@ public class FlappyBird extends Game {
 		player.setKey('S', "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
-		player.setSpeed(0, -2);
+		player.setSpeed(0, -10);
 		
 		
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", ENEMY_COLID,"All");
@@ -86,6 +87,7 @@ public class FlappyBird extends Game {
 		
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-		
+		engine.loadingDone();
+		return engine;
 	}
 }

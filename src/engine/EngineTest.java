@@ -25,7 +25,7 @@ public class EngineTest {
 		EngineTest et = new EngineTest();
 		JFrame mainFrame = new JFrame("EngineTest");
 		JPanel panel = new JPanel();
-		panel.add(et.testEngine());
+		panel.add(et.game2());
 		mainFrame.add(panel, BorderLayout.CENTER);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
@@ -33,15 +33,12 @@ public class EngineTest {
     }
 	
 	public GameEngine game2(){
-		GameEngine engine = new GameEngine(false);
-		engine.setGame(new FlappyBird(engine));
-		engine.loadingDone();
-		return engine;
+		return new FlappyBird().flappyBird();
 	}
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(true);
+		GameEngine engine = new GameEngine(false);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();

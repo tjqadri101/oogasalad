@@ -138,8 +138,6 @@ public class GameEngine extends StdGame {
 		myPlayer.restore(scene_restart);
 	}
 	
-	
-	
 	public void doFrameInGame() {
 		doFrameEdit();	
 	}
