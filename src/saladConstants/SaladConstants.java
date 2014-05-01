@@ -32,6 +32,7 @@ public final class SaladConstants {
 	public static final String ELEMENT_LABEL = "Element";
 	public static final String ROOT_ELEMENT_LABEL = "Root";
 	public static final String TILE_PANEL = "Tile";
+	public static final String PLAYER_SPEED = "PlayerSpeed";
 	
 	public static final String STATE_GAMEOVER = "GameOver";
 	public static final String STATE_STARTTITLE = "StartTitle";
@@ -260,6 +261,11 @@ public final class SaladConstants {
 	public static final String EVENT_CHANGE_LIVE = "EventChangeLive";
 
 	
+	
+	public static final String BLOOD_MANAGER_PATH = "engineManagers.BloodManager";
+	public static final String SCORE_MANAGER_PATH = "engineManagers.ScoreManager";
+	public static final String LIVE_MANAGER_PATH = "engineManagers.LiveManager";
+	public static final String EVENT_MANAGER_PATH = "engineManagers.TriggerEventManager";
 	
 
 	

@@ -474,14 +474,16 @@ public abstract class GameObject extends JGObject {
 		}
 		if (myUniqueID != SaladConstants.NULL_UNIQUE_ID) myRevivalManager.addRemovedObject(this);
 		if (this instanceof Player) {
-			LiveManager liveManager = (LiveManager) getSpecificManager(SaladConstants.LIVE_MANAGER);
-			liveManager.changeLive(myUniqueID, -1);
+			LiveManager liveManager = (LiveManager) getSpecificManager(SaladConstants.LIVE_MANAGER_PATH);
+			if(liveManager != null) liveManager.changeLive(myUniqueID, -1);
 		}
 	}
 	
 	protected StatisticsManager getSpecificManager(String name){
 		for(StatisticsManager manager: myGameManagers){
-			if(manager.getClass().getName().equals(name)) return manager;
+			if(manager.getClass().getName().equals(name)){
+				return manager;
+			}
 		}
 		return null;
 	}
@@ -494,7 +496,7 @@ public abstract class GameObject extends JGObject {
 	 * @return a list of Strings
 	 */
 	public List<String> getAttributes() {
-		myAttributes.add(AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
+		myAttributes.add(0, AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
 				SaladConstants.IMAGE, false, myDefaultImage, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
 				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
 		myAttributes.addAll(myActionManager.getAttributes());
@@ -514,7 +516,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public TriggerEventManager getEventManager(){
-		return (TriggerEventManager) getSpecificManager(SaladConstants.TRIGGER_EVENT_MANAGER);
+		return (TriggerEventManager) getSpecificManager(SaladConstants.EVENT_MANAGER_PATH);
 	}
 	
 	/**

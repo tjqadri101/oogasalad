@@ -328,7 +328,8 @@ public class Game {
      */
     public List<String> getAttributes() {
         List <String> answer = new ArrayList<String>();
-        answer.add(myGravity.getAttributes());
+        answer.addAll(myCollisionManager.getAttributes());
+        
         for (Entry<Character, String> entry : myTileImageMap.entrySet()) { // need check
             Character cid = entry.getKey();
             String imgfile = entry.getValue();
@@ -345,13 +346,14 @@ public class Game {
         for(Transition value: myTransitionStateMap.values()){
             answer.addAll(value.getAttributes()); 
         } // need check if before level or after
-        answer.addAll(myCollisionManager.getAttributes());
+        
         answer.addAll(myLiveManager.getAttributes());
         answer.addAll(myBloodManager.getAttributes());
         answer.addAll(myTriggerManager.getAttributes());
         answer.addAll(myInputManager.getAttributes());
-        answer.addAll(myScoreManager.getAttributes()); 
+        answer.addAll(myScoreManager.getAttributes());
         answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_GAME, SaladConstants.SET_NAME, myName));
+        answer.add(myGravity.getAttributes());
         return answer;
     }
 
