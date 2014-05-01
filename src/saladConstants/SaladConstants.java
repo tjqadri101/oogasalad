@@ -241,6 +241,7 @@ public final class SaladConstants {
 	public static final String UP_MOVE = "UPMove";
 	public static final String DW_MOVE = "DWMOVE";
 	public static final String TRIGGER_BY_REMOVE = "TriggerByRemove";
+	public static final String TRIGGER_BY_COLLISION = "TriggerByCollision";
 	public static final String EVENT_LEVEL_DONE = "EventLevelDone";
 	public static final String EVENT_ENEMY_SHOWER = "EventEnemyShower";
 	public static final String SHOOT_HIT_OBJECT = "ShootHitObject";
@@ -267,6 +268,8 @@ public final class SaladConstants {
 	public static final String SCORE_MANAGER_PATH = "engineManagers.ScoreManager";
 	public static final String LIVE_MANAGER_PATH = "engineManagers.LiveManager";
 	public static final String EVENT_MANAGER_PATH = "engineManagers.TriggerEventManager";
+
+	
 
 	
 	
