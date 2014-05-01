@@ -69,7 +69,6 @@ public class GameEngine extends StdGame {
 	protected boolean isTileEditing;
 	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
-//	protected Music musicManager;
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
