@@ -474,8 +474,7 @@ public class GameEngine extends StdGame {
 				 object.x += MouseX - myMouseX;
 				 object.y += MouseY - myMouseY;
 				 drag = true;
-				 int id = this.getClickedID();
-				 getParent().firePropertyChange("updatePos", 0, id);
+				 getParent().firePropertyChange("updatePos", 0, myClickedID);
 			 }
 		 }
 

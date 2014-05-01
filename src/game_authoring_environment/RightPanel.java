@@ -40,8 +40,6 @@ import javax.swing.plaf.LayerUI;
 
 import reflection.MethodAction;
 import reflection.ReflectionException;
-import util.MethodChangeSpinner;
-
 import java.lang.reflect.Field;
 
 import jgame.platform.JGEngine;

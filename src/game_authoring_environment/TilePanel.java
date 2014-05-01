@@ -150,7 +150,6 @@ public class TilePanel extends Panel{
 		 * */
 
 		private void addToTable(String imagePath,char colID,String imageName){	
-			System.out.println(imagePath + " "+colID+" "+imageName);
 			ImageIcon icon = urlToScaledImageIcon("src/game_authoring_environment/resources/"+imageName);
 			Object toAdd[] = {icon , colID, imageName};
 			tileTableModel.addRow(toAdd);

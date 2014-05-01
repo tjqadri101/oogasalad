@@ -95,7 +95,6 @@ public class CollisioneditorPanel extends Panel {
 
 		for(Object[] d:listData){
 			data[i]= d;
-			System.out.println(d);
 			i++;
 		}
 
@@ -186,7 +185,6 @@ public class CollisioneditorPanel extends Panel {
 
 							switch(str){
 								case "HitterEliminateVictim":{
-									System.out.println("");
 									gController.modifyCollisBehavHitElimVic(hittee, hitter,location);
 									break;
 								}
@@ -279,7 +277,6 @@ public class CollisioneditorPanel extends Panel {
 
 							switch(str){
 								case "StayOnTile":{
-									System.out.println("");
 									gController.modifyCollisBehavStayOnTile(hitter, hittee, location);
 									break;
 								}
@@ -362,7 +359,6 @@ public class CollisioneditorPanel extends Panel {
 
 							switch(str){
 								case "StayOnTile":{
-									System.out.println("");
 									gController.modifyCollisBehavStayOnTile(hitter, hittee, location);
 									break;
 								}
@@ -404,7 +400,6 @@ public class CollisioneditorPanel extends Panel {
 
 							switch(str){
 								case "Rebound":{
-									System.out.println("");
 									gController.modifyCollisionBehaviorRebounce(hitter, hittee, location);
 									break;
 								}
