@@ -11,7 +11,7 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
-	public static final int LEVELS = 80;
+	public static final int LEVELS = 8;
 	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
@@ -22,7 +22,7 @@ public class EngineTest {
 	
 	public static void main(String[] arg){
 
-		GameEngine engine = new GameEngine(false){
+		GameEngine engine = new GameEngine(true){
 			public void doFrame(){
 				super.doFrame();
 				if(getKey('C')){
@@ -107,7 +107,7 @@ public class EngineTest {
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
 		
-		player.setViewOffset(400, 300);
+		player.setViewOffset(600, 400);
 		
 //		engine.modifyPlayerImage(0, "poke-mon/025.gif", 100, 100);
 		
