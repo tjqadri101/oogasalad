@@ -191,7 +191,7 @@ public class Game {
      */
     public void switchSceneToLevel(int currentLevelID, int newLevelID, int sceneID){
         Scene scene = getScene(currentLevelID, sceneID);
-        if(scene != null) return;
+        if(scene == null) return;
         removeScene(currentLevelID, sceneID);
         Level level = myLevelMap.get(newLevelID);
         if(level != null) level.addScene(sceneID, scene);
