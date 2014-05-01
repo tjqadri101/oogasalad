@@ -218,7 +218,7 @@ public class GameEditorTable extends PanelTable {
 				gController.modifyGravityMagnitude(Double.parseDouble(tf4.getText()));
 			}			
 		});
-		myTableModel.addRow(eighthRow);
+		myTableModel.addRow(ninthRow);
 		classMap.put(9,ninthRow[1]);
 		
 		
