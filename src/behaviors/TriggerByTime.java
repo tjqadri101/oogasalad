@@ -19,7 +19,6 @@ public class TriggerByTime extends Triggerable{
 	 */
 	@Override
 	public boolean checkTrigger(List<Object> params) {
-	    System.out.println("TriggerByTime checkTrigger is called");
 		int timeLimit = (Integer) params.get(0);
 		if(myEngine.getSaladTimer() == timeLimit) return true;
 		return false;
