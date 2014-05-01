@@ -154,6 +154,7 @@ public class GameEngine extends StdGame {
 		boolean viewOffset = false;
 		if (drag()) {myViewOffsetPlayer = false;}
 		else {
+//			System.out.println("doFrameEdit");
 			moveObjects();
 			applyG();
 			checkAllCollision();
@@ -643,6 +644,7 @@ public class GameEngine extends StdGame {
 			 }
 			 if (myPlayer != null) {myPlayer.suspend();}
 			 removeObjects(null, 0, false);
+//			 System.out.println("removeObjects");
 		 }
 	 }
 	 

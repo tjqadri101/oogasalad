@@ -80,7 +80,7 @@ public class EngineTest {
 		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
 		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
-		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 3);
+		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 20);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
 		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
@@ -131,7 +131,7 @@ public class EngineTest {
 		
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-		System.out.println("\n EngineTest LoadingDone");
+		System.out.println("EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;
 	}
