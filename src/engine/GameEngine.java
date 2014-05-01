@@ -65,6 +65,7 @@ public class GameEngine extends StdGame {
 	protected boolean isLoading;
 	protected boolean isPlaying;
 	protected boolean isTileEditing;
+	protected boolean isPaused;
 	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
 //	protected Music musicManager;
@@ -159,7 +160,7 @@ public class GameEngine extends StdGame {
 	public void doFrameEdit() {
 		if (myGame==null || myCurrentScene == null) {return;}
 		boolean viewOffset = false;
-		if (drag()) {myViewOffsetPlayer = false;}
+		if (drag() || !isPaused) {myViewOffsetPlayer = false;}
 		else {
 //			System.out.println("doFrameEdit");
 			moveObjects();
@@ -803,6 +804,11 @@ public class GameEngine extends StdGame {
 	 
 	 public void setTileEditing(boolean tile_editing) {
 		 isTileEditing = tile_editing;
+	 }
+	 
+	 public void setPaused(boolean paused) {
+		 if (isEditingMode) {return;}
+		 isPaused = paused;
 	 }
 	 
 	 public void levelDone(){
