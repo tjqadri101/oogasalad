@@ -91,16 +91,7 @@ public class GameEditorTable extends PanelTable {
 		classMap.put(2,secondRow[1]);
 
 
-		final JTextField tf7 = new JTextField();
-		Object[] third_Row = {"Initial Lives", tf7}; // each row should be in this format
-		tf7.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				gController.modifyLifeManagerInitLives(Integer.parseInt(tf7.getText()), 0);
-			}			
-		});
-		myTableModel.addRow(third_Row);
-		classMap.put(3,third_Row[1]);
+
 		
 		//GameOver, LifeLost, LevelDone,
 		final JTextField tf1 = new JTextField();
@@ -112,7 +103,7 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(fourthRow);
-		classMap.put(4,fourthRow[1]);
+		classMap.put(3,fourthRow[1]);
 
 		final JTextField tf2 = new JTextField();
 		Object[] fifthRow = {"Life Lost Frame Length", tf2}; // each row should be in this format
@@ -123,7 +114,18 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(fifthRow);
-		classMap.put(5,fifthRow[1]);
+		classMap.put(4,fifthRow[1]);
+		
+		final JTextField tf5 = new JTextField();
+		Object[] eleventhRow = {"Set Score Increase by Time", tf5}; // each row should be in this format
+		tf5.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gController.modifyScoreManagerScoreCondition(Integer.parseInt(tf5.getText().toString()));
+			}			
+		});
+		myTableModel.addRow(eleventhRow);
+		classMap.put(5,eleventhRow[1]);
 
 		final JTextField tf3 = new JTextField();
 		Object[] sixthRow = {"Level Done Frame Length", tf3}; // each row should be in this format
@@ -218,12 +220,12 @@ public class GameEditorTable extends PanelTable {
 				gController.modifyGravityMagnitude(Double.parseDouble(tf4.getText()));
 			}			
 		});
-		myTableModel.addRow(eighthRow);
+		myTableModel.addRow(ninthRow);
 		classMap.put(9,ninthRow[1]);
 		
 		
 		JCheckBox cb5= new JCheckBox();
-		Object[] tenthRow = {"Restore Life At End of Level", tf4}; // each row should be in this format
+		Object[] tenthRow = {"Restore Life At End of Level", cb5}; // each row should be in this format
 		cb5.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
@@ -237,17 +239,7 @@ public class GameEditorTable extends PanelTable {
 		});
 		myTableModel.addRow(tenthRow);
 		classMap.put(10,tenthRow[1]);
-		
-		final JTextField tf5 = new JTextField();
-		Object[] eleventhRow = {"Set Score Increase by Time", tf5}; // each row should be in this format
-		tf5.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				gController.modifyScoreManagerScoreCondition(Integer.parseInt(tf5.getText().toString()));
-			}			
-		});
-		myTableModel.addRow(eleventhRow);
-		classMap.put(11,eleventhRow[1]);
+	
 		
 		}
 	

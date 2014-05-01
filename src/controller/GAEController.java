@@ -357,6 +357,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	public void modifyPlayerInitBlood(int blood){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ playerID + SaladConstants.SEPARATOR  + SaladConstants.SET_INIT_BLOOD + SaladConstants.SEPARATOR + blood;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	/**
 	 * Delete player without providing player id. The already specified playerID is used for the id.
 	 */
@@ -490,6 +497,7 @@ public class GAEController {
 	public void modifyActorColIDNoID(int newColID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ selectedActorID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
+		this.setColIDStayOnEveryTileID(newColID);
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -497,7 +505,7 @@ public class GAEController {
 	public void modifyActorColID(int oldColID,int newColID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+oldColID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
-		if (!DEBUG) myDataController.receiveOrder(order);
+		if (!DEBUG) myDataController.receiveOrder(order);		
 		System.out.println(order);
 	}
 
@@ -637,6 +645,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void modifyActorInitBlood(int blood){
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ selectedActorID + SaladConstants.SEPARATOR  + SaladConstants.SET_INIT_BLOOD + SaladConstants.SEPARATOR + blood;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	/**
 	 * 
 	 * 
@@ -923,7 +938,7 @@ public class GAEController {
 	
 	public void modifyTriggerEventManagerCollision(int eventTriggerPairID, int victimID, int hitterID){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR  + SaladConstants.ID  + SaladConstants.SEPARATOR +
-				eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_COLLISION + 
+				eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.COLLISION + 
 				SaladConstants.SEPARATOR + SaladConstants.COLLISION + SaladConstants.SEPARATOR + 
 				victimID+ SaladConstants.SEPARATOR + hitterID;
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -989,7 +1004,7 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
-	public void modifyLifeManagerInitLives(int lives, int playerID){
+	public void modifyLifeManagerInitLives(int lives){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + 
 				SaladConstants.SEPARATOR + lives + SaladConstants.SEPARATOR + playerID; 
 		if (!DEBUG) myDataController.receiveOrder(order);
