@@ -737,9 +737,14 @@ public class GameEngine extends StdGame {
 
 	 public void setObjectImage(int objectID, String action, String imgfile, int xsize, int ysize){
 		 loadImage(imgfile);
-		 GameObject object;
-		 if(objectID != 0) object = myGame.getNonPlayer(myCurrentLevelID, myCurrentSceneID, objectID);
-		 else object = myGame.getPlayer(objectID);
+		 GameObject object = myGame.getNonPlayer(myCurrentLevelID, myCurrentSceneID, objectID);
+		 object.setSize(object.getXSize(), object.getYSize());
+		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
+	 }
+	 
+	 public void setPlayerImage(int objectID, String action, String imgfile, int xsize, int ysize){
+		 loadImage(imgfile);
+		 GameObject object = myGame.getPlayer(objectID);
 		 object.setSize(object.getXSize(), object.getYSize());
 		 object.modifyDynamicImage(action, imgfile, xsize, ysize);
 	 }

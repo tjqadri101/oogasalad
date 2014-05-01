@@ -50,7 +50,10 @@ public class PlayereditorPanel extends Panel {
 			this.add(createPlayerButton(), BorderLayout.SOUTH);
 		}
 		else{
-			this.add(createKeySetButton(), BorderLayout.SOUTH);
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.add(createKeySetButton(), BorderLayout.EAST);
+			buttonPanel.add(createAnimationButton(), BorderLayout.WEST);
+			this.add(buttonPanel, BorderLayout.SOUTH);
 	
 		}	
 		}
@@ -98,14 +101,11 @@ public class PlayereditorPanel extends Panel {
 						String playerName = "Player" + gController.getPlayerID();
 						
 					//	gController.uploadImage(100, 100, path);
-						gController.createPlayer(gController.getPlayerID(), name, 100, 100, 100, 100,playerName, 0, 1);
+						gController.createPlayer(gController.getPlayerID(), name, 100, 100, 100, 100,playerName, 1, 1);
 						playerExists = true;
 						((PlayerEditorTable) myTable).setPlayerExists(true);
 						makeSubPanel();
 						construct();
-						
-						
-						
 					}			
 				}
 				catch(Exception J){
@@ -254,6 +254,63 @@ public class PlayereditorPanel extends Panel {
 			}			
 		}catch(Exception e){
 		}
+	}
+	
+	private JButton createAnimationButton(){
+		JButton j = new JButton("Animate Actor");
+		j.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				Object[] options1 = {"Animate Jump Image",
+						"Animate Forward Move",
+						"Animate Backward Move", "Cancel"};
+
+				int result = JOptionPane.showOptionDialog(null,
+						"Animation options",
+						"Select an animation type",
+						JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.PLAIN_MESSAGE,
+						null,
+						options1,
+						null);			
+
+					try{
+						JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
+						UIManager.put("FileChooser.openDialogTitleText", "Chooser");
+						SwingUtilities.updateComponentTreeUI(chooser);
+						FileNameExtensionFilter filter = new FileNameExtensionFilter(
+								"jpg", "gif","png","jpeg");
+						chooser.setFileFilter(filter);
+						int returnVal = chooser.showOpenDialog(getParent());
+						if(returnVal == JFileChooser.APPROVE_OPTION) {
+
+
+								String path = chooser.getSelectedFile().getPath();
+								String name = chooser.getSelectedFile().getName();
+								switch(result){
+								case 0:
+									gController.uploadImage(100,100, path);
+									gController.modifyPlayerAnimationJump(name, 100,100);
+									break;
+								case 1:
+									gController.uploadImage(100,100, path);
+									gController.modifyPlayerAnimationFDMove(name, 100,100);
+									break;
+								case 2:
+									gController.uploadImage(100,100, path);
+									gController.modifyPlayerAnimationBKMove(name, 100,100);
+									break;
+								}
+							}
+
+						}
+						catch(Exception l){
+
+						}
+			}
+		});
+
+		return j;
 	}
 	
 	public void updateInfo(int actorID){
