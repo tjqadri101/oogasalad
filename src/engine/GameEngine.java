@@ -160,7 +160,7 @@ public class GameEngine extends StdGame {
 	public void doFrameEdit() {
 		if (myGame==null || myCurrentScene == null) {return;}
 		boolean viewOffset = false;
-		if (drag() || !isPaused) {myViewOffsetPlayer = false;}
+		if (drag() || isPaused) {myViewOffsetPlayer = false;}
 		else {
 //			System.out.println("doFrameEdit");
 			moveObjects();

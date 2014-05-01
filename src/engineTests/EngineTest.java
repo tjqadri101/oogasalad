@@ -96,8 +96,8 @@ public class EngineTest {
 		game.getGravity().setMagnitude(0.1);
 		
 		game.getTransitionState("Title").setBackground("floorImage.jpg");
-		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
-		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
+//		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
+//		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
 		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
 //		engine.setPlayerImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
