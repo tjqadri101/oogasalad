@@ -362,7 +362,7 @@ public abstract class StdGame extends JGEngine {
 	 * another state than InGame or {InGame,StartLevel/StartGame}.
 	 * After the LifeLost
 	 * sequence, goes to InGame or GameOver, depending on lives left. */
-	public final void lifeLost() {
+	public void lifeLost() {
 		if (!inGameState("InGame") || inGameState("LevelDone")
 		|| inGameState("LifeLost") || inGameState("GameOver") ) return;
 		//	System.err.println(
@@ -407,7 +407,7 @@ public abstract class StdGame extends JGEngine {
 	 * not InGame or {Ingame,StartLevel/StartGame}. After the LevelDone
 	 * sequence, it sets gametime to 0, calls
 	 * incrementLevel and defineLevel, and goes to StartLevel/StartGame. */
-	public final void levelDone() {
+	public void levelDone() {
 		if (!inGameState("InGame") || inGameState("LevelDone")
 		|| inGameState("LifeLost") || inGameState("GameOver") ) return;
 		//	System.err.println(
@@ -451,7 +451,7 @@ public abstract class StdGame extends JGEngine {
 	* {InGame}, {Ingame,Start*}, or LifeLost.  Will go to Title after GameOver
 	* sequence.
 	*/
-	public final void gameOver() {
+	public void gameOver() {
 		// XXX hmm. we should check out these conditions
 		if ( inGameState("GameOver")
 		||  (!inGameState("InGame") && !inGameState("LifeLost")) ) return;
