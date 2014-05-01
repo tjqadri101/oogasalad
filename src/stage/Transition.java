@@ -45,7 +45,7 @@ public class Transition {
 		frame_to_stay = frame;
 	}
 	
-	public void addInstruction(int xpos, int ypos, String instrution){
+	public void addInstruction(String instrution, int xpos, int ypos){
 		myInstructionMap.put(new double[]{xpos, ypos}, instrution);
 	}
 	
