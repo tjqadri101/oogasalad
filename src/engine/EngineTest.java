@@ -7,7 +7,6 @@ import objects.NonPlayer;
 import objects.Player;
 import saladConstants.SaladConstants;
 import stage.Game;
-import util.Music;
 import engine.GameEngine;
 
 public class EngineTest {
@@ -23,7 +22,7 @@ public class EngineTest {
 	
 	public static void main(String[] arg){
 
-		GameEngine engine = new GameEngine(false){
+		GameEngine engine = new GameEngine(true){
 			public void doFrame(){
 				super.doFrame();
 				if(getKey('C')){
