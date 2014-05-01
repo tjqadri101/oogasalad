@@ -498,18 +498,16 @@ public abstract class GameObject extends JGObject {
 	 * @return a list of Strings
 	 */
 	public List<String> getAttributes() {
-		
-		myAttributes.add(0, creationString() + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + myUniqueID 
-				+ SaladConstants.SEPARATOR + SaladConstants.IMAGE + SaladConstants.SEPARATOR + myDefaultImage + 
-				SaladConstants.SEPARATOR + myXSize + SaladConstants.SEPARATOR + myYSize + SaladConstants.SEPARATOR + SaladConstants.POSITION
-				 + SaladConstants.SEPARATOR + myInitX + SaladConstants.SEPARATOR + myInitY + SaladConstants.SEPARATOR + SaladConstants.NAME + SaladConstants.SEPARATOR + 
-				 myName + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + colid
-				 + SaladConstants.SEPARATOR + SaladConstants.LIVES + SaladConstants.SEPARATOR + myInitBlood);
-		
+		myAttributes.add(0, AttributeMaker.addAttribute(creationString(), SaladConstants.ID, myUniqueID, 
+				SaladConstants.IMAGE, false, myDefaultImage, myXSize, myYSize, SaladConstants.POSITION, myInitX, 
+				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
 		myAttributes.addAll(myActionManager.getAttributes());
 		myAttributes.addAll(myAnimationManager.getAttributes());
-		System.out.println("getAttributes called: ");
-		SaladUtil.printStringList(myAttributes);
+		List<String> deleteList = new ArrayList<String>();
+		for(int i = 0; i < myAttributes.size(); i ++){
+			if(myAttributes.get(i).startsWith(creationString()) && i != 0){ deleteList.add(myAttributes.get(i)); }
+		}
+		for(String s: deleteList){ myAttributes.remove(s); }
 		return myAttributes;
 	}
 	
