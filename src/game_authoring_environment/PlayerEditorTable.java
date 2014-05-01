@@ -66,13 +66,11 @@ public class PlayerEditorTable extends PanelTable {
 		myTableModel.addRow(firstRow); // actually adding to the table
 		classMap.put(0,firstRow[1]); // classMap is the hashmap that keep track of the thing we created (first number is the row)		
 
-		System.out.println("init");
 		final JComboBox shootTypesBox = new JComboBox(shootTypes);
 		Object[] thirdRow = {"Shooting", shootTypesBox};
 		shootTypesBox.setSelectedIndex(0);
 		System.out.println("init");
 		if(!playerExists){
-			System.out.println("init");
 			shootTypesBox.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent arg0) {
@@ -82,10 +80,8 @@ public class PlayerEditorTable extends PanelTable {
 					}
 				}
 			});
-			System.out.println("init");
 		}
 		else{
-			System.out.println("init");
 			shootTypesBox.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent arg0) {
