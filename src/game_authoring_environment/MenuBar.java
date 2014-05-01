@@ -56,13 +56,6 @@ public class MenuBar extends JMenuBar{
 	private JMenu createFileMenu(){
 		JMenu fileMenu = new JMenu("File");
 		fileMenu.add(makeMenuItem(getCurrentInstance(), "Save As...", "saveGameFile"));
-		/*JMenuItem m = new JMenuItem("Save As...");
-		m.addActionListener(new ActionListener(){
-			@Override
-			 public void actionPerformed (ActionEvent event){
-				saveGameFile();
-		}});
-		fileMenu.add(m);*/
 		fileMenu.add(makeMenuItem(getCurrentInstance(), "Open", "openGameFile"));
 		fileMenu.add(makeMenuItem(getCurrentInstance(), "Quit", "closeProgram"));
 		return fileMenu;

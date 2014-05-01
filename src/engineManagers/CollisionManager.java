@@ -45,6 +45,52 @@ public class CollisionManager {
 	}
 	
 	/**
+	 * Do not call this method directly
+	 * @param key
+	 * @param map
+	 * @param colid1
+	 * @param type
+	 * @param colid2
+	 * @param args
+	 */
+	protected void addPairs(String key, Map<String, List<Object>> map, int colid1, String type, int colid2, String direction, Object ... args){
+		addPair(map, colid1, type, colid2, direction, args);
+		List<Object> attributeParams = SaladUtil.copyObjectList(SaladUtil.convertArgsToObjectList(args));
+		attributeParams.add(0, colid2);
+		attributeParams.add(1, direction);
+		String attribute = AttributeMaker.addAttribute(key, 
+				SaladConstants.COLLISION_ID, colid1, type, true, attributeParams);
+		myAttributes.add(attribute);
+	}
+	
+	protected void addPair(Map<String, List<Object>> map, int colid1, String type, int colid2, 
+			String direction, Object ... args){
+		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
+		objects.add(0, type);
+		String pair = colid1 + SaladConstants.SEPARATOR + colid2;
+		map.put(pair, objects);
+	}
+	
+	/**
+	 * Do not call this method directly
+	 * @param key
+	 * @param map
+	 * @param colid1
+	 * @param type
+	 * @param colid2
+	 * @param args
+	 */
+	protected void addTilePairs(String key, Map<String, List<Object>> map, int colid1, String type, char colid2, String direction, Object ... args){
+		addPair(map, colid1, type, colid2, direction, args);
+		List<Object> attributeParams = SaladUtil.copyObjectList(SaladUtil.convertArgsToObjectList(args));
+		attributeParams.add(0, colid2);
+		attributeParams.add(1, direction);
+		String attribute = AttributeMaker.addAttribute(key, 
+				SaladConstants.COLLISION_ID, colid1, type, true, attributeParams);
+		myAttributes.add(attribute);
+	}
+	
+	/**
 	 * Add a collision behavior between object and tile
 	 * @param victimColid
 	 * @param type collision behavior
@@ -52,7 +98,7 @@ public class CollisionManager {
 	 * @param args parameters
 	 */
 	public void addTileCollisionPair(int victimColid, String type, char tileColid, String direction, Object ... args){
-		addPairs(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR, myTileCollisionMap, 
+		addTilePairs(SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR, myTileCollisionMap, 
 				victimColid, type, tileColid, direction, args);
 	}
 	
@@ -151,28 +197,6 @@ public class CollisionManager {
 			answer.add(adder);
 		}
 		return answer;
-	}
-	
-	/**
-	 * Do not call this method directly
-	 * @param key
-	 * @param map
-	 * @param colid1
-	 * @param type
-	 * @param colid2
-	 * @param args
-	 */
-	protected void addPairs(String key, Map<String, List<Object>> map, int colid1, String type, int colid2, String direction, Object ... args){
-		List<Object> objects = SaladUtil.convertArgsToObjectList(args);
-		List<Object> attributeParams = SaladUtil.copyObjectList(objects);
-		attributeParams.add(0, colid2);
-		attributeParams.add(1, direction);
-		String attribute = AttributeMaker.addAttribute(key, 
-				SaladConstants.COLLISION_ID, colid1, type, true, attributeParams);
-		myAttributes.add(attribute);
-		objects.add(0, type);
-		String pair = colid1 + SaladConstants.SEPARATOR + colid2;
-		map.put(pair, objects);
 	}
 	
 	/**
