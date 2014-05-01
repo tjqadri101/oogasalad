@@ -9,7 +9,7 @@ public final class SaladConstants {
 	public static final String MODIFY_LEVEL = "ModifyLevel";
 	public static final String CREATE_SCENE = "CreateScene";
 	public static final String SWITCH_SCENE = "SwitchScene";
-	public static final String SWITCH_SCENE_TO_NEW_LEVEL_ID = "switchSceneToNewLevelID";
+	public static final String SWITCH_SCENE_TO_NEW_LEVEL_ID = "SwitchSceneToNewLevelID";
 	public static final String MODIFY_SCENE = "ModifyScene";
 	public static final String MODIFY_INIT_SCENE = "ModifyInitScene";
 	public static final String SET_INIT_SCENE = "SetInitialScene";

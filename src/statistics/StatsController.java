@@ -19,6 +19,7 @@ import jgame.platform.JGEngine;
 
 /**
  * @author Sam Ginsburg and Ethan Gottlieb
+ * @integration Justin (Zihao) Zhang 
  *
  */
 public class StatsController {

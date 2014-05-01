@@ -49,7 +49,7 @@ public class GameFactoryGameTest extends TestCase{
 ////        myActor = (NonPlayer) myFactory.processOrder(CREATEPLAYER_OBJECT_LIST);
 //        String ORDER_TEST = "0,actor_default.png,3,3,20.0,30.0,myPlayer,0,1";
         
-        myFactory.processOrder(CREATE_ACTOR);
+//        myFactory.processOrder(CREATE_ACTOR);
         myGame.setName("intial");
         
 //        String STRINGINPUT = "CreateActor,ID,0,ActorImage,actor_default.png,3,3," +
