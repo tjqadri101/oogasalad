@@ -11,7 +11,7 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
-	public static final int LEVELS = 8;
+	public static final int LEVELS = 1;
 	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
@@ -22,11 +22,18 @@ public class EngineTest {
 	
 	public static void main(String[] arg){
 
-		GameEngine engine = new GameEngine(true){
+		GameEngine engine = new GameEngine(false){
 			public void doFrame(){
 				super.doFrame();
 				if(getKey('C')){
 					new EngineTest().testEngine(this);
+					clearKey('C');
+				}
+				if(getKey('P')){
+					for (String str: this.myGame.getAttributes()){
+						System.out.println(str);
+					}
+					clearKey('P');
 				}
 			}
 		};
@@ -52,26 +59,32 @@ public class EngineTest {
 		engine.setGame(game);
 		for (int i=0;i<LEVELS;i++){
 			game.addLevel(i+1);
+			
+			game.addScene(i+1, i+2);
+			engine.setCurrentScene(i+1, i+2);
+			engine.setSceneView("floorImage.jpg",false,false,1200,400);
+			
 			game.addScene(i+1, i);
 			game.getLevel(i+1).setInitialScene(i);
 			game.getScene(i+1, i).setPlayerInitPosition((i+1)*100, 200);
+			game.addScene(i+1, i+2);
 			engine.setCurrentScene(i+1, i);
 			
-			engine.setSceneView(null,false,false,1200,400);
+			engine.setSceneView("floorImage.jpg",false,false,1200,400);
 			engine.loadTileImage(TILE_COLID, "brick.png");
 			engine.createTiles(TILE_COLID,0,15+i,1180,1);
 			engine.createTiles(TILE_COLID,20,15,10,1);
 			engine.createTiles('0',30,25+i,5,1);
 			
-			NonPlayer actor = engine.createActor(123+i, "poke-mon/0"+(13+i)+".gif", 200, 200, 300, 100, SaladConstants.NULL, ENEMY_COLID, 10);
-			actor.setBehavior("RegularRemove");
-			actor.setBehavior("BackForthMove", 8.0, 5);
-			actor.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
-
-			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 10);
-			goomba.setBehavior("RegularRemove");
-			goomba.setBehavior("BackForthMove",5.0, 10);
-			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100, 4);
+//			NonPlayer actor = engine.createActor(123+i, "poke-mon/0"+(13+i)+".gif", 200, 200, 300, 100, SaladConstants.NULL, ENEMY_COLID, 10);
+//			actor.setBehavior("RegularRemove");
+//			actor.setBehavior("BackForthMove", 8.0, 5);
+//			actor.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
+//
+//			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 10);
+//			goomba.setBehavior("RegularRemove");
+//			goomba.setBehavior("BackForthMove",5.0, 10);
+//			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100, 4);
 
 			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);
 			mushroom.setBehavior("RegularRemove");
@@ -111,10 +124,10 @@ public class EngineTest {
 		
 //		engine.modifyPlayerImage(0, "poke-mon/025.gif", 100, 100);
 		
-		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
-		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
-		game.getCollisionManager().setDirectionalCollisionBehavior(MUSHROOM_COLID, "ShootHitObject", BULLET_COLID,"All");
-		game.getCollisionManager().setDirectionalCollisionBehavior(MUSHROOM_COLID, "HitterEliminateVictim", PLAYER_COLID,"Top");
+//		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
+//		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
+//		game.getCollisionManager().setDirectionalCollisionBehavior(MUSHROOM_COLID, "ShootHitObject", BULLET_COLID,"All");
+		game.getCollisionManager().setDirectionalCollisionBehavior(MUSHROOM_COLID, "HitterEliminateVictim", PLAYER_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID,"Left");
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "HitterEliminateVictim", MUSHROOM_COLID,"Right");
 		game.getCollisionManager().setDirectionalTileCollisionBehavior(ENEMY_COLID, "StayOnTile", TILE_COLID,"All");
@@ -136,12 +149,14 @@ public class EngineTest {
 		game.getInputManager().setKey('F', "GameOver");
 		game.getInputManager().setKey('K', "LevelDone");
 		
-		engine.gotoGameState("Title");
-		engine.setCurrentScene(1, 0);
+//		engine.gotoGameState("Title");
+//		engine.setCurrentScene(1, 0);
 		
-		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 100);
+//		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByCollision", 200);
+//		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", 2, 200.0, 100.0);
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-		System.out.println("EngineTest LoadingDone");
+//		System.out.println("EngineTest LoadingDone");
 		engine.loadingDone();
 	}
 }

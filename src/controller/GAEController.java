@@ -497,6 +497,7 @@ public class GAEController {
 	public void modifyActorColIDNoID(int newColID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ selectedActorID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
+		this.setColIDStayOnEveryTileID(newColID);
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -504,7 +505,7 @@ public class GAEController {
 	public void modifyActorColID(int oldColID,int newColID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+oldColID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
-		if (!DEBUG) myDataController.receiveOrder(order);
+		if (!DEBUG) myDataController.receiveOrder(order);		
 		System.out.println(order);
 	}
 
@@ -937,7 +938,7 @@ public class GAEController {
 	
 	public void modifyTriggerEventManagerCollision(int eventTriggerPairID, int victimID, int hitterID){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR  + SaladConstants.ID  + SaladConstants.SEPARATOR +
-				eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_COLLISION + 
+				eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.COLLISION + 
 				SaladConstants.SEPARATOR + SaladConstants.COLLISION + SaladConstants.SEPARATOR + 
 				victimID+ SaladConstants.SEPARATOR + hitterID;
 		if (!DEBUG) myDataController.receiveOrder(order);

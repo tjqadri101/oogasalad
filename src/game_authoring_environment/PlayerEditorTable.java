@@ -315,7 +315,7 @@ public class PlayerEditorTable extends PanelTable {
 		
 		final JTextField tf11 = new JTextField();
 		Object[] eighthRow = {"Initial Blood", tf11}; 
-		tf1.addActionListener(new ActionListener(){
+		tf11.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gController.modifyPlayerInitBlood(Integer.parseInt(tf11.getText()));
@@ -324,6 +324,17 @@ public class PlayerEditorTable extends PanelTable {
 
 		myTableModel.addRow(eighthRow); // actually adding to the table
 		classMap.put(6,eighthRow[1]);
+		
+		final JTextField tf7 = new JTextField();
+		Object[] third_Row = {"Initial Lives", tf7}; // each row should be in this format
+		tf7.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gController.modifyLifeManagerInitLives(Integer.parseInt(tf7.getText()));
+			}			
+		});
+		myTableModel.addRow(third_Row);
+		classMap.put(7,third_Row[1]);
 	}
 
 	
