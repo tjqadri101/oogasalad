@@ -317,7 +317,7 @@ public class GAEController {
 	 * Animate an player's jump animation
 	 */
 	public void modifyPlayerAnimationJump(String url, int xSize, int ySize ){
-		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + 
+		String order = SaladConstants.MODIFY_PLAYER_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + 
 				SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.JUMP_ANIMATION +
 				SaladConstants.SEPARATOR +  SaladConstants.JUMP + SaladConstants.SEPARATOR + url + SaladConstants.SEPARATOR + 
 				xSize + SaladConstants.SEPARATOR + ySize; 
@@ -330,7 +330,7 @@ public class GAEController {
 	 *  Animate an player's forward move animation
 	 */
 	public void modifyPlayerAnimationFDMove(String imgURL, int xSize, int ySize){ 
-		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID
+		String order = SaladConstants.MODIFY_PLAYER_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID
 				+ SaladConstants.SEPARATOR + SaladConstants.FD_MOVE + SaladConstants.SEPARATOR + SaladConstants.FD_MOVE
 				+ SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize;
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -341,12 +341,22 @@ public class GAEController {
 	 * Animate an player's backward move animation
 	 */
 	public void modifyPlayerAnimationBKMove(String imgURL, int xSize, int ySize){ 
-		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
+		String order = SaladConstants.MODIFY_PLAYER_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
 				SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize ;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
 
+	/**
+	 * Modify the player's name without using playerID
+	 */
+	public void modifyPlayerName(String name){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ playerID + SaladConstants.SEPARATOR  + SaladConstants.NAME + SaladConstants.SEPARATOR + name;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	/**
 	 * Delete player without providing player id. The already specified playerID is used for the id.
 	 */
