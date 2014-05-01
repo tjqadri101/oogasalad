@@ -24,7 +24,7 @@ import engineManagers.TriggerEventManager;
 
 /**
  * @author Main Isaac (Shenghan) Chen
- * @contribution (for creation): Justin (Zihao) Zhang
+ * @contribution (for the two methods of creating player and actor): Justin (Zihao) Zhang
  * @contribution (for TriggerEventManager handling) Steve (Siyang) Wang
  */
 

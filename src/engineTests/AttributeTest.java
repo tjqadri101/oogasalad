@@ -33,6 +33,8 @@ public class AttributeTest {
 	public static final String ACTOR_ANIMATION = "ModifyActorAnimation,ID,1,JumpAnimation,Jump,actor_default.png,10,10";
 	public static final String SCENE_PLAYER_POSITION = "ModifyScene,ID,0,PlayerInitialPosition,0.0,0.0";
 	public static final String MODIFY_PLAYER_SHOOT = "ModifyPlayer,ID,1,SlowShoot,SlowShoot,actor_default.png,10,10,2,5.0,4";
+	public static final String EVENT_MANAGER = "ModifyTriggerManager,ID,0,EventEnemyShower,EventEnemyShower,3,actor_default.png";
+	
 	protected DataController myController;
 	protected GameEngine myEngine;
 	protected Game myGame;
@@ -74,83 +76,96 @@ public class AttributeTest {
     	assertEquals(att.get(13), MODIFY_GAME_NAME);
 	}
 	
-	@Test
-	public void testPlayer(){
-    	myController = new DataController();
-    	myEngine = myController.initGameEngine(true);
-    	myGame = myEngine.getGame();
-    	
-    	myController.receiveOrder(CREATE_LEVEL_1);
-    	myController.receiveOrder(CREATE_SCENE_1);
-    	myController.receiveOrder(SWITCH_SCENE_1);
-    	myController.receiveOrder(CREATE_PLAYER_ORDER);
-    	myController.receiveOrder(MODIFY_PLAYER_SHOOT);
-//    	myController.receiveOrder(ACTOR_ANIMATION);
-    	myController.receiveOrder(MODIFY_PERISHTOGETHER);
-    	myController.receiveOrder(BLOOD_COLLISION);
-    	
-    	List<String> att = myGame.getAttributes();
-    	assertEquals(att.get(0), DEFAULT_GRAVITY);
-    	assertEquals(att.get(1), CREATE_PLAYER_ORDER);
-    	assertEquals(att.get(2), MODIFY_PLAYER_SHOOT);
-    	assertEquals(att.get(3), PLAYER_SPEED);
-    	assertEquals(att.get(4), PLAYER_AIR);
-    	assertEquals(att.get(5), CREATE_LEVEL_1);
-	}
-	
-	@Test
-	public void testScoreManager(){
-    	myController = new DataController();
-    	myEngine = myController.initGameEngine(true);
-    	myGame = myEngine.getGame();
-    	myController.receiveOrder(SCORE_COLLISION);
-    	myController.receiveOrder(SCORE_TIME);
-    	
-    	List<String> att = myGame.getAttributes();
-    	assertEquals(att.get(0), DEFAULT_GRAVITY);
-    	assertEquals(att.get(1), LIVEMANAGER_RESTORE);
-    	assertEquals(att.get(2), SCORE_INITIAL);
-    	assertEquals(att.get(3), SCORE_TIME);
-    	assertEquals(att.get(4), SCORE_COLLISION);
-	}
-	
 //	@Test
-//	public void testTriggerManager(){
+//	public void testPlayer(){
+//    	myController = new DataController();
+//    	myEngine = myController.initGameEngine(true);
+//    	myGame = myEngine.getGame();
+//    	
+//    	myController.receiveOrder(CREATE_LEVEL_1);
+//    	myController.receiveOrder(CREATE_SCENE_1);
+//    	myController.receiveOrder(SWITCH_SCENE_1);
+//    	myController.receiveOrder(CREATE_PLAYER_ORDER);
+//    	myController.receiveOrder(MODIFY_PLAYER_SHOOT);
+////    	myController.receiveOrder(ACTOR_ANIMATION);
+//    	myController.receiveOrder(MODIFY_PERISHTOGETHER);
+//    	myController.receiveOrder(BLOOD_COLLISION);
+//    	
+//    	List<String> att = myGame.getAttributes();
+//    	assertEquals(att.get(0), DEFAULT_GRAVITY);
+//    	assertEquals(att.get(1), CREATE_PLAYER_ORDER);
+//    	assertEquals(att.get(2), MODIFY_PLAYER_SHOOT);
+//    	assertEquals(att.get(3), PLAYER_SPEED);
+//    	assertEquals(att.get(4), PLAYER_AIR);
+//    	assertEquals(att.get(5), CREATE_LEVEL_1);
+//	}
+//	
+//	@Test
+//	public void testScoreManager(){
 //    	myController = new DataController();
 //    	myEngine = myController.initGameEngine(true);
 //    	myGame = myEngine.getGame();
 //    	myController.receiveOrder(SCORE_COLLISION);
+//    	myController.receiveOrder(SCORE_TIME);
 //    	
-//    	
-//    	
+//    	List<String> att = myGame.getAttributes();
+//    	assertEquals(att.get(0), DEFAULT_GRAVITY);
+//    	assertEquals(att.get(1), LIVEMANAGER_RESTORE);
+//    	assertEquals(att.get(2), SCORE_INITIAL);
+//    	assertEquals(att.get(3), SCORE_TIME);
+//    	assertEquals(att.get(4), SCORE_COLLISION);
 //	}
-	
+//	
 	@Test
-	public void testAnimation(){
+	public void testTriggerManager(){
     	myController = new DataController();
     	myEngine = myController.initGameEngine(true);
     	myGame = myEngine.getGame();
-    	myController.receiveOrder(CREATE_ACTOR_ORDER);
-    	myController.receiveOrder(ACTOR_ANIMATION);
-    	
-        List<String> att = myGame.getAttributes();
     	myController.receiveOrder(CREATE_LEVEL_1);
     	myController.receiveOrder(CREATE_SCENE_1);
     	myController.receiveOrder(SWITCH_SCENE_1);
     	myController.receiveOrder(INITIAL_SCENE);
-    	myController.receiveOrder(CREATE_ACTOR_ORDER);
-    	myController.receiveOrder(ACTOR_ANIMATION);
+    	myController.receiveOrder(EVENT_MANAGER);
     	
+        List<String> att = myGame.getAttributes();
     	assertEquals(att.get(0), DEFAULT_GRAVITY);
     	assertEquals(att.get(1), CREATE_LEVEL_1);
     	assertEquals(att.get(2), INITIAL_SCENE);
     	assertEquals(att.get(3), CREATE_SCENE_1);
     	assertEquals(att.get(4), SWITCH_SCENE_1);
     	assertEquals(att.get(5), SCENE_PLAYER_POSITION);
-    	assertEquals(att.get(6), CREATE_ACTOR_ORDER);
-    	assertEquals(att.get(7), ACTOR_ANIMATION);
-    	
+
 	}
+	
+//	@Test
+//	public void testAnimation(){
+//    	myController = new DataController();
+//    	myEngine = myController.initGameEngine(true);
+//    	myGame = myEngine.getGame();
+//    	myController.receiveOrder(CREATE_ACTOR_ORDER);
+//    	myController.receiveOrder(ACTOR_ANIMATION);
+//    	
+//        List<String> att = myGame.getAttributes();
+//    	myController.receiveOrder(CREATE_LEVEL_1);
+//    	myController.receiveOrder(CREATE_SCENE_1);
+//    	myController.receiveOrder(SWITCH_SCENE_1);
+//    	myController.receiveOrder(INITIAL_SCENE);
+//    	myController.receiveOrder(CREATE_ACTOR_ORDER);
+//    	myController.receiveOrder(ACTOR_ANIMATION);
+//    	
+//    	assertEquals(att.get(0), DEFAULT_GRAVITY);
+//    	assertEquals(att.get(1), LIVEMANAGER_RESTORE);
+//    	assertEquals(att.get(2), SCORE_INITIAL);
+//    	assertEquals(att.get(3), "ModifyGame,SetName,Game");
+//    	assertEquals(att.get(4), CREATE_LEVEL_1);
+//    	assertEquals(att.get(4), INITIAL_SCENE);
+//    	assertEquals(att.get(5), CREATE_SCENE_1);
+//    	assertEquals(att.get(6), SWITCH_SCENE_1);
+//    	assertEquals(att.get(7), SCENE_PLAYER_POSITION);
+//    	assertEquals(att.get(8), CREATE_ACTOR_ORDER);
+//    	assertEquals(att.get(9), ACTOR_ANIMATION);
+//    	
+//	}
 	
 	
 }
