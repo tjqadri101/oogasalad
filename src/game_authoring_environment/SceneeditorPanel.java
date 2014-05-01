@@ -118,7 +118,6 @@ public class SceneeditorPanel extends Panel {
 						}
 					}
 					else if(result == 1){
-						System.out.println("player tile colision");
 						JComboBox hitterBox = new JComboBox(createPlayerList());
 						JComboBox hitteeBox = new JComboBox(createTileColIDList());
 						JComboBox[] texts = {hitterBox, hitteeBox};

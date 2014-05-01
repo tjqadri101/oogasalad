@@ -44,7 +44,6 @@ public class ActorEditorTable extends PanelTable{
 		tf.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf.getText());
 				gController.modifyActorName(tf.getText());
 			}			
 		});
@@ -60,7 +59,6 @@ public class ActorEditorTable extends PanelTable{
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					String str = arg0.getItem().toString();
-					System.out.println("new selected item:"+arg0.getItem().toString());
 					JTextField amplitude = new JTextField(10);
 					JTextField Speed = new JTextField(10);
 					switch(str){
@@ -127,7 +125,6 @@ public class ActorEditorTable extends PanelTable{
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					String str = arg0.getItem().toString();
-					System.out.println("new selected item:"+arg0.getItem().toString());
 					JTextField xSizeField = new JTextField(10);
 					JTextField ySizeField = new JTextField(10);
 					JTextField speedField = new JTextField(10);
@@ -242,7 +239,6 @@ public class ActorEditorTable extends PanelTable{
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					String str = arg0.getItem().toString();
-					System.out.println("new selected item:"+arg0.getItem().toString());
 					switch(str){
 					case "Immortal":
 						gController.modifyPlayerImmortal();
@@ -269,7 +265,6 @@ public class ActorEditorTable extends PanelTable{
 		tf1.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf1.getText());
 				String input = tf1.getText().toString();
 				String delim = ",";
 				String[] list = input.split(delim);
@@ -287,7 +282,6 @@ public class ActorEditorTable extends PanelTable{
 		tf2.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf2.getText());
 				gController.modifyActorColIDNoID(Integer.parseInt(tf2.getText()));
 			}
 
@@ -302,7 +296,6 @@ public class ActorEditorTable extends PanelTable{
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
-					System.out.println("now checked:"+true);
 					JTextField numberJumpsField = new JTextField(10);
 					JTextField magnitudeField = new JTextField(10);
 					JTextField[] texts_ = {magnitudeField, numberJumpsField};
@@ -319,7 +312,6 @@ public class ActorEditorTable extends PanelTable{
 					}
 				}
 				else{
-					System.out.println("now checked:"+false);
 					int id = gController.getActorID();
 					gController.modifyPlayerCanNotJump("canNotJump");
 				}

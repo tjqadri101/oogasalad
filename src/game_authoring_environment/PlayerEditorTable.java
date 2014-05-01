@@ -49,8 +49,6 @@ public class PlayerEditorTable extends PanelTable {
 
 	@Override
 	public void init() {
-		System.out.println("init");
-		System.out.println(playerExists);
 		//player name
 		final JTextField tf = new JTextField(playerName);
 		Object[] firstRow = {"Name", tf}; // each row should be in this format
@@ -58,7 +56,6 @@ public class PlayerEditorTable extends PanelTable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				playerName = tf.getText().toString(); 
-				System.out.println(tf.getText());
 				int id = gController.getActorID();
 
 			}			
@@ -69,7 +66,6 @@ public class PlayerEditorTable extends PanelTable {
 		final JComboBox shootTypesBox = new JComboBox(shootTypes);
 		Object[] thirdRow = {"Shooting", shootTypesBox};
 		shootTypesBox.setSelectedIndex(0);
-		System.out.println("init");
 		if(!playerExists){
 			shootTypesBox.addItemListener(new ItemListener() {
 				@Override
@@ -87,7 +83,6 @@ public class PlayerEditorTable extends PanelTable {
 				public void itemStateChanged(ItemEvent arg0) {
 					if(arg0.getStateChange() == ItemEvent.SELECTED){
 						String str = arg0.getItem().toString();
-						System.out.println("new selected item:"+arg0.getItem().toString());
 						JTextField xSizeField = new JTextField(10);
 						JTextField ySizeField = new JTextField(10);
 						JTextField speedField = new JTextField(10);
@@ -142,10 +137,8 @@ public class PlayerEditorTable extends PanelTable {
 				}
 			});	
 		}	
-		System.out.println("init");
 		myTableModel.addRow(thirdRow);
 		classMap.put(1,thirdRow[1]);
-		System.out.println("init");
 		
 		
 		//DEATH DROPDOWN:
@@ -164,13 +157,11 @@ public class PlayerEditorTable extends PanelTable {
 			});
 		}
 		else{
-			System.out.println("init");
 			dieTypesBox.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent arg0) {
 					if(arg0.getStateChange() == ItemEvent.SELECTED){
 						String str = arg0.getItem().toString();
-						System.out.println("new selected item:"+arg0.getItem().toString());
 						switch(str){
 						case "Immortal":
 							gController.modifyPlayerImmortal();
@@ -220,7 +211,6 @@ public class PlayerEditorTable extends PanelTable {
 		}
 		myTableModel.addRow(fourthRow);
 		classMap.put(2,fourthRow[1]);
-		System.out.println("init");
 		//JUMP CHOICES
 		final JCheckBox jb = new JCheckBox();
 		Object[] fifthRow = {"Jump",jb};
@@ -228,7 +218,6 @@ public class PlayerEditorTable extends PanelTable {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
-					System.out.println("now checked:"+true);
 					JTextField numberJumpsField = new JTextField(10);
 					JTextField magnitudeField = new JTextField(10);
 					JTextField[] texts_ = {magnitudeField, numberJumpsField};
@@ -245,7 +234,6 @@ public class PlayerEditorTable extends PanelTable {
 					}
 				}
 				else{
-					System.out.println("now checked:"+false);
 					int id = gController.getActorID();
 					gController.modifyPlayerCanNotJump("CanNotJump");
 				}
@@ -260,7 +248,6 @@ public class PlayerEditorTable extends PanelTable {
 		tf1.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf1.getText());
 				String input = tf1.getText().toString();
 				String delim = ",";
 				String[] list = input.split(delim);
@@ -279,7 +266,6 @@ public class PlayerEditorTable extends PanelTable {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
-					System.out.println("now checked:"+true);
 					JTextField xSpeed = new JTextField(10);
 					JTextField ySpeed = new JTextField(10);
 					JTextField[] texts_ = {xSpeed, ySpeed};
@@ -296,7 +282,6 @@ public class PlayerEditorTable extends PanelTable {
 					}
 				}
 				else{
-					System.out.println("now checked:"+false);
 					int id = gController.getActorID();
 					gController.modifyPlayerSpeed(0,0);
 				}
