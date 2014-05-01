@@ -1120,7 +1120,7 @@ public class GAEController {
 		return k;
 	}
 
-	private void setColIDStayOnEveryTileID(int actorColID){f
+	private void setColIDStayOnEveryTileID(int actorColID){
 		System.out.println(myDataController.getGame().getOccupiedTileColids());
 		for(char tileID :myDataController.getGame().getOccupiedTileColids()){
 			this.modifyCollisBehavStayOnTile(actorColID, tileID, "All");

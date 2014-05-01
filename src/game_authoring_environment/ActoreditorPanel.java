@@ -170,7 +170,7 @@ public class ActoreditorPanel extends Panel {
 
 	private void chooseActor(String displayText) {
 		try{
-			JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+			JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 			UIManager.put("FileChooser.openDialogTitleText", displayText);
 			SwingUtilities.updateComponentTreeUI(chooser);
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
