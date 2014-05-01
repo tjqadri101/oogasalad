@@ -26,7 +26,6 @@ public class SpreadShoot extends Shootable{
 	 */
 	@Override
 	public void shoot(List<Object> objects) {
-		if(myObject instanceof NonPlayer) return;
 		GameEngine engine = (GameEngine) myObject.eng;
 		
 		String imageName = (String) objects.get(0);
