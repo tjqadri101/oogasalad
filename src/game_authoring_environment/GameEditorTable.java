@@ -50,7 +50,7 @@ public class GameEditorTable extends PanelTable {
 		
 		
 		JComboBox gameStateBox = new JComboBox(gameStates);
-		Object[] firstRow = {"Transition Image", gameStateBox};
+		Object[] firstRow = {"Transition Background", gameStateBox};
 		gameStateBox.setSelectedIndex(0);
 		gameStateBox.addItemListener(new ItemListener() {
 			@Override
@@ -92,84 +92,84 @@ public class GameEditorTable extends PanelTable {
 
 
 		final JTextField tf7 = new JTextField();
-		Object[] second_Row = {"Initial Lives", tf7}; // each row should be in this format
+		Object[] third_Row = {"Initial Lives", tf7}; // each row should be in this format
 		tf7.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gController.modifyLifeManagerInitLives(Integer.parseInt(tf7.getText()), 0);
 			}			
 		});
-		myTableModel.addRow(second_Row);
-		classMap.put(3,second_Row[1]);
+		myTableModel.addRow(third_Row);
+		classMap.put(3,third_Row[1]);
 		
 		//GameOver, LifeLost, LevelDone,
 		final JTextField tf1 = new JTextField();
-		Object[] thirdRow = {"Game Over Frame Length", tf1}; // each row should be in this format
+		Object[] fourthRow = {"Game Over Frame Length", tf1}; // each row should be in this format
 		tf1.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gController.modifyTransitionStateFrame("GameOver", Integer.parseInt(tf1.getText().toString()));
 			}			
 		});
-		myTableModel.addRow(thirdRow);
-		classMap.put(6,thirdRow[1]);
+		myTableModel.addRow(fourthRow);
+		classMap.put(4,fourthRow[1]);
 
 		final JTextField tf2 = new JTextField();
-		Object[] fourthRow = {"Life Lost Frame Length", tf2}; // each row should be in this format
+		Object[] fifthRow = {"Life Lost Frame Length", tf2}; // each row should be in this format
 		tf2.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gController.modifyTransitionStateFrame("LifeLost", Integer.parseInt(tf2.getText().toString()));
 			}			
 		});
-		myTableModel.addRow(fourthRow);
-		classMap.put(4,fourthRow[1]);
+		myTableModel.addRow(fifthRow);
+		classMap.put(5,fifthRow[1]);
 
 		final JTextField tf3 = new JTextField();
-		Object[] fifthRow = {"Level Done Frame Length", tf3}; // each row should be in this format
+		Object[] sixthRow = {"Level Done Frame Length", tf3}; // each row should be in this format
 		tf3.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gController.modifyTransitionStateFrame("LevelDone", Integer.parseInt(tf3.getText().toString()));
 			}			
 		});
-		myTableModel.addRow(fifthRow);
-		classMap.put(5,fifthRow[1]);
+		myTableModel.addRow(sixthRow);
+		classMap.put(6,sixthRow[1]);
 
 		//change message box
 		JComboBox gameStateMessages = new JComboBox(gameStates);
-		Object[] sixthrow = {"Transition Message", gameStateMessages};
+		Object[] seventhrow = {"Transition Message", gameStateMessages};
 		gameStateMessages.setSelectedIndex(0);
 		gameStateMessages.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					String str = arg0.getItem().toString();
-					JTextField Message = new JTextField(10);
-					JTextField xPosition = new JTextField(10);
-					JTextField yPosition = new JTextField(10);
-					JTextField[] texts_ = {Message, xPosition, yPosition };
-					String[] strings_ = {"Message:", "X Position:", "Y Position:"};
-					JPanel myPanel = ViewFactory.createOptionInputPanel(texts_, strings_);
-					int result = JOptionPane.showConfirmDialog(null, myPanel, 
+					JTextField message = new JTextField(10);
+					JTextField xPosition1 = new JTextField(10);
+					JTextField yPosition1 = new JTextField(10);
+					JTextField[] texts_1 = {message, xPosition1, yPosition1 };
+					String[] strings_1 = {"Message:", "X Position:", "Y Position:"};
+					JPanel myPanel = ViewFactory.createOptionInputPanel(texts_1, strings_1);
+					int result1 = JOptionPane.showConfirmDialog(null, myPanel, 
 							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
-					if (result == JOptionPane.OK_OPTION) {
+					if (result1 == JOptionPane.OK_OPTION) {
 
-						String message = Message.getText().toString();
-						int xpos = Integer.parseInt(xPosition.getText().toString());
-						int ypos = Integer.parseInt(xPosition.getText().toString());
-						gController.modifyTransitionStateMessage(arg0.getItem().toString(), message, xpos, ypos);
+						String message1 = message.getText().toString();
+						int xpos = Integer.parseInt(xPosition1.getText().toString());
+						int ypos = Integer.parseInt(yPosition1.getText().toString());
+						gController.modifyTransitionStateMessage(arg0.getItem().toString(), message1, xpos, ypos);
 
 					}			
 				}
 
 			}
 		});		
-		myTableModel.addRow(sixthrow);
-		classMap.put(8,sixthrow[1]);
+		myTableModel.addRow(seventhrow);
+		classMap.put(7,seventhrow[1]);
 
 		JComboBox gameStateDisplayImage = new JComboBox(gameStates);
-		Object[] seventhRow = {"Transition Image", gameStateDisplayImage};
+		Object[] eighthRow = {"Transition Image", gameStateDisplayImage};
 		gameStateDisplayImage.setSelectedIndex(0);
 		gameStateDisplayImage.addItemListener(new ItemListener() {
 			@Override
@@ -196,7 +196,9 @@ public class GameEditorTable extends PanelTable {
 							String path = chooser.getSelectedFile().getPath();
 							String name = chooser.getSelectedFile().getName();
 							gController.uploadImage(100, 100, path);
-							gController.modifyTransitionStateImage(arg0.getItem().toString(), name, Integer.parseInt(xPosition.getText().toString()), Integer.parseInt(xPosition.getText().toString()));
+							gController.modifyTransitionStateImage(arg0.getItem().toString(),
+									name, Integer.parseInt(xPosition.getText().toString()), 
+									Integer.parseInt(yPosition.getText().toString()));
 
 						}			
 
@@ -205,11 +207,11 @@ public class GameEditorTable extends PanelTable {
 			}
 				
 			});	
-		myTableModel.addRow(seventhRow);
-		classMap.put(7,seventhRow[1]);
+		myTableModel.addRow(eighthRow);
+		classMap.put(8,eighthRow[1]);
 		
 		final JTextField tf4 = new JTextField();
-		Object[] eighthRow = {"Gravity Magnitude", tf4}; // each row should be in this format
+		Object[] ninthRow = {"Gravity Magnitude", tf4}; // each row should be in this format
 		tf4.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -217,11 +219,11 @@ public class GameEditorTable extends PanelTable {
 			}			
 		});
 		myTableModel.addRow(eighthRow);
-		classMap.put(9,eighthRow[1]);
+		classMap.put(9,ninthRow[1]);
 		
 		
 		JCheckBox cb5= new JCheckBox();
-		Object[] ninthRow = {"Restore Life At End of Level", tf4}; // each row should be in this format
+		Object[] tenthRow = {"Restore Life At End of Level", tf4}; // each row should be in this format
 		cb5.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
@@ -233,19 +235,19 @@ public class GameEditorTable extends PanelTable {
 				}
 			}			
 		});
-		myTableModel.addRow(ninthRow);
-		classMap.put(10,ninthRow[1]);
+		myTableModel.addRow(tenthRow);
+		classMap.put(10,tenthRow[1]);
 		
 		final JTextField tf5 = new JTextField();
-		Object[] tenthRow = {"Set Score Increase by Time", tf5}; // each row should be in this format
+		Object[] eleventhRow = {"Set Score Increase by Time", tf5}; // each row should be in this format
 		tf5.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				gController.modifyScoreManagerScoreCondition(Integer.parseInt(tf5.getText().toString()));
 			}			
 		});
-		myTableModel.addRow(tenthRow);
-		classMap.put(11,tenthRow[1]);
+		myTableModel.addRow(eleventhRow);
+		classMap.put(11,eleventhRow[1]);
 		
 		}
 	

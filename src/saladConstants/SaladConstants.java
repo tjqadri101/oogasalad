@@ -262,6 +262,7 @@ public final class SaladConstants {
 	public static final String JUMP_ANIMATION = "JumpAnimation";
 	public static final String EVENT_CHANGE_BLOOD = "EventChangeBlood";
 	public static final String EVENT_CHANGE_LIVE = "EventChangeLive";
+	public static final String EVENT_SWITCH_SCENE = "EventSwitchScene";
 
 	
 	
@@ -269,6 +270,8 @@ public final class SaladConstants {
 	public static final String SCORE_MANAGER_PATH = "engineManagers.ScoreManager";
 	public static final String LIVE_MANAGER_PATH = "engineManagers.LiveManager";
 	public static final String EVENT_MANAGER_PATH = "engineManagers.TriggerEventManager";
+
+	
 
 	
 

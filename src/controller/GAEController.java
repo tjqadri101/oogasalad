@@ -979,6 +979,15 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	
+	public void modifyTriggerEventManagerSwitchScene(int eventTriggerPairID, int sceneID, double xPos, double yPos){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_SWITCH_SCENE + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_SWITCH_SCENE + SaladConstants.SEPARATOR + sceneID + SaladConstants.SEPARATOR + 
+				xPos + SaladConstants.SEPARATOR + yPos;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	public void modifyLifeManagerInitLives(int lives, int playerID){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + 
 				SaladConstants.SEPARATOR + lives + SaladConstants.SEPARATOR + playerID; 

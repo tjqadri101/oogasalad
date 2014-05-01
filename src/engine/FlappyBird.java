@@ -45,8 +45,8 @@ public class FlappyBird {
 		game.getGravity().setMagnitude(0);
 		
 		game.getTransitionState("Title").setBackground("floorImage.jpg");
-		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
-		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
+		game.getTransitionState("Title").addImage("splash.gif", 20, 30);
+		game.getTransitionState("Title").addInstruction("NEW GAME! LET'S GO", 400, 300);
 		
 		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
 		engine.setObjectImage(0, "BKMove", "poke-mon/103.gif", 100, 100);

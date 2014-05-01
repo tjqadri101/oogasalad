@@ -59,11 +59,13 @@ public class GameEngine extends StdGame {
 	protected int myTileCounter = 0;
 	protected String myTitleBG;
 	
-	protected String gameStateEdit;
+	protected String myGameStateString;
+	protected int myGameStateFrame = 0;
 	protected boolean isEditingMode;
 	protected boolean isLoading;
 	protected boolean isPlaying;
 	protected boolean isTileEditing;
+	protected boolean isPaused;
 	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
 //	protected Music musicManager;
@@ -103,9 +105,9 @@ public class GameEngine extends StdGame {
 	
 	public void loadingBegin() {
 		if (isEditingMode) {return;}
+		setEmptyScene();
 		isLoading = true;
 		isPlaying = false;
-		setEmptyScene();
 	}
 	
 	public void loadingDone() {
@@ -158,7 +160,7 @@ public class GameEngine extends StdGame {
 	public void doFrameEdit() {
 		if (myGame==null || myCurrentScene == null) {return;}
 		boolean viewOffset = false;
-		if (drag()) {myViewOffsetPlayer = false;}
+		if (drag() || !isPaused) {myViewOffsetPlayer = false;}
 		else {
 //			System.out.println("doFrameEdit");
 			moveObjects();
@@ -196,7 +198,10 @@ public class GameEngine extends StdGame {
 	public void paintFrameEdit() {
 		displayPlayerInfo();
 		disPlayDragTile();
-		if (gameStateEdit != null) {drawString(gameStateEdit,viewWidth()/2,viewHeight()/3,0);}
+		if (myGameStateString != null && myGameStateFrame < FRAMES_PER_SECOND) {
+			drawString(myGameStateString,viewWidth()/2,viewHeight()/3,0);
+			myGameStateFrame++;
+		}
 	}
 	
 	
@@ -374,13 +379,12 @@ public class GameEngine extends StdGame {
 				 myViewOffsetRate = 35; //make it constant later
 			 }
 			 myViewOffsetPlayer = true;
-			 int xofs = myPlayer.getXofs();
-			 int yofs = myPlayer.getYofs();
-//			 System.out.println(xpos+" "+ypos);
+			 int xofs = JGPOINT_X/2 - myPlayer.getXofs();
+			 int yofs = JGPOINT_Y/2 - myPlayer.getYofs();
 			 int desired_viewXOfs = (int) myPlayer.x + myPlayer.getXSize() / 2 - viewWidth() / 2;
 			 int desired_viewYOfs = (int) myPlayer.y + myPlayer.getYSize() / 2 - viewHeight() / 2;
-			 setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate + viewXOfs(),
-					 (desired_viewYOfs - viewYOfs()) / myViewOffsetRate + viewYOfs(), false);
+			 setViewOffset((desired_viewXOfs - viewXOfs() + xofs) / myViewOffsetRate + viewXOfs(),
+					 (desired_viewYOfs - viewYOfs() + yofs) / myViewOffsetRate + viewYOfs(), false);
 		 }
 	 }
 
@@ -802,19 +806,33 @@ public class GameEngine extends StdGame {
 		 isTileEditing = tile_editing;
 	 }
 	 
+	 public void setPaused(boolean paused) {
+		 if (isEditingMode) {return;}
+		 isPaused = paused;
+	 }
+	 
 	 public void levelDone(){
 		 super.levelDone();
-		 if (isEditingMode) {gameStateEdit = "Level Done !";}
+		 if (isEditingMode) {
+			 myGameStateString = "Level Done !";
+			 myGameStateFrame = 0;
+		 }
 	 }
 	 
 	 public void lifeLost(){
 		 super.lifeLost();
-		 if (isEditingMode) {gameStateEdit = "Life Lost !";}
+		 if (isEditingMode) {
+			 myGameStateString = "Life Lost !";
+			 myGameStateFrame = 0;
+		 }
 	 }
 	 
 	 public void gameOver(){
 		 super.gameOver();
-		 if (isEditingMode) {gameStateEdit = "Game Over !";}
+		 if (isEditingMode) {
+			 myGameStateString = "Game Over !";
+			 myGameStateFrame = 0;	 
+		 }
 	 }
 	 
 //	 public void createActor(int old_unique_id, int new_unique_id) {
