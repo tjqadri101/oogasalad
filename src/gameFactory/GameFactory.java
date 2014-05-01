@@ -82,16 +82,14 @@ public class GameFactory {
     public GameObject oneStepReflect (Object refObj, String GameRefInfo, String GameReflectPara) 
             throws FactoryException {
 
-        String methodToInvoke = null;
+        String methodToInvoke = myMethod.getString(instruction);
         Object[] objArgArray;
         
         if (!(GameReflectPara.equals(NO_PARAMETER))) {
-            methodToInvoke= myMethod.getString(instruction);
             objArgArray = idSelector(GameReflectPara); 
         }
         else {
             objArgArray = objArgList.toArray(new Object[objArgList.size()]);
-            methodToInvoke = myMethod.getString(typeMethodList.get(0));
         }
         return (GameObject) Reflection.callMethod(refObj, methodToInvoke, objArgArray);
     }
