@@ -148,8 +148,8 @@ public class EngineTest {
 		
 //		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 300);
 //		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-//		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByRemove", "TriggerByRemove", BOSS_ID);
-//		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", );
+		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByRemove", "TriggerByRemove", BOSS_ID);
+		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", );
 //		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;
