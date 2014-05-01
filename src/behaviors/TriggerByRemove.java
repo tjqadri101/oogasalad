@@ -23,6 +23,7 @@ public class TriggerByRemove extends Triggerable{
     public boolean checkTrigger(List<Object> params) {
     	int id = (Integer) params.get(0);
     	NonPlayer object = myEngine.getGame().getNonPlayer(myEngine.getCurrentLevelID(), myEngine.getCurrentSceneID(), id);
+    	if (object==null) {return false;}
     	List<Player> players = myEngine.getGame().getAllPlayers();
     	boolean playerAlive = false;
     	for(Player p: players){

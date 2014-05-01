@@ -71,7 +71,7 @@ public class TriggerEventManager extends StatisticsManager{
     private void checkCollisionTrigger (String collisionBehavior,
                                         GameObject victim,
                                         Object obj) {
-        System.out.println("TEM: checkCollisionTrigger: called here");
+//        System.out.println("TEM: checkCollisionTrigger: called here");
         for (Map.Entry<Integer, List<Object>> entry: myTriggerMap.entrySet()){
             List<Object> collisionPara = entry.getValue();
             try{
