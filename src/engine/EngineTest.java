@@ -25,7 +25,7 @@ public class EngineTest {
 		EngineTest et = new EngineTest();
 		JFrame mainFrame = new JFrame("EngineTest");
 		JPanel panel = new JPanel();
-		panel.add(et.game2());
+		panel.add(et.testEngine());
 		mainFrame.add(panel, BorderLayout.CENTER);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.pack();
