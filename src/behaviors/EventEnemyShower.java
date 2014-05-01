@@ -2,6 +2,7 @@ package behaviors;
 
 import java.util.List;
 import java.util.Random;
+import saladConstants.SaladConstants;
 import engine.GameEngine;
 /**
  * Showers the enemy of amount specified by user when trigger is triggered 
@@ -38,7 +39,7 @@ public class EventEnemyShower extends Eventable{
         while(true){
             int size = rg.nextInt(10)+30;
 //            myEngine.createActor(rg.nextInt(50), gfx, size, size, rg.nextInt(800), rg.nextInt(600), ENEMY_SHOWER, 1, rg.nextInt(5));
-            myEngine.createActor(rg.nextInt(50), gfx, size, size, rg.nextInt(800), rg.nextInt(600), ENEMY_SHOWER, 1, 1);
+            myEngine.createActor(SaladConstants.NULL_UNIQUE_ID, gfx, size, size, rg.nextInt(800), rg.nextInt(600), ENEMY_SHOWER, 1, 1);
             enemyCounter++;
             if(enemyCounter == maxEnemy){
                 break;
