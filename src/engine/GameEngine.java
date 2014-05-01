@@ -91,8 +91,7 @@ public class GameEngine extends StdGame {
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
-		musicManager = new Music("src/engine/Sounds/PlayJoyful.mp3"); // newly Added for testing music
-//		musicManager = new Music("/Users/siyangwang/Desktop/CreepyMusic.wav"); // newly Added for testing music
+//		musicManager = new Music("src/engine/Sounds/PlayCreepy.wav"); // newly Added for testing music
 		musicManager.start();
 	}
 	
@@ -248,6 +247,7 @@ public class GameEngine extends StdGame {
 	}
 
 	public void startGameOver() {
+//	    musicManager = new Music("src/engine/Sounds/PlayJoyful.wav"); // newly Added for testing music
 		setEmptyScene();
 		setTransition("GameOver");
 	}
@@ -742,6 +742,7 @@ public class GameEngine extends StdGame {
 
 	 public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			 double xpos, double ypos, String name, int colid, int lives) {
+
 		 loadImage(imgfile);
 		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				 name, colid, lives, myGame.getCollisionManager(),

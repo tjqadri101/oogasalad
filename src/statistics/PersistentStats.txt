@@ -4,3 +4,7 @@ Score,Game,null,154
 Nick Live,Game,null,6
 ShootObjects Blood,Game,null,-1
 Enemies Killed,Game,null,1
+Score,Game,,10594
+Nick Live,Game,,3
+ShootObjects Blood,Game,,-33
+Enemies Killed,Game,,1656
