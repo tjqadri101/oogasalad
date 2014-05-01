@@ -65,7 +65,7 @@ public class SceneeditorPanel extends Panel {
 		return jb;
 	}
 
-/*	       private JButton makeEnemyShower(){
+	       private JButton makeEnemyShower(){
 	                JButton b = ViewFactory.createJButton("Create Enemy Shower");
 	                b.addActionListener(new ActionListener(){
 	                        @Override
@@ -179,8 +179,10 @@ public class SceneeditorPanel extends Panel {
 
 	                        });
 	                return b;
-	                }*/
-	
+	                }
+	       
+	/* This part commented out 
+	 * 
 	private JButton makeLevelDone(){
 		JButton b = ViewFactory.createJButton("Create Level Done");
 		b.addActionListener(new ActionListener(){
@@ -291,7 +293,7 @@ public class SceneeditorPanel extends Panel {
 
 			});
 		return b;
-		}
+		}*/
 
 		private JPanel makebuttonpanel(){
 			JPanel k = new JPanel();

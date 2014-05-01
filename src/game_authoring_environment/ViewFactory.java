@@ -70,10 +70,7 @@ public class ViewFactory {
 			myPanel.add(new JLabel(titles[i]));
 			myPanel.add(textAreas[i]);
 			myPanel.add(Box.createHorizontalStrut(15));
-			
 		}
-		
 		return myPanel;
 	}
-	
 }
