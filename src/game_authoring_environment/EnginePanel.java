@@ -35,7 +35,7 @@ public class EnginePanel extends JPanel{
 				int selectedID = (int)(long)arg0.getNewValue();				
 				if(selectedID != -1){
 					gController.getRightPanel().updateActorPositionSpinners();
-					//gController.getRightPanel().updatePlayerPositionSpinners();
+					gController.getRightPanel().updatePlayerPositionSpinners();
 					
 				}								
 			}

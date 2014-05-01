@@ -1076,12 +1076,12 @@ public class GAEController {
 
 	/**Called to get the url image into our engine package*/
 	public void uploadImage(int xSize,int ySize, String url){
-		try {
-			if (!DEBUG) myDataController.uploadImage(xSize, ySize, url);
-			return;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (!DEBUG) myDataController.uploadImage(xSize, ySize, url);
+//			return;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public int getActorCollisionID(){
