@@ -11,7 +11,7 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
-	public static final int LEVELS = 80;
+	public static final int LEVELS = 8;
 	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
@@ -45,7 +45,7 @@ public class EngineTest {
 	}
 	
 	public void testEngine(GameEngine engine){
-		
+		engine.loadingBegin();
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
@@ -87,8 +87,8 @@ public class EngineTest {
 		game.getGravity().setMagnitude(0.1);
 		
 		game.getTransitionState("Title").setBackground("floorImage.jpg");
-		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
-		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
+		game.getTransitionState("Title").addImage("splash.gif", 20, 30);
+		game.getTransitionState("Title").addInstruction("NEW GAME! LET'S GO", 400, 300);
 		
 		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 20);
 //		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
@@ -107,7 +107,7 @@ public class EngineTest {
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
 		
-		player.setViewOffset(400, 300);
+		player.setViewOffset(600, 400);
 		
 //		engine.modifyPlayerImage(0, "poke-mon/025.gif", 100, 100);
 		
