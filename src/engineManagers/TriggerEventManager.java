@@ -37,6 +37,10 @@ public class TriggerEventManager extends StatisticsManager{
         myEventMap = new HashMap<Integer, List<Object>>();
         myAttributes = new ArrayList<>();
     }
+    
+    public void initTEM (GameEngine engine) {
+        myEngine = engine;
+    }
 
     /**
      * Called by Collision when the trigger is collision
@@ -85,9 +89,8 @@ public class TriggerEventManager extends StatisticsManager{
     /** 
      * Called by engine in the doFrame
      */
-    public void checkTrigger (GameEngine engine) {
-        myEngine = engine; 
-
+    public void checkTrigger () {
+    	
         for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
             System.out.println("checkTrigger in TEM called: ");
             int etPairID = entry.getKey();
