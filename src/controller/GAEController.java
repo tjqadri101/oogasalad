@@ -939,7 +939,7 @@ public class GAEController {
 	public void modifyTriggerEventManagerCollision(int eventTriggerPairID, int victimID, int hitterID){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR  + SaladConstants.ID  + SaladConstants.SEPARATOR +
 				eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_COLLISION + 
-				SaladConstants.SEPARATOR + SaladConstants.COLLISION + SaladConstants.SEPARATOR + 
+				SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_COLLISION+ SaladConstants.SEPARATOR + 
 				victimID+ SaladConstants.SEPARATOR + hitterID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -950,7 +950,7 @@ public class GAEController {
 			int xSize, int ySize){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
 				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_TILE_COLLISION + SaladConstants.SEPARATOR 
-				+ SaladConstants.TILE_COLLISION + SaladConstants.SEPARATOR + playerOrActorID + SaladConstants.SEPARATOR + 
+				+  SaladConstants.TRIGGER_BY_TILE_COLLISION  + SaladConstants.SEPARATOR + playerOrActorID + SaladConstants.SEPARATOR + 
 				xPos  + SaladConstants.SEPARATOR + yPos +  SaladConstants.SEPARATOR + xSize +  SaladConstants.SEPARATOR + ySize;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
