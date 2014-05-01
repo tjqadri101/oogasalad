@@ -352,7 +352,7 @@ public class GAEController {
 	 */
 	public void modifyPlayerName(String name){
 		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ SaladConstants.NAME + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR  + name;
+				+ playerID + SaladConstants.SEPARATOR  + SaladConstants.NAME + SaladConstants.SEPARATOR + name;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
