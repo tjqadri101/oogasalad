@@ -40,7 +40,6 @@ public class SoundManager extends Music {
         mySoundMap.put(OHYEAH, SRC_ENGINE_SOUNDS_CLIP_OHYEAH_WAV);
         mySoundMap.put(GAMEOVER, SRC_ENGINE_SOUNDS_GAME_OVER_WAV);
         mySoundMap.put(SUCCEED, SRC_ENGINE_SOUNDS_CLIP_SUCCEED_WAV);
-        chooseInitSound();
     }
     
     /**
@@ -48,6 +47,7 @@ public class SoundManager extends Music {
      */
     public SoundManager(String filename) {
             super(filename);
+//            chooseInitSound();
     }
 
     /**
