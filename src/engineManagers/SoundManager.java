@@ -1,12 +1,10 @@
 package engineManagers;
 
-<<<<<<< HEAD
-=======
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
->>>>>>> 5cf7d608aa111851f70991be56d28e9f0b53b3b1
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
