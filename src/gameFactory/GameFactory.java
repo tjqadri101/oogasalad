@@ -59,7 +59,7 @@ public class GameFactory {
 
         objArgList = (List<Object>) p.parseParameter(order);
         typeMethodList =  (List<String>) p.parseType(order);
-        System.out.println("ProcessOrder: typeMethodList is :" + typeMethodList);
+//        System.out.println("ProcessOrder: typeMethodList is :" + typeMethodList);
         instruction = p.getOrderKey(order);
 
         //      TODO: Simplify code below:       
@@ -106,16 +106,16 @@ public class GameFactory {
         Object obj = null;
         String methodToInvoke = null;
         if (!GameReflectPara.equals(NO_PARAMETER)){
-            System.out.println("twoStepReflect: with para-ref");
+//            System.out.println("twoStepReflect: with para-ref");
             methodToInvoke = myMethod.getString(typeMethodList.get(1));
             obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(GameReflectPara));
         }
         else{
-            System.out.println("twoStepReflect: no para-ref");
+//            System.out.println("twoStepReflect: no para-ref");
             String tempMethod = typeMethodList.get(0);
             if(!tempMethod.equals("Colid")&&!tempMethod.equals("ID")) { methodToInvoke = myMethod.getString(tempMethod);}
             else{methodToInvoke = myMethod.getString(typeMethodList.get(1));}
-            System.out.println("methodToInvoke is " + methodToInvoke);
+//            System.out.println("methodToInvoke is " + methodToInvoke);
             obj = Reflection.callMethod(refObj, GameRefMethod);
         }
         Object[] argumentArray = objArgList.toArray(new Object[objArgList.size()]);
