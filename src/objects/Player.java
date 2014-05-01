@@ -130,6 +130,8 @@ public class Player extends GameObject {
 		}
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
 				SaladConstants.CAN_MOVE_IN_AIR, false, myCanMoveInAir));
+		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
+				SaladConstants.VIEW_OFFSET, false, myXofs, myYofs));
 		return answer;
 	}
 	

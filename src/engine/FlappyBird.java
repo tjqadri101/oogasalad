@@ -18,9 +18,8 @@ public class FlappyBird {
 	public static final char TILE_COLID = '3';
 	
 	
-	public GameEngine flappyBird(){
+	public void flappyBird(GameEngine engine){
 		
-		GameEngine engine = new GameEngine(false);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
@@ -88,6 +87,5 @@ public class FlappyBird {
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
 		engine.loadingDone();
-		return engine;
 	}
 }

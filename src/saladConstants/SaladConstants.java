@@ -51,6 +51,7 @@ public final class SaladConstants {
 	public static final String MODIFY_ACTOR_ANIMATION = "ModifyActorAnimation";
 	public static final String MODIFY_PLAYER_ANIMATION = "ModifyPlayerAnimation";
 	
+	public static final String VIEW_OFFSET = "ViewOffset";
 	
 	public static final String TEST_XMLFILE_URL = "test.xml";
 	
