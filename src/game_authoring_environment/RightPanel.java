@@ -69,11 +69,35 @@ public class RightPanel extends JSplitPane {
 		JPanel spinnerPanel = new JPanel();
 		actorXSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_X", "curActorXPos",POSIT_STEP);
 		actorYSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_Y", "curActorYPos", POSIT_STEP);
+		spinnerPanel.add(makeFreezeButton());
+		spinnerPanel.add(makeUnFreezeButton());
 		return spinnerPanel;
 	}
 	
 	
 	 
+
+	private JButton makeFreezeButton() {
+		JButton freezeButton = new JButton("Freeze");
+		freezeButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				myGAEController.getEngine().setPaused(true);
+				}
+			});	
+		return freezeButton;
+	}
+	
+	private JButton makeUnFreezeButton() {
+		JButton freezeButton = new JButton("UnFreeze");
+		freezeButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed (ActionEvent e){
+				myGAEController.getEngine().setPaused(false);
+				}
+			});	
+		return freezeButton;
+	}
 
 	protected JSpinner addLabeledPositionSpinner(Container c, String label, String field,
 												double stepSize){
