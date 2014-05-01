@@ -65,8 +65,128 @@ public class SceneeditorPanel extends Panel {
 		return jb;
 	}
 
-	private JButton makeEnemyShower(){
-		JButton b = ViewFactory.createJButton("Create Enemy Shower");
+	       private JButton makeEnemyShower(){
+	                JButton b = ViewFactory.createJButton("Create Enemy Shower");
+	                b.addActionListener(new ActionListener(){
+	                        @Override
+	                        public void actionPerformed (ActionEvent e){
+	                                JTextField maxEnemies = new JTextField(10);
+	                                JTextField ImageName = new JTextField(10);
+	                                JComponent[] texts2 = {maxEnemies, ImageName};
+	                                String[] strings2 = {"maxEnemies", "ImageName"};
+	                                JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+	                                int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+	                                                "Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+	                                if (result2 == JOptionPane.OK_OPTION) {
+	                                        Object[] options1 = {"Collision",
+	                                                        "Tile Collision", "Time", "Cancel"};
+
+	                                        int result = JOptionPane.showOptionDialog(null,"Trigger Event By...",null,
+	                                                        JOptionPane.YES_NO_CANCEL_OPTION,
+	                                                        JOptionPane.PLAIN_MESSAGE,
+	                                                        null,
+	                                                        options1,
+	                                                        null);          
+	                                        if(result == 0){
+	                                                JComboBox hitterBox = new JComboBox(createPlayerList());
+	                                                JComboBox hitteeBox = new JComboBox(createActorCollisionList());
+	                                                JComboBox[] texts = {hitterBox, hitteeBox};
+	                                                String[] strings = {"ID of Hitter:", "ID being Hit:"};
+	                                                JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+	                                                int result3 = JOptionPane.showConfirmDialog(null, myPanel, 
+	                                                                "Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+	                                                if (result3 == JOptionPane.OK_OPTION) {
+	                                                        Object[] k = {hitterBox.getSelectedItem().toString(), hitteeBox.getSelectedItem().toString()};
+
+	                                                        JComboBox collisionLocationBox = new JComboBox(collisionLocation);
+	                                                        JComboBox[] texts_ = {collisionLocationBox};
+	                                                        String[] strings_ = {"Where Can Collision Take Place"};
+	                                                        JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
+	                                                        int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+	                                                                        "Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+	                                                        if (result_ == JOptionPane.OK_OPTION) {
+	                                                                int k2 = gController.getEventTriggerPair();
+	                                                                int hitter = 0;
+	                                                                int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
+	                                                                String location = collisionLocationBox.getSelectedItem().toString();
+
+	                                                                gController.modifyTriggerEventManagerEnemyShower(k2, Integer.parseInt(maxEnemies.getText()), ImageName.getText().toString());
+
+	                                                        }
+	                                                }
+	                                        }
+	                                        else if(result == 1){
+	                                                JComboBox hitterBox = new JComboBox(createPlayerList());
+	                                                JComboBox hitteeBox = new JComboBox(createTileColIDList());
+	                                                JComboBox[] texts = {hitterBox, hitteeBox};
+	                                                String[] strings = {"ID of Hitter:", "ID being Hit:"};
+	                                                JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+	                                                int result3 = JOptionPane.showConfirmDialog(null, myPanel, 
+	                                                                "Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+	                                                if (result3 == JOptionPane.OK_OPTION) {
+	                                                        Object[] k = {hitterBox.getSelectedItem().toString(), hitteeBox.getSelectedItem().toString()};
+
+	                                                        JComboBox collisionLocationBox = new JComboBox(collisionLocation);
+	                                                        JComboBox[] texts_ = {collisionLocationBox};
+	                                                        String[] strings_ = {"Where Can Collision Take Place"};
+	                                                        JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
+	                                                        int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+	                                                                        "Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+	                                                        if (result_ == JOptionPane.OK_OPTION) {
+	                                                                JTextField xpos = new JTextField(10);
+	                                                                JTextField ypos = new JTextField(10);
+	                                                                JTextField ysize = new JTextField(10);
+	                                                                JTextField xsize = new JTextField(10);
+	                                                                JComponent[] texts4 = {xpos, ypos, xsize, ysize};
+	                                                                String[] strings4 = {"X Position :", "Y Position:", "X Size:", "Y Size:"};
+	                                                                JPanel myPanel4 = ViewFactory.createOptionInputPanel(texts4, strings4);
+
+	                                                                int result4 = JOptionPane.showConfirmDialog(null, myPanel4, 
+	                                                                                "Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+	                                                                if (result4 == JOptionPane.OK_OPTION) {
+	                                                                        int k2 = gController.getEventTriggerPair();
+	                                                                        int hitter = 0;
+	                                                                        int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
+	                                                                        String location = collisionLocationBox.getSelectedItem().toString();
+	                                                                        gController.modifyTriggerEventManagerEnemyShower(k2, Integer.parseInt(maxEnemies.getText()), ImageName.getText().toString());
+	                                                                        gController.modifyTriggerEventManagerTileCollision(k2, 0, Integer.parseInt(xpos.getText()), Integer.parseInt(ypos.getText()), Integer.parseInt(xsize.getText()), Integer.parseInt(ysize.getText())) ;
+	                                                                }
+	                                                        }
+	                                                }
+	                                        }
+	                                        else if(result==2){
+
+	                                                        JTextField time= new JTextField(10);
+	                                                        JComponent[] texts4 = {time};
+	                                                        String[] strings4 = {"At What Time"};
+	                                                        JPanel myPanel4 = ViewFactory.createOptionInputPanel(texts4, strings4);
+
+	                                                        int result4 = JOptionPane.showConfirmDialog(null, myPanel4, 
+	                                                                        "Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+	                                                        if (result4 == JOptionPane.OK_OPTION) {
+	                                                                int k2 = gController.getEventTriggerPair();
+	                                                                gController.modifyTriggerEventManagerEnemyShower(k2, Integer.parseInt(maxEnemies.getText()), ImageName.getText().toString());
+	                                                                gController.modifyTriggerEventManagerTime(k2, Integer.parseInt(time.getText()));
+	                                                        }
+
+
+	                                }
+	                                }
+	                                }
+
+	                        });
+	                return b;
+	                }
+
+	       
+	/* This part commented out steve wrote this
+	 * 
+
+	private JButton makeLevelDone(){
+		JButton b = ViewFactory.createJButton("Create Level Done");
 		b.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed (ActionEvent e){
@@ -74,7 +194,7 @@ public class SceneeditorPanel extends Panel {
 				JTextField ImageName = new JTextField(10);
 				JComponent[] texts2 = {maxEnemies, ImageName};
 				String[] strings2 = {"maxEnemies", "ImageName"};
-				JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+				JButton myPanel2 = ViewFactory.createJButton("Event Level Done");
 
 				int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
 						"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
@@ -108,12 +228,10 @@ public class SceneeditorPanel extends Panel {
 									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result_ == JOptionPane.OK_OPTION) {
 								int k2 = gController.getEventTriggerPair();
-								int hitter = 0;
+								int hitter = 1;
 								int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 								String location = collisionLocationBox.getSelectedItem().toString();
-
-								gController.modifyTriggerEventManagerEnemyShower(k2, Integer.parseInt(maxEnemies.getText()), ImageName.getText().toString());
-
+								gController.modifyTriggerEventManagerLevelDone(k2); 
 							}
 						}
 					}
@@ -148,10 +266,10 @@ public class SceneeditorPanel extends Panel {
 										"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 								if (result4 == JOptionPane.OK_OPTION) {
 									int k2 = gController.getEventTriggerPair();
-									int hitter = 0;
+									int hitter = 1;
 									int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 									String location = collisionLocationBox.getSelectedItem().toString();
-									gController.modifyTriggerEventManagerEnemyShower(k2, Integer.parseInt(maxEnemies.getText()), ImageName.getText().toString());
+									gController.modifyTriggerEventManagerLevelDone(k2);
 									gController.modifyTriggerEventManagerTileCollision(k2, 0, Integer.parseInt(xpos.getText()), Integer.parseInt(ypos.getText()), Integer.parseInt(xsize.getText()), Integer.parseInt(ysize.getText())) ;
 								}
 							}
@@ -168,23 +286,22 @@ public class SceneeditorPanel extends Panel {
 									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result4 == JOptionPane.OK_OPTION) {
 								int k2 = gController.getEventTriggerPair();
-								gController.modifyTriggerEventManagerEnemyShower(k2, Integer.parseInt(maxEnemies.getText()), ImageName.getText().toString());
+								gController.modifyTriggerEventManagerLevelDone(k2);
 								gController.modifyTriggerEventManagerTime(k2, Integer.parseInt(time.getText()));
 							}
-
-
 				}
 				}
 				}
 
 			});
 		return b;
-		}
+		}*/
 
 		private JPanel makebuttonpanel(){
 			JPanel k = new JPanel();
 			k.setLayout(new BorderLayout());
 			k.add(makeEnemyShower(), BorderLayout.NORTH);
+			// k.add(makeLevelDone(), BorderLayout.XX);
 			k.add(endSceneButton(), BorderLayout.SOUTH);
 			return k;
 		}
@@ -253,12 +370,12 @@ public class SceneeditorPanel extends Panel {
 									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result_ == JOptionPane.OK_OPTION) {
 								int k2 = gController.getEventTriggerPair();
-								int hitter = 0;
+								int hitter = 1;
 								int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 								String location = collisionLocationBox.getSelectedItem().toString();
-
 								gController.modifyTriggerEventManagerLevelDone(k2);
-// OTHER METHOD NEEDED...
+								gController.modifyTriggerEventManagerCollision(k2, hittee, hitter);
+// OTHER METHOD NEEDED...(Nick added)
 
 							}
 						}
@@ -294,7 +411,7 @@ public class SceneeditorPanel extends Panel {
 										"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 								if (result2 == JOptionPane.OK_OPTION) {
 									int k2 = gController.getEventTriggerPair();
-									int hitter = 0;
+									int hitter = 1;
 									int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 									String location = collisionLocationBox.getSelectedItem().toString();
 									gController.modifyTriggerEventManagerLevelDone(k2);

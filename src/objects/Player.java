@@ -44,24 +44,6 @@ public class Player extends GameObject {
 		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
 	}
 	
-	public void initViewOffset(){
-		myXofs = GameEngine.JGPOINT_X/2;
-		myYofs = GameEngine.JGPOINT_Y/2;
-	}
-	
-	public void setViewOffset(int xofs, int yofs){
-		myXofs = xofs;
-		myYofs = yofs;
-	}
-	
-	public int getXofs(){
-		return myXofs;
-	}
-	
-	public int getYofs(){
-		return myYofs;
-	}
-	
 	/**
 	 * Called by Factory to set the key
 	 * @param key
@@ -151,6 +133,40 @@ public class Player extends GameObject {
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_PLAYER, SaladConstants.ID, myUniqueID, 
 				SaladConstants.VIEW_OFFSET, false, myXofs, myYofs));
 		return answer;
+	}
+	
+	/**
+	 * Initiate the view off set
+	 */
+	public void initViewOffset(){
+		myXofs = GameEngine.JGPOINT_X/2;
+		myYofs = GameEngine.JGPOINT_Y/2;
+	}
+	
+	/**
+	 * Set the view off set
+	 * @param xofs
+	 * @param yofs
+	 */
+	public void setViewOffset(int xofs, int yofs){
+		myXofs = xofs;
+		myYofs = yofs;
+	}
+	
+	/**
+	 * Called by Game Engine to get the x off set
+	 * @return
+	 */
+	public int getXofs(){
+		return myXofs;
+	}
+	
+    /**
+     * Called by Game Engine to get the y off set
+     * @return
+     */
+	public int getYofs(){
+		return myYofs;
 	}
 
 }

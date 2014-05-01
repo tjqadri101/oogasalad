@@ -9,6 +9,7 @@ import reflection.Reflection;
 import saladConstants.SaladConstants;
 import engineManagers.*;
 import util.AttributeMaker;
+import util.SaladUtil;
 import engineManagers.CollisionManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
@@ -60,6 +61,7 @@ public abstract class GameObject extends JGObject {
 			BloodManager bloodManager, RevivalManager revivalManager, LiveManager liveManager,
 			TriggerEventManager eventManager) {
 		super(String.valueOf(uniqueID), true, xpos, ypos, collisionId, staticGfxName);
+		
 		resume_in_view = false;
 		suspend();
 		myBehaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
@@ -501,6 +503,11 @@ public abstract class GameObject extends JGObject {
 				myInitY, SaladConstants.NAME, myName, SaladConstants.COLLISION_ID, colid, SaladConstants.LIVES, myInitBlood));
 		myAttributes.addAll(myActionManager.getAttributes());
 		myAttributes.addAll(myAnimationManager.getAttributes());
+		List<String> deleteList = new ArrayList<String>();
+		for(int i = 0; i < myAttributes.size(); i ++){
+			if(myAttributes.get(i).startsWith(creationString()) && i != 0){ deleteList.add(myAttributes.get(i)); }
+		}
+		for(String s: deleteList){ myAttributes.remove(s); }
 		return myAttributes;
 	}
 	
@@ -566,8 +573,7 @@ public abstract class GameObject extends JGObject {
      * @param xsize
      * @param ysize
      */
-	public void modifyDynamicImage(String action, String imgfile, int xsize,
-			int ysize) {
+	public void modifyDynamicImage(String action, String imgfile, int xsize, int ysize) {
 		myAnimationManager.modifyImage(action, imgfile);
 	}
 

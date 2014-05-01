@@ -49,6 +49,7 @@ public final class SaladConstants {
 	public static final String MODIFY_ACTOR = "ModifyActor";
 	public static final String DELETE_ACTOR = "DeleteActor";
 	public static final String MODIFY_ACTOR_ANIMATION = "ModifyActorAnimation";
+	public static final String MODIFY_PLAYER_ANIMATION = "ModifyPlayerAnimation";
 	
 	public static final String VIEW_OFFSET = "ViewOffset";
 	
@@ -105,6 +106,7 @@ public final class SaladConstants {
 	public static final String SHOOT_NAME = "ShootObjects";
 	public static final String LIVES = "Lives";
 	public static final String SPEED = "Speed";
+	public static final String PLAYERSPEED = "PlayerSpeed";
 	public static final String MODIFY_GRAVITY = "ModifyGravity";
 	public static final String GRAVITY_MAGNITUDE = "Magnitude";
     public static final String CREATE_GOAL = "CreateGoal";
@@ -240,6 +242,7 @@ public final class SaladConstants {
 	public static final String UP_MOVE = "UPMove";
 	public static final String DW_MOVE = "DWMOVE";
 	public static final String TRIGGER_BY_REMOVE = "TriggerByRemove";
+	public static final String TRIGGER_BY_COLLISION = "TriggerByCollision";
 	public static final String EVENT_LEVEL_DONE = "EventLevelDone";
 	public static final String EVENT_ENEMY_SHOWER = "EventEnemyShower";
 	public static final String SHOOT_HIT_OBJECT = "ShootHitObject";
@@ -259,11 +262,17 @@ public final class SaladConstants {
 	public static final String JUMP_ANIMATION = "JumpAnimation";
 	public static final String EVENT_CHANGE_BLOOD = "EventChangeBlood";
 	public static final String EVENT_CHANGE_LIVE = "EventChangeLive";
+
+	
 	
 	public static final String BLOOD_MANAGER_PATH = "engineManagers.BloodManager";
 	public static final String SCORE_MANAGER_PATH = "engineManagers.ScoreManager";
 	public static final String LIVE_MANAGER_PATH = "engineManagers.LiveManager";
 	public static final String EVENT_MANAGER_PATH = "engineManagers.TriggerEventManager";
+
+	
+
+	
 	
 
 	

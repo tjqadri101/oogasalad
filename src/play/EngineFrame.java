@@ -49,7 +49,7 @@ public class EngineFrame extends JFrame{
 
 
 	private void initializeViewSpecs() {
-		setPreferredSize(new Dimension(600, 800));
+		setPreferredSize(new Dimension(800, 600));
 		setLayout(new BorderLayout());
 	}
 

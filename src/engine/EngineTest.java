@@ -7,6 +7,7 @@ import objects.NonPlayer;
 import objects.Player;
 import saladConstants.SaladConstants;
 import stage.Game;
+import util.Music;
 import engine.GameEngine;
 
 public class EngineTest {
@@ -77,6 +78,9 @@ public class EngineTest {
 			mushroom.setBehavior("RegularRemove");
 			mushroom.setBehavior("BackForthMove",6.0, 20);
 			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
+			
+//			musicManager = new Music("src/engine/Sounds/PlayJoyful.wav");
+//		        System.out.println("loadingDone: initGame is called here");
 		}
 		
 //		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");
@@ -88,9 +92,9 @@ public class EngineTest {
 		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
 		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 20);
-		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
-		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
-		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
+//		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
+//		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
+//		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
 
 		player.setBehavior("RegularRemove");
 		player.setBehavior("Jump", 5.0, 1);

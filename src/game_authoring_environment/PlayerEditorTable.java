@@ -29,7 +29,7 @@ public class PlayerEditorTable extends PanelTable {
 
 	//	private static final String[] moveTypes = {};
 	private static final String[] shootTypes = {"Slow Shoot", "Quick Shoot", "Spread Shoot"};
-	private static final String[] dieTypes = {"Immortal", "Remove Corpse", "Show Corpse"};
+	private static final String[] dieTypes = {"Immortal", "Remove Corpse"};
 	private GAEController gController;
 	private PlayereditorPanel parentPanel;
 	private String playerName;
@@ -56,8 +56,7 @@ public class PlayerEditorTable extends PanelTable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				playerName = tf.getText().toString(); 
-				int id = gController.getActorID();
-
+				gController.modifyPlayerName(playerName);
 			}			
 		});
 		myTableModel.addRow(firstRow); // actually adding to the table
@@ -222,40 +221,6 @@ public class PlayerEditorTable extends PanelTable {
 						case "Immortal":
 							gController.modifyPlayerImmortal();
 							break;
-						case "Show Corpse":
-							JTextField xSizeField = new JTextField(10);
-							JTextField ySizeField = new JTextField(10);
-							JTextField time = new JTextField(10);
-							JTextField[] textsLife = {xSizeField, ySizeField, time};
-							String[] stringsLife = {"x size:", "y size:", "Show Time:"};
-							JPanel myPanel = ViewFactory.createOptionInputPanel(textsLife, stringsLife);
-							UIManager.put("OptionPane.okButtonText", "Now Choose Actor Image");  
-							int result = JOptionPane.showConfirmDialog(null, myPanel, 
-									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
-							if (result == JOptionPane.OK_OPTION) {
-
-								try{
-									JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
-									UIManager.put("FileChooser.openDialogTitleText", "Choose Corpse Image");
-									SwingUtilities.updateComponentTreeUI(chooser);
-									FileNameExtensionFilter filter = new FileNameExtensionFilter(
-											"jpg", "gif","png","jpeg");
-									chooser.setFileFilter(filter);
-									int returnVal = chooser.showOpenDialog(getParent());
-									if(returnVal == JFileChooser.APPROVE_OPTION) {
-										String path = chooser.getSelectedFile().getPath();
-										String name = chooser.getSelectedFile().getName();
-										gController.uploadImage(10,10, path);
-										gController.modifyPlayerShowCorpse(name,  Integer.parseInt(xSizeField.getText()), 
-												Integer.parseInt(ySizeField.getText()), 
-												Integer.parseInt(time.getText()));
-
-									}			
-								}catch(Exception e){
-								}
-							}
-							break;
-
 						case "Remove Corpse":
 							gController.modifyPlayerRegRemove();
 							break;

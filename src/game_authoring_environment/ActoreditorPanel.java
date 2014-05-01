@@ -74,11 +74,11 @@ public class ActoreditorPanel extends Panel {
 			public void actionPerformed (ActionEvent e){
 				Object[] options1 = {"Animate Jump Image",
 						"Animate Forward Move",
-						"Animate Backward Move", "Cancel"};
+						"Animate Backward Move"};
 
 				int result = JOptionPane.showOptionDialog(null,
-						"Enter a number between 0 and 10000",
-						"Enter a Number",
+						"Animation options",
+						"Select an animation type",
 						JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE,
 						null,
