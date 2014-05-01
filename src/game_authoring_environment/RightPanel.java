@@ -127,10 +127,12 @@ public class RightPanel extends JSplitPane {
 	protected void updatePlayerPositionSpinners(){
 		
 		Player curPlayer = myGAEController.getPlayer();
-		curPlayerXPos = curPlayer.x;
-		curPlayerYPos = curPlayer.y;
-		playerXSpinner.setValue(curPlayerXPos);
-		playerYSpinner.setValue(curPlayerYPos);
+		if(!curPlayer.equals(null)){
+			curPlayerXPos = curPlayer.x;
+			curPlayerYPos = curPlayer.y;
+			playerXSpinner.setValue(curPlayerXPos);
+			playerYSpinner.setValue(curPlayerYPos);
+		}
 	}
 	
 	private RightPanel getCurInstance(){
