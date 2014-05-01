@@ -103,6 +103,7 @@ public final class SaladConstants {
 	public static final String SHOOT_NAME = "ShootObjects";
 	public static final String LIVES = "Lives";
 	public static final String SPEED = "Speed";
+	public static final String PLAYERSPEED = "PlayerSpeed";
 	public static final String MODIFY_GRAVITY = "ModifyGravity";
 	public static final String GRAVITY_MAGNITUDE = "Magnitude";
     public static final String CREATE_GOAL = "CreateGoal";
@@ -257,6 +258,8 @@ public final class SaladConstants {
 	public static final String JUMP_ANIMATION = "JumpAnimation";
 	public static final String EVENT_CHANGE_BLOOD = "EventChangeBlood";
 	public static final String EVENT_CHANGE_LIVE = "EventChangeLive";
+
+	
 	
 
 	
