@@ -107,10 +107,10 @@ public class EngineTest {
 		player.setBehavior("Jump", 5.0, 1);
 		player.setBehavior("SpreadShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4, 8);
 //		player.setKey(, "die");
-		player.setKey('A', "moveLeft");
-		player.setKey('D', "moveRight");
-		player.setKey(97, "moveUp");
-		player.setKey('S', "moveDown");
+		player.setKey(65, "moveLeft");
+		player.setKey(68, "moveRight");
+		player.setKey(87, "moveUp");
+		player.setKey(83, "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
