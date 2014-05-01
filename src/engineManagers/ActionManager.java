@@ -52,6 +52,7 @@ public class ActionManager {
 	 * @param type
 	 */
 	public void doAction(String type){
+		System.out.println("doAction " + type);
 		for(String action: myActions){
 			String current = myBehaviorMethods.getString(action);
 			if(current.equals(type)){

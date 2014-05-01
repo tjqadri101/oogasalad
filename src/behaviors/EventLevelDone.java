@@ -16,11 +16,6 @@ public class EventLevelDone extends Eventable{
 
     @Override
     public void doEvent (List<Object> params) {
-        //Consider changing the input parameter
-        if(myEngine.level>=3){
-            myEngine.gameOver();
-    }
-    else
-            myEngine.levelDone();
+           myEngine.levelDone();
     }
 }

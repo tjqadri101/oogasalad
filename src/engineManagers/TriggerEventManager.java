@@ -76,12 +76,13 @@ public class TriggerEventManager extends StatisticsManager{
             try{
                 if (collisionPara.size()==3){
                     if (compareParameters(collisionPara,collisionBehavior,victim,obj)){
-                        System.out.println("checkCollisionBehavior called: triggerEventManager");
+//                        System.out.println("checkCollisionBehavior called: triggerEventManager");
                         performEvent(myEngine,entry.getKey());
                     }
                 } 
             }catch (IndexOutOfBoundsException e){
-                System.out.println("Caught IOException: " + e.getMessage());
+
+
             }
         }
     }
@@ -92,10 +93,10 @@ public class TriggerEventManager extends StatisticsManager{
     public void checkTrigger () {
     	
         for (Entry<Integer, List<Object>> entry : myTriggerMap.entrySet()) {
-            System.out.println("checkTrigger in TEM called: ");
+//            System.out.println("checkTrigger in TEM called: ");
             int etPairID = entry.getKey();
             List<Object> triggerList = entry.getValue();
-            System.out.println("checkTrigger: " + triggerList);
+//            System.out.println("checkTrigger: " + triggerList);
             if(triggerList.size()!=0){
                 String triggerBehavior = triggerList.get(0).toString();
                 triggerList = triggerList.subList(1, triggerList.size());
@@ -105,7 +106,7 @@ public class TriggerEventManager extends StatisticsManager{
                                    + SaladConstants.OBJECT_BEHAVIOR);
                 Object answer = SaladUtil.behaviorReflection(behaviors, triggerBehavior,
                                                              triggerList, CHECK_TRIGGER, myEngine);
-                System.out.println("checkTrigger: the answer is " + answer);
+//                System.out.println("checkTrigger: the answer is " + answer);
                 if ((boolean) answer)
                     performEvent(myEngine, etPairID);
 //                    answer = false;
@@ -123,7 +124,7 @@ public class TriggerEventManager extends StatisticsManager{
 //        System.out.println("doEvent: the eventParameter is " + eventParameter);
         String eventBehavior = (String) rawPara.get(0);
 //        System.out.println("doEvent: eventBehavior is " + eventBehavior);
-        System.out.println("performEvent is called here ");
+//        System.out.println("performEvent is called here ");
         ResourceBundle behaviors = ResourceBundle.getBundle(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE
                            + SaladConstants.OBJECT_BEHAVIOR);
         SaladUtil.behaviorReflection(behaviors, eventBehavior, eventParameter, DO_EVENT, myEngine);
@@ -161,7 +162,7 @@ public class TriggerEventManager extends StatisticsManager{
         for (int i = 0; i < args.length; i++) {
             behaviorParameters.add(args[i]);
         }
-        System.out.println("setEventOrTriggerBehavior: behaviroParar: " + behaviorParameters);
+//        System.out.println("setEventOrTriggerBehavior: behaviroParar: " + behaviorParameters);
         if (behaviorName.contains(TRIGGER_INDICATOR)) {
             myTriggerMap.put(etPairID, behaviorParameters);
         }

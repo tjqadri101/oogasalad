@@ -17,7 +17,7 @@ import saladConstants.SaladConstants;
 public class Transition {
 	
 	public static String[] TRANSITION_STATE = new String[]{"StartGame", "LevelDone", "LifeLost", "GameOver",
-		"Title", "EnterHighscore", "Highscores", "Paused"};
+		"Title", "Paused"};
 	
 	public static List<String> SEQUENCE =
 			Arrays.asList(new String[]{"StartGame", "LevelDone", "LifeLost", "GameOver"});

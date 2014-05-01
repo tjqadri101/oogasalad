@@ -86,7 +86,6 @@ public class ActorsPanel extends Panel {
 			public void valueChanged(ListSelectionEvent e) {
 				if(!e.getValueIsAdjusting()){
 					if(myActorsTable.isFocusOwner()){
-						System.out.println("valueChange");
 						mySelectedRow = myActorsTable.getSelectedRow();							
 						update();
 					}

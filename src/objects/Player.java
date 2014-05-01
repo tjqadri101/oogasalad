@@ -19,7 +19,7 @@ import util.SaladUtil;
  */
 public class Player extends GameObject {
 	
-	protected Map<Integer, String> myKeyMap;
+	protected Map<Character, String> myKeyMap;
 	protected List<String> myNonClearKeys;
 	protected double myMovingXSpeed;
 	protected double myMovingYSpeed;
@@ -32,7 +32,7 @@ public class Player extends GameObject {
 			TriggerEventManager triggerEventManager) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, 
 				scoreManager, bloodManager, revivalManager, liveManager, triggerEventManager);
-		myKeyMap = new HashMap<Integer, String>();
+		myKeyMap = new HashMap<Character, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myCanMoveInAir = true;
@@ -46,7 +46,8 @@ public class Player extends GameObject {
 	 * @param type
 	 */
 	public void setKey(int key, String type){
-		myKeyMap.put(key, type);
+//		char newkey = (char) key;
+		myKeyMap.put(newkey, type);
 	}
 	
 	@Override
@@ -74,7 +75,7 @@ public class Player extends GameObject {
 	 * Called by the Game Authorizing Environment to display the current set keys
 	 * @return Map maps from int key to String function (i.e. jump)
 	 */
-	public Map<Integer, String> getKeyMap(){
+	public Map<Character, String> getKeyMap(){
 		return myKeyMap;
 	}
 	
@@ -108,6 +109,11 @@ public class Player extends GameObject {
 	
 	public void setCanMoveInAir(boolean canMoveInAir){
 		myCanMoveInAir = canMoveInAir;
+	}
+	
+	public void setPlayerSpeed(double xspeed, double yspeed){
+		myMovingXSpeed = xspeed;
+		myMovingYSpeed = yspeed;
 	}
 	
 	@Override
