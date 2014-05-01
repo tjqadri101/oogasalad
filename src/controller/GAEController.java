@@ -229,18 +229,6 @@ public class GAEController {
 	}
 
 	/**
-	 * Modify player's corpse showing property without providing player id. The already specified playerID is used.
-	 */
-	public void modifyPlayerShowCorpse(String url, int xSize, int ySize, int time){
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+playerID+SaladConstants.SEPARATOR + 
-				SaladConstants.SHOW_CORPSE + SaladConstants.SEPARATOR+SaladConstants.SHOW_CORPSE + SaladConstants.SEPARATOR + url + 
-				SaladConstants.SEPARATOR +  xSize + SaladConstants.SEPARATOR + ySize + SaladConstants.SEPARATOR + time;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
-
-
-	/**
 	 * Modify player's jump behavior without providing player id. The already specified playerID is used.
 	 */
 
@@ -258,7 +246,8 @@ public class GAEController {
 	 * Modify player so it can't jump
 	 */
 	public void modifyPlayerCanNotJump(){ 
-		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.CAN_NOT_JUMP + 
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR +
+				playerID + SaladConstants.SEPARATOR + SaladConstants.CAN_NOT_JUMP + 
 				SaladConstants.SEPARATOR + SaladConstants.CAN_NOT_JUMP; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -324,6 +313,39 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
+	/**
+	 * Animate an player's jump animation
+	 */
+	public void modifyPlayerAnimationJump(String url, int xSize, int ySize ){
+		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + 
+				SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.JUMP_ANIMATION +
+				SaladConstants.SEPARATOR +  SaladConstants.JUMP + SaladConstants.SEPARATOR + url + SaladConstants.SEPARATOR + 
+				xSize + SaladConstants.SEPARATOR + ySize; 
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+
+	
+	/**
+	 *  Animate an player's forward move animation
+	 */
+	public void modifyPlayerAnimationFDMove(String imgURL, int xSize, int ySize){ 
+		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID
+				+ SaladConstants.SEPARATOR + SaladConstants.FD_MOVE + SaladConstants.SEPARATOR + SaladConstants.FD_MOVE
+				+ SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	/**
+	 * Animate an player's backward move animation
+	 */
+	public void modifyPlayerAnimationBKMove(String imgURL, int xSize, int ySize){ 
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
+				SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize ;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 
 	/**
 	 * Delete player without providing player id. The already specified playerID is used for the id.
@@ -363,7 +385,8 @@ public class GAEController {
 	 * Modify actor's jump 
 	 */
 	public void modifyActorJump(double magnitude, int numberOfJumpsAllowedInAir){
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.JUMP + SaladConstants.SEPARATOR +
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID +  SaladConstants.SEPARATOR +
+				selectedActorID + SaladConstants.SEPARATOR + SaladConstants.JUMP + SaladConstants.SEPARATOR +
 				SaladConstants.JUMP + SaladConstants.SEPARATOR + magnitude + SaladConstants.SEPARATOR + numberOfJumpsAllowedInAir;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -419,7 +442,7 @@ public class GAEController {
 	 * Animate an actor's backward move animation
 	 */
 	public void modifyActorAnimationBKMove(String imgURL, int xSize, int ySize){ 
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
 				SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize ;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
