@@ -1,8 +1,11 @@
 package engineTests;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import controller.DataController;
 import objects.NonPlayer;
 import objects.Player;
 import saladConstants.SaladConstants;
@@ -33,8 +36,8 @@ public class EngineTest {
     }
 	
 	public GameEngine testEngine(){
-		
-		GameEngine engine = new GameEngine(true);
+//		DataController controller = new DataController();
+		GameEngine engine = new GameEngine(false);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
@@ -79,7 +82,7 @@ public class EngineTest {
 		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
-		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
+		engine.setObjectImage(player, "JumpAnimation", "poke-mon/100.gif", 100, 100);
 
 		player.setBehavior("RegularRemove");
 		player.setBehavior("Jump", 5.0, 1);

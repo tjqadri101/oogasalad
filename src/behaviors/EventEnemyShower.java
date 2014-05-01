@@ -2,6 +2,8 @@ package behaviors;
 
 import java.util.List;
 import java.util.Random;
+
+import objects.GameObject;
 import saladConstants.SaladConstants;
 import engine.GameEngine;
 /**
@@ -39,7 +41,10 @@ public class EventEnemyShower extends Eventable{
         while(true){
             int size = rg.nextInt(10)+30;
 //            myEngine.createActor(rg.nextInt(50), gfx, size, size, rg.nextInt(800), rg.nextInt(600), ENEMY_SHOWER, 1, rg.nextInt(5));
-            myEngine.createActor(SaladConstants.NULL_UNIQUE_ID, gfx, size, size, rg.nextInt(800), rg.nextInt(600), ENEMY_SHOWER, 1, 1);
+            GameObject object = myEngine.createActor(-2, gfx, size, size, rg.nextInt(800), rg.nextInt(600), ENEMY_SHOWER, 100, 1);
+            object.setBehavior("BackForthMove", 3.0, 1);
+            myEngine.getGame().getCollisionManager().setDirectionalCollisionBehavior(0, "ShootHitObject", 100, "All");
+            object.setBehavior("RegularRemove");
             enemyCounter++;
             if(enemyCounter == maxEnemy){
                 break;
