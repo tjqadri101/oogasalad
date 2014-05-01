@@ -730,7 +730,7 @@ public class GAEController {
 	 * Modify an object such that it dies on colliding with a tile. 
 	 */
 	public void modifyCollisionBehaviorToDieByTile(int victimCollisionID, char collID, String direction){
-		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
+		String order = SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
 				SaladConstants.KILL_BY_TILE + SaladConstants.SEPARATOR + SaladConstants.KILL_BY_TILE + SaladConstants.SEPARATOR + collID + SaladConstants.SEPARATOR + 
 				direction;
 		if (!DEBUG) myDataController.receiveOrder(order);
