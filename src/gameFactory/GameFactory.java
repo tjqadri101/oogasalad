@@ -106,7 +106,7 @@ public class GameFactory {
         Object obj = null;
         String methodToInvoke = null;
         if (!GameReflectPara.equals(NO_PARAMETER)){
-//            System.out.println("twoStepReflect: with para-ref");
+            System.out.println("twoStepReflect: with para-ref");
             methodToInvoke = myMethod.getString(typeMethodList.get(1));
             obj = Reflection.callMethod(refObj, GameRefMethod, idSelector(GameReflectPara));
         }
