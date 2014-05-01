@@ -93,7 +93,7 @@ public class EngineTest {
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
 		
-		engine.modifyPlayerImage(0, "poke-mon/025.gif", 0, 0);
+//		engine.modifyPlayerImage(0, "poke-mon/025.gif", 100, 100);
 		
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
