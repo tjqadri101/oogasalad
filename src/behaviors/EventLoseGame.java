@@ -9,7 +9,7 @@ import engine.GameEngine;
  */
 public class EventLoseGame extends Eventable{
 
-	protected EventLoseGame(GameEngine engine) {
+	public EventLoseGame(GameEngine engine) {
 		super(engine);
 	}
 

@@ -9,7 +9,7 @@ import engine.GameEngine;
 public class EventLevelDone extends Eventable{
     protected GameEngine myEngine;
 
-    protected EventLevelDone (GameEngine engine) {
+    public EventLevelDone (GameEngine engine) {
         super(engine);
         myEngine = engine;
     }
