@@ -213,20 +213,7 @@ public class GameFactoryActorTest extends TestCase{
 //        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
 //        assert(set.contains("RegularRemove"));
     }
-    
-    @Test
-    public void testModifyGravity() throws FactoryException{
-        String MODIFY_GRAVITY= "ModifyGravity,Magnitude,0.1";
 
-        try {
-            myFactory.processOrder(MODIFY_GRAVITY);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-//        System.out.println("the speed in the speed test is " + myGame.getNonPlayer(1, 0, 0).xspeed);
-//        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
-    }
     
     @Test
     public void testModifyActorImage() throws FactoryException{
