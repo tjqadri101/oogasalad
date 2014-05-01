@@ -24,7 +24,7 @@ public class ActorEditorTable extends PanelTable{
 
 	private static final String[] moveTypes = {"Immobile", "Regular", "Back and Forth", "Back and Forth With Vertical Speed"};
 	private static final String[] shootTypes = {"None", "Slow Shoot", "Spread Shoot", "Quick Shoot", "Slow Shoot by Time", "Spread Shoot by Time"};
-	private static final String[] dieTypes = {"Immortal", "Disappear", "Show Corpse"};
+	private static final String[] dieTypes = {"Immortal", "Disappear"};
 
 	private String name; 
 	//private static final String[] collisionTypes = {"Explode", "Hitter Eliminate Victim"};
@@ -60,7 +60,8 @@ public class ActorEditorTable extends PanelTable{
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					String str = arg0.getItem().toString();
 					JTextField amplitude = new JTextField(10);
-					JTextField Speed = new JTextField(10);
+					JTextField frequency = new JTextField(10);
+					JTextField verticalSpeed = new JTextField(10);
 					switch(str){
 					case "Regular":
 					{	
@@ -85,27 +86,29 @@ public class ActorEditorTable extends PanelTable{
 						break;
 					case "Back and Forth":
 						
-						JTextField[] texts = {amplitude, Speed};
-						String[] strings = {"Amplitude:", "Speed:"};
+						JTextField[] texts = {amplitude, frequency};
+						String[] strings = {"Amplitude:", "Frequency:"};
 						JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
 
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result == JOptionPane.OK_OPTION) {
-							gController.modifyActorBackForthMoveNoID(Double.parseDouble(amplitude.getText()), Integer.parseInt(Speed.getText()));
+							gController.modifyActorBackForthMoveNoID(Double.parseDouble(amplitude.getText()), Integer.parseInt(frequency.getText()));
 						}
 						break;
 						
 						//NEED TO FINISH THIS ::
 					case "Back and Forth With Vertical Speed":{
-						JTextField[] texts_ = {amplitude, Speed};
-						String[] strings_ = {"Amplitude:", "Speed:"};
-						myPanel = ViewFactory.createOptionInputPanel(texts_, strings_);
+						JTextField[] texts2 = {amplitude, frequency, verticalSpeed};
+						String[] strings2 = {"Amplitude:", "Frequency:", "VerticalSpeed:"};
+						myPanel = ViewFactory.createOptionInputPanel(texts2, strings2);
 
 						result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result == JOptionPane.OK_OPTION) {
-					//		gController.modifyActorBackForthMoveNoID(Double.parseDouble(amplitude.getText()), Integer.parseInt(Speed.getText()));
+							gController.modifyActorBackForthVerticalMove(Double.parseDouble(amplitude.getText()), 
+																	Integer.parseInt(frequency.getText()), 
+																	Integer.parseInt(verticalSpeed.getText()));
 						}
 						break;
 					}
@@ -129,6 +132,7 @@ public class ActorEditorTable extends PanelTable{
 					JTextField ySizeField = new JTextField(10);
 					JTextField speedField = new JTextField(10);
 					JTextField bulletsField = new JTextField(10);
+					JTextField timeDelay = new JTextField(10);
 					JTextField maxBullets = new JTextField(10);
 					JTextField bulletColid = new JTextField(10);
 
@@ -156,7 +160,7 @@ public class ActorEditorTable extends PanelTable{
 								gController.modifyActorSlowShoot(name,  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()), Integer.parseInt(speedField.getText()), Integer.parseInt(maxBullets.getText()));
 							}
 							else{
-								gController.modifyActorSlowShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()), Integer.parseInt(maxBullets.getText()));
+								gController.modifyActorSlowShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()), Integer.parseInt(speedField.getText()), Integer.parseInt(maxBullets.getText()));
 
 							}
 						}
@@ -164,12 +168,12 @@ public class ActorEditorTable extends PanelTable{
 						break;
 					}
 					case "Quick Shoot":
-						JTextField[] texts_ = {xSizeField, ySizeField, speedField, bulletsField, maxBullets};
+						JTextField[] texts_ = {xSizeField, ySizeField, speedField, bulletsField, maxBullets, bulletColid};
 						String[] strings_ = {"x size:", "y size:", "Speed:", "Number of Bullets Per Shot", "Max Bullets","Bullet ColID"};
 						JPanel myPanel = ViewFactory.createOptionInputPanel(texts_, strings_);
 
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
-								"Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result == JOptionPane.OK_OPTION) {							
 							JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 							UIManager.put("FileChooser.openDialogTitleText", "Choose Bullet Image");
@@ -183,21 +187,24 @@ public class ActorEditorTable extends PanelTable{
 								String name = chooser.getSelectedFile().getName();
 								gController.uploadImage(100, 100, path);
 								gController.modifyActorQuickShoot(name,  Integer.parseInt(xSizeField.getText()), 
-										Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),
+										Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()), Integer.parseInt(speedField.getText()),
 										Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
 							}
 							else{
-								gController.modifyActorQuickShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
+								gController.modifyActorQuickShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), 
+										Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()),
+										Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), 
+										Integer.parseInt(maxBullets.getText()) );
 							}
 						}
 						break;
 						case "Spread Shoot":{
-							JTextField[] texts_2 = {xSizeField, ySizeField, speedField, bulletsField, maxBullets};
+							JTextField[] texts_2 = {xSizeField, ySizeField, speedField, bulletsField, maxBullets, bulletColid};
 							String[] strings_2 = {"x size:", "y size:", "Speed:", "Number of Bullets Per Shot", "Max Bullets","Bullet ColID"};
 							JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts_2, strings_2);
 
 							int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
-									"Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
+									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result2 == JOptionPane.OK_OPTION) {							
 								JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 								UIManager.put("FileChooser.openDialogTitleText", "Choose Bullet Image");
@@ -211,20 +218,85 @@ public class ActorEditorTable extends PanelTable{
 									String name = chooser.getSelectedFile().getName();
 									gController.uploadImage(100, 100, path);
 									gController.modifyActorSpreadShoot(name,  Integer.parseInt(xSizeField.getText()), 
-											Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),
+											Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()), Integer.parseInt(speedField.getText()),
 											Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
 								}
 								else{
-									gController.modifyActorSpreadShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
+									gController.modifyActorSpreadShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), 
+											Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()),
+											Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), 
+											Integer.parseInt(maxBullets.getText()) );
 								}
 							}
 							break;
 						}
 						case "Slow Shoot by Time":{
-							
+							JTextField[] texts3 = {xSizeField, ySizeField, speedField, maxBullets,bulletColid, timeDelay};
+							String[] strings3 = {"x size:", "y size:", "Speed:", "Max Bullets","Bullet ColID", "Shoot Delay"};
+							JPanel myPanel3 = ViewFactory.createOptionInputPanel(texts3, strings3);
+
+							int result3 = JOptionPane.showConfirmDialog(null, myPanel3, 
+									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+							if (result3 == JOptionPane.OK_OPTION) {
+								JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
+								UIManager.put("FileChooser.openDialogTitleText", "Choose Bullet Image");
+								SwingUtilities.updateComponentTreeUI(chooser);
+								FileNameExtensionFilter filter = new FileNameExtensionFilter(
+										"jpg", "gif","png","jpeg");
+								chooser.setFileFilter(filter);
+								int returnVal = chooser.showOpenDialog(getParent());
+								if(returnVal == JFileChooser.APPROVE_OPTION) {
+									String path = chooser.getSelectedFile().getPath();
+									String name = chooser.getSelectedFile().getName();
+									gController.uploadImage(100, 100, path);
+									gController.modifyActorSlowShootByTime(name,Integer.parseInt(xSizeField.getText()),
+											Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()),
+											Integer.parseInt(speedField.getText()), Integer.parseInt(timeDelay.getText()), 
+											Integer.parseInt(maxBullets.getText()));
+									
+								}
+								else{
+									gController.modifyActorSlowShootByTime("bullet.png",Integer.parseInt(xSizeField.getText()),
+											Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()),
+											Integer.parseInt(speedField.getText()), Integer.parseInt(timeDelay.getText()), 
+											Integer.parseInt(maxBullets.getText()));
+								}
+							}
 							break;
 						}
 						case "Spread Shoot by Time":{
+							JTextField[] texts_4 = {xSizeField, ySizeField, speedField, bulletsField, maxBullets, bulletColid, timeDelay};
+							String[] strings_4 = {"x size:", "y size:", "Speed:", "Number of Bullets Per Shot", "Max Bullets","Bullet ColID", "Shoot Delay"};
+							JPanel myPanel4 = ViewFactory.createOptionInputPanel(texts_4, strings_4);
+
+							int result4 = JOptionPane.showConfirmDialog(null, myPanel4, 
+									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+							if (result4 == JOptionPane.OK_OPTION) {							
+								JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
+								UIManager.put("FileChooser.openDialogTitleText", "Choose Bullet Image");
+								SwingUtilities.updateComponentTreeUI(chooser);
+								FileNameExtensionFilter filter = new FileNameExtensionFilter(
+										"jpg", "gif","png","jpeg");
+								chooser.setFileFilter(filter);
+								int returnVal = chooser.showOpenDialog(getParent());
+								if(returnVal == JFileChooser.APPROVE_OPTION) {
+									String path = chooser.getSelectedFile().getPath();
+									String name = chooser.getSelectedFile().getName();
+									gController.uploadImage(100, 100, path);
+									gController.modifyActorSpreadShootByTime(name,  Integer.parseInt(xSizeField.getText()), 
+											Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()), 
+											Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), 
+											Integer.parseInt(timeDelay.getText()), Integer.parseInt(maxBullets.getText()) );
+								}
+								else{
+									gController.modifyActorSpreadShootByTime("bullet.png",  Integer.parseInt(xSizeField.getText()), 
+											Integer.parseInt(ySizeField.getText()), Integer.parseInt(bulletColid.getText()), 
+											Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), 
+											Integer.parseInt(timeDelay.getText()), Integer.parseInt(maxBullets.getText()) );
+								}
+							}
+							
+							
 							break;
 						}
 						default:
@@ -249,11 +321,7 @@ public class ActorEditorTable extends PanelTable{
 					case "Immortal":
 						gController.modifyPlayerImmortal();
 						break;
-					case "Show Corpse":
-
-						//gController.modifyActorShowCorpse("bullet.png", 10, 10, 10);
-						break;
-					case "Regular Remove":
+					case "Disappear":
 						gController.modifyActorRegRemoveNoID();
 						break;
 					default:
@@ -319,7 +387,7 @@ public class ActorEditorTable extends PanelTable{
 				}
 				else{
 					int id = gController.getActorID();
-					gController.modifyPlayerCanNotJump("canNotJump");
+					gController.modifyActorCanNotJump();
 				}
 			}
 		});	
@@ -329,8 +397,6 @@ public class ActorEditorTable extends PanelTable{
 	
 	
 	}
-
-
 		@Override
 		void updateTable() {
 			NonPlayer actor = gController.getNonPlayer();
