@@ -42,7 +42,6 @@ public class SceneEditorTable extends PanelTable {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
-					System.out.println("new selected item:"+arg0.getItem().toString());
 					setLevelForScene(Integer.parseInt(arg0.getItem().toString()));
 				}				
 			}

@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class Music {
+public abstract class Music {
         private File soundFile;
         private AudioInputStream myAudioInputStream;
         private AudioFormat myAudioFormat;
@@ -41,7 +41,7 @@ public class Music {
         
         /**
          * 
-         * @param filename Re set file path of the music file
+         * @param filename Reset file path of the music file
          */
 
         public void setSound(String filename) {

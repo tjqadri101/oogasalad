@@ -46,5 +46,8 @@ public class Gravity {
 			object.yspeed += myMagnitude;	
 		}
 	}
-
+	
+	public double getMagnitude(){
+	    return myMagnitude;
+	}
 }

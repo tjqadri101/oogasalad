@@ -51,7 +51,6 @@ public class BehaviorTable extends PanelTable {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
-					System.out.println("new selected item:"+arg0.getItem().toString());
 					// call the change method in GAEController here (change level;change scene etc)
 					currentSelectedItem = arg0.getItem().toString();
 				}				

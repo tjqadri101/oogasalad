@@ -1,7 +1,11 @@
 package statistics;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * @author Sam Ginsburg and Ethan Gottlieb
+ * @integration Justin (Zihao) Zhang 
+ *
+ */
 public class GameStats {
 	
 	private static List<StatsObject> allStatsObjects = new ArrayList<StatsObject>();

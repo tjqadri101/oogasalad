@@ -9,7 +9,7 @@ public final class SaladConstants {
 	public static final String MODIFY_LEVEL = "ModifyLevel";
 	public static final String CREATE_SCENE = "CreateScene";
 	public static final String SWITCH_SCENE = "SwitchScene";
-	public static final String SWITCH_SCENE_TO_NEW_LEVEL_ID = "switchSceneToNewLevelID";
+	public static final String SWITCH_SCENE_TO_NEW_LEVEL_ID = "SwitchSceneToNewLevelID";
 	public static final String MODIFY_SCENE = "ModifyScene";
 	public static final String MODIFY_INIT_SCENE = "ModifyInitScene";
 	public static final String SET_INIT_SCENE = "SetInitialScene";
@@ -67,10 +67,10 @@ public final class SaladConstants {
 	public static final String DIE = "die";
 	public static final String MOVE = "move";
 	public static final String SHOOT = "shoot";
-	public static final String JUMP = "jump";
+	public static final String JUMP = "Jump";
 	public static final String COLLIDE = "collide";
 	public static final String REMOVE = "remove";
-	public static final String UPDATE_JUMP = "Jump";
+	public static final String UPDATE_JUMP = "JumpAnimation";
 	
 	//Specific Behaviors
 	public static final String EXPLODE = "Explode";
@@ -172,7 +172,7 @@ public final class SaladConstants {
 	public static final String TRIGGER_BY_TIME = "TriggerByTime";
 	public static final String SET_TRIGGER_BY_REMOVE = "SetTriggerByRemove";
 	public static final String SET_TRIGGER_BY_COLLISION = "SetTriggerByCollision";
-	public static final String TRIGGER_BY_TILE_COLLISION = "SetTriggerByTileCollision";
+	public static final String TRIGGER_BY_TILE_COLLISION = "TriggerByTileCollision";
 	public static final String SET_EVENT_LEVEL_DONE = "SetEventLevelDone";
 	public static final String SET_EVENT_ENEMY_SHOWER = "SetEventEnemyShower";
 	public static final String SET_TRIGGER = "SetTrigger";
@@ -255,6 +255,8 @@ public final class SaladConstants {
 	public static final String LIFE_INCREASE = "LifeIncrease";
 	public static final String GAME_OVER = "GameOver";
 	public static final String JUMP_ANIMATION = "JumpAnimation";
+	public static final String EVENT_CHANGE_BLOOD = "EventChangeBlood";
+	public static final String EVENT_CHANGE_LIVE = "EventChangeLive";
 	
 
 	

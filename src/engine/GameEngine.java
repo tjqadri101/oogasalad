@@ -5,6 +5,7 @@ import stage.Game;
 import stage.Scene;
 import stage.Transition;
 import statistics.StatsController;
+import util.Music;
 import jgame.Highscore;
 import jgame.JGColor;
 import jgame.platform.StdGame;
@@ -12,19 +13,18 @@ import objects.GameObject;
 import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import engineManagers.InputManager;
 import engineManagers.TriggerEventManager;
 
+
 /**
  * @author Main Isaac (Shenghan) Chen
- * @contribution (for creation): Justin (Zihao) Zhang
+ * @contribution (for the two methods of creating player and actor): Justin (Zihao) Zhang
  * @contribution (for TriggerEventManager handling) Steve (Siyang) Wang
  */
 
@@ -69,6 +69,7 @@ public class GameEngine extends StdGame {
 	protected boolean isTileEditing;
 	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
+//	protected Music musicManager;
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -90,6 +91,8 @@ public class GameEngine extends StdGame {
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
+//		musicManager = new Music("src/engine/Sounds/PlayCreepy.wav"); // newly Added for testing music
+//		musicManager.start();
 	}
 	
 	public void loadingBegin() {
@@ -135,8 +138,6 @@ public class GameEngine extends StdGame {
 		myPlayer.restore(scene_restart);
 	}
 	
-	
-	
 	public void doFrameInGame() {
 		doFrameEdit();	
 	}
@@ -163,7 +164,7 @@ public class GameEngine extends StdGame {
 		if (!viewOffset) {setViewOffsetEdit();}
 		doManagers();
 	}
-
+	
 	private void doManagers() {
 		if (myGame.getScoreManager() != null) {
 			myGame.getScoreManager().update("Time");
@@ -244,6 +245,7 @@ public class GameEngine extends StdGame {
 	}
 
 	public void startGameOver() {
+//	    musicManager = new Music("src/engine/Sounds/PlayJoyful.wav"); // newly Added for testing music
 		setEmptyScene();
 		setTransition("GameOver");
 	}
@@ -365,10 +367,12 @@ public class GameEngine extends StdGame {
 				 myViewOffsetRate = 35; //make it constant later
 			 }
 			 myViewOffsetPlayer = true;
+			 int four = 400;
+			 int three = 300;
 			 int desired_viewXOfs = (int) myPlayer.x + myPlayer.getXSize() / 2 - viewWidth() / 2;
 			 int desired_viewYOfs = (int) myPlayer.y + myPlayer.getYSize() / 2 - viewHeight() / 2;
-			 setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate + viewXOfs(),
-					 (desired_viewYOfs - viewYOfs()) / myViewOffsetRate + viewYOfs(), false);
+			 setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate + viewXOfs() + four,
+					 (desired_viewYOfs - viewYOfs()) / myViewOffsetRate + viewYOfs() +three, true);
 		 }
 	 }
 
@@ -474,8 +478,7 @@ public class GameEngine extends StdGame {
 				 object.x += MouseX - myMouseX;
 				 object.y += MouseY - myMouseY;
 				 drag = true;
-				 int id = this.getClickedID();
-				 getParent().firePropertyChange("updatePos", 0, id);
+				 getParent().firePropertyChange("updatePos", 0, myClickedID);
 			 }
 		 }
 
@@ -606,6 +609,7 @@ public class GameEngine extends StdGame {
 		 showScene(true);
 	 }
 	 
+	 //called by defineLevel or order from GAE
 	 public void setCurrentScene(int currentLevelID, int currentSceneID) {
 		 if (isEditingMode) {setGameState("Edit");}
 		 hideScene();
@@ -613,34 +617,47 @@ public class GameEngine extends StdGame {
 		 myCurrentSceneID = currentSceneID;
 		 myCurrentScene = myGame.getScene(myCurrentLevelID, myCurrentSceneID);
 		 showScene(false);
+		 if (!isLoading || myPlayer != null) {
+			 myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
+					 myCurrentScene.getPlayerInitPosition()[1]);
+		 }
 	 }
-
-	private void hideScene() {
-		if (myCurrentScene != null) {
+	 
+	 //called by TEM
+	 public void switchScene(int currentSceneID, double xpos, double ypos) {
+		 Scene scene = myGame.getScene(myCurrentLevelID, currentSceneID);
+		 if (scene == null || scene.getXSize() < xpos || scene.getYSize() < ypos) {return;}
+		 if(isPlaying) {myGame.getScoreManager().update("SceneDone", myCurrentSceneID);}
+		 hideScene();
+		 myCurrentSceneID = currentSceneID;
+		 myCurrentScene = scene;
+		 showScene(false);
+		 myPlayer.setInitPos(xpos, ypos);
+	 }
+	 
+	 private void hideScene() {
+		 if (myCurrentScene != null) {
 			 for (GameObject object : myCurrentScene.getGameObjects()) {
 				 object.suspend();
 			 }
 			 if (myPlayer != null) {myPlayer.suspend();}
 			 removeObjects(null, 0, false);
 		 }
-		 if(isPlaying) {myGame.getScoreManager().update("SceneDone", myCurrentSceneID);}
-	}
-
-	private void showScene(boolean empty) {
-		setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
+	 }
+	 
+	 private void showScene(boolean empty) {
+		 setSceneView(myCurrentScene.getBackgroundImage(), myCurrentScene.ifWrapHorizontal(), 
 				 myCurrentScene.ifWrapVertical(), myCurrentScene.getXSize(), myCurrentScene.getYSize());
-		if (isPlaying) {
-			setTiles(0, 0, myCurrentScene.getTiles());
-			if (myPlayer != null && !empty) {
-				myPlayer.setInitPos(myCurrentScene.getPlayerInitPosition()[0],
-						myCurrentScene.getPlayerInitPosition()[1]);
-				myPlayer.resume();
-			}
-			for (GameObject object : myCurrentScene.getGameObjects()) {
-				object.resume();
-			}
-		}
-	}
+		 if (isPlaying) {
+			 setTiles(0, 0, myCurrentScene.getTiles());
+			 if (myPlayer != null && !empty) {
+				 myPlayer.resume();
+			 }
+			 for (GameObject object : myCurrentScene.getGameObjects()) {
+				 object.resume();
+			 }
+		 }
+	 }
 	
 	 /* scene view modification methods */
 
@@ -725,6 +742,7 @@ public class GameEngine extends StdGame {
 
 	 public Player createPlayer(int unique_id, String imgfile, int xsize, int ysize,
 			 double xpos, double ypos, String name, int colid, int lives) {
+
 		 loadImage(imgfile);
 		 Player object = new Player(unique_id, imgfile, xsize, ysize, xpos, ypos,
 				 name, colid, lives, myGame.getCollisionManager(),

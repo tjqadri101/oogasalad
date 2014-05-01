@@ -42,7 +42,6 @@ public class GameEditorTable extends PanelTable {
 		name.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(name.getText());
 				gController.modifyGameName(name.getText().toString());
 			}			
 		});
@@ -58,7 +57,6 @@ public class GameEditorTable extends PanelTable {
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
 					String str = arg0.getItem().toString();
-					System.out.println("new selected item:"+arg0.getItem().toString());
 
 					JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
 					UIManager.put("FileChooser.openDialogTitleText", "Choose Transition Image");
@@ -86,7 +84,6 @@ public class GameEditorTable extends PanelTable {
 		tf.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf.getText());
 				gController.modifyScoreManagerInitScore(Integer.parseInt(tf.getText()));
 			}			
 		});
@@ -99,7 +96,6 @@ public class GameEditorTable extends PanelTable {
 		tf7.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf.getText());
 				gController.modifyLifeManagerInitLives(Integer.parseInt(tf7.getText()), 0);
 			}			
 		});
@@ -112,7 +108,6 @@ public class GameEditorTable extends PanelTable {
 		tf1.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf1.getText());
 				gController.modifyTransitionStateFrame("GameOver", Integer.parseInt(tf1.getText().toString()));
 			}			
 		});
@@ -124,7 +119,6 @@ public class GameEditorTable extends PanelTable {
 		tf2.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf2.getText());
 				gController.modifyTransitionStateFrame("LifeLost", Integer.parseInt(tf2.getText().toString()));
 			}			
 		});
@@ -136,7 +130,6 @@ public class GameEditorTable extends PanelTable {
 		tf3.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf3.getText());
 				gController.modifyTransitionStateFrame("LevelDone", Integer.parseInt(tf3.getText().toString()));
 			}			
 		});
@@ -191,7 +184,6 @@ public class GameEditorTable extends PanelTable {
 							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 					if (result == JOptionPane.OK_OPTION) {
 						String str = arg0.getItem().toString();
-						System.out.println("new selected item:"+arg0.getItem().toString());
 
 						JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
 						UIManager.put("FileChooser.openDialogTitleText", "Choose Transition Image");
@@ -221,7 +213,6 @@ public class GameEditorTable extends PanelTable {
 		tf4.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(tf4.getText());
 				gController.modifyGravityMagnitude(Double.parseDouble(tf4.getText()));
 			}			
 		});
@@ -235,7 +226,6 @@ public class GameEditorTable extends PanelTable {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				if(arg0.getStateChange() == ItemEvent.SELECTED){
-				System.out.println(tf4.getText());
 				gController.modifyLifeManagerRestoreLife(true);
 				}
 				else{

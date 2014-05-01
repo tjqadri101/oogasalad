@@ -1,8 +1,11 @@
 package engineTests;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import controller.DataController;
 import objects.NonPlayer;
 import objects.Player;
 import saladConstants.SaladConstants;
@@ -11,7 +14,7 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
-	public static final int LEVELS = 8;
+	public static final int LEVELS = 1;
 	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
@@ -19,6 +22,7 @@ public class EngineTest {
 	public static final int BULLET_COLID = 2;
 	public static final int BOMB_COLID = 6;
 	public static final char TILE_COLID = '3';
+	public static final int BOSS_COLID = 8;
 	
 	public static void main(String[] arg){
 		
@@ -33,7 +37,7 @@ public class EngineTest {
     }
 	
 	public GameEngine testEngine(){
-		
+//		DataController controller = new DataController();
 		GameEngine engine = new GameEngine(false);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
@@ -68,6 +72,24 @@ public class EngineTest {
 			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
 		}
 		
+		game.addLevel(3);
+		game.addScene(3, 2);
+		game.getLevel(3).setInitialScene(2);
+		game.getScene(3, 2).setPlayerInitPosition(200, 200);
+		engine.setCurrentScene(3, 2);
+		
+		engine.setSceneView(null, false, false, 1200, 40);
+		engine.loadTileImage(TILE_COLID, "brick.png");
+		engine.loadTileImage(TILE_COLID, "brick.png");
+		engine.createTiles(TILE_COLID,0,20,1180,1);
+		engine.createTiles(TILE_COLID,20,15,10,1);
+		engine.createTiles('0',30,30,5,1);
+		
+		NonPlayer boss = engine.createActor(300, "poke-mon/0"+(13+10)+".gif", 200, 200, 300, 100, "Boss", BOSS_COLID, 100);
+		boss.setBehavior("BackForthMove", 100.0, 12);
+		boss.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 8, 100, 32);
+		boss.setBehavior("RegularRemove");
+		
 //		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");
 		
 		game.getGravity().setMagnitude(0.1);
@@ -79,21 +101,21 @@ public class EngineTest {
 		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
-		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
+		engine.setObjectImage(player, "JumpAnimation", "poke-mon/100.gif", 100, 100);
 
 		player.setBehavior("RegularRemove");
 		player.setBehavior("Jump", 5.0, 1);
 		player.setBehavior("SpreadShoot", "ball20-red.gif", 20, 20, BULLET_COLID, 5.0, 4, 8);
-		player.setKey('L', "die");
-		player.setKey('A', "moveLeft");
-		player.setKey('D', "moveRight");
-		player.setKey('W', "moveUp");
-		player.setKey('S', "moveDown");
+//		player.setKey(, "die");
+		player.setKey(65, "moveLeft");
+		player.setKey(68, "moveRight");
+		player.setKey(87, "moveUp");
+		player.setKey(83, "moveDown");
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
 		
-		engine.modifyPlayerImage(0, "poke-mon/025.gif", 0, 0);
+//		engine.modifyPlayerImage(0, "poke-mon/025.gif", 100, 100);
 		
 		game.getCollisionManager().setDirectionalCollisionBehavior(PLAYER_COLID, "ShootHitObject", BOMB_COLID,"All");
 		game.getCollisionManager().setDirectionalCollisionBehavior(ENEMY_COLID, "ShootHitObject", BULLET_COLID,"All");
@@ -123,9 +145,11 @@ public class EngineTest {
 		engine.gotoGameState("Title");
 		engine.setCurrentScene(1, 0);
 		
-		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 300);
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-		System.out.println("\n EngineTest LoadingDone");
+//		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByRemove", "TriggerByRemove", BOSS_ID);
+//		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", );
+//		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;
 	}

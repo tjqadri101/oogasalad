@@ -5,7 +5,12 @@ import java.util.List;
 import jgame.JGColor;
 import jgame.JGFont;
 import jgame.platform.JGEngine;
-
+/**
+ * 
+ * @author Main Sam Ginsburg and Ethan Gottlieb
+ * @integration Justin (Zihao) Zhang 
+ *
+ */
 public class StatsDisplay {
 	private JGEngine myGameEngine;
 	private int gameWidth;

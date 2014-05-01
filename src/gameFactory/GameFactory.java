@@ -59,7 +59,7 @@ public class GameFactory {
 
         objArgList = (List<Object>) p.parseParameter(order);
         typeMethodList =  (List<String>) p.parseType(order);
-        System.out.println("ProcessFactory: typeMethodList is :" + typeMethodList);
+//        System.out.println("ProcessOrder: typeMethodList is :" + typeMethodList);
         instruction = p.getOrderKey(order);
 
         //      TODO: Simplify code below:       

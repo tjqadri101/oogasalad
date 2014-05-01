@@ -110,6 +110,11 @@ public class Player extends GameObject {
 		myCanMoveInAir = canMoveInAir;
 	}
 	
+	public void setPlayerSpeed(double xspeed, double yspeed){
+		myMovingXSpeed = xspeed;
+		myMovingYSpeed = yspeed;
+	}
+	
 	@Override
 	public List<String> getAttributes(){
 		List<String> answer = super.getAttributes();

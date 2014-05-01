@@ -38,8 +38,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.LayerUI;
 
+import reflection.MethodAction;
 import reflection.ReflectionException;
-
 import java.lang.reflect.Field;
 
 import jgame.platform.JGEngine;
@@ -54,8 +54,9 @@ public class RightPanel extends JSplitPane {
 
 	public double curActorXPos, curActorYPos, curPlayerXPos, curPlayerYPos;
 	public GAEController myGAEController;
-	protected JSpinner actorXSpinner, actorYSpinner, playerXSpinner, playerYSpinner;
+	protected JSpinner actorXSpinner, actorYSpinner;
 	public static final double POSIT_STEP = 10d;
+
 	
 	public RightPanel(GAEController gController){
 		myGAEController = gController;
@@ -68,15 +69,14 @@ public class RightPanel extends JSplitPane {
 		JPanel spinnerPanel = new JPanel();
 		actorXSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_X", "curActorXPos",POSIT_STEP);
 		actorYSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_Y", "curActorYPos", POSIT_STEP);
-		playerXSpinner = addLabeledPositionSpinner(spinnerPanel, "PLAYER_X", "curPlayerXPos",POSIT_STEP);
-		playerYSpinner = addLabeledPositionSpinner(spinnerPanel, "PLAYER_Y", "curPlayerYPos", POSIT_STEP);
 		return spinnerPanel;
 	}
 	
 	
 	 
 
-	protected JSpinner addLabeledPositionSpinner(Container c, String label, String field, double stepSize){
+	protected JSpinner addLabeledPositionSpinner(Container c, String label, String field,
+												double stepSize){
 		SpinnerModel posModel = new SpinnerNumberModel(0d, 0d, 1000d, stepSize);
 		JLabel l = new JLabel(label);
 		c.add(l);
@@ -88,7 +88,6 @@ public class RightPanel extends JSplitPane {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
 				JSpinner curSpinner = (JSpinner)(e.getSource());
 				 try{
 						Class<?> c1 = getCurInstance().getClass();
@@ -115,14 +114,6 @@ public class RightPanel extends JSplitPane {
 		actorYSpinner.setValue(curActorYPos);
 	}
 	
-	protected void updatePlayerPositionSpinners(){
-		
-		Player curPlayer = myGAEController.getPlayer();
-		curPlayerXPos = curPlayer.x;
-		curPlayerYPos = curPlayer.y;
-		playerXSpinner.setValue(curPlayerXPos);
-		playerYSpinner.setValue(curPlayerYPos);
-	}
 	
 	private RightPanel getCurInstance(){
 		return this;

@@ -899,25 +899,6 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
-	
-	/*public void modifyTriggerEventManagerCollision(int eventTriggerPairID, int playerOrActorID, int xPos, int yPos, 
-			int xSize, int ySize){
-		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.TRIGGER_BY_COLLISION + SaladConstants.SEPARATOR 
-			    + SaladConstants.COLLISION + SaladConstants.SEPARATOR + playerOrActorID + SaladConstants.SEPARATOR + 
-			    xPos  + SaladConstants.SEPARATOR + yPos +  SaladConstants.SEPARATOR + xSize +  SaladConstants.SEPARATOR + ySize;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}*/
-
-
-	public void modifyTriggerEventManagerLevelDone(int eventTriggerPairID){
-		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_LEVEL_DONE + SaladConstants.SEPARATOR 
-				+ SaladConstants.EVENT_LEVEL_DONE;
-		if (!DEBUG) myDataController.receiveOrder(order);
-		System.out.println(order);
-	}
 
 	public void modifyTriggerEventManagerEnemyShower(int eventTriggerPairID, int maxEnemy, String gfx){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
@@ -927,6 +908,22 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void modifyTriggerEventManagerChangeBlood(int eventTriggerPairID, int changeBlood){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_CHANGE_BLOOD + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_CHANGE_BLOOD + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + changeBlood;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTriggerEventManagerChangeLive(int eventTriggerPairID, int changeLive){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_CHANGE_LIVE + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_CHANGE_LIVE + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + changeLive;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	public void modifyTriggerEventManagerLoseGame(int eventTriggerPairID){
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
 				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_LOSE_GAME + SaladConstants.SEPARATOR 
@@ -935,6 +932,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void modifyTriggerEventManagerLevelDone(int eventTriggerPairID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_LEVEL_DONE + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_LEVEL_DONE;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	public void modifyLifeManagerInitLives(int lives, int playerID){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + 
 				SaladConstants.SEPARATOR + lives + SaladConstants.SEPARATOR + playerID; 
@@ -1076,12 +1080,12 @@ public class GAEController {
 
 	/**Called to get the url image into our engine package*/
 	public void uploadImage(int xSize,int ySize, String url){
-		try {
-			if (!DEBUG) myDataController.uploadImage(xSize, ySize, url);
-			return;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (!DEBUG) myDataController.uploadImage(xSize, ySize, url);
+//			return;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public int getActorCollisionID(){
@@ -1093,25 +1097,25 @@ public class GAEController {
 		return myDataController.getSelectedID();
 	}
 
-	public Map<String, Integer> getKeyMap(int playerId2){
+	public Map<String, Integer> getKeyMap(int playerId2) {
 		System.out.println("map");
-		if(myDataController.getGame()!=null){
-			if(myDataController.getGame().getPlayer(playerId2)!=null){
-				if(myDataController.getGame().getPlayer(playerId2).getKeyMap()!=null){
+		if (myDataController.getGame() != null) {
+			if (myDataController.getGame().getPlayer(playerId2) != null) {
+				if (myDataController.getGame().getPlayer(playerId2).getKeyMap() != null) {
 					Map<Integer, String> map = myDataController.getGame().getPlayer(playerId2).getKeyMap();
 					System.out.println("map");
-
 					HashMap<String, Integer> map2 = new HashMap<String, Integer>();
 					System.out.println("map");
-
-					for(Integer K : map.keySet()){
+					for (Integer K : map.keySet()) {
 						String str = map.get(K);
 						System.out.println(str);
 						map2.put(str, K);
 					}
 					System.out.println("map2");
-
-					return map2;}}}
+					return map2;
+				}
+			}
+		}
 		Map<String, Integer> k = new HashMap<String, Integer>();
 		return k;
 	}
