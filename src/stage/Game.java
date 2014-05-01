@@ -70,6 +70,7 @@ public class Game {
     public void addLevel(int levelID) {
         Level level = new Level(levelID);
         myLevelMap.put(levelID, level);
+//        mySoundManager.playClip("Succeed");
     }
 
     /**
@@ -382,5 +383,9 @@ public class Game {
     public RevivalManager getRevivalManager() {
         return myRevivalManager;
     }       
+    
+    public SoundManager getSoundManager(){
+        return mySoundManager;
+    }
 
 }

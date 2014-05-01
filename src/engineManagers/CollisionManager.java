@@ -235,7 +235,7 @@ public class CollisionManager {
 		int dir = Arrays.asList(new String[]{SaladConstants.Top,SaladConstants.BOTTOM,SaladConstants.LEFT,SaladConstants.RIGHT, SaladConstants.ALL}).indexOf(direction);
 		if (dir == -1) return;
 		if(dir == 4) addTileCollisionPair(victimColid, type, tileColid, direction, args);
-		else addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, direction, args);
+//		else addTileCollisionPair(SideDetector.SDcid(victimColid, dir), type, tileColid, direction, args);
 	}
 	
 	/**
