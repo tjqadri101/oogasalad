@@ -90,7 +90,7 @@ public class GameEngine extends StdGame {
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
-		getGame().getSoundManager().chooseInitSound();
+//		getGame().getSoundManager().chooseInitSound();
 //		musicManager.start();
 		
 	}

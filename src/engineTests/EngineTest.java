@@ -89,7 +89,7 @@ public class EngineTest {
 		NonPlayer boss = engine.createActor(300, "poke-mon/0"+(13+10)+".gif", 200, 200, 300, 100, "Boss", BOSS_COLID, 100);
 		boss.setBehavior("BackForthMove", 100.0, 12);
 		boss.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 8, 100, 32);
-		boss.setBehavior("RegularRemove");
+		boss.setBehavior("Immortal");
 		
 //		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");
 		
