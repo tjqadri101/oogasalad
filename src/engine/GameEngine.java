@@ -6,7 +6,6 @@ import stage.Scene;
 import stage.Transition;
 import statistics.StatsController;
 import util.Music;
-import jgame.Highscore;
 import jgame.JGColor;
 import jgame.platform.StdGame;
 import objects.GameObject;
@@ -14,12 +13,9 @@ import objects.Gravity;
 import objects.NonPlayer;
 import objects.Player;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
-import engineManagers.InputManager;
-import engineManagers.TriggerEventManager;
+
 
 
 /**
@@ -367,8 +363,8 @@ public class GameEngine extends StdGame {
 				 myViewOffsetRate = 35; //make it constant later
 			 }
 			 myViewOffsetPlayer = true;
-			 int xpos = myPlayer.getXofs();
-			 int ypos = myPlayer.getYofs();
+			 int xofs = myPlayer.getXofs();
+			 int yofs = myPlayer.getYofs();
 //			 System.out.println(xpos+" "+ypos);
 			 int desired_viewXOfs = (int) myPlayer.x + myPlayer.getXSize() / 2 - viewWidth() / 2;
 			 int desired_viewYOfs = (int) myPlayer.y + myPlayer.getYSize() / 2 - viewHeight() / 2;
