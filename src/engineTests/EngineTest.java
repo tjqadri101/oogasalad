@@ -114,10 +114,6 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
-		System.out.println('W' + 0);
-		System.out.println('A' + 0);
-		System.out.println('S' + 0);
-		System.out.println('D' + 0);
 		
 //		engine.modifyPlayerImage(0, "poke-mon/025.gif", 100, 100);
 		
