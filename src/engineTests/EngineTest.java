@@ -14,7 +14,7 @@ import engine.GameEngine;
 
 public class EngineTest {
 	
-	public static final int LEVELS = 8;
+	public static final int LEVELS = 1;
 	
 	public static final int ENEMY_COLID = 1;
 	public static final int MUSHROOM_COLID = 5;
@@ -22,6 +22,7 @@ public class EngineTest {
 	public static final int BULLET_COLID = 2;
 	public static final int BOMB_COLID = 6;
 	public static final char TILE_COLID = '3';
+	public static final int BOSS_COLID = 8;
 	
 	public static void main(String[] arg){
 		
@@ -70,6 +71,24 @@ public class EngineTest {
 			mushroom.setBehavior("BackForthMove",6.0, 20);
 			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
 		}
+		
+		game.addLevel(3);
+		game.addScene(3, 2);
+		game.getLevel(3).setInitialScene(2);
+		game.getScene(3, 2).setPlayerInitPosition(200, 200);
+		engine.setCurrentScene(3, 2);
+		
+		engine.setSceneView(null, false, false, 1200, 40);
+		engine.loadTileImage(TILE_COLID, "brick.png");
+		engine.loadTileImage(TILE_COLID, "brick.png");
+		engine.createTiles(TILE_COLID,0,20,1180,1);
+		engine.createTiles(TILE_COLID,20,15,10,1);
+		engine.createTiles('0',30,30,5,1);
+		
+		NonPlayer boss = engine.createActor(300, "poke-mon/0"+(13+10)+".gif", 200, 200, 300, 100, "Boss", BOSS_COLID, 100);
+		boss.setBehavior("BackForthMove", 100.0, 12);
+		boss.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 8, 100, 32);
+		boss.setBehavior("RegularRemove");
 		
 //		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");
 		
@@ -126,9 +145,11 @@ public class EngineTest {
 		engine.gotoGameState("Title");
 		engine.setCurrentScene(1, 0);
 		
-		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 200);
+		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 300);
 		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-		System.out.println("\n EngineTest LoadingDone");
+		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByRemove", "TriggerByRemove", BOSS_ID);
+		game.getTriggerManager().setEventOrTriggerBehavior(2, "Event, args);
+//		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;
 	}
