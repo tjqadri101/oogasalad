@@ -406,8 +406,12 @@ public class ActorEditorTable extends PanelTable{
 
 		myTableModel.addRow(eighthRow); // actually adding to the table
 		classMap.put(7,eighthRow[1]);
+		
+	
 	
 	}
+	
+	
 		@Override
 		void updateTable() {
 			NonPlayer actor = gController.getNonPlayer();

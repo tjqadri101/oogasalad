@@ -497,6 +497,7 @@ public class GAEController {
 	public void modifyActorColIDNoID(int newColID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+ selectedActorID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
+		this.setColIDStayOnEveryTileID(newColID);
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
@@ -504,7 +505,7 @@ public class GAEController {
 	public void modifyActorColID(int oldColID,int newColID){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR+oldColID+SaladConstants.SEPARATOR + 
 				SaladConstants.CHANGE_COLLISION_ID + SaladConstants.SEPARATOR +newColID;
-		if (!DEBUG) myDataController.receiveOrder(order);
+		if (!DEBUG) myDataController.receiveOrder(order);		
 		System.out.println(order);
 	}
 
