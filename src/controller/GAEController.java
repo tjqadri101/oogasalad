@@ -357,6 +357,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 	
+	public void modifyPlayerInitBlood(int blood){
+		String order = SaladConstants.MODIFY_PLAYER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ playerID + SaladConstants.SEPARATOR  + SaladConstants.SET_INIT_BLOOD + SaladConstants.SEPARATOR + blood;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	/**
 	 * Delete player without providing player id. The already specified playerID is used for the id.
 	 */
@@ -637,6 +644,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void modifyActorInitBlood(int blood){
+		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ playerID + SaladConstants.SEPARATOR  + SaladConstants.SET_INIT_BLOOD + SaladConstants.SEPARATOR + blood;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
 	/**
 	 * 
 	 * 
