@@ -90,8 +90,9 @@ public class GameEngine extends StdGame {
 		if (isEditingMode) {setGameState("Edit");}
 		myTimer = 0;
 		lives = 1;
-//		musicManager = new Music("src/engine/Sounds/PlayCreepy.wav"); // newly Added for testing music
+		getGame().getSoundManager().chooseInitSound();
 //		musicManager.start();
+		
 	}
 	
 	public void loadingBegin() {

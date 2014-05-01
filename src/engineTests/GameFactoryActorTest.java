@@ -56,7 +56,7 @@ public class GameFactoryActorTest extends TestCase{
         //        myActor = (NonPlayer) myFactory.processOrder(STRINGINPUT);
     }
 
-
+    /*
     @Test
     public void testCreateActor() throws FactoryException{
         String CREATE_ACTOR = "CreateActor,ID,0,Image,actor_default.png,3,3," +
@@ -71,23 +71,6 @@ public class GameFactoryActorTest extends TestCase{
         }
         assertEquals(myObject, myGame.getNonPlayer(1, 0, 0));
         // here the levelID=1, SceneID=0, objID=0
-    }
-    
-    /*
-    @Test
-    public void testSetInitBlood() throws FactoryException{
-
-        String CHANGETOID_ORDER = "ModifyActor,ID,0,SetInitBlood,5";
-        //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeToID", 1};
-
-        //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(CHANGETOID_ORDER);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        //        assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
     }
 
     @Test
@@ -243,7 +226,7 @@ public class GameFactoryActorTest extends TestCase{
         }
         //        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
         //        assert(set.contains("RegularRemove"));
-    }*/
+    }
 
     @Test
     public void testModifyActorImmobile() throws FactoryException{
@@ -261,6 +244,38 @@ public class GameFactoryActorTest extends TestCase{
         }
         //        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
         //        assert(set.contains("RegularRemove"));
+    }*/
+    
+    @Test
+    public void testSetInitBlood() throws FactoryException{
+
+        String CHANGETOID_ORDER = "ModifyActor,ID,0,SetInitBlood,5";
+        //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeToID", 1};
+
+        //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(CHANGETOID_ORDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        //        assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
+    }
+    
+    @Test
+    public void testRegularRemove() throws FactoryException{
+
+        String CHANGETOID_ORDER = "ModifyActor,ID,0,RegularRemove,RegularRemove";
+        //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeToID", 1};
+
+        //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(CHANGETOID_ORDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        //        assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
     }
 
 }
