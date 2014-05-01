@@ -681,8 +681,7 @@ public class GAEController {
 	public void modifyCollisBehavShootHitObject(int victimCollID, int hitterCollID, String Direction){
 		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR
 				+ victimCollID + SaladConstants.SEPARATOR + SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR 
-				+ SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR + SaladConstants.SEPARATOR +
-				hitterCollID;
+				+ SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR + hitterCollID;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
