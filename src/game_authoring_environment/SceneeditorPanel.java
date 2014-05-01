@@ -118,7 +118,6 @@ public class SceneeditorPanel extends Panel {
 						}
 					}
 					else if(result == 1){
-						System.out.println("player tile colision");
 						JComboBox hitterBox = new JComboBox(createPlayerList());
 						JComboBox hitteeBox = new JComboBox(createTileColIDList());
 						JComboBox[] texts = {hitterBox, hitteeBox};
@@ -365,7 +364,7 @@ public class SceneeditorPanel extends Panel {
 						String path = chooser.getSelectedFile().getPath();
 						String name = chooser.getSelectedFile().getName();
 
-						gController.uploadImage(Integer.parseInt(xSize.getText().toString()), Integer.parseInt(ySize.getText().toString()), path);
+						gController.uploadImage(Integer.parseInt(xSize.getText().toString())*20, Integer.parseInt(ySize.getText().toString())*20, path);
 						gController.modifySceneBackground(name, horizontalWrap.isSelected(), verticalWrap.isSelected(), Integer.parseInt(xSize.getText().toString()), Integer.parseInt(ySize.getText().toString()));
 					}
 

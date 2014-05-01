@@ -45,14 +45,11 @@ public class PlayereditorPanel extends Panel {
 		this.removeAll();
 		this.setLayout(new BorderLayout());		
 		this.add(new JScrollPane(mySubPanel), BorderLayout.NORTH);
-		System.out.println("bool at point " + playerExists);
 		this.add(new JScrollPane(createTable()), BorderLayout.CENTER);
 		if(!playerExists){
-			System.out.println("test if");
 			this.add(createPlayerButton(), BorderLayout.SOUTH);
 		}
 		else{
-			System.out.println("test else");
 			this.add(createKeySetButton(), BorderLayout.SOUTH);
 	
 		}	
@@ -78,9 +75,7 @@ public class PlayereditorPanel extends Panel {
 	}
 
 	private JTable createTable(){
-		System.out.println("test create tables");
 		myTable = new PlayerEditorTable(gController, this, playerExists);
-		System.out.println("test create tables");
 		return myTable;
 	}
 	
@@ -138,7 +133,6 @@ public class PlayereditorPanel extends Panel {
 				for(String s : map.keySet()){
 					
 					char k = (char) (map.get(s).intValue());
-					System.out.println(s + k);
 					switch(s){
 					case "moveUp": 
 						moveUp_ = String.valueOf(k);
@@ -224,7 +218,6 @@ public class PlayereditorPanel extends Panel {
 		String firstrow = s.get(0);
 		String[] strings = firstrow.split(",");
 		for(String k : strings){
-			System.out.println(k);
 		}
 	}
 
@@ -264,7 +257,6 @@ public class PlayereditorPanel extends Panel {
 	}
 	
 	public void updateInfo(int actorID){
-		System.out.println("updating playerID:"+actorID);	
 	}
 
 
