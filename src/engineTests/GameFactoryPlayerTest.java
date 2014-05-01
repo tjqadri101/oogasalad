@@ -90,6 +90,19 @@ public class GameFactoryPlayerTest extends TestCase{
     }
     
     @Test
+    public void testCanMoveInAir() throws FactoryException{
+        String MOVE_INAIR = "ModifyPlayer,ID,0,CanMoveInAir,true";
+        
+        try {
+            myFactory.processOrder(MOVE_INAIR);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(myObject, myGame.getNonPlayer(1, 0, 0));
+    }
+    /*
+    @Test
     public void testModifyPlayerChangetoID() throws FactoryException{
         String CHANGETOID_ORDER = "ModifyPlayer,ID,0,ChangeToID,1";
 //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeToID", 1};
@@ -183,5 +196,5 @@ public class GameFactoryPlayerTest extends TestCase{
         assertEquals("RegularRemove", myGame.getPlayer(0).getMyDieBehavior());
     }
 //   
-    
+    */
 }

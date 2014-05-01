@@ -49,7 +49,7 @@ public class GameFactoryManagerTest extends TestCase{
             e.printStackTrace();
             fail("Exception");
         }
-        assertEquals(2, myGame.getTEM().size());
+//        assertEquals(2, myGame.getTEM().size());
 // here the levelID=1, SceneID=0, objID=0
     }
     /*
