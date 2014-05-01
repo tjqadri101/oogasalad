@@ -182,7 +182,9 @@ public class ActorEditorTable extends PanelTable{
 								String path = chooser.getSelectedFile().getPath();
 								String name = chooser.getSelectedFile().getName();
 								gController.uploadImage(100, 100, path);
-								gController. QuickShoot(name,  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
+								gController.modifyActorQuickShoot(name,  Integer.parseInt(xSizeField.getText()), 
+										Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),
+										Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
 							}
 							else{
 								gController.modifyActorQuickShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
