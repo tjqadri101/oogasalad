@@ -56,8 +56,7 @@ public class PlayerEditorTable extends PanelTable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				playerName = tf.getText().toString(); 
-				int id = gController.getActorID();
-
+				gController.modifyPlayerName(playerName);
 			}			
 		});
 		myTableModel.addRow(firstRow); // actually adding to the table

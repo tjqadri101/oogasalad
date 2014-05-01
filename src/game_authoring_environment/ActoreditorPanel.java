@@ -74,7 +74,7 @@ public class ActoreditorPanel extends Panel {
 			public void actionPerformed (ActionEvent e){
 				Object[] options1 = {"Animate Jump Image",
 						"Animate Forward Move",
-						"Animate Backward Move", "Cancel"};
+						"Animate Backward Move"};
 
 				int result = JOptionPane.showOptionDialog(null,
 						"Animation options",

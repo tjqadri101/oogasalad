@@ -94,9 +94,8 @@ public class GameEngine extends StdGame {
 		myTimer = 0;
 		lives = 1;
 
-		musicManager = new Music("src/engine/Sounds/PlayJoyful.wav");
-		
-		
+//                musicManager = new Music("src/engine/Sounds/PlayJoyful.wav");
+//                System.out.println("loadingDone: initGame is called here");
 //		mySoundManager = new SoundManager(); // newly Added for testing music
 //		mySoundManager.setSound("src/engine/Sounds/PlayJoyful.wav");
 ////		getGame().getSoundManager().chooseInitSound();
