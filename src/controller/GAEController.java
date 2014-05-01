@@ -646,7 +646,7 @@ public class GAEController {
 
 	public void modifyActorInitBlood(int blood){
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
-				+ playerID + SaladConstants.SEPARATOR  + SaladConstants.SET_INIT_BLOOD + SaladConstants.SEPARATOR + blood;
+				+ selectedActorID + SaladConstants.SEPARATOR  + SaladConstants.SET_INIT_BLOOD + SaladConstants.SEPARATOR + blood;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
