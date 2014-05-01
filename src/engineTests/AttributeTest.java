@@ -62,7 +62,7 @@ public class AttributeTest {
     	myController.receiveOrder(MODIFY_ACTOR_SHOOT);
     	myController.receiveOrder(MODIFY_PERISHTOGETHER);
     	myController.receiveOrder(BLOOD_COLLISION);
-    	myController.receiveOrder("ModifyCollisionBehavior,Colid,0,KilledByTile,KilledByTile,A,All");
+    	myController.receiveOrder("ModifyTileCollisionBehavior,Colid,0,KilledByTile,KilledByTile,A,All");
     	
     	List<String> att = myGame.getAttributes();
     	assertEquals(att.get(0), MODIFY_PERISHTOGETHER);
