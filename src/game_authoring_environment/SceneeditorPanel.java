@@ -108,7 +108,7 @@ public class SceneeditorPanel extends Panel {
 									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result_ == JOptionPane.OK_OPTION) {
 								int k2 = gController.getEventTriggerPair();
-								int hitter = 0;
+								int hitter = 1;
 								int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 								String location = collisionLocationBox.getSelectedItem().toString();
 
@@ -148,7 +148,7 @@ public class SceneeditorPanel extends Panel {
 										"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 								if (result4 == JOptionPane.OK_OPTION) {
 									int k2 = gController.getEventTriggerPair();
-									int hitter = 0;
+									int hitter = 1;
 									int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 									String location = collisionLocationBox.getSelectedItem().toString();
 									gController.modifyTriggerEventManagerEnemyShower(k2, Integer.parseInt(maxEnemies.getText()), ImageName.getText().toString());
@@ -253,10 +253,9 @@ public class SceneeditorPanel extends Panel {
 									"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 							if (result_ == JOptionPane.OK_OPTION) {
 								int k2 = gController.getEventTriggerPair();
-								int hitter = 0;
+								int hitter = 1;
 								int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 								String location = collisionLocationBox.getSelectedItem().toString();
-
 								gController.modifyTriggerEventManagerLevelDone(k2);
 // OTHER METHOD NEEDED...
 
@@ -294,7 +293,7 @@ public class SceneeditorPanel extends Panel {
 										"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 								if (result2 == JOptionPane.OK_OPTION) {
 									int k2 = gController.getEventTriggerPair();
-									int hitter = 0;
+									int hitter = 1;
 									int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 									String location = collisionLocationBox.getSelectedItem().toString();
 									gController.modifyTriggerEventManagerLevelDone(k2);
