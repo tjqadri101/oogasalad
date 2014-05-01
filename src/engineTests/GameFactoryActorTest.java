@@ -74,6 +74,22 @@ public class GameFactoryActorTest extends TestCase{
     }
     
     @Test
+    public void testSetInitBlood() throws FactoryException{
+        
+        String CHANGETOID_ORDER = "ModifyActor,ID,0,SetInitBlood,5";
+//        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeToID", 1};
+
+//        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(CHANGETOID_ORDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
+    }
+    
+    @Test
     public void testModifyActorImage() throws FactoryException{
         String MODIFY_IMAGE = "ModifyActorImage,ID,0,ActorImage,actor_default.png,10,10";
 //        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
@@ -103,7 +119,6 @@ public class GameFactoryActorTest extends TestCase{
 //        assertEquals(5.0, myGame.getNonPlayer(1, 0, 0).xspeed);
     }
     
-
     @Test
     public void testModifyActorChangetoID() throws FactoryException{
         
@@ -229,9 +244,6 @@ public class GameFactoryActorTest extends TestCase{
 //        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
 //        assert(set.contains("RegularRemove"));
     }
-    
-
-    
 
 //
 ////    Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateActor","ID",0,"ActorImage","actor_default.png",3,3,
