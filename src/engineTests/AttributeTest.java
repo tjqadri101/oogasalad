@@ -35,6 +35,8 @@ public class AttributeTest {
 	public static final String SCENE_PLAYER_POSITION = "ModifyScene,ID,0,PlayerInitialPosition,0.0,0.0";
 	public static final String MODIFY_PLAYER_SHOOT = "ModifyPlayer,ID,1,SlowShoot,SlowShoot,actor_default.png,10,10,2,5.0,4";
 	public static final String EVENT_MANAGER = "ModifyTriggerManager,ID,0,EventEnemyShower,EventEnemyShower,3,actor_default.png";
+//	public static final String RESET_COLLISION_ID = "";
+	
 	
 	protected DataController myController;
 	protected GameEngine myEngine;
