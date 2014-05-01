@@ -989,7 +989,7 @@ public class GAEController {
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
-	public void modifyLifeManagerInitLives(int lives, int playerID){
+	public void modifyLifeManagerInitLives(int lives){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + 
 				SaladConstants.SEPARATOR + lives + SaladConstants.SEPARATOR + playerID; 
 		if (!DEBUG) myDataController.receiveOrder(order);
