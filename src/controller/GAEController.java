@@ -504,12 +504,11 @@ public class GAEController {
 	/**
 	 * Modify actor's vertical movement
 	 */
-	public void modifyActorBackForthVerticalMove(String imgURL, double amplitude, int lantency, double ySpeed){ 
+	public void modifyActorBackForthVerticalMove( double amplitude, int lantency, double ySpeed){ 
 		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR +
 				selectedActorID + SaladConstants.SEPARATOR + SaladConstants.BACK_FORTH_MOVE_WITH_VERTICAL_SPEED + 
-				SaladConstants.SEPARATOR + SaladConstants.BACK_FORTH_MOVE_WITH_VERTICAL_SPEED + SaladConstants.SEPARATOR +
-				imgURL + SaladConstants.SEPARATOR + amplitude + SaladConstants.SEPARATOR + lantency + SaladConstants.SEPARATOR +
-				ySpeed; 
+				SaladConstants.SEPARATOR + SaladConstants.BACK_FORTH_MOVE_WITH_VERTICAL_SPEED + SaladConstants.SEPARATOR 
+				+ amplitude + SaladConstants.SEPARATOR + lantency + SaladConstants.SEPARATOR + ySpeed; 
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

@@ -19,6 +19,13 @@ public abstract class Music {
         private Thread myThread;
         
         private int BUFFER_SIZE = 12800000;
+
+        /**
+         * @param filename String of the file path to the music file
+         */
+
+        public Music() {
+        }
         
         /**
          * 

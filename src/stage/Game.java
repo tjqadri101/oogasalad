@@ -12,6 +12,7 @@ import engineManagers.InputManager;
 import engineManagers.LiveManager;
 import engineManagers.RevivalManager;
 import engineManagers.ScoreManager;
+import engineManagers.SoundManager;
 import engineManagers.TriggerEventManager;
 import objects.GameObject;
 import objects.Gravity;
@@ -40,6 +41,7 @@ public class Game {
     protected Map<Integer, Player> myPlayerMap;
     protected Gravity myGravity;
     protected CollisionManager myCollisionManager;
+    protected SoundManager mySoundManager;
     protected Map<Character, String> myTileImageMap;
     protected String myName;
 
@@ -56,6 +58,7 @@ public class Game {
         myGravity = new Gravity();
         myCollisionManager = new CollisionManager();
         myTriggerManager = new TriggerEventManager();
+        mySoundManager = new SoundManager();
         myName = DEFAULT_NAME;
 
     }
