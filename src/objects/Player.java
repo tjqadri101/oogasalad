@@ -19,7 +19,7 @@ import util.SaladUtil;
  */
 public class Player extends GameObject {
 	
-	protected Map<Character, String> myKeyMap;
+	protected Map<Integer, String> myKeyMap;
 	protected List<String> myNonClearKeys;
 	protected double myMovingXSpeed;
 	protected double myMovingYSpeed;
@@ -32,7 +32,7 @@ public class Player extends GameObject {
 			TriggerEventManager triggerEventManager) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, 
 				scoreManager, bloodManager, revivalManager, liveManager, triggerEventManager);
-		myKeyMap = new HashMap<Character, String>();
+		myKeyMap = new HashMap<Integer, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myCanMoveInAir = true;
@@ -46,8 +46,7 @@ public class Player extends GameObject {
 	 * @param type
 	 */
 	public void setKey(int key, String type){
-		char newkey = (char) key;
-		myKeyMap.put(newkey, type);
+		myKeyMap.put(key, type);
 	}
 	
 	@Override
@@ -57,7 +56,7 @@ public class Player extends GameObject {
 	}
 	
 	protected void checkKeys(){
-		for(char key: myKeyMap.keySet()){
+		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){
 				String methodName = myKeyMap.get(key);
 				try{
@@ -75,7 +74,7 @@ public class Player extends GameObject {
 	 * Called by the Game Authorizing Environment to display the current set keys
 	 * @return Map maps from int key to String function (i.e. jump)
 	 */
-	public Map<Character, String> getKeyMap(){
+	public Map<Integer, String> getKeyMap(){
 		return myKeyMap;
 	}
 	
