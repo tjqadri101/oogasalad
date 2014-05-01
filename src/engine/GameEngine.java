@@ -29,7 +29,7 @@ public class GameEngine extends StdGame {
 
 	public static final String BUFFER_IMAGE_FOLDER = "ImageBuffer/";
 	
-	public static final int FRAMES_PER_SECOND = 70;
+	public static final int FRAMES_PER_SECOND = 20;
 //	public static final int FRAMES_PER_SECOND = 10;
 	public static final int MAX_FRAMES_TO_SKIP = 2;
 	public static final int JGPOINT_X = 800;
