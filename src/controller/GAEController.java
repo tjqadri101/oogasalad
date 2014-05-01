@@ -28,6 +28,7 @@ import javax.swing.plaf.LayerUI;
 
 import objects.GameObject;
 import objects.NonPlayer;
+import objects.Player;
 import engine.GameEngine;
 import saladConstants.SaladConstants;
 import stage.Game;
@@ -1126,7 +1127,7 @@ public class GAEController {
 		return myDataController.getGame().getOccupiedTileColids();
 	}
 	
-	public Map<Integer, NonPlayer> getMapOfPlayers(){
+	public Map<Integer, NonPlayer> getMapOfNonPlayers(){
 		Map<Integer, NonPlayer> map = myDataController.getMapOfNonPlayers(selectedSceneID);
 		return map;
 	}
@@ -1141,7 +1142,9 @@ public class GAEController {
 		return myDataController.getNonPlayer(selectedActorID);
 	}	
 
-
+	public Player getPlayer(){
+		return myDataController.getGame().getPlayer(playerID);
+	}	
 	public int getPlayerID() {
 		return playerID;
 	}

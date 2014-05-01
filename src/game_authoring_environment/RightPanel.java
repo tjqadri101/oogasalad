@@ -47,13 +47,14 @@ import controller.GAEController;
 import engine.GameEngine;
 import engineTests.EngineTest;
 import objects.NonPlayer;
+import objects.Player;
 
 @SuppressWarnings("serial")
 public class RightPanel extends JSplitPane {
 
-	public double curActorXPos, curActorYPos;
+	public double curActorXPos, curActorYPos, curPlayerXPos, curPlayerYPos;
 	public GAEController myGAEController;
-	protected JSpinner xSpinner, ySpinner;
+	protected JSpinner actorXSpinner, actorYSpinner, playerXSpinner, playerYSpinner;
 	public static final double POSIT_STEP = 10d;
 	
 	public RightPanel(GAEController gController){
@@ -65,8 +66,10 @@ public class RightPanel extends JSplitPane {
 	
 	private JComponent createSpinnerPanel(GAEController gController){
 		JPanel spinnerPanel = new JPanel();
-		xSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_X", "curActorXPos",POSIT_STEP);
-		ySpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_Y", "curActorYPos", POSIT_STEP);
+		actorXSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_X", "curActorXPos",POSIT_STEP);
+		actorYSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_Y", "curActorYPos", POSIT_STEP);
+		playerXSpinner = addLabeledPositionSpinner(spinnerPanel, "PLAYER_X", "curPlayerXPos",POSIT_STEP);
+		playerYSpinner = addLabeledPositionSpinner(spinnerPanel, "PLAYER_Y", "curPlayerYPos", POSIT_STEP);
 		return spinnerPanel;
 	}
 	
@@ -103,13 +106,22 @@ public class RightPanel extends JSplitPane {
 		return spinner;
 	}
 	 
-	protected void updatePositionSpinners(){
+	protected void updateActorPositionSpinners(){
 		
 		NonPlayer curActor = myGAEController.getNonPlayer();
 		curActorXPos = curActor.x;
 		curActorYPos = curActor.y;
-		xSpinner.setValue(curActorXPos);
-		ySpinner.setValue(curActorYPos);
+		actorXSpinner.setValue(curActorXPos);
+		actorYSpinner.setValue(curActorYPos);
+	}
+	
+	protected void updatePlayerPositionSpinners(){
+		
+		Player curPlayer = myGAEController.getPlayer();
+		curPlayerXPos = curPlayer.x;
+		curPlayerYPos = curPlayer.y;
+		playerXSpinner.setValue(curPlayerXPos);
+		playerYSpinner.setValue(curPlayerYPos);
 	}
 	
 	private RightPanel getCurInstance(){
