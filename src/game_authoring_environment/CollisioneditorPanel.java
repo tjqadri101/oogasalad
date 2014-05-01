@@ -179,7 +179,7 @@ public class CollisioneditorPanel extends Panel {
 						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result_ == JOptionPane.OK_OPTION) {
-							int hitter = 0;
+							int hitter = 1;
 							int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 							String location = collisionLocationBox.getSelectedItem().toString();
 
