@@ -156,7 +156,7 @@ public class GameeditorPanel extends Panel {
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result_ == JOptionPane.OK_OPTION) {
 							int k2 = gController.getEventTriggerPair();
-							int hitter = 0;
+							int hitter = 1;
 							int hittee = Integer.parseInt(hitteeBox.getSelectedItem().toString());
 							String location = collisionLocationBox.getSelectedItem().toString();
 

@@ -108,6 +108,8 @@ public class GameEngine extends StdGame {
 		setEmptyScene();
 		isLoading = true;
 		isPlaying = false;
+		myTimer = 0;
+//		System.out.println("loadingBegin");
 	}
 	
 	public void loadingDone() {
@@ -592,6 +594,7 @@ public class GameEngine extends StdGame {
 			 if (bg.equals(myTitleBG)) {return;}
 			 myTitleBG = bg;
 		 }
+		 if (bg == null) {return;}
 		 loadImage(bg);
 		 setBGImage(bg);
 	 }
@@ -638,7 +641,7 @@ public class GameEngine extends StdGame {
 	 //called by TEM
 	 public void switchScene(int currentSceneID, double xpos, double ypos) {
 		 Scene scene = myGame.getScene(myCurrentLevelID, currentSceneID);
-		 if (scene == null || scene.getXSize() < xpos || scene.getYSize() < ypos) {return;}
+		 if (scene == null || scene.getXSize()*TILE_WIDTH < xpos || scene.getYSize()*TILE_WIDTH < ypos) {return;}
 		 if(isPlaying) {myGame.getScoreManager().update("SceneDone", myCurrentSceneID);}
 		 hideScene();
 		 myCurrentSceneID = currentSceneID;
