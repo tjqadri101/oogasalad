@@ -112,7 +112,6 @@ public class TriggerEventManager extends StatisticsManager{
 //                    answer = false;
             }
         }
-
     }
 
     public void performEvent (GameEngine myEngine, int etPairID) {
