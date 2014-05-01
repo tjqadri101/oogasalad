@@ -142,7 +142,7 @@ public class ActorEditorTable extends PanelTable{
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result == JOptionPane.OK_OPTION) {
-							JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+							JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 							UIManager.put("FileChooser.openDialogTitleText", "Choose Bullet Image");
 							SwingUtilities.updateComponentTreeUI(chooser);
 							FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -171,7 +171,7 @@ public class ActorEditorTable extends PanelTable{
 						int result = JOptionPane.showConfirmDialog(null, myPanel, 
 								"Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
 						if (result == JOptionPane.OK_OPTION) {							
-							JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+							JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 							UIManager.put("FileChooser.openDialogTitleText", "Choose Bullet Image");
 							SwingUtilities.updateComponentTreeUI(chooser);
 							FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -192,13 +192,14 @@ public class ActorEditorTable extends PanelTable{
 						}
 						break;
 						case "Spread Shoot":{
-							JTextField[] texts1 = {xSizeField, ySizeField, speedField, bulletsField,bulletColid};
-							String[] strings1 = {"x size:", "y size:", "Speed:", "Number of Bullets Per Shot","Bullet ColID"};
-							JPanel myPanel1 = ViewFactory.createOptionInputPanel(texts1, strings1);
-							result = JOptionPane.showConfirmDialog(null, myPanel1, 
+							JTextField[] texts_2 = {xSizeField, ySizeField, speedField, bulletsField, maxBullets};
+							String[] strings_2 = {"x size:", "y size:", "Speed:", "Number of Bullets Per Shot", "Max Bullets","Bullet ColID"};
+							JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts_2, strings_2);
+
+							int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
 									"Please Enter X and Y Values", JOptionPane.OK_CANCEL_OPTION);
-							if (result == JOptionPane.OK_OPTION) {
-								JFileChooser chooser = new JFileChooser("src/game_authoring_environment/resources");
+							if (result2 == JOptionPane.OK_OPTION) {							
+								JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 								UIManager.put("FileChooser.openDialogTitleText", "Choose Bullet Image");
 								SwingUtilities.updateComponentTreeUI(chooser);
 								FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -209,10 +210,12 @@ public class ActorEditorTable extends PanelTable{
 									String path = chooser.getSelectedFile().getPath();
 									String name = chooser.getSelectedFile().getName();
 									gController.uploadImage(100, 100, path);
-							//		gController.modifyActorSpreadShootNoID(name,  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()) );
+									gController.modifyActorSpreadShoot(name,  Integer.parseInt(xSizeField.getText()), 
+											Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),
+											Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
 								}
 								else{
-								//	gController.modifyActorSpreadShootNoID("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()) );
+									gController.modifyActorSpreadShoot("bullet.png",  Integer.parseInt(xSizeField.getText()), Integer.parseInt(ySizeField.getText()), 100, Integer.parseInt(speedField.getText()),Integer.parseInt(bulletsField.getText()), Integer.parseInt(maxBullets.getText()) );
 								}
 							}
 							break;
@@ -248,7 +251,7 @@ public class ActorEditorTable extends PanelTable{
 						break;
 					case "Show Corpse":
 
-						//	gController.modifyActorShowCorpseNoID("bullet.png", 10, 10, 10);
+						//gController.modifyActorShowCorpse("bullet.png", 10, 10, 10);
 						break;
 					case "Regular Remove":
 						gController.modifyActorRegRemoveNoID();

@@ -85,7 +85,7 @@ public class PlayereditorPanel extends Panel {
 			@Override
 			public void actionPerformed (ActionEvent e){
 				try{
-					JFileChooser chooser = new JFileChooser("src/engineImages/");
+					JFileChooser chooser = new JFileChooser("src/engine/ImageBuffer");
 					UIManager.put("FileChooser.openDialogTitleText", null);
 					SwingUtilities.updateComponentTreeUI(chooser);
 					FileNameExtensionFilter filter = new FileNameExtensionFilter(
