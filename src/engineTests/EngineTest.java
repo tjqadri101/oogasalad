@@ -100,9 +100,9 @@ public class EngineTest {
 		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
 		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
-		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
-		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
-		engine.setObjectImage(player, "JumpAnimation", "poke-mon/100.gif", 100, 100);
+//		engine.setPlayerImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
+//		engine.setPlayerImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
+//		engine.setPlayerImage(player, "JumpAnimation", "poke-mon/100.gif", 100, 100);
 
 		player.setBehavior("RegularRemove");
 		player.setBehavior("Jump", 5.0, 1);
@@ -148,8 +148,8 @@ public class EngineTest {
 		
 //		game.getTriggerManager().setEventOrTriggerBehavior(1, "TriggerByTime", 300);
 //		game.getTriggerManager().setEventOrTriggerBehavior(1, "EventEnemyShower", 5, "actor_default.png");
-		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByRemove", "TriggerByRemove", BOSS_ID);
-		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", );
+//		game.getTriggerManager().setEventOrTriggerBehavior(2, "TriggerByRemove", "TriggerByRemove", BOSS_ID);
+//		game.getTriggerManager().setEventOrTriggerBehavior(2, "EventSwitchScene", );
 //		System.out.println("\n EngineTest LoadingDone");
 		engine.loadingDone();
         return engine;

@@ -229,7 +229,7 @@ public final class SaladConstants {
 	public static final String MODIFY_COLLISION_BEHAVIOUR = "ModifyCollisionBehavior";
 	public static final String REBOUND = "Rebounce";
 
-	public static final String KILL_BY_TILE = "KillByTile";
+	public static final String KILL_BY_TILE = "KilledByTile";
 	public static final String SET_COLLISION_LIFE = "SetCollisionLife";
 	public static final String SET_TILE_COLLISION_LIFE = "SetTileCollisionLife";
 

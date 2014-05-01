@@ -148,7 +148,7 @@ public class CollisioneditorPanel extends Panel {
 			public void actionPerformed (ActionEvent e){
 				Object[] options1 = {"Player to Actor",
 						"Player to Tile",
-						"Actor to Tile", "Actor to Player", "Cancel"};
+						"Actor to Tile", "Actor to Player", "Actor to Actor","Cancel"};
 
 				int result = JOptionPane.showOptionDialog(null,
 						null,null,
@@ -406,6 +406,99 @@ public class CollisioneditorPanel extends Panel {
 	
 								case "ShootHitObject":{
 									gController.modifyCollisBehavShootHitObject(hitter, hittee, location);
+									break;
+								}
+							}
+							makeSubPanel();
+							construct();
+						}
+					}
+				}
+				//actor to actor (Added by Nick)
+				if(result == 4){
+					JTextField hitterBox = new JTextField(20);
+					JTextField hitteeBox = new JTextField(20);
+					JComboBox collisionTypes = new JComboBox(collision0TypesStrings);
+					JComponent[] texts = {hitterBox, hitteeBox, collisionTypes};
+					String[] strings = {"ID of Hitter:", "ID being Hit:", "Type of Collision:"};
+					JPanel myPanel = ViewFactory.createOptionInputPanel(texts, strings);
+
+					result = JOptionPane.showConfirmDialog(null, myPanel, 
+							"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+					if (result == JOptionPane.OK_OPTION) {
+						String str = collisionTypes.getSelectedItem().toString();
+						Object[] k = {hitterBox.getText(), hitteeBox.getText(), str};
+						listData.add(k);
+						JComboBox collisionLocationBox = new JComboBox(collisionLocation);
+						JComboBox[] texts_ = {collisionLocationBox};
+						String[] strings_ = {"Where Can Collision Take Place"};
+						JPanel myPanel_ = ViewFactory.createOptionInputPanel(texts_, strings_);
+						int result_ = JOptionPane.showConfirmDialog(null, myPanel_, 
+								"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+						if (result_ == JOptionPane.OK_OPTION) {
+							int hitter = Integer.parseInt(hitterBox.getText());
+							int hittee = Integer.parseInt(hitteeBox.getText());
+							String location = collisionLocationBox.getSelectedItem().toString();
+
+							switch(str){
+								case "HitterEliminateVictim":{
+									gController.modifyCollisBehavHitElimVic(hittee, hitter,location);
+									break;
+								}
+	
+								case "ShootHitObject":{
+									gController.modifyCollisBehavShootHitObject(hittee, hitter, location);
+									break;
+								}
+								case "PerishTogether":{
+									gController.modifyCollisBehavPerishTog(hittee, hitter,location);
+									break;
+								}
+								case "Rebounce":{
+	
+									gController.modifyCollisionBehaviorRebounce(hittee, hitter,location);
+	
+									break;
+								}
+								case "Restore Blood":{
+									JTextField score = new JTextField(10);
+									JTextField blood = new JTextField(10);
+									JComponent[] texts2 = {score, blood};
+									String[] strings2 = {"Score:", "Amount of Blood:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyBloodManagerCollision(Integer.parseInt(score.getText().toString()), Integer.parseInt(blood.getText().toString()), hittee, hitter);
+									}
+									break;
+								}
+									
+								case "Add Life":{
+									JTextField score = new JTextField(10);
+									JComponent[] texts2 = {score};
+									String[] strings2 = {"Number of Lives:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyLifeManagerSetCollisionLife(Integer.parseInt(score.getText().toString()), hittee, hitter);
+									}
+									break;
+								}
+								case "Add Score":{
+									JTextField score = new JTextField(10);
+									JComponent[] texts2 = {score};
+									String[] strings2 = {"Number of Lives:"};
+									JPanel myPanel2 = ViewFactory.createOptionInputPanel(texts2, strings2);
+
+									int result2 = JOptionPane.showConfirmDialog(null, myPanel2, 
+											"Please Enter Values", JOptionPane.OK_CANCEL_OPTION);
+									if (result2 == JOptionPane.OK_OPTION) {
+									gController.modifyScoreManagerCollisionScore(Integer.parseInt(score.getText().toString()), hittee, hitter);
+									}
 									break;
 								}
 							}
