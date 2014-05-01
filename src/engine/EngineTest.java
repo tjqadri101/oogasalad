@@ -38,7 +38,7 @@ public class EngineTest {
 	
 	public GameEngine testEngine(){
 		
-		GameEngine engine = new GameEngine(false);
+		GameEngine engine = new GameEngine(true);
 		engine.setTileEditing(true);
 		engine.setGameSpeed(1);
 		Game game = new Game();
@@ -50,7 +50,7 @@ public class EngineTest {
 			game.getScene(i+1, i).setPlayerInitPosition((i+1)*100, 200);
 			engine.setCurrentScene(i+1, i);
 			
-			engine.setSceneView(null,false,false,1200,40);
+			engine.setSceneView(null,false,false,1200,400);
 			engine.loadTileImage(TILE_COLID, "brick.png");
 			engine.createTiles(TILE_COLID,0,15+i,1180,1);
 			engine.createTiles(TILE_COLID,20,15,10,1);
@@ -80,7 +80,7 @@ public class EngineTest {
 		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
 		game.getTransitionState("Title").addInstruction(400, 300, "NEW GAME! LET'S GO");
 		
-		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 30);
+		Player player = engine.createPlayer(0, "poke-mon/105.gif", 100, 100, 300, 300, "Nick", PLAYER_COLID, 3);
 		engine.setObjectImage(player, "BKMove", "poke-mon/103.gif", 100, 100);
 		engine.setObjectImage(player, "FDMove", "poke-mon/102.gif", 100, 100);
 		engine.setObjectImage(player, "Jump", "poke-mon/100.gif", 100, 100);
@@ -96,6 +96,8 @@ public class EngineTest {
 		player.setKey('J', "jump");
 		player.setKey('B', "shoot");
 		player.setCanMoveInAir(false);
+		
+		player.setViewOffset(400, 300);
 		
 //		engine.modifyPlayerImage(0, "poke-mon/025.gif", 100, 100);
 		

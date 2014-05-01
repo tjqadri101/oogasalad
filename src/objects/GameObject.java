@@ -474,14 +474,18 @@ public abstract class GameObject extends JGObject {
 		}
 		if (myUniqueID != SaladConstants.NULL_UNIQUE_ID) myRevivalManager.addRemovedObject(this);
 		if (this instanceof Player) {
-			LiveManager liveManager = (LiveManager) getSpecificManager(SaladConstants.LIVE_MANAGER);
-			liveManager.changeLive(myUniqueID, -1);
+			LiveManager liveManager = (LiveManager) getSpecificManager(SaladConstants.LIVE_MANAGER_PATH);
+			if(liveManager != null) liveManager.changeLive(myUniqueID, -1);
 		}
 	}
 	
 	protected StatisticsManager getSpecificManager(String name){
 		for(StatisticsManager manager: myGameManagers){
-			if(manager.getClass().getName().equals(name)) return manager;
+			System.out.println("manager: " + manager.getClass().getName());
+			if(manager.getClass().getName().equals(name)){
+				System.out.println("name got!" + name);
+				return manager;
+			}
 		}
 		return null;
 	}
@@ -514,7 +518,7 @@ public abstract class GameObject extends JGObject {
 	}
 	
 	public TriggerEventManager getEventManager(){
-		return (TriggerEventManager) getSpecificManager(SaladConstants.TRIGGER_EVENT_MANAGER);
+		return (TriggerEventManager) getSpecificManager(SaladConstants.EVENT_MANAGER_PATH);
 	}
 	
 	/**

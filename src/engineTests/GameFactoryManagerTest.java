@@ -36,10 +36,58 @@ public class GameFactoryManagerTest extends TestCase{
             myEngine.setCurrentScene(1, 0);
         myFactory = new GameFactory(myEngine);
     }
-    
+   
     @Test
     public void testTEMSetTriggerByTime() throws FactoryException{
-        String CREATE_LEVEL = "ModifyTriggerEventManager,ID,1,SetTriggerByTime,SetTriggerByTime,40";
+        String CREATE_LEVEL = "ModifyTriggerEventManager,ID,1,TriggerByTime,SetTriggerByTime,40";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
+        try {
+            myFactory.processOrder(CREATE_LEVEL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(2, myGame.getTEM().size());
+// here the levelID=1, SceneID=0, objID=0
+    }
+    
+    @Test
+    public void testTEMTriggerByRemove() throws FactoryException{
+        String CREATE_LEVEL = "ModifyTriggerEventManager,ID,1,TriggerByRemove,SetTriggerByRemove,0";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
+        try {
+            myFactory.processOrder(CREATE_LEVEL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(2, myGame.getTEM().size());
+// here the levelID=1, SceneID=0, objID=0
+    }
+    
+    @Test
+    public void testTEMTriggerByCollision() throws FactoryException{
+        String CREATE_LEVEL = "ModifyTriggerEventManager,ID,2,TriggerByCollision,Collision,1,2,3";
+//        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
+//        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+
+        try {
+            myFactory.processOrder(CREATE_LEVEL);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(2, myGame.getTEM().size());
+// here the levelID=1, SceneID=0, objID=0
+    }
+    
+    @Test
+    public void testTEMTriggerByTileCollision() throws FactoryException{
+        String CREATE_LEVEL = "ModifyTriggerEventManager,ID,4,TriggerByTileCollision,TileCollision,1,20,60,10,10";
 //        Object[] UNPARSED_OBJECT_ARRAY = new Object[] {"CreateLevel","ID",2};
 //        List<Object> CREATELEVEL_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
 

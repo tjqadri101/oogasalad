@@ -367,12 +367,13 @@ public class GameEngine extends StdGame {
 				 myViewOffsetRate = 35; //make it constant later
 			 }
 			 myViewOffsetPlayer = true;
-			 int four = 400;
-			 int three = 300;
+			 int xpos = myPlayer.getXofs();
+			 int ypos = myPlayer.getYofs();
+			 System.out.println(xpos+" "+ypos);
 			 int desired_viewXOfs = (int) myPlayer.x + myPlayer.getXSize() / 2 - viewWidth() / 2;
 			 int desired_viewYOfs = (int) myPlayer.y + myPlayer.getYSize() / 2 - viewHeight() / 2;
-			 setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate + viewXOfs() + four,
-					 (desired_viewYOfs - viewYOfs()) / myViewOffsetRate + viewYOfs() +three, true);
+			 setViewOffset((desired_viewXOfs - viewXOfs()) / myViewOffsetRate + viewXOfs(),
+					 (desired_viewYOfs - viewYOfs()) / myViewOffsetRate + viewYOfs(), false);
 		 }
 	 }
 

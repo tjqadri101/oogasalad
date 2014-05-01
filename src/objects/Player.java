@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import engine.GameEngine;
 import engineManagers.BloodManager;
 import engineManagers.CollisionManager;
 import engineManagers.LiveManager;
@@ -21,6 +22,8 @@ public class Player extends GameObject {
 	
 	protected Map<Integer, String> myKeyMap;
 	protected List<String> myNonClearKeys;
+	protected int myXofs;
+	protected int myYofs;
 	protected double myMovingXSpeed;
 	protected double myMovingYSpeed;
 	protected boolean myCanMoveInAir;
@@ -32,12 +35,31 @@ public class Player extends GameObject {
 			TriggerEventManager triggerEventManager) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, 
 				scoreManager, bloodManager, revivalManager, liveManager, triggerEventManager);
+		initViewOffset();
 		myKeyMap = new HashMap<Integer, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myMovingYSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
 		myCanMoveInAir = true;
 		myNonClearKeys = SaladUtil.getListFromPropertiesFile(SaladConstants.DEFAULT_ENGINE_RESOURCE_PACKAGE + SaladConstants.NONCLEAR_KEYS_FILE, 
 		                                                     SaladConstants.NON_CLEAR_KEYS, SaladConstants.SEPARATOR);
+	}
+	
+	public void initViewOffset(){
+		myXofs = GameEngine.JGPOINT_X/2;
+		myYofs = GameEngine.JGPOINT_Y/2;
+	}
+	
+	public void setViewOffset(int xofs, int yofs){
+		myXofs = xofs;
+		myYofs = yofs;
+	}
+	
+	public int getXofs(){
+		return myXofs;
+	}
+	
+	public int getYofs(){
+		return myYofs;
 	}
 	
 	/**

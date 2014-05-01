@@ -81,8 +81,7 @@ public class TriggerEventManager extends StatisticsManager{
                     }
                 } 
             }catch (IndexOutOfBoundsException e){
-
-
+                // it should not reach there
             }
         }
     }
