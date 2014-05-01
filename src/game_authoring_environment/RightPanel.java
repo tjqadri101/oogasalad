@@ -38,7 +38,9 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.LayerUI;
 
+import reflection.MethodAction;
 import reflection.ReflectionException;
+import util.MethodChangeSpinner;
 
 import java.lang.reflect.Field;
 
@@ -56,6 +58,7 @@ public class RightPanel extends JSplitPane {
 	public GAEController myGAEController;
 	protected JSpinner actorXSpinner, actorYSpinner, playerXSpinner, playerYSpinner;
 	public static final double POSIT_STEP = 10d;
+	public boolean checkChange = false;
 	
 	public RightPanel(GAEController gController){
 		myGAEController = gController;
@@ -68,6 +71,7 @@ public class RightPanel extends JSplitPane {
 		JPanel spinnerPanel = new JPanel();
 		actorXSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_X", "curActorXPos",POSIT_STEP);
 		actorYSpinner = addLabeledPositionSpinner(spinnerPanel, "ACTOR_Y", "curActorYPos", POSIT_STEP);
+		checkChange = true;
 		playerXSpinner = addLabeledPositionSpinner(spinnerPanel, "PLAYER_X", "curPlayerXPos",POSIT_STEP);
 		playerYSpinner = addLabeledPositionSpinner(spinnerPanel, "PLAYER_Y", "curPlayerYPos", POSIT_STEP);
 		return spinnerPanel;
@@ -76,7 +80,8 @@ public class RightPanel extends JSplitPane {
 	
 	 
 
-	protected JSpinner addLabeledPositionSpinner(Container c, String label, String field, double stepSize){
+	protected JSpinner addLabeledPositionSpinner(Container c, String label, String field,
+												double stepSize){
 		SpinnerModel posModel = new SpinnerNumberModel(0d, 0d, 1000d, stepSize);
 		JLabel l = new JLabel(label);
 		c.add(l);
@@ -88,13 +93,17 @@ public class RightPanel extends JSplitPane {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
 				JSpinner curSpinner = (JSpinner)(e.getSource());
 				 try{
 						Class<?> c1 = getCurInstance().getClass();
 						Field field1 = c1.getField(curSpinner.getName());
 						field1.set(getCurInstance(),curSpinner.getValue());
-						myGAEController.modifyActorPosNoID(curActorXPos, curActorYPos);
+						if(!checkChange){
+							myGAEController.modifyActorPosNoID(curActorXPos, curActorYPos);
+						}
+						else{
+							myGAEController.modifyPlayerPos(curPlayerXPos, curPlayerYPos);
+						}
 					}
 					 catch (Exception e2)
 				        {
