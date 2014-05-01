@@ -271,6 +271,8 @@ public final class SaladConstants {
 	public static final String LIVE_MANAGER_PATH = "engineManagers.LiveManager";
 	public static final String EVENT_MANAGER_PATH = "engineManagers.TriggerEventManager";
 
+	public static final String SET_INIT_BLOOD = "SetInitBlood";
+
 	
 
 	

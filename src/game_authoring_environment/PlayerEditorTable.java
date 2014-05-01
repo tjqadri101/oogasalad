@@ -312,8 +312,21 @@ public class PlayerEditorTable extends PanelTable {
 
 		myTableModel.addRow(seventhRow);
 		classMap.put(5,seventhRow[1]);
+		
+		final JTextField tf11 = new JTextField();
+		Object[] eighthRow = {"Initial Blood", tf11}; 
+		tf1.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gController.modifyPlayerInitBlood(Integer.parseInt(tf11.getText()));
+			}			
+		});
+
+		myTableModel.addRow(eighthRow); // actually adding to the table
+		classMap.put(6,eighthRow[1]);
 	}
 
+	
 	@Override
 	void updateTable() {
 		

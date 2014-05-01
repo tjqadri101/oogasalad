@@ -395,6 +395,17 @@ public class ActorEditorTable extends PanelTable{
 		myTableModel.addRow(seventhRow);
 		classMap.put(6, seventhRow[1]);
 	
+		final JTextField tf11 = new JTextField();
+		Object[] eighthRow = {"Initial Blood", tf11}; 
+		tf1.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gController.modifyActorInitBlood(Integer.parseInt(tf11.getText()));
+			}			
+		});
+
+		myTableModel.addRow(eighthRow); // actually adding to the table
+		classMap.put(7,eighthRow[1]);
 	
 	}
 		@Override
