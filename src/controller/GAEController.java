@@ -677,10 +677,11 @@ public class GAEController {
 		System.out.println(order);
 	}
 
-	public void modifyCollisBehavShootHitObject(int victimCollID, int hitterCollID, String Direction){
+	public void modifyCollisBehavShootHitObject(int victimCollID, int hitterCollID, String direction){
 		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR
 				+ victimCollID + SaladConstants.SEPARATOR + SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR 
-				+ SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR + hitterCollID;
+				+ SaladConstants.SHOOT_HIT_OBJECT + SaladConstants.SEPARATOR + hitterCollID + SaladConstants.SEPARATOR +
+				direction;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}
