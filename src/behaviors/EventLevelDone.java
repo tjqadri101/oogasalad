@@ -9,13 +9,14 @@ import engine.GameEngine;
 public class EventLevelDone extends Eventable{
     protected GameEngine myEngine;
 
-    protected EventLevelDone (GameEngine engine) {
+    public EventLevelDone (GameEngine engine) {
         super(engine);
         myEngine = engine;
     }
 
     @Override
     public void doEvent (List<Object> params) {
+    	System.out.println("EventLevelDone");
            myEngine.levelDone();
     }
 }

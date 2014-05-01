@@ -10,7 +10,7 @@ import engine.GameEngine;
  */
 public class EventChangeBlood extends Eventable{
 
-	protected EventChangeBlood(GameEngine engine) {
+	public EventChangeBlood(GameEngine engine) {
 		super(engine);
 	}
 

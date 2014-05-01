@@ -730,7 +730,7 @@ public class GAEController {
 	 * Modify an object such that it dies on colliding with a tile. 
 	 */
 	public void modifyCollisionBehaviorToDieByTile(int victimCollisionID, char collID, String direction){
-		String order = SaladConstants.MODIFY_COLLISION_BEHAVIOUR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
+		String order = SaladConstants.MODIFY_TILE_COLLISION_BEHAVIOR + SaladConstants.SEPARATOR + SaladConstants.COLLISION_ID + SaladConstants.SEPARATOR + victimCollisionID+SaladConstants.SEPARATOR + 
 				SaladConstants.KILL_BY_TILE + SaladConstants.SEPARATOR + SaladConstants.KILL_BY_TILE + SaladConstants.SEPARATOR + collID + SaladConstants.SEPARATOR + 
 				direction;
 		if (!DEBUG) myDataController.receiveOrder(order);
@@ -976,6 +976,15 @@ public class GAEController {
 		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
 				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_LEVEL_DONE + SaladConstants.SEPARATOR 
 				+ SaladConstants.EVENT_LEVEL_DONE;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
+	
+	public void modifyTriggerEventManagerSwitchScene(int eventTriggerPairID, int sceneID, double xPos, double yPos){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_SWITCH_SCENE + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_SWITCH_SCENE + SaladConstants.SEPARATOR + sceneID + SaladConstants.SEPARATOR + 
+				xPos + SaladConstants.SEPARATOR + yPos;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
 	}

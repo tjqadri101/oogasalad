@@ -11,7 +11,7 @@ import engine.GameEngine;
 public class EventCommandAction extends Eventable {
         private GameEngine myEngine;
 
-    protected EventCommandAction (GameEngine engine) {
+    public EventCommandAction (GameEngine engine) {
         super(engine);
         myEngine = engine;
     }
