@@ -341,7 +341,7 @@ public class GAEController {
 	 * Animate an player's backward move animation
 	 */
 	public void modifyPlayerAnimationBKMove(String imgURL, int xSize, int ySize){ 
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
+		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + playerID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
 				SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize ;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);
@@ -442,7 +442,7 @@ public class GAEController {
 	 * Animate an actor's backward move animation
 	 */
 	public void modifyActorAnimationBKMove(String imgURL, int xSize, int ySize){ 
-		String order = SaladConstants.MODIFY_ACTOR + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
+		String order = SaladConstants.MODIFY_ACTOR_ANIMATION + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR + selectedActorID + SaladConstants.SEPARATOR + SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + 
 				SaladConstants.BK_MOVE + SaladConstants.SEPARATOR + imgURL + SaladConstants.SEPARATOR + xSize + SaladConstants.SEPARATOR + ySize ;
 		if (!DEBUG) myDataController.receiveOrder(order);
 		System.out.println(order);

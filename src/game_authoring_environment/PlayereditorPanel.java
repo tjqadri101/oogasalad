@@ -106,9 +106,6 @@ public class PlayereditorPanel extends Panel {
 						((PlayerEditorTable) myTable).setPlayerExists(true);
 						makeSubPanel();
 						construct();
-						
-						
-						
 					}			
 				}
 				catch(Exception J){
