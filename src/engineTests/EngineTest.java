@@ -63,7 +63,8 @@ public class EngineTest {
 
 			NonPlayer goomba = engine.createActor(300+i, "poke-mon/0"+(12+i)+".gif", 100, 100, 500.0, 100, SaladConstants.NULL, ENEMY_COLID, 10);
 			goomba.setBehavior("RegularRemove");
-			goomba.setBehavior("BackForthMove",5.0, 10);
+//			goomba.setBehavior("BackForthMove",5.0, 10);
+			goomba.setBehavior("Immobile");
 			goomba.setBehavior("SpreadShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 4, 100, 4);
 
 			NonPlayer mushroom = engine.createActor(200, "poke-mon/0"+(14+i)+".gif", 80, 80, 400, 100, "Mushroom", MUSHROOM_COLID, 10);

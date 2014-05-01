@@ -3,7 +3,11 @@ package behaviors;
 import java.util.List;
 import reflection.Reflection;
 import engine.GameEngine;
-
+/**
+ * 
+ * @author Main Steve (Siyang) Wang
+ *
+ */
 public class EventCommandAction extends Eventable {
         private GameEngine myEngine;
 
