@@ -3,13 +3,18 @@ package engineManagers;
 import java.util.List;
 import javax.media.j3d.Sound;
 import objects.GameObject;
+import util.Music;
 
-public class SoundManager extends Sound {
+public class SoundManager extends Music {
     
-    private SoundManager (){
-        
+    
+    /**
+     * 
+     * @param filename String of the file path to the music file
+     */
+    public SoundManager(String filename) {
+            super(filename);
     }
-    
     
 
 
