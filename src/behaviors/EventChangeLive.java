@@ -10,7 +10,7 @@ import engine.GameEngine;
  */
 public class EventChangeLive extends Eventable{
 
-	protected EventChangeLive(GameEngine engine) {
+	public EventChangeLive(GameEngine engine) {
 		super(engine);
 	}
 

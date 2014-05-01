@@ -58,14 +58,15 @@ public class GameEngine extends StdGame {
 	protected char myTileCid;
 	protected int myTileCounter = 0;
 	protected String myTitleBG;
-
+	
+	protected String gameStateEdit;
 	protected boolean isEditingMode;
 	protected boolean isLoading;
 	protected boolean isPlaying;
 	protected boolean isTileEditing;
 	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
-	protected Music musicManager;
+//	protected Music musicManager;
 //	protected SoundManager mySoundManager;
 	
 	public GameEngine(boolean editing) {
@@ -195,6 +196,7 @@ public class GameEngine extends StdGame {
 	public void paintFrameEdit() {
 		displayPlayerInfo();
 		disPlayDragTile();
+		if (gameStateEdit != null) {drawString(gameStateEdit,viewWidth()/2,viewHeight()/3,0);}
 	}
 	
 	
@@ -800,10 +802,25 @@ public class GameEngine extends StdGame {
 		 isTileEditing = tile_editing;
 	 }
 	 
+	 public void levelDone(){
+		 super.levelDone();
+		 if (isEditingMode) {gameStateEdit = "Level Done !";}
+	 }
+	 
+	 public void lifeLost(){
+		 super.lifeLost();
+		 if (isEditingMode) {gameStateEdit = "Life Lost !";}
+	 }
+	 
+	 public void gameOver(){
+		 super.gameOver();
+		 if (isEditingMode) {gameStateEdit = "Game Over !";}
+	 }
+	 
 //	 public void createActor(int old_unique_id, int new_unique_id) {
 //		 NonPlayer actor = myCurrentScene.getNonPlayer(old_unique_id);
 //		 createActor(new_unique_id, actor.getMyGfx(), actor.getXSize(), actor.getYSize(),
 //				 actor.x, actor.y, actor.getObjectName(), actor.colid, actor.getInitBlood());
 //	 }
-
+	 
 }

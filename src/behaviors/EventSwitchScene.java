@@ -10,7 +10,7 @@ import engine.GameEngine;
  */
 public class EventSwitchScene extends Eventable {
 
-	protected EventSwitchScene(GameEngine engine) {
+	public EventSwitchScene(GameEngine engine) {
 		super(engine);
 	}
 
