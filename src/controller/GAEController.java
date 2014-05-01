@@ -916,6 +916,13 @@ public class GAEController {
 		System.out.println(order);
 	}
 
+	public void modifyTriggerEventManagerLevelDone(int eventTriggerPairID){
+		String order = SaladConstants.MODIFY_TRIGGER_EVENT_MANAGER + SaladConstants.SEPARATOR + SaladConstants.ID + SaladConstants.SEPARATOR 
+				+ eventTriggerPairID + SaladConstants.SEPARATOR + SaladConstants.EVENT_LEVEL_DONE + SaladConstants.SEPARATOR 
+				+ SaladConstants.EVENT_LEVEL_DONE;
+		if (!DEBUG) myDataController.receiveOrder(order);
+		System.out.println(order);
+	}
 	public void modifyLifeManagerInitLives(int lives, int playerID){
 		String order = SaladConstants.MODIFY_LIFE_MANAGER + SaladConstants.SEPARATOR + SaladConstants.SET_INIT_LIVES + 
 				SaladConstants.SEPARATOR + lives + SaladConstants.SEPARATOR + playerID; 
@@ -1074,25 +1081,25 @@ public class GAEController {
 		return myDataController.getSelectedID();
 	}
 
-	public Map<String, Integer> getKeyMap(int playerId2){
+	public Map<String, Integer> getKeyMap(int playerId2) {
 		System.out.println("map");
-		if(myDataController.getGame()!=null){
-			if(myDataController.getGame().getPlayer(playerId2)!=null){
-				if(myDataController.getGame().getPlayer(playerId2).getKeyMap()!=null){
+		if (myDataController.getGame() != null) {
+			if (myDataController.getGame().getPlayer(playerId2) != null) {
+				if (myDataController.getGame().getPlayer(playerId2).getKeyMap() != null) {
 					Map<Integer, String> map = myDataController.getGame().getPlayer(playerId2).getKeyMap();
 					System.out.println("map");
-
 					HashMap<String, Integer> map2 = new HashMap<String, Integer>();
 					System.out.println("map");
-
-					for(Integer K : map.keySet()){
+					for (Integer K : map.keySet()) {
 						String str = map.get(K);
 						System.out.println(str);
 						map2.put(str, K);
 					}
 					System.out.println("map2");
-
-					return map2;}}}
+					return map2;
+				}
+			}
+		}
 		Map<String, Integer> k = new HashMap<String, Integer>();
 		return k;
 	}
