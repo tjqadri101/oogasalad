@@ -69,7 +69,7 @@ public class GameEngine extends StdGame {
 	protected boolean isTileEditing;
 	protected boolean scene_restart = true;
 	protected StatsController myStatsController;
-	protected Music musicManager;
+//	protected Music musicManager;
 	
 	public GameEngine(boolean editing) {
 		initEngineComponent(JGPOINT_X, JGPOINT_Y);
@@ -92,7 +92,7 @@ public class GameEngine extends StdGame {
 		myTimer = 0;
 		lives = 1;
 //		musicManager = new Music("src/engine/Sounds/PlayCreepy.wav"); // newly Added for testing music
-		musicManager.start();
+//		musicManager.start();
 	}
 	
 	public void loadingBegin() {
