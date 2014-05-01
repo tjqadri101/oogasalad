@@ -7,6 +7,7 @@ import objects.NonPlayer;
 import objects.Player;
 import saladConstants.SaladConstants;
 import stage.Game;
+import util.Music;
 import engine.GameEngine;
 
 public class EngineTest {
@@ -70,6 +71,9 @@ public class EngineTest {
 			mushroom.setBehavior("RegularRemove");
 			mushroom.setBehavior("BackForthMove",6.0, 20);
 			mushroom.setBehavior("SlowShootByTime", "ball20-red.gif", 20, 20, BOMB_COLID, 5.0, 100, 4);
+			
+//			musicManager = new Music("src/engine/Sounds/PlayJoyful.wav");
+//		        System.out.println("loadingDone: initGame is called here");
 		}
 		
 //		engine.setStatusDisplay(engine.status_font, engine.status_color, "poke-mon/025.gif");

@@ -117,19 +117,7 @@ public class GameFactoryActorTest extends TestCase{
         assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
     }
 
-    @Test
-    public void testModifyActorChangeCollisionID() throws FactoryException{
-        String CHANGE_COLLISION_ID = "ModifyActor,ID,0,ChangeCollisionID,1";
-        //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeCollisionID", 1};
-        //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(CHANGE_COLLISION_ID);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        assertEquals(1, myGame.getNonPlayer(1, 0, 0).colid);
-    }
+ 
 
     @Test
     public void testModifyActorPosition() throws FactoryException{
@@ -209,24 +197,6 @@ public class GameFactoryActorTest extends TestCase{
     }
 
     @Test
-    public void testModifyActorDie() throws FactoryException{
-        String REGULAR_DIE = "ModifyActor,ID,0,RegularRemove,RegularRemove";
-        String ACTOR_DIE = "ModifyActor,ID,0,ShowCorpse,ShowCorpse,mushroom.png,10,10,400";
-        //        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
-        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
-        //        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
-        //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
-        try {
-            myFactory.processOrder(REGULAR_DIE);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception");
-        }
-        //        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
-        //        assert(set.contains("RegularRemove"));
-    }
-
-    @Test
     public void testModifyActorImmobile() throws FactoryException{
         String Immobile = "ModifyActor,ID,0,Immobile,Immobile";
         //        String ACTOR_DIE = "ModifyActor,ID,0,ShowCorpse,ShowCorpse,mushroom.png,10,10,400";
@@ -274,6 +244,38 @@ public class GameFactoryActorTest extends TestCase{
             fail("Exception");
         }
         //        assertEquals(1, myGame.getNonPlayer(1, 0, 0).getID());
+    }
+    
+    @Test
+    public void testModifyActorChangeCollisionID() throws FactoryException{
+        String CHANGE_COLLISION_ID = "ModifyActor,ID,0,ChangeCollisionID,3";
+        //        Object[] UNPARSED_ORDER = new Object[] {"ModifyActor","ID",0,"ChangeCollisionID", 1};
+        //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(CHANGE_COLLISION_ID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+//        assertEquals(1, myGame.gsetNonPlayer(1, 0, 0).colid);
+    }
+    
+    @Test
+    public void testModifyActorDie() throws FactoryException{
+        String REGULAR_DIE = "ModifyActor,ID,0,RegularRemove,RegularRemove";
+        String ACTOR_DIE = "ModifyActor,ID,0,ShowCorpse,ShowCorpse,mushroom.png,10,10,400";
+        //        List<Object> CREATEPLAYER_OBJECT_LIST = Arrays.asList(UNPARSED_OBJECT_ARRAY);
+        myActor = (NonPlayer) myFactory.processOrder(CREATE_ACTOR);
+        //        Object[] UNPARSED_ORDER = new Object[] {"ModifyPlayer","ID",0,"ShowCorpse","ShowCorpse","imageURL",10,10,400};
+        //        List<Object> MODIFYACTOR_OBJECT_LIST = Arrays.asList(UNPARSED_ORDER);
+        try {
+            myFactory.processOrder(REGULAR_DIE);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("Exception");
+        }
+        //        List<Object> set = myGame.getNonPlayer(1,0,0).getActionManager().getDieBehavior();
+        //        assert(set.contains("RegularRemove"));
     }
 
 }
