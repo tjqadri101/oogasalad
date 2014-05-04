@@ -22,6 +22,7 @@ public class ActionManager {
 	protected ResourceBundle myBehaviors;
 	protected ResourceBundle myBehaviorMethods;
 	protected List<String> myAttributes;
+	
 	protected GameObject myObject;
 	protected List<String> myActions;
 	protected Map<String, List<Object>> myActionMap;
@@ -39,22 +40,22 @@ public class ActionManager {
 	
 	/**
 	 * Set the action behavior
-	 * @param s
+	 * @param behavior
 	 * @param args
 	 */
-	public void setBehavior(String s, Object ... args){
-		String type = myBehaviorMethods.getString(s);
+	public void setBehavior(String behavior, Object ... args){
+		String type = myBehaviorMethods.getString(behavior);
 		String delete = null;
 		for(String action: myActions){
 			if(myBehaviorMethods.getString(action).equals(type)) delete = action;
 		}
 		if(delete != null) myActions.remove(delete);
-		myActions.add(s);
-		myActionMap.put(s, SaladUtil.convertArgsToObjectList(args));
+		myActions.add(behavior);
+		myActionMap.put(behavior, SaladUtil.convertArgsToObjectList(args));
 	}
 	
 	/**
-	 * Perform an action
+	 * Perform an action for a certain behavior type (i.e. jump, move)
 	 * @param type
 	 */
 	public void doAction(String type){
@@ -89,6 +90,10 @@ public class ActionManager {
 		}
 	}
 	
+	/**
+	 * Get a list of Strings that contains the attributes regarding all the actions for a Game Object
+	 * @return
+	 */
 	public List<String> getAttributes(){
 		for(String action: myActions){
 			myAttributes.add(AttributeMaker.addAttribute(myObject.modificationString(),
