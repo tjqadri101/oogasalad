@@ -69,28 +69,6 @@ public class ActionManager {
 	}
 	
 	/**
-	 * Called by Actor to rebound if regular move behavior
-	 */
-	public void bounce(){
-		for(String action: myActions){
-			String current = myBehaviorMethods.getString(action);
-			if(current.equals(SaladConstants.MOVE) && action == SaladConstants.REGULAR_MOVE){
-				double xspeed = (Double) myActionMap.get(action).get(0);
-				double yspeed = (Double) myActionMap.get(action).get(1);
-				List<Object> newParams = new ArrayList<Object>();
-				newParams.add(-1*xspeed);
-				newParams.add(-1*yspeed);
-				myActionMap.put(action, newParams);
-				return;
-			}
-		}
-		if (myObject.xspeed != 0 || myObject.yspeed != 0){
-			myObject.xspeed *= -1;
-			myObject.yspeed *= -1;
-		}
-	}
-	
-	/**
 	 * Get a list of Strings that contains the attributes regarding all the actions for a Game Object
 	 * @return
 	 */

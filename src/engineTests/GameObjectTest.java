@@ -45,8 +45,6 @@ public class GameObjectTest {
 		game.getGravity().setMagnitude(0.1);
 		
 		game.getTransitionState("Title").setBackground("floorImage.jpg");
-		game.getTransitionState("Title").addImage(20, 30, "splash.gif");
-		game.getTransitionState("Title").addInstruction(400, 3360, "NEW LEVEL! LET'S GO");
 		
 		
 		engine.setSceneView(null,false,false,1200,40);

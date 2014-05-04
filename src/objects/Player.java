@@ -35,6 +35,7 @@ public class Player extends GameObject {
 			TriggerEventManager triggerEventManager) {
 		super(uniqueID, gfxname, xsize, ysize, xpos, ypos, name, collisionId, lives, collisionManager, 
 				scoreManager, bloodManager, revivalManager, liveManager, triggerEventManager);
+		
 		initViewOffset();
 		myKeyMap = new HashMap<Integer, String>();
 		myMovingXSpeed = SaladConstants.DEFAULT_ACTOR_SPEED;
@@ -45,20 +46,28 @@ public class Player extends GameObject {
 	}
 	
 	/**
-	 * Called by Factory to set the key
+	 * Set a key for an action type
 	 * @param key
-	 * @param type
+	 * @param action type
 	 */
 	public void setKey(int key, String type){
 		myKeyMap.put(key, type);
 	}
 	
+	/**
+	 * Executed for each frame
+	 * Called from the engine
+	 */
 	@Override
 	public void move(){
 		checkKeys();
 		super.move();
 	}
 	
+	/**
+	 * Do not call this method directly
+	 * Check valid keys that are already set and execute the corresponding actions
+	 */
 	protected void checkKeys(){
 		for(int key: myKeyMap.keySet()){
 			if(eng.getKey(key)){

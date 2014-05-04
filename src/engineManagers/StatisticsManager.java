@@ -10,7 +10,7 @@ import saladConstants.SaladConstants;
 import util.SaladUtil;
 /**
  * A super class of managers related to recording statistics
- * Examples of subclasses includes BloodManager, LiveManager, ScoreManager, etc.
+ * Examples of subclasses includes CollisionManager, BloodManager, LiveManager, ScoreManager, etc.
  * @author Main Justin (Zihao) Zhang
  *
  */

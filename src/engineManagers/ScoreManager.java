@@ -5,7 +5,6 @@ import java.util.List;
 
 import objects.GameObject;
 import saladConstants.SaladConstants;
-import statistics.GameStats;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
@@ -21,7 +20,6 @@ public class ScoreManager extends StatisticsManager{
 		super();
 		myInitScore = startScore;
 		restore();
-		GameStats.set(SaladConstants.SCORE, startScore);
 	}
 	
 	public ScoreManager(){
@@ -63,9 +61,16 @@ public class ScoreManager extends StatisticsManager{
 		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, victimColid, hitterColid);
+		updateScore(condition);
+	}
+	
+	/**
+	 * Do not call this method directly
+	 * @param condition
+	 */
+	protected void updateScore(String condition){
 		if(!myMap.containsKey(condition)) return;
 		myScore += myMap.get(condition);
-		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
 	}
 	
 	/**
@@ -74,9 +79,7 @@ public class ScoreManager extends StatisticsManager{
 	public void update(String info, GameObject victim, int tilecid) {
 		int victimColid = checkIfSideDetectorColid(victim);
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, info, victimColid, tilecid);
-		if(!myMap.containsKey(condition)) return;
-		myScore += myMap.get(condition);
-		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
+		updateScore(condition);
 	}
 	
 	/**
@@ -87,9 +90,7 @@ public class ScoreManager extends StatisticsManager{
 	public void update(String info, int oldLevelOrSceneID){
 		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
 				info, oldLevelOrSceneID);
-		if(myMap.get(condition) == null) return;
-		myScore += myMap.get(condition);
-		GameStats.update(SaladConstants.SCORE, myMap.get(condition));
+		updateScore(condition);
 	}
 	
 	/**
@@ -97,10 +98,7 @@ public class ScoreManager extends StatisticsManager{
 	 * @param condition
 	 */
 	public void update(String condition){
-		if(myMap.containsKey(condition)){
-			myScore += myMap.get(condition);
-			GameStats.update(SaladConstants.SCORE, myMap.get(condition));
-		}
+		updateScore(condition);
 	}
 	
 	/**

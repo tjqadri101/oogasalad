@@ -385,10 +385,6 @@ public abstract class GameObject extends JGObject {
 		return myInitBlood;
 	}
 
-	public void bounce(){
-		myActionManager.bounce();
-	}
-
 	public void stop() {
 		setSpeed(0);
 		setPos(getLastX(), getLastY());

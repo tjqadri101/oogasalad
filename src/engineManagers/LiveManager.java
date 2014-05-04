@@ -8,7 +8,6 @@ import java.util.Map;
 import objects.GameObject;
 import objects.Player;
 import saladConstants.SaladConstants;
-import statistics.GameStats;
 import util.AttributeMaker;
 import util.SaladUtil;
 /**
@@ -43,7 +42,6 @@ public class LiveManager extends StatisticsManager {
 		if(!myPlayerMap.containsKey(playerID)) return;
 		myInitLifeMap.put(myPlayerMap.get(playerID), lives);
 		myCurrentLifeMap.put(myPlayerMap.get(playerID), lives);
-		GameStats.set(myPlayerMap.get(playerID).getObjectName() + SaladConstants.SPACE + SaladConstants.LIVE, lives);
 	}
 	
 	/**
@@ -64,8 +62,6 @@ public class LiveManager extends StatisticsManager {
 		int currentLive = myCurrentLifeMap.get(myPlayerMap.get(playerID));
 		currentLive += change;
 		myCurrentLifeMap.put(myPlayerMap.get(playerID), currentLive);
-		GameStats.update(myPlayerMap.get(playerID).getObjectName() + 
-				SaladConstants.SPACE + SaladConstants.LIVE, change);
 	}
 	
 	/**
@@ -99,13 +95,49 @@ public class LiveManager extends StatisticsManager {
 	 */
 	protected void restore(){
 		for(Player o: myPlayerMap.values()){
-			if(myCurrentLifeMap.containsKey(o)){
-				GameStats.update(o.getObjectName() + " " + SaladConstants.LIVE, myInitLifeMap.get(o) - myCurrentLifeMap.get(o));
-			}
 			myCurrentLifeMap.put(o, myInitLifeMap.get(o));
 		}
 	}
 
+	/**
+	 * Called to update the live of a player for a condition between two objects
+	 */
+	@Override
+	public void update(String info, GameObject victim, GameObject hitter) {
+		int victimColid = checkIfSideDetectorColid(victim);
+		int hitterColid = checkIfSideDetectorColid(hitter);
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
+				info, victimColid, hitterColid);
+		update(condition, victim);
+	}
+	
+	/**
+	 * Do not call this method directly
+	 * @param condition
+	 * @param victim
+	 */
+	protected void update(String condition, GameObject victim){
+		if(!myMap.containsKey(condition)) return;
+		if(victim instanceof Player){
+			Player p = (Player) victim;
+			int changeLive = myMap.get(condition);
+			int finalLive = myCurrentLifeMap.get(p) + changeLive;
+			myCurrentLifeMap.put(p, finalLive);	
+		}
+	}
+	
+	/**
+	 * Called to update the live of a player for a condition between an object and a tile
+	 */
+	@Override
+	public void update(String info, GameObject victim, int tileColid){
+		int victimColid = checkIfSideDetectorColid(victim);
+		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
+				info, victimColid, tileColid);
+		update(condition, victim);
+	}
+	
+	
 	/**
 	 * Called to get the attribute of LiveManager
 	 */
@@ -135,42 +167,5 @@ public class LiveManager extends StatisticsManager {
 		}
 		answer.add(AttributeMaker.addAttribute(SaladConstants.MODIFY_LIFE_MANAGER, SaladConstants.RESTORE_LIFE_BY_LEVEL, myRestore));
 		return answer;
-	}
-
-	/**
-	 * Called to update the live of a player for a condition between two objects
-	 */
-	@Override
-	public void update(String info, GameObject victim, GameObject hitter) {
-		int victimColid = checkIfSideDetectorColid(victim);
-		int hitterColid = checkIfSideDetectorColid(hitter);
-		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victimColid, hitterColid);
-		if(!myMap.containsKey(condition)) return;
-		if(victim instanceof Player){
-			Player p = (Player) victim;
-			int changeLive = myMap.get(condition);
-			GameStats.update(p.getObjectName() + SaladConstants.SPACE + SaladConstants.LIVE, changeLive);
-			int finalLive = myCurrentLifeMap.get(p) + changeLive;
-			myCurrentLifeMap.put(p, finalLive);	
-		}
-	}
-	
-	/**
-	 * Called to update the live of a player for a condition between an object and a tile
-	 */
-	@Override
-	public void update(String info, GameObject victim, int tileColid){
-		int victimColid = checkIfSideDetectorColid(victim);
-		String condition = SaladUtil.convertArgsToString(SaladConstants.SEPARATOR, 
-				info, victimColid, tileColid);
-		if(!myMap.containsKey(condition)) return;
-		if(victim instanceof Player){
-			Player p = (Player) victim;
-			int changeLive = myMap.get(condition);
-			GameStats.update(p.getObjectName() + SaladConstants.SPACE + SaladConstants.LIVE, changeLive);
-			int finalLive = myCurrentLifeMap.get(p) + changeLive;
-			myCurrentLifeMap.put(p, finalLive);	
-		}
 	}
 }
