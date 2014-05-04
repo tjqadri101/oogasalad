@@ -359,7 +359,6 @@ public abstract class GameObject extends JGObject {
 	 * @param lives
 	 */
 	public void setInitBlood(int blood) {
-//		GameStats.set(myName + SaladConstants.SPACE + SaladConstants.BLOOD, blood);
 		myInitBlood = blood;
 		restoreBlood();
 	}
@@ -454,11 +453,10 @@ public abstract class GameObject extends JGObject {
 		try{
 			for(StatisticsManager manager: myGameManagers){
 				if(manager != null){
-					System.out.println(manager.getClass().getName());
 					Reflection.callMethod(manager, SaladConstants.MANAGER_UPDATE, args);
 				}
 			}
-		} catch (Exception e){ e.printStackTrace(); } // should never reach here
+		} catch (Exception e){ e.printStackTrace(); } 
 	}
 
 	@Override

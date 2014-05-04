@@ -45,13 +45,7 @@ public class SaladUtil {
      * @param list
      */
     public static void printStringList(List<String> list){
-        System.out.println();
-        System.out.print("*StringList print starts: ");
-        for(String s: list){
-            System.out.print("/" + s);
-        }
-        System.out.println("*StringList print ends.");
-        System.out.println();
+    	SaladUtil.printObjectList(SaladUtil.convertStringListToObjectList(list));
     }
 
     /**
@@ -59,12 +53,12 @@ public class SaladUtil {
      * @param list
      */
     public static void printObjectList(List<Object> list){
-        System.out.println();
-        System.out.print("*StringList print starts: ");
+        System.out.println("*StringList print starts:");
         for(Object s: list){
             System.out.print("/" + s.toString());
         }
         System.out.print("*StringList print ends.");
+        System.out.println();
     }
 
     /**
@@ -91,12 +85,10 @@ public class SaladUtil {
                                             List<Object> objects, String methodName, Object constructorParam){
         if(myString == null) return null;
         try{
-//            System.out.println("behaviorReflection: " + myBundle.getString(myString));
             Object behavior = Reflection.createInstance(myBundle.getString(myString), constructorParam);
-            // I think here is the problem 
             return Reflection.callMethod(behavior, methodName, objects);	
         } catch (Exception e){
-            e.printStackTrace(); // should never reach here
+            e.printStackTrace();
             return null;
         }
     }

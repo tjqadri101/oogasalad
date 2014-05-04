@@ -88,17 +88,6 @@ public class AttributeMaker {
 	public static String addAttribute(String key, String firstType, int firstParameter, String secondType, boolean duplicated, Object ... args){
 		List<Object> params = SaladUtil.convertArgsToObjectList(args);
 		return AttributeMaker.addAttribute(key, firstType, firstParameter, secondType, duplicated, params);
-//		StringBuilder attribute = new StringBuilder();
-//		attribute.append(key + SaladConstants.SEPARATOR + firstType + SaladConstants.SEPARATOR + firstParameter + SaladConstants.SEPARATOR + secondType);
-//		if(duplicated){ attribute.append(SaladConstants.SEPARATOR + secondType); }
-//		for(Object o: args){ 
-//			if(o == null) {
-//				attribute.append("null");
-//				continue;
-//			}
-//			attribute.append(SaladConstants.SEPARATOR + o.toString()); 
-//		}
-//		return attribute.toString();
 	}
 	
 	/**
